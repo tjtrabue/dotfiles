@@ -1,3 +1,5 @@
 #!/usr/bin/env zsh
 
-setopt autocd
+# Changing Directories:
+setopt auto_cd
+setopt pushd_silent

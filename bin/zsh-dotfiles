@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+# Clone the repo to HOME:
+function clone_dotfiles_repo () {
+    git clone https://github.com/tjtrabue/zsh-dotfiles.git ~/.zsh-dotfiles
+}
