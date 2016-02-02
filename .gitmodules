@@ -1,12 +1,12 @@
 [submodule "vendors/oh-my-zsh"]
 	path = vendors/oh-my-zsh
 	url = git@github.com:robbyrussell/oh-my-zsh.git
-[submodule "vendors/powerline"]
-	path = vendors/powerline
-	url = git@github.com:powerline/powerline.git
 [submodule "vendors/fonts"]
 	path = vendors/fonts
 	url = git@github.com:powerline/fonts.git
 [submodule "vendors/solarized"]
 	path = vendors/solarized
 	url = git@github.com:altercation/solarized.git
+[submodule "vendors/powerline"]
+	path = vendors/powerline
+	url = git@github.com:powerline/powerline.git
