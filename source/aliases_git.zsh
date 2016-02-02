@@ -17,3 +17,6 @@ alias ga="git add"
 alias gc="git commit -m"
 alias gca="git commit --amend"
 alias gp="git push origin"
+
+# Rebasing aliases:
+alias grb="git rebase"

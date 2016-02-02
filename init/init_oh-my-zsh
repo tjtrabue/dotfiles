@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Configure system to use oh-my-zsh
+
+if [[ -f ~/.zshrc ]]; then
+    echo "Backing up old .zshrc file"
+    cp ~/.zshrc ~/.zshrc.orig
+fi
+
+cp $VENDORS/oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+chsh -s /bin/zsh
