@@ -87,6 +87,23 @@ gacp () {
 #                                                                         #
 ###########################################################################
 
+# Lists all submodules in a repo
+ls_submods () {
+    is_repo
+    if [[ "$!" -eq 0 ]]; then
+        local repo_home="$(dirname $(git rev-parse --git-dir))"
+        grep path $repo_home/.gitmodules | sed 's/.*= //'
+    else
+        echoe "Not in a git repository" 1>&2
+        return 1
+    fi
+}
+
+# Creates a submodule based on a git url:
+submod () {
+    git submodule add "$1"
+}
+
 # removes a submodule from the current repo:
 rm_submod () {
     if [[ "$#" -ne 1 ]]; then
@@ -94,12 +111,17 @@ rm_submod () {
         return 1
     fi
 
-    mv "$1" "$1_tmp"
-    git submodule deinit "$1"
-    git rm --cached "$1"
-    mv "$1_tmp" "$1"
-
-    rm -rf "$(git rev-parse --git-dir)/modules/$1"
+    local submods=($(ls_submods))
+    for sub in "${submods[@]}"; do
+        if [[ "$1" == "$sub" ]]; then
+            echo "Removing submodule $1" 1>&2
+            mv "$1" "$1_tmp"
+            git submodule deinit "$1"
+            git rm --cached "$1"
+            mv "$1_tmp" "$1"
+            rm -rf "$(git rev-parse --git-dir)/modules/$1"
+        fi
+    done
 }
 
 ###########################################################################
@@ -110,7 +132,7 @@ rm_submod () {
 
 # Changes the designated git editor.
 # Options are Sublime, Atom, and Vim:
-switchgeditor () {
+swged () {
     if [[ "$#" -ne 1 ]]; then
         echoe "No editor name supplied."
         echo "Valid options are sublime, atom, and vim." 1>&2

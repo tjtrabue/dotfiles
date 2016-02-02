@@ -3,6 +3,15 @@
 # The home dir for this entire project:
 export ZSH_DOTFILES=~/.zsh-dotfiles
 
+# The home of all submodules used by this project:
+export VENDORS="$ZSH_DOTFILES/vendors"
+
+# Logging stuff.
+function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
+function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
+function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
+function e_arrow()    { echo -e " \033[1;34m➜\033[0m  $@"; }
+
 # Clone the repo to HOME:
 function clone_dotfiles_repo () {
     if [[ ! -d $ZSH_DOTFILES ]]; then
@@ -10,6 +19,15 @@ function clone_dotfiles_repo () {
     else
         echo "zsh-dotfiles repo already exists" 1>&2
     fi
+}
+
+# For testing.
+function assert() {
+  local success modes equals actual expected
+  modes=(e_error e_success); equals=("!=" "=="); expected="$1"; shift
+  actual="$("$@")"
+  [[ "$actual" == "$expected" ]] && success=1 || success=0
+  ${modes[success]} "\"$actual\" ${equals[success]} \"$expected\""
 }
 
 # OS detection
@@ -30,10 +48,15 @@ function init_do() {
     source "$2"
 }
 function copy_do() {
-
+    cp "$ZSH_DOTFILES/copy/batcharge.py" ~/bin/
+    cp "$ZSH_DOTFILES/copy/online-check.sh" ~/
+    cp "$ZSH_DOTFILES/copy/tjtrabue.zsh-theme" "$VENDORS/oh-my-zsh/custom/"
 }
-function source_do() {
-
+function link_do() {
+    ln -sf ${2#$HOME/} ~/
+}
+function font_do() { #hehe
+    cp "$2" ~/Library/Fonts/
 }
 
 # Take care of bweezeness:
