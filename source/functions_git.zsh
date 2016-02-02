@@ -1,5 +1,19 @@
 #!/usr/bin/env ksh
 
+###########################################################################
+#                                                                         #
+#                                   General                               #
+#                                                                         #
+###########################################################################
+
+# Determines whether or not the directory is in a git repository
+is_repo () {
+    if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
 
 ###########################################################################
 #                                                                         #
@@ -66,6 +80,27 @@ gacp () {
     git push origin "$remote_branch"
 }
 
+
+###########################################################################
+#                                                                         #
+#                                Submodules                               #
+#                                                                         #
+###########################################################################
+
+# removes a submodule from the current repo:
+rm_submod () {
+    if [[ "$#" -ne 1 ]]; then
+        echoe "Must enter the path to the submodule"
+        return 1
+    fi
+
+    mv "$1" "$1_tmp"
+    git submodule deinit "$1"
+    git rm --cached "$1"
+    mv "$1_tmp" "$1"
+
+    rm -rf "$(git rev-parse --git-dir)/modules/$1"
+}
 
 ###########################################################################
 #                                                                         #
