@@ -86,7 +86,7 @@ source $ZSH/oh-my-zsh.sh
 # Sources all automation files:
 src ()
 {
-    for file in ~/.zsh-dotfiles/source/* ~/.{vars,dirs}; do
+    for file in ~/.zsh-dotfiles/source/* ~/.{vars,dirs,colors}; do
         [ -r "$file" ] && [ -f "$file" ] && source "$file";
     done
 }
