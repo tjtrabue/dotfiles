@@ -93,8 +93,9 @@ src ()
     done
 }
 
-# Set git user info:
+# Set git user info and run ssh agent:
 git config --global user.name "tjtrabue"
 git config --global user.email "tom.trabue@gmail.com"
+eval "$(ssh-agent -s)"
 
 src

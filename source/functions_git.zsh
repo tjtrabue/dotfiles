@@ -7,7 +7,7 @@
 ###########################################################################
 
 # Determines whether or not the directory is in a git repository
-is_repo () {
+is-repo () {
     if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
         return 0
     else
@@ -16,17 +16,26 @@ is_repo () {
 }
 
 # Runs the logic for generating a new SSH key for GitHub and saving the pair:
-ssh_gen () {
+ssh-gen () {
+    local key_name="auto generated ssh key for GitHub"
     local response=""
-    while [[ response == "" ]]; do
+    while [[ "$response" == "" ]]; do
         echo "Enter file name for key (dafault is ~/.ssh/id_rsa)" 1>&2
         read response
         response=${response:-~/.ssh/id_rsa}
     done
+
     ssh-keygen -t rsa -b 4096 -C "tom.trabue@gmail.com" | echo "$response" | echo "" | echo ""
     eval "$(ssh-agent -s)"
     ssh-add "$response"
+
+    if [[ "$1" == "-n" && "$2" != "" ]]; then
+        key_name="$2"
+    fi
+    pbcopy < "$response.pub"
+    curl -u "tjtrabue" --data {"title":"$key_name", "key":"$(pbpaste)"} https://api.github.com/user/keys
 }
+
 
 ###########################################################################
 #                                                                         #
@@ -53,7 +62,7 @@ gacp () {
         return 1
     fi
 
-    if [[ `is_repo` == "false" ]]; then
+    if [[ `is-repo` == "false" ]]; then
         echo "Not a git repository" 1>&2
         echo "Aborting" 1>&2
         return 1
@@ -101,7 +110,7 @@ gacp () {
 ###########################################################################
 
 # Lists all submodules in a repo
-ls_submods () {
+ls-submods () {
     is_repo
     if [[ "$!" -eq 0 ]]; then
         local repo_home="$(dirname $(git rev-parse --git-dir))"
