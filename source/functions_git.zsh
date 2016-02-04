@@ -112,31 +112,30 @@ ls_submods () {
     fi
 }
 
-# Creates a submodule based on a git url:
+# Creates a git submodule based on a git url.
+# Alternately deletes a submodule in a repo:
 submod () {
-    git submodule add "$1"
-}
-
-# removes a submodule from the current repo:
-rm_submod () {
-    if [[ "$#" -ne 1 ]]; then
-        echoe "Must enter the path to the submodule"
-        return 1
-    fi
-
-    local submods=($(ls_submods))
-    for sub in "${submods[@]}"; do
-        if [[ "$1" == "$sub" ]]; then
-            echo "Removing submodule $1" 1>&2
-            mv "$1" "$1_tmp"
-            git submodule deinit "$1"
-            git rm --cached "$1"
-            mv "$1_tmp" "$1"
-            rm -rf "$(git rev-parse --git-dir)/modules/$1"
+    if [[ "$1" == "-r" ]]; then
+        if [[ -z "$2" ]]; then
+            echoe "Must enter the path to the submodule"
+            return 1
         fi
-    done
-}
 
+        local submods=($(ls_submods))
+        for sub in "${submods[@]}"; do
+            if [[ "$2" == "$sub" ]]; then
+                echo "Removing submodule $2" 1>&2
+                mv "$2" "$2_tmp"
+                git submodule deinit "$2"
+                git rm --cached "$2"
+                mv "$2_tmp" "$2"
+                rm -rf "$(git rev-parse --git-dir)/modules/$2"
+            fi
+        done
+    else
+        git submodule add "$1"
+    fi
+}
 
 ###########################################################################
 #                                                                         #
