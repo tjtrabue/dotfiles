@@ -15,6 +15,19 @@ is_repo () {
     fi
 }
 
+# Runs the logic for generating a new SSH key for GitHub and saving the pair:
+ssh_gen () {
+    local response=""
+    while [[ response == "" ]]; do
+        echo "Enter file name for key (dafault is ~/.ssh/id_rsa)" 1>&2
+        read response
+        response=${response:-~/.ssh/id_rsa}
+    done
+    ssh-keygen -t rsa -b 4096 -C "tom.trabue@gmail.com" | echo "$response" | echo "" | echo ""
+    eval "$(ssh-agent -s)"
+    ssh-add "$response"
+}
+
 ###########################################################################
 #                                                                         #
 #                              Staging/Pushing                            #
@@ -40,7 +53,7 @@ gacp () {
         return 1
     fi
 
-    if [[ `isrepo` == "false" ]]; then
+    if [[ `is_repo` == "false" ]]; then
         echo "Not a git repository" 1>&2
         echo "Aborting" 1>&2
         return 1

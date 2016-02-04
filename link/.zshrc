@@ -91,4 +91,8 @@ src ()
     done
 }
 
+# Set git user info:
+git config --global user.name "tjtrabue"
+git config --global user.email "tom.trabue@gmail.com"
+
 src
