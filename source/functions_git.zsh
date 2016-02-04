@@ -33,7 +33,7 @@ ssh-gen () {
         key_name="$2"
     fi
     pbcopy < "$response.pub"
-    curl -u "tjtrabue" --data {"title":"$key_name", "key":"$(pbpaste)"} https://api.github.com/user/keys
+    curl -u "tjtrabue" --data "{\"title\":\"$key_name\", \"key\":\"$(pbpaste)\"}" "https://api.github.com/user/keys"
 }
 
 

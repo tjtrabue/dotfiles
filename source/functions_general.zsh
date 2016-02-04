@@ -48,7 +48,7 @@ func ()
 {
     local CODE="`declare -f $@`";
     if [[ -z "$CODE" ]]; then
-        alias -p | grep "alias $@=";
+        alias -m | grep "alias $@=";
     else
         echo "$CODE";
     fi
