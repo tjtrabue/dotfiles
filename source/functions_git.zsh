@@ -18,6 +18,10 @@ is-repo () {
 # Runs the logic for generating a new SSH key for GitHub and saving the pair:
 ssh-gen () {
     local key_name="auto generated ssh key for GitHub"
+    if [[ "$1" == "-n" && "$2" != "" ]]; then
+        key_name="$2"
+    fi
+
     local response=""
     while [[ "$response" == "" ]]; do
         echo "Enter file name for key (dafault is ~/.ssh/id_rsa)" 1>&2
@@ -29,9 +33,6 @@ ssh-gen () {
     eval "$(ssh-agent -s)"
     ssh-add "$response"
 
-    if [[ "$1" == "-n" && "$2" != "" ]]; then
-        key_name="$2"
-    fi
     pbcopy < "$response.pub"
     curl -u "tjtrabue" --data "{\"title\":\"$key_name\", \"key\":\"$(pbpaste)\"}" "https://api.github.com/user/keys"
 }
