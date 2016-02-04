@@ -43,6 +43,17 @@ diralias ()
     sdirs
 }
 
+# Returns the block of source code for a function or alias specified:
+func ()
+{
+    local CODE="`declare -f $@`";
+    if [[ -z "$CODE" ]]; then
+        alias -p | grep "alias $@=";
+    else
+        echo "$CODE";
+    fi
+}
+
 #########################################
 ##              Navigation             ##
 #########################################

@@ -9,6 +9,9 @@ alias lsh="ls -a | egrep '^\.'"
 alias rmr="rm -r"
 alias rmrf="rm -rf"
 
+# Source aliases:
+alias sdirs="source $DIR_ALIAS_FILE"
+
 ###########################################################################
 ##                          Aliases taken from                           ##
 ##                        mathiasbynens/dotfiles                         ##
@@ -41,6 +44,8 @@ fi
 
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
+
+alias ls="ls -GFh"
 
 # List all files colorized in long format, including dot files
 alias la="ls -laF ${colorflag}"
