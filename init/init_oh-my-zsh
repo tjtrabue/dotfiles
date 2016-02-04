@@ -7,5 +7,5 @@ if [[ -f ~/.zshrc ]]; then
     cp ~/.zshrc ~/.zshrc.orig
 fi
 
-cp $VENDORS/oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+ln -s $ZSH_DOTFILES/link/.zshrc ~/.zshrc
 chsh -s /bin/zsh
