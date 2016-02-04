@@ -118,16 +118,13 @@ atp () {
 #########################################
 
 # Lists all scope extensions for Sublime snippets:
-subscopes ()
-{
-    cat ~/.automation/snippet_scopes
-}
+subscopes () { cat ~/.automation/snippet_scopes ; }
 
 # Used for printing errors:
-echoe ()
-{
-    echo "${RED}Error${NC}: $@" 1>&2
-}
+echoe () { echo "${RED}Error${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+echow () { echo "${YELLOW}Warning${NC}: $@" 1>&2 ; }
 
 # Prints useful network information regarding open
 # connections.
