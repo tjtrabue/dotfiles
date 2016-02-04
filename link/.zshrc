@@ -82,6 +82,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Set zsh to use LS_COLORS
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Sources all automation files:
 src ()
