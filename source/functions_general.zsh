@@ -1,5 +1,18 @@
 #!/usr/bin/env zsh
 
+#########################################
+##                General              ##
+#########################################
+
+# Returns the block of source code for a function or alias specified:
+func () {
+    local CODE="`declare -f $@`";
+    if [[ -z "$CODE" ]]; then
+        alias -m | grep "alias $@=";
+    else
+        echo "$CODE";
+    fi
+}
 
 #########################################
 ##           File Manipulation         ##
@@ -10,8 +23,7 @@
 ##       Directory Manipulation        ##
 #########################################
 
-shortpath ()
-{
+shortpath () {
     local input_path="$1";
     egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's/^ *export *//' | sed 's/=.*//' | {
         local var best_var to_replace best_to_replace;
@@ -35,24 +47,13 @@ shortpath ()
 }
 
 # Makes an alias for the current working directory:
-diralias ()
-{
+diralias () {
     local short_path="`shortpath "$(pwd)"`";
     sed -i "" "/export $1=/d" "$DIR_ALIAS_FILE";
     echo "export $1=\"$short_path\"" >> "$DIR_ALIAS_FILE";
     sdirs
 }
 
-# Returns the block of source code for a function or alias specified:
-func ()
-{
-    local CODE="`declare -f $@`";
-    if [[ -z "$CODE" ]]; then
-        alias -m | grep "alias $@=";
-    else
-        echo "$CODE";
-    fi
-}
 
 #########################################
 ##              Navigation             ##
@@ -60,8 +61,7 @@ func ()
 
 # Wrapper for the cd function that adds some memory
 # to it for retracing directories.
-cd ()
-{
+cd () {
     local adir;
     local -i cnt;
     if [[ $1 == "--" ]]; then
@@ -80,7 +80,7 @@ cd ()
         [[ $the_new_dir == */* ]] && temp="$temp/${the_new_dir#*/}";
         the_new_dir="$temp"
     };
-    pushd "$the_new_dir" > /dev/null;
+    pushd "$the_new_dir" >> /dev/null;
     [[ $? -ne 0 ]] && return 1;
     the_new_dir="$(pwd)";
     popd -n +11 2> /dev/null > /dev/null;
@@ -97,6 +97,14 @@ cd ()
     return 0
 }
 
+# Maps an input integer with a directory on the directory stack
+translate_dir_hist () {
+    [[ ! -z "$1" && "$1" =~ \-[0-9]+ ]] && local num_dirs_to_go_back=${1:1} || return 1
+    num_dirs_to_go_back=$((num_dirs_to_go_back+1))
+    dir_arr=($(dirs))
+    [[ $num_dirs_to_go_back -gt ${#dir_arr[@]} ]] && return 1
+    echo ${dir_arr[$num_dirs_to_go_back]}
+}
 
 #########################################
 ##            PATH/Variables           ##

@@ -88,7 +88,7 @@ gacp () {
                     ;;
             esac
         done
-        shift $((OPTIND-1))
+    shift $((OPTIND-1))
 
     # Make sure there are files staged for commit
     if [[ $(gadded) -eq 0 ]]; then
