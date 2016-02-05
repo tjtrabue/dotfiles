@@ -97,7 +97,7 @@ cd () {
     return 0
 }
 
-# Maps an input integer with a directory on the directory stack
+# Maps an input integer of the form -i with a directory on the directory stack:
 translate_dir_hist () {
     [[ ! -z "$1" && "$1" =~ \-[0-9]+ ]] && local num_dirs_to_go_back=${1:1} || return 1
     num_dirs_to_go_back=$((num_dirs_to_go_back+1))
@@ -140,10 +140,10 @@ atp () {
 subscopes () { cat ~/.automation/snippet_scopes ; }
 
 # Used for printing errors:
-echoe () { echo "${RED}Error${NC}: $@" 1>&2 ; }
+echoe () { echo "${RED}ERROR${reset_color}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-echow () { echo "${YELLOW}Warning${NC}: $@" 1>&2 ; }
+echow () { echo "${YELLOW}WARNING${reset_color}: $@" 1>&2 ; }
 
 # Prints useful network information regarding open
 # connections.
@@ -152,6 +152,7 @@ netinfo () {
         lsof -i | grep -E "(LISTEN|ESTABLISHED)" | awk '{print $1, $8, $9}'
     elif [[ "$#" -gt 0 && "$1" != "-l" ]]; then
         echoe "Unknown operand $1"
+        echo "Usage: netinfo [-l]" 1>&2
         return 1
     else
         lsof -i | grep -E "(LISTEN|ESTABLISHED)"
