@@ -88,7 +88,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # Sources all automation files:
 src ()
 {
-    for file in ~/.zsh-dotfiles/source/* ~/.{vars,dirs,colors}; do
+    for file in ~/.zsh-dotfiles/source/* ~/.{vars,dirs,colors,path}; do
         [ -r "$file" ] && [ -f "$file" ] && source "$file";
     done
 }

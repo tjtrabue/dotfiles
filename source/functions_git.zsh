@@ -90,19 +90,21 @@ gacp () {
         done
     shift $((OPTIND-1))
 
+    # Add any files the user specifies:
+    for file in "$@"; do
+        git add "$file"
+    done
+
     # Make sure there are files staged for commit
     if [[ $(gadded) -eq 0 ]]; then
         echo "No files staged for commit." 1>&2
         return 1
     fi
 
+    # Prompt for commit message:
     while [[ "$commit_message" == "" ]]; do
         echo "Type a commit message, then press ENTER:" 1>&2
         read commit_message
-    done
-
-    for file in "$@"; do
-        git add "$file"
     done
 
     git commit -m "$commit_message"
