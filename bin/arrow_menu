@@ -1,29 +1,23 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # input: list of menu items
 # output: item selected
 # exit codes: 0 - normal, 1 - abort, 2 - no menu items, 3 - too many items
 # to select item, press enter; to abort press q
 
-function cleanup() {
-   tput cnorm
-   trap - EXIT
-}
-trap cleanup EXIT # make sure that cursor is returned to normal if script exits
-
 [[ $# -lt 1 ]] && exit 2 # no menu items, at least 1 required
 
 [[ $# -gt $(( `tput lines` - 1 )) ]] && exit 3 # more items than rows
 
 # set colors
-cn="`echo -e '\r\e[0;1m'`" # normal
-cr="`echo -e '\r\e[1;7m'`" # reverse
+cn="$(echo '\r\e[0;1m')" # normal
+cr="$(echo '\r\e[1;7m')" # reverse
 
 # keys
-au="`echo -e '\e[A'`" # arrow up
-ad="`echo -e '\e[B'`" # arrow down
-ec="`echo -e '\e'`"   # escape
-nl="`echo -e '\n'`"   # newline
+au="$(echo $'\e[A')" # arrow up
+ad="$(echo $'\e[B')" # arrow down
+ec="$(echo $'\e')"   # escape
+nl="$(echo '\n')"   # newline
 
 tn="$#" # total number of items
 
@@ -37,13 +31,14 @@ end=false
 
 while ! $end
 do
+
    for i in `seq 1 $tn`
    do
 
       echo -n "$cn"
       [[ $cp == $i ]] && echo -n "$cr"
 
-      eval "printf \"%-10s%s\n\" \"[\$i]\" \"\${$i}\""
+      eval "echo \${$i}"
 
    done
 
@@ -54,19 +49,19 @@ do
       key="$key$k2"
    }
 
-   case "$key" in
+   case "${key}" in
 
-      "$au")
+      "${au}")
          cp=$(( cp - 1 ))
          [[ $cp == 0 ]] && cp=$tn
          ;;
 
-      "$ad")
+      "${ad}")
          cp=$(( cp + 1 ))
          [[ $cp == $(( tn + 1 )) ]] && cp=1
          ;;
 
-      "$nl")
+      "${nl}")
          si=true
          end=true
          ;;
@@ -89,7 +84,5 @@ echo "$cn" # normal colors
 } >&2 # end capture
 
 $si && eval "echo \${$cp}"
-
-cleanup
 
 # eof

@@ -120,7 +120,7 @@ atp () {
         local to_add=$(shortpath `$1`);
     fi
 
-    echo $PATH | grep -q "$to_add"
+    echo $PATH | grep -ho "$to_add"
 
     if [ $? -ne 0 ]; then
         PATH=$PATH:$to_add
