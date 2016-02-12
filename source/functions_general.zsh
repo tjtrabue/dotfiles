@@ -124,10 +124,12 @@ atp () {
 
     if [ $? -ne 0 ]; then
         PATH=$PATH:$to_add
-        sed -i "" "/^export\ PATH=/d" ~/.path
+        sed -i "" "s:^export::g" ~/.path
         echo "export PATH=$PATH" >> ~/.path
         source ~/.path
         src
+    else
+        return 1
     fi
 }
 
