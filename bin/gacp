@@ -4,7 +4,7 @@
 # This is a binary used for adding, committing, and pushing files in a
 # git repository to a remote branch.
 
- function gacp_usage () {
+ function gacp_usage() {
     echo "Add, commit, and push files to remote repository" 1>&2
     echo "all in one command." 1>&2
     echo "" 1>&2
