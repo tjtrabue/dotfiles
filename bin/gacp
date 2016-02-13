@@ -14,6 +14,7 @@
     echo "Options:" 1>&2
     echo "  -m <message> : the commit message (will be prompted for one if this arguemnet is omitted)" 1>&2
     echo "  -b <remote branch> : the name of the remote branch to push changes to (\"master\" by default)" 1>&2
+    echo "  -a : specifies that the changes should be added to the previous commit" 1>&2
 }
 
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
