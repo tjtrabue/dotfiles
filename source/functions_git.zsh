@@ -1,4 +1,4 @@
-#!/usr/bin/env ksh
+#!/usr/bin/env zsh
 
 ###########################################################################
 #                                                                         #
@@ -7,7 +7,7 @@
 ###########################################################################
 
 # Determines whether or not the directory is in a git repository
-is-repo () {
+function is-repo() {
     if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
         return 0
     else
@@ -16,7 +16,7 @@ is-repo () {
 }
 
 # Runs the logic for generating a new SSH key for GitHub and saving the pair:
-ssh-gen () {
+function ssh-gen() {
     local key_name="auto generated ssh key for GitHub"
     if [[ "$1" == "-n" && "$2" != "" ]]; then
         key_name="$2"
@@ -45,7 +45,7 @@ ssh-gen () {
 ###########################################################################
 
 # Commit and push changes upstream. Can optionally add files from a specified directory:
-gacp () {
+function gacp () {
         gacp_usage () {
         echo "Add, commit, and push files to remote repository" 1>&2
         echo "all in one command." 1>&2
@@ -119,7 +119,7 @@ gacp () {
 ###########################################################################
 
 # Lists all submodules in a repo
-ls-submods () {
+ function ls-submods() {
     is_repo
     if [[ "$!" -eq 0 ]]; then
         local repo_home="$(dirname $(git rev-parse --git-dir))"
@@ -132,7 +132,7 @@ ls-submods () {
 
 # Creates a git submodule based on a git url.
 # Alternately deletes a submodule in a repo:
-submod () {
+function submod() {
     if [[ "$1" == "-r" ]]; then
         if [[ -z "$2" ]]; then
             echoe "Must enter the path to the submodule"
@@ -172,7 +172,7 @@ submod () {
 
 # Changes the designated git editor.
 # Options are Sublime, Atom, and Vim:
-swged () {
+function swged() {
     if [[ "$#" -ne 1 ]]; then
         echoe "No editor name supplied."
         echo "Valid options are sublime, atom, and vim." 1>&2
@@ -196,4 +196,21 @@ swged () {
             return 1
             ;;
     esac
+}
+
+
+###########################################################################
+##                                                                       ##
+##                              Reverting                                ##
+##                                                                       ##
+###########################################################################
+
+function revertlast() {
+    git rev-parse --is-inside-work-tree >> /dev/null
+    if [[ $? -eq 0 ]]; then
+        git reset --soft HEAD~1
+        git reset HEAD "$(git rev-parse --show-toplevel)"
+    else
+        return 1
+    fi
 }
