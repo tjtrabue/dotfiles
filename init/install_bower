@@ -1,8 +1,0 @@
-#!/usr/bin/env zsh
-
-bower --version >> /dev/null
-if [[ "$?" -ne 0 ]]; then
-    npm install bower
-else
-    bower update
-fi
