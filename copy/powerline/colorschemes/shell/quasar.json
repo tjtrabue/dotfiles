@@ -1,0 +1,29 @@
+{
+    "name": "Solarized Dark",
+    "groups": {
+        "jobnum":               	{ "fg": "solarized:base3", "bg": "solarized:magenta" },
+        "user":                 	{ "fg": "solarized:base3", "bg": "solarized:blue", "attr": ["bold"] },
+        "superuser":            	{ "fg": "solarized:base3", "bg": "red", "attr": ["bold"] },
+        "virtualenv":           	{ "fg": "solarized:base3", "bg": "green" },
+        "branch":               	{ "fg": "gray70", "bg": "steelblue" },
+        "branch_dirty":         	{ "fg": "yellow", "bg": "steelblue" },
+        "branch_clean":         	{ "fg": "gray70", "bg": "steelblue" },
+        "continuation":         	{ "fg": "brightyellow", "bg": "solarized:magenta" },
+        "continuation:current": 	{ "fg": "solarized:base3", "bg": "solarized:magenta", "attr": ["bold"] },
+        "cwd":                  	{ "fg": "brightyellow", "bg": "solarized:magenta" },
+        "cwd:current_folder":   	{ "fg": "solarized:base3", "bg": "solarized:magenta", "attr": ["bold"] },
+        "cwd:divider":          	{ "fg": "gray70", "bg": "solarized:magenta" },
+        "hostname":             	{ "fg": "solarized:base3", "bg": "mediumgreen" },
+        "exit_fail":            	{ "fg": "solarized:base3", "bg": "red" },
+        "exit_success":         	{ "fg": "solarized:base3", "bg": "solarized:green" },
+        "environment":              { "fg": "solarized:base3", "bg": "solarized:green" },
+        "mode":                 	{ "fg": "solarized:base3", "bg": "solarized:green", "attrs": ["bold"] }
+    },
+    "mode_translations": {
+        "vicmd": {
+            "groups": {
+                "mode": { "fg": "solarized:base3", "bg": "solarized:green", "attrs": ["bold"] }
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-#!/usr/bin/env ksh
+#!/usr/bin/env zsh
 
 ###########################################################################
 #                                                                         #
@@ -7,7 +7,7 @@
 ###########################################################################
 
 # Determines whether or not the directory is in a git repository
-is-repo () {
+function isrepo() {
     if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
         return 0
     else
@@ -16,7 +16,7 @@ is-repo () {
 }
 
 # Runs the logic for generating a new SSH key for GitHub and saving the pair:
-ssh-gen () {
+function ssh-gen() {
     local key_name="auto generated ssh key for GitHub"
     if [[ "$1" == "-n" && "$2" != "" ]]; then
         key_name="$2"
@@ -44,73 +44,6 @@ ssh-gen () {
 #                                                                         #
 ###########################################################################
 
-# Commit and push changes upstream. Can optionally add files from a specified directory:
-gacp () {
-        gacp_usage () {
-        echo "Add, commit, and push files to remote repository" 1>&2
-        echo "all in one command." 1>&2
-        echo "" 1>&2
-        echo "Usage:" 1>&2
-        echo "gacp [-m (message) -b (branch name) <file names>]" 1>&2
-        echo "" 1>&2
-        echo "Options:" 1>&2
-        echo "  -m <message> : the commit message (will be prompted for one if this arguemnet is omitted)" 1>&2
-        echo "  -b <remote branch> : the name of the remote branch to push changes to (\"master\" by default)" 1>&2
-    }
-
-    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        gacp_usage
-        return 1
-    fi
-
-    if [[ `is-repo` == "false" ]]; then
-        echo "Not a git repository" 1>&2
-        echo "Aborting" 1>&2
-        return 1
-    fi
-
-    # Local variables
-    local commit_message=""
-    local remote_branch="master"
-
-    local OPTIND o
-        while getopts ":m:b:" o; do
-            case "${o}" in
-                m)
-                    commit_message="${OPTARG}"
-                    ;;
-                b)
-                    remote_branch="${OPTARG}"
-                    ;;
-                *)
-                    gacp_usage
-                    return
-                    ;;
-            esac
-        done
-    shift $((OPTIND-1))
-
-    # Add any files the user specifies:
-    for file in "$@"; do
-        git add "$file"
-    done
-
-    # Make sure there are files staged for commit
-    if [[ $(gadded) -eq 0 ]]; then
-        echo "No files staged for commit." 1>&2
-        return 1
-    fi
-
-    # Prompt for commit message:
-    while [[ "$commit_message" == "" ]]; do
-        echo "Type a commit message, then press ENTER:" 1>&2
-        read commit_message
-    done
-
-    git commit -m "$commit_message"
-    git push origin "$remote_branch"
-}
-
 
 ###########################################################################
 #                                                                         #
@@ -119,7 +52,7 @@ gacp () {
 ###########################################################################
 
 # Lists all submodules in a repo
-ls-submods () {
+ function ls-submods() {
     is_repo
     if [[ "$!" -eq 0 ]]; then
         local repo_home="$(dirname $(git rev-parse --git-dir))"
@@ -132,7 +65,7 @@ ls-submods () {
 
 # Creates a git submodule based on a git url.
 # Alternately deletes a submodule in a repo:
-submod () {
+function submod() {
     if [[ "$1" == "-r" ]]; then
         if [[ -z "$2" ]]; then
             echoe "Must enter the path to the submodule"
@@ -172,7 +105,7 @@ submod () {
 
 # Changes the designated git editor.
 # Options are Sublime, Atom, and Vim:
-swged () {
+function swged() {
     if [[ "$#" -ne 1 ]]; then
         echoe "No editor name supplied."
         echo "Valid options are sublime, atom, and vim." 1>&2
@@ -196,4 +129,22 @@ swged () {
             return 1
             ;;
     esac
+}
+
+
+###########################################################################
+##                                                                       ##
+##                          Reverting/Resetting                          ##
+##                                                                       ##
+###########################################################################
+
+# Reverts the current repo to the state of its previous commit:
+function resetlast() {
+    git rev-parse --is-inside-work-tree >> /dev/null
+    if [[ $? -eq 0 ]]; then
+        git reset --soft HEAD~1
+        git reset HEAD "$(git rev-parse --show-toplevel)"
+    else
+        return 1
+    fi
 }

@@ -1,3 +1,11 @@
 #!/usr/bin/env zsh
 
+brew update
+
 brew install dialog
+
+# Apps needed for Powerline:
+brew install socat
+brew install libgit2
+brew install pygit2
+brew install automake

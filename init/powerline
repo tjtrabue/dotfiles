@@ -2,4 +2,5 @@
 
 brew install python
 
-pip install --user powerline-status
+pip install --user --editable="$VENDORS/powerline"
+ln -s "$VENDORS/powerline/scripts/powerline" "$HOME/bin/powerline"
