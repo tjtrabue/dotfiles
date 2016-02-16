@@ -43,6 +43,7 @@ end=false
 
 while ! $end
 do
+   clear
    for i in $(seq $lower_index $upper_index)
    do
 
