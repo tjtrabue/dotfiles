@@ -1,13 +1,13 @@
 {
-    "name": "Solarized Dark",
+    "name": "Quasar",
     "groups": {
         "jobnum":               	{ "fg": "solarized:base3", "bg": "solarized:magenta" },
         "user":                 	{ "fg": "solarized:base3", "bg": "solarized:blue", "attr": ["bold"] },
         "superuser":            	{ "fg": "solarized:base3", "bg": "red", "attr": ["bold"] },
         "virtualenv":           	{ "fg": "solarized:base3", "bg": "green" },
-        "branch":               	{ "fg": "solarized:base3", "bg": "steelblue" },
+        "branch":               	{ "fg": "solarized:base3", "bg": "lightyellowgreen" },
         "branch_dirty":         	{ "fg": "gray3", "bg": "gold3" },
-        "branch_clean":         	{ "fg": "solarized:base3", "bg": "steelblue" },
+        "branch_clean":         	{ "fg": "solarized:base3", "bg": "lightyellowgreen" },
         "continuation":         	{ "fg": "brightyellow", "bg": "solarized:magenta" },
         "continuation:current": 	{ "fg": "solarized:base3", "bg": "solarized:magenta", "attr": ["bold"] },
         "cwd":                  	{ "fg": "brightyellow", "bg": "solarized:magenta" },

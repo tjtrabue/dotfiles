@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # Printing aliases:
 alias echo="echo -e"
@@ -9,8 +9,14 @@ alias lsh="ls -a | egrep '^\.'"
 alias rmr="rm -r"
 alias rmrf="rm -rf"
 
-# Source aliases:
-alias sdirs="source $DIR_ALIAS_FILE"
+# Source the dir alias file
+alias sdirs=source\ ~/.dirs
+
+# Source the variables file
+alias svar=source\ ~/.vars
+
+# Source the path file:
+alias spath=source\ ~/.path
 
 ###########################################################################
 ##                          Aliases taken from                           ##
@@ -168,4 +174,7 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -l"
+alias reload="exec $SHELL -i"
+
+# Reload powerline theme and colorscheme:
+alias pdr="powerline-daemon --replace"

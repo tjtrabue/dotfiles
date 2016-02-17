@@ -1,4 +1,28 @@
 {
+	"default_module": "powerline.segments.common",
+	"segment_data": {
+		"hostname": {
+			"args": {
+				"only_if_ssh": true,
+				"exclude_domain": true
+			}
+		},
+		"virtualenv": {
+			"before": "ⓔ "
+		},
+		"branch": {
+			"before": " ",
+			"args": {
+				"status_colors": true
+			}
+		},
+    	"cwd": {
+				"args": {
+					"use_path_separator": true,
+					"dir_limit_depth": 2
+				}
+    	}
+	},
 	"segments": {
 		"left": [
 			{
