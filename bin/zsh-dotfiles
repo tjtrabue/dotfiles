@@ -51,6 +51,7 @@ function copy_do() {
     cp "$ZSH_DOTFILES/copy/batcharge.py" ~/bin/
     cp "$ZSH_DOTFILES/copy/online-check.sh" ~/
     cp "$ZSH_DOTFILES/copy/tjtrabue.zsh-theme" "$VENDORS/oh-my-zsh/custom/"
+    mkdir ~/.config && cp -r "$ZSH_DOTFILES/copy/powerline" ~/.config
 }
 function link_do() {
     ln -sf ${2#$HOME/} ~/
