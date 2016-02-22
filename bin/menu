@@ -3,7 +3,7 @@
 # input: list of menu items
 # output: item selected
 # exit codes: 0 - normal, 1 - abort, 2 - no menu items, 3 - too many items
-# to select item, press enter; to abort press q
+# to select item, press enter; to abort, press q
 
 # make sure that cursor is returned to normal if script exits
 function cleanup() {
@@ -47,7 +47,7 @@ spacer=10
          item=$(eval "echo -n \"\${$i}\"")
          space_padding=$(printf %$((line_length - ${#item} - $spacer))s)
          [[ $cp == $i ]] && echo -n "$cr" || echo -n "$cn"
-         eval "printf \"%-${spacer}s%s%-20s\n\" \"[\$i]\" \"\${$i}\" \"\$space_padding\""
+         eval "printf \"%-${spacer}s%s%s\n\" \"[\$i]\" \"\${$i}\" \"\$space_padding\""
       done
 
       read -sn 1 key
@@ -105,5 +105,5 @@ spacer=10
 
 } >&2 # end capture
 
-$si && eval "echo \${$cp}"
+$si && eval "echo \${$cp} | tr -dc [:print:]"
 # eof
