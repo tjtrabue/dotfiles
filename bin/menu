@@ -27,9 +27,8 @@ nl="$(echo -e '\n')"   # newline
 tn="$#" # total number of items
 num_rows=$(($(tput lines) - 1))
 line_length=$(tput cols)
-if [[ $tn -le $num_rows ]]; then
-   num_rows=$tn
-fi
+[[ $tn -le $num_rows ]] && num_rows=$tn
+
 # The object range to display at any given time:
 upper_index=$num_rows
 lower_index=1

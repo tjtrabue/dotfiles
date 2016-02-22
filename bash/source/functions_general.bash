@@ -4,7 +4,7 @@
 ##                General              ##
 #########################################
 
-# Returns the block of source code for a function or alias specified:
+# Returns the block of sourced code for the function or alias given as an argument:
 func () {
     local CODE="`declare -f $@`";
     if [[ -z "$CODE" ]]; then
@@ -59,8 +59,8 @@ diralias () {
 ##              Navigation             ##
 #########################################
 
-# Wrapper for the cd function that adds some memory
-# to it for retracing directories.
+# Wrapper for the cd function that adds some memory to it for
+# retracing directories.
 cd () {
     local adir;
     local -i cnt;
@@ -102,7 +102,7 @@ translate_dir_hist () {
     [[ ! -z "$1" && "$1" =~ \-[0-9]+ ]] && local num_dirs_to_go_back=${1:1} || return 1
     num_dirs_to_go_back=$((num_dirs_to_go_back+1))
     dir_arr=($(dirs))
-    [[ $num_dirs_to_go_back -gt ${#dir_arr[@]} ]] && return 1
+    [[ $num_dirs_to_go_back -gt ${#dir_arr[@]} ]] && return 2
     echo ${dir_arr[$num_dirs_to_go_back]}
 }
 
@@ -138,17 +138,13 @@ atp () {
 ##             Information             ##
 #########################################
 
-# Lists all scope extensions for Sublime snippets:
-subscopes () { cat ~/.automation/snippet_scopes ; }
-
 # Used for printing errors:
 echoe () { echo "${RED}ERROR${reset_color}: $@" 1>&2 ; }
 
 # Used for printing warnings:
 echow () { echo "${YELLOW}WARNING${reset_color}: $@" 1>&2 ; }
 
-# Prints useful network information regarding open
-# connections.
+# Prints useful network information regarding open connections.
 netinfo () {
     if [[ "$1" == "-l" ]]; then
         lsof -i | grep -E "(LISTEN|ESTABLISHED)" | awk '{print $1, $8, $9}'
@@ -161,11 +157,11 @@ netinfo () {
     fi
 }
 
-##############################################
-##      Functions taken from
-##      mathiasbynens/dotfiles     ##
-##  https://github.com/mathiasbynens/dotfiles
-#########################################
+#################################################
+##            Functions taken from             ##
+##           mathiasbynens/dotfiles            ##
+##  https://github.com/mathiasbynens/dotfiles  ##
+#################################################
 
 # Simple calculator
 calc () {
@@ -186,7 +182,7 @@ calc () {
 }
 
 # Create a new directory and enter it
- mkd () {
+mkd () {
     mkdir -p "$@" && cd "$_";
 }
 
