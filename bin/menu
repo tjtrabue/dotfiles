@@ -45,9 +45,9 @@ spacer=10
    while ! $end; do
       for i in $(seq $lower_index $upper_index); do
          item=$(eval "echo -n \"\${$i}\"")
-         space_buffer=$(printf %$((line_length - ${#item} - $spacer))s)
+         space_padding=$(printf %$((line_length - ${#item} - $spacer))s)
          [[ $cp == $i ]] && echo -n "$cr" || echo -n "$cn"
-         eval "printf \"%-${spacer}s%s%-20s\n\" \"[\$i]\" \"\${$i}\" \"\$space_buffer\""
+         eval "printf \"%-${spacer}s%s%-20s\n\" \"[\$i]\" \"\${$i}\" \"\$space_padding\""
       done
 
       read -sn 1 key
