@@ -33,6 +33,8 @@ fi
 upper_index=$num_rows
 lower_index=1
 
+line_length=$(tput cols)
+
 { # capture stdout to stderr
 
 tput civis # hide cursor
@@ -43,15 +45,14 @@ end=false
 
 while ! $end
 do
-   clear
    for i in $(seq $lower_index $upper_index)
    do
-
+      item=$(eval "echo -n \"\${$i}\"")
+      buffer_length=$((line_length - ${#item} - 11))
+      space_buffer=$(printf %${buffer_length}s)
       echo -n "$cn"
       [[ $cp == $i ]] && echo -n "$cr"
-
-      eval "printf \"%-10s%s\n\" \"[\$i]\" \"\${$i}\""
-
+      eval "printf \"%-10s%s%s\n\" \"[\$i]\" \"\${$i}\" \"\$space_buffer\""
    done
 
    read -sn 1 key
