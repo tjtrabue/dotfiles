@@ -2,10 +2,10 @@
 
 # input: list of menu items
 # output: item selected
-# exit codes: 0 - normal, 1 - abort, 2 - no menu items, 3 - too many items
+# exit codes: 0 - normal, 1 - abort, 2 - no menu items
 # to select item, press enter; to abort, press q
 
-# make sure that cursor is returned to normal if script exits
+# make sure that cursor is returned to normal when script exits:
 function cleanup() {
    tput cnorm
    trap - EXIT
@@ -34,7 +34,7 @@ fi
 upper_index=$num_rows
 lower_index=1
 
-# The amount of space between the item number and the item itself
+# The amount of space between the item number and the item itself:
 spacer=10
 
 { # capture stdout to stderr
@@ -96,13 +96,11 @@ spacer=10
       esac
 
       tput cuu $tn
-
    done
 
    tput cud $(( upper_index - 1 ))
    tput cnorm # unhide cursor
    echo "$cn" # normal colors
-
 } >&2 # end capture
 
 $si && eval "echo \${$cp} | tr -dc [:print:]"
