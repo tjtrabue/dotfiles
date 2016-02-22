@@ -15,18 +15,18 @@ trap cleanup EXIT
 [[ $# -lt 1 ]] && exit 2 # no menu items, at least 1 required
 
 # set colors
-cn="`echo -e '\r\e[0;1m'`" # normal
-cr="`echo -e '\r\e[1;7m'`" # reverse
+cn="$(echo -e '\r\e[0;1m')" # normal
+cr="$(echo -e '\r\e[1;7m')" # reverse
 
 # keys
-au="`echo -e '\e[A'`" # arrow up
-ad="`echo -e '\e[B'`" # arrow down
-ec="`echo -e '\e'`"   # escape
-nl="`echo -e '\n'`"   # newline
+au="$(echo -e '\e[A')" # arrow up
+ad="$(echo -e '\e[B')" # arrow down
+ec="$(echo -e '\e')"   # escape
+nl="$(echo -e '\n')"   # newline
 
 tn="$#" # total number of items
-num_rows=$((`tput lines` - 1))
-line_length=`tput cols`
+num_rows=$(($(tput lines) - 1))
+line_length=$(tput cols)
 if [[ $tn -le $num_rows ]]; then
    num_rows=$tn
 fi
@@ -43,17 +43,17 @@ spacer=10
    end=false
 
    while ! $end; do
-      for i in $(seq $lower_index $upper_index); do
+      for i in $(seq "$lower_index" "$upper_index"); do
          item=$(eval "echo -n \"\${$i}\"")
          space_padding=$(printf %$((line_length - ${#item} - $spacer))s)
-         [[ $cp == $i ]] && echo -n "$cr" || echo -n "$cn"
+         [[ $cp == "$i" ]] && echo -n "$cr" || echo -n "$cn"
          eval "printf \"%-${spacer}s%s%s\n\" \"[\$i]\" \"\${$i}\" \"\$space_padding\""
       done
 
-      read -sn 1 key
+      read -rsn 1 key
       [[ "$key" == "$ec" ]] &&
       {
-         read -sn 2 k2
+         read -rsn 2 k2
          key="$key$k2"
       }
 
@@ -95,7 +95,7 @@ spacer=10
             ;;
       esac
 
-      tput cuu $tn
+      tput cuu "$tn"
    done
 
    tput cud $(( upper_index - 1 ))
