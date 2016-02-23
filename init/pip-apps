@@ -1,9 +1,11 @@
 #!/usr/bin/env zsh
 
 # Apps needed for Powerline:
-pip install psutil
-pip install mercurial
-pip install pygit2
-pip install bzr
-pip install pyuv
-pip install 13-py
+pip install {
+    psutil,
+    mercurial,
+    pygit2,
+    bzr,
+    pyuv,
+    i3-py
+}
