@@ -51,7 +51,7 @@ diralias () {
     local short_path="`shortpath "$(pwd)"`";
     sed -i "" "/export $1=/d" "$DIR_ALIAS_FILE";
     echo "export $1=\"$short_path\"" >> "$DIR_ALIAS_FILE";
-    sdirs
+    source ~/.dirs
 }
 
 
@@ -100,7 +100,6 @@ cd () {
 # Maps an input integer of the form -i with a directory on the directory stack:
 translate_dir_hist () {
     [[ ! -z "$1" && "$1" =~ \-[0-9]+ ]] && local num_dirs_to_go_back=${1:1} || return 1
-    num_dirs_to_go_back=$((num_dirs_to_go_back+1))
     dir_arr=($(dirs))
     [[ $num_dirs_to_go_back -gt ${#dir_arr[@]} ]] && return 2
     echo ${dir_arr[$num_dirs_to_go_back]}

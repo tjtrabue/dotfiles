@@ -36,3 +36,4 @@ if [[ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]]; then
     POWERLINE_BASH_SELECT=1
     . "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh"
 fi
+export PATH="/usr/local/sbin:$PATH"
