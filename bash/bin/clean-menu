@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# This middle-man binary cleans output from the larger menu binary and
+# returns it to the user.
+
+item_to_return=$(menu $@)
+item_to_return="$(echo $item_to_return | cat -v | sed "s:\^\[\[.*::")"
+echo "$item_to_return"
