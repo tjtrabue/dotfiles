@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Trims trailing/beginning white space from a string. Can also trim characters
+# from the beginning or end of the string.
+
+###########################################################################
+#                                                                         #
+#                            Supporting Functions                         #
+#                                                                         #
+###########################################################################
+
+function trim_usage() {
+    echo "Trims beginning/trailing white space from a string. Can also" 1>&2
+    echo "trim characters from the beginning or end of the string." 1>&2
+    echo "USAGE:" 1>&2
+    echo "trim [-b n -e n] FILE" 1>&2
+    echo "OPTIONS:" 1>&2
+    echo "  -b <number of chars to trim> : trims the FIRST n chars from the string" 1>&2
+    echo "  -e <number of chars to trim> : trims the LAST n chars from the string" 1>&2
+}
+
+###########################################################################
+#                                                                         #
+#                                 Variables                               #
+#                                                                         #
+###########################################################################
+
+num_chars_to_trim_from_front=0
+num_chars_to_trim_from_end=0
+
+###########################################################################
+#                                                                         #
+#                               Main Program                              #
+#                                                                         #
+###########################################################################
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    trim_usage
+    exit 1
+fi
+
+while getopts ":b:e:" o; do
+    case "${o}" in
+        b)
+            num_chars_to_trim_from_front="${OPTARG}"
+            ;;
+        e)
+            num_chars_to_trim_from_end="${OPTARG}"
+            ;;
+        *)
+            echoe "Unknown operand"
+            exit 1
+            ;;
+    esac
+done
+
+echo "Number of args: $#" 1>&2
+
