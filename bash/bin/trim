@@ -19,6 +19,12 @@ function trim_usage() {
     echo "  -e <number of chars to trim> : trims the LAST n chars from the string" 1>&2
 }
 
+# Used for printing errors:
+echoe () { echo "${RED}ERROR${reset_color}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+echow () { echo "${YELLOW}WARNING${reset_color}: $@" 1>&2 ; }
+
 ###########################################################################
 #                                                                         #
 #                                 Variables                               #
@@ -27,6 +33,7 @@ function trim_usage() {
 
 num_chars_to_trim_from_front=0
 num_chars_to_trim_from_end=0
+trimmed_string=""
 
 ###########################################################################
 #                                                                         #
@@ -49,10 +56,21 @@ while getopts ":b:e:" o; do
             ;;
         *)
             echoe "Unknown operand"
+            trim_usage
             exit 1
             ;;
     esac
 done
+shift $((OPTIND - 1))
 
-echo "Number of args: $#" 1>&2
+if [[ "$#" -ne 0 ]]; then
+    echo "$1" 1>&2
+    trimmed_string="$(echo "$1" | sed "s/^[ ]*//" | sed "s/[ ]*$//")"
+
+    echo "$trimmed_string"
+else
+    echoe "No string provided"
+    trim_usage
+    exit 2
+fi
 
