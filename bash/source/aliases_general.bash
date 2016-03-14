@@ -8,7 +8,6 @@ else # OS X `ls`
 fi
 
 # Printing aliases:
-alias echo="echo -e"
 alias lsa="ls -aF ${colorflag}"
 alias lsh="ls -aF ${colorflag} | egrep '^\.'"
 
