@@ -24,7 +24,7 @@ alias svar=source\ ~/.vars
 # Source the path file:
 alias spath=source\ ~/.path
 
-# Find files with CLRF line endings
+# Find files with CRLF line endings
 alias dosfiles="find . -not -type d -exec file '{}' ';' | grep CRLF | grep -o --color=never '^.*: ' | sed 's/..$//'"
 
 ###########################################################################
