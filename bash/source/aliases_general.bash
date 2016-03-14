@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+    colorflag="--color"
+else # OS X `ls`
+    colorflag="-G"
+fi
+
 # Printing aliases:
 alias echo="echo -e"
-alias lsa="ls -a"
-alias lsh="ls -a | egrep '^\.'"
+alias lsa="ls -aF ${colorflag}"
+alias lsh="ls -aF ${colorflag} | egrep '^\.'"
 
 # Delete aliases:
 alias rmr="rm -r"
@@ -17,6 +24,9 @@ alias svar=source\ ~/.vars
 
 # Source the path file:
 alias spath=source\ ~/.path
+
+# Find files with CLRF line endings
+alias dosfiles="find . -not -type d -exec file '{}' ';' | grep CRLF | grep -o --color=never '^.*: ' | sed 's/..$//'"
 
 ###########################################################################
 ##                          Aliases taken from                           ##
@@ -40,13 +50,6 @@ alias p="cd ~/projects"
 alias g="git"
 alias h="history"
 alias j="jobs"
-
-# Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-    colorflag="--color"
-else # OS X `ls`
-    colorflag="-G"
-fi
 
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
