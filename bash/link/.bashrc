@@ -1,24 +1,23 @@
 # Where the magic happens.
-export ZSH_DOTFILES_HOME=~/.zsh-dotfiles
+export DOTFILES_HOME=~/.dotfiles
 
 # Add binaries into the path
-PATH=$ZSH_DOTFILES/bin:$PATH
-export PATH
+export PATH=$DOTFILES/bin:$PATH
 
 # Source all files in "source"
 function src() {
-  local file
-  if [[ "$1" ]]; then
-    source "$ZSH_DOTFILES/bash/source/$1.bash"
-  else
-    for file in ~/.{vars,dirs,path}; do
-			source "$file"
-    done
+    local file
+    if [[ "$1" ]]; then
+        source "$DOTFILES_HOME/bash/source/$1.bash"
+    else
+        for file in ~/.{vars,dirs,path}; do
+  			    source "$file"
+        done
 
-    for file in $ZSH_DOTFILES_HOME/bash/source/*; do
-        source "$file"
-    done
-  fi
+        for file in $DOTFILES_HOME/bash/source/*; do
+            source "$file"
+        done
+    fi
 }
 
 # Add tab completion for many Bash commands:
@@ -29,8 +28,9 @@ fi
 src
 
 POWERLINE_HOME=~/"Dropbox/GitHub/GitHub_Repositories/powerline/"
-PATH="$POWERLINE_HOME/scripts:$PATH"
+export PATH="$POWERLINE_HOME/scripts:$PATH"
 if [[ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]]; then
+    echo "Found powerline!" 1>&2
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1
     POWERLINE_BASH_SELECT=1
