@@ -165,7 +165,7 @@ function get_index_of() {
 
 # Prompt user for larger applications to install:
 function install_custom_brew_apps() {
-    local cask_potential_apps=(dropbox, macvim, spotify, sublime-text3, tower, Done)
+    local cask_potential_apps=(dropbox macvim spotify sublime-text3 tower Done)
     local cask_apps_to_install=()
 
     echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
