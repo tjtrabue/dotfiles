@@ -88,6 +88,47 @@ function determine_shell() {
     chsh -s "/bin/$shell_type"
 }
 
+# Returns the index of an array element
+# Syntax: get_index_of array element
+function get_index() {
+    local arr=$1
+    local element=$2
+
+    for i in "${!arr[@]}"; do
+         if [[ "${arr[$i]}" = "${element}" ]]; then
+             echo "${i}";
+         fi
+    done
+}
+
+# Prompt user for larger applications to install:
+function install_optional_brew_apps() {
+    local cask_potential_apps=(dropbox macvim spotify sublime-text3 tower Done)
+    local cask_apps_to_install=()
+
+    echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
+    local response=""
+    while [[ "$response" != "Done" ]]; do
+        if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
+            echo "Apps Selected:" 1>&2
+            echo "${cask_apps_to_install[@]}" 1>&2
+        fi
+
+        echo -e "\nSelect an App to Install:" 1>&2
+        response="$(clean-menu ${cask_potential_apps[@]})"
+        if [[ "$response" != "Done" ]]; then
+            cask_apps_to_install+=("$response")
+            local pos=$(get_index $cask_potential_apps $response)
+            cask_potential_apps=(${cask_potential_apps[@]:0:$pos} ${cask_potential_apps[@]:$(($pos + 1))})
+        fi
+    done
+
+    # Install the selected apps:
+    for app in ${cask_apps_to_install[@]}; do
+        brew cask install "$app"
+    done
+}
+
 # Install depencies and prepare apps:
 function init_step() {
     # Prep the locate database:
@@ -97,6 +138,9 @@ function init_step() {
     echo "Preparing Homebrew..." 1>&2
     "$INIT_DIR/init_homebrew"
     source "$INIT_DIR/brew_apps"
+
+    # Prompt user to install larger apps:
+    install_optional_brew_apps
 
     # Get powerline ready:
     local response=""
@@ -147,47 +191,6 @@ function link_step() {
 
     for f in "$shell_link_dir"/.[a-zA-Z]*; do
         ln -s "$f" "$HOME/$(basename $f)"
-    done
-}
-
-# Returns the index of an array element
-# Syntax: get_index_of array element
-function get_index_of() {
-    local arr=$1
-    local element=$2
-
-    for i in "${!arr[@]}"; do
-         if [[ "${arr[$i]}" = "${element}" ]]; then
-             echo "${i}";
-         fi
-    done
-}
-
-# Prompt user for larger applications to install:
-function install_custom_brew_apps() {
-    local cask_potential_apps=(dropbox macvim spotify sublime-text3 tower Done)
-    local cask_apps_to_install=()
-
-    echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
-    local response=""
-    while [[ "$response" != "Done" ]]; do
-        if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
-            echo "Apps Selected:" 1>&2
-            echo "${cask_apps_to_install[@]}" 1>&2
-        fi
-
-        echo -e "\nSelect App to Install:" 1>&2
-        response="$(clean-menu ${cask_potential_apps[@]})"
-        if [[ "$response" != "Done" ]]; then
-            cask_apps_to_install+=("$response")
-            local pos=$(get_index_of $cask_potential_apps $response)
-            cask_potential_apps=(${cask_potential_apps[@]:0:$pos} ${cask_potential_apps[@]:$(($pos + 1))})
-        fi
-    done
-
-    # Install the selected apps:
-    for app in ${cask_apps_to_install[@]}; do
-        brew cask install "$app"
     done
 }
 
