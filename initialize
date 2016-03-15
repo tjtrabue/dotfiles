@@ -224,14 +224,13 @@ function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                       ##
 ###########################################################################
 
-# # Get environment ready for the installation:
-# prep
+# Get environment ready for the installation:
+prep
 
-# # Get shell install type from the user:
-# determine_shell
+# Get shell install type from the user:
+determine_shell
 
-# # Init, copy, link files:
-# init_step
-# copy_step
-# link_step
-install_optional_brew_apps
+# Init, copy, link files:
+init_step
+copy_step
+link_step
