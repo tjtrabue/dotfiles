@@ -37,6 +37,30 @@ function ssh-gen() {
     curl -u "tjtrabue" --data "{\"title\":\"$key_name\", \"key\":\"$(pbpaste)\"}" "https://api.github.com/user/keys"
 }
 
+###########################################################################
+##                                                                       ##
+##                               Cloning                                 ##
+##                                                                       ##
+###########################################################################
+
+# Clones a repo and all submodules. Prompts user for username/email
+function clone() {
+    if [[ -n "$1" ]]; then
+        echo "Enter username for this project:" 1>&2
+        read -r username
+        echo "Now enter the email address for the project:" 1>&2
+        read -r email
+
+        git clone --recursive "$1"
+        pushd $(basename "$1" | sed 's/\.git$//')
+            git config user.name "$username"
+            git config user.email "$email"
+        popd
+    else
+        echoe "No url entered"
+        return 1
+    fi
+}
 
 ###########################################################################
 #                                                                         #
