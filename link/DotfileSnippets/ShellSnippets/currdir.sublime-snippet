@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-"$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+"\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
     <tabTrigger>currdir</tabTrigger>
