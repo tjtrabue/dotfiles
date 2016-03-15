@@ -27,6 +27,12 @@ alias spath=source\ ~/.path
 # Find files with CRLF line endings
 alias dosfiles="find . -not -type d -exec file '{}' ';' | grep CRLF | grep -o --color=never '^.*: ' | sed 's/..$//'"
 
+# Reload the shell (i.e. invoke as a login shell)
+alias reshell="exec $SHELL -i"
+
+# Reload powerline theme and colorscheme:
+alias pdr="powerline-daemon --replace"
+
 ###########################################################################
 ##                          Aliases taken from                           ##
 ##                        mathiasbynens/dotfiles                         ##
@@ -174,9 +180,3 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
-
-# Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -i"
-
-# Reload powerline theme and colorscheme:
-alias pdr="powerline-daemon --replace"

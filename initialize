@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# This is where all the magic happens! Just run this executable and follow
+# the instructions.
+
+###########################################################################
+##                                                                       ##
+##                              Variables                                ##
+##                                                                       ##
+###########################################################################
+
+DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SHELL_HOME=""
+PATH="$DOTFILES_HOME/bash/bin:$PATH"
+
+
+###########################################################################
+##                                                                       ##
+##                         Supporting Functions                          ##
+##                                                                       ##
+###########################################################################
+
+function link_step() {
+    local link_dir="$DOTFILES_HOME/link"
+    ln -s "$link_dir/"
+    ln -s "$link_dir/powerline"
+    popd
+}
+
+
+###########################################################################
+##                                                                       ##
+##                             Main Program                              ##
+##                                                                       ##
+###########################################################################
+

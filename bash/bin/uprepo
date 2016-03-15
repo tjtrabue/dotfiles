@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 
- function uprepo_usage() {
+###########################################################################
+##                                                                       ##
+##                              Variables                                ##
+##                                                                       ##
+###########################################################################
+
+commit_message=""
+remote_branch="master"
+amend=false
+
+
+###########################################################################
+##                                                                       ##
+##                         Supporting Functions                          ##
+##                                                                       ##
+###########################################################################
+
+function uprepo_usage() {
     echo "Add, commit, and push files to remote repository" 1>&2
     echo "all in one command." 1>&2
     echo "" 1>&2
@@ -13,6 +30,12 @@
     echo "  -a : specifies that the changes should be added to the previous commit" 1>&2
 }
 
+###########################################################################
+##                                                                       ##
+##                             Main Program                              ##
+##                                                                       ##
+###########################################################################
+
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
     uprepo_usage
     exit 0
@@ -24,11 +47,6 @@ if [[ "$?" -ne 0 ]]; then
     echo "Aborting" 1>&2
     exit 1
 fi
-
-# Variables
-commit_message=""
-remote_branch="master"
-amend=false
 
 while getopts ":m:b:a" o; do
     case "${o}" in

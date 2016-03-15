@@ -1,8 +1,8 @@
 # Where the magic happens.
-export DOTFILES_HOME=~/.dotfiles
+export DOTFILES_HOME=~/".dotfiles"
 
 # Add binaries into the path
-export PATH=$DOTFILES/bin:$PATH
+export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 
 # Source all files in "source"
 function src() {
@@ -11,7 +11,7 @@ function src() {
         source "$DOTFILES_HOME/bash/source/$1.bash"
     else
         for file in ~/.{vars,dirs,path}; do
-  			    source "$file"
+  		    source "$file"
         done
 
         for file in $DOTFILES_HOME/bash/source/*; do
@@ -30,7 +30,6 @@ src
 POWERLINE_HOME=~/"Dropbox/GitHub/GitHub_Repositories/powerline/"
 export PATH="$POWERLINE_HOME/scripts:$PATH"
 if [[ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]]; then
-    echo "Found powerline!" 1>&2
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1
     POWERLINE_BASH_SELECT=1
