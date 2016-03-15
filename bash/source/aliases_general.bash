@@ -31,7 +31,7 @@ alias spath=source\ ~/.path
 alias dosfiles="find . -not -type d -exec file '{}' ';' | grep CRLF | grep -o --color=never '^.*: ' | sed 's/..$//'"
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reshell="exec $SHELL -i"
+alias reshell="exec $SHELL -l"
 
 # Reload powerline theme and colorscheme:
 alias pdr="powerline-daemon --replace"
