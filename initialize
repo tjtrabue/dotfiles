@@ -88,7 +88,7 @@ function link_step() {
 
     ln -s "$link_dir/powerline" ~/".config/powerline"
     ln -s "$link_dir/DotfileSnippets" \
-        ~/"Library/Applcation Support/Sublime Text 3/Packages/User/DotfileSnippets"
+        ~/"Library/Application Support/Sublime Text 3/Packages/User/DotfileSnippets"
 
     for f in "$shell_link_dir"/.[a-zA-Z]*; do
         ln -s "$f" ~/"$(basename $f)"
