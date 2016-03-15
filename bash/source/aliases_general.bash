@@ -11,6 +11,9 @@ fi
 alias lsa="ls -aF ${colorflag}"
 alias lsh="ls -aF ${colorflag} | egrep '^\.'"
 
+# Linking aliases:
+alias lns="ln -s"
+
 # Delete aliases:
 alias rmr="rm -r"
 alias rmrf="rm -rf"

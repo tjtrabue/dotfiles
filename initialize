@@ -133,14 +133,15 @@ function copy_step() {
 
 # Link files:
 function link_step() {
-    local link_dir="$DOTFILES_HOME/link"
     local shell_link_dir="$SHELL_HOME/link"
 
     [[ ! -d ~/".config" ]] && mkdir ~/".config"
 
-    ln -s "$link_dir/powerline" "$HOME/.config/powerline"
-    ln -s "$link_dir/DotfileSnippets" \
+    ln -s "$LINK_DIR/powerline" "$HOME/.config/powerline"
+    ln -s "$LINK_DIR/DotfileSnippets" \
         "$HOME/Library/Application Support/Sublime Text 3/Packages/User/DotfileSnippets"
+    ln -s "$LINK_DIR/Preferences.sublime-settings" \
+        "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Prefences.sublime-settings"
 
     for f in "$shell_link_dir"/.[a-zA-Z]*; do
         ln -s "$f" "$HOME/$(basename $f)"
