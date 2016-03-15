@@ -107,6 +107,9 @@ function init_step() {
     if [[ "$response" =~ [Yy] ]]; then
         "$INIT_DIR/init_powerline"
     fi
+
+    # Initialize Vim
+    "$INIT_DIR/init_vim"
 }
 
 # Copy files:

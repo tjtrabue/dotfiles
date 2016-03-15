@@ -1,3 +1,6 @@
+" Use Pathogen
+execute pathogen#infect()
+
 " Use the Solarized Dark theme
 set background=dark
 colorscheme solarized
@@ -43,7 +46,7 @@ set secure
 " Enable line numbers
 set number
 " Enable syntax highlighting
-syntax on
+syntax enable
 " Highlight current line
 set cursorline
 " Make tabs as wide as two spaces
@@ -104,3 +107,7 @@ if has("autocmd")
     " Treat .md files as Markdown
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
+
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
