@@ -53,6 +53,10 @@ function existing_install() {
     fi
 }
 
+function pull_submodules() {
+    echo "" 1>&2
+}
+
 # Ask user for shell type:
 function determine_shell() {
     echo "Which installation would you like?" 1>&2
@@ -94,6 +98,12 @@ function link_step() {
         ln -s "$f" "$HOME/$(basename $f)"
     done
 }
+
+# Used for printing errors:
+echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 
 ###########################################################################
 ##                                                                       ##

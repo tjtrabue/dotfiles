@@ -29,7 +29,7 @@ fi
 
 src
 
-POWERLINE_HOME=~/"Dropbox/GitHub/GitHub_Repositories/powerline/"
+POWERLINE_HOME=~/".dotfiles/vendors/powerline/"
 export PATH="$POWERLINE_HOME/scripts:$PATH"
 if [[ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]]; then
     powerline-daemon -q

@@ -31,10 +31,10 @@ function trim_usage() {
 }
 
 # Used for printing errors:
-echoe () { echo "${RED}ERROR${reset_color}: $@" 1>&2 ; }
+echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-echow () { echo "${YELLOW}WARNING${reset_color}: $@" 1>&2 ; }
+echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 
 
 ###########################################################################
