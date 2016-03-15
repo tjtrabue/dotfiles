@@ -150,9 +150,13 @@ function link_step() {
 
 # Prepare the last bits of the dev environment and reinvoke the login shell:
 function finish() {
-
+    unset COPY_DIR
+    unset LINK_DIR
+    unset INIT_DIR
+    unset VENDORS
     exec $SHELL -i
 }
+trap finish EXIT
 
 # Used for printing errors:
 function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
