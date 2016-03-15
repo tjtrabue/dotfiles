@@ -115,6 +115,7 @@ function install_optional_brew_apps() {
     local cask_apps=(
         alfred
         bartender
+        coda
         dbvisualizer
         dropbox
         flux-beta
