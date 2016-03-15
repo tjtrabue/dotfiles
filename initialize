@@ -7,6 +7,13 @@
 #   1 - User chose to abort installation
 #   2 - .dotfiles dir already exists
 
+# Get permission from admin right at the beginning:
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until the installer has finished:
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+
 ###########################################################################
 ##                                                                       ##
 ##                              Variables                                ##
@@ -23,17 +30,12 @@ SHELL_HOME=""
 # Add bash binaries to PATH for use in the installation:
 export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 
+
 ###########################################################################
 ##                                                                       ##
 ##                         Supporting Functions                          ##
 ##                                                                       ##
 ###########################################################################
-
-# Get permission from admin right at the beginning:
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until the installer has finished:
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Preps the user's environment for the installation:
 function prep() {
@@ -106,12 +108,28 @@ function get_index() {
 
 # Prompt user for larger applications to install:
 function install_optional_brew_apps() {
-    local cask_potential_apps=(dropbox macvim spotify sublime-text3 tower Done)
+    local cask_apps=(
+        alfred
+        bartender
+        dbvisualizer
+        dropbox
+        flux-beta
+        intellij-idea-ce
+        iterm2-beta
+        macvim
+        macpaw-gemini
+        moom
+        spotify
+        sublime-text3
+        tower
+        virtualbox-beta
+        Done
+    )
     local cask_apps_to_install=()
 
     echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
     local response=""
-    while [[ "$response" != "Done" && ${#cask_potential_apps[@]} -gt 1 ]]; do
+    while [[ "$response" != "Done" && ${#cask_apps[@]} -gt 1 ]]; do
         if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
             echo "Apps Selected:" 1>&2
             local app
@@ -121,11 +139,11 @@ function install_optional_brew_apps() {
         fi
 
         echo -e "\nSelect an App to Install:" 1>&2
-        response="$(clean-menu ${cask_potential_apps[@]})"
+        response="$(clean-menu ${cask_apps[@]})"
         if [[ "$response" != "Done" ]]; then
             cask_apps_to_install+=("$response")
-            local pos=$(get_index cask_potential_apps $response)
-            cask_potential_apps=(${cask_potential_apps[@]:0:$pos} ${cask_potential_apps[@]:$(($pos + 1))})
+            local pos=$(get_index cask_apps $response)
+            cask_apps=(${cask_apps[@]:0:$pos} ${cask_apps[@]:$(($pos + 1))})
             echo
         else
             echo
