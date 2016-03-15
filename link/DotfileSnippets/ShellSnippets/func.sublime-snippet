@@ -1,8 +1,8 @@
 <snippet>
     <content><![CDATA[
 # ${1:description}
-${2:func} () {
-    ${3:#content}
+function ${2:func}() {
+    #${3:content}
 }
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->

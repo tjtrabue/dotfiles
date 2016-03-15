@@ -94,13 +94,15 @@ function init_step() {
     "$INIT_DIR/init_locate"
 
     # Make sure that brew is installed and up-to-date:
+    echo "Preparing Homebrew..." 1>&2
     "$INIT_DIR/init_homebrew"
+    source "$INIT_DIR/brew_apps"
 
     # Get powerline ready:
     local response=""
     while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
         echo "Would you like to install powerline and all dependencies?" 1>&2
-        echo "If not, you can always install later." 1>&2
+        echo "If not, you can always install it later." 1>&2
         read -sn 1 response
         response=${response:-y}
     done
@@ -148,15 +150,46 @@ function link_step() {
     done
 }
 
+# Returns the index of an array element
+# Syntax: get_index_of array_name element_name
+function get_index_of() {
+    local arr=$1
+    local element=$2
+
+    for i in "${!arr[@]}"; do
+         if [[ "${arr[$i]}" = "${element}" ]]; then
+             echo "${i}";
+         fi
+    done
+}
+
+# Prompt user for larger applications to install:
+function install_custom_brew_apps() {
+    local cask_potential_apps=(dropbox, macvim, spotify, sublime-text3, tower, Done)
+    local cask_apps_to_install=()
+
+    echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
+    local response=""
+    while [[ "$response" != "Done" ]]; do
+        response="$(clean-menu ${cask_potential_apps[@]})"
+        if [[ "$response" != "Done" ]]; then
+            cask_apps_to_install+=("$response")
+            local index_to_remove=$(get_index_of $cask_potential_apps $response)
+            cask_potential_apps=(${cask_potential_apps[@]:0:$index_to_remove} ${cask_potential_apps[@]:$(($index_to_remove + 1))})
+        fi
+    done
+}
+
 # Prepare the last bits of the dev environment and reinvoke the login shell:
 function finish() {
     unset COPY_DIR
     unset LINK_DIR
     unset INIT_DIR
     unset VENDORS
+
     exec $SHELL -i
 }
-trap finish EXIT
+trap finish EXIT # Make sure that finish() runs whenever the script exits
 
 # Used for printing errors:
 function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }

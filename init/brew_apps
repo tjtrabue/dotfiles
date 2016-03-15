@@ -3,6 +3,12 @@
 brew update
 brew upgrade --all
 
+# Prep brew cask for app installations
+brew tap | grep -o --color=never caskroom/cask
+if [[ "$?" -ne 0 ]]; then
+    brew tap caskroom/cask
+fi
+
 brew install dialog
 
 # Install GNU core utilities (those that come with OS X are outdated).
