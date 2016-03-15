@@ -20,15 +20,19 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 ##                                                                       ##
 ###########################################################################
 
-export DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export COPY_DIR="$DOTFILES_HOME/copy"
-export LINK_DIR="$DOTFILES_HOME/link"
-export INIT_DIR="$DOTFILES_HOME/init"
-export VENDORS="$DOTFILES_HOME/vendors"
-SHELL_HOME=""
+DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COPY_DIR="$DOTFILES_HOME/copy"
+LINK_DIR="$DOTFILES_HOME/link"
+INIT_DIR="$DOTFILES_HOME/init"
+VENDORS="$DOTFILES_HOME/vendors"
 
 # Add bash binaries to PATH for use in the installation:
-export PATH="$DOTFILES_HOME/bash/bin:$PATH"
+PATH="$DOTFILES_HOME/bash/bin:$PATH"
+
+SHELL_HOME=""
+
+export DOTFILES_HOME COPY_DIR LINK_DIR INIT_DIR VENDORS PATH
+
 
 
 ###########################################################################
@@ -165,7 +169,7 @@ function init_step() {
     # Make sure that brew is installed and up-to-date:
     echo "Preparing Homebrew..." 1>&2
     "$INIT_DIR/init_homebrew"
-    source "$INIT_DIR/brew_apps"
+    "$INIT_DIR/brew_apps"
 
     # Prompt user to install larger apps:
     install_optional_brew_apps
@@ -218,7 +222,7 @@ function link_step() {
         "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Prefences.sublime-settings"
 
     for f in "$shell_link_dir"/.[a-zA-Z]*; do
-        ln -s "$f" "$HOME/$(basename $f)"
+        ln -s "$f" "$HOME/$(basename "$f")"
     done
 }
 
