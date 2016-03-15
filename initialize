@@ -13,7 +13,11 @@
 ##                                                                       ##
 ###########################################################################
 
-DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export COPY_DIR="$DOTFILES_HOME/copy"
+export LINK_DIR="$DOTFILES_HOME/link"
+export INIT_DIR="$DOTFILES_HOME/init"
+export VENDORS="$DOTFILES_HOME/vendors"
 SHELL_HOME=""
 
 # Add bash binaries to PATH for use in the installation:
@@ -34,6 +38,8 @@ function prep() {
     if [[ -d ~/".dotfiles" ]]; then
         existing_install
     fi
+
+    pull_submodules
 }
 
 # Prompt user whether or not to overwrite an existing install:
@@ -54,18 +60,10 @@ function existing_install() {
 }
 
 function pull_submodules() {
-    local response=""
-    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
-        echow "Make sure to clone the submodules contained in this repo's vendors"
-        echo "directory. Would you like to pull them now?" 1>&2
-        read -sn 1 response
-    done
-
-    if [[ "$response" =~ [Yy] ]]; then
-        pushd "$DOTFILES_HOME"
-        git submodule update --init --recursive
-        popd
-    fi
+    echo "Ensuring that submodules are cloned..." 1>&2
+    pushd "$DOTFILES_HOME"
+    git submodule update --init --recursive
+    popd
 }
 
 # Ask user for shell type:
@@ -81,6 +79,28 @@ function determine_shell() {
     fi
 
     echo "Ok, you want a ${BLUE}$shell_type${NC} installation" 1>&2
+    chsh -s "/bin/$shell_type"
+}
+
+# Install depencies and prepare apps:
+function init_step() {
+    # Prep the locate database:
+    "$INIT_DIR/init_locate"
+
+    # Make sure that brew is installed:
+    "$INIT_DIR/init_homebrew"
+
+    # Get powerline ready:
+    local response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echo "Would you like to install powerline and all dependencies?" 1>&2
+        echo "If not, you can always install later." 1>&2
+        read -sn 1 response
+        response=${response:-y}
+    done
+    if [[ "$response" =~ [Yy] ]]; then
+        "$INIT_DIR/init_powerline"
+    fi
 }
 
 # Copy files:
@@ -118,6 +138,12 @@ function link_step() {
     done
 }
 
+# Prepare the last bits of the dev environment and reinvoke the login shell:
+function finish() {
+
+    exec $SHELL -i
+}
+
 # Used for printing errors:
 function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -136,6 +162,7 @@ prep
 # Get shell install type from the user:
 determine_shell
 
-# Copy, link files:
+# Init, copy, link files:
+init_step
 copy_step
 link_step

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Install powerline dependencies:
+brew install python
+brew install socat
+brew install libgit2
+brew install automake
+pip install psutil
+pip install mercurial
+pip install cffi
+pip install pycparser
+pip install pygit2
+pip install bzr
+pip install pyuv
+pip install i3-py
+
+# Prep the powerline submodule:
+pip install --user --editable="$VENDORS/powerline"
+ln -s "$VENDORS/powerline/scripts/powerline" "$HOME/bin/powerline"
