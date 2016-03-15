@@ -2,6 +2,10 @@
 
 # This is where all the magic happens! Just run this executable and follow
 # the instructions.
+#
+# Exit codes:
+#   1 - User chose to abort installation
+#   2 - .dotfiles dir already exists
 
 ###########################################################################
 ##                                                                       ##
@@ -12,7 +16,7 @@
 DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SHELL_HOME=""
 PATH="$DOTFILES_HOME/bash/bin:$PATH"
-
+RUN_MENU="$DOTFILES_HOME/bash/bin/clean-menu"
 
 ###########################################################################
 ##                                                                       ##
@@ -20,10 +24,57 @@ PATH="$DOTFILES_HOME/bash/bin:$PATH"
 ##                                                                       ##
 ###########################################################################
 
+# Preps the user's environment for the installation:
+function prep() {
+    # Use custom color aliases:
+    source "$DOTFILES_HOME/bash/source/colors.bash"
+
+    # Ask user to overwrite existing install if applicable:
+    if [[ -d ~/".dotfiles" ]]; then
+        existing_install
+    fi
+}
+
+# Prompt user whether or not to overwrite an existing install:
+function existing_install() {
+    local response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echo "It appears that a .dotfiles directory already exists in your" 1>&2
+        echo "user home. Do you want to overwrite it?" 1>&2
+        read -sn 1 response
+    done
+
+    if [[ "$response" =~ [Yy] ]]; then
+        rm -rf ~/".dotfiles"
+    else
+        echo "Aborting" 1>&2
+        exit 2
+    fi
+}
+
+# Ask user for shell type:
+function determine_shell() {
+    echo "Which installation would you like?" 1>&2
+    local shell_type="$($RUN_MENU "bash" "zsh" "EXIT")"
+
+    if [[ "$shell_type" == "EXIT" ]]; then
+        echo "Aborting" 1>&2
+        exit 1
+    else
+        SHELL_HOME="$DOTFILES_HOME/$shell_type"
+    fi
+
+    echo "Ok, you want a $shell_type installation" 1>&2
+}
+
+# Link files:
 function link_step() {
     local link_dir="$DOTFILES_HOME/link"
-    ln -s "$link_dir/"
-    ln -s "$link_dir/powerline"
+    local shell_link_dir="$SHELL_HOME/link"
+
+    [[ ! -d ~/".config" ]] && mkdir ~/".config"
+
+    ln -s "$link_dir/powerline" ~/".config/powerline"
     popd
 }
 
@@ -34,3 +85,8 @@ function link_step() {
 ##                                                                       ##
 ###########################################################################
 
+# Get environment ready for the installation:
+prep
+
+# Get shell install type from the user:
+determine_shell

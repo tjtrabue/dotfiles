@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Where the magic happens.
 export DOTFILES_HOME=~/".dotfiles"
 
