@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-brew cask install dropbox
-brew cask install macvim
-brew cask install spotify
-brew cask install sublime-text3
-brew cask install tower

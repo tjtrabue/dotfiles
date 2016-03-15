@@ -15,7 +15,7 @@ func () {
 }
 
 # Returns the index of an array element
-# Syntax: get_index_of array_name element_name
+# Syntax: get_index_of array element
 function get_index_of() {
     local arr=$1
     local element=$2

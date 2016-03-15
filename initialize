@@ -151,7 +151,7 @@ function link_step() {
 }
 
 # Returns the index of an array element
-# Syntax: get_index_of array_name element_name
+# Syntax: get_index_of array element
 function get_index_of() {
     local arr=$1
     local element=$2
@@ -171,12 +171,23 @@ function install_custom_brew_apps() {
     echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
     local response=""
     while [[ "$response" != "Done" ]]; do
+        if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
+            echo "Apps Selected:" 1>&2
+            echo "${cask_apps_to_install[@]}" 1>&2
+        fi
+
+        echo -e "\nSelect App to Install:" 1>&2
         response="$(clean-menu ${cask_potential_apps[@]})"
         if [[ "$response" != "Done" ]]; then
             cask_apps_to_install+=("$response")
-            local index_to_remove=$(get_index_of $cask_potential_apps $response)
-            cask_potential_apps=(${cask_potential_apps[@]:0:$index_to_remove} ${cask_potential_apps[@]:$(($index_to_remove + 1))})
+            local pos=$(get_index_of $cask_potential_apps $response)
+            cask_potential_apps=(${cask_potential_apps[@]:0:$pos} ${cask_potential_apps[@]:$(($pos + 1))})
         fi
+    done
+
+    # Install the selected apps:
+    for app in ${cask_apps_to_install[@]}; do
+        brew cask install "$app"
     done
 }
 
