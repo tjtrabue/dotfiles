@@ -114,7 +114,10 @@ function install_optional_brew_apps() {
     while [[ "$response" != "Done" && ${#cask_potential_apps[@]} -gt 1 ]]; do
         if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
             echo "Apps Selected:" 1>&2
-            echo "${cask_apps_to_install[@]}" 1>&2
+            local app
+            for app in "${cask_apps_to_install[@]}"; do
+                echo -e "${BLUE}$app${NC}" 1>&2
+            done
         fi
 
         echo -e "\nSelect an App to Install:" 1>&2
@@ -130,9 +133,9 @@ function install_optional_brew_apps() {
     done
 
     # Install the selected apps:
-    # for app in ${cask_apps_to_install[@]}; do
-    #     brew cask install "$app"
-    # done
+    for app in ${cask_apps_to_install[@]}; do
+        brew cask install "$app"
+    done
 }
 
 # Install depencies and prepare apps:
