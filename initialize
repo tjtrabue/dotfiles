@@ -29,6 +29,12 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 ##                                                                       ##
 ###########################################################################
 
+# Get permission from admin right at the beginning:
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until the installer has finished:
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Preps the user's environment for the installation:
 function prep() {
     # Use custom color aliases:
