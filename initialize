@@ -123,13 +123,13 @@ function install_optional_brew_apps() {
         sublime-text3
         tower
         virtualbox-beta
-        Done
+        DONE
     )
     local cask_apps_to_install=()
 
-    echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
+    echo "Select any additional apps to install from the menu. Select 'DONE' when finished." 1>&2
     local response=""
-    while [[ "$response" != "Done" && ${#cask_apps[@]} -gt 1 ]]; do
+    while [[ "$response" != "DONE" && ${#cask_apps[@]} -gt 1 ]]; do
         if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
             echo "Apps Selected:" 1>&2
             local app
@@ -140,7 +140,7 @@ function install_optional_brew_apps() {
 
         echo -e "\nSelect an App to Install:" 1>&2
         response="$(clean-menu ${cask_apps[@]})"
-        if [[ "$response" != "Done" ]]; then
+        if [[ "$response" != "DONE" ]]; then
             cask_apps_to_install+=("$response")
             local pos=$(get_index cask_apps $response)
             cask_apps=(${cask_apps[@]:0:$pos} ${cask_apps[@]:$(($pos + 1))})
@@ -159,6 +159,7 @@ function install_optional_brew_apps() {
 # Install depencies and prepare apps:
 function init_step() {
     # Prep the locate database:
+    echo "Initializing locate..." 1>&2
     "$INIT_DIR/init_locate"
 
     # Make sure that brew is installed and up-to-date:
@@ -172,7 +173,7 @@ function init_step() {
     # Get powerline ready:
     local response=""
     while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
-        echo "Would you like to install powerline and all dependencies?" 1>&2
+        echo -e "\nWould you like to install powerline and all dependencies?" 1>&2
         echo "If not, you can always install it later." 1>&2
         read -sn 1 response
         response=${response:-y}
