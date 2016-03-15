@@ -1,0 +1,12 @@
+<snippet>
+    <content><![CDATA[
+if [[ "\$1" == "--help" || "\$1" == "-h" ]]; then
+    echo ${1:func}_usage
+    exit 0
+fi
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>help</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>

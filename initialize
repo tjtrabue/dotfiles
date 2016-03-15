@@ -65,7 +65,7 @@ function determine_shell() {
         SHELL_HOME="$DOTFILES_HOME/$shell_type"
     fi
 
-    echo "Ok, you want a $shell_type installation" 1>&2
+    echo "Ok, you want a ${BLUE}$shell_type${NC} installation" 1>&2
 }
 
 # Copy files:
@@ -87,6 +87,8 @@ function link_step() {
     [[ ! -d ~/".config" ]] && mkdir ~/".config"
 
     ln -s "$link_dir/powerline" ~/".config/powerline"
+    ln -s "$link_dir/DotfileSnippets" \
+        ~/"Library/Applcation Support/Sublime Text 3/Packages/User/DotfileSnippets"
 
     for f in "$shell_link_dir"/.[a-zA-Z]*; do
         ln -s "$f" ~/"$(basename $f)"
@@ -105,5 +107,6 @@ prep
 # Get shell install type from the user:
 determine_shell
 
+# Copy, link files:
 copy_step
 link_step
