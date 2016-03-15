@@ -89,16 +89,19 @@ function determine_shell() {
 }
 
 # Returns the index of an array element
-# Syntax: get_index_of array element
+# Syntax: get_index array_name (no $ in front of array name) $element
 function get_index() {
-    local arr=$1
+    local array_name=$1[@]
+    declare -a arr=("${!array_name}")
     local element=$2
 
     for i in "${!arr[@]}"; do
-         if [[ "${arr[$i]}" = "${element}" ]]; then
+         if [[ "${arr[$i]}" == "${element}" ]]; then
              echo "${i}";
+             exit 0
          fi
     done
+    echo -1
 }
 
 # Prompt user for larger applications to install:
@@ -108,7 +111,7 @@ function install_optional_brew_apps() {
 
     echo "Select any additional apps to install from the menu. Select 'Done' when finished." 1>&2
     local response=""
-    while [[ "$response" != "Done" ]]; do
+    while [[ "$response" != "Done" && ${#cask_potential_apps[@]} -gt 1 ]]; do
         if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
             echo "Apps Selected:" 1>&2
             echo "${cask_apps_to_install[@]}" 1>&2
@@ -118,15 +121,18 @@ function install_optional_brew_apps() {
         response="$(clean-menu ${cask_potential_apps[@]})"
         if [[ "$response" != "Done" ]]; then
             cask_apps_to_install+=("$response")
-            local pos=$(get_index $cask_potential_apps $response)
+            local pos=$(get_index cask_potential_apps $response)
             cask_potential_apps=(${cask_potential_apps[@]:0:$pos} ${cask_potential_apps[@]:$(($pos + 1))})
+            echo
+        else
+            echo
         fi
     done
 
     # Install the selected apps:
-    for app in ${cask_apps_to_install[@]}; do
-        brew cask install "$app"
-    done
+    # for app in ${cask_apps_to_install[@]}; do
+    #     brew cask install "$app"
+    # done
 }
 
 # Install depencies and prepare apps:
@@ -201,7 +207,7 @@ function finish() {
     unset INIT_DIR
     unset VENDORS
 
-    exec $SHELL -i
+    exec $SHELL -l
 }
 trap finish EXIT # Make sure that finish() runs whenever the script exits
 
@@ -218,13 +224,14 @@ function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                       ##
 ###########################################################################
 
-# Get environment ready for the installation:
-prep
+# # Get environment ready for the installation:
+# prep
 
-# Get shell install type from the user:
-determine_shell
+# # Get shell install type from the user:
+# determine_shell
 
-# Init, copy, link files:
-init_step
-copy_step
-link_step
+# # Init, copy, link files:
+# init_step
+# copy_step
+# link_step
+install_optional_brew_apps
