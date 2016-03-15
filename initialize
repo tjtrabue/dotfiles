@@ -118,10 +118,11 @@ function install_optional_brew_apps() {
         dbvisualizer
         dropbox
         flux-beta
+        gitkraken
         intellij-idea-ce
         iterm2-beta
-        macvim
         macpaw-gemini
+        macvim
         moom
         spotify
         sublime-text3
