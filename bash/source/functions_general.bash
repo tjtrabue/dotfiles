@@ -15,16 +15,19 @@ func () {
 }
 
 # Returns the index of an array element
-# Syntax: get_index_of array element
-function get_index_of() {
-    local arr=$1
+# Syntax: get_index array_name (no $ in front of array name) $element
+function get_index() {
+    local array_name=$1[@]
+    declare -a arr=("${!array_name}")
     local element=$2
 
     for i in "${!arr[@]}"; do
-         if [[ "${arr[$i]}" = "${element}" ]]; then
+         if [[ "${arr[$i]}" == "${element}" ]]; then
              echo "${i}";
+             exit 0
          fi
     done
+    echo -1
 }
 
 #########################################
