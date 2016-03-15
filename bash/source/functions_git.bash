@@ -126,7 +126,7 @@ function swged() {
             echoe "Unknown operand $1."
             echo "Please enter sublime, atom, or vim as an" 1>&2
             echo "argument to this function." 1>&2
-            return 1
+            return 2
             ;;
     esac
 }
