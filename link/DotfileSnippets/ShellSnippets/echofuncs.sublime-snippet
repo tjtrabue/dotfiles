@@ -1,10 +1,10 @@
 <snippet>
     <content><![CDATA[
 # Used for printing errors:
-echoe () { echo "\${RED}ERROR\${NC}: \$@" 1>&2 ; }
+function echoe () { echo "\${RED}ERROR\${NC}: \$@" 1>&2 ; }
 
 # Used for printing warnings:
-echow () { echo "\${YELLOW}WARNING\${NC}: \$@" 1>&2 ; }
+function echow () { echo "\${YELLOW}WARNING\${NC}: \$@" 1>&2 ; }
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
     <tabTrigger>echofuncs</tabTrigger>

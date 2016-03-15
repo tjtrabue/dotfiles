@@ -54,7 +54,18 @@ function existing_install() {
 }
 
 function pull_submodules() {
-    echo "" 1>&2
+    local response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echow "Make sure to clone the submodules contained in this repo's vendors"
+        echo "directory. Would you like to pull them now?" 1>&2
+        read -sn 1 response
+    done
+
+    if [[ "$response" =~ [Yy] ]]; then
+        pushd "$DOTFILES_HOME"
+        git submodule update --init --recursive
+        popd
+    fi
 }
 
 # Ask user for shell type:
@@ -81,6 +92,14 @@ function copy_step() {
     cp "$copy_dir/.path" ~/.path
     cp "$copy_dir/batcharge.py" ~/"bin/batcharge.py"
     cp "$copy_dir/online-check.sh" ~/"online-check.sh"
+
+    if [[ -d "$DOTFILES_HOME/vendors/oh-my-zsh/themes" ]]; then
+        cp "$copy_dir/tjtrabue.zsh-theme" "$DOTFILES_HOME/vendors/oh-my-zsh/themes/tjtrabue.zsh-theme"
+    else
+        echoe "It appears that the oh-my-zsh submodule hasn't been cloned."
+        echo "Run 'git submodule update --init --recursive' from the .dotfiles" 1>&2
+        echo "directory and copy tjtrabue.zsh-theme to oh-my-zsh/themes" 1>&2
+    fi
 }
 
 # Link files:
@@ -100,10 +119,10 @@ function link_step() {
 }
 
 # Used for printing errors:
-echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
+function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 
 ###########################################################################
 ##                                                                       ##
