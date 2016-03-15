@@ -176,7 +176,7 @@ function init_step() {
     # Prompt user to install larger apps:
     install_optional_brew_apps
 
-    # Get powerline ready:
+    # Get powerline/fonts ready:
     local response=""
     while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
         echo -e "\nWould you like to install powerline and all dependencies?" 1>&2
@@ -186,6 +186,7 @@ function init_step() {
     done
     if [[ "$response" =~ [Yy] ]]; then
         "$INIT_DIR/init_powerline"
+        "$INIT_DIR/init_fonts"
     fi
 
     # Initialize Vim

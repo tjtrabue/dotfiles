@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Install powerline fonts
+"$VENDORS/fonts/install.sh"

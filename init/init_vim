@@ -8,9 +8,9 @@ fi
 
 # Clone vim bundles:
 pushd ~/.vim/bundle
-git init
-git add .
-git commit -m "First commit"
-echo "Make sure to add a remote URL for the bundle repo later" 1>&2
-git submodule add git://github.com/altercation/vim-colors-solarized.git
+    git init
+    git add .
+    git commit -m "First commit"
+    echo "Make sure to add a remote URL for the bundle repo later" 1>&2
+    git submodule add git://github.com/altercation/vim-colors-solarized.git
 popd
