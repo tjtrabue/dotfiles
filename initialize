@@ -87,7 +87,7 @@ function init_step() {
     # Prep the locate database:
     "$INIT_DIR/init_locate"
 
-    # Make sure that brew is installed:
+    # Make sure that brew is installed and up-to-date:
     "$INIT_DIR/init_homebrew"
 
     # Get powerline ready:

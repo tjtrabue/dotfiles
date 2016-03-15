@@ -69,10 +69,19 @@ if [[ "$#" -ne 0 ]]; then
     echo "$1" 1>&2
     trimmed_string="$(echo "$1" | sed "s/^[ ]*//" | sed "s/[ ]*$//")"
 
+    # Optionally trim chars from front of string:
+    if [[ "$num_chars_to_trim_from_front" -gt 0 ]]; then
+        trimmed_string="$(echo "$trimmed_string" | sed "s/^.{$num_chars_to_trim_from_front}//")"
+    fi
+
+    # Optionally trim chars from end of string:
+    if [[ "$num_chars_to_trim_from_end" -gt 0 ]]; then
+        trimmed_string="$(echo "$trimmed_string" | sed "s/.{$num_chars_to_trim_from_end}$//")"
+    fi
+
     echo "$trimmed_string"
 else
     echoe "No string provided"
     trim_usage
     exit 2
 fi
-
