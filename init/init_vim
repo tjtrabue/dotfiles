@@ -18,7 +18,7 @@ pushd ~/.vim/bundle
     answer=""
     vim_bundle_repo="vim-bundles"
     finished=false
-    while [[ finished=false ]]; do
+    while [[ $finished == false ]]; do
         echo "Enter your GitHub username:" 1>&2
         read -r username
         echo "Enter your GitHub password (leave blank to be prompted later):" 1>&2
