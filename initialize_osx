@@ -278,10 +278,10 @@ function link_step() {
 }
 
 # Used for printing errors:
-function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 
 ################################################################################
