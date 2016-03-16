@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+###########################################################################
+##                                                                       ##
+##                              Variables                                ##
+##                                                                       ##
+###########################################################################
+
+branches=( $(git branch --no-color | sed 's/^\*/ /' | sed 's/^[ \t]*//') )
+color_flag=true
+
+###########################################################################
+##                                                                       ##
+##                         Supporting Functions                          ##
+##                                                                       ##
+###########################################################################
+
+# Usage function:
+function swb_usage() {
+    echo "swb provides an interactive menu for switching branches" 1>&2
+    echo "Usage:" 1>&2
+    echo "    swb [ -n ]" 1>&2
+    echo "Options:" 1>&2
+    echo "    -n : turn off all coloration" 1>&2
+}
+
+# Used for printing errors:
+function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
+
+###########################################################################
+##                                                                       ##
+##                             Main Program                              ##
+##                                                                       ##
+###########################################################################
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo swb_usage
+    exit 0
+fi
+
+git rev-parse --is-inside-work-tree >> /dev/null
+if [[ $? -ne 0 ]]; then
+    echoe "Not a git repository"
+    exit 2
+fi
+
+while getopts ":n" o; do
+    case "${o}" in
+        n)
+            color_flag=false
+            ;;
+        *)
+            func_usage
+            exit 1
+            ;;
+    esac
+done
+
+if [[ ${#branches[@]} -gt 1 ]]; then
+    echo "Select a branch to switch to:" 1>&2
+    branch_to_switch=$(clean-menu ${branches[@]})
+    git checkout "$branch_to_switch"
+else
+    if $color_flag; then
+        echo -e "${RED}$(git rev-parse --abbrev-ref HEAD)${NC} is the only branch in this repository" 1>&2
+    else
+        echo -e "$(git rev-parse --abbrev-ref HEAD) is the only branch in this repository" 1>&2
+    fi
+fi

@@ -1,16 +1,9 @@
 <snippet>
     <content><![CDATA[
-while getopts ":${1:flags}" o; do
-    case "\${o}" in
-        *)
-            ${2:func}_usage
-            exit 1
-            ;;
-    esac
-done
+>> /dev/null
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-    <tabTrigger>opts</tabTrigger>
+    <tabTrigger>devnull</tabTrigger>
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.shell</scope>
 </snippet>
