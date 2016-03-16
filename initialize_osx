@@ -36,7 +36,7 @@ export DOTFILES_HOME COPY_DIR LINK_DIR INIT_DIR VENDORS PATH
 
 ###########################################################################
 ##                                                                       ##
-##                         Supporting Functions                          ##
+##                       Prep / Teardown Functions                       ##
 ##                                                                       ##
 ###########################################################################
 
@@ -45,13 +45,26 @@ function prep() {
     # Use custom color aliases:
     source "$DOTFILES_HOME/bash/source/colors.bash"
 
-    # Ask user to overwrite existing install if applicable:
-    if [[ -d ~/".dotfiles" ]]; then
-        existing_install
-    fi
-
     pull_submodules
 }
+
+# Prepare the last bits of the dev environment and reinvoke the login shell:
+function finish() {
+    unset COPY_DIR
+    unset LINK_DIR
+    unset INIT_DIR
+    unset VENDORS
+
+    exec $SHELL -l
+}
+trap finish EXIT # Make sure that finish() runs whenever the script exits
+
+
+###########################################################################
+##                                                                       ##
+##                           Update Functions                            ##
+##                                                                       ##
+###########################################################################
 
 # Prompt user whether or not to overwrite an existing install:
 function existing_install() {
@@ -69,6 +82,13 @@ function existing_install() {
         exit 2
     fi
 }
+
+
+###########################################################################
+##                                                                       ##
+##                       Initial Install Functions                       ##
+##                                                                       ##
+###########################################################################
 
 function pull_submodules() {
     echo "Ensuring that submodules are cloned..." 1>&2
@@ -231,17 +251,6 @@ function link_step() {
     done
 }
 
-# Prepare the last bits of the dev environment and reinvoke the login shell:
-function finish() {
-    unset COPY_DIR
-    unset LINK_DIR
-    unset INIT_DIR
-    unset VENDORS
-
-    exec $SHELL -l
-}
-trap finish EXIT # Make sure that finish() runs whenever the script exits
-
 # Used for printing errors:
 function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -258,13 +267,19 @@ function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 # Get environment ready for the installation:
 prep
 
-# Get shell install type from the user:
-determine_shell
+if [[ -f ~/".dotfiles/.dotfiles_installed" ]]; then
+    existing_install
+else
+    # Get shell install type from the user:
+    determine_shell
 
-# Init, copy, link files:
-init_step
-copy_step
-link_step
+    # Init, copy, link files:
+    init_step
+    copy_step
+    link_step
+
+    touch ~/".dotfiles/.dotfiles_installed"
+fi
 
 # Take care of cleanup:
 finish
