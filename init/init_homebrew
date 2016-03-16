@@ -2,8 +2,11 @@
 
 which -s brew
 if [[ $? != 0 ]] ; then
-    # Install Homebrew
+    # Install Homebrew:
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
+    # Update homebrew and upgrade all installed brew apps if Homebrew is already installed:
     brew update
+    brew upgrade --all
+    brew cleanup
 fi
