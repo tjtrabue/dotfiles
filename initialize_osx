@@ -14,11 +14,11 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 
-###########################################################################
-##                                                                       ##
-##                              Variables                                ##
-##                                                                       ##
-###########################################################################
+################################################################################
+##                                                                            ##
+##                                  Variables                                 ##
+##                                                                            ##
+################################################################################
 
 DOTFILES_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COPY_DIR="$DOTFILES_HOME/copy"
@@ -33,12 +33,31 @@ SHELL_HOME=""
 
 export DOTFILES_HOME COPY_DIR LINK_DIR INIT_DIR VENDORS PATH
 
+cask_apps=(
+        alfred
+        bartender
+        coda
+        dbvisualizer
+        dropbox
+        flux-beta
+        gitkraken
+        intellij-idea-ce
+        iterm2-beta
+        macpaw-gemini
+        macvim
+        moom
+        spotify
+        sublime-text3
+        tower
+        virtualbox-beta
+)
 
-###########################################################################
-##                                                                       ##
-##                       Prep / Teardown Functions                       ##
-##                                                                       ##
-###########################################################################
+
+################################################################################
+##                                                                            ##
+##                          Prep / Teardown Functions                         ##
+##                                                                            ##
+################################################################################
 
 # Preps the user's environment for the installation:
 function prep() {
@@ -60,11 +79,17 @@ function finish() {
 trap finish EXIT # Make sure that finish() runs whenever the script exits
 
 
-###########################################################################
-##                                                                       ##
-##                           Update Functions                            ##
-##                                                                       ##
-###########################################################################
+################################################################################
+##                                                                            ##
+##                              Update Functions                              ##
+##                                                                            ##
+################################################################################
+
+# Returns a list of installed Homebrew Casks:
+function install_new_casks {
+    local installed_casks=( $(brew cask list) )
+    local cask_apps_copy=("${cask_apps[@]}")
+}
 
 # Prompt user whether or not to overwrite an existing install:
 function existing_install() {
@@ -84,11 +109,11 @@ function existing_install() {
 }
 
 
-###########################################################################
-##                                                                       ##
-##                       Initial Install Functions                       ##
-##                                                                       ##
-###########################################################################
+################################################################################
+##                                                                            ##
+##                          Initial Install Functions                         ##
+##                                                                            ##
+################################################################################
 
 function pull_submodules() {
     echo "Ensuring that submodules are cloned..." 1>&2
@@ -131,30 +156,12 @@ function get_index() {
 
 # Prompt user for larger applications to install:
 function install_optional_brew_apps() {
-    local cask_apps=(
-        alfred
-        bartender
-        coda
-        dbvisualizer
-        dropbox
-        flux-beta
-        gitkraken
-        intellij-idea-ce
-        iterm2-beta
-        macpaw-gemini
-        macvim
-        moom
-        spotify
-        sublime-text3
-        tower
-        virtualbox-beta
-        DONE
-    )
+    local cask_apps_copy=("${cask_apps[@]}")
     local cask_apps_to_install=()
 
     echo "Select any additional apps to install from the menu. Select 'DONE' when finished." 1>&2
     local response=""
-    while [[ "$response" != "DONE" && ${#cask_apps[@]} -gt 1 ]]; do
+    while [[ "$response" != "DONE" && ${#cask_apps_copy[@]} -gt 1 ]]; do
         if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
             echo "Apps Selected:" 1>&2
             local app
@@ -164,11 +171,11 @@ function install_optional_brew_apps() {
         fi
 
         echo -e "\nSelect an App to Install:" 1>&2
-        response="$(clean-menu ${cask_apps[@]})"
+        response="$(clean-menu ${cask_apps_copy[@]} DONE)"
         if [[ "$response" != "DONE" ]]; then
             cask_apps_to_install+=("$response")
-            local pos=$(get_index cask_apps $response)
-            cask_apps=(${cask_apps[@]:0:$pos} ${cask_apps[@]:$(($pos + 1))})
+            local pos=$(get_index cask_apps_copy $response)
+            cask_apps_copy=(${cask_apps_copy[@]:0:$pos} ${cask_apps_copy[@]:$(($pos + 1))})
             echo
         else
             echo
@@ -258,11 +265,11 @@ function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
 function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 
 
-###########################################################################
-##                                                                       ##
-##                             Main Program                              ##
-##                                                                       ##
-###########################################################################
+################################################################################
+##                                                                            ##
+##                                Main Program                                ##
+##                                                                            ##
+################################################################################
 
 # Get environment ready for the installation:
 prep
