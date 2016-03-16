@@ -33,6 +33,7 @@ SHELL_HOME=""
 
 export DOTFILES_HOME COPY_DIR LINK_DIR INIT_DIR VENDORS PATH
 
+# The list of all my favorite developer tools to install via Homebrew Cask:
 cask_apps=(
         alfred
         bartender
@@ -85,8 +86,9 @@ trap finish EXIT # Make sure that finish() runs whenever the script exits
 ##                                                                            ##
 ################################################################################
 
-# Allow the user to choose from new casks
+# Prompt the user to install new Homebrew Casks:
 function install_new_casks {
+    echo "Looking for new Homebrew apps..." 1>&2
     local installed_casks=( $(brew cask list) )
     local cask_apps_copy=("${cask_apps[@]}")
 
@@ -104,20 +106,9 @@ function install_new_casks {
 
 # Prompt user whether or not to overwrite an existing install:
 function existing_install() {
+    git pull origin master
     brew cask update
-    local response=""
-    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
-        echow "It appears that a .dotfiles directory already exists in your"
-        echo "user home. Do you want to overwrite it? [y/n]" 1>&2
-        read -sn 1 response
-    done
-
-    if [[ "$response" =~ [Yy] ]]; then
-        rm -rf ~/".dotfiles"
-    else
-        echo "Aborting" 1>&2
-        exit 2
-    fi
+    install_new_casks
 }
 
 
@@ -198,9 +189,9 @@ function install_optional_brew_apps() {
     done
 
     # Install the selected apps:
-    for app in ${cask_apps_to_install[@]}; do
-        brew cask install "$app"
-    done
+    # for app in ${cask_apps_to_install[@]}; do
+    #     brew cask install "$app"
+    # done
 }
 
 # Install depencies and prepare apps:
@@ -286,22 +277,24 @@ function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
-# Get environment ready for the installation:
-prep
+# # Get environment ready for the installation:
+# prep
 
-if [[ -f ~/".dotfiles/.dotfiles_installed" ]]; then
-    existing_install
-else
-    # Get shell install type from the user:
-    determine_shell
+# if [[ -f ~/".dotfiles/.dotfiles_installed" ]]; then
+#     existing_install
+# else
+#     # Get shell install type from the user:
+#     determine_shell
 
-    # Init, copy, link files:
-    init_step
-    copy_step
-    link_step
+#     # Init, copy, link files:
+#     init_step
+#     copy_step
+#     link_step
 
-    touch ~/".dotfiles/.dotfiles_installed"
-fi
+#     touch ~/".dotfiles/.dotfiles_installed"
+# fi
 
-# Take care of cleanup:
-finish
+# # Take care of cleanup:
+# finish
+
+install_new_casks cask_apps
