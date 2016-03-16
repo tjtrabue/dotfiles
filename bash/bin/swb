@@ -6,7 +6,7 @@
 ##                                                                       ##
 ###########################################################################
 
-branches=( $(git branch --no-color | sed 's/^\*/ /' | sed 's/^[ \t]*//') )
+branches=( $(git branch --no-color 2> /dev/null | sed 's/^\*/ /' | sed 's/^[ \t]*//' ) )
 color_flag=true
 
 ###########################################################################
@@ -41,7 +41,7 @@ if [[ "$1" == "--help" || "$1" == "-h" ]]; then
     exit 0
 fi
 
-git rev-parse --is-inside-work-tree >> /dev/null
+git rev-parse --is-inside-work-tree &> /dev/null
 if [[ $? -ne 0 ]]; then
     echoe "Not a git repository"
     exit 2
