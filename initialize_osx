@@ -85,14 +85,26 @@ trap finish EXIT # Make sure that finish() runs whenever the script exits
 ##                                                                            ##
 ################################################################################
 
-# Returns a list of installed Homebrew Casks:
+# Allow the user to choose from new casks
 function install_new_casks {
     local installed_casks=( $(brew cask list) )
     local cask_apps_copy=("${cask_apps[@]}")
+
+    for c in ${installed_casks[@]}; do
+        local pos=$(get_index installed_casks $c)
+        if [[ "$pos" -ge 0 ]]; then
+            cask_apps_copy=(${cask_apps_copy[@]:0:$pos} ${cask_apps_copy[@]:$(($pos + 1))})
+        fi
+    done
+
+    if [[ ${#cask_apps_copy[@]} -gt 0 ]]; then
+        install_optional_brew_apps cask_apps_copy
+    fi
 }
 
 # Prompt user whether or not to overwrite an existing install:
 function existing_install() {
+    brew cask update
     local response=""
     while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
         echow "It appears that a .dotfiles directory already exists in your"
@@ -155,13 +167,16 @@ function get_index() {
 }
 
 # Prompt user for larger applications to install:
+# Syntax:
+#   install_optional_brew_apps array_name (no '$' in front of the array name)
 function install_optional_brew_apps() {
-    local cask_apps_copy=("${cask_apps[@]}")
+    local arg_array=$1[@]
+    declare -a arg_array_copy=("${!arg_array}")
     local cask_apps_to_install=()
 
     echo "Select any additional apps to install from the menu. Select 'DONE' when finished." 1>&2
     local response=""
-    while [[ "$response" != "DONE" && ${#cask_apps_copy[@]} -gt 1 ]]; do
+    while [[ "$response" != "DONE" && ${#arg_array_copy[@]} -gt 1 ]]; do
         if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
             echo "Apps Selected:" 1>&2
             local app
@@ -171,11 +186,11 @@ function install_optional_brew_apps() {
         fi
 
         echo -e "\nSelect an App to Install:" 1>&2
-        response="$(clean-menu ${cask_apps_copy[@]} DONE)"
+        response="$(clean-menu ${arg_array_copy[@]} DONE)"
         if [[ "$response" != "DONE" ]]; then
             cask_apps_to_install+=("$response")
-            local pos=$(get_index cask_apps_copy $response)
-            cask_apps_copy=(${cask_apps_copy[@]:0:$pos} ${cask_apps_copy[@]:$(($pos + 1))})
+            local pos=$(get_index arg_array_copy $response)
+            arg_array_copy=(${arg_array_copy[@]:0:$pos} ${arg_array_copy[@]:$(($pos + 1))})
             echo
         else
             echo
@@ -200,7 +215,7 @@ function init_step() {
     "$INIT_DIR/brew_apps"
 
     # Prompt user to install larger apps:
-    install_optional_brew_apps
+    install_optional_brew_apps cask_apps
 
     # Get powerline/fonts ready:
     local response=""
