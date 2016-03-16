@@ -34,7 +34,6 @@ SHELL_HOME=""
 export DOTFILES_HOME COPY_DIR LINK_DIR INIT_DIR VENDORS PATH
 
 
-
 ###########################################################################
 ##                                                                       ##
 ##                         Supporting Functions                          ##
@@ -58,8 +57,8 @@ function prep() {
 function existing_install() {
     local response=""
     while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
-        echo "It appears that a .dotfiles directory already exists in your" 1>&2
-        echo "user home. Do you want to overwrite it?" 1>&2
+        echow "It appears that a .dotfiles directory already exists in your"
+        echo "user home. Do you want to overwrite it? [y/n]" 1>&2
         read -sn 1 response
     done
 
@@ -74,7 +73,7 @@ function existing_install() {
 function pull_submodules() {
     echo "Ensuring that submodules are cloned..." 1>&2
     pushd "$DOTFILES_HOME"
-    git submodule update --init --recursive
+        git submodule update --init --recursive
     popd
 }
 
@@ -215,6 +214,9 @@ function copy_step() {
 # Link files:
 function link_step() {
     local shell_link_dir="$SHELL_HOME/link"
+
+    # Link the repo as a whole:
+    ln -s "$DOTFILES_HOME" "$HOME/.dotfiles"
 
     [[ ! -d ~/".config" ]] && mkdir ~/".config"
 
