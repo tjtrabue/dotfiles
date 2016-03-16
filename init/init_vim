@@ -21,8 +21,8 @@ pushd ~/.vim/bundle
     while [[ finished=false ]]; do
         echo "Enter your GitHub username:" 1>&2
         read -r username
-        echo "Enter your GitHub password:" 1>&2
-        read -r password
+        echo "Enter your GitHub password (leave blank to be prompted later):" 1>&2
+        read -rs password
         echo "You entered:" 1>&2
         echo -e "    Username: ${BLUE}$username${NC}" 1>&2
         echo -e "    Password: ${BLUE}$password${NC}" 1>&2
@@ -34,17 +34,23 @@ pushd ~/.vim/bundle
         fi
     done
 
-    response_three=""
-    while [[ ! $response_three =~ [Yy] && ! $response_three =~ [Nn] ]]; do
-        echo "Use the default name 'vim-bundles' for the bundle repository? [y/n]" 1>&2
-        read -sn 1 response_three
+    repo_name_answer=""
+    while [[ ! $repo_name_answer =~ [Yy] && ! $repo_name_answer =~ [Nn] ]]; do
+        echo "Use the default name 'vim-bundles' for the bundle repository? [y/n] (default: y)" 1>&2
+        read -sn 1 repo_name_answer
+        repo_name_answer=${repo_name_answer:-y}
     done
-    if [[ "$response_three" =~ [Nn] ]]; then
+    if [[ "$repo_name_answer" =~ [Nn] ]]; then
         echo "Enter the name for the vim bundle repository:" 1>&2
         read -r vim_bundle_repo
     fi
 
-    curl -u "$username":"$password" "https://api.github.com/user/repos" -d "{\"name\":\"$vim_bundle_repo\"}"
+    # Create remote repository on GitHub
+    if [[ "$password" != "" ]]; then
+        curl -u "$username":"$password" "https://api.github.com/user/repos" -d "{\"name\":\"$vim_bundle_repo\"}" >> /dev/null
+    else
+        curl -u "$username" "https://api.github.com/user/repos" -d "{\"name\":\"$vim_bundle_repo\"}" >> /dev/null
+    fi
 
     # Set the remote URL for the vim-bundles repo:
     git remote set-url origin "git@github.com:$username/vim-bundles.git"
