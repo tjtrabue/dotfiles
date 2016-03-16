@@ -7,7 +7,7 @@ if [[ ! -f ~/.vim/autoload/pathogen.vim ]]; then
 fi
 
 # Clone vim bundles:
-#   Solarized, Fugitive, NERD TREE, Syntastic, Surround
+#   Solarized, Fugitive, NERD TREE, Syntastic, Surround, CTRLP, NERD Commenter
 pushd ~/.vim/bundle
     git init
     git add .
@@ -27,6 +27,9 @@ pushd ~/.vim/bundle
         fi
     done
 
+    # Set the remote URL for the vim-bundles repo:
+    git remote set-url origin "git@github.com:$response_one/vim-bundles.git"
+
     git submodule add git://github.com/altercation/vim-colors-solarized.git
     git submodule add git://github.com/tpope/vim-fugitive.git
     vim -u NONE -c "helptags vim-fugitive/doc" -c q
@@ -35,4 +38,11 @@ pushd ~/.vim/bundle
     git submodule add git://github.com/tpope/vim-surround.git
     git submodule add git://github.com/kien/ctrlp.vim.git
     git submodule add git://github.com/scrooloose/nerdcommenter.git
+    git submodule add git://github.com/airblade/vim-gitgutter.git
+    git submodule add git://github.com/pangloss/vim-javascript.git
+    git submodule add git://github.com/tpope/vim-rails.git
+    git submodule add git://github.com/tpope/vim-bundler.git
+    git submodule add git://github.com/mattn/emmet-vim.git
+    git submodule add git://github.com/godlygeek/tabular.git
+    git submodule add git://github.com:ervandew/supertab.git
 popd
