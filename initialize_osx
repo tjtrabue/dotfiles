@@ -142,7 +142,8 @@ function determine_shell() {
 }
 
 # Returns the index of an array element
-# Syntax: get_index array_name (no $ in front of array name) $element
+# Syntax:
+#   get_index array_name (no $ in front of array_name) $element
 function get_index() {
     local array_name=$1[@]
     declare -a arr=("${!array_name}")
@@ -155,6 +156,21 @@ function get_index() {
          fi
     done
     echo -1
+}
+
+# Removes a specified element from an array. If more than one of the same
+# element exist in the array, it removes the first occurance.
+#
+# Syntax:
+#   remove_element array_name (no $ in front of array_name) $element
+function remove_element() {
+    local array_name=$1[@]
+    declare -a arr=("${!array_name}")
+    local element=$2
+    local pos=$(get_index arr $element)
+    if [[ "$pos" -ge 0 ]]; then
+        arr=(${arr[@]:0:$pos} ${arr[@]:$(($pos + 1))})
+    fi
 }
 
 # Prompt user for larger applications to install:
