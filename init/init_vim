@@ -13,22 +13,41 @@ pushd ~/.vim/bundle
     git add .
     git commit -m "First commit"
 
-    response_one=""
-    response_two=""
+    username=""
+    password=""
+    answer=""
+    vim_bundle_repo="vim-bundles"
     finished=false
     while [[ finished=false ]]; do
         echo "Enter your GitHub username:" 1>&2
-        read -r response_one
-        echo "You entered $response_one. Is this correct? [y/n]" 1>&2
-        read -sn 1 response_two
-        response_two=${response_two:-y}
-        if [[ "$response_tw0" =~ [Yy] ]]; then
+        read -r username
+        echo "Enter your GitHub password:" 1>&2
+        read -r password
+        echo "You entered:" 1>&2
+        echo -e "    Username: ${BLUE}$username${NC}" 1>&2
+        echo -e "    Password: ${BLUE}$password${NC}" 1>&2
+        echo "Is this correct? [y/n]" 1>&2
+        read -sn 1 answer
+        answer=${answer:-y}
+        if [[ "$answer" =~ [Yy] ]]; then
             finished=true
         fi
     done
 
+    response_three=""
+    while [[ ! $response_three =~ [Yy] && ! $response_three =~ [Nn] ]]; do
+        echo "Use the default name 'vim-bundles' for the bundle repository? [y/n]" 1>&2
+        read -sn 1 response_three
+    done
+    if [[ "$response_three" =~ [Nn] ]]; then
+        echo "Enter the name for the vim bundle repository:" 1>&2
+        read -r vim_bundle_repo
+    fi
+
+    curl -u "$username":"$password" "https://api.github.com/user/repos" -d "{\"name\":\"$vim_bundle_repo\"}"
+
     # Set the remote URL for the vim-bundles repo:
-    git remote set-url origin "git@github.com:$response_one/vim-bundles.git"
+    git remote set-url origin "git@github.com:$username/vim-bundles.git"
 
     git submodule add git://github.com/altercation/vim-colors-solarized.git
     git submodule add git://github.com/tpope/vim-fugitive.git
