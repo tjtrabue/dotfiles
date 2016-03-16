@@ -161,36 +161,49 @@ function get_index() {
 # Syntax:
 #   install_optional_brew_apps array_name (no '$' in front of the array name)
 function install_optional_brew_apps() {
-    local arg_array=$1[@]
-    declare -a arg_array_copy=("${!arg_array}")
-    local cask_apps_to_install=()
+    local function_loop_control=false
+    while ! $function_loop_control; do
+        local arg_array=$1[@]
+        declare -a arg_array_copy=("${!arg_array}")
+        local cask_apps_to_install=()
 
-    echo "Select any additional apps to install from the menu. Select 'DONE' when finished." 1>&2
-    local response=""
-    while [[ "$response" != "DONE" && ${#arg_array_copy[@]} -gt 1 ]]; do
-        if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
-            echo "Apps Selected:" 1>&2
-            local app
-            for app in "${cask_apps_to_install[@]}"; do
-                echo -e "${BLUE}$app${NC}" 1>&2
+        echo "Select any additional apps to install from the menu. Select 'DONE' when finished." 1>&2
+        local response=""
+        while [[ "$response" != "DONE" && ${#arg_array_copy[@]} -gt 1 ]]; do
+            if [[ ${#cask_apps_to_install[@]} -gt 0 ]]; then
+                echo "Apps Selected:" 1>&2
+                local app
+                for app in "${cask_apps_to_install[@]}"; do
+                    echo -e "${BLUE}$app${NC}" 1>&2
+                done
+            fi
+
+            echo -e "\nSelect an App to Install:" 1>&2
+            response="$(clean-menu ${arg_array_copy[@]} DONE)"
+            if [[ "$response" != "DONE" ]]; then
+                cask_apps_to_install+=("$response")
+                local pos=$(get_index arg_array_copy $response)
+                arg_array_copy=(${arg_array_copy[@]:0:$pos} ${arg_array_copy[@]:$(($pos + 1))})
+                echo
+            else
+                echo
+            fi
+        done
+
+        response=""
+        while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+            echo "These are the apps you've selected to install:" 1>&2
+            echo "Is this correct? [y/n]" 1>&2
+            read -sn 1 response
+        done
+        if [[ "$response" =~ [Yy] ]]; then
+            # Install the selected apps:
+            for app in ${cask_apps_to_install[@]}; do
+                brew cask install "$app"
             done
-        fi
 
-        echo -e "\nSelect an App to Install:" 1>&2
-        response="$(clean-menu ${arg_array_copy[@]} DONE)"
-        if [[ "$response" != "DONE" ]]; then
-            cask_apps_to_install+=("$response")
-            local pos=$(get_index arg_array_copy $response)
-            arg_array_copy=(${arg_array_copy[@]:0:$pos} ${arg_array_copy[@]:$(($pos + 1))})
-            echo
-        else
-            echo
+            function_loop_control=true
         fi
-    done
-
-    # Install the selected apps:
-    for app in ${cask_apps_to_install[@]}; do
-        brew cask install "$app"
     done
 }
 
