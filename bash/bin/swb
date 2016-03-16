@@ -25,10 +25,10 @@ function swb_usage() {
 }
 
 # Used for printing errors:
-function echoe () { echo "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-function echow () { echo "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
+function echow () { echo -e "${YELLOW}WARNING${NC}: $@" 1>&2 ; }
 
 ###########################################################################
 ##                                                                       ##
@@ -67,6 +67,6 @@ else
     if $color_flag; then
         echo -e "${RED}$(git rev-parse --abbrev-ref HEAD)${NC} is the only branch in this repository" 1>&2
     else
-        echo -e "$(git rev-parse --abbrev-ref HEAD) is the only branch in this repository" 1>&2
+        echo "$(git rev-parse --abbrev-ref HEAD) is the only branch in this repository" 1>&2
     fi
 fi

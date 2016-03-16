@@ -158,10 +158,10 @@ atp () {
 #########################################
 
 # Used for printing errors:
-echoe () { echo "${RED}ERROR${reset_color}: $@" 1>&2 ; }
+echoe () { echo -e "${RED}ERROR${reset_color}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-echow () { echo "${YELLOW}WARNING${reset_color}: $@" 1>&2 ; }
+echow () { echo -e "${YELLOW}WARNING${reset_color}: $@" 1>&2 ; }
 
 # Prints useful network information regarding open connections.
 netinfo () {

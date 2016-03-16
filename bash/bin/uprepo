@@ -30,6 +30,12 @@ function uprepo_usage() {
     echo "  -a : specifies that the changes should be added to the previous commit" 1>&2
 }
 
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
 ###########################################################################
 ##                                                                       ##
 ##                             Main Program                              ##
@@ -43,7 +49,7 @@ fi
 
 git rev-parse --is-inside-work-tree >> /dev/null
 if [[ "$?" -ne 0 ]]; then
-    echo "Not a git repository" 1>&2
+    echoe "Not a git repository"
     echo "Aborting" 1>&2
     exit 1
 fi
@@ -75,7 +81,7 @@ done
 # Make sure there are files staged for commit. If not, ask user whether or
 # not to add all changed files to the commit:
 if [[ $(git diff --cached --numstat | wc -l | sed -e "s/[ \t]//g") -eq 0 ]]; then
-    echo "No files staged for commit." 1>&2
+    echow "No files staged for commit."
     response=""
     while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
         echo "Add all modified files in repo to commit? [y/n]" 1>&2
