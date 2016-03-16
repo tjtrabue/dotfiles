@@ -193,6 +193,9 @@ function install_optional_brew_apps() {
         response=""
         while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
             echo "These are the apps you've selected to install:" 1>&2
+            for app in "${cask_apps_to_install[@]}"; do
+                echo -e "${BLUE}$app${NC}" 1>&2
+            done
             echo "Is this correct? [y/n]" 1>&2
             read -sn 1 response
         done
@@ -201,7 +204,6 @@ function install_optional_brew_apps() {
             for app in ${cask_apps_to_install[@]}; do
                 brew cask install "$app"
             done
-
             function_loop_control=true
         fi
     done
