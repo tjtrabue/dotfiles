@@ -87,7 +87,7 @@ trap finish EXIT # Make sure that finish() runs whenever the script exits
 ################################################################################
 
 # Prompt the user to install new Homebrew Casks:
-function install_new_casks {
+function install_new_casks() {
     echo "Looking for new Homebrew apps..." 1>&2
     local installed_casks=( $(dir -1 /opt/homebrew-cask/Caskroom) )
     local cask_apps_copy=("${cask_apps[@]}")
