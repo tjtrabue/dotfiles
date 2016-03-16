@@ -1,10 +1,10 @@
 <snippet>
     <content><![CDATA[
-response=""
-while [[ ! \$response =~ [Yy] && ! \$response =~ [Nn] ]]; do
-    echo "${1:message}? [y/n]" 1>&2
-    read -sn 1 response
-    response=\${response:-n}
+${1:response}=""
+while [[ ! \$${1:response} =~ [Yy] && ! \$${1:response} =~ [Nn] ]]; do
+    echo "${2:message}? [y/n]" 1>&2
+    read -sn 1 ${1:response}
+    ${1:response}=\${${1:response}:-n}
 done
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->

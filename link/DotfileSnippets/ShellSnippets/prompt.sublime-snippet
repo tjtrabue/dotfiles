@@ -1,9 +1,9 @@
 <snippet>
     <content><![CDATA[
-response=""
-while [[ \$response == "" ]]; do
-    echo "${1:message}" 1>&2
-    read -r response
+${1:response}=""
+while [[ \$${1:response} == "" ]]; do
+    echo "${2:message}" 1>&2
+    read -r ${1:response}
 done
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
