@@ -198,8 +198,7 @@ function install_optional_brew_apps() {
             response="$(clean-menu ${arg_array_copy[@]} DONE)"
             if [[ "$response" != "DONE" ]]; then
                 cask_apps_to_install+=("$response")
-                local pos=$(get_index arg_array_copy $response)
-                arg_array_copy=(${arg_array_copy[@]:0:$pos} ${arg_array_copy[@]:$(($pos + 1))})
+                remove_element arg_array_copy "$response"
                 echo
             else
                 echo
