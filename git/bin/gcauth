@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Changes the author information (name and email) for a list of commits
+# specified by the user.
+#
+# IMPORTANT: This is untested as of yet! It is a dangerous, screwy, horrible
+# binary that could do terrible things to your git repository. Please, for the
+# love of Pete make sure you read through the whole binary before you use it,
+# if you must. I intend to flesh it out and test it thoroughly soon, but for
+# now just know that it's very dangerous.
+
 ################################################################################
 ##                                                                            ##
 ##                                  Variables                                 ##
@@ -79,27 +88,38 @@ function finalize_and_push() {
         echo "Ready to push? [y/n]" 1>&2
         read -sn 1 response
     done
-    if [[ "$response" =~ [yy] ]]; then
+    if [[ "$response" =~ [Yy] ]]; then
         git push -f
     else
         echo "Aborting" 1>&2
-        exit 2
+        exit 3
     fi
 }
 
 # Actually does the magic of changing the desired commits with the new
 # user-supplied information:
 function change_commits() {
-    echo "Amending commits..." 1>&2
-    for com_num in ${commits_to_amend[@]}; do
-        local new_commit_number="$(git log -1 --no-color | grep --color=never "^commit" | sed "s/^commit //")"
-        git checkout "$com_num"
-        git commit --amend --author "$user_name <$user_email>"
-        git replace "$com_num" "$new_commit_number"
-        git filter-branch -- --all
-        git replace -d "$com_num"
-        finalize_and_push
+    local response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echo "Are you sure you want to amend these commits? [y/n]" 1>&2
+        read -sn 1 response
     done
+
+    if [[ "$response" =~ [Yy] ]]; then
+        echo "Amending commits..." 1>&2
+        for com_num in ${commits_to_amend[@]}; do
+            local new_commit_number="$(git log -1 --no-color | grep --color=never "^commit" | sed "s/^commit //")"
+            git checkout "$com_num"
+            git commit --amend --author "$user_name <$user_email>"
+            git replace "$com_num" "$new_commit_number"
+            git filter-branch -- --all
+            git replace -d "$com_num"
+            finalize_and_push
+        done
+    else
+        echo "Aborting" 1>&2
+        exit 2
+    fi
 }
 
 
@@ -118,7 +138,9 @@ echo "your username and email." 1>&2
 get_and_set_user_info
 
 echo "Starting with HEAD at index 0, what are the indecies of the commits you want" 1>&2
-echo "to adjust? Type 'done' when finshsed." 1>&2
+echo "to adjust?" 1>&2
+echo "Type 'done' when finshsed" 1>&2
+echo "Type 'info' to see a list of commit messages with their corresponding indecies" 1>&2
 get_commit_indecies
 
 for entry in ${commits_to_amend[@]}; do
