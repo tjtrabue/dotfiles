@@ -6,10 +6,13 @@
 ##                                                                            ##
 ################################################################################
 
-done_entering_commit_indecies=false
+user_name=""
+user_email=""
+
 commit_indecies_to_amend=()
 commits_to_amend=()
 commit_arr=()
+
 
 ################################################################################
 ##                                                                            ##
@@ -25,6 +28,50 @@ function exit_if_not_git_repo() {
     fi
 }
 
+# Prompts user for their git username and email, and then changes their
+# gitconfig accordingly:
+function get_and_set_user_info() {
+    echo -n "Enter username: " 1>&2
+    read -r user_name
+
+    echo -n "Enter email: " 1>&2
+    read -r user_email
+
+    git config user.name "$user_name"
+    git config user.email "$user_email"
+}
+
+# Prompts user for indecies of commits they want amend, and builds an array
+# of commit IDs for those commits:
+function get_commit_indecies() {
+    local done_entering_commit_indecies=false
+    local response=""
+    while ! $done_entering_commit_indecies; do
+        if [[ ${#commit_indecies_to_amend[@]} -gt 0 ]]; then
+            echo "Indecies entered:" 1>&2
+            for i in ${commit_indecies_to_amend[@]}; do
+                echo -e "${BLUE}$i${NC}"
+            done
+        fi
+
+        echo -n "Enter commit index: " 1>&2
+        read -r response
+        if [[ "$response" =~ [0-9]+ ]]; then
+            commit_indecies_to_amend+=("$response")
+        elif [[ "$response" =~ [Dd][Oo][Nn][Ee] ]]; then
+            done_entering_commit_indecies=true
+        fi
+    done
+
+    # Add selected commits to array for amending:
+    for i in ${commit_indecies_to_amend[@]}; do
+        if [[ "$i" -le ${#commit_arr[@]} ]]; then
+            commits_to_amend+=("${commit_arr[$i]}")
+        fi
+    done
+}
+
+
 ################################################################################
 ##                                                                            ##
 ##                                Main Program                                ##
@@ -33,35 +80,17 @@ function exit_if_not_git_repo() {
 
 # Make sure that the working directory is a git repo:
 exit_if_not_git_repo
-
 commit_arr=( $(git log --no-color | grep --color=never "^commit" | sed "s/^commit //") )
+
+echo "Ugh, ok. Time to rewrite some git history. Ok champ, let's start by getting" 1>&2
+echo "your username and email." 1>&2
+get_and_set_user_info
 
 echo "Starting with HEAD at index 0, what are the indecies of the commits you want" 1>&2
 echo "to adjust? Type 'done' when finshsed." 1>&2
-response=""
-while ! $done_entering_commit_indecies; do
-    if [[ ${#commit_indecies_to_amend[@]} -gt 0 ]]; then
-        echo "Indecies entered:" 1>&2
-        for i in ${commit_indecies_to_amend[@]}; do
-            echo -e "${BLUE}$i${NC}"
-        done
-    fi
-
-    read -r response
-    if [[ "$response" =~ [0-9]+ ]]; then
-        commit_indecies_to_amend+=("$response")
-    elif [[ "$response" =~ [Dd][Oo][Nn][Ee] ]]; then
-        done_entering_commit_indecies=true
-    fi
-done
-
-# Add selected commits to array for amending:
-for i in ${commit_indecies_to_amend[@]}; do
-    if [[ "$i" -le ${#commit_arr[@]} ]]; then
-        commits_to_amend+=("${commit_arr[$i]}")
-    fi
-done
+get_commit_indecies
 
 for entry in ${commits_to_amend[@]}; do
     echo "Entry: $entry" 1>&2
+    git checkout "$entry"
 done
