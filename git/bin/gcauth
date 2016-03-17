@@ -69,6 +69,8 @@ function get_commit_indecies() {
             commit_indecies_to_amend+=("$response")
         elif [[ "$response" =~ [Dd][Oo][Nn][Ee] ]]; then
             done_entering_commit_indecies=true
+        elif [[ "$response" =~ [Ii][Nn][Ff][Oo] ]]; then
+            show_commit_info
         fi
     done
 
@@ -122,6 +124,17 @@ function change_commits() {
     fi
 }
 
+# Displays a list of past commit messages along with their corresponding
+# indecies:
+function show_commit_info() {
+    local message_arr=( "$(git log --pretty=oneline --abbrev-commit --no-color -15 | grep -o --color=never " .*")" )
+    local ind=0
+    local spacer=10 # The amount of space between an index and its message
+    for msg in ${message_arr[@]}; do
+        printf "%-${spacer}%s%s" "$ind" "$msg"
+        ((ind+=1))
+    done
+}
 
 ################################################################################
 ##                                                                            ##
