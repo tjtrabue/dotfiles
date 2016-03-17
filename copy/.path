@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-PATH="$PATH:$DOTFILES_HOME/git/bin"
-PATH="$PATH:$DOTFILES_HOME/$(basename "$SHELL")/bin"
+export PATH="$PATH:$DOTFILES_HOME/git/bin"
+export PATH="$PATH:$DOTFILES_HOME/$(basename "$SHELL")/bin"
