@@ -71,6 +71,37 @@ function get_commit_indecies() {
     done
 }
 
+# Finalizes the changes made to the commits and pushes them:
+function finalize_and_push() {
+    git log
+    local response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echo "Ready to push? [y/n]" 1>&2
+        read -sn 1 response
+    done
+    if [[ "$response" =~ [yy] ]]; then
+        git push -f
+    else
+        echo "Aborting" 1>&2
+        exit 2
+    fi
+}
+
+# Actually does the magic of changing the desired commits with the new
+# user-supplied information:
+function change_commits() {
+    echo "Amending commits..." 1>&2
+    for com_num in ${commits_to_amend[@]}; do
+        local new_commit_number="$(git log -1 --no-color | grep --color=never "^commit" | sed "s/^commit //")"
+        git checkout "$com_num"
+        git commit --amend --author "$user_name <$user_email>"
+        git replace "$com_num" "$new_commit_number"
+        git filter-branch -- --all
+        git replace -d "$com_num"
+        finalize_and_push
+    done
+}
+
 
 ################################################################################
 ##                                                                            ##
@@ -92,5 +123,6 @@ get_commit_indecies
 
 for entry in ${commits_to_amend[@]}; do
     echo "Entry: $entry" 1>&2
-    git checkout "$entry"
 done
+
+change_commits
