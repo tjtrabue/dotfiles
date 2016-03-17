@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+################################################################################
+##                                                                            ##
+##                                  Variables                                 ##
+##                                                                            ##
+################################################################################
+
+done_entering_commit_indecies=false
+commit_indecies_to_amend=()
+commits_to_amend=()
+commit_arr=()
+
+################################################################################
+##                                                                            ##
+##                           Supporting Functions                             ##
+##                                                                            ##
+################################################################################
+
+# Checks whether or not the user is in a git repo, and exits if not:
+function exit_if_not_git_repo() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+    if [[ "$?" -ne 0 ]]; then
+        exit 1
+    fi
+}
+
+################################################################################
+##                                                                            ##
+##                                Main Program                                ##
+##                                                                            ##
+################################################################################
+
+# Make sure that the working directory is a git repo:
+exit_if_not_git_repo
+
+commit_arr=( $(git log --no-color | grep --color=never "^commit" | sed "s/^commit //") )
+
+echo "Starting with HEAD at index 0, what are the indecies of the commits you want" 1>&2
+echo "to adjust? Type 'done' when finshsed." 1>&2
+response=""
+while ! $done_entering_commit_indecies; do
+    if [[ ${#commit_indecies_to_amend[@]} -gt 0 ]]; then
+        echo "Indecies entered:" 1>&2
+        for i in ${commit_indecies_to_amend[@]}; do
+            echo -e "${BLUE}$i${NC}"
+        done
+    fi
+
+    read -r response
+    if [[ "$response" =~ [0-9]+ ]]; then
+        commit_indecies_to_amend+=("$response")
+    elif [[ "$response" =~ [Dd][Oo][Nn][Ee] ]]; then
+        done_entering_commit_indecies=true
+    fi
+done
+
+# Add selected commits to array for amending:
+for i in ${commit_indecies_to_amend[@]}; do
+    if [[ "$i" -le ${#commit_arr[@]} ]]; then
+        commits_to_amend+=("${commit_arr[$i]}")
+    fi
+done
+
+for entry in ${commits_to_amend[@]}; do
+    echo "Entry: $entry" 1>&2
+done
