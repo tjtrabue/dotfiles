@@ -1,29 +1,80 @@
 #!/usr/bin/env bash
 
-# Provides an interactive menu for deleting branches in the current git
-# repositor.
+###########################################################################
+##                                                                       ##
+##                              Variables                                ##
+##                                                                       ##
+###########################################################################
 
-################################################################################
-##                                                                            ##
-##                                  Variables                                 ##
-##                                                                            ##
-################################################################################
+branches=( $(git branch --no-color 2> /dev/null \
+    | sed 's/^\*/ /' \
+    | sed 's/^[ \t]*//' \
+    | sed "/$(git rev-parse --abbrev-ref HEAD)/d" ) )
+color_flag=true
 
+###########################################################################
+##                                                                       ##
+##                         Supporting Functions                          ##
+##                                                                       ##
+###########################################################################
 
+# Usage function:
+function dlb_usage() {
+    echo "dlb provides an interactive menu for deleting branches" 1>&2
+    echo "Usage:" 1>&2
+    echo "    dlb [ -n ]" 1>&2
+    echo "Options:" 1>&2
+    echo "    -n : turn off all coloration" 1>&2
+}
 
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
-################################################################################
-##                                                                            ##
-##                             Supporting Functions                           ##
-##                                                                            ##
-################################################################################
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
+###########################################################################
+##                                                                       ##
+##                             Main Program                              ##
+##                                                                       ##
+###########################################################################
 
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo dlb_usage
+    exit 0
+fi
 
+git rev-parse --is-inside-work-tree &> /dev/null
+if [[ $? -ne 0 ]]; then
+    echoe "Not a git repository"
+    exit 2
+fi
 
-################################################################################
-##                                                                            ##
-##                                 Main Program                               ##
-##                                                                            ##
-################################################################################
+while getopts ":n" o; do
+    case "${o}" in
+        n)
+            color_flag=false
+            ;;
+        *)
+            dlb_usage
+            exit 1
+            ;;
+    esac
+done
 
+if [[ ${#branches[@]} -gt 1 ]]; then
+    echo "Select a branch to switch to:" 1>&2
+    branch_to_delete=$(clean-menu ${branches[@]} EXIT)
+    if [[ "$branch_to_switch" == "EXIT" ]]; then
+        echo "Aborting" 1>&2
+        exit 0
+    else
+        git branch -D "$branch_to_delete"
+    fi
+else
+    if $color_flag; then
+        echo -e "${RED}$(git rev-parse --abbrev-ref HEAD)${NC} is the only branch in this repository" 1>&2
+    else
+        echo "$(git rev-parse --abbrev-ref HEAD) is the only branch in this repository" 1>&2
+    fi
+fi
