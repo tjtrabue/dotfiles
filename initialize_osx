@@ -253,6 +253,9 @@ function init_step() {
 
     # Initialize Vim
     "$INIT_DIR/init_vim"
+
+    # Initialize Git
+    "$INIT_DIR/init_git"
 }
 
 # Copy files:
