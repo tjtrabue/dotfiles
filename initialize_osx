@@ -292,8 +292,14 @@ function link_step() {
     ln -s "$LINK_DIR/Preferences.sublime-settings" \
         "$HOME/Library/Application Support/Sublime Text 3/Packages/User/Prefences.sublime-settings"
 
+    # Link shell-specific files:
     for f in "$shell_link_dir"/.[a-zA-Z]*; do
         ln -s "$f" "$HOME/$(basename "$f")"
+    done
+
+    # Link git configuration files:
+    for gf in "$DOTFILES_HOME/git/link"/*; do
+        ln -s "$gf" "$HOME/$(basename "$gf")"
     done
 }
 
