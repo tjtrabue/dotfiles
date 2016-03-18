@@ -62,19 +62,11 @@ while getopts ":n" o; do
     esac
 done
 
-if [[ ${#branches[@]} -gt 1 ]]; then
-    echo "Select a branch to switch to:" 1>&2
-    branch_to_delete=$(clean-menu ${branches[@]} EXIT)
-    if [[ "$branch_to_switch" == "EXIT" ]]; then
-        echo "Aborting" 1>&2
-        exit 0
-    else
-        git branch -D "$branch_to_delete"
-    fi
+echo "Select a branch to switch to:" 1>&2
+branch_to_delete=$(clean-menu ${branches[@]} EXIT)
+if [[ "$branch_to_switch" == "EXIT" ]]; then
+    echo "Aborting" 1>&2
+    exit 0
 else
-    if $color_flag; then
-        echo -e "${RED}$(git rev-parse --abbrev-ref HEAD)${NC} is the only branch in this repository" 1>&2
-    else
-        echo "$(git rev-parse --abbrev-ref HEAD) is the only branch in this repository" 1>&2
-    fi
+    git branch -D "$branch_to_delete"
 fi
