@@ -1,1 +1,18 @@
+# The file marking the repo as installed (will be present after running
+# the install script)
 .dotfiles_installed
+
+# Compiled Python files
+*.pyc
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
