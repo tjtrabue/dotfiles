@@ -35,7 +35,7 @@ function cleanup_hist_file() {
     if [[ -f "$branch_hist_file" ]]; then
         git rev-parse --verify "$deleted_branch" &> /dev/null
         if [[ "$?" -ne 0 ]]; then
-            sed -i "/^$deleted_branch$/d" "$branch_hist_file"
+            sed -i ":^${deleted_branch}$:d" "$branch_hist_file"
         fi
     fi
 }
