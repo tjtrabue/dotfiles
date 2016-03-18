@@ -62,7 +62,11 @@ while getopts ":n" o; do
 done
 
 if [[ ${#branches[@]} -gt 1 ]]; then
-    echo "Select a branch to switch to:" 1>&2
+    if $color_flag; then
+        echo "Select a branch to ${BLUE}switch${NC} to:" 1>&2
+    else
+        echo "Select a branch to switch to:" 1>&2
+    fi
     branch_to_switch=$(clean-menu ${branches[@]} EXIT)
     if [[ "$branch_to_switch" == "EXIT" ]]; then
         echo "Aborting" 1>&2

@@ -75,7 +75,11 @@ while getopts ":n" o; do
     esac
 done
 
-echo "Select a branch to delete:" 1>&2
+if $color_flag; then
+    echo "Select a branch to ${RED}delete${NC}:" 1>&2
+else
+    echo "Select a branch to delete:" 1>&2
+fi
 branch_to_delete=$(clean-menu ${branches[@]} "EXIT")
 if [[ "$branch_to_delete" == "EXIT" ]]; then
     echo "Aborting" 1>&2
