@@ -72,8 +72,13 @@ make_branch_hist_if_neccessary
 
 if [[ ${#branches[@]} -gt 1 ]]; then
     echo "Select a branch to switch to:" 1>&2
-    branch_to_switch=$(clean-menu ${branches[@]})
-    git checkout "$branch_to_switch"
+    branch_to_switch=$(clean-menu ${branches[@]} EXIT)
+    if [[ "$branch_to_switch" == "EXIT" ]]; then
+        echo "Aborting" 1>&2
+        exit 0
+    else
+        git checkout "$branch_to_switch"
+    fi
 else
     if $color_flag; then
         echo -e "${RED}$(git rev-parse --abbrev-ref HEAD)${NC} is the only branch in this repository" 1>&2
