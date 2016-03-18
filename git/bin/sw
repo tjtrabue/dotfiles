@@ -91,7 +91,7 @@ function do_switch() {
         add_current_branch
         git checkout "$@"
     else
-        echo "Already on branch ${BLUE}$to_switch${NC}" 1>&2
+        echo -e "Already on branch ${BLUE}$to_switch${NC}" 1>&2
     fi
 }
 
@@ -100,8 +100,8 @@ function translate_branch_hist() {
     local num_branches_to_go_back="$@"
     local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
     local total_branches="$(wc -l < "$branch_hist_file" | sed 's/^ *//')"
-    local branch_to_return=$(( total_branches - num_branches_to_go_back + 1 ))
-    sed -i -n -e ${branch_to_return}p
+    local branch_num_to_return=$(( total_branches - num_branches_to_go_back + 1 ))
+    sed "${branch_num_to_return}q;d" "$(git rev-parse --show-toplevel)/.branch_hist"
 }
 
 # Parses the user's input:
