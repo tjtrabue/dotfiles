@@ -6,6 +6,7 @@
 ##                                                                            ##
 ################################################################################
 
+input_param=""
 branch_to_switch="master"
 
 ################################################################################
@@ -17,6 +18,7 @@ branch_to_switch="master"
 # Usage message:
 function sw_usage() {
     echo "A git branch-switching alias with some memory thrown in for good measure." 1>&2
+    echo "If no parameters are supplied, this tool switches the user back to master." 1>&2
     echo "USAGE:" 1>&2
     echo "  sw [-<integer> | branch_name]" 1>&2
     echo "OPTIONS:" 1>&2
@@ -68,16 +70,6 @@ function make_branch_hist_if_neccessary() {
     if [[ ! -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
         echo "Making .branch_hist file..." 1>&2
         touch "$(git rev-parse --show-toplevel)/.branch_hist"
-    fi
-}
-
-# Gets the user's input param (if any) and calls parse_user_input:
-function main() {
-    if [[ "$#" -eq 1 ]]; then
-        local input_param="$1"
-        parse_user_input "$input_param"
-    else
-        do_switch "$branch_to_switch"
     fi
 }
 
@@ -141,6 +133,11 @@ exit_if_not_git_repo
 exit_if_input_incorrect
 
 make_branch_hist_if_neccessary
-main "$@"
+if [[ "$#" -eq 1 ]]; then
+    input_param="$1"
+    parse_user_input "$input_param"
+else
+    do_switch "$branch_to_switch"
+fi
 
 cleanup
