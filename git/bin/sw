@@ -6,8 +6,7 @@
 ##                                                                            ##
 ################################################################################
 
-
-
+branch_to_switch="master"
 
 ################################################################################
 ##                                                                            ##
@@ -27,6 +26,15 @@ function sw_usage() {
     echo "  branch_name : the name of the branch to switch to." 1>&2
 }
 
+# Takes care of cleanup:
+function cleanup() {
+    # Clean any empty lines from the .git_hist file:
+    if [[ -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
+        sed -i 's:^$::g' "$(git rev-parse --show-toplevel)/.branch_hist"
+    fi
+}
+trap cleanup EXIT
+
 # Exits the program if not in a git repo:
 function exit_if_not_git_repo() {
     git rev-parse --is-inside-work-tree &> /dev/null
@@ -39,9 +47,18 @@ function exit_if_not_git_repo() {
 
 # Exits the program if the user passes in a -h or --help flag:
 function exit_if_help_requested() {
-    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    if [[ "$@" == "--help" || "$@" == "-h" ]]; then
         echo sw_usage
         exit 0
+    fi
+}
+
+# Exits if the user supplied incorrect input:
+function exit_if_input_incorrect() {
+    if [[ "$#" -gt 1 ]]; then
+        echoe "Too many parameters supplied."
+        sw_usage
+        exit 1
     fi
 }
 
@@ -51,6 +68,43 @@ function make_branch_hist_if_neccessary() {
         echo "Making .branch_hist file..." 1>&2
         touch "$(git rev-parse --show-toplevel)/.branch_hist"
     fi
+}
+
+# Gets the user's input param (if any) and calls parse_user_input:
+function get_user_input() {
+    if [[ "$#" -eq 1 ]]; then
+        local input_param="$1"
+        parse_user_input "$input_param"
+    else
+        do_switch "$branch_to_switch"
+    fi
+}
+
+# Actually makes the branch change:
+function do_switch() {
+    git checkout "$branch_to_switch"
+}
+
+# Figures out the branch to switch to based on the repo's branch history:
+function translate_branch_hist() {
+    local num_branches_to_go_back="$@"
+}
+
+# Parses the user's input:
+function parse_user_input() {
+    local user_input="$1"
+    if [[ "$user_input" =~ \-.* ]]; then
+        local num_branches_to_go_back="$(echo "$user_input" | sed 's:^\-::')"
+        translate_branch_hist "$num_branches_to_go_back"
+    else
+        do_switch "$user_input"
+    fi
+}
+
+# Adds the current branch name to the end of the .branch_hist file:
+function add_branch() {
+    local branch_name="$(git rev-parse --abbrev-ref HEAD)"
+    echo "$branch_name" >> "$(git rev-parse --show-toplevel)/.branch_hist"
 }
 
 # Used for printing errors:
@@ -64,3 +118,9 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+exit_if_help_requested "$@"
+exit_if_not_git_repo
+exit_if_input_incorrect
+
+make_branch_hist_if_neccessary

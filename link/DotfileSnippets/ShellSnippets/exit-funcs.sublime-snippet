@@ -12,7 +12,7 @@ function exit_if_not_git_repo() {
 
 # Exits the program if the user passes in a -h or --help flag:
 function exit_if_help_requested() {
-    if [[ "\$1" == "--help" || "\$1" == "-h" ]]; then
+    if [[ "\$@" == "--help" || "\$@" == "-h" ]]; then
         echo sw_usage
         exit 0
     fi
