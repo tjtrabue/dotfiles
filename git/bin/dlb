@@ -63,8 +63,8 @@ while getopts ":n" o; do
 done
 
 echo "Select a branch to switch to:" 1>&2
-branch_to_delete=$(clean-menu ${branches[@]} EXIT)
-if [[ "$branch_to_switch" == "EXIT" ]]; then
+branch_to_delete=$(clean-menu ${branches[@]} "EXIT")
+if [[ "$branch_to_delete" == "EXIT" ]]; then
     echo "Aborting" 1>&2
     exit 0
 else
