@@ -24,6 +24,14 @@ function swb_usage() {
     echo "    -n : turn off all coloration" 1>&2
 }
 
+# Adds a .branch_hist file to the repo if it's not already there.
+function make_branch_hist_if_neccessary() {
+    if [[ ! -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
+        echo "Making .branch_hist file..." 1>&2
+        touch "$(git rev-parse --show-toplevel)/.branch_hist"
+    fi
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -58,6 +66,9 @@ while getopts ":n" o; do
             ;;
     esac
 done
+
+# Make sure to add a .branch_hist file if it isn't already there:
+make_branch_hist_if_neccessary
 
 if [[ ${#branches[@]} -gt 1 ]]; then
     echo "Select a branch to switch to:" 1>&2
