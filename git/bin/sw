@@ -30,7 +30,7 @@ function sw_usage() {
 function cleanup() {
     # Clean any empty lines from the .git_hist file:
     if [[ -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
-        sed -i 's:^$::g' "$(git rev-parse --show-toplevel)/.branch_hist"
+        sed -i -e '/^$/d' "$(git rev-parse --show-toplevel)/.branch_hist"
     fi
 }
 trap cleanup EXIT
@@ -88,6 +88,7 @@ function do_switch() {
 # Figures out the branch to switch to based on the repo's branch history:
 function translate_branch_hist() {
     local num_branches_to_go_back="$@"
+    awk '/./{line=$0} END{print line}' "$(git rev-parse --show-toplevel)/.branch_hist"
 }
 
 # Parses the user's input:
@@ -124,3 +125,4 @@ exit_if_not_git_repo
 exit_if_input_incorrect
 
 make_branch_hist_if_neccessary
+translate_branch_hist 2
