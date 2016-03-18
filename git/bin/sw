@@ -31,6 +31,7 @@ function cleanup() {
     # Clean any empty lines from the .git_hist file:
     if [[ -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
         sed -i -e '/^$/d' "$(git rev-parse --show-toplevel)/.branch_hist"
+        delete_old_branches
     fi
 }
 trap cleanup EXIT
@@ -82,13 +83,17 @@ function get_user_input() {
 
 # Actually makes the branch change:
 function do_switch() {
+    add_current_branch
     git checkout "$branch_to_switch"
 }
 
 # Figures out the branch to switch to based on the repo's branch history:
 function translate_branch_hist() {
     local num_branches_to_go_back="$@"
-    awk '/./{line=$0} END{print line}' "$(git rev-parse --show-toplevel)/.branch_hist"
+    local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
+    local total_branches="$(wc -l < "$branch_hist_file" | sed 's/^ *//')"
+    local branch_to_return=$(( total_branches - num_branches_to_go_back + 1 ))
+    sed -n -e ${branch_to_return}p
 }
 
 # Parses the user's input:
@@ -96,14 +101,25 @@ function parse_user_input() {
     local user_input="$1"
     if [[ "$user_input" =~ \-.* ]]; then
         local num_branches_to_go_back="$(echo "$user_input" | sed 's:^\-::')"
-        translate_branch_hist "$num_branches_to_go_back"
+        local to_switch="$(translate_branch_hist "$num_branches_to_go_back")"
+        do_switch "$to_switch"
     else
         do_switch "$user_input"
     fi
 }
 
+# Deletes branches in .branch_hist that were viewed more than 5 times ago:
+function delete_old_branches() {
+    local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
+    local total_branches="$(wc -l < "$branch_hist_file")"
+    if [[ "$total_branches" -gt 5 ]]; then
+        local num_to_delete=$(( total_branches - 5 ))
+        sed -i -e "1,${num_to_delete}d" "$branch_hist_file"
+    fi
+}
+
 # Adds the current branch name to the end of the .branch_hist file:
-function add_branch() {
+function add_current_branch() {
     local branch_name="$(git rev-parse --abbrev-ref HEAD)"
     echo "$branch_name" >> "$(git rev-parse --show-toplevel)/.branch_hist"
 }
@@ -125,4 +141,7 @@ exit_if_not_git_repo
 exit_if_input_incorrect
 
 make_branch_hist_if_neccessary
-translate_branch_hist 2
+# translate_branch_hist 2
+delete_old_branches
+
+cleanup
