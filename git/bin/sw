@@ -35,6 +35,11 @@ function cleanup() {
         sed -i -e '/^$/d' "$(git rev-parse --show-toplevel)/.branch_hist"
         delete_old_branches
     fi
+
+    # Get rid of backup file if it's present:
+    if [[ -f "$(git rev-parse --show-toplevel)/.branch_hist-e" ]]; then
+        rm "$(git rev-parse --show-toplevel)/.branch_hist-e"
+    fi
 }
 trap cleanup EXIT
 
@@ -73,10 +78,21 @@ function make_branch_hist_if_neccessary() {
     fi
 }
 
+# Adds the current branch name to the end of the .branch_hist file:
+function add_current_branch() {
+    local branch_name="$(git rev-parse --abbrev-ref HEAD)"
+    echo "$branch_name" >> "$(git rev-parse --show-toplevel)/.branch_hist"
+}
+
 # Actually makes the branch change:
 function do_switch() {
-    add_current_branch
-    git checkout "$branch_to_switch"
+    local to_switch="$@"
+    if [[ "$to_switch" != "$(git rev-parse --abbrev-ref HEAD)" ]]; then
+        add_current_branch
+        git checkout "$@"
+    else
+        echo "Already on branch ${BLUE}$to_switch${NC}" 1>&2
+    fi
 }
 
 # Figures out the branch to switch to based on the repo's branch history:
@@ -85,7 +101,7 @@ function translate_branch_hist() {
     local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
     local total_branches="$(wc -l < "$branch_hist_file" | sed 's/^ *//')"
     local branch_to_return=$(( total_branches - num_branches_to_go_back + 1 ))
-    sed -n -e ${branch_to_return}p
+    sed -i -n -e ${branch_to_return}p
 }
 
 # Parses the user's input:
@@ -108,12 +124,6 @@ function delete_old_branches() {
         local num_to_delete=$(( total_branches - 5 ))
         sed -i -e "1,${num_to_delete}d" "$branch_hist_file"
     fi
-}
-
-# Adds the current branch name to the end of the .branch_hist file:
-function add_current_branch() {
-    local branch_name="$(git rev-parse --abbrev-ref HEAD)"
-    echo "$branch_name" >> "$(git rev-parse --show-toplevel)/.branch_hist"
 }
 
 # Used for printing errors:
