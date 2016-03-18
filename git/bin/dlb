@@ -27,6 +27,19 @@ function dlb_usage() {
     echo "    -n : turn off all coloration" 1>&2
 }
 
+# Takes care of cleanup logic for the branch history file
+# Syntax: cleanup_hist_file $deleted_branch
+function cleanup_hist_file() {
+    local deleted_branch="$1"
+    local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
+    if [[ -f "$branch_hist_file" ]]; then
+        git rev-parse --verify "$deleted_branch" &> /dev/null
+        if [[ "$?" -ne 0 ]]; then
+            sed -i "/^$deleted_branch$/d" "$branch_hist_file"
+        fi
+    fi
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -69,4 +82,5 @@ if [[ "$branch_to_delete" == "EXIT" ]]; then
     exit 0
 else
     git branch -D "$branch_to_delete"
+    cleanup_hist_file "$branch_to_delete"
 fi
