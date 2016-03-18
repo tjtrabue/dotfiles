@@ -8,7 +8,7 @@
 
 branches=( $(git branch --no-color 2> /dev/null \
     | sed 's/^\*/ /' \
-    | sed 's/^[ \t]*//' \
+    | sed 's/^[ ]*//' \
     | sed "/$(git rev-parse --abbrev-ref HEAD)/d" ) )
 color_flag=true
 
