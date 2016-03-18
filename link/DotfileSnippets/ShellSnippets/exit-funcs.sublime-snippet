@@ -1,0 +1,25 @@
+<snippet>
+    <content><![CDATA[
+# Exits the program if not in a git repo:
+function exit_if_not_git_repo() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+    if [[ "\$?" -ne 0 ]]; then
+        echoe "Not inside a git repo"
+        echo "Aborting" 1>&2
+        exit 5
+    fi
+}
+
+# Exits the program if the user passes in a -h or --help flag:
+function exit_if_help_requested() {
+    if [[ "\$1" == "--help" || "\$1" == "-h" ]]; then
+        echo sw_usage
+        exit 0
+    fi
+}
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>exitfuncs</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>
