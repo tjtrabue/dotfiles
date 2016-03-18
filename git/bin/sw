@@ -72,7 +72,7 @@ function make_branch_hist_if_neccessary() {
 }
 
 # Gets the user's input param (if any) and calls parse_user_input:
-function get_user_input() {
+function main() {
     if [[ "$#" -eq 1 ]]; then
         local input_param="$1"
         parse_user_input "$input_param"
@@ -141,7 +141,6 @@ exit_if_not_git_repo
 exit_if_input_incorrect
 
 make_branch_hist_if_neccessary
-# translate_branch_hist 2
-delete_old_branches
+main "$@"
 
 cleanup
