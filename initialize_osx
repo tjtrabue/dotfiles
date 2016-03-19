@@ -93,10 +93,7 @@ function install_new_casks() {
     local cask_apps_copy=("${cask_apps[@]}")
 
     for c in ${installed_casks[@]}; do
-        local pos=$(get_index installed_casks $c)
-        if [[ "$pos" -ge 0 ]]; then
-            cask_apps_copy=(${cask_apps_copy[@]:0:$pos} ${cask_apps_copy[@]:$(($pos + 1))})
-        fi
+        remove_element cask_apps_copy "$c"
     done
 
     if [[ ${#cask_apps_copy[@]} -gt 0 ]]; then
