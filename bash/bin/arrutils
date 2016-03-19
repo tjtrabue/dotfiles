@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# A binary for working with arrays in bash. This tool has option flags for a
+# number of different operations to perform on arrays, providing a centralized
+# area for manipulating them. Bash itself is pretty screwy when it comes to
+# arrays, and does not provide many handy operations by default; hence, the
+# need for a tool such as this.
+# Treat this binary kind of like the Array class in Java.
+#
+# Usage:
+#   arrutils []
+#
+# Options:
+#   --remove-element <object>  : Removes the specified element from the array if
+#                                it exists within the array.
+#   --copy-array <arr1> <arr2> : Copies the elements of arr1 into a new array
+#                                arr2.
+#   --get-index-of <arr> <element> : Returns a set of integer indecies of a specified
+#                                    element within arr. Returns -1 if the element is not present.
+#

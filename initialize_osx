@@ -161,6 +161,10 @@ function get_index() {
 # Syntax:
 #   remove_element array_name (no $ in front of array_name) $element
 function remove_element() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "remove_element - incorrect number of parameters supplied"
+        return 1
+    fi
     local array_name=$1[@]
     declare -a arr=("${!array_name}")
     local element=$2
