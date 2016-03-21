@@ -54,30 +54,25 @@ function parse_user_input() {
         exit 1
     fi
     local user_option="$1"
+    shift
 
     case "$user_option" in
         --get-index-of)
-            shift
             get_index_of "$@"
             ;;
         --get-each-index-of)
-            shift
             get_each_index_of "$@"
             ;;
         --remove)
-            shift
             remove "$@"
             ;;
         --remove-each)
-            shift
             remove_each "$@"
             ;;
         --prepend)
-            shift
             prepend
             ;;
         --append)
-            shift
             append
             ;;
         *)
