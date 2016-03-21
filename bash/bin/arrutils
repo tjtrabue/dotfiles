@@ -30,6 +30,26 @@
 ##                                                                            ##
 ################################################################################
 
+# Usage message:
+function arrutils_usage() {
+    echo "Usage:" 1>&2
+    echo "  arrutils <options>" 1>&2
+    echo "Options:" 1>&2
+    echo "  --get-index-of arr element   : returns the index of the first occurance of element in" 1>&2
+    echo "                                 arr. Returns -1 if element does not exist in arr." 1>&2
+    echo "  --remove-element arr element : removes the first occurance of element in arr. Does nothing" 1>&2
+    echo "                                 element does not exist in arr." 1>&2
+}
+
+# Parses the user's input and decides a course of action:
+function parse_user_input() {
+    if [[ "$#" -eq 0 ]]; then
+        arrutils_usage
+        exit 1
+    fi
+    local user_option="$1"
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
