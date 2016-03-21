@@ -134,7 +134,7 @@ function determine_shell() {
         SHELL_HOME="$DOTFILES_HOME/$shell_type"
     fi
 
-    echo "Ok, you want a ${BLUE}$shell_type${NC} installation" 1>&2
+    echo -e "Ok, you want a ${BLUE}$shell_type${NC} installation" 1>&2
     chsh -s "/bin/$shell_type"
 }
 
