@@ -170,6 +170,21 @@ function remove_each() {
     echo "${arr_copy[@]}"
 }
 
+# Puts the specified element at the beginning of the array
+function prepend() {
+    local arr_copy=$1[@]
+    local element="$2"
+    arr_copy=("$element" "${arr_copy[@]}")
+    echo "${arr_copy[@]}"
+}
+
+# Puts the specified element at the end of the array
+function append() {
+    local arr_copy=$1[@]
+    local element="$2"
+    arr_copy=("${arr_copy[@]}" "$element")
+    echo "${arr_copy[@]}"
+}
 
 ################################################################################
 ##                                                                            ##
