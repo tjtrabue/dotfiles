@@ -70,10 +70,10 @@ function parse_user_input() {
             remove_each "$@"
             ;;
         --prepend)
-            prepend
+            prepend "$@"
             ;;
         --append)
-            append
+            append "$@"
             ;;
         *)
             echoe "Unknown option ${RED}$user_option${NC}"
