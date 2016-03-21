@@ -43,6 +43,8 @@ function arrutils_usage() {
     echo "  --remove arr element : removes the first occurance of element in arr. Does nothing" 1>&2
     echo "                                 element does not exist in arr." 1>&2
     echo "  --remove-each arr element : removes each occurance of element within arr." 1>&2
+    echo "  --prepend arr element : places element at the beginning of arr" 1>&2
+    echo "  --append arr element : places element at the end of arr" 1>&2
 }
 
 # Parses the user's input and decides a course of action:
@@ -69,6 +71,14 @@ function parse_user_input() {
         --remove-each)
             shift
             remove_each "$@"
+            ;;
+        --prepend)
+            shift
+            prepend
+            ;;
+        --append)
+            shift
+            append
             ;;
         *)
             echoe "Unknown option ${RED}$user_option${NC}"
