@@ -48,6 +48,18 @@ function parse_user_input() {
         exit 1
     fi
     local user_option="$1"
+
+    case "$user_option" in
+        --get-index-of)
+            get_index_of
+            ;;
+        --remove-element)
+            remove_element
+            ;;
+        *)
+            echoe "Unknown option ${RED}$user_option${NC}"
+            exit 2
+    esac
 }
 
 # Used for printing errors:
@@ -65,7 +77,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 # Gets the incex of the first occurance of an element in an array
 # Syntax:
 #   get-index-of arr $element
-function get-index-of() {
+function get_index_of() {
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of params passed to get-index-of"
         return 1
@@ -88,7 +100,7 @@ function get-index-of() {
 }
 
 # Removes the first occurance of an element from a specified array
-function remove-element() {
+function remove_element() {
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of params passed to remove-element"
         return 1
@@ -108,4 +120,7 @@ function remove-element() {
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+parse_user_input
+
 
