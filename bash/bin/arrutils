@@ -11,9 +11,9 @@
 #   arrutils []
 #
 # Options:
-#   --remove-element <arr> <element>  : Removes the specified element from the array if
+#   --remove <arr> <element>  : Removes the specified element from the array if
 #                                it exists within the array.
-#   --remove-all-elements <arr> <element> : removes each occurance of element within arr.
+#   --remove-each <arr> <element> : removes each occurance of element within arr.
 #   --get-index-of <arr> <element> : Returns a set of integer indecies of a specified
 #                                    element within arr. Returns -1 if the element is not present.
 #   --get-each-index-of <arr> <element> : returns an array of indecies representing each occurance
