@@ -4,5 +4,6 @@ npm install -g {
     bower,
     express,
     mongodb,
-    jshint
+    jshint,
+    jsonlint
 }
