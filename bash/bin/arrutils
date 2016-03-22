@@ -16,7 +16,10 @@
 #   --remove-all-elements <arr> <element> : removes each occurance of element within arr.
 #   --get-index-of <arr> <element> : Returns a set of integer indecies of a specified
 #                                    element within arr. Returns -1 if the element is not present.
-#
+#   --get-each-index-of <arr> <element> : returns an array of indecies representing each occurance
+#                                         of element in arr.
+#   --prepend <arr> <element> : prepends element to the beginning of arr.
+#   --append <arr> <element> : appends element to the end of arr.
 
 ################################################################################
 ##                                                                            ##
