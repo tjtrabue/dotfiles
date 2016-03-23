@@ -42,7 +42,7 @@ cask_apps=(
         dropbox
         flux-beta
         gitkraken
-        intellij-idea-ce
+        intellij-idea
         iterm2-beta
         macpaw-gemini
         macvim
@@ -51,6 +51,7 @@ cask_apps=(
         sublime-text3
         tower
         virtualbox-beta
+        webstorm
 )
 
 
