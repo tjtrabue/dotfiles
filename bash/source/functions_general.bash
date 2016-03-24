@@ -39,39 +39,6 @@ function get_index() {
 ##       Directory Manipulation        ##
 #########################################
 
-shortpath () {
-    local input_path="$1";
-    egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's/^ *export *//' | sed 's/=.*//' | {
-        local var best_var to_replace best_to_replace;
-        while read -s var; do
-            local dir_alias="`env | egrep "^${var}\b"`";
-            if [[ -n $dir_alias ]]; then
-                to_replace="`echo "$dir_alias" | sed -e "s/${var}=//" -e 's/"//g'`";
-                if [[ "$input_path" =~ ^"${to_replace%/}/".* ]]; then
-                    if [[ ${#to_replace} -gt ${#best_to_replace} ]]; then
-                        best_to_replace="$to_replace";
-                        best_var="$var";
-                    fi;
-                fi;
-            fi;
-        done;
-        if [[ -n $best_to_replace ]]; then
-            input_path="`echo "$input_path" | sed "s:$best_to_replace:\\$$best_var:"`";
-        fi;
-        echo "$input_path"
-    }
-}
-
-# Makes an alias for the current working directory:
-diralias () {
-    local short_path="`shortpath "$(pwd)"`";
-
-    sed -i "s:export\ $1=.*::g" "$DIR_ALIAS_FILE";
-    perl -pi -e 'chomp if eof' "$DIR_ALIAS_FILE" && echo >> "$DIR_ALIAS_FILE"
-    echo -n "export $1=\"$short_path\"" >> "$DIR_ALIAS_FILE";
-    source "$DIR_ALIAS_FILE"
-}
-
 
 #########################################
 ##              Navigation             ##
@@ -126,31 +93,6 @@ translate_dir_hist () {
 #########################################
 ##            PATH/Variables           ##
 #########################################
-
-# Adds a directory to the PATH environment variable.
-# By default adds the working directory, but can take
-# an argument as well:
-atp () {
-    if [[ "$#" -ne 1 ]]; then
-        local to_add=$(shortpath "$(pwd)");
-    else
-        local to_add="$1" && to_add=$(shortpath "$to_add");
-    fi
-
-    grep --color=never -ho "^export\ PATH=\$PATH:$to_add" ~/.path >> /dev/null
-
-    if [ $? -ne 0 ]; then
-        PATH=$PATH:$to_add
-        sed -i "s|^export\ PATH=\$PATH:$to_add||g" ~/.path
-        sed -i "/^$/d" ~/.path
-        perl -pi -e 'chomp if eof' ~/.path && echo >> ~/.path
-        echo -n "export PATH=\$PATH:$to_add" >> ~/.path
-        source ~/.path
-        src
-    else
-        return 1
-    fi
-}
 
 
 #########################################
