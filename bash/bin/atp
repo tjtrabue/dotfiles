@@ -17,29 +17,6 @@ function cleanup() {
 }
 trap cleanup EXIT
 
-function shortpath () {
-    local input_path="$1";
-    egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's/^ *export *//' | sed 's/=.*//' | {
-        local var best_var to_replace best_to_replace;
-        while read -s var; do
-            local dir_alias="$(env | egrep "^${var}\b")";
-            if [[ -n $dir_alias ]]; then
-                to_replace="$(echo "$dir_alias" | sed -e "s/${var}=//" -e 's/"//g')";
-                if [[ "$input_path" =~ ^"${to_replace%/}/".* ]]; then
-                    if [[ ${#to_replace} -gt ${#best_to_replace} ]]; then
-                        best_to_replace="$to_replace";
-                        best_var="$var";
-                    fi;
-                fi;
-            fi;
-        done;
-        if [[ -n $best_to_replace ]]; then
-            input_path="$(echo "$input_path" | sed "s:$best_to_replace:\\$$best_var:")";
-        fi;
-        echo "$input_path"
-    }
-}
-
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
