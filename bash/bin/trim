@@ -3,16 +3,6 @@
 # Trims trailing/beginning white space from a string. Can also trim characters
 # from the beginning or end of the string.
 
-###########################################################################
-#                                                                         #
-#                                 Variables                               #
-#                                                                         #
-###########################################################################
-
-num_chars_to_trim_from_front=0
-num_chars_to_trim_from_end=0
-trimmed_string=""
-
 
 ###########################################################################
 #                                                                         #
@@ -35,6 +25,17 @@ function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
 # Used for printing warnings:
 function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
+
+###########################################################################
+#                                                                         #
+#                                 Variables                               #
+#                                                                         #
+###########################################################################
+
+num_chars_to_trim_from_front=0
+num_chars_to_trim_from_end=0
+trimmed_string=""
 
 
 ###########################################################################
