@@ -6,6 +6,17 @@
 ##                                                                            ##
 ################################################################################
 
+# Ensure that .dirs file exists and is referenced by DIR_ALIAS_FILE:
+function set_dirs_file() {
+    if [[ ! -f ~/.dirs ]]; then
+        touch ~/.dirs
+    fi
+
+    if [[ -z "$DIR_ALIAS_FILE" ]]; then
+        DIR_ALIAS_FILE=~/.dirs
+        echo "DIR_ALIAS_FILE=~/.dirs" >> ~/.vars
+    fi
+}
 
 
 ################################################################################
@@ -26,6 +37,8 @@ best_to_replace;
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+set_dirs_file
 
 input_path="$1";
 egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's/^ *export *//' | sed 's/=.*//' | {
