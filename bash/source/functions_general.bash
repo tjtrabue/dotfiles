@@ -66,7 +66,7 @@ shortpath () {
 diralias () {
     local short_path="`shortpath "$(pwd)"`";
 
-    sed -i 's:export\ $1=.*::g' "$DIR_ALIAS_FILE";
+    sed -i "s:export\ $1=.*::g" "$DIR_ALIAS_FILE";
     perl -pi -e 'chomp if eof' "$DIR_ALIAS_FILE" && echo >> "$DIR_ALIAS_FILE"
     echo -n "export $1=\"$short_path\"" >> "$DIR_ALIAS_FILE";
     source "$DIR_ALIAS_FILE"
