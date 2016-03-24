@@ -8,6 +8,15 @@ set -e
 ##                                                                            ##
 ################################################################################
 
+# Takes care of any final operations
+function cleanup() {
+    local f
+    for f in ~/.{dirs,vars,path}; do
+        source "$f"
+    done
+}
+trap cleanup EXIT
+
 function shortpath () {
     local input_path="$1";
     egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's/^ *export *//' | sed 's/=.*//' | {
