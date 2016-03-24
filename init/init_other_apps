@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Install SDKMAN!
+curl -s get.sdkman.io | bash
