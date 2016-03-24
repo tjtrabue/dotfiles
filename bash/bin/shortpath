@@ -15,6 +15,7 @@ function set_dirs_file() {
     if [[ -z "$DIR_ALIAS_FILE" ]]; then
         DIR_ALIAS_FILE=~/.dirs
         echo "DIR_ALIAS_FILE=~/.dirs" >> ~/.vars
+        export DIR_ALIAS_FILE
     fi
 }
 
