@@ -3,3 +3,5 @@
 	name = Thomas Trabue
 [core]
 	editor = vim
+[push]
+	default = simple
