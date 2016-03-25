@@ -38,3 +38,6 @@ if [[ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]]; then
     . "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh"
 fi
 export PATH="/usr/local/sbin:$PATH"
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/tom/.sdkman"
+[[ -s "/Users/tom/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tom/.sdkman/bin/sdkman-init.sh"
