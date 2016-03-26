@@ -26,6 +26,17 @@ function atp_usage() {
     echo "  -h --help : print this help message" 1>&2
 }
 
+# Ensures that we have a .path file to work with
+function set_path_file() {
+    if [[ ! -f ~/.path ]]; then
+        echow "No .path file found in home directory"
+        echo "Creating .path file..." 1>&2
+        touch ~/.path
+        PATH_FILE=~/.path
+        echo -n "#!/usr/bin/env bash" >> "$PATH_FILE"
+    fi
+}
+
 # Takes care of any final operations
 function cleanup() {
     local f
@@ -67,6 +78,8 @@ if [[ "$1" == "--help" || "$1" == "-h" ]]; then
     exit 0
 fi
 
+set_path_file
+
 # Get options
 while getopts ":p" o; do
     case "${o}" in
@@ -89,19 +102,20 @@ if [[ "$#" -eq 1 ]]; then
     to_add="$1" && to_add=$(shortpath "$to_add");
 fi
 
-# Edit the .path file is the change is permanent.
+# Edit the .path file if the change is permanent.
 # Otherwise, just add the path to PATH and export it
 if $permanent ; then
-    grep --color=never -ho "^export\ PATH=\$PATH:$to_add" ~/.path >> /dev/null
+    grep --color=never -ho "^export\ PATH=\"\$PATH:$to_add\"" "$PATH_FILE" >> /dev/null
     if [ $? -ne 0 ]; then
         PATH=$PATH:$to_add
-        sed -i "s|^export\ PATH=\$PATH:$to_add||g" ~/.path
-        sed -i "/^$/d" ~/.path
-        perl -pi -e 'chomp if eof' ~/.path && echo >> ~/.path
-        echo -n "\"export PATH=\$PATH:$to_add\"" >> ~/.path
-        source ~/.path
+        sed -i "s|^export\ PATH=\"\$PATH:$to_add\"||g" "$PATH_FILE"
+        sed -i "/^$/d" "$PATH_FILE"
+        perl -pi -e 'chomp if eof' ~/.path && echo >> "$PATH_FILE"
+        echo -n "export PATH=\"\$PATH:$to_add\"" >> "$PATH_FILE"
+        source "$PATH_FILE"
         src
     else
+        echoe "Path already exists"
         exit 1
     fi
 else
