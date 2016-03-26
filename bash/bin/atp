@@ -23,6 +23,7 @@ function atp_usage() {
     echo "  atp [-p] [path]" 1>&2
     echo "Options:" 1>&2
     echo "  -p : switch that tells atp to make the addition permanent" 1>&2
+    echo "  -h --help : print this help message" 1>&2
 }
 
 # Takes care of any final operations
