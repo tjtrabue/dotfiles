@@ -8,6 +8,23 @@ set -e
 ##                                                                            ##
 ################################################################################
 
+# Full help message:
+function atp_help() {
+    echo "atp is a tool that adds a specified path to the PATH environment variable." 1>&2
+    echo "If no path is provided, it assumes you want to add the current working directory" 1>&2
+    echo "to PATH. By default, the change is not permanent, but there is an option to specify" 1>&2
+    echo "a permanent addition." 1>&2
+    atp_usage
+}
+
+# Usage message:
+function atp_usage() {
+    echo "Usage:" 1>&2
+    echo "  atp [-p] [path]" 1>&2
+    echo "Options:" 1>&2
+    echo "  -p : switch that tells atp to make the addition permanent" 1>&2
+}
+
 # Takes care of any final operations
 function cleanup() {
     local f
@@ -33,11 +50,36 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 # The path to add to the .path file
 to_add=$(shortpath "$(pwd)");
 
+# A boolean value specifying whether or not to make the change permanent.
+permanent=false
+
+
 ################################################################################
 ##                                                                            ##
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+# Display help messaage if the user asks.
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo atp_help
+    exit 0
+fi
+
+# Get options
+while getopts ":p" o; do
+    case "${o}" in
+        p)
+            permanent=true
+            ;;
+        *)
+            echoe "Unknown operand $o"
+            atp_usage
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
 
 # Adds a directory to the PATH environment variable.
 # By default adds the working directory, but can take
@@ -46,16 +88,22 @@ if [[ "$#" -eq 1 ]]; then
     to_add="$1" && to_add=$(shortpath "$to_add");
 fi
 
-grep --color=never -ho "^export\ PATH=\$PATH:$to_add" ~/.path >> /dev/null
-
-if [ $? -ne 0 ]; then
-    PATH=$PATH:$to_add
-    sed -i "s|^export\ PATH=\$PATH:$to_add||g" ~/.path
-    sed -i "/^$/d" ~/.path
-    perl -pi -e 'chomp if eof' ~/.path && echo >> ~/.path
-    echo -n "\"export PATH=\$PATH:$to_add\"" >> ~/.path
-    source ~/.path
-    src
+# Edit the .path file is the change is permanent.
+# Otherwise, just add the path to PATH and export it
+if $permanent ; then
+    grep --color=never -ho "^export\ PATH=\$PATH:$to_add" ~/.path >> /dev/null
+    if [ $? -ne 0 ]; then
+        PATH=$PATH:$to_add
+        sed -i "s|^export\ PATH=\$PATH:$to_add||g" ~/.path
+        sed -i "/^$/d" ~/.path
+        perl -pi -e 'chomp if eof' ~/.path && echo >> ~/.path
+        echo -n "\"export PATH=\$PATH:$to_add\"" >> ~/.path
+        source ~/.path
+        src
+    else
+        exit 1
+    fi
 else
-    exit 1
+    PATH="$PATH:$to_add"
+    export PATH
 fi
