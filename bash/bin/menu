@@ -5,6 +5,12 @@
 # exit codes: 0 - normal, 1 - abort, 2 - no menu items
 # to select item, press enter; to abort, press q
 
+################################################################################
+##                                                                            ##
+##                           Supporting Functions                             ##
+##                                                                            ##
+################################################################################
+
 # make sure that cursor is returned to normal when script exits:
 function cleanup() {
    tput cnorm
@@ -13,6 +19,13 @@ function cleanup() {
 trap cleanup EXIT
 
 [[ $# -lt 1 ]] && exit 2 # no menu items, at least 1 required
+
+
+################################################################################
+##                                                                            ##
+##                                  Variables                                 ##
+##                                                                            ##
+################################################################################
 
 # set colors
 cn="$(echo -e '\r\e[0;1m')" # normal
@@ -35,6 +48,13 @@ lower_index=1
 
 # The amount of space between the item number and the item itself:
 spacer=10
+
+
+################################################################################
+##                                                                            ##
+##                                Main Program                                ##
+##                                                                            ##
+################################################################################
 
 { # capture stdout to stderr
    tput civis # hide cursor
