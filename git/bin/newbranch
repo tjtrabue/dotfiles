@@ -17,7 +17,7 @@ function newbranch_help() {
 # Usage message:
 function newbranch_usage() {
     echo "Usage:" 1>&2
-    echo "    newbranch [-u <upstream>] branch_name" 1>&2
+    echo "    newbranch [-u <upstream> -b <branch name> -n]" 1>&2
     echo "Options:" 1>&2
     echo "    -u <upstream>    : sets the upstream branch tracked by the new branch" 1>&2
     echo "                       to a branch specified by the user. If this arguemnt" 1>&2
@@ -26,6 +26,16 @@ function newbranch_usage() {
     echo "                       is ommitted, the user will be prompted to provide a names" 1>&2
     echo "    -n               : signals that the local branch should not track a remote branch" 1>&2
     echo "    -h --help        : prints the help message (this message)" 1>&2
+}
+
+# Gets the new branch's name from the user:
+function get_branch_name_from_user() {
+    local new_branch_name=""
+    while [[ "$new_branch_name" == "" ]]; do
+        echo -n "Enter a name for the branch you wish to create:" 1>&2
+        read -r new_branch_name
+    done
+    echo "$new_branch_name"
 }
 
 # Decides how to create the local branch based on user input:
@@ -46,6 +56,25 @@ function create_local_branch() {
     fi
 }
 
+# Checks whether or not a local branch with the given name already exists
+# in the repository:
+function check_branch_exists() {
+    if [[ "$#" -ne 1 ]]; then
+        echoe "Incorrect number of arguments passed to check_branch_exists"
+        exit 3
+    fi
+
+    local new_branch_name="$1"
+
+    git rev-parse --verify "$new_branch_name"
+    if [[ "$?" == 0 ]]; then
+        echoe "Branch with name $new_branch_name already exists in this repository." 1>&2
+        return 1
+    else
+        return 0
+    fi
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -62,6 +91,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 upstream="origin/master"
 new_branch_name=""
 track_upstream=true
+branch_exists=""
 
 ################################################################################
 ##                                                                            ##
@@ -98,10 +128,11 @@ shift $((OPTIND - 1))
 
 # Ask the user for the branch name if it hasn't already been specified:
 if [[ -z "$new_branch_name" ]]; then
-    while [[ "$new_branch_name" == "" ]]; do
-        echo -n "Enter a name for the branch you wish to create:" 1>&2
-        read -r new_branch_name
-    done
+    new_branch_name="$(get_branch_name_from_user)"
 fi
+
+while [[ ! $(check_branch_exists "$new_branch_name") ]] ; do
+    new_branch_name="$(get_branch_name_from_user)"
+done
 
 create_local_branch "$new_branch_name" "$upstream" "$track_upstream"
