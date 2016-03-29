@@ -75,6 +75,7 @@ function parse_user_input() {
             append "$@"
             ;;
         --sort)
+            sort "$@"
             ;;
         *)
             echoe "Unknown option ${RED}$user_option${NC}"
@@ -180,6 +181,42 @@ function append() {
     local element="$2"
     arr_copy=("${arr_copy[@]}" "$element")
     echo "${arr_copy[@]}"
+}
+
+# Quick sorts the array passed in
+# Syntax:
+#   sort arr_name
+function sort() {
+    local arr_copy=$1[@]
+    local left=0
+    local right=$((${#$arr_copy} - 1))
+}
+
+# The actual sorting function:
+function _quick_sort() {
+
+}
+
+# Private method for partitioning the array for sorting purposes
+function _partition() {
+    local arr_copy=$1[@]
+    local i="$2"
+    local j="$3"
+    local tmp=0
+    local pivot=$(( ($i + $j) / 2 ))
+
+    while [[ $i -le $j ]]; do
+        while [[ ${arr_copy[$i]} -lt $pivot ]]; do
+            ((i+=1))
+        done
+        while [[ ${arr_copy[$j]} -gt $pivot ]]; do
+            ((j-=1))
+        done
+        if [[ $i -le $j ]]; then
+            tmp=${arr_copy[$i]}
+            ${arr_copy[$i]}
+        fi
+    done
 }
 
 ################################################################################
