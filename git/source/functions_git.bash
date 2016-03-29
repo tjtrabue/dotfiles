@@ -39,7 +39,7 @@ function ssh-gen() {
 
 # Retrieves the git url for the current repository
 function gurl() {
-    git remote -v | grep 'push' | awk '{print $2}'
+    git remote -v | egrep '^origin.*push' | awk '{print $2}'
 }
 
 ###########################################################################
