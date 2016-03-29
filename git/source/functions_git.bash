@@ -48,7 +48,7 @@ function mainbranch() {
 }
 
 # Opens the commit message for the current repo in Vim:
-function cmsg() {
+function emsg() {
     vim "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
 }
 
