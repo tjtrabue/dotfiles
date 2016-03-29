@@ -47,6 +47,11 @@ function mainbranch() {
     git remote show origin | grep 'HEAD branch' | awk '{print $3}'
 }
 
+# Opens the commit message for the current repo in Vim:
+function cmsg() {
+    vim "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
+}
+
 ###########################################################################
 ##                                                                       ##
 ##                               Cloning                                 ##
