@@ -20,6 +20,7 @@
 #                                         of element in arr.
 #   --prepend <arr> <element> : prepends element to the beginning of arr.
 #   --append <arr> <element> : appends element to the end of arr.
+#   --sort <arr> : quick sorts the array.
 
 
 ################################################################################
@@ -42,6 +43,7 @@ function arrutils_usage() {
     echo "  --remove-each arr element : removes each occurance of element within arr." 1>&2
     echo "  --prepend arr element : places element at the beginning of arr" 1>&2
     echo "  --append arr element : places element at the end of arr" 1>&2
+    echo "  --sort arr : performs a quick sort on the array" 1>&2
 }
 
 # Parses the user's input and decides a course of action:
@@ -71,6 +73,8 @@ function parse_user_input() {
             ;;
         --append)
             append "$@"
+            ;;
+        --sort)
             ;;
         *)
             echoe "Unknown option ${RED}$user_option${NC}"
