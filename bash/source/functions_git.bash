@@ -37,6 +37,11 @@ function ssh-gen() {
     curl -u "tjtrabue" --data "{\"title\":\"$key_name\", \"key\":\"$(pbpaste)\"}" "https://api.github.com/user/keys"
 }
 
+# Retrieves the git url for the current repository
+function gurl() {
+    git remote -v | grep 'push' | awk '{print $2}'
+}
+
 ###########################################################################
 ##                                                                       ##
 ##                               Cloning                                 ##
