@@ -16,11 +16,12 @@ alias groot="git rev-parse --show-toplevel"
 # Return number of modified files:
 alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 
-# Staging/pushing aliases:
+# Staging/pushing/pulling aliases:
 alias ga="git add"
 alias gc="git commit -m"
 alias gca="git commit --amend"
-alias gp="git push origin"
+alias gp="git push"
+alias gpl="git pull"
 
 # Rebasing aliases:
 alias grb="git rebase"
