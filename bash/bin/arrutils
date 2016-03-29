@@ -189,12 +189,22 @@ function append() {
 function sort() {
     local arr_copy=$1[@]
     local left=0
-    local right=$((${#$arr_copy} - 1))
+    local right=$((${#$arr_copy[@]} - 1))
+    _quick_sort "$@"
 }
 
 # The actual sorting function:
 function _quick_sort() {
-
+    local arr_copy=$1[@]
+    local left="$2"
+    local right"$3"
+    local index="$(_partition arr_copy $left $right)"
+    if [[ "$left" -lt $((index - 1)) ]]; then
+        _quick_sort arr_copy $left $((index - 1))
+    fi
+    if [[ "$index" -lt $right ]]; then
+        _quick_sort arr_copy $index $right
+    fi
 }
 
 # Private method for partitioning the array for sorting purposes
@@ -214,9 +224,14 @@ function _partition() {
         done
         if [[ $i -le $j ]]; then
             tmp=${arr_copy[$i]}
-            ${arr_copy[$i]}
+            arr_copy[$i]=${arr_copy[$j]}
+            arr_copy[$j]=$tmp
+            ((i+=1))
+            ((j-=1))
         fi
     done
+
+    echo "$i"
 }
 
 ################################################################################
