@@ -20,6 +20,7 @@ alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 alias ga="git add"
 alias gc="git commit -m"
 alias gca="git commit --amend"
+alias gcan="git commit --amend --no-edit"
 alias gp="git push"
 alias gpl="git pull"
 
