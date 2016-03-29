@@ -42,6 +42,11 @@ function gurl() {
     git remote -v | egrep '^origin.*push' | awk '{print $2}'
 }
 
+# Returns the main remote branch for the repository:
+function mainbranch() {
+    git remote show origin | grep 'HEAD branch' | awk '{print $3}'
+}
+
 ###########################################################################
 ##                                                                       ##
 ##                               Cloning                                 ##
