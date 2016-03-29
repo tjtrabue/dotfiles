@@ -8,6 +8,7 @@ while getopts ":${1:flags}" o; do
             ;;
     esac
 done
+shift $((OPTIND - 1))
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
     <tabTrigger>opts</tabTrigger>
