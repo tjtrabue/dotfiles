@@ -17,13 +17,15 @@ function newbranch_help() {
 # Usage message:
 function newbranch_usage() {
     echo "Usage:" 1>&2
-    echo "    newbranch [-u <upstream> -b <branch name> -n]" 1>&2
+    echo "    newbranch [-u <upstream> -b <branch name> -n] [branch_name]" 1>&2
     echo "Options:" 1>&2
     echo "    -u <upstream>    : sets the upstream branch tracked by the new branch" 1>&2
     echo "                       to a branch specified by the user. If this arguemnt" 1>&2
     echo "                       is not provided, the upstream branch defaults to origin/master" 1>&2
     echo "    -b <branch name> : sets the value of the new branch name. If this argument" 1>&2
-    echo "                       is ommitted, the user will be prompted to provide a names" 1>&2
+    echo "                       is ommitted, the user will be prompted to provide a names." 1>&2
+    echo "                       This is equivalent to putting the branch name at the end of the binary" 1>&2
+    echo "                       without any flag prefix" 1>&2
     echo "    -n               : signals that the local branch should not track a remote branch" 1>&2
     echo "    -h --help        : prints the help message (this message)" 1>&2
 }
@@ -105,7 +107,7 @@ if [[ "$1" == "--help" || "$1" == "-h" ]]; then
     exit 0
 fi
 
-# Get options:
+# Get optional arguments:
 while getopts ":u:b:n" o; do
     case "${o}" in
         u)
@@ -126,13 +128,23 @@ while getopts ":u:b:n" o; do
 done
 shift $((OPTIND - 1))
 
+# If the user uses this binary in the form "newbranch branch_name," with the
+# branch name at the end of the binary specification without a flag prefix,
+# make sure to record the name:
+if [[ -z "$1" ]]; then
+    new_branch_name="$1"
+fi
+
 # Ask the user for the branch name if it hasn't already been specified:
 if [[ -z "$new_branch_name" ]]; then
     new_branch_name="$(get_branch_name_from_user)"
 fi
 
+# Continue to prompt user for branch names while the names supplied exist in
+# the repository:
 while [[ ! $(check_branch_exists "$new_branch_name") ]] ; do
     new_branch_name="$(get_branch_name_from_user)"
 done
 
+# Finally, if everything else checks out, create the branch:
 create_local_branch "$new_branch_name" "$upstream" "$track_upstream"
