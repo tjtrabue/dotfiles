@@ -15,8 +15,10 @@ function src() {
         for file in ~/.{vars,dirs,path}; do
   		    source "$file"
         done
-
         for file in $DOTFILES_HOME/bash/source/*; do
+            source "$file"
+        done
+        for file in $DOTFILES_HOME/git/source/*; do
             source "$file"
         done
     fi
