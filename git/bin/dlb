@@ -82,7 +82,7 @@ if $color_flag; then
 else
     echo "Select a branch to delete:" 1>&2
 fi
-branch_to_delete=$(clean-menu ${branches[@]} "EXIT")
+branch_to_delete=$(menu ${branches[@]} "EXIT")
 if [[ "$branch_to_delete" == "EXIT" ]]; then
     echo "Aborting" 1>&2
     exit 0

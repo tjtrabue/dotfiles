@@ -126,7 +126,7 @@ function pull_submodules() {
 # Ask user for shell type:
 function determine_shell() {
     echo "Which installation would you like?" 1>&2
-    local shell_type="$(clean-menu "bash" "zsh" "EXIT")"
+    local shell_type="$(menu "bash" "zsh" "EXIT")"
 
     if [[ "$shell_type" == "EXIT" ]]; then
         echo "Aborting" 1>&2
@@ -197,7 +197,7 @@ function install_optional_brew_apps() {
             fi
 
             echo -e "\nSelect an App to Install:" 1>&2
-            response="$(clean-menu ${arg_array_copy[@]} DONE)"
+            response="$(menu ${arg_array_copy[@]} DONE)"
             if [[ "$response" != "DONE" ]]; then
                 cask_apps_to_install+=("$response")
                 remove_element arg_array_copy "$response"

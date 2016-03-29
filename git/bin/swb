@@ -70,7 +70,7 @@ if [[ ${#branches[@]} -gt 1 ]]; then
     else
         echo "Select a branch to switch to:" 1>&2
     fi
-    branch_to_switch=$(clean-menu ${branches[@]} EXIT)
+    branch_to_switch=$(menu ${branches[@]} EXIT)
     if [[ "$branch_to_switch" == "EXIT" ]]; then
         echo "Aborting" 1>&2
         exit 0
