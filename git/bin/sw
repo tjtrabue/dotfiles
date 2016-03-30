@@ -6,6 +6,28 @@
 ##                                                                            ##
 ################################################################################
 
+# Full help message:
+function sw_help() {
+    echo "sw is an intelligent git-checkout alias that can take the user back through branches" 1>&2
+    echo "that they've previously visited as well as to specific branches by specifying the name." 1>&2
+    echo "For instance, inputting" 1>&2
+    echo "    sw -1" 1>&2
+    echo "will take the user to the previously visited branch, while inputting" 1>&2
+    echo "    sw branch_one" 1>&2
+    echo "will take the user to a branch named branch_one. Inputting" 1>&2
+    echo "    sw" 1>&2
+    echo "with no arguments will take the user back to master." 1>&2
+    sw_usage
+}
+
+# Usage message:
+function sw_usage() {
+    echo "Usage:" 1>&2
+    echo "    sw [branch_name | -n (where n is the number of the branch in history to go back)]" 1>&2
+    echo "    NOTE: if no options are supplied, sw takes the user back to the git repository's" 1>&2
+    echo "          master branch." 1>&2
+}
+
 # Parses user input and decides which branch to choose:
 # Syntax:
 #    parse_user_input $branch_indicator
@@ -31,6 +53,11 @@ destination_branch="master"
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo sw_help
+    exit 0
+fi
 
 if [[ "$#" -gt 0 ]]; then
     destination_branch="$(parse_user_input "$@")"
