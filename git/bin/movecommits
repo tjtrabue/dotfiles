@@ -56,6 +56,15 @@ function stash_changes_if_needed() {
         echow "You have uncommitted changes in your working branch."
         echo "These changes will be stashed." 1>&2
         git stash save
+        pop_changes=true
+    fi
+}
+
+# Move stashed changes back:
+function pop_changes_if_needed() {
+    if $pop_changes ; then
+        echo "Popping stashed changes" 1>&2
+        git stash pop
     fi
 }
 
@@ -99,6 +108,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 destination_branch=""
 num_commits_to_move=1
+pop_changes=false
 
 ################################################################################
 ##                                                                            ##
@@ -125,5 +135,8 @@ done
 shift $((OPTIND - 1))
 
 destination_branch="$1"
+
+stash_changes_if_needed
+pop_changes_if_needed
 
 move_commits "$num_commits_to_move" "$destination_branch"
