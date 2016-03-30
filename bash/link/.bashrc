@@ -24,11 +24,30 @@ function src() {
     fi
 }
 
+# Git rid of old directory aliases in .dirs that no longer work
+function rmdirs() {
+    # Move the .dirs file into a temporary location and rewrite it
+    mv ~/.dirs ~/.dirs.tmp
+    touch ~/.dirs && echo "#!/usr/bin/env bash" >> ~/.dirs
+    local line
+    while read line; do
+        if [[ "$line" =~ "^export.*" ]]; then
+            local dir="$(echo $line | sed -e 's/^export.*=//')"
+            if [[ "$dir" ]]; then
+                echo "$line" >> ~/.dirs
+            fi
+        fi
+    done < ~/.dirs.tmp
+    # Remove temp directory file
+    rm ~/.dirs.tmp
+}
+
 # Add tab completion for many Bash commands:
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
+rmdirs
 src
 
 POWERLINE_HOME=~/".dotfiles/vendors/powerline/"
