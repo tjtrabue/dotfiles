@@ -59,7 +59,7 @@ function exit_if_input_incorrect() {
 function do_switch() {
     local to_switch="$@"
     if [[ "$to_switch" != "$(git rev-parse --abbrev-ref HEAD)" ]]; then
-        git checkout "$@"
+        git checkout "$to_switch"
     else
         echo -e "Already on branch ${BLUE}$to_switch${NC}" 1>&2
     fi
