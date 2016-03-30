@@ -32,8 +32,9 @@ function rmdirs() {
     local line
     while read line; do
         if [[ "$line" =~ ^export.* ]]; then
-            local dir="$(echo $line | sed -e 's/^export.*=//')"
-            if [[ "$dir" ]]; then
+            local dir="$(echo $line | sed -e 's/^export.*=//' | sed -e 's/"//g')"
+            dir="$(eval echo "$dir")"
+            if [[ -d "$dir" ]]; then
                 echo "$line" >> ~/.dirs
             fi
         fi
