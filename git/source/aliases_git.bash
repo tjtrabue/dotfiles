@@ -18,6 +18,7 @@ alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 
 # Staging/pushing/pulling aliases:
 alias ga="git add"
+alias gaa="git add \$(git rev-parse --show-toplevel)/"
 alias gc="git commit -m"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
