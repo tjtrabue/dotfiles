@@ -32,18 +32,22 @@ function movecommits_usage() {
 ################################################################################
 
 function move_commits() {
-    local num_commits_to_move="$1"
-    local destination_branch="$2"
+    # local num_commits_to_move="$1"
+    # local destination_branch="$2"
 
-    local commit_id_array=(
-                            $(git log -2 --no-color \
-                            | egrep --color=never '^commit' \
-                            | sed -e 's/^commit[ \t]*//')
-                            )
+    # local commit_id_array=(
+    #                         $(git log -2 --no-color \
+    #                         | egrep --color=never '^commit' \
+    #                         | sed -e 's/^commit[ \t]*//')
+    #                         )
 
-    git checkout "$destination_branch"
+    # git checkout "$destination_branch"
+    # for (( idx=${#commit_id_array[@]}-1 ; idx>=0 ; idx-- )); do
+    #     git cherry-pick "${commit_id_array[idx]}"
+    # done
+
     for (( idx=${#commit_id_array[@]}-1 ; idx>=0 ; idx-- )); do
-        git cherry-pick "${commit_id_array[$idx]}"
+        echo "${commit_id_array[idx]}" 1>&2
     done
 }
 
@@ -111,5 +115,7 @@ while getopts ":n:" o; do
     esac
 done
 shift $((OPTIND - 1))
+
+destination_branch="$1"
 
 move_commits "$@"
