@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+
+################################################################################
+##                                                                            ##
+##                             Supporting Functions                           ##
+##                                                                            ##
+################################################################################
+
+# Usage message:
+function sw_usage() {
+    echo "A git branch-switching alias with some memory thrown in for good measure." 1>&2
+    echo "If no parameters are supplied, this tool switches the user back to master." 1>&2
+    echo "USAGE:" 1>&2
+    echo "  sw [-<integer> | branch_name]" 1>&2
+    echo "OPTIONS:" 1>&2
+    echo "  -<integer>  : a flag passed in like '-1' or '-3' which mean 'return" 1>&2
+    echo "                to the last branch' and 'return to the branch I was on" 1>&2
+    echo "                before the last two' respectively." 1>&2
+    echo "  branch_name : the name of the branch to switch to." 1>&2
+}
+
+# Takes care of cleanup:
+function cleanup() {
+    # Clean any empty lines from the .git_hist file:
+    if [[ -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
+        sed -i -e '/^$/d' "$(git rev-parse --show-toplevel)/.branch_hist"
+        delete_old_branches
+    fi
+
+    # Get rid of backup file if it's present:
+    if [[ -f "$(git rev-parse --show-toplevel)/.branch_hist-e" ]]; then
+        rm "$(git rev-parse --show-toplevel)/.branch_hist-e"
+    fi
+}
+trap cleanup EXIT
+
+# Exits the program if not in a git repo:
+function exit_if_not_git_repo() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+    if [[ "$?" -ne 0 ]]; then
+        echoe "Not inside a git repo"
+        echo "Aborting" 1>&2
+        exit 5
+    fi
+}
+
+# Exits the program if the user passes in a -h or --help flag:
+function exit_if_help_requested() {
+    if [[ "$@" == "--help" || "$@" == "-h" ]]; then
+        echo sw_usage
+        exit 0
+    fi
+}
+
+# Exits if the user supplied incorrect input:
+function exit_if_input_incorrect() {
+    if [[ "$#" -gt 1 ]]; then
+        echoe "Too many parameters supplied."
+        sw_usage
+        exit 1
+    fi
+}
+
+# Adds a .branch_hist file to the repo if it's not already there.
+function make_branch_hist_if_neccessary() {
+    if [[ ! -f "$(git rev-parse --show-toplevel)/.branch_hist" ]]; then
+        echo "Making .branch_hist file..." 1>&2
+        touch "$(git rev-parse --show-toplevel)/.branch_hist"
+    fi
+}
+
+# Adds the current branch name to the end of the .branch_hist file:
+function add_current_branch() {
+    local branch_name="$(git rev-parse --abbrev-ref HEAD)"
+    echo "$branch_name" >> "$(git rev-parse --show-toplevel)/.branch_hist"
+}
+
+# Actually makes the branch change:
+function do_switch() {
+    local to_switch="$@"
+    if [[ "$to_switch" != "$(git rev-parse --abbrev-ref HEAD)" ]]; then
+        add_current_branch
+        git checkout "$@"
+    else
+        echo -e "Already on branch ${BLUE}$to_switch${NC}" 1>&2
+    fi
+}
+
+# Figures out the branch to switch to based on the repo's branch history:
+function translate_branch_hist() {
+    local num_branches_to_go_back="$@"
+    local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
+    local total_branches="$(wc -l < "$branch_hist_file" | sed 's/^ *//')"
+    local branch_num_to_return=$(( total_branches - num_branches_to_go_back + 1 ))
+    sed "${branch_num_to_return}q;d" "$(git rev-parse --show-toplevel)/.branch_hist"
+}
+
+# Parses the user's input:
+function parse_user_input() {
+    local user_input="$1"
+    if [[ "$user_input" =~ \-.* ]]; then
+        local num_branches_to_go_back="$(echo "$user_input" | sed 's:^\-::')"
+        local to_switch="$(translate_branch_hist "$num_branches_to_go_back")"
+        do_switch "$to_switch"
+    else
+        do_switch "$user_input"
+    fi
+}
+
+# Deletes branches in .branch_hist that were viewed more than 5 times ago:
+function delete_old_branches() {
+    local branch_hist_file="$(git rev-parse --show-toplevel)/.branch_hist"
+    local total_branches="$(wc -l < "$branch_hist_file")"
+    if [[ "$total_branches" -gt 5 ]]; then
+        local num_to_delete=$(( total_branches - 5 ))
+        sed -i -e "1,${num_to_delete}d" "$branch_hist_file"
+    fi
+}
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
+
+################################################################################
+##                                                                            ##
+##                                  Variables                                 ##
+##                                                                            ##
+################################################################################
+
+input_param=""
+branch_to_switch="master"
+
+
+################################################################################
+##                                                                            ##
+##                                 Main Program                               ##
+##                                                                            ##
+################################################################################
+
+exit_if_help_requested "$@"
+exit_if_not_git_repo
+exit_if_input_incorrect
+
+make_branch_hist_if_neccessary
+if [[ "$#" -eq 1 ]]; then
+    input_param="$1"
+    parse_user_input "$input_param"
+else
+    do_switch "$branch_to_switch"
+fi
+
+cleanup
