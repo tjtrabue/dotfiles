@@ -1,16 +1,33 @@
-<snippet>
-    <content><![CDATA[
+#!/usr/bin/env bash
+
 ################################################################################
 ##                                                                            ##
 ##                               Usage Functions                              ##
 ##                                                                            ##
 ################################################################################
 
+# Full help message:
+function movecommits_help() {
+    echo "movecommits takes the last n commits of the current branch and moves" 1>&2
+    echo "them on top of HEAD on another branch. Thus," 1>&2
+    echo "    movecommits -n 2 destination_branch" 1>&2
+    echo "moves the top 2 commits of the current HEAD and puts them on top of" 1>&2
+    echo "HEAD on destination_branch." 1>&2
+    movecommits_usage
+}
 
+# Usage message:
+function movecommits_usage() {
+    echo "Usage:" 1>&2
+    echo "    movecommits [-n <number of commits>] destination_branch" 1>&2
+    echo "Options:" 1>&2
+    echo "    -n <number of commits> : the number of commits to move from the" 1>&2
+    echo "                             current branch to the destination branch" 1>&2
+}
 
 ################################################################################
 ##                                                                            ##
-##                             Supporting Functions                           ##
+##                           Supporting Functions                             ##
 ##                                                                            ##
 ################################################################################
 
@@ -30,10 +47,3 @@
 ##                                                                            ##
 ################################################################################
 
-
-]]></content>
-    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-    <tabTrigger>hall</tabTrigger>
-    <!-- Optional: Set a scope to limit where the snippet will trigger -->
-    <scope>source.shell</scope>
-</snippet>
