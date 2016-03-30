@@ -31,7 +31,53 @@ function movecommits_usage() {
 ##                                                                            ##
 ################################################################################
 
+function move_commits() {
+    local num_commits_to_move="$1"
+    local destination_branch="$2"
 
+    local commit_id_array=(
+                            $(git log -2 --no-color \
+                            | egrep --color=never '^commit' \
+                            | sed -e 's/^commit[ \t]*//')
+                            )
+
+    git checkout "$destination_branch"
+    for (( idx=${#commit_id_array[@]}-1 ; idx>=0 ; idx-- )); do
+        git cherry-pick "${commit_id_array[$idx]}"
+    done
+}
+
+# Aborts the program if the user requests help
+function exit_if_help_requested() {
+    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+        echo movecommits_help
+        exit 0
+    fi
+}
+
+# Aborts the program if the user didn't supply the correct parameters
+function exit_if_input_incorrect() {
+    if [[ "$#" -gt 2 ]]; then
+        echoe "Too many parameters supplied"
+        exit 2
+    fi
+}
+
+# Aborts the program if the user isn't in a git repo
+function exit_if_not_git_repo() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+    if [[ "$?" -ne 0 ]]; then
+        echoe "Not inside a git repo"
+        echo "Aborting" 1>&2
+        exit 5
+    fi
+}
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
@@ -39,7 +85,8 @@ function movecommits_usage() {
 ##                                                                            ##
 ################################################################################
 
-
+destination_branch=""
+num_commits_to_move=1
 
 ################################################################################
 ##                                                                            ##
@@ -47,3 +94,22 @@ function movecommits_usage() {
 ##                                                                            ##
 ################################################################################
 
+exit_if_help_requested
+exit_if_not_git_repo
+exit_if_input_incorrect
+
+while getopts ":n:" o; do
+    case "${o}" in
+        n)
+            num_commits_to_move="${OPTARG}"
+            ;;
+        *)
+            echoe "Unknown operand $o"
+            movecommits_usage
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+move_commits "$@"
