@@ -31,6 +31,7 @@ function movecommits_usage() {
 ##                                                                            ##
 ################################################################################
 
+# Actually do the magic!
 function move_commits() {
     local num_commits_to_move="$1"
     local destination_branch="$2"
@@ -46,6 +47,16 @@ function move_commits() {
     for (( idx=${#commit_id_array[@]}-1 ; idx>=0 ; idx-- )); do
         git cherry-pick "${commit_id_array[idx]}"
     done
+}
+
+# Make sure to stash any current changes before moving on:
+function stash_changes_if_needed() {
+    if ! git diff-index --cached --quiet HEAD --ignore-submodules --
+    then
+        echow "You have uncommitted changes in your working branch."
+        echo "These changes will be stashed." 1>&2
+        git stash save
+    fi
 }
 
 # Aborts the program if the user requests help
