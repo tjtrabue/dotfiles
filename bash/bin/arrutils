@@ -196,7 +196,7 @@ function append() {
 function sort() {
     local arr_copy=$1[@]
     local left=0
-    local right=$((${#$arr_copy[@]} - 1))
+    local right=$((${#arr_copy[@]} - 1))
     _quick_sort "$@"
 }
 
