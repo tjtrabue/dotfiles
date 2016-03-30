@@ -50,6 +50,12 @@ function parse_user_input() {
     fi
 }
 
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
 ################################################################################
 ##                                                                            ##
 ##                               Exit Functions                               ##

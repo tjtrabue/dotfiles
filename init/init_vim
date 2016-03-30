@@ -2,7 +2,7 @@
 
 # Prep the .vim dir and install Pathogen:
 if [[ ! -f ~/.vim/autoload/pathogen.vim ]]; then
-    mkdir -p ~/.vim ~/.vim/autoload ~/.vim/bundle
+    mkdir -p ~/.vim ~/.vim/autoload ~/.vim/bundle ~/.vim/backups
     curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 fi
 
