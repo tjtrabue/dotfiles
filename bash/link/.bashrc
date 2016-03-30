@@ -31,14 +31,14 @@ function rmdirs() {
     touch ~/.dirs && echo "#!/usr/bin/env bash" >> ~/.dirs
     local line
     while read line; do
-        if [[ "$line" =~ "^export.*" ]]; then
+        if [[ "$line" =~ ^export.* ]]; then
             local dir="$(echo $line | sed -e 's/^export.*=//')"
             if [[ "$dir" ]]; then
                 echo "$line" >> ~/.dirs
             fi
         fi
     done < ~/.dirs.tmp
-    # Remove temp directory file
+    # Remove the temporary dirs file
     rm ~/.dirs.tmp
 }
 
