@@ -7,11 +7,11 @@
 ################################################################################
 
 # Usage message:
-function sw_usage() {
+function switch_usage() {
     echo "A git branch-switching alias with some memory thrown in for good measure." 1>&2
     echo "If no parameters are supplied, this tool switches the user back to master." 1>&2
     echo "USAGE:" 1>&2
-    echo "  sw [-<integer> | branch_name]" 1>&2
+    echo "  switch [-<integer> | branch_name]" 1>&2
     echo "OPTIONS:" 1>&2
     echo "  -<integer>  : a flag passed in like '-1' or '-3' which mean 'return" 1>&2
     echo "                to the last branch' and 'return to the branch I was on" 1>&2
@@ -47,7 +47,7 @@ function exit_if_not_git_repo() {
 # Exits the program if the user passes in a -h or --help flag:
 function exit_if_help_requested() {
     if [[ "$@" == "--help" || "$@" == "-h" ]]; then
-        echo sw_usage
+        echo switch_usage
         exit 0
     fi
 }
@@ -56,7 +56,7 @@ function exit_if_help_requested() {
 function exit_if_input_incorrect() {
     if [[ "$#" -gt 1 ]]; then
         echoe "Too many parameters supplied."
-        sw_usage
+        switch_usage
         exit 1
     fi
 }
