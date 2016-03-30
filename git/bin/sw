@@ -28,6 +28,43 @@ function sw_usage() {
     echo "          master branch." 1>&2
 }
 
+# Exits the program if not in a git repo:
+function exit_if_not_git_repo() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+    if [[ "$?" -ne 0 ]]; then
+        echoe "Not inside a git repo"
+        echo "Aborting" 1>&2
+        exit 5
+    fi
+}
+
+# Exits the program if the user passes in a -h or --help flag:
+function exit_if_help_requested() {
+    if [[ "$@" == "--help" || "$@" == "-h" ]]; then
+        echo sw_usage
+        exit 0
+    fi
+}
+
+# Exits if the user supplied incorrect input:
+function exit_if_input_incorrect() {
+    if [[ "$#" -gt 1 ]]; then
+        echoe "Too many parameters supplied."
+        sw_usage
+        exit 1
+    fi
+}
+
+# Actually makes the branch change:
+function do_switch() {
+    local to_switch="$@"
+    if [[ "$to_switch" != "$(git rev-parse --abbrev-ref HEAD)" ]]; then
+        git checkout "$@"
+    else
+        echo -e "Already on branch ${BLUE}$to_switch${NC}" 1>&2
+    fi
+}
+
 # Parses user input and decides which branch to choose:
 # Syntax:
 #    parse_user_input $branch_indicator
@@ -54,13 +91,13 @@ destination_branch="master"
 ##                                                                            ##
 ################################################################################
 
-if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-    echo sw_help
-    exit 0
-fi
+# Exit if some condition is incorrect:
+exit_if_help_requested
+exit_if_not_git_repo
+exit_if_input_incorrect
 
 if [[ "$#" -gt 0 ]]; then
     destination_branch="$(parse_user_input "$@")"
 fi
 
-git checkout "$destination_branch"
+do_switch "$destination_branch"
