@@ -101,6 +101,7 @@ for arg in "$@"; do
             ;;
         --* | -*)
             echoe "Unknown argument $arg"
+            gref_usage
             exit 3
     esac
 done
