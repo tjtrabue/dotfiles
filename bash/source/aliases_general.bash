@@ -36,6 +36,8 @@ alias reshell="exec $SHELL -l"
 # Reload powerline theme and colorscheme:
 alias pdr="powerline-daemon --replace"
 
+alias rsy="rsync -a"
+
 ###########################################################################
 ##                          Aliases taken from                           ##
 ##                        mathiasbynens/dotfiles                         ##
