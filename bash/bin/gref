@@ -7,15 +7,15 @@
 ################################################################################
 
 # Full help message
-function gf_help() {
-    echo "gf is a tool for searching for files on your machine. It is primarily an alias" 1>&2
+function gref_help() {
+    echo "gref is a tool for searching for files on your machine. It is primarily an alias" 1>&2
     echo "for find, but it has some additional utilities as well."
 }
 
 # Usage message
-function gf_usage() {
+function gref_usage() {
     echo "Usage:" 1>&2
-    echo "    gf [-d <path to directory>] [file pattern]" 1>&2
+    echo "    gref [-d <path to directory>] [file pattern]" 1>&2
 }
 
 ################################################################################
@@ -27,7 +27,7 @@ function gf_usage() {
 # Exit the program if the user requests help
 function exit_if_help_requested() {
     if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        echo gf_help
+        echo gref_help
         exit 0
     fi
 }
@@ -99,7 +99,7 @@ while getopts ":d:" o; do
             ;;
         *)
             echoe "Unknown operand $o" 1>&2
-            gf_usage
+            gref_usage
             exit 1
             ;;
     esac
