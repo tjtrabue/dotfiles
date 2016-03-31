@@ -29,8 +29,8 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                       ##
 ###########################################################################
 
-branches=( $(git branch --no-color 2> /dev/null
-    | sed 's/^\*/ /'
+branches=( $(git branch --no-color 2> /dev/null \
+    | sed 's/^\*/ /' \
     | sed 's/^[ ]*//' ) )
 color_flag=true
 
