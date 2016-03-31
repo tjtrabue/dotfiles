@@ -52,15 +52,6 @@ function exit_if_no_input_supplied() {
 ##                                                                            ##
 ################################################################################
 
-# Actually do the search
-function perform_search() {
-    local dir_path="$1"
-    local file_pattern="$2"
-    local grep_pattern="$3"
-
-    find "$dir_path" -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
-}
-
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -76,6 +67,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 dir_path="."
 file_pattern="*"
 grep_pattern=""
+recursive=true
 
 ################################################################################
 ##                                                                            ##
@@ -102,6 +94,9 @@ for arg in "$@"; do
             grep_pattern="$2"
             shift 2
             ;;
+        --non-recursive | -n)
+            recursive=false
+            ;;
         --* | -*)
             echoe "Unknown argument $arg"
             exit 3
@@ -113,4 +108,8 @@ if [[ "$#" -gt 0 ]]; then
     grep_pattern="$1"
 fi
 
-perform_search "$dir_path" "$file_pattern" "$grep_pattern"
+if $recursive ; then
+    find "$dir_path" -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
+else
+    find "$dir_path" -maxdepth 1 -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
+fi
