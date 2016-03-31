@@ -43,6 +43,9 @@ function syml() {
 
 # Update OS X, Homebrew, Ruby, npm, sdkman, pip, and their installed packages
 function update() {
+    # Keep-alive: update existing `sudo` time stamp until the updates complete:
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
     sudo softwareupdate -i -a;
     brew update; brew upgrade --all;
     brew cleanup;
