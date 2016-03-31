@@ -32,14 +32,6 @@ function exit_if_help_requested() {
     fi
 }
 
-# Exit the program if the user provides incorrect input
-function exit_if_input_incorrect() {
-    if [[ "$#" -gt 3 ]]; then
-        echoe "Incorrect number of parameters supplied"
-        exit 2
-    fi
-}
-
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
@@ -79,8 +71,8 @@ grep_pattern=".*"
 
 # Exit conditions:
 exit_if_help_requested "$@"
-exit_if_input_incorrect "$@"
 
+# Parse user input:
 for arg in "$@"; do
     case "$arg" in
         --dir | -d)
@@ -95,6 +87,9 @@ for arg in "$@"; do
             grep_pattern="$2"
             shift 2
             ;;
+        *)
+            echoe "Unknown argument $arg"
+            exit 3
     esac
 done
 
