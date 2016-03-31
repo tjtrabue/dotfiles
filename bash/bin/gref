@@ -37,9 +37,9 @@ function exit_if_help_requested() {
     fi
 }
 
-# Exit program if user doesn’t input any arguments
-function exit_if_no_input_supplied() {
-    if [[ "$#" -eq 0 ]]; then
+# Exit program if user doesn't supply correct input
+function exit_if_input_incorrect() {
+    if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
         echoe "You must supply a pattern to search for"
         gref_usage
         exit 2
@@ -77,7 +77,7 @@ recursive=true
 
 # Exit conditions:
 exit_if_help_requested "$@"
-exit_if_no_input_supplied "$@"
+exit_if_input_incorrect "$@"
 
 # Parse user input:
 for arg in "$@"; do
