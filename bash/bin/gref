@@ -15,7 +15,7 @@ function gref_help() {
 # Usage message
 function gref_usage() {
     echo "Usage:" 1>&2
-    echo "    gref [-d <path to directory>] [file pattern]" 1>&2
+    echo "    gref [options] [pattern to search files for]" 1>&2
 }
 
 ################################################################################
@@ -41,10 +41,11 @@ function exit_if_help_requested() {
 # Actually do the search
 function perform_search() {
     local dir_path="$1"
-    local file_pattern="$2"
-    local grep_pattern="$3"
+    local type_to_search="$2"
+    local file_pattern="$3"
+    local grep_pattern="$4"
 
-    find "$dir_path" -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
+    find "$dir_path" -type "$type_to_search" -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
 }
 
 # Used for printing errors:
@@ -60,6 +61,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ################################################################################
 
 dir_path="."
+type_to_search="f"
 file_pattern="*"
 grep_pattern=".*"
 
@@ -79,6 +81,10 @@ for arg in "$@"; do
             dir_path="$2"
             shift 2
             ;;
+        --type | -t)
+            type_to_search="$2"
+            shift 2
+            ;;
         --file | -f)
             file_pattern="$2"
             shift 2
@@ -87,7 +93,7 @@ for arg in "$@"; do
             grep_pattern="$2"
             shift 2
             ;;
-        *)
+        --* | -*)
             echoe "Unknown argument $arg"
             exit 3
     esac
@@ -98,4 +104,4 @@ if [[ "$#" -gt 0 ]]; then
     grep_pattern="$1"
 fi
 
-perform_search "$dir_path" "$file_pattern" "$grep_pattern"
+perform_search "$dir_path" "$type_to_search" "$file_pattern" "$grep_pattern"
