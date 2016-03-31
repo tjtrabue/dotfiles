@@ -111,6 +111,7 @@ if [[ "$#" -gt 0 ]]; then
     grep_pattern="$1"
 fi
 
+# Actually perform the search:
 if $recursive ; then
     find "$dir_path" -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
 else
