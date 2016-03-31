@@ -15,9 +15,22 @@ function gf_help() {
 # Usage message
 function gf_usage() {
     echo "Usage:" 1>&2
-    echo "    gf [path to directory] [file pattern]" 1>&2
+    echo "    gf [-d <path to directory>] [file pattern]" 1>&2
 }
 
+################################################################################
+##                                                                            ##
+##                               Exit Functions                               ##
+##                                                                            ##
+################################################################################
+
+# Exit the program if the user requests help
+function exit_if_help_requested() {
+    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+        echo gf_help
+        exit 0
+    fi
+}
 
 ################################################################################
 ##                                                                            ##
@@ -25,7 +38,16 @@ function gf_usage() {
 ##                                                                            ##
 ################################################################################
 
+# Actually do the search
+function perform_search() {
 
+}
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
@@ -41,4 +63,21 @@ file_pattern=""
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+# Exit conditions:
+exit_if_help_requested "$@"
+
+while getopts ":d:" o; do
+    case "${o}" in
+        d)
+            dir_path="${OPTARG}"
+            ;;
+        *)
+            echoe "Unknown operand $o" 1>&2
+            func_usage
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
 
