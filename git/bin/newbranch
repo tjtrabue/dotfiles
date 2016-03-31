@@ -17,17 +17,17 @@ function newbranch_help() {
 # Usage message:
 function newbranch_usage() {
     echo "Usage:" 1>&2
-    echo "    newbranch [-u <upstream> -b <branch name> -n] [branch_name]" 1>&2
+    echo "    newbranch [-t <tracked_branch> -b <branch name> -n] [branch_name]" 1>&2
     echo "Options:" 1>&2
-    echo "    -u <upstream>    : sets the upstream branch tracked by the new branch" 1>&2
-    echo "                       to a branch specified by the user. If this arguemnt" 1>&2
-    echo "                       is not provided, the upstream branch defaults to origin/master" 1>&2
-    echo "    -b <branch name> : sets the value of the new branch name. If this argument" 1>&2
-    echo "                       is ommitted, the user will be prompted to provide a names." 1>&2
-    echo "                       This is equivalent to putting the branch name at the end of the binary" 1>&2
-    echo "                       without any flag prefix" 1>&2
-    echo "    -n               : signals that the local branch should not track a remote branch" 1>&2
-    echo "    -h --help        : prints the help message (this message)" 1>&2
+    echo "    -t <tracked_branch>    : sets the remote branch tracked by the new branch" 1>&2
+    echo "                             to a branch specified by the user. If this arguemnt" 1>&2
+    echo "                             is not provided, the upstream branch defaults to origin/master" 1>&2
+    echo "    -b <branch name>       : sets the value of the new branch name. If this argument" 1>&2
+    echo "                             is ommitted, the user will be prompted to provide a names." 1>&2
+    echo "                             This is equivalent to putting the branch name at the end of the binary" 1>&2
+    echo "                             without any flag prefix" 1>&2
+    echo "    -n                     : signals that the local branch should not track a remote branch" 1>&2
+    echo "    -h --help              : prints the help message (this message)" 1>&2
 }
 
 # Gets the new branch's name from the user:
@@ -48,11 +48,11 @@ function create_local_branch() {
     fi
 
     local new_branch_name="$1"
-    local upstream="$2"
+    local tracked="$2"
     local track_upstream="$3"
 
     if $track_upstream ; then
-        git checkout -b "$new_branch_name" --track "$upstream"
+        git checkout -b "$new_branch_name" --track "$tracked"
     else
         git checkout -b "$new_branch_name"
     fi
@@ -90,7 +90,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
-upstream="origin/master"
+tracked="origin/master"
 new_branch_name=""
 track_upstream=true
 branch_exists=""
@@ -108,10 +108,10 @@ if [[ "$1" == "--help" || "$1" == "-h" ]]; then
 fi
 
 # Get optional arguments:
-while getopts ":u:b:n" o; do
+while getopts ":t:b:n" o; do
     case "${o}" in
-        u)
-            upstream="${OPTARG}"
+        t)
+            tracked="${OPTARG}"
             ;;
         b)
             new_branch_name="${OPTARG}"
@@ -147,4 +147,4 @@ while [[ ! $(check_branch_exists "$new_branch_name") ]] ; do
 done
 
 # Finally, if everything else checks out, create the branch:
-create_local_branch "$new_branch_name" "$upstream" "$track_upstream"
+create_local_branch "$new_branch_name" "$tracked" "$track_upstream"
