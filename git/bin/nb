@@ -2,7 +2,7 @@
 
 ################################################################################
 ##                                                                            ##
-##                             Supporting Functions                           ##
+##                               Usage Functions                              ##
 ##                                                                            ##
 ################################################################################
 
@@ -29,6 +29,12 @@ function nb_usage() {
     echo "    -n                     : signals that the local branch should not track a remote branch" 1>&2
     echo "    -h --help              : prints the help message (this message)" 1>&2
 }
+
+################################################################################
+##                                                                            ##
+##                             Supporting Functions                           ##
+##                                                                            ##
+################################################################################
 
 # Gets the new branch's name from the user:
 function get_branch_name_from_user() {
