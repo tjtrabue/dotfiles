@@ -12,14 +12,14 @@ alias gl="git log -3"
 # Info aliases:
 alias gs="git status"
 alias groot="git rev-parse --show-toplevel"
-alias gtracked="git for-each-ref --format='%(upstream:short)' \$(git symbolic-ref -q HEAD)"
+alias gtracked="git for-each-ref --format='%(upstream:short)' \"\$(git symbolic-ref -q HEAD)\""
 
 # Return number of modified files:
 alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 
 # Staging/pushing/pulling aliases:
 alias ga="git add"
-alias gaa="git add \$(git rev-parse --show-toplevel)/"
+alias gaa="git add \"\$(git rev-parse --show-toplevel)\"/"
 alias gc="git commit -m"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
