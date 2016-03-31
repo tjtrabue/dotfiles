@@ -37,7 +37,7 @@ alias reshell="exec $SHELL -l"
 alias pdr="powerline-daemon --replace"
 
 # Directory syncing aliases:
-alias rsy="rsync -a"
+alias rsa="rsync -a"
 
 ###########################################################################
 ##                          Aliases taken from                           ##
