@@ -6,6 +6,17 @@
 ##                                                                            ##
 ################################################################################
 
+# Full help message
+function gf_help() {
+    echo "gf is a tool for searching for files on your machine. It is primarily an alias" 1>&2
+    echo "for find, but it has some additional utilities as well."
+}
+
+# Usage message
+function gf_usage() {
+    echo "Usage:" 1>&2
+    echo "    gf [path to directory] [file pattern]" 1>&2
+}
 
 
 ################################################################################
@@ -22,7 +33,8 @@
 ##                                                                            ##
 ################################################################################
 
-
+dir_path="."
+file_pattern=""
 
 ################################################################################
 ##                                                                            ##
