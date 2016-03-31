@@ -34,7 +34,7 @@ function exit_if_help_requested() {
 
 # Exit the program if the user provides incorrect input
 function exit_if_input_incorrect() {
-    if [[ "$#" -gt 2 || "$#" -lt 1 ]]; then
+    if [[ "$#" -gt 3 ]]; then
         echoe "Incorrect number of parameters supplied"
         exit 2
     fi
@@ -48,24 +48,25 @@ function exit_if_input_incorrect() {
 
 # Actually do the search
 function perform_search() {
-    if [[ "$#" -eq 2 ]]; then
-        local dir_path="$1"
-        local file_pattern="$2"
-    elif [[ "$#" -eq 1 ]]; then
-        local dir_path="."
-        local file_pattern="$1"
-    else
-        local dir_path="."
-        local file_pattern="*"
-    fi
+    local dir_path="$1"
+    local file_pattern="$2"
+    local grep_pattern="$3"
 
-    find "$dir_path" -name "$file_pattern"
+    find "$dir_path" -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
 }
 
 # Sets the file variables
 function set_variables() {
-    dir_path="$1"
-    file_pattern="$2"
+    if [[ "$#" -eq 2 ]]; then
+        dir_path="$1"
+        file_pattern="$2"
+    elif [[ "$#" -eq 1 ]]; then
+        file_pattern="$1"
+        dir_path="."
+    else
+        file_pattern="*"
+        dir_path="."
+    fi
 }
 
 # Used for printing errors:
@@ -82,6 +83,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 dir_path="."
 file_pattern="*"
+grep_pattern=".*"
 
 ################################################################################
 ##                                                                            ##
@@ -91,19 +93,24 @@ file_pattern="*"
 
 # Exit conditions:
 exit_if_help_requested "$@"
+exit_if_input_incorrect "$@"
 
-while getopts ":d:" o; do
-    case "${o}" in
-        d)
-            dir_path="${OPTARG}"
+for arg in "$@"; do
+    case "$arg" in
+        --path)
+            dir_path="$2"
+            shift 2
+            ;;
+        --file)
+            file_pattern="$2"
+            shift 2
+            ;;
+        --pattern)
+            grep_pattern="$2"
+            shift 2
             ;;
         *)
-            echoe "Unknown operand $o" 1>&2
-            gref_usage
-            exit 1
-            ;;
     esac
 done
-shift $((OPTIND - 1))
 
-perform_search "$@"
+perform_search "$dir_path $file_pattern $grep_pattern"
