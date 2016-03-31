@@ -98,4 +98,9 @@ for arg in "$@"; do
     esac
 done
 
+# If user enters the grep pattern without any flags, just accept it as is:
+if [[ "$#" -gt 0 ]]; then
+    grep_pattern="$1"
+fi
+
 perform_search "$dir_path" "$file_pattern" "$grep_pattern"
