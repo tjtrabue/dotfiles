@@ -85,7 +85,7 @@ while getopts ":d:" o; do
             ;;
         *)
             echoe "Unknown operand $o" 1>&2
-            func_usage
+            gf_usage
             exit 1
             ;;
     esac
