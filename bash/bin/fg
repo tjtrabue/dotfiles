@@ -7,16 +7,16 @@
 ################################################################################
 
 # Full help message
-function fg_help() {
-    echo "fg is a tool for searching for files based on a pattern. It stands for 'find grep,'" 1>&2
+function gref_help() {
+    echo "gref is a tool for searching for files based on a pattern. It stands for 'grep find,'" 1>&2
     echo "since it uses a combination of these tools to search." 1>&2
-    fg_usage
+    gref_usage
 }
 
 # Usage message
-function fg_usage() {
+function gref_usage() {
     echo "Usage:" 1>&2
-    echo "    fg [options] [pattern to search files for]" 1>&2
+    echo "    gref [options] [pattern to search files for]" 1>&2
     echo "Options:" 1>&2
     echo "    --dir | -d             -   the base directory to search in" 1>&2
     echo "    --file | -f            -   a file pattern to narrow down search results" 1>&2
@@ -35,7 +35,7 @@ function fg_usage() {
 # Exit the program if the user requests help
 function exit_if_help_requested() {
     if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        fg_help
+        gref_help
         exit 0
     fi
 }
@@ -44,7 +44,7 @@ function exit_if_help_requested() {
 function exit_if_input_incorrect() {
     if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
         echoe "You must supply a pattern to search for"
-        fg_usage
+        gref_usage
         exit 2
     fi
 }
@@ -102,7 +102,7 @@ for arg in "$@"; do
             ;;
         --* | -*)
             echoe "Unknown argument $arg"
-            fg_usage
+            gref_usage
             exit 3
     esac
 done
