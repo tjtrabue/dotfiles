@@ -36,6 +36,7 @@ alias reshell="exec $SHELL -l"
 # Reload powerline theme and colorscheme:
 alias pdr="powerline-daemon --replace"
 
+# Directory syncing aliases:
 alias rsy="rsync -a"
 
 ###########################################################################
