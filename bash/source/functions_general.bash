@@ -5,7 +5,7 @@
 #########################################
 
 # Returns the block of sourced code for the function or alias given as an argument:
-func () {
+function func() {
     local CODE="`declare -f $@`";
     if [[ -z "$CODE" ]]; then
         alias -m | grep "alias $@=";
@@ -28,6 +28,17 @@ function get_index() {
          fi
     done
     echo -1
+}
+
+# Shows all symlinks and the files they point to for a given directory.
+# If no direcotry is specified, it checks the current directory.
+function syml() {
+    local directory="."
+    if [[ "$#" -gt 0 ]]; then
+        directory="$1"
+    fi
+
+    ls -la "$directory" | grep '\->' | awk {'print $9 " " $10 " " $11'}
 }
 
 #########################################
