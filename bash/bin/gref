@@ -75,7 +75,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 dir_path="."
 file_pattern="*"
-grep_pattern=".*"
+grep_pattern=""
 
 ################################################################################
 ##                                                                            ##
