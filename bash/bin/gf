@@ -32,6 +32,14 @@ function exit_if_help_requested() {
     fi
 }
 
+# Exit the program if the user provides incorrect input
+function exit_if_input_incorrect() {
+    if [[ "$#" -gt 2 || "$#" -lt 1 ]]; then
+        echoe "Incorrect number of parameters supplied"
+        exit 2
+    fi
+}
+
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
@@ -52,6 +60,12 @@ function perform_search() {
     fi
 
     find "$dir_path" -name "$file_pattern"
+}
+
+# Sets the file variables
+function set_variables() {
+    dir_path="$1"
+    file_pattern="$2"
 }
 
 # Used for printing errors:
