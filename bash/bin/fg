@@ -8,7 +8,7 @@
 
 # Full help message
 function fg_help() {
-    echo "fg is a tool for searching for files based on a pattern. It stands for 'grep find,'" 1>&2
+    echo "fg is a tool for searching for files based on a pattern. It stands for 'find grep,'" 1>&2
     echo "since it uses a combination of these tools to search." 1>&2
     fg_usage
 }
