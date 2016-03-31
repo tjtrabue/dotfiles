@@ -18,12 +18,12 @@ function gref_usage() {
     echo "Usage:" 1>&2
     echo "    gref [options] [pattern to search files for]" 1>&2
     echo "Options:" 1>&2
-    echo "    --dir | -d             -   the base directory to search in" 1>&2
-    echo "    --file | -f            -   a file pattern to narrow down search results" 1>&2
-    echo "    --pattern | -p         -   the actual string pattern to search for (can also be entered" 1>&2
-    echo "                               without any flags after all other arguments have been entered)" 1>&2
-    echo "    --non-recursive | -n   -   specify the search to only check the working directory for matches" 1>&2
-    echo "    --help | h             -   print help message and exit" 1>&2
+    echo "    --dir | -d <directory path> - the base directory to search in" 1>&2
+    echo "    --file | -f <pattern>       - a file pattern to narrow down search results" 1>&2
+    echo "    --pattern | -p <pattern>    -   the actual string pattern to search for (can also be entered" 1>&2
+    echo "                                    without any flags after all other arguments have been entered)" 1>&2
+    echo "    --non-recursive | -n        -   specify the search to only check the working directory for matches" 1>&2
+    echo "    --help | -h                 -   print help message and exit" 1>&2
 }
 
 ################################################################################
