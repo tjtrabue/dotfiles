@@ -22,6 +22,7 @@ function gref_usage() {
     echo "    --pattern | -p         -   the actual string pattern to search for (can also be entered" 1>&2
     echo "                               without any flags after all other arguments have been entered)" 1>&2
     echo "    --non-recursive | -n   -   specify the search to only check the working directory for matches" 1>&2
+    echo "    --help | h             -   print help message and exit" 1>&2
 }
 
 ################################################################################
