@@ -12,6 +12,7 @@ alias gl="git log -3"
 # Info aliases:
 alias gs="git status"
 alias groot="git rev-parse --show-toplevel"
+alias gtracked="git for-each-ref --format='%(upstream:short)' \$(git symbolic-ref -q HEAD)"
 
 # Return number of modified files:
 alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""

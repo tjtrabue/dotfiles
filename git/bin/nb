@@ -96,7 +96,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
-tracked="origin/master"
+tracked="$(git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)")"
 new_branch_name=""
 track_upstream=true
 branch_exists=""
