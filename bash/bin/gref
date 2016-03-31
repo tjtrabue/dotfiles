@@ -55,20 +55,6 @@ function perform_search() {
     find "$dir_path" -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
 }
 
-# Sets the file variables
-function set_variables() {
-    if [[ "$#" -eq 2 ]]; then
-        dir_path="$1"
-        file_pattern="$2"
-    elif [[ "$#" -eq 1 ]]; then
-        file_pattern="$1"
-        dir_path="."
-    else
-        file_pattern="*"
-        dir_path="."
-    fi
-}
-
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -97,20 +83,19 @@ exit_if_input_incorrect "$@"
 
 for arg in "$@"; do
     case "$arg" in
-        --path)
+        --dir | -d)
             dir_path="$2"
             shift 2
             ;;
-        --file)
+        --file | -f)
             file_pattern="$2"
             shift 2
             ;;
-        --pattern)
+        --pattern | -p)
             grep_pattern="$2"
             shift 2
             ;;
-        *)
     esac
 done
 
-perform_search "$dir_path $file_pattern $grep_pattern"
+perform_search "$dir_path" "$file_pattern" "$grep_pattern"
