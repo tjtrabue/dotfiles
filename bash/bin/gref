@@ -16,6 +16,11 @@ function gref_help() {
 function gref_usage() {
     echo "Usage:" 1>&2
     echo "    gref [options] [pattern to search files for]" 1>&2
+    echo "Options:" 1>&2
+    echo "    --dir | -d   -   the base directory to search in" 1>&2
+    echo "    --file | -f   -   a file pattern to narrow down search results" 1>&2
+    echo "    --pattern | -p   -   the actual string pattern to search for (can also be entered" 1>&2
+    echo "              without any flags after all other arguments have been entered)" 1>&2
 }
 
 ################################################################################
@@ -27,8 +32,17 @@ function gref_usage() {
 # Exit the program if the user requests help
 function exit_if_help_requested() {
     if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        echo gref_help
+        gref_help
         exit 0
+    fi
+}
+
+# Exit program if user doesn’t input any arguments
+function exit_if_no_input_supplied() {
+    if [[ "$#" -eq 0 ]]; then
+        echoe "You must supply a pattern to search for"
+        gref_usage
+        exit 2
     fi
 }
 
@@ -41,11 +55,10 @@ function exit_if_help_requested() {
 # Actually do the search
 function perform_search() {
     local dir_path="$1"
-    local type_to_search="$2"
-    local file_pattern="$3"
-    local grep_pattern="$4"
+    local file_pattern="$2"
+    local grep_pattern="$3"
 
-    find "$dir_path" -type "$type_to_search" -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
+    find "$dir_path" -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
 }
 
 # Used for printing errors:
@@ -61,7 +74,6 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ################################################################################
 
 dir_path="."
-type_to_search="f"
 file_pattern="*"
 grep_pattern=".*"
 
@@ -73,16 +85,13 @@ grep_pattern=".*"
 
 # Exit conditions:
 exit_if_help_requested "$@"
+exit_if_no_input_supplied "$@"
 
 # Parse user input:
 for arg in "$@"; do
     case "$arg" in
         --dir | -d)
             dir_path="$2"
-            shift 2
-            ;;
-        --type | -t)
-            type_to_search="$2"
             shift 2
             ;;
         --file | -f)
@@ -104,4 +113,4 @@ if [[ "$#" -gt 0 ]]; then
     grep_pattern="$1"
 fi
 
-perform_search "$dir_path" "$type_to_search" "$file_pattern" "$grep_pattern"
+perform_search "$dir_path" "$file_pattern" "$grep_pattern"
