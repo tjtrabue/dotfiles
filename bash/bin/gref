@@ -8,8 +8,8 @@
 
 # Full help message
 function gref_help() {
-    echo "gref is a tool for searching for files on your machine. It is primarily an alias" 1>&2
-    echo "for find, but it has some additional utilities as well."
+    echo "gref is a tool for searching for files based on a pattern. It stands for 'grep find,'" 1>&2
+    echo "since it uses a combination of these tools to search." 1>&2
 }
 
 # Usage message
