@@ -51,8 +51,8 @@ function update() {
     sudo gem update --system;
     sudo gem update;
     sdk selfupdate;
-    pip install --upgrade pip
-    pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+    pip install --upgrade pip;
+    pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U;
 }
 
 #########################################
