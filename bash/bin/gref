@@ -10,6 +10,7 @@
 function gref_help() {
     echo "gref is a tool for searching for files based on a pattern. It stands for 'grep find,'" 1>&2
     echo "since it uses a combination of these tools to search." 1>&2
+    gref_usage
 }
 
 # Usage message
