@@ -74,6 +74,12 @@ function rmbaks() {
     fi
 }
 
+# Make a new executable file:
+function mke() {
+    touch "$@" && chmod a+x "$@"
+    echo -n "#!/usr/bin/env bash" >> "$@"
+}
+
 #########################################
 ##       Directory Manipulation        ##
 #########################################
