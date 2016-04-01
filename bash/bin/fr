@@ -28,6 +28,8 @@ function fr_usage() {
     echo "    --replace | -r <string>" 1>&2
     echo "        the string to replace all matches with in the file heirarchy" 1>&2
     echo "        (can also be entered as the second argument after all options)" 1>&2
+    echo "    --whole-word | -w" 1>&2
+    echo "        match whole words instead of a pattern" 1>&2
     echo "    --non-recursive | -n" 1>&2
     echo "        tell fr to only check the working directory for matches" 1>&2
     echo "    --max-depth | -M <int>        " 1>&2
@@ -83,6 +85,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 search=""
 replace=""
+whole_word=false
 dir_path="."
 file_pattern="-iname \"*\""
 max_depth=""
@@ -115,6 +118,10 @@ for arg in "$@"; do
             replace="$2"
             shift 2
             ;;
+        --whole-word | -w)
+            whole_word=true
+            shift 1
+            ;;
         --non-recursive | -n)
             max_depth="-maxdepth 1"
             min_depth=""
@@ -144,6 +151,11 @@ fi
 if [[ "$1" != "" ]]; then
     replace="$1"
     shift 1
+fi
+
+# Match whole words if the user specifies:
+if $whole_word ; then
+    search="\b$search\b"
 fi
 
 # Exit conditions:
