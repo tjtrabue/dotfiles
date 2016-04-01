@@ -18,6 +18,24 @@ function fr_usage() {
     echo "Usage:" 1>&2
     echo "    fr [options] [search pattern] [replace pattern]" 1>&2
     echo "Options:" 1>&2
+    echo "    --dir | -d <directory path> " 1>&2
+    echo "        the base directory to search in" 1>&2
+    echo "    --file-pattern | -f <pattern>" 1>&2
+    echo "        a file pattern to narrow down search results" 1>&2
+    echo "    --search | -s <pattern>" 1>&2
+    echo "        the pattern to search for in the file heirarchy" 1>&2
+    echo "        (can also be entered as the first argument after all options)" 1>&2
+    echo "    --replace | -r <string>" 1>&2
+    echo "        the string to replace all matches with in the file heirarchy" 1>&2
+    echo "        (can also be entered as the second argument after all options)" 1>&2
+    echo "    --non-recursive | -n" 1>&2
+    echo "        tell gref to only check the working directory for matches" 1>&2
+    echo "    --max-depth | -M <int>        " 1>&2
+    echo "        the maximum level of directories to recurse down when searching" 1>&2
+    echo "    --min-depth | -m <int>        " 1>&2
+    echo "        the minimum level of directories to recurse down when searching" 1>&2
+    echo "    --help | -h                   " 1>&2
+    echo "        print help message and exit" 1>&2
 }
 
 
