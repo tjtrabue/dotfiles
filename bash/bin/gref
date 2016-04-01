@@ -102,7 +102,6 @@ for arg in "$@"; do
             max_depth="-maxdepth 1"
             min_depth=""
             shift 1
-            break
             ;;
         --max-depth | -M)
             max_depth="-maxdepth $2"
