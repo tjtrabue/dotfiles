@@ -155,7 +155,7 @@ fi
 
 # Match whole words if the user specifies:
 if $whole_word ; then
-    search="\b$search\b"
+    search="\(^\| \)$search\( \|$\)*"
 fi
 
 # Exit conditions:
