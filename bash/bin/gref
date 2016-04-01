@@ -138,4 +138,6 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 # Actually perform the search:
-eval "find $find_args" | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
+eval "find $find_args" 2> /dev/null \
+    | xargs -0 grep -c "$grep_pattern" 2> /dev/null \
+    | grep -v ":0$" 2> /dev/null
