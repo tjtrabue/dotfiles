@@ -81,8 +81,12 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
-search_pattern=""
-replace_pattern=""
+search=""
+replace=""
+dir_path="."
+file_pattern="\"*\""
+max_depth=""
+min_depth=""
 
 
 ################################################################################
@@ -91,3 +95,41 @@ replace_pattern=""
 ##                                                                            ##
 ################################################################################
 
+# Parse user input:
+for arg in "$@"; do
+    case "$arg" in
+        --dir | -d)
+            dir_path="$2"
+            shift 2
+            ;;
+        --file-pattern | -f)
+            file_pattern="-iname \"$2\""
+            shift 2
+            ;;
+        --pattern | -p)
+            grep_pattern="$2"
+            shift 2
+            ;;
+        --non-recursive | -n)
+            max_depth="-maxdepth 1"
+            min_depth=""
+            shift 1
+            ;;
+        --max-depth | -M)
+            max_depth="-maxdepth $2"
+            shift 2
+            ;;
+        --min-depth | -m)
+            min_depth="-mindepth $2"
+            shift 2
+            ;;
+        --* | -*)
+            echoe "Unknown argument '$arg' to gref"
+            gref_usage
+            exit 2
+    esac
+done
+
+# Exit conditions:
+exit_if_help_requested
+exit_if_input_incorrect
