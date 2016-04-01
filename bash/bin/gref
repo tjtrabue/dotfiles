@@ -47,7 +47,7 @@ function exit_if_input_incorrect() {
     if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
         echoe "You must supply a pattern to search for"
         gref_usage
-        exit 2
+        exit 1
     fi
 }
 
@@ -119,7 +119,7 @@ for arg in "$@"; do
         --* | -*)
             echoe "Unknown argument $arg"
             gref_usage
-            exit 3
+            exit 2
     esac
 done
 
