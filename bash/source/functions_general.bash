@@ -64,7 +64,7 @@ function update() {
 
 # Traverse the file tree recursively and delete all backup files:
 function rmbaks() {
-    find . -type f "*.bak" -print0 | xargs -0 rm
+    find . -type f -iname "*.bak" -print0 | xargs -0 rm
 }
 
 #########################################
