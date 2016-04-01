@@ -123,13 +123,15 @@ for arg in "$@"; do
 done
 
 # Put all the arguments together:
-find_args="$dir_path"
+find_args="$dir_path -type f"
 for param in "$max_depth" "$min_depth" "$file_pattern"; do
     if [[ "$param" != "" ]]; then
-        find_args="$find_args $param "
+        find_args="$find_args $param"
     fi
 done
 find_args="$find_args -print0"
+# echo "find $find_args"
+# exit
 
 # If user enters the grep pattern without any flags, just accept it as is:
 if [[ "$#" -gt 0 ]]; then
@@ -137,4 +139,4 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 # Actually perform the search:
-find "$find_args" | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
+eval "find $find_args" | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
