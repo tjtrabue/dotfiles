@@ -55,7 +55,7 @@ function exit_if_help_requested() {
 
 # Exit program if user doesn't supply correct input
 function exit_if_input_incorrect() {
-    if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
+    if [[ "$search" == "" || "$replace" == "" ]]; then
         echoe "You must supply a search pattern and a replace string"
         fr_usage
         exit 1
@@ -135,10 +135,6 @@ for arg in "$@"; do
     esac
 done
 
-# Exit conditions:
-exit_if_help_requested
-exit_if_input_incorrect
-
 # If the user enters the find and replace strings as regular arguments,
 # parse them here:
 if [[ "$1" != "" ]]; then
@@ -149,6 +145,10 @@ if [[ "$1" != "" ]]; then
     replace="$1"
     shift 1
 fi
+
+# Exit conditions:
+exit_if_help_requested
+exit_if_input_incorrect
 
 # Put the find arguments together to be evaluated:
 find_args="$dir_path"
