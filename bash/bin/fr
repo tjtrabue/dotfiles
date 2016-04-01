@@ -148,4 +148,5 @@ for param in "$dir_path" "$file_pattern" "$search" "$replace" "$max_depth" "$min
 done
 find_args="$find_args -print0"
 
+# Perform the actual find/replace
 eval "find $find_args" | xargs -0 sed -i.bak "s:$search:$replace:g"
