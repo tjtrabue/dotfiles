@@ -1,0 +1,17 @@
+<snippet>
+    <content><![CDATA[
+# Full help message
+function ${1:func}_help() {
+    ${2:#content}
+}
+
+# Usage message
+function ${1:func}_usage() {
+    ${3:#content}
+}
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>helpfuncs</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>
