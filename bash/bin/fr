@@ -84,7 +84,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 search=""
 replace=""
 dir_path="."
-file_pattern="\"*\""
+file_pattern="-iname \"*\""
 max_depth=""
 min_depth=""
 
@@ -151,8 +151,8 @@ exit_if_help_requested
 exit_if_input_incorrect
 
 # Put the find arguments together to be evaluated:
-find_args="$dir_path"
-for param in "$dir_path" "$file_pattern" "$search" "$replace" "$max_depth" "$min_depth"; do
+find_args="$dir_path -type f"
+for param in "$file_pattern" "$max_depth" "$min_depth"; do
     if [[ "$param" != "" ]]; then
         find_args="$find_args $param"
     fi
