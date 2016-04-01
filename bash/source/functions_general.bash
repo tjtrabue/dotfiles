@@ -63,8 +63,15 @@ function update() {
 #########################################
 
 # Traverse the file tree recursively and delete all backup files:
+# Syntax: rmbaks [-a | --all]
+# adding the -a or --all argument removes all tmp files as well.
 function rmbaks() {
-    find . -type f -iname "*.bak" -print0 | xargs -0 rm
+    local all="$1"
+    if [[ "$1" == "-a" || "$1" == "--all" ]]; then
+        find . -type f \( -name "*.bak" -or -name "*.tmp" \) -print0 | xargs -0 rm
+    else
+        find . -type f -name "*.bak" -print0 | xargs -0 rm
+    fi
 }
 
 #########################################
