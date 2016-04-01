@@ -88,6 +88,7 @@ file_pattern="\"*\""
 max_depth=""
 min_depth=""
 
+find_args=""
 
 ################################################################################
 ##                                                                            ##
@@ -106,8 +107,12 @@ for arg in "$@"; do
             file_pattern="-iname \"$2\""
             shift 2
             ;;
-        --pattern | -p)
-            grep_pattern="$2"
+        --search | -s)
+            search="$2"
+            shift 2
+            ;;
+        --replace | -r)
+            replace="$2"
             shift 2
             ;;
         --non-recursive | -n)
@@ -133,3 +138,12 @@ done
 # Exit conditions:
 exit_if_help_requested
 exit_if_input_incorrect
+
+# Put the find arguments together to be evaluated:
+find_args="$dir_path"
+for param in "$dir_path" "$file_pattern" "$search" "$replace" "$max_depth" "$min_depth"; do
+    if [[ "$param" != "" ]]; then
+        find_args="$find_args $param"
+    fi
+done
+find_args="$find_args -print0"
