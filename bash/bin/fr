@@ -45,6 +45,22 @@ function fr_usage() {
 ##                                                                            ##
 ################################################################################
 
+# Exit the program if the user requests help
+function exit_if_help_requested() {
+    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+        gref_help
+        exit 0
+    fi
+}
+
+# Exit program if user doesn't supply correct input
+function exit_if_input_incorrect() {
+    if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
+        echoe "You must supply a search pattern"
+        gref_usage
+        exit 1
+    fi
+}
 
 
 ################################################################################

@@ -1,0 +1,20 @@
+<snippet>
+    <content><![CDATA[
+# Exit the program if the user requests the help message:
+function exit_if_help_requested () {
+    if [[ "\$1" == "-h" || "\$1" == "--help" ]]; then
+        ${1:func}_help
+        exit 0
+    fi
+}
+
+# Exit the program if the user enters input incorrectly
+function exit_if_input_incorrect () {
+    ${2:#content}
+}
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>exitfuncs</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>
