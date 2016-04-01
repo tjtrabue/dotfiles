@@ -113,7 +113,7 @@ for arg in "$@"; do
             shift 2
             ;;
         --* | -*)
-            echoe "Unknown argument $arg"
+            echoe "Unknown argument '$arg' to gref"
             gref_usage
             exit 2
     esac
