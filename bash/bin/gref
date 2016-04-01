@@ -70,11 +70,12 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ################################################################################
 
 dir_path="."
-file_pattern="*"
+file_pattern="-iname \"*\""
 grep_pattern=""
-recursive=true
 max_depth=""
 min_depth=""
+
+find_args=""
 
 ################################################################################
 ##                                                                            ##
@@ -94,7 +95,7 @@ for arg in "$@"; do
             shift 2
             ;;
         --file | -f)
-            file_pattern="$2"
+            file_pattern="-iname \"$2\""
             shift 2
             ;;
         --pattern | -p)
@@ -102,14 +103,16 @@ for arg in "$@"; do
             shift 2
             ;;
         --non-recursive | -n)
-            recursive=false
+            max_depth="-maxdepth 1"
+            min_depth=""
+            break
             ;;
         --max-depth | -M)
-            max_depth="$2"
+            max_depth="-maxdepth $2"
             shift 2
             ;;
         --min-depth | -m)
-            min_depth="$2"
+            min_depth="-mindepth $2"
             shift 2
             ;;
         --* | -*)
@@ -119,23 +122,19 @@ for arg in "$@"; do
     esac
 done
 
+# Put all the arguments together:
+find_args="$dir_path"
+for param in "$max_depth" "$min_depth" "$file_pattern"; do
+    if [[ "$param" != "" ]]; then
+        find_args="$find_args $param "
+    fi
+done
+find_args="$find_args -print0"
+
 # If user enters the grep pattern without any flags, just accept it as is:
 if [[ "$#" -gt 0 ]]; then
     grep_pattern="$1"
 fi
 
 # Actually perform the search:
-if $recursive ; then
-    if [[ "$max_depth" != "" && "$min_depth" != "" ]]; then
-        find "$dir_path" -maxdepth "$max_depth" -mindepth "$min_depth" -type f -name "$file_pattern" -print0 \
-                        | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
-    elif [[ "$max_depth" != "" ]]; then
-        find "$dir_path" -maxdepth "$max_depth" -type f -name "$file_pattern" -print0 \
-                        | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
-    elif [[ "$min_depth" != "" ]]; then
-        find "$dir_path" -mindepth "$min_depth" -type f -name "$file_pattern" -print0 \
-                        | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
-    fi
-else
-    find "$dir_path" -maxdepth 1 -type f -name "$file_pattern" -print0 | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
-fi
+find "$find_args" | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
