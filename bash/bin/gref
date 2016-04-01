@@ -130,8 +130,6 @@ for param in "$max_depth" "$min_depth" "$file_pattern"; do
     fi
 done
 find_args="$find_args -print0"
-# echo "find $find_args"
-# exit
 
 # If user enters the grep pattern without any flags, just accept it as is:
 if [[ "$#" -gt 0 ]]; then
