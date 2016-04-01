@@ -155,7 +155,7 @@ fi
 
 # Match whole words if the user specifies:
 if $whole_word ; then
-    search="\(^\| \)\($search\( \|$\)\)+"
+    search="\<$search\>"
 fi
 
 # Exit conditions:
@@ -171,5 +171,8 @@ for param in "$file_pattern" "$max_depth" "$min_depth"; do
 done
 find_args="$find_args -print0"
 
+echo "search string: $search"
+exit
+
 # Perform the actual find/replace
-eval "find $find_args" | xargs -0 sed -i.bak "s:$search:$replace:g"
+eval "find $find_args" | xargs -0 sed -i.bak -e "s:$search:$replace:g"

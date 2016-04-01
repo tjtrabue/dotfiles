@@ -35,6 +35,7 @@ export DOTFILES_HOME COPY_DIR LINK_DIR INIT_DIR VENDORS PATH
 
 # The list of all my favorite developer tools to install via Homebrew Cask:
 cask_apps=(
+        adobe-reader
         alfred
         bartender
         coda
