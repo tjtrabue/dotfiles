@@ -18,11 +18,13 @@ function gref_usage() {
     echo "Usage:" 1>&2
     echo "    gref [options] [pattern to search files for]" 1>&2
     echo "Options:" 1>&2
-    echo "    --dir | -d <directory path> - the base directory to search in" 1>&2
-    echo "    --file | -f <pattern>       - a file pattern to narrow down search results" 1>&2
+    echo "    --dir | -d <directory path> -   the base directory to search in" 1>&2
+    echo "    --file | -f <pattern>       -   a file pattern to narrow down search results" 1>&2
     echo "    --pattern | -p <pattern>    -   the actual string pattern to search for (can also be entered" 1>&2
     echo "                                    without any flags after all other arguments have been entered)" 1>&2
     echo "    --non-recursive | -n        -   specify the search to only check the working directory for matches" 1>&2
+    echo "    --max-depth | -M <int>      -   the maximum levels of directories to recurse down when searching" 1>&2
+    echo "    --min-depth | -m <int>      -   the minimum levels of directories to recurse down when searching" 1>&2
     echo "    --help | -h                 -   print help message and exit" 1>&2
 }
 
@@ -71,6 +73,8 @@ dir_path="."
 file_pattern="*"
 grep_pattern=""
 recursive=true
+max_depth=""
+min_depth=""
 
 ################################################################################
 ##                                                                            ##
@@ -100,6 +104,14 @@ for arg in "$@"; do
         --non-recursive | -n)
             recursive=false
             ;;
+        --max-depth | -M)
+            max_depth="$2"
+            shift 2
+            ;;
+        --min-depth | -m)
+            min_depth="$2"
+            shift 2
+            ;;
         --* | -*)
             echoe "Unknown argument $arg"
             gref_usage
@@ -114,7 +126,16 @@ fi
 
 # Actually perform the search:
 if $recursive ; then
-    find "$dir_path" -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
+    if [[ "$max_depth" != "" && "$min_depth" != "" ]]; then
+        find "$dir_path" -maxdepth "$max_depth" -mindepth "$min_depth" -type f -name "$file_pattern" -print0 \
+                        | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
+    elif [[ "$max_depth" != "" ]]; then
+        find "$dir_path" -maxdepth "$max_depth" -type f -name "$file_pattern" -print0 \
+                        | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
+    elif [[ "$min_depth" != "" ]]; then
+        find "$dir_path" -mindepth "$min_depth" -type f -name "$file_pattern" -print0 \
+                        | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
+    fi
 else
-    find "$dir_path" -maxdepth 1 -type f -name "$file_pattern" -exec grep -l "$grep_pattern" {} \;
+    find "$dir_path" -maxdepth 1 -type f -name "$file_pattern" -print0 | xargs -0 grep -c "$grep_pattern" | grep -v ":0$"
 fi
