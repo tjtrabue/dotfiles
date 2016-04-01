@@ -139,6 +139,17 @@ done
 exit_if_help_requested
 exit_if_input_incorrect
 
+# If the user enters the find and replace strings as regular arguments,
+# parse them here:
+if [[ "$1" == "" ]]; then
+    search="$1"
+    shift 1
+fi
+if [[ "$1" ]]; then
+    replace="$1"
+    shift 1
+fi
+
 # Put the find arguments together to be evaluated:
 find_args="$dir_path"
 for param in "$dir_path" "$file_pattern" "$search" "$replace" "$max_depth" "$min_depth"; do
