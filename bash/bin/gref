@@ -45,7 +45,7 @@ function exit_if_help_requested() {
 # Exit program if user doesn't supply correct input
 function exit_if_input_incorrect() {
     if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
-        echoe "You must supply a pattern to search for"
+        echoe "You must supply a search pattern"
         gref_usage
         exit 1
     fi
@@ -83,10 +83,6 @@ find_args=""
 ##                                                                            ##
 ################################################################################
 
-# Exit conditions:
-exit_if_help_requested "$@"
-exit_if_input_incorrect "$@"
-
 # Parse user input:
 for arg in "$@"; do
     case "$arg" in
@@ -122,6 +118,10 @@ for arg in "$@"; do
             exit 2
     esac
 done
+
+# Exit conditions:
+exit_if_help_requested "$@"
+exit_if_input_incorrect "$@"
 
 # Put all the arguments together:
 find_args="$dir_path -type f"
