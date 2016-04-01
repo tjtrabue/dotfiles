@@ -29,7 +29,7 @@ function fr_usage() {
     echo "        the string to replace all matches with in the file heirarchy" 1>&2
     echo "        (can also be entered as the second argument after all options)" 1>&2
     echo "    --non-recursive | -n" 1>&2
-    echo "        tell gref to only check the working directory for matches" 1>&2
+    echo "        tell fr to only check the working directory for matches" 1>&2
     echo "    --max-depth | -M <int>        " 1>&2
     echo "        the maximum level of directories to recurse down when searching" 1>&2
     echo "    --min-depth | -m <int>        " 1>&2
@@ -48,7 +48,7 @@ function fr_usage() {
 # Exit the program if the user requests help
 function exit_if_help_requested() {
     if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        gref_help
+        fr_help
         exit 0
     fi
 }
@@ -57,7 +57,7 @@ function exit_if_help_requested() {
 function exit_if_input_incorrect() {
     if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
         echoe "You must supply a search pattern"
-        gref_usage
+        fr_usage
         exit 1
     fi
 }
@@ -129,8 +129,8 @@ for arg in "$@"; do
             shift 2
             ;;
         --* | -*)
-            echoe "Unknown argument '$arg' to gref"
-            gref_usage
+            echoe "Unknown argument '$arg' to fr"
+            fr_usage
             exit 2
     esac
 done
