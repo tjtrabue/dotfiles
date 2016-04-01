@@ -62,7 +62,6 @@ function exit_if_input_incorrect() {
     fi
 }
 
-
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
@@ -70,6 +69,11 @@ function exit_if_input_incorrect() {
 ################################################################################
 
 
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
