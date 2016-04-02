@@ -81,7 +81,7 @@ function fin() {
         local length="${#find_args[@]}"
         local last_pos=$((length - 1))
         for (( i = 0; i < $last_pos; i++ )); do
-            arg_string="$arg_string -iname \"${find_args[$i]}\" -or"
+            arg_string="$arg_string -iname \"${find_args[${i}]}\" -or"
         done
         arg_string="$arg_string ${find_args[${last_pos}]} \)"
         find . "$arg_string"
