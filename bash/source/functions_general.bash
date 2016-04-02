@@ -69,7 +69,7 @@ function update() {
 # Searches recursively down the current directory structure for files
 # matching an input pattern
 function fin() {
-    find . -iname "$@"
+    find . -iname "*$@*"
 }
 
 ################################################################################
