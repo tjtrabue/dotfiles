@@ -49,7 +49,20 @@ function exit_if_input_incorrect () {
 ##                                                                            ##
 ################################################################################
 
-
+# Parse the user's input for all operator symbols and operands:
+function get_operators_and_operands() {
+    local arg
+    for arg in "$@"; do
+        case "$arg" in
+            + | - | \* | / | % | ** | sqrt)
+                operators+=("$arg")
+                ;;
+            *)
+                operands+=("$arg")
+                ;;
+        esac
+    done
+}
 
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
