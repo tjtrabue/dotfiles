@@ -6,6 +6,18 @@
 ##                                                                            ##
 ################################################################################
 
+# Full help message
+function calc_help() {
+    echo "calc is a powerful command line calculator that can compute not only sums, differences," 1>&2
+    echo "products, and quotients, but also square roots, exponentiation, and much more." 1>&2
+    calc_usage
+}
+
+# Usage message
+function calc_usage() {
+    echo "Usage:" 1>&2
+    echo "Options:" 1>&2
+}
 
 
 ################################################################################
@@ -14,6 +26,21 @@
 ##                                                                            ##
 ################################################################################
 
+# Exit the program if the user requests the help message:
+function exit_if_help_requested () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        func_help
+        exit 0
+    fi
+}
+
+# Exit the program if the user enters input incorrectly
+function exit_if_input_incorrect () {
+    if [[ "$#" -lt 2 ]]; then
+        echoe "Insufficient number of operands/operators"
+        exit 1
+    fi
+}
 
 
 ################################################################################
@@ -24,13 +51,20 @@
 
 
 
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
 ################################################################################
 ##                                                                            ##
 ##                                  Variables                                 ##
 ##                                                                            ##
 ################################################################################
 
-
+operands=()
+operators=()
 
 ################################################################################
 ##                                                                            ##
