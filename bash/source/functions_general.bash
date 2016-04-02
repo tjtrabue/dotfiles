@@ -74,17 +74,17 @@ function fin() {
     elif [[ "$#" -gt 1 ]]; then
         local arg
         local find_args=()
-        local arg_string="\( "
+        local arg_string="\("
         for arg in "$@"; do
             find_args+=("$arg")
         done
         local length="${#find_args[@]}"
         local last_pos=$((length - 1))
         for (( i = 0; i < $last_pos; i++ )); do
-            arg_string="$arg_string -iname \"${find_args[${i}]}\" -or"
+            arg_string="$arg_string -iname "${find_args[${i}]}" -or"
         done
-        arg_string="$arg_string ${find_args[${last_pos}]} \)"
-        find . "$arg_string"
+        arg_string="$arg_string -iname "${find_args[${last_pos}]}" \)"
+        eval "find . $arg_string"
     else
         echoe "Need to specify at least one file pattern."
         return 1
