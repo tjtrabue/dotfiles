@@ -70,7 +70,7 @@ function update() {
 # matching an input pattern
 function fin() {
     if [[ "$#" -eq 1 ]]; then
-        find . -iname \""$@"\"
+        find . -iname "$@"
     elif [[ "$#" -gt 1 ]]; then
         local arg
         local find_args=()
