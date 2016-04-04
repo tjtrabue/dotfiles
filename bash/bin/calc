@@ -384,12 +384,13 @@ function parse_user_input() {
 
 # Test the math functions by printing out some test calculations
 function test_math_funcs() {
-    echo "10 + 5: $(add 10 5)" 1>&2
-    echo "10 - 5: $(subtract 10 5)" 1>&2
-    echo "10 * 5: $(multiply 10 5)" 1>&2
-    echo "10 / 5: $(divide 10 5)" 1>&2
-    echo "10 ^ 5: $(power 10 5)" 1>&2
-    echo "3 % 2: $(mod 3 2)" 1>&2
+    echo "10 + 5 = $(add 10 5)" 1>&2
+    echo "10 - 5 = $(subtract 10 5)" 1>&2
+    echo "10 * 5 = $(multiply 10 5)" 1>&2
+    echo "10 / 5 = $(divide 10 5)" 1>&2
+    echo "10 ^ 5 = $(power 10 5)" 1>&2
+    echo "3 % 2 = $(mod 3 2)" 1>&2
+    echo "sqrt 10 = $(square_root 10)" 1>&2
 }
 
 # Used for printing errors:
@@ -415,8 +416,6 @@ declare -A operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3
 ##                                                                            ##
 ################################################################################
 
-number=10
-number="$(square_root $number)"
-echo "$number"
+test_math_funcs
 
 # parse_user_input
