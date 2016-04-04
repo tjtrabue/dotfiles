@@ -213,6 +213,30 @@ function stack_exists
 ##                                                                            ##
 ################################################################################
 
+# Adds two real numbers
+function add() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of arguments to function ${BLUE}add${NC}"
+        return 1
+    fi
+    local arg1="$1"
+    local arg2="$2"
+    echo $((arg1 + arg2))
+    return 0
+}
+
+# Subtracts two real numbers
+function subtract() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of arguments to function ${BLUE}subtract${NC}"
+        return 1
+    fi
+    local arg1="$1"
+    local arg2="$2"
+    echo $((arg1 - arg2))
+    return 0
+}
+
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
