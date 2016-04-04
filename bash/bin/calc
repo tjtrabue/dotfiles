@@ -348,8 +348,27 @@ function parse_user_input() {
                     stack_pop operands val2
                     stack_pop operands val1
                     case "$operator" in
-
+                        '+')
+                            result="$(add "$val1" "$val2")"
+                            ;;
+                        '-')
+                            result="$(subtract "$val1" "$val2")"
+                            ;;
+                        '*')
+                            result="$(multiply "$val1" "$val2")"
+                            ;;
+                        '/')
+                            result="$(divide "$val1" "$val2")"
+                            ;;
+                        '^')
+                            result="$(power "$val1" "$val2")"
+                            ;;
+                        '%')
+                            result="$(mod "$val1" "$val2")"
+                            ;;
                     esac
+                    stack_push "operands" "$result"
+                    stack_pop "operators" sentinel
                 done
                 ;;
 
@@ -374,6 +393,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 stack_new "operands"
 stack_new "operators"
+operator_list=('+' '-' '*' '/' '^' '%' '**' 'sqrt')
 
 ################################################################################
 ##                                                                            ##
