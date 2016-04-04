@@ -10,6 +10,8 @@
 function calc_help() {
     echo "calc is a powerful command line calculator that can compute not only sums, differences," 1>&2
     echo "products, and quotients, but also square roots, exponentiation, and much more." 1>&2
+    echo "NOTE: Always separate arguments and operators with spaces, or you will not get the" 1>&2
+    echo "      output you expect." 1>&2
     calc_usage
 }
 
