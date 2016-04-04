@@ -16,6 +16,13 @@ function calc_help() {
 # Usage message
 function calc_usage() {
     echo "Usage:" 1>&2
+    echo "    calc <arg1> + <arg2>" 1>&2
+    echo "    calc <arg1> - <arg2>" 1>&2
+    echo "    calc <arg1> * <arg2>" 1>&2
+    echo "    calc <arg1> / <arg2>" 1>&2
+    echo "    calc ** <arg>" 1>&2
+    echo "    calc sqrt <arg>" 1>&2
+    echo "    calc <arg1> ^ <arg2> | calc <arg1> pow <arg2>" 1>&2
     echo "Options:" 1>&2
 }
 
