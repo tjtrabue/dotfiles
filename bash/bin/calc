@@ -393,8 +393,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 stack_new "operands"
 stack_new "operators"
 operator_list=('+' '-' '*' '/' '^' '%' '**' 'sqrt')
-declare -A operator_precedence
-operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3 ['**']=3 )
+declare -A operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3 ['**']=3 )
 
 ################################################################################
 ##                                                                            ##
