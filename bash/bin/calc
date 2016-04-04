@@ -382,6 +382,16 @@ function parse_user_input() {
     done
 }
 
+# Test the math functions by printing out some test calculations
+function test_math_funcs() {
+    echo "10 + 5: $(add 10 5)" 1>&2
+    echo "10 - 5: $(subtract 10 5)" 1>&2
+    echo "10 * 5: $(multiply 10 5)" 1>&2
+    echo "10 / 5: $(divide 10 5)" 1>&2
+    echo "10 ^ 5: $(power 10 5)" 1>&2
+    echo "3 % 2: $(mod 3 2)" 1>&2
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
