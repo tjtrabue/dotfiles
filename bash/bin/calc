@@ -324,6 +324,42 @@ function get_operators_and_operands() {
     done
 }
 
+# Parse user input entered in the form of a mathematical expression to be evaluated
+function parse_user_input() {
+    local input_string="$@"
+    local token
+    for token in $input_string; do
+        case "$token" in
+            [0-9]+)
+                stack_push "operands" "$token"
+                ;;
+            \()
+                stack_push "operators" "$token"
+                ;;
+            \))
+                local sentinel
+                stack_pop operators sentinel
+                while [[ "$sentinel" != "(" ]]; do
+                    local operator
+                    local val1
+                    local val2
+                    local result
+                    stack_pop operators operator
+                    stack_pop operands val2
+                    stack_pop operands val1
+                    case "$operator" in
+
+                    esac
+                done
+                ;;
+
+            '+')
+
+                ;;
+        esac
+    done
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -348,3 +384,5 @@ stack_new "operators"
 number=10
 number="$(square_root $number)"
 echo "$number"
+
+# parse_user_input
