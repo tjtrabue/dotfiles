@@ -237,6 +237,33 @@ function subtract() {
     return 0
 }
 
+# Subtracts two real numbers
+function multiply() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of arguments to function ${BLUE}multiply${NC}"
+        return 1
+    fi
+    local arg1="$1"
+    local arg2="$2"
+    echo $((arg1 * arg2))
+    return 0
+}
+
+# Subtracts two real numbers
+function divide() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of arguments to function ${BLUE}divide${NC}"
+        return 1
+    elif [[ "$2" -eq 0 ]]; then
+        echoe "Cannot divide by 0"
+        return 2
+    fi
+    local arg1="$1"
+    local arg2="$2"
+    echo $((arg1 / arg2))
+    return 0
+}
+
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
