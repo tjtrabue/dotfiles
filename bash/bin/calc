@@ -319,3 +319,6 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
+number=10
+number="$(sqrt $number)"
+echo "$number"
