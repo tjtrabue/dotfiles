@@ -237,7 +237,7 @@ function subtract() {
     return 0
 }
 
-# Subtracts two real numbers
+# Multiplies two real numbers
 function multiply() {
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}multiply${NC}"
@@ -249,7 +249,7 @@ function multiply() {
     return 0
 }
 
-# Subtracts two real numbers
+# Divides two real numbers
 function divide() {
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}divide${NC}"
@@ -262,6 +262,19 @@ function divide() {
     local arg2="$2"
     echo $((arg1 / arg2))
     return 0
+}
+
+# Calculates the square root of a positive real number
+function sqrt() {
+    if [[ "$#" -ne 1 ]]; then
+        echoe "No arguement given to function ${BLUE}sqrt${NC}"
+        return 1
+    elif [[ "$1" -lt 0 ]]; then
+        echoe "Cannot calculate the square root of a negative number"
+        return 2
+    fi
+    local arg="$(echo "sqrt ($1)" | bc -l)"
+    echo "$arg"
 }
 
 ################################################################################
