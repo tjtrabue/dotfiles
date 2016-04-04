@@ -261,7 +261,7 @@ function divide() {
 }
 
 # Calculates the square root of a positive real number
-function sqrt() {
+function square_root() {
     if [[ "$#" -ne 1 ]]; then
         echoe "No arguement given to function ${BLUE}sqrt${NC}"
         return 1
@@ -316,8 +316,8 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
-"$(stack_new "operands")"
-"$(stack_new "operators")"
+stack_new "operands"
+stack_new "operators"
 
 ################################################################################
 ##                                                                            ##
@@ -326,5 +326,5 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ################################################################################
 
 number=10
-number="$(sqrt $number)"
+number="$(square_root $number)"
 echo "$number"
