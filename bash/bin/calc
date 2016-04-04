@@ -372,7 +372,11 @@ function parse_user_input() {
                 done
                 ;;
             "${operator_list[@]}")
+                local size
+                stack_size "operators" size
+                while [[ "$size" -ne 0 ]]; do
 
+                done
                 ;;
         esac
     done
