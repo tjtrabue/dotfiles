@@ -290,6 +290,17 @@ function power() {
     echo "$1 ^ $2" | bc -l
 }
 
+# Takes the modulus of one integer by another
+function mod() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of arguments to function ${BLUE}mod${NC}"
+        return 1
+    fi
+    local arg1="$1"
+    local arg2="$2"
+    echo "$1 % $2" | bc -l
+}
+
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
