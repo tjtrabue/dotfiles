@@ -221,8 +221,7 @@ function add() {
     fi
     local arg1="$1"
     local arg2="$2"
-    echo $((arg1 + arg2))
-    return 0
+    echo "$arg1 + $arg2" | bc -l
 }
 
 # Subtracts two real numbers
@@ -233,8 +232,7 @@ function subtract() {
     fi
     local arg1="$1"
     local arg2="$2"
-    echo $((arg1 - arg2))
-    return 0
+    echo "$arg1 - $arg2" | bc -l
 }
 
 # Multiplies two real numbers
@@ -245,8 +243,7 @@ function multiply() {
     fi
     local arg1="$1"
     local arg2="$2"
-    echo $((arg1 * arg2))
-    return 0
+    echo "$arg1 * $arg2" | bc -l
 }
 
 # Divides two real numbers
@@ -260,8 +257,7 @@ function divide() {
     fi
     local arg1="$1"
     local arg2="$2"
-    echo $((arg1 / arg2))
-    return 0
+    echo "$arg1 / $arg2" | bc -l
 }
 
 # Calculates the square root of a positive real number
@@ -273,8 +269,18 @@ function sqrt() {
         echoe "Cannot calculate the square root of a negative number"
         return 2
     fi
-    local arg="$(echo "sqrt ($1)" | bc -l)"
-    echo "$arg"
+    echo "sqrt ($1)" | bc -l
+}
+
+# Caclulates one number raised to the power of another
+function power() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of arguments to function ${BLUE}power${NC}"
+        return 1
+    fi
+    local arg1="$1"
+    local arg2="$2"
+    echo "$1 ^ $2" | bc -l
 }
 
 ################################################################################
