@@ -387,10 +387,10 @@ function parse_user_input() {
             "${binary_operator_list[@]}")
                 local size
                 local peek_var
-                local token_precedence=${operator_precedence[$token]}
-                local peek_precedence=${operator_precedence[$peek_var]}
                 stack_size "operators" size
                 stack_peek "operators" peek_var
+                local token_precedence=${operator_precedence[$token]}
+                local peek_precedence=${operator_precedence[$peek_var]}
                 while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
                     local operator val1 val2
                     stack_pop "operators" operator
