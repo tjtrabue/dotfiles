@@ -411,7 +411,7 @@ function parse_user_input() {
 # Finish up remaining calculations
 function finish_remaining_operations() {
     local operator size val val1 val2 result
-    stack_size "operators" size
+    stack_size "operators" size 2> /dev/null
     while [[ "$size" -gt 0 ]]; do
         stack_pop "operators" operator
         if $(is_binary_operator $operator); then
