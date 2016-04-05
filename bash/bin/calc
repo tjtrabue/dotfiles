@@ -467,6 +467,7 @@ function test_math_funcs() {
     echo "10 / 5 = $(divide 10 5)" 1>&2
     echo "10 ^ 5 = $(power 10 5)" 1>&2
     echo "3 % 2 = $(mod 3 2)" 1>&2
+    echo "** 3 = $(power 3 2)" 1>&2
     echo "sqrt 10 = $(square_root 10)" 1>&2
 }
 
