@@ -143,10 +143,13 @@ function stack_print
 
 # Returns the topmost element on the stack without popping it off
 #
-# Usage: stack_peek name
+# Usage: stack_peek name var
 function stack_peek
 {
     : ${1?'Missing stack name'}
+    : ${2?'Missing name of variable for stack peek result'}
+
+    eval 'let _i=$'"_stack_$1_i"
 
     if no_such_stack $1
     then
@@ -154,10 +157,15 @@ function stack_peek
         return 1
     fi
 
+    if [[ "$_i" -eq 0 ]]
+    then
+        echo "Empty stack -- $1" >&2
+        return 2
+    fi
+
     eval 'let _i=$'_stack_$1_i
     let _i=${_i}-1
-    eval 'e=$'"{_stack_$1[$_i]}"
-    echo $e
+    eval "$2"='$'"{_stack_$1[$_i]}"
 }
 
 # Get the size of a stack
@@ -428,20 +436,26 @@ function test_math_funcs() {
 # Test the stack functions
 function test_stack_funcs() {
     local test_stack
+    local size_var
+    local peek_var
     local elem1
     local elem2
     stack_new test_stack
-    echo "Original size of test_stack: $(stack_size test_stack)" 1>&2
+    stack_size test_stack size_var
+    echo "Original size of test_stack: $size_var" 1>&2
     stack_push test_stack "first"
     stack_push test_stack "second"
-    echo "Size of test_stack after two things pushed: $(stack_size test_stack)" 1>&2
+    stack_size test_stack size_var
+    echo "Size of test_stack after two things pushed: $size_var" 1>&2
     echo "\"second\" should be on top of the stack: $(stack_peek test_stack)" 1>&2
     stack_pop test_stack elem2
     echo "This was just popped off the stack: $elem2" 1>&2
-    echo "After popping, the size of test_stack is: $(stack_size test_stack)" 1>&2
+    stack_size test_stack size_var
+    echo "After popping, the size of test_stack is: $size_var" 1>&2
     stack_pop test_stack elem1
     echo "This is the second thing we popped off: $elem1" 1>&2
-    echo "Now the size of the stack is: $(stack_size test_stack)" 1>&2
+    stack_size test_stack size_var
+    echo "Now the size of the stack is: $size_var" 1>&2
 }
 
 ################################################################################
@@ -462,5 +476,7 @@ declare -A operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3
 ################################################################################
 
 test_math_funcs
+echo "" 1>&2
+test_stack_funcs
 
 # parse_user_input
