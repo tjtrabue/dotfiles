@@ -144,7 +144,8 @@ function stack_print
 # Returns the topmost element on the stack without popping it off
 #
 # Usage: stack_peek name
-function stack_peek() {
+function stack_peek
+{
     : ${1?'Missing stack name'}
 
     if no_such_stack $1
@@ -410,6 +411,25 @@ function test_math_funcs() {
     echo "10 ^ 5 = $(power 10 5)" 1>&2
     echo "3 % 2 = $(mod 3 2)" 1>&2
     echo "sqrt 10 = $(square_root 10)" 1>&2
+}
+
+# Test the stack functions
+function test_stack_funcs() {
+    local test_stack
+    local elem1
+    local elem2
+    stack_new test_stack
+    echo "Original size of test_stack: $(stack_size test_stack)" 1>&2
+    stack_push test_stack "first"
+    stack_push test_stack "second"
+    echo "Size of test_stack after two things pushed: $(stack_size test_stack)" 1>&2
+    echo "\"second\" should be on top of the stack: $(stack_peek test_stack)" 1>&2
+    stack_pop test_stack elem2
+    echo "This was just popped off the stack: $elem2" 1>&2
+    echo "After popping, the size of test_stack is: $(stack_size test_stack)" 1>&2
+    stack_pop test_stack elem1
+    echo "This is the second thing we popped off: $elem1" 1>&2
+    echo "Now the size of the stack is: $(stack_size test_stack)" 1>&2
 }
 
 # Used for printing errors:
