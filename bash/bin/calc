@@ -574,6 +574,7 @@ stack_new "operators"
 binary_operator_list=('+' '-' '*' '/' '^' '%')
 unary_operator_list=('**' 'sqrt')
 declare -A operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3 ['**']=3 )
+final_result
 
 ################################################################################
 ##                                                                            ##
@@ -587,3 +588,5 @@ test_stack_funcs
 
 # parse_user_input
 # finish_remaining_operations
+# stack_pop "operands" final_result
+# echo $final_result
