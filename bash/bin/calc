@@ -390,20 +390,40 @@ function parse_user_input() {
 
 # Finish up remaining calculations
 function finish_remaining_operations() {
-    local operator size val1 val2 result
+    local operator size val val1 val2 result
     stack_size "operators" size
     while [[ "$size" -gt 0 ]]; do
-        if $(is_binary_operator); then
-            stack_pop "operators" operator
+        stack_pop "operators" operator
+        if $(is_binary_operator $operator); then
             stack_pop "operands" val2
             stack_pop "operands" val1
+            result=$(do_binary $operator $val1 $val2)
+        elif $(is_unary_operator $operator); then
+            stack_pop "operands" val
+            result=$(do_unary $operator $val)
+        else
+            echoe "Illegal operator $operator in finish_remaining_operations"
+            return 1
         fi
     done
 }
 
 # Returns true for binary and false for anything else
+# Usage: is_binary_operator op
 function is_binary_operator() {
+    : ${1?'Missing the operator'}
     if [[ "${binary_operator_list[@]}" =~ ${1} ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Returns true for unary and false for anything else
+# Usage: is_unary_operator op
+function is_unary_operator() {
+    : ${1?'Missing the operator'}
+    if [[ "${unary_operator_list[@]}" =~ ${1} ]]; then
         return 0
     else
         return 1
