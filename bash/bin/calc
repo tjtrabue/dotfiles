@@ -141,6 +141,24 @@ function stack_print
     echo "(" $tmp ")"
 }
 
+# Returns the topmost element on the stack without popping it off
+#
+# Usage: stack_peek name
+function stack_peek() {
+    : ${1?'Missing stack name'}
+
+    if no_such_stack $1
+    then
+        echo "No such stack -- $1" >&2
+        return 1
+    fi
+
+    eval 'let _i=$'_stack_$1_i
+    let _i=${_i}-1
+    eval 'e=$'"{_stack_$1[$_i]}"
+    echo $e
+}
+
 # Get the size of a stack
 #
 # Usage: stack_size name var
@@ -182,7 +200,7 @@ function stack_pop
     if [[ "$_i" -eq 0 ]]
     then
         echo "Empty stack -- $1" >&2
-        return 1
+        return 2
     fi
 
     let _i-=1
@@ -300,7 +318,7 @@ function mod() {
     fi
     local arg1="$1"
     local arg2="$2"
-    echo "$1 % $2" | bc -l
+    echo "$1 % $2" | bc
 }
 
 ################################################################################
@@ -375,7 +393,8 @@ function parse_user_input() {
                 local size
                 stack_size "operators" size
                 while [[ "$size" -ne 0 ]]; do
-
+                    local operator
+                    stack_pop "operators" operator
                 done
                 ;;
         esac
