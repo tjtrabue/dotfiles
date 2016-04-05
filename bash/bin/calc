@@ -364,7 +364,7 @@ function parse_user_input() {
                 local left_parenthesis
                 stack_pop "operators" left_parenthesis
                 ;;
-            "${operator_list[@]}")
+            "${binary_operator_list[@]}")
                 local size
                 local peek_var
                 local token_precedence=${operator_precedence[$token]}
@@ -381,17 +381,19 @@ function parse_user_input() {
                 done
                 stack_push "operators" "$token"
                 ;;
+            "${unary_operator_list[@]}")
+                ;;
         esac
     done
 }
 
-# Decide which binary operation to perform and do it:
+# Decide which binary operation to perform and then do it
 # Usage: operator val1 val2
-# Operator in +,-,*,/,^,%
+# operator in: +, -, *, /, ^, %
 function do_binary() {
-    : ${1?'Missing operator'}
-    : ${2?'Missing first operand'}
-    : ${3?'Missing second operand'}
+    : ${1?'Missing the operator'}
+    : ${2?'Missing the first operand'}
+    : ${3?'Missing the second operand'}
 
     local result
     case "$1" in
@@ -414,11 +416,35 @@ function do_binary() {
             result=$(mod $2 $3)
             ;;
         *)
-            echoe "Unknown operator in function do_binary: $1"
+            echoe "Unknown operator passed to function do_binary: $1"
             return 1
    esac
 
    echo "$result"
+}
+
+# Decide which unary operation to perform and then do it
+# Usage: do_unary operation val
+# operator in: **, sqrt
+function do_unary() {
+    : ${1?'Missing the operator'}
+    : ${2?'Missing the operand'}
+
+    local result
+    case "$1" in
+        '**')
+            result=$(power $val 2)
+            ;;
+        'sqrt')
+            result=$(square_root $val)
+            ;;
+        *)
+            echoe "Unkown operator passed to function do_unary: $2"
+            return 1
+            ;;
+    esac
+
+    echo "$result"
 }
 
 # Used for printing errors:
@@ -479,7 +505,8 @@ function test_stack_funcs() {
 
 stack_new "operands"
 stack_new "operators"
-operator_list=('+' '-' '*' '/' '^' '%' '**' 'sqrt')
+binary_operator_list=('+' '-' '*' '/' '^' '%')
+unary_operator_list=('**' 'sqrt')
 declare -A operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3 ['**']=3 )
 
 ################################################################################
