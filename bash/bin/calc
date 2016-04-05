@@ -144,6 +144,7 @@ function stack_print
 # Returns the topmost element on the stack without popping it off
 #
 # Usage: stack_peek name var
+# echo "The topmost element on name is $var"
 function stack_peek
 {
     : ${1?'Missing stack name'}
@@ -447,9 +448,11 @@ function test_stack_funcs() {
     stack_push test_stack "second"
     stack_size test_stack size_var
     echo "Size of test_stack after two things pushed: $size_var" 1>&2
-    echo "\"second\" should be on top of the stack: $(stack_peek test_stack)" 1>&2
+    echo "This is the entire stack: $(stack_print test_stack)" 1>&2
+    stack_peek test_stack peek_var
+    echo "Now, let's peek at the top of the stack (should be 'second'): $peek_var" 1>&2
     stack_pop test_stack elem2
-    echo "This was just popped off the stack: $elem2" 1>&2
+    echo "Now let's pop it off! We just popped this off: $elem2" 1>&2
     stack_size test_stack size_var
     echo "After popping, the size of test_stack is: $size_var" 1>&2
     stack_pop test_stack elem1
