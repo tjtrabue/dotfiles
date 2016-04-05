@@ -38,7 +38,7 @@ function calc_usage() {
 # Exit the program if the user requests the help message:
 function exit_if_help_requested () {
     if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-        func_help
+        calc_help
         exit 0
     fi
 }
@@ -574,7 +574,7 @@ stack_new "operators"
 binary_operator_list=('+' '-' '*' '/' '^' '%')
 unary_operator_list=('**' 'sqrt')
 declare -A operator_precedence=( ['+']=1 ['-']=1 ['*']=2 ['/']=2 ['%']=2 ['^']=3 ['**']=3 )
-final_result
+declare final_result
 
 ################################################################################
 ##                                                                            ##
@@ -582,11 +582,15 @@ final_result
 ##                                                                            ##
 ################################################################################
 
-test_math_funcs
-echo "" 1>&2
-test_stack_funcs
+# test_math_funcs
+# echo "" 1>&2
+# test_stack_funcs
 
-# parse_user_input
-# finish_remaining_operations
-# stack_pop "operands" final_result
-# echo $final_result
+# Exit conditions
+exit_if_help_requested "$@"
+exit_if_input_incorrect "$@"
+
+parse_user_input "$@"
+finish_remaining_operations
+stack_pop "operands" final_result
+echo $final_result
