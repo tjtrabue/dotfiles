@@ -350,39 +350,21 @@ function parse_user_input() {
                 stack_push "operators" "$token"
                 ;;
             \))
-                local sentinel
-                stack_pop operators sentinel
-                while [[ "$sentinel" != "(" ]]; do
+                local peek_var
+                stack_peek operators peek_var
+                while [[ "$peek_var" != "(" ]]; do
                     local operator
                     local val1
                     local val2
-                    local result
                     stack_pop operators operator
                     stack_pop operands val2
                     stack_pop operands val1
-                    case "$operator" in
-                        '+')
-                            result="$(add "$val1" "$val2")"
-                            ;;
-                        '-')
-                            result="$(subtract "$val1" "$val2")"
-                            ;;
-                        '*')
-                            result="$(multiply "$val1" "$val2")"
-                            ;;
-                        '/')
-                            result="$(divide "$val1" "$val2")"
-                            ;;
-                        '^')
-                            result="$(power "$val1" "$val2")"
-                            ;;
-                        '%')
-                            result="$(mod "$val1" "$val2")"
-                            ;;
-                    esac
+                    local result=$(do_binary $operator $val1 $val2)
                     stack_push "operands" "$result"
-                    stack_pop "operators" sentinel
+                    stack_peek "operators" peek_var
                 done
+                local left_parenthesis
+                stack_pop "operators" left_parenthesis
                 ;;
             "${operator_list[@]}")
                 local size
@@ -398,7 +380,10 @@ function parse_user_input() {
                     stack_pop "operators" operator
                     stack_pop "operands" val2
                     stack_pop "operands" val1
+                    local result=$(do_binary $operator $val1 $val2)
+                    stack_push "operands" "$result"
                 done
+                stack_push "operators" "$token"
                 ;;
         esac
     done
@@ -412,23 +397,32 @@ function do_binary() {
     : ${2?'Missing first operand'}
     : ${3?'Missing second operand'}
 
+    local result
     case "$1" in
         '+')
+            result=$(add $2 $3)
             ;;
         '-')
+            result=$(subtract $2 $3)
             ;;
         '*')
+            result=$(multiply $2 $3)
             ;;
         '/')
+            result=$(divide $2 $3)
             ;;
         '^')
+            result=$(power $2 $3)
             ;;
         '%')
+            result=$(mod $2 $3)
             ;;
         *)
             echoe "Unknown operator in function do_binary: $1"
             return 1
-    esac
+   esac
+
+   echo "$result"
 }
 
 # Used for printing errors:
