@@ -382,6 +382,7 @@ function parse_user_input() {
                 stack_push "operators" "$token"
                 ;;
             "${unary_operator_list[@]}")
+                echow "Unary operations currently unsupported"
                 ;;
         esac
     done
