@@ -398,9 +398,11 @@ function finish_remaining_operations() {
             stack_pop "operands" val2
             stack_pop "operands" val1
             result=$(do_binary $operator $val1 $val2)
+            stack_push "operands" $result
         elif $(is_unary_operator $operator); then
             stack_pop "operands" val
             result=$(do_unary $operator $val)
+            stack_push "operands" $result
         else
             echoe "Illegal operator $operator in finish_remaining_operations"
             return 1
