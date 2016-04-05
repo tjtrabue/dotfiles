@@ -337,21 +337,6 @@ function mod() {
 ##                                                                            ##
 ################################################################################
 
-# Parse the user's input for all operator symbols and operands:
-function get_operators_and_operands() {
-    local arg
-    for arg in "$@"; do
-        case "$arg" in
-            + | - | \* | / | % | ** | sqrt)
-                operators+=("$arg")
-                ;;
-            *)
-                operands+=("$arg")
-                ;;
-        esac
-    done
-}
-
 # Parse user input entered in the form of a mathematical expression to be evaluated
 function parse_user_input() {
     local input_string="$@"
@@ -401,14 +386,49 @@ function parse_user_input() {
                 ;;
             "${operator_list[@]}")
                 local size
+                local peek_var
+                local token_precedence=${operator_precedence[$token]}
+                local peek_precedence=${operator_precedence[$peek_var]}
                 stack_size "operators" size
-                while [[ "$size" -ne 0 ]]; do
+                stack_peek "operators" peek_var
+                while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
                     local operator
+                    local val1
+                    local val2
                     stack_pop "operators" operator
+                    stack_pop "operands" val2
+                    stack_pop "operands" val1
                 done
                 ;;
         esac
     done
+}
+
+# Decide which binary operation to perform and do it:
+# Usage: operator val1 val2
+# Operator in +,-,*,/,^,%
+function do_binary() {
+    : ${1?'Missing operator'}
+    : ${2?'Missing first operand'}
+    : ${3?'Missing second operand'}
+
+    case "$1" in
+        '+')
+            ;;
+        '-')
+            ;;
+        '*')
+            ;;
+        '/')
+            ;;
+        '^')
+            ;;
+        '%')
+            ;;
+        *)
+            echoe "Unknown operator in function do_binary: $1"
+            return 1
+    esac
 }
 
 # Used for printing errors:
@@ -419,7 +439,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
-##                               Test Function                                ##
+##                              Test Functions                                ##
 ##                                                                            ##
 ################################################################################
 
