@@ -353,9 +353,7 @@ function parse_user_input() {
                 local peek_var
                 stack_peek operators peek_var
                 while [[ "$peek_var" != "(" ]]; do
-                    local operator
-                    local val1
-                    local val2
+                    local operator val1 val2
                     stack_pop operators operator
                     stack_pop operands val2
                     stack_pop operands val1
@@ -374,9 +372,7 @@ function parse_user_input() {
                 stack_size "operators" size
                 stack_peek "operators" peek_var
                 while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
-                    local operator
-                    local val1
-                    local val2
+                    local operator val1 val2
                     stack_pop "operators" operator
                     stack_pop "operands" val2
                     stack_pop "operands" val1
