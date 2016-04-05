@@ -252,6 +252,9 @@ function stack_exists
 
 # Adds two real numbers
 function add() {
+    : ${1?'Missing the first argument'}
+    : ${2?'Missing the second argument'}
+
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}add${NC}"
         return 1
@@ -263,6 +266,9 @@ function add() {
 
 # Subtracts two real numbers
 function subtract() {
+    : ${1?'Missing the first argument'}
+    : ${2?'Missing the second argument'}
+
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}subtract${NC}"
         return 1
@@ -274,6 +280,9 @@ function subtract() {
 
 # Multiplies two real numbers
 function multiply() {
+    : ${1?'Missing the first argument'}
+    : ${2?'Missing the second argument'}
+
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}multiply${NC}"
         return 1
@@ -285,6 +294,9 @@ function multiply() {
 
 # Divides two real numbers
 function divide() {
+    : ${1?'Missing the first argument'}
+    : ${2?'Missing the second argument'}
+
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}divide${NC}"
         return 1
@@ -299,6 +311,8 @@ function divide() {
 
 # Calculates the square root of a positive real number
 function square_root() {
+    : ${1?'Missing the argument'}
+
     if [[ "$#" -ne 1 ]]; then
         echoe "No arguement given to function ${BLUE}sqrt${NC}"
         return 1
@@ -311,6 +325,9 @@ function square_root() {
 
 # Caclulates one number raised to the power of another
 function power() {
+    : ${1?'Missing the first argument'}
+    : ${2?'Missing the second argument'}
+
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}power${NC}"
         return 1
@@ -322,6 +339,9 @@ function power() {
 
 # Takes the modulus of one integer by another
 function mod() {
+    : ${1?'Missing the first argument'}
+    : ${2?'Missing the second argument'}
+
     if [[ "$#" -ne 2 ]]; then
         echoe "Incorrect number of arguments to function ${BLUE}mod${NC}"
         return 1
