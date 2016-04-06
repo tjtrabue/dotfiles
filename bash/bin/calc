@@ -389,7 +389,7 @@ function parse_user_input() {
                 local left_parenthesis
                 stack_pop "operators" left_parenthesis
                 ;;
-            '+' | '-' | 'x' | '/' | '^' | '%')
+            '+' | '-' | 'x' | '/' | '^' | 'pow' | '%')
                 echo "Found a binary operator" 1>&2
                 local size=""
                 local peek_var=""
@@ -495,7 +495,7 @@ function do_binary() {
         '/')
             result=$(divide $2 $3)
             ;;
-        '^')
+        '^' | 'pow')
             result=$(power $2 $3)
             ;;
         '%')
@@ -598,9 +598,9 @@ function test_stack_funcs() {
 
 stack_new "operands"
 stack_new "operators"
-binary_operator_list=('+' '-' 'x' '/' '^' '%')
+binary_operator_list=('+' '-' 'x' '/' '^' 'pow' '%')
 unary_operator_list=('**' 'sqrt')
-declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["**"]=3 )
+declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
 declare final_result
 
 ################################################################################
