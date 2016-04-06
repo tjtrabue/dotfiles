@@ -389,8 +389,8 @@ function parse_user_input() {
                 local peek_var
                 stack_size "operators" size
                 stack_peek "operators" peek_var
-                local token_precedence="${operator_precedence["$token"]}"
-                local peek_precedence="${operator_precedence["$peek_var"]}"
+                local token_precedence="${operator_precedence[\"$token\"]}"
+                local peek_precedence="${operator_precedence[\"$peek_var\"]}"
                 while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
                     local operator val1 val2
                     stack_pop "operators" operator
@@ -414,12 +414,12 @@ function finish_remaining_operations() {
     stack_size "operators" size 2> /dev/null
     while [[ "$size" -gt 0 ]]; do
         stack_pop "operators" operator
-        if $(is_binary_operator $operator); then
+        if is_binary_operator $operator; then
             stack_pop "operands" val2
             stack_pop "operands" val1
             result=$(do_binary $operator $val1 $val2)
             stack_push "operands" $result
-        elif $(is_unary_operator $operator); then
+        elif is_unary_operator $operator; then
             stack_pop "operands" val
             result=$(do_unary $operator $val)
             stack_push "operands" $result
@@ -434,7 +434,7 @@ function finish_remaining_operations() {
 # Usage: is_binary_operator op
 function is_binary_operator() {
     : ${1?'Missing the operator'}
-    if [[ "${binary_operator_list[@]}" =~ ${1} ]]; then
+    if [[ "${binary_operator_list[@]}" =~ "${1}" ]]; then
         return 0
     else
         return 1
@@ -445,7 +445,7 @@ function is_binary_operator() {
 # Usage: is_unary_operator op
 function is_unary_operator() {
     : ${1?'Missing the operator'}
-    if [[ "${unary_operator_list[@]}" =~ ${1} ]]; then
+    if [[ "${unary_operator_list[@]}" =~ "${1}" ]]; then
         return 0
     else
         return 1
