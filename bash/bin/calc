@@ -20,7 +20,7 @@ function calc_usage() {
     echo "Usage:" 1>&2
     echo "    calc <arg1> + <arg2>" 1>&2
     echo "    calc <arg1> - <arg2>" 1>&2
-    echo "    calc <arg1> x <arg2>" 1>&2
+    echo "    calc <arg1> * <arg2>" 1>&2
     echo "    calc <arg1> / <arg2>" 1>&2
     echo "    calc ** <arg>" 1>&2
     echo "    calc sqrt <arg>" 1>&2
@@ -389,6 +389,7 @@ function parse_user_input() {
                 local left_parenthesis
                 stack_pop "operators" left_parenthesis
                 ;;
+            # '+' | '-' | '*' | '/' | '^' | 'pow' | '%')
             '+' | '-' | 'x' | '/' | '^' | 'pow' | '%')
                 echo "Found a binary operator" 1>&2
                 local size=""
@@ -489,6 +490,9 @@ function do_binary() {
         '-')
             result=$(subtract $2 $3)
             ;;
+        # '*')
+        #     result=$(multiply $2 $3)
+        #     ;;
         'x')
             result=$(multiply $2 $3)
             ;;
@@ -548,6 +552,7 @@ function prompt_for_input() {
         echo "number to a power. You may user parentheses." 1>&2
         read -r response
     done
+    parse_user_input "$response"
 }
 
 # Used for printing errors:
@@ -566,7 +571,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 function test_math_funcs() {
     echo "10 + 5 = $(add 10 5)" 1>&2
     echo "10 - 5 = $(subtract 10 5)" 1>&2
-    echo "10 x 5 = $(multiply 10 5)" 1>&2
+    echo "10 * 5 = $(multiply 10 5)" 1>&2
     echo "10 / 5 = $(divide 10 5)" 1>&2
     echo "10 ^ 5 = $(power 10 5)" 1>&2
     echo "3 % 2 = $(mod 3 2)" 1>&2
@@ -613,6 +618,7 @@ stack_new "operators"
 binary_operator_list=('+' '-' 'x' '/' '^' 'pow' '%')
 unary_operator_list=('**' 'sqrt')
 declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
+# declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["*"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
 declare final_result
 
 ################################################################################
@@ -627,7 +633,6 @@ declare final_result
 
 # Exit conditions
 exit_if_help_requested "$@"
-exit_if_input_incorrect "$@"
 
 if [[ "$#" -eq 0 ]]; then
     prompt_for_input
