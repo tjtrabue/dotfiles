@@ -621,5 +621,3 @@ parse_user_input "$@"
 finish_remaining_operations
 stack_pop "operands" final_result
 echo $final_result
-
-echo "+ precedence: "${operator_precedence["+"]}"" 1>&2
