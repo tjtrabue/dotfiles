@@ -489,23 +489,23 @@ function do_binary() {
 
     local result
     case "$1" in
-        '+')
+        '+' | 'add')
             result=$(add $2 $3)
             ;;
-        '-')
+        '-' | 'sub')
             result=$(subtract $2 $3)
             ;;
         # '*')
-        'x')
+        'x' | 'mul')
             result=$(multiply $2 $3)
             ;;
-        '/')
+        '/' | 'div')
             result=$(divide $2 $3)
             ;;
         '^' | 'pow')
             result=$(power $2 $3)
             ;;
-        '%')
+        '%' | 'mod')
             result=$(mod $2 $3)
             ;;
         *)
