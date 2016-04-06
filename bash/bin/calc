@@ -25,6 +25,7 @@ function calc_usage() {
     echo "    calc ** <arg>" 1>&2
     echo "    calc sqrt <arg>" 1>&2
     echo "    calc <arg1> ^ <arg2> | calc <arg1> pow <arg2>" 1>&2
+    echo "    calc <arg1> % <arg2> | calc <arg1> mod <arg2>" 1>&2
     echo "Options:" 1>&2
 }
 
@@ -617,7 +618,7 @@ function test_stack_funcs() {
 user_input=""
 stack_new "operands"
 stack_new "operators"
-binary_operator_list=('+' '-' 'x' '/' '^' 'pow' '%')
+binary_operator_list=('+' 'add' '-' 'sub' 'x' 'mul' '/' 'div' '^' 'pow' '%' 'mod')
 unary_operator_list=('**' 'sqrt')
 declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
 # declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["*"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
