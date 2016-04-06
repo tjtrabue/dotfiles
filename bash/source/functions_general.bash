@@ -178,15 +178,6 @@ function translate_dir_hist() {
     echo ${dir_arr[$num_dirs_to_go_back]}
 }
 
-# Alias the open command to assume the current directory if no arguments are given:
-function open() {
-    if [[ "$#" -eq 0 ]]; then
-        open .
-    else
-        open "$@"
-    fi
-}
-
 ################################################################################
 ##                                                                            ##
 ##                                 Information                                ##
