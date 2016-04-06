@@ -359,7 +359,7 @@ function mod() {
 
 # Parse user input entered in the form of a mathematical expression to be evaluated
 function parse_user_input() {
-    local input_string="$1"
+    local input_string="$@"
     local token
     for token in $input_string; do
         token="$(echo "$token")"
@@ -424,6 +424,10 @@ function parse_user_input() {
             '**' | 'sqrt')
                 echo "Found a unary operator" 1>&2
                 echow "Unary operations currently unsupported"
+                ;;
+            *)
+                echoe "Unknown token $token in input"
+                exit 3
                 ;;
         esac
     done
