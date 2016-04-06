@@ -363,7 +363,7 @@ function parse_user_input() {
     local token
     for token in $input_string; do
         token="$(echo "$token")"
-        echo "$token" 1>&2
+        echo "Token: $token" 1>&2
         case "$token" in
             [0-9]*)
                 echo "Pushing $token onto operands stack" 1>&2
@@ -524,6 +524,12 @@ function do_unary() {
 
     echo $result
 }
+
+# Make sure that any *'s read in from command line are escaped
+# Usage: escape_stars input_string
+# function escape_stars() {
+
+# }
 
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
