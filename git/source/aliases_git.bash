@@ -23,6 +23,7 @@ alias gaa="git add \"\$(git rev-parse --show-toplevel)\"/"
 alias gc="git commit -m"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
+alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
 alias gp="git push"
 alias gpl="git pull"
 
