@@ -134,7 +134,7 @@ function exportsublime() {
 
 # Wrapper for the cd function that adds some memory to it for
 # retracing directories.
-cd () {
+function cd() {
     local adir;
     local -i cnt;
     if [[ $1 == "--" ]]; then
@@ -171,11 +171,20 @@ cd () {
 }
 
 # Maps an input integer of the form -i with a directory on the directory stack:
-translate_dir_hist () {
+function translate_dir_hist() {
     [[ ! -z "$1" && "$1" =~ \-[0-9]+ ]] && local num_dirs_to_go_back=${1:1} || return 1
     dir_arr=($(dirs))
     [[ $num_dirs_to_go_back -gt ${#dir_arr[@]} ]] && return 2
     echo ${dir_arr[$num_dirs_to_go_back]}
+}
+
+# Alias the open command to assume the current directory if no arguments are given:
+function open() {
+    if [[ "$#" -eq 0 ]]; then
+        open .
+    else
+        open "$@"
+    fi
 }
 
 ################################################################################
@@ -185,13 +194,13 @@ translate_dir_hist () {
 ################################################################################
 
 # Used for printing errors:
-echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
 # Used for printing warnings:
-echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 # Prints useful network information regarding open connections.
-netinfo () {
+function netinfo() {
     if [[ "$1" == "-l" ]]; then
         lsof -i | grep -E "(LISTEN|ESTABLISHED)" | awk '{print $1, $8, $9}'
     elif [[ "$#" -gt 0 && "$1" != "-l" ]]; then
