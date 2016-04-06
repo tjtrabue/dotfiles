@@ -7,9 +7,10 @@ else # OS X `ls`
     colorflag="-G"
 fi
 
-# Printing aliases:
+# Printing / clearing aliases:
 alias lsa="ls -aF ${colorflag}"
 alias lsh="ls -aF ${colorflag} | egrep '^\.'"
+alias cl="clear"
 
 # Linking aliases:
 alias lns="ln -s"
@@ -57,7 +58,7 @@ alias -- -="cd -"
 alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
+alias p="cd ~/IntelliJProjects"
 alias g="git"
 alias h="history"
 alias j="jobs"
