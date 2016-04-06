@@ -362,14 +362,18 @@ function parse_user_input() {
     local input_string="$@"
     local token
     for token in $input_string; do
+        echo "Token: $token" 1>&2
         case "$token" in
-            [0-9]+)
+            [0-9])
+                echo "Pushing $token onto operands stack" 1>&2
                 stack_push "operands" "$token"
                 ;;
             \()
+                echo "Found opening parenthesis" 1>&2
                 stack_push "operators" "$token"
                 ;;
             \))
+                echo "Found closing parenthesis" 1>&2
                 local peek_var
                 stack_peek operators peek_var
                 while [[ "$peek_var" != "(" ]]; do
@@ -385,6 +389,7 @@ function parse_user_input() {
                 stack_pop "operators" left_parenthesis
                 ;;
             "${binary_operator_list[@]}")
+                echo "Found a binary operator" 1>&2
                 local size
                 local peek_var
                 stack_size "operators" size
@@ -402,6 +407,7 @@ function parse_user_input() {
                 stack_push "operators" "$token"
                 ;;
             "${unary_operator_list[@]}")
+                echo "Found a unary operator" 1>&2
                 echow "Unary operations currently unsupported"
                 ;;
         esac
@@ -427,6 +433,7 @@ function finish_remaining_operations() {
             echoe "Illegal operator $operator in finish_remaining_operations"
             return 1
         fi
+        stack_size "operators" size 2> /dev/null
     done
 }
 
