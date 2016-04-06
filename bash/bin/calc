@@ -539,6 +539,17 @@ function do_unary() {
 
 # }
 
+# Prompts the user for input if they didn't enter an expression
+function prompt_for_input() {
+    local response=""
+    while [[ $response == "" ]]; do
+        echo "Enter an arithmetic expression to evaluate. Allowed operations are addition," 1>&2
+        echo "subtraction, multiplication, division, evaluating a square root, and raising a" 1>&2
+        echo "number to a power. You may user parentheses." 1>&2
+        read -r response
+    done
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -596,6 +607,7 @@ function test_stack_funcs() {
 ##                                                                            ##
 ################################################################################
 
+user_input=""
 stack_new "operands"
 stack_new "operators"
 binary_operator_list=('+' '-' 'x' '/' '^' 'pow' '%')
@@ -617,7 +629,11 @@ declare final_result
 exit_if_help_requested "$@"
 exit_if_input_incorrect "$@"
 
-parse_user_input "$@"
+if [[ "$#" -eq 0 ]]; then
+    prompt_for_input
+else
+    parse_user_input "$*"
+fi
 finish_remaining_operations
 stack_pop "operands" final_result
 echo $final_result
