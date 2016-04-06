@@ -406,7 +406,7 @@ function parse_user_input() {
 
                     # Update the sentinel values:
                     stack_size "operators" size
-                    token_precedence="${operator_precedence[\"$token\"]}"
+                    stack_peek "operators" peek_var
                     peek_precedence="${operator_precedence[\"$peek_var\"]}"
                 done
                 stack_push "operators" "$token"
