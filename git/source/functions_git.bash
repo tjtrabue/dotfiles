@@ -8,7 +8,8 @@
 
 # Determines whether or not the current directory is in a git repository
 function isrepo() {
-    if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
+    $(git rev-parse --is-inside-work-tree) &> /dev/null
+    if [[ $? -eq 0 ]]; then
         return 0
     else
         return 1
@@ -92,8 +93,8 @@ function clone() {
 
 # Lists all submodules in a repo
  function ls-submods() {
-    is_repo
-    if [[ "$!" -eq 0 ]]; then
+    $(git rev-parse --is-inside-work-tree) &> /dev/null
+    if [[ $? -eq 0 ]]; then
         local repo_home="$(dirname $(git rev-parse --git-dir))"
         grep path $repo_home/.gitmodules | sed 's/.*= //'
     else
