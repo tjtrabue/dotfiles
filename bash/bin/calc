@@ -364,7 +364,7 @@ function parse_user_input() {
     for token in $input_string; do
         echo "Token: $token" 1>&2
         case "$token" in
-            [0-9])
+            [0-9]*)
                 echo "Pushing $token onto operands stack" 1>&2
                 stack_push "operands" "$token"
                 ;;
@@ -388,7 +388,7 @@ function parse_user_input() {
                 local left_parenthesis
                 stack_pop "operators" left_parenthesis
                 ;;
-            "${binary_operator_list[@]}")
+            '+' | '-' | '*' | '/' | '^' | '%')
                 echo "Found a binary operator" 1>&2
                 local size
                 local peek_var
@@ -403,6 +403,11 @@ function parse_user_input() {
                     stack_pop "operands" val1
                     local result=$(do_binary $operator $val1 $val2)
                     stack_push "operands" "$result"
+
+                    # Update the sentinel values:
+                    stack_size "operators" size
+                    token_precedence="${operator_precedence[\"$token\"]}"
+                    peek_precedence="${operator_precedence[\"$peek_var\"]}"
                 done
                 stack_push "operators" "$token"
                 ;;
