@@ -204,7 +204,7 @@ function netinfo() {
 }
 
 # Get the MAC address for the computer:
-function mac() { ifconfig en0 | awk '/ether/{print $2}' }
+function mac() { ifconfig en0 | awk '/ether/{print $2}' ; }
 
 ################################################################################
 ##                             Functions taken from                           ##
