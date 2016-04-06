@@ -411,7 +411,7 @@ function parse_user_input() {
                 done
                 stack_push "operators" "$token"
                 ;;
-            "${unary_operator_list[@]}")
+            '**' | 'sqrt')
                 echo "Found a unary operator" 1>&2
                 echow "Unary operations currently unsupported"
                 ;;
