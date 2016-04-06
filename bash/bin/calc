@@ -367,24 +367,24 @@ function parse_user_input() {
         case "$token" in
             [0-9]*)
                 echo "Pushing $token onto operands stack" 1>&2
-                stack_push "operands" "$token"
+                stack_push "operands" "$token" &> /dev/null
                 ;;
             \()
                 echo "Found opening parenthesis" 1>&2
-                stack_push "operators" "$token"
+                stack_push "operators" "$token" &> /dev/null
                 ;;
             \))
                 echo "Found closing parenthesis" 1>&2
                 local peek_var
-                stack_peek "operators" peek_var
+                stack_peek "operators" peek_var &> /dev/null
                 while [[ "$peek_var" != "(" ]]; do
                     local operator val1 val2
-                    stack_pop "operators" operator
-                    stack_pop "operands" val2
-                    stack_pop "operands" val1
+                    stack_pop "operators" operator &> /dev/null
+                    stack_pop "operands" val2 &> /dev/null
+                    stack_pop "operands" val1 &> /dev/null
                     local result=$(do_binary $operator $val1 $val2)
-                    stack_push "operands" "$result"
-                    stack_peek "operators" peek_var
+                    stack_push "operands" "$result" &> /dev/null
+                    stack_peek "operators" peek_var &> /dev/null
                 done
                 local left_parenthesis
                 stack_pop "operators" left_parenthesis
@@ -407,18 +407,18 @@ function parse_user_input() {
                 fi
                 while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
                     local operator val1 val2
-                    stack_pop "operators" operator
-                    stack_pop "operands" val2
-                    stack_pop "operands" val1
+                    stack_pop "operators" operator &> /dev/null
+                    stack_pop "operands" val2 &> /dev/null
+                    stack_pop "operands" val1 &> /dev/null
                     local result=$(do_binary $operator $val1 $val2)
-                    stack_push "operands" "$result"
+                    stack_push "operands" "$result" &> /dev/null
 
                     # Update the sentinel values:
-                    stack_size "operators" size
-                    stack_peek "operators" peek_var
-                    peek_precedence="${operator_precedence[\"$peek_var\"]}"
+                    stack_size "operators" size &> /dev/null
+                    stack_peek "operators" peek_var &> /dev/null
+                    peek_precedence="${operator_precedence["$peek_var"]}"
                 done
-                stack_push "operators" "$token"
+                stack_push "operators" "$token" &> /dev/null
                 ;;
             '**' | 'sqrt')
                 echo "Found a unary operator" 1>&2
@@ -433,16 +433,16 @@ function finish_remaining_operations() {
     local operator size val val1 val2 result
     stack_size "operators" size 2> /dev/null
     while [[ "$size" -gt 0 ]]; do
-        stack_pop "operators" operator
+        stack_pop "operators" operator &> /dev/null
         if is_binary_operator $operator; then
-            stack_pop "operands" val2
-            stack_pop "operands" val1
+            stack_pop "operands" val2 &> /dev/null
+            stack_pop "operands" val1 &> /dev/null
             result=$(do_binary $operator $val1 $val2)
-            stack_push "operands" $result
+            stack_push "operands" $result &> /dev/null
         elif is_unary_operator $operator; then
-            stack_pop "operands" val
+            stack_pop "operands" val &> /dev/null
             result=$(do_unary $operator $val)
-            stack_push "operands" $result
+            stack_push "operands" $result &> /dev/null
         else
             echoe "Illegal operator $operator in finish_remaining_operations"
             return 1
@@ -570,23 +570,23 @@ function test_stack_funcs() {
     local peek_var
     local elem1
     local elem2
-    stack_new test_stack
-    stack_size test_stack size_var
+    stack_new test_stack &> /dev/null
+    stack_size test_stack size_var &> /dev/null
     echo "Original size of test_stack: $size_var" 1>&2
-    stack_push test_stack "first"
-    stack_push test_stack "second"
-    stack_size test_stack size_var
+    stack_push test_stack "first" &> /dev/null
+    stack_push test_stack "second" &> /dev/null
+    stack_size test_stack size_var &> /dev/null
     echo "Size of test_stack after two things pushed: $size_var" 1>&2
     echo "This is the entire stack: $(stack_print test_stack)" 1>&2
-    stack_peek test_stack peek_var
+    stack_peek test_stack peek_var &> /dev/null
     echo "Now, let's peek at the top of the stack (should be 'second'): $peek_var" 1>&2
-    stack_pop test_stack elem2
+    stack_pop test_stack elem2 &> /dev/null
     echo "Now let's pop it off! We just popped this off: $elem2" 1>&2
-    stack_size test_stack size_var
+    stack_size test_stack size_var &> /dev/null
     echo "After popping, the size of test_stack is: $size_var" 1>&2
-    stack_pop test_stack elem1
+    stack_pop test_stack elem1 &> /dev/null
     echo "This is the second thing we popped off: $elem1" 1>&2
-    stack_size test_stack size_var
+    stack_size test_stack size_var &> /dev/null
     echo "Now the size of the stack is: $size_var" 1>&2
 }
 
