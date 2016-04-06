@@ -1,0 +1,4 @@
+[
+	{ "keys": ["ctrl+shift+o"], "command": "require_dojo_module" },
+	{ "keys": ["ctrl+shift+i"], "command": "insert_dojo_module" }
+]

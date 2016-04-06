@@ -1,0 +1,203 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/ttrabue/Workspace/webext-common/build"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/lifecycle-workflow"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/license"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/launcher"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/InternationalizationHelper"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/HttpComponents-Util"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/hibernateutil"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/Groovy"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/GitSourceConfig"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/general-utilities"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/FileUtils"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/FileSystemVersionedSourceConfig"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/diffutils"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/dev"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/dbunit"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-xml"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-workflow"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-webapp-profiler"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-web-util"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-web"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-util"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-service"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-petriworkflow"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-net"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-locking"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/commons-fileutils"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/codestation-aggregate"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/cm-db-updater"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/ClearCaseSourceConfig"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/AnthillSourceConfig"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/anthill-shell"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/anthill-codestation2"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-versioned-configuration"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-ssh-agent-installer"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-shell"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-service-event"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-security"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-propertyresolver"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-property-sheets"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-plugin-server-common"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-plugin-server"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-plugin-command"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-notification"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-net"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-inventory"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-halock"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-diagnostics"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-devilfish"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-agentupgrade"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-agentmanager"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-agent-topology"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/air-agent-relay"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/agent-workerlauncher"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/agent-utils"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/agent"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/activemqtransport"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/activemq-launcher"
+		},
+		{
+			"path": "/Users/ttrabue/Workspace/activemq"
+		},
+		{
+			"path": "/Users/ttrabue/uDeploy_Servers/prefs"
+		},
+		{
+			"path": "/Users/ttrabue/Dropbox/Scripts"
+		},
+		{
+			"path": "/Users/ttrabue/Dropbox/GitHub/GitHub_Repositories/zsh-dotfiles/.git"
+		},
+		{
+			"path": "/Users/ttrabue/Dropbox/GitHub/GitHub_Repositories/zsh-dotfiles"
+		},
+		{
+			"path": "/Users/ttrabue/Dropbox/GitHub/GitHub_Repositories/urbancode-dev"
+		},
+		{
+			"path": "/Users/ttrabue/Dropbox/GitHub/GitHub_Repositories/dev"
+		},
+		{
+			"path": "/Users/ttrabue/.dotfiles"
+		},
+		{
+			"path": "/Users/ttrabue"
+		}
+	]
+}

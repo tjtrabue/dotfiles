@@ -1,0 +1,50 @@
+{
+    // an array of options to pass to jslint.
+    "options" : [
+        // tolerate bitwise operators
+        "--bitwise"
+        // tolerate standard browser predefined globals
+        ,"--browser"
+        // tolerate the good parts of ES6
+        ,"--es6"
+        // tolerate 'eval'
+        ,"--eval"
+        // tolerate 'for'
+        ,"--for"
+        // start file and column counts from 1
+        ,"--fudge"
+        // assume Node.js
+        ,"--node"
+        // tolerate 'this'
+        ,"--this"
+    ]
+
+    // if true, run jslint on save.
+    ,"run_on_save" : true
+
+    // a regex string to determine whether jslint
+    // should be run on a file.
+    // if a match is found (i.e. re.search(filename_filter, filename)),
+    // the file will be linted.
+    ,"filename_filter": "(\\.js|\\.json)$"
+
+
+    // jslint command you want to run as an array of strings.
+    // E.g.: ["jslint"] or ["/usr/local/bin/jslint"] or ["node", "mylinter.js"]
+    // Default is
+    //    * Linux: ["node", "~/.config/sublime-text-2/Packages/JSLint/linter.js"]
+    //    * Mac: ["node", "~/Library/Application Support/Sublime Text 2/Packages/JSLint/linter.js"]
+    //    * Windows: ["node", "%APPDATA%/Sublime Text 2/Packages/JSLint/linter.js"]
+
+    // ,"jslint" : ["jslint"]
+
+
+    // if your own personal choice of jslint has an output
+    // different from the standard which comes with this package,
+    // you may have to change line_regex and file_regex
+    // check http://docs.sublimetext.info/en/latest/reference/build_systems.html
+    // to find out how these regular expressions work. The defaults are:
+
+    // ,"line_regex" : ".*// Line ([0-9]*), Pos ([0-9]*)$"
+    // ,"file_regex" : "(^[^# ]+.*$)"
+}

@@ -1,0 +1,11 @@
+{
+	"require_comment": "",
+	"search_paths": [
+        "/Users/ttrabue/Workspace/urban-deploy/src/web/war/js/deploy/widgets"
+    ],
+
+	//Require settings
+	"plugin_prefixes": ["com", "org", "net", "edu"],
+	"ignore_paths": [],
+	"provide_comment": ""
+}

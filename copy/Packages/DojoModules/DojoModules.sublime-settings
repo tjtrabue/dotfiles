@@ -1,0 +1,9 @@
+{
+	"require_comment": "",
+	"search_paths": [],
+	
+	//Require settings
+	"plugin_prefixes": ["com", "org", "net", "edu"],
+	"ignore_paths": [],
+	"provide_comment": ""
+}

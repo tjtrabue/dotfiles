@@ -1,0 +1,13 @@
+<snippet>
+    <content><![CDATA[
+${1:response}=""
+while [[ \$${1:response} == "" ]]; do
+    echo "${2:message}" 1>&2
+    read -r ${1:response}
+done
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>prompt</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>

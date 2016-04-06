@@ -1,0 +1,40 @@
+/* Html fake border color */
+/* Defines the general look of the font and provides a little margin. */
+body {
+    color: black;
+    background-color: white;
+    margin: 1px;
+    font-size: 1em;
+    padding: 0.2em;
+}
+/* Headers */
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.4em; }
+h3 { font-size: 1.3em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1.1em; }
+h6 { font-size: 1em; }
+h1, h2, h3, h4, h5, h6 { margin-top: 0.2em; margin-bottom: 0.2em; }
+/* Blockquote support. */
+blockquote { display: block; font-style: italic; }
+/* Horizontal rule support. */
+hr { display: block; padding: 1px; margin: 1em 1em; }
+/* Description list support */
+dl { display: block; }
+dt { display: block; font-style: italic; font-weight: bold; }
+dd { display: block; margin-left: 1em; }
+/* Preformatted block */
+pre { display: block; }
+/* Blocks */
+blockquote, ol, ul, dl, p, div {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+}
+dd { padding-left: 0.5em; }
+ul, ol { padding-left: 2.0em; }
+/* Special classes */
+.highlight { padding: 0.5em; }
+.admonition { padding: 0.5em; }

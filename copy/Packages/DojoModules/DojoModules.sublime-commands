@@ -1,0 +1,5 @@
+[
+    { "caption": "Provide dojo module", "command": "dojo_provide" },
+    { "caption": "Insert dojo module name", "command": "insert_dojo_module" },
+    { "caption": "Require dojo module", "command": "require_dojo_module"}
+]

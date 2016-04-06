@@ -1,0 +1,1 @@
+{"dependencies": [], "description": "SublimeREPL - run an interpreter inside ST2 (Clojure, CoffeeScript, F#, Groovy, Haskell, Lua, MozRepl, NodeJS, Python + virtualenv, R, Ruby, Scala...)", "platforms": ["*"], "url": "https://github.com/wuub/SublimeREPL", "version": "2.1.2", "sublime_text": "*"}

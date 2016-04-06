@@ -1,0 +1,2 @@
+{"command": "expandSelectionTo", "args": {"feature": "line"}},
+{"command": "insert", "args": {"characters": "\n"}}

@@ -1,0 +1,14 @@
+<snippet>
+    <content><![CDATA[
+${1:response}=""
+while [[ ! \$${1:response} =~ [Yy] && ! \$${1:response} =~ [Nn] ]]; do
+    echo "${2:message}? [y/n]" 1>&2
+    read -sn 1 ${1:response}
+    ${1:response}=\${${1:response}:-y}
+done
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>yndefy</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>

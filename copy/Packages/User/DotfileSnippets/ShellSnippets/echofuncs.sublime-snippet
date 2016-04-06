@@ -1,0 +1,13 @@
+<snippet>
+    <content><![CDATA[
+# Used for printing errors:
+function echoe () { echo -e "\${RED}ERROR\${NC}: \$@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "\${BROWN_ORANGE}WARNING\${NC}: \$@" 1>&2 ; }
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>echofuncs</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>

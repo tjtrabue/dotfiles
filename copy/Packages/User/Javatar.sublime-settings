@@ -1,0 +1,59 @@
+{
+	"javatar_gp": 0,
+	"jdk_version":
+	{
+		"JDK1.6.0u65":
+		{
+			"path": "/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bundle/Home/bin",
+			"update": "65",
+			"version": "1.6.0"
+		},
+		"JDK1.7.0u80":
+		{
+			"path": "/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/bin",
+			"update": "80",
+			"version": "1.7.0"
+		},
+		"JDK1.8.0u65":
+		{
+			"path": "/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/bin",
+			"update": "65",
+			"version": "1.8.0"
+		},
+		"JDK1.8.0u66":
+		{
+			"path": "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/bin",
+			"update": "66",
+			"version": "1.8.0"
+		},
+		"JDK217j38m69upt":
+		{
+			"path": "/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bundle/Home/bundle/Home/bin",
+			"update": "pt",
+			"version": "217j38m69"
+		},
+		"use": "JDK217j38m69upt"
+	},
+	"message_id": 20,
+	"project_data":
+	{
+		"2":
+		{
+			"build_systems":
+			[
+				{
+					"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+					"name": "Anaconda Python Builder",
+					"selector": "source.python",
+					"shell_cmd": "\"python\" -u \"$file\""
+				}
+			],
+			"folders":
+			[
+				{
+					"path": "/Users/ttrabue/Scratch/dev"
+				}
+			]
+		}
+	}
+}

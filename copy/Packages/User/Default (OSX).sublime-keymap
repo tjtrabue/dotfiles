@@ -1,0 +1,4 @@
+[
+    { "keys": ["super+b"], "command": "goto_definition" },
+    { "keys": ["ctrl+d"], "command": "run_macro_file", "args": {"file": "res://Packages/User/CustomMacros/delete-line.sublime-macro"}}
+]
