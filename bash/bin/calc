@@ -10,6 +10,7 @@
 function calc_help() {
     echo "calc is a powerful command line calculator that can compute not only sums, differences," 1>&2
     echo "products, and quotients, but also square roots, exponentiation, and much more." 1>&2
+    echo "You may use parentheses to group operands, but you must escape them with a backslash." 1>&2
     echo "NOTE: Always separate arguments and operators with spaces, or you will not get the" 1>&2
     echo "      output you expect." 1>&2
     calc_usage
@@ -364,18 +365,18 @@ function parse_user_input() {
     local token
     for token in $input_string; do
         token="$(echo "$token")"
-        # echo "Token: $token" 1>&2
+        echo "Token: $token" 1>&2
         case "$token" in
             [0-9]*)
                 # echo "Pushing $token onto operands stack" 1>&2
                 stack_push "operands" "$token" &> /dev/null
                 ;;
-            \()
-                # echo "Found opening parenthesis" 1>&2
+            '(')
+                echo "Found opening parenthesis" 1>&2
                 stack_push "operators" "$token" &> /dev/null
                 ;;
-            \))
-                # echo "Found closing parenthesis" 1>&2
+            ')')
+                echo "Found closing parenthesis" 1>&2
                 local peek_var
                 stack_peek "operators" peek_var &> /dev/null
                 while [[ "$peek_var" != "(" ]]; do
