@@ -180,7 +180,7 @@ function swged() {
 
 # Reverts the current repo to the state of its previous commit:
 function resetlast() {
-    git rev-parse --is-inside-work-tree >> /dev/null
+    git rev-parse --is-inside-work-tree &> /dev/null
     if [[ $? -eq 0 ]]; then
         git reset --soft HEAD~1
         git reset HEAD "$(git rev-parse --show-toplevel)"
