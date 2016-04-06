@@ -376,12 +376,12 @@ function parse_user_input() {
             \))
                 echo "Found closing parenthesis" 1>&2
                 local peek_var
-                stack_peek operators peek_var
+                stack_peek "operators" peek_var
                 while [[ "$peek_var" != "(" ]]; do
                     local operator val1 val2
-                    stack_pop operators operator
-                    stack_pop operands val2
-                    stack_pop operands val1
+                    stack_pop "operators" operator
+                    stack_pop "operands" val2
+                    stack_pop "operands" val1
                     local result=$(do_binary $operator $val1 $val2)
                     stack_push "operands" "$result"
                     stack_peek "operators" peek_var
@@ -391,12 +391,20 @@ function parse_user_input() {
                 ;;
             '+' | '-' | 'x' | '/' | '^' | '%')
                 echo "Found a binary operator" 1>&2
-                local size
-                local peek_var
-                stack_size "operators" size
-                stack_peek "operators" peek_var
-                local token_precedence="${operator_precedence[\"$token\"]}"
-                local peek_precedence="${operator_precedence[\"$peek_var\"]}"
+                local size=""
+                local peek_var=""
+                local token_precedence=""
+                local peek_precedence=""
+                stack_size "operators" size &> /dev/null
+                stack_peek "operators" peek_var &> /dev/null
+                if [[ "$size" != "" ]]; then
+                    token_precedence="${operator_precedence["$token"]}"
+                    echo "Token precedence: $token_precedence" 1>&2
+                fi
+                if [[ "$peek_var" != "" ]]; then
+                    peek_precedence="${operator_precedence["$peek_var"]}"
+                    echo "Peek precedence: $peek_precedence" 1>&2
+                fi
                 while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
                     local operator val1 val2
                     stack_pop "operators" operator
@@ -613,3 +621,5 @@ parse_user_input "$@"
 finish_remaining_operations
 stack_pop "operands" final_result
 echo $final_result
+
+echo "+ precedence: "${operator_precedence["+"]}"" 1>&2
