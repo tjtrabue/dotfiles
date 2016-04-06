@@ -18,10 +18,10 @@ function calc_help() {
 # Usage message
 function calc_usage() {
     echo "Usage:" 1>&2
-    echo "    calc <arg1> + <arg2>" 1>&2
-    echo "    calc <arg1> - <arg2>" 1>&2
-    echo "    calc <arg1> x <arg2>" 1>&2
-    echo "    calc <arg1> / <arg2>" 1>&2
+    echo "    calc <arg1> + <arg2> | calc <arg1> add <arg2>" 1>&2
+    echo "    calc <arg1> - <arg2> | calc <arg1> sub <arg2>" 1>&2
+    echo "    calc <arg1> x <arg2> | calc <arg1> mul <arg2>" 1>&2
+    echo "    calc <arg1> / <arg2> | calc <arg1> div <arg2>" 1>&2
     echo "    calc ** <arg>" 1>&2
     echo "    calc sqrt <arg>" 1>&2
     echo "    calc <arg1> ^ <arg2> | calc <arg1> pow <arg2>" 1>&2
@@ -390,7 +390,7 @@ function parse_user_input() {
                 stack_pop "operators" left_parenthesis
                 ;;
             # '+' | '-' | '*' | '/' | '^' | 'pow' | '%')
-            '+' | '-' | 'x' | '/' | '^' | 'pow' | '%')
+            '+' | 'add' | '-' | 'sub' | 'x' | 'mul' | '/' | 'div' | '^' | 'pow' | '%' | 'mod')
                 echo "Found a binary operator" 1>&2
                 local size=""
                 local peek_var=""
