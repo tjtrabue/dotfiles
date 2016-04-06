@@ -20,7 +20,7 @@ function calc_usage() {
     echo "Usage:" 1>&2
     echo "    calc <arg1> + <arg2>" 1>&2
     echo "    calc <arg1> - <arg2>" 1>&2
-    echo "    calc <arg1> * <arg2>" 1>&2
+    echo "    calc <arg1> x <arg2>" 1>&2
     echo "    calc <arg1> / <arg2>" 1>&2
     echo "    calc ** <arg>" 1>&2
     echo "    calc sqrt <arg>" 1>&2
@@ -389,7 +389,7 @@ function parse_user_input() {
                 local left_parenthesis
                 stack_pop "operators" left_parenthesis
                 ;;
-            '+' | '-' | '*' | '/' | '^' | '%')
+            '+' | '-' | 'x' | '/' | '^' | '%')
                 echo "Found a binary operator" 1>&2
                 local size
                 local peek_var
@@ -481,7 +481,7 @@ function do_binary() {
         '-')
             result=$(subtract $2 $3)
             ;;
-        '*')
+        'x')
             result=$(multiply $2 $3)
             ;;
         '/')
@@ -547,7 +547,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 function test_math_funcs() {
     echo "10 + 5 = $(add 10 5)" 1>&2
     echo "10 - 5 = $(subtract 10 5)" 1>&2
-    echo "10 * 5 = $(multiply 10 5)" 1>&2
+    echo "10 x 5 = $(multiply 10 5)" 1>&2
     echo "10 / 5 = $(divide 10 5)" 1>&2
     echo "10 ^ 5 = $(power 10 5)" 1>&2
     echo "3 % 2 = $(mod 3 2)" 1>&2
@@ -590,9 +590,9 @@ function test_stack_funcs() {
 
 stack_new "operands"
 stack_new "operators"
-binary_operator_list=('+' '-' '*' '/' '^' '%')
+binary_operator_list=('+' '-' 'x' '/' '^' '%')
 unary_operator_list=('**' 'sqrt')
-declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["*"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["**"]=3 )
+declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["**"]=3 )
 declare final_result
 
 ################################################################################
