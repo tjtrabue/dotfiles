@@ -123,7 +123,7 @@ function mke() {
 
 # Copy all sublime packages to the ~/.dotfiles/copy directory
 function exportsublime() {
-    rsync -a ~/"Application Support/Sublime Text 3/Packages/" ~/".dotfiles/backup/Packages"
+    rsync -a ~/"Application Support/Sublime Text 3/Packages/" ~/".dotfiles/exports/Sublime/Packages"
 }
 
 ################################################################################
