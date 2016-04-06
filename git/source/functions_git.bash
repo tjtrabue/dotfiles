@@ -179,11 +179,25 @@ function swged() {
 ###########################################################################
 
 # Reverts the current repo to the state of its previous commit:
-function resetlast() {
+function creset() {
     git rev-parse --is-inside-work-tree &> /dev/null
     if [[ $? -eq 0 ]]; then
         git reset --soft HEAD~1
         git reset HEAD "$(git rev-parse --show-toplevel)"
+    else
+        return 1
+    fi
+}
+
+# Resets all uncommitted changes in the current repository
+function ucreset() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+    if [[ $? -eq 0 ]]; then
+        # Revert changes to modified files.
+        git reset --hard
+
+        # Remove all untracked files and directories. (`-f` is `force`, `-d` is `remove directories`)
+        git clean -fd
     else
         return 1
     fi
