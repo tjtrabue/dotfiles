@@ -190,7 +190,7 @@ function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 # Used for printing warnings:
 function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
-# Prints useful network information regarding open connections.
+# Prints useful network information regarding open connections:
 function netinfo() {
     if [[ "$1" == "-l" ]]; then
         lsof -i | grep -E "(LISTEN|ESTABLISHED)" | awk '{print $1, $8, $9}'
@@ -202,6 +202,9 @@ function netinfo() {
         lsof -i | grep -E "(LISTEN|ESTABLISHED)"
     fi
 }
+
+# Get the MAC address for the computer:
+function mac() { ifconfig en0 | awk '/ether/{print $2}' }
 
 ################################################################################
 ##                             Functions taken from                           ##
