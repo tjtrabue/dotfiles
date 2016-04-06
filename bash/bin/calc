@@ -20,7 +20,7 @@ function calc_usage() {
     echo "Usage:" 1>&2
     echo "    calc <arg1> + <arg2>" 1>&2
     echo "    calc <arg1> - <arg2>" 1>&2
-    echo "    calc <arg1> * <arg2>" 1>&2
+    echo "    calc <arg1> x <arg2>" 1>&2
     echo "    calc <arg1> / <arg2>" 1>&2
     echo "    calc ** <arg>" 1>&2
     echo "    calc sqrt <arg>" 1>&2
@@ -359,7 +359,7 @@ function mod() {
 
 # Parse user input entered in the form of a mathematical expression to be evaluated
 function parse_user_input() {
-    local input_string="$@"
+    local input_string="$1"
     local token
     for token in $input_string; do
         token="$(echo "$token")"
@@ -476,7 +476,7 @@ function is_unary_operator() {
 
 # Decide which binary operation to perform and then do it
 # Usage: operator val1 val2
-# operator in: +, -, *, /, ^, %
+# operator in: +, -, x, /, ^, %
 function do_binary() {
     : ${1?'Missing the operator'}
     : ${2?'Missing the first operand'}
@@ -491,8 +491,6 @@ function do_binary() {
             result=$(subtract $2 $3)
             ;;
         # '*')
-        #     result=$(multiply $2 $3)
-        #     ;;
         'x')
             result=$(multiply $2 $3)
             ;;
@@ -571,7 +569,7 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 function test_math_funcs() {
     echo "10 + 5 = $(add 10 5)" 1>&2
     echo "10 - 5 = $(subtract 10 5)" 1>&2
-    echo "10 * 5 = $(multiply 10 5)" 1>&2
+    echo "10 x 5 = $(multiply 10 5)" 1>&2
     echo "10 / 5 = $(divide 10 5)" 1>&2
     echo "10 ^ 5 = $(power 10 5)" 1>&2
     echo "3 % 2 = $(mod 3 2)" 1>&2
@@ -637,7 +635,7 @@ exit_if_help_requested "$@"
 if [[ "$#" -eq 0 ]]; then
     prompt_for_input
 else
-    parse_user_input "$*"
+    parse_user_input "$@"
 fi
 finish_remaining_operations
 stack_pop "operands" final_result
