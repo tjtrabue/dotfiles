@@ -364,18 +364,18 @@ function parse_user_input() {
     local token
     for token in $input_string; do
         token="$(echo "$token")"
-        echo "Token: $token" 1>&2
+        # echo "Token: $token" 1>&2
         case "$token" in
             [0-9]*)
-                echo "Pushing $token onto operands stack" 1>&2
+                # echo "Pushing $token onto operands stack" 1>&2
                 stack_push "operands" "$token" &> /dev/null
                 ;;
             \()
-                echo "Found opening parenthesis" 1>&2
+                # echo "Found opening parenthesis" 1>&2
                 stack_push "operators" "$token" &> /dev/null
                 ;;
             \))
-                echo "Found closing parenthesis" 1>&2
+                # echo "Found closing parenthesis" 1>&2
                 local peek_var
                 stack_peek "operators" peek_var &> /dev/null
                 while [[ "$peek_var" != "(" ]]; do
@@ -388,11 +388,11 @@ function parse_user_input() {
                     stack_peek "operators" peek_var &> /dev/null
                 done
                 local left_parenthesis
-                stack_pop "operators" left_parenthesis
+                stack_pop "operators" left_parenthesis &> /dev/null
                 ;;
             # '+' | '-' | '*' | '/' | '^' | 'pow' | '%')
             '+' | 'add' | '-' | 'sub' | 'x' | 'mul' | '/' | 'div' | '^' | 'pow' | '%' | 'mod')
-                echo "Found a binary operator" 1>&2
+                # echo "Found a binary operator" 1>&2
                 local size=""
                 local peek_var=""
                 local token_precedence=""
@@ -401,11 +401,11 @@ function parse_user_input() {
                 stack_peek "operators" peek_var &> /dev/null
                 if [[ "$size" != "" ]]; then
                     token_precedence="${operator_precedence["$token"]}"
-                    echo "Token precedence: $token_precedence" 1>&2
+                    # echo "Token precedence: $token_precedence" 1>&2
                 fi
                 if [[ "$peek_var" != "" ]]; then
                     peek_precedence="${operator_precedence["$peek_var"]}"
-                    echo "Peek precedence: $peek_precedence" 1>&2
+                    # echo "Peek precedence: $peek_precedence" 1>&2
                 fi
                 while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
                     local operator val1 val2
@@ -423,7 +423,7 @@ function parse_user_input() {
                 stack_push "operators" "$token" &> /dev/null
                 ;;
             '**' | 'sqrt')
-                echo "Found a unary operator" 1>&2
+                # echo "Found a unary operator" 1>&2
                 echow "Unary operations currently unsupported"
                 ;;
             *)
