@@ -1,0 +1,31 @@
+<snippet>
+    <content><![CDATA[
+# Determines whether or not the current directory is in a git repository
+function isrepo() {
+    if [[ \$(git rev-parse --is-inside-work-tree) == "true" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Retrieves the git url for the current repository
+function remoteurl() {
+    git remote -v | egrep '^origin.*push' | awk '{print \$2}'
+}
+
+# Returns the main remote branch for the repository:
+function mainbranch() {
+    git remote show origin | grep 'HEAD branch' | awk '{print \$3}'
+}
+
+# Opens the commit message for the current repo in Vim:
+function emsg() {
+    vim "\$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
+}
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>gitfuncs</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.shell</scope>
+</snippet>

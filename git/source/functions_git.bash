@@ -6,7 +6,7 @@
 #                                                                         #
 ###########################################################################
 
-# Determines whether or not the directory is in a git repository
+# Determines whether or not the current directory is in a git repository
 function isrepo() {
     if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
         return 0
@@ -38,7 +38,7 @@ function ssh-gen() {
 }
 
 # Retrieves the git url for the current repository
-function gurl() {
+function remoteurl() {
     git remote -v | egrep '^origin.*push' | awk '{print $2}'
 }
 
