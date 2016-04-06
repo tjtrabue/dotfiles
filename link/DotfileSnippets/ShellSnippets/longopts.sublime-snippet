@@ -1,7 +1,7 @@
 <snippet>
     <content><![CDATA[
 # Execute getopt
-ARGS=\$(getopt -o a:b:c -l "ay:,bee:,cee" -n "getopt.sh" -- "$@");
+ARGS=\$(getopt -o a:b:c -l "ay:,bee:,cee" -n "getopt.sh" -- "\$@");
 
 #Bad arguments
 if [ \$? -ne 0 ];
