@@ -362,7 +362,8 @@ function parse_user_input() {
     local input_string="$@"
     local token
     for token in $input_string; do
-        echo "Token: $token" 1>&2
+        token="$(echo "$token")"
+        echo "$token" 1>&2
         case "$token" in
             [0-9]*)
                 echo "Pushing $token onto operands stack" 1>&2
