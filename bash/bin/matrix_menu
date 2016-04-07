@@ -30,7 +30,11 @@
 ##                                                                            ##
 ################################################################################
 
+# Indicates when the program should end
+end=false
 
+# The associative array that will hold the rows of options
+declare -A matrix
 
 ################################################################################
 ##                                                                            ##
@@ -38,3 +42,7 @@
 ##                                                                            ##
 ################################################################################
 
+# Begin main program loop:
+while ! $end; do
+
+done # End main program loop
