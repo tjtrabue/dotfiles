@@ -52,7 +52,22 @@ function exit_if_input_incorrect () {
 
 # Parse the input and create rows for the matrix:
 function parse_input() {
-
+    local input="$@"
+    local token
+    local num_rows=0
+    local num_columns=0
+    local current_row_count=0
+    for token in $input; do
+        if [[ "$token" == "-r" ]]; then
+            (( num_rows+=1 ))
+            current_row_count=0
+        else
+            (( current_row_count+=1 ))
+            if [[ "$current_row_count" -gt "$num_rows" ]]; then
+                (( num_rows+=1 ))
+            fi
+        fi
+    done
 }
 
 # Used for printing errors:
@@ -78,6 +93,9 @@ declare -A matrix
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
+
+# Figure out option rows
+parse_input "$@"
 
 # Begin main program loop:
 while ! $end; do
