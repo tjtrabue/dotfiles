@@ -553,7 +553,8 @@ function prompt_for_input() {
     while [[ $response == "" ]]; do
         echo "Enter an arithmetic expression to evaluate. Allowed operations are addition," 1>&2
         echo "subtraction, multiplication, division, evaluating a square root, and raising a" 1>&2
-        echo "number to a power. You may user parentheses." 1>&2
+        echo "number to a power. You may use parentheses, but they have to be escaped with" 1>&2
+        echo "backslashes." 1>&2
         read -r response
     done
     parse_user_input "$response"
