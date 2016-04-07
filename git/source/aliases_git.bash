@@ -26,6 +26,7 @@ alias gcan="git commit --amend --no-edit"
 alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
 alias gp="git push"
 alias gpl="git pull"
+alias rmuntracked="git clean -d -ff"
 
 # Rebasing aliases:
 alias grb="git rebase"
