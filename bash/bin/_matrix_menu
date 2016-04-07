@@ -6,7 +6,21 @@
 ##                                                                            ##
 ################################################################################
 
+# Full help message
+function matrix_menu_help() {
+    echo "A two-dimensional selection menu that the user can navigate" 1>&2
+    echo "with the arrow keys. Note that this is NOT the binary that should" 1>&2
+    echo "be called by the end user. They should use matrix_menu instead," 1>&2
+    echo "which is used the exact same way." 1>&2
+}
 
+# Usage message
+function matrix_menu_usage() {
+    echo "Usage:" 1>&2
+    echo "This binary is used by calling _matrix_menu and one or more -r flags with the data" 1>&2
+    echo "for each row after each -r flag." 1>&2
+    echo "    _matrix_menu -r [row1_option1 [row1_option2 ...] -r [ [row2_option1 ...]]" 1>&2
+}
 
 ################################################################################
 ##                                                                            ##
@@ -22,7 +36,10 @@
 ##                                                                            ##
 ################################################################################
 
+# Parse the input and create rows for the matrix:
+function parse_input() {
 
+}
 
 ################################################################################
 ##                                                                            ##
