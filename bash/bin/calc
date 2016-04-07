@@ -554,9 +554,12 @@ function prompt_for_input() {
         echo "Enter an arithmetic expression to evaluate. Allowed operations are addition," 1>&2
         echo "subtraction, multiplication, division, evaluating a square root, and raising a" 1>&2
         echo "number to a power. You may use parentheses, but they have to be escaped with" 1>&2
-        echo "backslashes." 1>&2
+        echo "backslashes. Type QUIT to exit." 1>&2
         read -r response
     done
+    if [[ "$response" =~ [Qq][Uu][Ii][Tt] ]]; then
+        exit 0
+    fi
     parse_user_input "$response"
 }
 
