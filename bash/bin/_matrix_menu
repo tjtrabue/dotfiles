@@ -54,8 +54,6 @@ function exit_if_input_incorrect () {
 function parse_input() {
     local input="$@"
     local token
-    local num_rows=0
-    local num_columns=0
     local current_row_count=0
     for token in $input; do
         if [[ "$token" == "-r" ]]; then
@@ -87,6 +85,12 @@ end=false
 
 # The associative array that will hold the rows of options
 declare -A matrix
+
+# The number of rows in the two-dimensinoal menu
+num_rows=0
+
+# The number of columns in the two-dimensional menu
+num_columns=0
 
 ################################################################################
 ##                                                                            ##
