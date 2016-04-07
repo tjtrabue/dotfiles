@@ -7,7 +7,7 @@
 ################################################################################
 
 # Full help message
-function matrix_menu_help() {
+function _matrix_menu_help() {
     echo "A two-dimensional selection menu that the user can navigate" 1>&2
     echo "with the arrow keys. Note that this is NOT the binary that should" 1>&2
     echo "be called by the end user. They should use matrix_menu instead," 1>&2
@@ -15,7 +15,7 @@ function matrix_menu_help() {
 }
 
 # Usage message
-function matrix_menu_usage() {
+function _matrix_menu_usage() {
     echo "Usage:" 1>&2
     echo "This binary is used by calling _matrix_menu and one or more -r flags with the data" 1>&2
     echo "for each row after each -r flag." 1>&2
@@ -28,7 +28,21 @@ function matrix_menu_usage() {
 ##                                                                            ##
 ################################################################################
 
+# Exit the program if the user requests the help message:
+function exit_if_help_requested () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        _matrix_menu_help
+        exit 0
+    fi
+}
 
+# Exit the program if the user enters input incorrectly
+function exit_if_input_incorrect () {
+    if [[ "$#" -eq 0 ]]; then
+        echoe "Need one or more rows of data"
+        _matrix_menu_usage
+    fi
+}
 
 ################################################################################
 ##                                                                            ##
@@ -40,6 +54,12 @@ function matrix_menu_usage() {
 function parse_input() {
 
 }
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
