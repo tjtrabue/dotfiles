@@ -8,11 +8,11 @@
 
 # Determines whether or not the current directory is in a git repository
 function isrepo() {
-    $(git rev-parse --is-inside-work-tree) &> /dev/null
+    git rev-parse --is-inside-work-tree &> /dev/null
     if [[ $? -eq 0 ]]; then
-        return 0
+        echo true 1>&2
     else
-        return 1
+        echo false 1>&2
     fi
 }
 
@@ -51,6 +51,11 @@ function mainbranch() {
 # Opens the commit message for the current repo in Vim:
 function emsg() {
     vim "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
+}
+
+# Checks out the commit for a given tag name and makes a branch for that tag:
+function gcht() {
+    git checkout "tags/$1" -b "$1"
 }
 
 ###########################################################################
@@ -196,8 +201,8 @@ function ucreset() {
         # Revert changes to modified files.
         git reset --hard
 
-        # Remove all untracked files and directories. (`-f` is `force`, `-d` is `remove directories`)
-        git clean -fd
+        # Remove all untracked files and directories. (`-d` is `remove directories`, `-ff` is `force`)
+        git clean -d -ff
     else
         return 1
     fi
