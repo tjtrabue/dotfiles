@@ -8,14 +8,13 @@ set -e
 ##                                                                            ##
 ################################################################################
 
-# Takes care of any final operations before the script exits:
-function cleanup() {
+# Make sure to source all necessary files into the executable environment
+function setup() {
     local f
     for f in ~/.{dirs,vars,path}; do
         . "$f"
     done
 }
-trap cleanup EXIT
 
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
@@ -29,7 +28,6 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 ##                                                                            ##
 ################################################################################
 
-declare dir_alias_file=~/".dirs"
 declare short_path="$(shortpath "$(pwd)")";
 
 ################################################################################
@@ -38,7 +36,11 @@ declare short_path="$(shortpath "$(pwd)")";
 ##                                                                            ##
 ################################################################################
 
-sed -i "s:export\ $1=.*::g" "$dir_alias_file";
-perl -pi -e 'chomp if eof' "$dir_alias_file" && echo >> "$dir_alias_file"
-echo -n "export $1=\"$short_path\"" >> "$dir_alias_file";
-. ~/.dir
+# setup
+
+# sed -i "s:export\ $1=.*::g" "$DIR_ALIAS_FILE";
+# perl -pi -e 'chomp if eof' "$DIR_ALIAS_FILE" && echo >> "$DIR_ALIAS_FILE"
+# echo -n "export $1=\"$short_path\"" >> "$DIR_ALIAS_FILE";
+# . ~/.dirs
+
+echo "$DIR_ALIAS_FILE"

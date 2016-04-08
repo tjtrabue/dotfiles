@@ -6,6 +6,14 @@
 ##                                                                            ##
 ################################################################################
 
+# Source all required files into the executable environment
+function setup() {
+    local f
+    for f in ~/.{dirs, vars, path}; do
+        . "$f"
+    done
+}
+
 # Ensure that .dirs file exists and is referenced by DIR_ALIAS_FILE:
 function set_dirs_file() {
     if [[ ! -f ~/.dirs ]]; then
@@ -18,7 +26,6 @@ function set_dirs_file() {
         export DIR_ALIAS_FILE
     fi
 }
-
 
 ################################################################################
 ##                                                                            ##
@@ -33,13 +40,13 @@ declare best_var;
 declare to_replace;
 declare best_to_replace;
 
-
 ################################################################################
 ##                                                                            ##
 ##                                 Main Program                               ##
 ##                                                                            ##
 ################################################################################
 
+setup
 set_dirs_file
 
 input_path="$1";
