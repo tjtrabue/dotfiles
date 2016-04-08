@@ -9,7 +9,7 @@
 # Source all required files into the executable environment
 function setup() {
     local f
-    for f in ~/.{dirs, vars, path}; do
+    for f in ~/.{dirs,vars,path}; do
         . "$f"
     done
 }
