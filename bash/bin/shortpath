@@ -26,12 +26,12 @@ function set_dirs_file() {
 ##                                                                            ##
 ################################################################################
 
-input_path="$1";
-dir_alias;
-var;
-best_var;
-to_replace;
-best_to_replace;
+declare input_path="$1";
+declare dir_alias;
+declare var;
+declare best_var;
+declare to_replace;
+declare best_to_replace;
 
 
 ################################################################################
@@ -43,11 +43,11 @@ best_to_replace;
 set_dirs_file
 
 input_path="$1";
-egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's/^ *export *//' | sed 's/=.*//' | {
+egrep "^\s*export" "$DIR_ALIAS_FILE" | sed 's:^ *export *::' | sed 's:=.*::' | {
     while read -s var; do
         dir_alias="`env | egrep "^${var}\b"`";
         if [[ -n $dir_alias ]]; then
-            to_replace="`echo "$dir_alias" | sed -e "s/${var}=//" -e 's/"//g'`";
+            to_replace="`echo "$dir_alias" | sed -e "s:${var}=::" -e 's:"::g'`";
             if [[ "$input_path" =~ ^"${to_replace%/}/".* ]]; then
                 if [[ ${#to_replace} -gt ${#best_to_replace} ]]; then
                     best_to_replace="$to_replace";
