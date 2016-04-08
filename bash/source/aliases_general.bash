@@ -40,6 +40,9 @@ alias pdr="powerline-daemon --replace"
 # Directory syncing aliases:
 alias rsa="rsync -a"
 
+# Source the diralias script by using it like an executable:
+alias diralias=". diralias"
+
 ###########################################################################
 ##                          Aliases taken from                           ##
 ##                        mathiasbynens/dotfiles                         ##
