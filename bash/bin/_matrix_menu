@@ -105,8 +105,21 @@ function get_user_input() {
     read -rsn 1 key
 
     case $key in
+        "$arrow_up")
+            ;;
+        "$arrow_down")
+            ;;
+        "$arrow_right")
+            ;;
+        "$arrow_left")
+            ;;
+        "$newline")
+            end=true
+            made_selection=true
+            ;;
         "q")
             end=true
+            made_selection=false
             ;;
     esac
 }
@@ -186,6 +199,9 @@ declare newline="$(echo -e '\n')"
 declare color_normal="$(echo -e '\r\e[0;1m')"
 declare color_reverse="$(echo -e '\r\e[1;7m')"
 
+# Mark whether or not the user made a selection or chose to exit
+declare made_selection
+
 ################################################################################
 ##                                                                            ##
 ##                                 Main Program                               ##
@@ -205,7 +221,6 @@ declare color_reverse="$(echo -e '\r\e[1;7m')"
         tput civis # hide cursor
         print_menu
         get_user_input
-
         tput cuu "$num_rows"
     done # End main program loop
     tput cud $(( num_rows - 1 ))
