@@ -60,8 +60,8 @@ function parse_input() {
     for token in $input; do
         if [[ "$token" == "-r" ]]; then
             (( num_rows+=1 ))
-            current_column=0
             (( current_row+=1 ))
+            current_column=0
         else
             (( current_column+=1 ))
             if [[ "$current_column" -gt "$num_columns" ]]; then
