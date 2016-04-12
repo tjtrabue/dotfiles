@@ -95,6 +95,21 @@ function print_variables() {
     echo "end: $end" 1>&2
     echo "rum_rows: $num_rows" 1>&2
     echo "num_columns: $num_columns" 1>&2
+
+    echo -e "\nMenu:" 1>&2
+    printf "$f1" ''
+    for ((i=1; i<=num_columns; i++)) do
+        printf "$f2" $i
+    done
+    echo
+
+    for ((j=1; j<=num_rows; j++)) do
+        printf "$f1" $j
+        for ((i=1; i<=num_columns; i++)) do
+            printf "$f2" ${matrix[$j,$i]}
+        done
+        echo
+    done
 }
 
 ################################################################################
@@ -115,6 +130,7 @@ declare num_rows=0
 # The number of columns in the two-dimensional menu
 declare num_columns=0
 
+# Display variables
 declare f1
 declare f2
 
@@ -126,6 +142,8 @@ declare f2
 
 # Figure out option rows
 parse_input "$@"
+
+init_display_vars
 
 print_variables
 
