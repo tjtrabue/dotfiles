@@ -25,7 +25,7 @@ function src() {
 function rmdirs() {
     # Move the .dirs file into a temporary location and rewrite it
     mv ~/.dirs ~/.dirs.tmp
-    touch ~/.new_dirs && echo "#!/usr/bin/env bash" >> ~/.new_dirs
+    touch ~/.dirs && echo "#!/usr/bin/env bash" >> ~/.dirs
     local line
     sed -i '/^$/d' ~/.dirs.tmp
     echo "" >> ~/.dirs.tmp
@@ -34,15 +34,14 @@ function rmdirs() {
             local dir_alias="$(echo $line | sed -e 's/^export \(.*\)=.*/\1/')"
             local dir="$(echo $line | sed -e 's/^export.*=//' | sed -e 's/"//g')"
             dir="$(eval echo "$dir")"
-            if [[ -d "$dir" && $(grep -o --color=never "^export $dir_alias=" ~/.new_dirs) == "" ]]; then
-                echo "$line" >> ~/.new_dirs
+            if [[ -d "$dir" && $(grep -o --color=never "^export $dir_alias=" ~/.dirs) == "" ]]; then
+                echo "$line" >> ~/.dirs
             fi
         fi
     done < ~/.dirs.tmp
-    cat ~/.new_dirs | sort > ~/.dirs
     sed -i '${/./!d}' ~/.dirs
     # Remove the temporary dirs files
-    rm ~/.dirs.tmp ~/.new_dirs
+    rm ~/.dirs.tmp
 }
 
 # Add tab completion for many Bash commands:
