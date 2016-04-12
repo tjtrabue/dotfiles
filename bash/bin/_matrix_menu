@@ -88,12 +88,12 @@ function print_menu() {
     local i j
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
-            if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                echo -n "$color_reverse"
-            else
-                echo -n "$color_normal"
-            fi
-            eval "printf \"$f2\" \${matrix[$j,$i]}"
+            # if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
+            #     echo -n "$color_reverse"
+            # else
+            #     echo -n "$color_normal"
+            # fi
+            eval "printf \"%9s\" \"\${matrix[$j,$i]}"\"
         done
         echo 1>&2
     done
@@ -192,14 +192,24 @@ declare color_reverse="$(echo -e '\r\e[1;7m')"
 ##                                                                            ##
 ################################################################################
 
-# Figure out option rows based on user input
-parse_input_and_init_matrix "$@"
+# Begin capture stdout to stderr
+{
+    # Figure out option rows based on user input
+    parse_input_and_init_matrix "$@"
 
-# Initialize the variables used to format the rows/columns of the menu
-init_display_vars
+    # Initialize the variables used to format the rows/columns of the menu
+    init_display_vars
 
-# Begin main program loop:
-while ! $end; do
-    print_menu
-    get_user_input
-done # End main program loop
+    # Begin main program loop:
+    while ! $end; do
+        tput civis # hide cursor
+        print_menu
+        get_user_input
+
+        tput cuu "$num_rows"
+    done # End main program loop
+    tput cud $(( num_rows - 1 ))
+    tput cnorm # unhide cursor
+    echo "$color_normal" # normal colors
+
+} >&2 # End capture stdout to stderr
