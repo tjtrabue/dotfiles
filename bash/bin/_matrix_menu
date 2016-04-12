@@ -78,6 +78,16 @@ function init_display_vars() {
     f2=" %9s"
 }
 
+# Print the menu:
+function print_menu() {
+    for ((j=1; j<=num_rows; j++)) do
+        for ((i=1; i<=num_columns; i++)) do
+            printf "$f2" ${matrix[$j,$i]}
+        done
+        echo
+    done
+}
+
 # Used for printing errors:
 function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
 
@@ -145,7 +155,8 @@ parse_input "$@"
 
 init_display_vars
 
-print_variables
+# print_variables
+print_menu
 
 # Begin main program loop:
 # while ! $end; do
