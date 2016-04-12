@@ -24,21 +24,26 @@ function src() {
     fi
 }
 
-# Git rid of old directory aliases in .dirs that no longer work
+# Get rid of old directory aliases in .dirs that are no longer valid,
+# and also get rid of any duplicates.
 function rmdirs() {
     # Move the .dirs file into a temporary location and rewrite it
     mv ~/.dirs ~/.dirs.tmp
     touch ~/.dirs && echo "#!/usr/bin/env bash" >> ~/.dirs
     local line
+    sed -i '/^$/d' ~/.dirs.tmp
+    echo "" >> ~/.dirs.tmp
     while read line; do
         if [[ "$line" =~ ^export.* ]]; then
+            local dir_alias="$(echo $line | sed -e 's/^export \(.*\)=.*/\1/')"
             local dir="$(echo $line | sed -e 's/^export.*=//' | sed -e 's/"//g')"
             dir="$(eval echo "$dir")"
-            if [[ -d "$dir" ]]; then
+            if [[ -d "$dir" && $(grep -o --color=never "^export $dir_alias=" ~/.dirs) == "" ]]; then
                 echo "$line" >> ~/.dirs
             fi
         fi
     done < ~/.dirs.tmp
+    sed -i '${/./!d}' ~/.dirs.tmp
     # Remove the temporary dirs file
     rm ~/.dirs.tmp
 }
