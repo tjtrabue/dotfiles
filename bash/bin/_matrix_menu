@@ -79,8 +79,8 @@ function parse_input_and_init_matrix() {
 
 # Initialize the display style variables
 function init_display_vars() {
-    f1="%$((${#num_rows}+1))s"
-    f2=" %9s"
+    option_spacer=9
+    column_spacer=$((${#num_rows}+1))
 }
 
 # Print the 2D matrix menu:
@@ -93,7 +93,7 @@ function print_menu() {
             # else
             #     echo -n "$color_normal"
             # fi
-            eval "printf \"%9s\" \"\${matrix[$j,$i]}"\"
+            eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}"\"
         done
         echo 1>&2
     done
@@ -165,8 +165,8 @@ declare num_rows=0
 declare num_columns=0
 
 # Display variables
-declare f1
-declare f2
+declare option_spacer
+declare column_spacer
 
 # The position of the highlighted option at any given time
 declare cursor_x=1
