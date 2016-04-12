@@ -83,8 +83,9 @@ function init_display_vars() {
     f2=" %9s"
 }
 
-# Print the menu:
+# Print the 2D matrix menu:
 function print_menu() {
+    local i j
     for ((j=1; j<=num_rows; j++)) do
         for ((i=1; i<=num_columns; i++)) do
             printf "$f2" ${matrix[$j,$i]}
@@ -111,6 +112,7 @@ function print_variables() {
     echo "rum_rows: $num_rows" 1>&2
     echo "num_columns: $num_columns" 1>&2
 
+    local i j
     echo -e "\nMenu:" 1>&2
     printf "$f1" ''
     for ((i=1; i<=num_columns; i++)) do
