@@ -148,6 +148,12 @@ declare f2
 declare cursor_x=1
 declare cursor_y=1
 
+# Aliases for the arrow keys:
+declare arrow_up="$(echo -e '\e[A')"
+declare arrow_down="$(echo -e '\e[B')"
+declare arrow_right="$(echo -e '\e[C')"
+declare arrow_left="$(echo -e '\e[D')"
+
 ################################################################################
 ##                                                                            ##
 ##                                 Main Program                               ##
