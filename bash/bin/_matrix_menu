@@ -51,8 +51,9 @@ function exit_if_input_incorrect () {
 ##                                                                            ##
 ################################################################################
 
-# Parse the input and create rows for the matrix:
-function parse_input() {
+# Parse the user's input, determine the number of rows and columns, and
+# initialize the matrix with the user's data
+function parse_input_and_init_matrix() {
     local input="$@"
     local token
     local current_row=0
@@ -161,7 +162,7 @@ declare arrow_left="$(echo -e '\e[D')"
 ################################################################################
 
 # Figure out option rows
-parse_input "$@"
+parse_input_and_init_matrix "$@"
 
 init_display_vars
 
