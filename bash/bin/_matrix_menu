@@ -84,7 +84,7 @@ function print_menu() {
         for ((i=1; i<=num_columns; i++)) do
             printf "$f2" ${matrix[$j,$i]}
         done
-        echo
+        echo 1>&2
     done
 }
 
