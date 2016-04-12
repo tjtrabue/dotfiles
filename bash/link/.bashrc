@@ -12,13 +12,9 @@ function src() {
     if [[ "$1" ]]; then
         source "$DOTFILES_HOME/bash/source/$1.bash"
     else
-        for file in ~/.{vars,dirs,path}; do
-  		    source "$file"
-        done
-        for file in $DOTFILES_HOME/bash/source/*; do
-            source "$file"
-        done
-        for file in $DOTFILES_HOME/git/source/*; do
+        for file in ~/.{vars,dirs,path} \
+        $DOTFILES_HOME/bash/source/* \
+        $DOTFILES_HOME/git/source/*; do
             source "$file"
         done
     fi
