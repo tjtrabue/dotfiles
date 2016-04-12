@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-# Where the magic happens.
+# Where the magic happens:
 export DOTFILES_HOME=~/".dotfiles"
 
-# Add binaries into the path
+# Add binaries to the path:
 export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 
-# Source all files in "source"
+# Source all files in "source":
 function src() {
     local file
     if [[ "$1" ]]; then
