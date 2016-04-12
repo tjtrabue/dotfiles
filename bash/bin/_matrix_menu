@@ -145,7 +145,8 @@ declare f1
 declare f2
 
 # The position of the highlighted option at any given time
-declare cursor_position=(1,1)
+declare cursor_x=1
+declare cursor_y=1
 
 ################################################################################
 ##                                                                            ##
