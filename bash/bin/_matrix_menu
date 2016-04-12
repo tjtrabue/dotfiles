@@ -77,6 +77,19 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
+#                                Test Functions                               ##
+##                                                                            ##
+################################################################################
+
+# Print the variable values
+function test_variables() {
+    echo "end: $end" 1>&2
+    echo "rum_rows: $num_rows" 1>&2
+    echo "num_columns: $num_columns" 1>&2
+}
+
+################################################################################
+##                                                                            ##
 ##                                  Variables                                 ##
 ##                                                                            ##
 ################################################################################
@@ -102,7 +115,9 @@ num_columns=0
 # Figure out option rows
 parse_input "$@"
 
-# Begin main program loop:
-while ! $end; do
+test_variables
 
-done # End main program loop
+# Begin main program loop:
+# while ! $end; do
+
+# done # End main program loop
