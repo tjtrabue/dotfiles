@@ -25,7 +25,7 @@ function src() {
 }
 
 # Get rid of old directory aliases in .dirs that are no longer valid,
-# and also get rid of any duplicates.
+# and also get rid of any duplicate aliases.
 function rmdirs() {
     # Move the .dirs file into a temporary location and rewrite it
     mv ~/.dirs ~/.dirs.tmp
