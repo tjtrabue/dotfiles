@@ -55,18 +55,27 @@ function exit_if_input_incorrect () {
 function parse_input() {
     local input="$@"
     local token
-    local current_row_count=0
+    local current_row=0
+    local current_column=0
     for token in $input; do
         if [[ "$token" == "-r" ]]; then
             (( num_rows+=1 ))
-            current_row_count=0
+            current_column=0
+            (( current_row+=1 ))
         else
-            (( current_row_count+=1 ))
-            if [[ "$current_row_count" -gt "$num_columns" ]]; then
+            (( current_column+=1 ))
+            if [[ "$current_column" -gt "$num_columns" ]]; then
                 (( num_columns+=1 ))
             fi
+            matrix[$current_row,$current_column]="$token"
         fi
     done
+}
+
+# Initialize the display style variables
+function init_display_vars() {
+    f1="%$((${#num_rows}+1))s"
+    f2=" %9s"
 }
 
 # Used for printing errors:
@@ -95,16 +104,19 @@ function print_variables() {
 ################################################################################
 
 # Indicates when the program should end
-end=false
+declare end=false
 
 # The associative array that will hold the rows of options
 declare -A matrix
 
 # The number of rows in the two-dimensinoal menu
-num_rows=0
+declare num_rows=0
 
 # The number of columns in the two-dimensional menu
-num_columns=0
+declare num_columns=0
+
+declare f1
+declare f2
 
 ################################################################################
 ##                                                                            ##
