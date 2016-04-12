@@ -86,9 +86,14 @@ function init_display_vars() {
 # Print the 2D matrix menu:
 function print_menu() {
     local i j
-    for ((j=1; j<=num_rows; j++)) do
-        for ((i=1; i<=num_columns; i++)) do
-            printf "$f2" ${matrix[$j,$i]}
+    for (( j = 1; j <= num_rows; j++ )) do
+        for (( i = 1; i <= num_columns; i++ )) do
+            if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
+                echo -n "$color_reverse"
+            else
+                echo -n "$color_normal"
+            fi
+            eval "printf \"$f2\" \${matrix[$j,$i]}"
         done
         echo 1>&2
     done
@@ -178,8 +183,8 @@ declare escape="$(echo -e '\e')"
 declare newline="$(echo -e '\n')"
 
 # Set color variables
-color_normal="$(echo -e '\r\e[0;1m')"
-color_reverse="$(echo -e '\r\e[1;7m')"
+declare color_normal="$(echo -e '\r\e[0;1m')"
+declare color_reverse="$(echo -e '\r\e[1;7m')"
 
 ################################################################################
 ##                                                                            ##
