@@ -12,6 +12,7 @@ function _matrix_menu_help() {
     echo "with the arrow keys. Note that this is NOT the binary that should" 1>&2
     echo "be called by the end user. They should use matrix_menu instead," 1>&2
     echo "which is used the exact same way." 1>&2
+    _matrix_menu_usage
 }
 
 # Usage message
@@ -61,8 +62,8 @@ function parse_input() {
             current_row_count=0
         else
             (( current_row_count+=1 ))
-            if [[ "$current_row_count" -gt "$num_rows" ]]; then
-                (( num_rows+=1 ))
+            if [[ "$current_row_count" -gt "$num_columns" ]]; then
+                (( num_columns+=1 ))
             fi
         fi
     done
