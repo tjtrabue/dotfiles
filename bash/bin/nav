@@ -18,7 +18,12 @@ function nav_help() {
 # Usage message:
 function nav_usage() {
     echo "Usage:" 1>&2
+    echo "     nav [-s|--show-hidden]" 1>&2
     echo "Options:" 1>&2
+    echo "    -s | --show-hidden:" 1>&2
+    echo "Display all directories in the present dir, including hidden ones." 1>&2
+    echo "    -h | --help:" 1>&2
+    echo "Print the usage message." 1>&2
 }
 
 ################################################################################
@@ -27,7 +32,13 @@ function nav_usage() {
 ##                                                                            ##
 ################################################################################
 
-
+# Exit the program if the user requests the help message:
+function exit_if_help_requested () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        nav_help
+        exit 0
+    fi
+}
 
 ################################################################################
 ##                                                                            ##
@@ -59,3 +70,5 @@ function nav_usage() {
 ##                                                                            ##
 ################################################################################
 
+# Exit conditions:
+exit_if_help_requested "$@"
