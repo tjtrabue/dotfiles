@@ -235,6 +235,10 @@ declare made_selection
 ##                                                                            ##
 ################################################################################
 
+# Exit conditions:
+exit_if_help_requested
+exit_if_input_incorrect
+
 # Begin capture stdout to stderr
 {
     # Figure out option rows based on user input
