@@ -152,9 +152,9 @@ function get_user_input() {
 # Return the user's selected option (if they made a selection)
 function return_selection() {
     if $made_selection; then
-        # Note that x and y are flipped here, since x increases to the left and
-        # y increases downward, with an origin in the top left corner of the
-        # matrix.
+        # Note that x and y are flipped here, since x increases as it moves to
+        # the left and y increases downward, with the origin at the top left
+        # corner of the matrix.
         echo "${matrix[$cursor_y,$cursor_x]}"
     fi
 }
