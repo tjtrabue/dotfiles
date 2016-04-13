@@ -74,7 +74,7 @@ function parse_input_and_init_matrix() {
     for token in $input; do
         if [[ "$token" == "-r" || "$token" == "--row" ]]; then
             if [[ "$current_column" -ne 0 ]]; then
-                row_counts+=("$current_column")
+                option_counts+=("$current_column")
             fi
             (( num_rows+=1 ))
             (( current_row+=1 ))
@@ -87,7 +87,7 @@ function parse_input_and_init_matrix() {
             matrix[$current_row,$current_column]="$token"
         fi
     done
-    row_counts+=("$current_column")
+    option_counts+=("$current_column")
 }
 
 # Initialize the display style variables
@@ -133,7 +133,7 @@ function get_user_input() {
             fi
             ;;
         "$arrow_right")
-            if [[ $cursor_x -lt "$num_columns" ]]; then
+            if [[ $cursor_x -lt ${option_counts[$((cursor_y - 1))]} ]]; then
                 (( cursor_x+=1 ))
             fi
             ;;
@@ -197,8 +197,8 @@ function print_variables() {
         echo
     done
 
-    echo -e "\nRow Counts:" 1>&2
-    echo "${row_counts[@]}" 1>&2
+    echo -e "\nOption Counts:" 1>&2
+    echo "${option_counts[@]}" 1>&2
 }
 
 ################################################################################
@@ -214,7 +214,7 @@ declare end=false
 declare -A matrix
 
 # The array that holds the number of options in each row of the matrix
-declare -a row_counts
+declare -a option_counts
 
 # The number of rows in the two-dimensinoal menu
 declare num_rows=0
