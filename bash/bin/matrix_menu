@@ -262,6 +262,7 @@ exit_if_input_incorrect "$@"
         get_user_input
         tput cuu "$num_rows"
     done # End main program loop
+
     tput cud $(( num_rows - 1 ))
     tput cnorm # unhide cursor
     echo 1>&2
