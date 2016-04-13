@@ -46,7 +46,38 @@ function exit_if_help_requested () {
 ##                                                                            ##
 ################################################################################
 
+# Parse user input and get options:
+function get_options() {
+    # Execute getopt
+    local args=$(getopt -o s -l "show-hidden" -n "nav" -- "$@");
 
+    #Bad arguments
+    if [ $? -ne 0 ]; then
+        echoe "Bad option passed to function nav"
+        exit 1
+    fi
+
+    eval set -- "$args";
+
+    while true; do
+      case "$1" in
+        -s|--show-hidden)
+          shift;
+          show_hidden=true
+          ;;
+        --)
+          shift;
+          break;
+          ;;
+      esac
+    done
+}
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 ################################################################################
 ##                                                                            ##
@@ -54,7 +85,16 @@ function exit_if_help_requested () {
 ##                                                                            ##
 ################################################################################
 
+# Test the get_options function by giving it all possible options:
+function test_get_options() {
+    echo "Values before:" 1>&2
+    echo "    show_hidden: $show_hidden" 1>&2
 
+    get_options "$@"
+
+    echo "Values after:" 1>&2
+    echo "    show_hidden: $show_hidden" 1>&2
+}
 
 ################################################################################
 ##                                                                            ##
@@ -62,7 +102,7 @@ function exit_if_help_requested () {
 ##                                                                            ##
 ################################################################################
 
-
+declare show_hidden=false
 
 ################################################################################
 ##                                                                            ##
@@ -72,3 +112,5 @@ function exit_if_help_requested () {
 
 # Exit conditions:
 exit_if_help_requested "$@"
+
+test_get_options "$@"
