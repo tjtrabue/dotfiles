@@ -49,6 +49,13 @@ function exit_if_input_incorrect () {
     fi
 }
 
+# make sure that cursor is returned to normal when script exits:
+function cleanup() {
+   tput cnorm
+   trap - EXIT
+}
+trap cleanup EXIT
+
 ################################################################################
 ##                                                                            ##
 ##                             Supporting Functions                           ##
@@ -89,12 +96,12 @@ function print_menu() {
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
             if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
+                eval "printf \"${color_reverse}%${option_spacer}s${color_normal}\" \"\${matrix[$j,$i]}\""
             else
                 eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
             fi
         done
-        echo 1>&2
+        echo "Cursor X: $cursor_x; Cursor Y: $cursor_y" 1>&2
     done
 }
 
@@ -102,8 +109,7 @@ function print_menu() {
 function get_user_input() {
     local key
     read -rsn 1 key
-
-    case $key in
+    case "$key" in
         "$arrow_up")
             if [[ $cursor_y -gt 1 ]]; then
                 (( cursor_y-=1 ))
@@ -207,7 +213,7 @@ declare escape="$(echo -e '\e')"
 declare newline="$(echo -e '\n')"
 
 # Set color variables
-declare color_normal="$(echo -e '\r\e[0;1m')"
+declare color_normal='\e[m'
 declare color_reverse="$(echo -e '\r\e[1;7m')"
 
 # Mark whether or not the user made a selection or chose to exit
@@ -236,6 +242,6 @@ declare made_selection
     done # End main program loop
     tput cud $(( num_rows - 1 ))
     tput cnorm # unhide cursor
-    echo "$color_normal" # normal colors
+    echo
 
 } >&2 # End capture stdout to stderr
