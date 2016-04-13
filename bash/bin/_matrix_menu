@@ -173,16 +173,16 @@ function print_variables() {
 
     local i j
     echo -e "\nMenu:" 1>&2
-    printf "$f1" ''
+    printf "%${column_spacer}s" ''
     for ((i=1; i<=num_columns; i++)) do
-        printf "$f2" $i
+        printf "%${option_spacer}s" $i
     done
     echo
 
     for ((j=1; j<=num_rows; j++)) do
-        printf "$f1" $j
+        printf "%${column_spacer}s" $j
         for ((i=1; i<=num_columns; i++)) do
-            printf "$f2" ${matrix[$j,$i]}
+            printf "%${option_spacer}s" ${matrix[$j,$i]}
         done
         echo
     done
