@@ -98,7 +98,7 @@ function print_menu() {
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
             if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                eval "printf \"%${option_spacer}s${BLUE_HIGHLIGHT}%s${NC}\" \"\" \"\${matrix[$j,$i]}\""
+                eval "printf \"%${option_spacer}s${color_reverse}%s${color_normal}\" \"\" \"\${matrix[$j,$i]}\""
             else
                 eval "printf \"%${option_spacer}s%s\" \"\" \"\${matrix[$j,$i]}\""
             fi
@@ -231,8 +231,8 @@ declare escape="$(echo -e '\e')"
 declare newline="$(echo -e '\n')"
 
 # Set color variables
-declare color_normal='\e[m'
-declare color_reverse="$(echo -e '\r\e[1;7m')"
+declare color_normal="$(echo -e '\033[0m')"
+declare color_reverse="$(echo -e '\033[1;7m')"
 
 # Mark whether or not the user made a selection or chose to exit
 declare made_selection
