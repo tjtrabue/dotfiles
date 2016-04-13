@@ -25,6 +25,7 @@ function _matrix_menu_usage() {
     echo "Options:" 1>&2
     echo "    --help | -h" 1>&2
     echo "Print the help message" 1>&2
+    echo "NOTE: you may type 'q' three times to exit the menu and return to the terminal." 1>&2
 }
 
 ################################################################################
@@ -41,7 +42,7 @@ function exit_if_help_requested () {
     fi
 }
 
-# Exit the program if the user enters input incorrectly
+# Exit the program if the user enters input incorrectly:
 function exit_if_input_incorrect () {
     if [[ "$#" -eq 0 ]]; then
         echoe "Need one or more rows of data"
@@ -135,7 +136,7 @@ function get_user_input() {
             end=true
             made_selection=true
             ;;
-        "q")
+        "qqq")
             end=true
             made_selection=false
             ;;
