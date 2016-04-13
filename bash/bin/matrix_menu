@@ -73,6 +73,9 @@ function parse_input_and_init_matrix() {
     local current_column=0
     for token in $input; do
         if [[ "$token" == "-r" || "$token" == "--row" ]]; then
+            if [[ "$current_column" -ne 0 ]]; then
+                row_counts+=("$current_column")
+            fi
             (( num_rows+=1 ))
             (( current_row+=1 ))
             current_column=0
@@ -84,6 +87,7 @@ function parse_input_and_init_matrix() {
             matrix[$current_row,$current_column]="$token"
         fi
     done
+    row_counts+=("$current_column")
 }
 
 # Initialize the display style variables
@@ -181,17 +185,20 @@ function print_variables() {
     echo -e "\nMenu:" 1>&2
     printf "%${column_spacer}s" ''
     for ((i=1; i<=num_columns; i++)) do
-        printf "%${option_spacer}s" $i
+        printf "%${option_spacer}s%${option_spacer}s" "" "$i"
     done
     echo
 
     for ((j=1; j<=num_rows; j++)) do
         printf "%${column_spacer}s" $j
         for ((i=1; i<=num_columns; i++)) do
-            printf "%${option_spacer}s" ${matrix[$j,$i]}
+            printf "%${option_spacer}s%${option_spacer}s" "" "${matrix[$j,$i]}"
         done
         echo
     done
+
+    echo -e "\nRow Counts:" 1>&2
+    echo "${row_counts[@]}" 1>&2
 }
 
 ################################################################################
@@ -205,6 +212,9 @@ declare end=false
 
 # The associative array that will hold the rows of options
 declare -A matrix
+
+# The array that holds the number of options in each row of the matrix
+declare -a row_counts
 
 # The number of rows in the two-dimensinoal menu
 declare num_rows=0
@@ -270,3 +280,7 @@ exit_if_input_incorrect "$@"
 
 # Return the user's selection:
 return_selection
+
+# init_display_vars
+# parse_input_and_init_matrix "$@"
+# print_variables
