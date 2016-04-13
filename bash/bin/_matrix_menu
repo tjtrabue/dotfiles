@@ -89,16 +89,12 @@ function print_menu() {
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
             if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                echo -n "$color_reverse"
+                eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
             else
-                echo -n "$color_normal"
-            fi
-            if [[ $i == "$num_columns" ]]; then
-                eval "printf \"%${option_spacer}s\n\" \"\${matrix[$j,$i]}"\"
-            else
-                eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}"\"
+                eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
             fi
         done
+        echo 1>&2
     done
 }
 
