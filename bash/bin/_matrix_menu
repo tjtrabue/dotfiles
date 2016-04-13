@@ -88,7 +88,7 @@ function parse_input_and_init_matrix() {
 
 # Initialize the display style variables
 function init_display_vars() {
-    option_spacer=9
+    option_spacer=5
     column_spacer=$((${#num_rows}+1))
 }
 
@@ -98,9 +98,9 @@ function print_menu() {
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
             if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                eval "printf \"${BLUE_HIGHLIGHT}%${option_spacer}s${NC}\" \"\${matrix[$j,$i]}\""
+                eval "printf \"%${option_spacer}s${BLUE_HIGHLIGHT}%s${NC}\" \"\" \"\${matrix[$j,$i]}\""
             else
-                eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
+                eval "printf \"%${option_spacer}s%s\" \"\" \"\${matrix[$j,$i]}\""
             fi
         done
         echo 1>&2
