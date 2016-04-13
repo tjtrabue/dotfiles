@@ -96,13 +96,14 @@ function print_menu() {
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
             if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                eval "printf \"${color_reverse}%${option_spacer}s${color_normal}\" \"\${matrix[$j,$i]}\""
+                eval "printf \"${BLUE}%${option_spacer}s${NC}\" \"\${matrix[$j,$i]}\""
             else
                 eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
             fi
         done
-        echo "Cursor X: $cursor_x; Cursor Y: $cursor_y" 1>&2
+        echo 1>&2
     done
+    # echo "Cursor X: $cursor_x; Cursor Y: $cursor_y"
 }
 
 # Get user key input and call the appropriate private function:
@@ -121,7 +122,7 @@ function get_user_input() {
             fi
             ;;
         "$arrow_right")
-            if [[ $cursor_x -le "$num_columns" ]]; then
+            if [[ $cursor_x -lt "$num_columns" ]]; then
                 (( cursor_x+=1 ))
             fi
             ;;
