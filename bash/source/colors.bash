@@ -3,6 +3,7 @@
 # Turn off coloration:
 export NC='\033[0m'
 
+# Standard Colors:
 export BLACK='\033[0;30m'
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
@@ -19,3 +20,6 @@ export LIGHT_BLUE='\033[1;34m'
 export LIGHT_PURPLE='\033[1;35m'
 export LIGHT_CYAN='\033[1;36m'
 export WHITE='\033[1;37m'
+
+# Hightlight Colors:
+export BLUE_HIGHLIGHT='\033[37;44m'

@@ -96,7 +96,7 @@ function print_menu() {
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
             if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                eval "printf \"${BLUE}%${option_spacer}s${NC}\" \"\${matrix[$j,$i]}\""
+                eval "printf \"${BLUE_HIGHLIGHT}%${option_spacer}s${NC}\" \"\${matrix[$j,$i]}\""
             else
                 eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}\""
             fi
@@ -140,6 +140,13 @@ function get_user_input() {
             made_selection=false
             ;;
     esac
+}
+
+# Return the user's selected option (if they made a selection)
+function return_selection() {
+    if $made_selection; then
+        echo "${matrix[$cursor_y,$cursor_x]}"
+    fi
 }
 
 # Used for printing errors:
@@ -244,5 +251,7 @@ declare made_selection
     tput cud $(( num_rows - 1 ))
     tput cnorm # unhide cursor
     echo
-
 } >&2 # End capture stdout to stderr
+
+# Return the user's selection:
+return_selection
