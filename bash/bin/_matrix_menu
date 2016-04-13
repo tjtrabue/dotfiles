@@ -88,14 +88,17 @@ function print_menu() {
     local i j
     for (( j = 1; j <= num_rows; j++ )) do
         for (( i = 1; i <= num_columns; i++ )) do
-            # if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-            #     echo -n "$color_reverse"
-            # else
-            #     echo -n "$color_normal"
-            # fi
-            eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}"\"
+            if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
+                echo -n "$color_reverse"
+            else
+                echo -n "$color_normal"
+            fi
+            if [[ $i == "$num_columns" ]]; then
+                eval "printf \"%${option_spacer}s\n\" \"\${matrix[$j,$i]}"\"
+            else
+                eval "printf \"%${option_spacer}s\" \"\${matrix[$j,$i]}"\"
+            fi
         done
-        echo 1>&2
     done
 }
 
@@ -106,12 +109,24 @@ function get_user_input() {
 
     case $key in
         "$arrow_up")
+            if [[ $cursor_y -gt 1 ]]; then
+                (( cursor_y-=1 ))
+            fi
             ;;
         "$arrow_down")
+            if [[ $cursor_y -lt "$num_rows" ]]; then
+                (( cursor_y+=1 ))
+            fi
             ;;
         "$arrow_right")
+            if [[ $cursor_x -le "$num_columns" ]]; then
+                (( cursor_x+=1 ))
+            fi
             ;;
         "$arrow_left")
+            if [[ $cursor_x -gt 1 ]]; then
+                (( cursor_x-=1 ))
+            fi
             ;;
         "$newline")
             end=true
