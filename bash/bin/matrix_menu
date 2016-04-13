@@ -123,17 +123,17 @@ function get_user_input() {
 
     case "$key" in
         "$arrow_up")
-            if [[ $cursor_y -gt 1 ]]; then
+            if [[ $cursor_y -gt 1 && $cursor_x -le $(( ${option_counts[$cursor_y - 2]} )) ]]; then
                 (( cursor_y-=1 ))
             fi
             ;;
         "$arrow_down")
-            if [[ $cursor_y -lt "$num_rows" ]]; then
+            if [[ $cursor_y -lt "$num_rows" && $cursor_x -le $(( ${option_counts[$cursor_y]} )) ]]; then
                 (( cursor_y+=1 ))
             fi
             ;;
         "$arrow_right")
-            if [[ $cursor_x -lt ${option_counts[$((cursor_y - 1))]} ]]; then
+            if [[ $cursor_x -lt $(( ${option_counts[$cursor_y - 1]} )) ]]; then
                 (( cursor_x+=1 ))
             fi
             ;;
