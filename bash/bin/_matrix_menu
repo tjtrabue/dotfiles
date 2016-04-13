@@ -103,7 +103,6 @@ function print_menu() {
         done
         echo 1>&2
     done
-    # echo "Cursor X: $cursor_x; Cursor Y: $cursor_y"
 }
 
 # Get user key input and call the appropriate private function:
@@ -145,6 +144,9 @@ function get_user_input() {
 # Return the user's selected option (if they made a selection)
 function return_selection() {
     if $made_selection; then
+        # Note that x and y are flipped here, since x increases to the left and
+        # y increases downward, with an origin in the top left corner of the
+        # matrix.
         echo "${matrix[$cursor_y,$cursor_x]}"
     fi
 }
@@ -250,7 +252,7 @@ declare made_selection
     done # End main program loop
     tput cud $(( num_rows - 1 ))
     tput cnorm # unhide cursor
-    echo
+    echo 1>&2
 } >&2 # End capture stdout to stderr
 
 # Return the user's selection:
