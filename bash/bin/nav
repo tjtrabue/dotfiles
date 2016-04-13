@@ -6,7 +6,20 @@
 ##                                                                            ##
 ################################################################################
 
+# Full help message:
+function nav_help() {
+    echo "nav presents the user with a rectangular grid of directories in the current directory" 1>&2
+    echo "to which they can navigate. The user can use the arrow keys to select the directory" 1>&2
+    echo "they want, press 'd' to finish selecting, or press 'q' to cancel out of the menu. " 1>&2
+    echo "Once they make a selection, they will then see all directories in the previously selected" 1>&2
+    echo "directory and can make another selection." 1>&2
+}
 
+# Usage message:
+function nav_usage() {
+    echo "Usage:" 1>&2
+    echo "Options:" 1>&2
+}
 
 ################################################################################
 ##                                                                            ##
