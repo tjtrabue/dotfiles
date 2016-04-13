@@ -65,7 +65,7 @@ trap cleanup EXIT
 ################################################################################
 
 # Parse the user's input, determine the number of rows and columns, and
-# initialize the matrix with the user's data
+# initialize the matrix with the user's data:
 function parse_input_and_init_matrix() {
     local input="$@"
     local token
@@ -149,7 +149,7 @@ function get_user_input() {
     esac
 }
 
-# Return the user's selected option (if they made a selection)
+# Return the user's selected option (if they made a selection):
 function return_selection() {
     if $made_selection; then
         # Note that x and y are flipped here, since x increases as it moves to
