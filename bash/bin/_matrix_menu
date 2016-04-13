@@ -108,7 +108,7 @@ function print_menu() {
 # Get user key input and call the appropriate private function:
 function get_user_input() {
     local key
-    read -rsn 1 key
+    read -rsn 3 key
     case "$key" in
         "$arrow_up")
             if [[ $cursor_y -gt 1 ]]; then
