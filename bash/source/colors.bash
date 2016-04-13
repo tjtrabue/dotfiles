@@ -23,3 +23,7 @@ export WHITE='\033[1;37m'
 
 # Hightlight Colors:
 export BLUE_HIGHLIGHT='\033[37;44m'
+export RED_HIGHLIGHT='\033[37;41m'
+export GREEN_HIGHLIGHT='\033[37;42m'
+export YELLOW_HIGHLIGHT='\033[37;43m'
+export PURPLE_HIGHLIGHT='\033[37;45m'
