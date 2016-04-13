@@ -107,7 +107,7 @@ function print_menu() {
     done
 }
 
-# Get user key input and call the appropriate private function:
+# Get the user's keyboard input and act accordingly:
 function get_user_input() {
     local key k2
     read -rsn 1 key
