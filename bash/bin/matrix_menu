@@ -112,10 +112,10 @@ function get_user_input() {
     local key k2
     read -rsn 1 key
     [[ "$key" == "$escape" ]] &&
-      {
-         read -rsn 2 k2
-         key="$key$k2"
-      }
+    {
+       read -rsn 2 k2
+       key="$key$k2"
+    }
 
     case "$key" in
         "$arrow_up")
