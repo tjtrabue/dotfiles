@@ -49,28 +49,14 @@ function exit_if_help_requested () {
 # Parse user input and get options:
 function get_options() {
     # Execute getopt
-    local args=$(getopt -o s -l "show-hidden" -n "nav" -- "$@");
+    local args=$()
 
     #Bad arguments
     if [ $? -ne 0 ]; then
         echoe "Bad option passed to function nav"
-        exit 1
+        nav_usage
+        exit 2
     fi
-
-    eval set -- "$args";
-
-    while true; do
-      case "$1" in
-        -s|--show-hidden)
-          shift;
-          show_hidden=true
-          ;;
-        --)
-          shift;
-          break;
-          ;;
-      esac
-    done
 }
 
 # Used for printing errors:
@@ -87,12 +73,17 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 # Test the get_options function by giving it all possible options:
 function test_get_options() {
-    echo "Values before:" 1>&2
+    echo "Variable values before:" 1>&2
     echo "    show_hidden: $show_hidden" 1>&2
 
-    get_options "$@"
+    get_options -s
 
-    echo "Values after:" 1>&2
+    echo -e "\nVariable values with short options:" 1>&2
+    echo "    show_hidden: $show_hidden" 1>&2
+
+    get_options --show-hidden
+
+    echo -e "\nVariable values with long options:" 1>&2
     echo "    show_hidden: $show_hidden" 1>&2
 }
 
