@@ -59,6 +59,11 @@ function get_options() {
                 shift
                 show_hidden=true
                 ;;
+            -h | --help)
+                shift
+                nav_help
+                break
+                ;;
             --) shift ; break ;;
             *)
                 echoe "Unknown option $1 to nav"
