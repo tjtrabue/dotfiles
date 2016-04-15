@@ -48,15 +48,27 @@ function exit_if_help_requested () {
 
 # Parse user input and get options:
 function get_options() {
-    # Execute getopt
-    local args=$()
+    # set an initial value for the flag
+    ARG_B=0
 
-    #Bad arguments
-    if [ $? -ne 0 ]; then
-        echoe "Bad option passed to function nav"
-        nav_usage
-        exit 2
-    fi
+    # read the options
+    local args=$(getopt -o s --long show-hidden -n 'nav' -- "$@")
+    eval set -- "$args"
+
+    # extract options and their arguments into variables.
+    while true ; do
+        case "$1" in
+            -s | --show-hidden)
+                shift
+                show_hidden=true
+                ;;
+            --) shift ; break ;;
+            *)
+                echoe "Unknown option $1 to nav"
+                exit 2
+                ;;
+        esac
+    done
 }
 
 # Used for printing errors:
