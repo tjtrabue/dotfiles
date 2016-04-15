@@ -48,9 +48,6 @@ function exit_if_help_requested () {
 
 # Parse user input and get options:
 function get_options() {
-    # set an initial value for the flag
-    ARG_B=0
-
     # read the options
     local args=$(getopt -o s --long show-hidden -n 'nav' -- "$@")
     eval set -- "$args"
