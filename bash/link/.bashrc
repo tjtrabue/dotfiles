@@ -49,7 +49,6 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
-rmdirs
 src
 
 POWERLINE_HOME=~/".dotfiles/vendors/powerline/"
