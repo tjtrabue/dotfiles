@@ -50,7 +50,7 @@ function exit_if_input_incorrect () {
         exit 2
     fi
 
-    if [[ ! "$1" =~ "-.+" ]];
+    if [[ ! "$1" =~ "-.+" ]]; then
         echoe "Must provide one or more rows of data."
         echo "Each row must be prefixed with either --row or -r."
         exit 3
