@@ -49,6 +49,12 @@ function exit_if_input_incorrect () {
         matrix_menu_usage
         exit 2
     fi
+
+    if [[ ! "$1" =~ "-.+" ]];
+        echoe "Must provide one or more rows of data."
+        echo "Each row must be prefixed with either --row or -r."
+        exit 3
+    fi
 }
 
 # make sure that cursor is returned to normal when script exits:
