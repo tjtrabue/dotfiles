@@ -133,6 +133,17 @@ function submod() {
     fi
 }
 
+# Update all submodules in the current git repo (requires git version
+# 1.6.1 or later)
+function upsubs() {
+    if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+         git submodule foreach git pull origin master
+    else
+         echoe "Not in a git repository"
+         return 1
+    fi
+}
+
 ###########################################################################
 #                                                                         #
 #                                  Tracking                               #
