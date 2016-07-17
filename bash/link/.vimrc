@@ -34,6 +34,27 @@ if exists("&undodir")
     set undodir=~/.vim/undo
 endif
 
+" Don't use soft tabs, so as to avoid compatibility errors with other editors
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+" Use auto-indent and set line width to 100 characters
+set autoindent
+set textwidth=100
+
+" Function to enter a distraction-free word processor mode
+func! WordProcessorMode()
+ setlocal textwidth=100
+ setlocal smartindent
+ setlocal spell spelllang=en_us
+ setlocal noexpandtab
+endfu
+
+" calling WP in command mode enters word processor mode
+com! WP call WordProcessorMode()
+
 " Don’t create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
 
@@ -49,8 +70,6 @@ set number
 syntax enable
 " Highlight current line
 set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
