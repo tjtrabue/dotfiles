@@ -45,15 +45,15 @@ set autoindent
 set textwidth=100
 
 " Function to enter a distraction-free word processor mode
-func! WordProcessorMode()
+function! WordProcessorMode()
  setlocal textwidth=100
  setlocal smartindent
  setlocal spell spelllang=en_us
  setlocal noexpandtab
-endfu
+endfunction
 
 " calling WP in command mode enters word processor mode
-com! WP call WordProcessorMode()
+noremap <leader>WP :call WordProcessorMode()<CR>
 
 " Don’t create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
