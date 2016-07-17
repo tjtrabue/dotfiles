@@ -46,13 +46,12 @@ set textwidth=100
 
 " Function to enter a distraction-free word processor mode
 function! WordProcessorMode()
- setlocal textwidth=100
- setlocal smartindent
- setlocal spell spelllang=en_us
- setlocal noexpandtab
+    setlocal textwidth=100
+    setlocal smartindent
+    setlocal spell spelllang=en_us
+    setlocal noexpandtab
 endfunction
-
-" calling WP in command mode enters word processor mode
+" typing ',WP' in command mode enters word processor mode
 noremap <leader>WP :call WordProcessorMode()<CR>
 
 " Don’t create backups when editing files in certain directories
