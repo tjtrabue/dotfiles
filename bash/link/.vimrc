@@ -119,6 +119,12 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Use jk as an Esc alias to exit insert mode
 :imap jk <Esc>
 
+" Use 'ZX' to exit without saving
+:command! ZX q!
+
+" Use 'ZZ' to save and then exit
+:command! ZZ wq
+
 " Automatic commands
 if has("autocmd")
     " Enable file type detection
