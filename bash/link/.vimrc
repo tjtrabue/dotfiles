@@ -125,10 +125,7 @@ noremap <leader>. $
 noremap <leader>m ^
 
 " Use 'ZX' to exit without saving
-:command! ZX q!
-
-" Use 'ZZ' to save and then exit
-:command! ZZ wq
+noremap ZX :q!<CR>
 
 " Automatic commands
 if has("autocmd")
