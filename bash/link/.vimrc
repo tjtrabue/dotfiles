@@ -127,6 +127,9 @@ noremap <leader>m ^
 " Use 'ZX' to exit without saving
 noremap ZX :q!<CR>
 
+" Pasting from clipboard into vim is formatted correctly (,p)
+nmap <silent> <leader>p :set paste<CR>"*p:set nopaste<CR>
+
 " Automatic commands
 if has("autocmd")
     " Enable file type detection
