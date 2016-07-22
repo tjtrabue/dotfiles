@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+# This file, when sourced, provides try-catch capabilities for bash scripting similar to that
+# available in Java. You can even nest try-catch blocks inside one another.
+#
+# Example:
+# try {
+#    echo 'Hello'
+#    try {
+#        echo 'Nested Hello'
+#        false
+#        echo 'This will not execute'
+#    } catch {
+#        echo "Nested Caught (@ $__EXCEPTION_LINE__)"
+#    }
+#    false
+#    echo 'This will not execute too'
+#} catch {
+#    echo "Error in $__EXCEPTION_SOURCE__ at line: $__EXCEPTION_LINE__!"
+#}
+
 set -o pipefail
 shopt -s expand_aliases
 declare -ig __oo__insideTryCatch=0
@@ -32,7 +51,7 @@ function Exception.Extract() {
     __EXCEPTION_CATCH__=( $(Exception.GetLastException) )
 
     local retVal=$1
-    if [[ $retVal=$1 ]]; then
+    if [[ $retVal -gt 0 ]]; then
         # BACKWARDS COMPATIBILE WAY:
         # export __EXCEPTION_SOURCE__="${__EXCEPTION_CATCH__[(${#__EXCEPTION_CATCH__[@]}-1)]}"
         # export __EXCEPTION_LINE__="${__EXCEPTION_CATCH__[(${#__EXCEPTION_CATCH__[@]}-2)]}"
@@ -43,9 +62,9 @@ function Exception.Extract() {
     fi
 }
 
-Exception.GetLastException() {
-    if [[ -f /tmp/stored_exception ]] && [[ -f /tmp/stored_exception_line ]] && [[ -f
-    /tmp/stored_exception_source ]]; then
+function Exception.GetLastException() {
+    if [[ -f /tmp/stored_exception ]] && [[ -f /tmp/stored_exception_line ]] \
+    && [[ -f /tmp/stored_exception_source ]]; then
         cat /tmp/stored_exception
         cat /tmp/stored_exception_line
         cat /tmp/stored_exception_source
