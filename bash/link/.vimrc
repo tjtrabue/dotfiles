@@ -154,6 +154,8 @@ inoremap ' <c-r>=QuoteDelim("'")<CR>
 
 " Closes a pair of parentheses or square brackets when the user types a closing
 " character and the symbol under the cursor is that same closing character.
+" e.g., typing `]` while a ']' is under the cursor does not an extra ']', it only moves the cursor
+" ahead.
 function ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
         return "\<Right>"
@@ -164,6 +166,8 @@ endf
 
 " Close a pair of braces if the user types a closing brace and the char under  the cursor is a
 " closing brace, or the only char on the next line down from the cursor is a closing brace.
+" e.g., typing `}` when a '}' is under the cursor or is the first symbol on the line below the
+" current line will move the cursor to that next '}' without adding an extra one.
 function CloseBracket()
     if match(getline(line('.') + 1), '\s*}') < 0
         return "\<CR>}"
@@ -188,7 +192,7 @@ function QuoteDelim(char)
     endif
 endf
 
-" Escape from any number of nested brackets, braces, or quotation marks (Ctrl+j)
+" Jump out of brackets, braces, or quotation marks (Ctrl+j)
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
 
 python from powerline.vim import setup as powerline_setup
