@@ -140,6 +140,57 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
 
+" Automatically close square brackets, braces, parentheses, angle brackets, and both kinds of
+" quotation marks.
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap { {<CR>}<Esc>O<TAB>
+autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap } <c-r>=CloseBracket()<CR>
+inoremap " <c-r>=QuoteDelim('"')<CR>
+inoremap ' <c-r>=QuoteDelim("'")<CR>
+
+" Closes a pair of parentheses or square brackets when the user types a closing
+" character and the symbol under the cursor is that same closing character.
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endf
+
+" Close a pair of braces if the user types a closing brace and the char under  the cursor is a
+" closing brace, or the only char on the next line down from the cursor is a closing brace.
+function CloseBracket()
+    if match(getline(line('.') + 1), '\s*}') < 0
+        return "\<CR>}"
+    else
+        return "\<Esc>j0f}a"
+    endif
+endf
+
+" Close a pair of single or double quotes if the character under the cursor is the quotation mark typed
+function QuoteDelim(char)
+    let line = getline('.')
+    let col = col('.')
+    if line[col - 2] == "\\"
+        " Inserting a quoted quotation mark into the string
+        return a:char
+    elseif line[col - 1] == a:char
+        " Escaping out of the string
+        return "\<Right>"
+    else
+        " Starting a string
+        return a:char.a:char."\<Esc>i"
+    endif
+endf
+
+" Escape from any number of nested brackets, braces, or quotation marks (Ctrl+j)
+:inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
+
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
