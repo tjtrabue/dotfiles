@@ -116,8 +116,9 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-" Use jk as an Esc alias to exit insert mode
+" Use jk to toggle insert mode
 :imap jk <Esc>
+:map jk i
 
 " Use ',.' to go to end of current line
 noremap <leader>. $
@@ -126,6 +127,9 @@ noremap <leader>m ^
 
 " Use 'ZX' to exit without saving
 noremap ZX :q!<CR>
+
+" Use 'ZZ' to save and exit
+noremap ZZ :wq<CR>
 
 " Pasting from clipboard into vim is formatted correctly (,p)
 nmap <silent> <leader>p :set paste<CR>"*p:set nopaste<CR>
@@ -215,6 +219,10 @@ endf
 " Copy current line below cursor.
 :inoremap <C-s> <C-o>yyp
 inoremap <C-S-s> yyp
+
+" (Ctrl+j) and (Ctrl+k) move down and up, respectively, 20 lines at a time.
+:noremap <C-j> 20j
+:noremap <C-k> 20k
 
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
