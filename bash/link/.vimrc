@@ -201,6 +201,7 @@ endf
 :noremap <C-h> ^
 :noremap <C-l> $
 
+" Let (Ctrl+j) and (Ctrl+k) move the cursor to the beginning and end of a line, respectively.
 :inoremap <C-j> <C-o>>bi
 :inoremap <C-k> <C-o>wii
 :noremap <C-j> b
