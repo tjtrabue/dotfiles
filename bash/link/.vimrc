@@ -192,8 +192,7 @@ function QuoteDelim(char)
     endif
 endf
 
-" Jump out of brackets, braces, or quotation marks (Ctrl+m)
-:inoremap <C-m> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
+:inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
 
 " Let (Ctrl+h) and (Ctrl+l) move the cursor to the beginning and end of a line, respectively.
 :inoremap <C-h> <C-o>^i
@@ -201,11 +200,9 @@ endf
 :noremap <C-h> ^
 :noremap <C-l> $
 
-" Let (Ctrl+j) and (Ctrl+k) move the cursor to the beginning and end of a line, respectively.
-:inoremap <C-j> <C-o>>bi
-:inoremap <C-k> <C-o>wii
-:noremap <C-j> b
-:noremap <C-k> w
+" Let (Ctrl+b) and (Ctrl+w) move the cursor to the beginning and end of a line in insert mode, respectively.
+:inoremap <C-b> <C-o>b
+:inoremap <C-w> <C-o>w
 
 " Delete word under cursor while in either normal or insert mode.
 :inoremap <C-d> <C-o>diw
@@ -214,6 +211,10 @@ endf
 " Delete line while in either normal or insert mode.
 :inoremap <C-a> <C-o>dd
 :noremap <C-a> dd
+
+" Copy current line below cursor.
+:inoremap <C-s> <C-o>yyp
+inoremap <C-S-s> yyp
 
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
