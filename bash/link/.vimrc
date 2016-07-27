@@ -202,8 +202,12 @@ endf
 :noremap <C-l> $
 
 " Delete word under cursor while in either normal or insert mode.
-:imap <C-d> <C-o>diw
-:map <C-d> daw
+:inoremap <C-d> <C-o>diw
+:noremap <C-d> daw
+
+" Delete line while in either normal or insert mode.
+:inoremap <C-a> <C-o>dd
+:noremap <C-a> dd
 
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
