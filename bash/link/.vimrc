@@ -195,6 +195,12 @@ endf
 " Jump out of brackets, braces, or quotation marks (Ctrl+j)
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
 
+" Let (Ctrl+h) and (Ctrl+l) move the cursor to the beginning and end of a line, respectively.
+:inoremap <C-h> <Esc>^i
+:inoremap <C-l> <Esc>$i
+:noremap <C-h> ^
+:noremap <C-l> $
+
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
