@@ -116,9 +116,8 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-" Use jk to toggle insert mode
+" Use jk as an Escape alias to exit insert mode.
 :imap jk <Esc>
-:map jk i
 
 " Use ',.' to go to end of current line
 noremap <leader>. $
@@ -148,7 +147,8 @@ endif
 " quotation marks.
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
-inoremap { {<CR>}<Esc>O<TAB>
+inoremap { {}<Esc>i
+inoremap {<CR> {<CR>}<Esc>O<TAB>
 autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap ] <c-r>=ClosePair(']')<CR>
