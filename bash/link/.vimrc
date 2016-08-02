@@ -119,6 +119,10 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Use jk as an Escape alias to exit insert mode.
 :imap jk <Esc>
 
+" Use nm as an alias to toggle command mode
+:noremap nm :
+:cnoremap nm <Esc>
+
 " Use ',.' to go to end of current line
 noremap <leader>. $
 " Use ',m' to go to beginning of current line
