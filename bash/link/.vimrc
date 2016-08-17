@@ -203,8 +203,8 @@ endf
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
 
 " Let (Ctrl+h) and (Ctrl+l) move the cursor to the beginning and end of a line, respectively.
-:inoremap <C-h> <C-o>^i
-:inoremap <C-l> <C-o>$i
+:inoremap <C-h> <C-o>^
+:inoremap <C-l> <C-o>$
 :noremap <C-h> ^
 :noremap <C-l> $
 
@@ -224,9 +224,21 @@ endf
 :inoremap <C-s> <C-o>yyp
 inoremap <C-S-s> yyp
 
-" (Ctrl+j) and (Ctrl+k) move down and up, respectively, 20 lines at a time.
-:noremap <C-j> 20j
-:noremap <C-k> 20k
+" (Ctrl+j) and (Ctrl+k) move down and up, respectively, 10 lines at a time.
+:noremap <C-j> 10j
+:noremap <C-k> 10k
+
+" (Ctrl+Down) and (Ctrl+Up) move down and up, respectively, 10 lines at a time.
+:noremap <C-Down> 10j
+:noremap <C-Up> 10k
+:inoremap <C-Down> <C-o>10j
+:inoremap <C-Up> <C-o>10k
+
+" (Ctrl+Shift+Left/Right) Move one word left and right, respectively.
+:noremap <C-Left> b
+:noremap <C-Right> w
+:inoremap <C-Left> <C-o>b
+:inoremap <C-Right> <C-o>w
 
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
