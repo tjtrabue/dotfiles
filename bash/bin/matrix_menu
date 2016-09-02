@@ -120,32 +120,45 @@ function print_menu() {
 # Get the user's keyboard input and act accordingly:
 function get_user_input() {
     local key k2
+    local lowest_y_index=$num_rows;
     read -rsn 1 key
     [[ "$key" == "$escape" ]] &&
     {
        read -rsn 2 k2
        key="$key$k2"
     }
+    
+    if [[ ${option_counts[$num_rows]} -lt $lowest_y_index ]]; then
+        (( lowest_y_index-=1 ));
+    fi
 
     case "$key" in
         "$arrow_up")
             if [[ $cursor_y -gt 1 && $cursor_x -le $(( ${option_counts[$cursor_y - 2]} )) ]]; then
                 (( cursor_y-=1 ))
+            elif [[ $cursor_y -eq 1 ]]; then
+                cursor_y=$num_rows;
             fi
             ;;
         "$arrow_down")
             if [[ $cursor_y -lt "$num_rows" && $cursor_x -le $(( ${option_counts[$cursor_y]} )) ]]; then
                 (( cursor_y+=1 ))
+            elif [[ $cursor_y -eq $num_rows ]]; then
+                cursor_y=1;
             fi
             ;;
         "$arrow_right")
             if [[ $cursor_x -lt $(( ${option_counts[$cursor_y - 1]} )) ]]; then
                 (( cursor_x+=1 ))
+            elif [[ $cursor_x -eq ${option_counts[$cursor_y - 1]} ]]; then
+                cursor_x=1;
             fi
             ;;
         "$arrow_left")
             if [[ $cursor_x -gt 1 ]]; then
                 (( cursor_x-=1 ))
+            elif [[ $cursor_x -eq 1 ]]; then
+                cursor_x=${option_counts[$cursor_y - 1]};
             fi
             ;;
         "$newline")
