@@ -34,6 +34,10 @@ if exists("&undodir")
     set undodir=~/.vim/undo
 endif
 
+" Draw a vertical ruler at 100 characters to designate max width for coding:
+set colorcolumn=100
+:highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
 " Don't use soft tabs, so as to avoid compatibility errors with other editors
 set expandtab
 set tabstop=4
