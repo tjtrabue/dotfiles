@@ -10,3 +10,6 @@
 [submodule "vendors/powerline"]
 	path = vendors/powerline
 	url = git@github.com:powerline/powerline.git
+[submodule "vendors/nerdtree"]
+	path = vendors/nerdtree
+	url = git@github.com:scrooloose/nerdtree.git
