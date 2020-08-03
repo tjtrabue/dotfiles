@@ -1,0 +1,12 @@
+#+title:  PDF Tools for Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:08:03
+#+tags:   pdf tools
+
+This file contains plugin specifications for integrating various PDF tools with
+Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package pdf-tools)
+#+end_src
