@@ -204,7 +204,9 @@ optionally for extra modes"
     (company-auctex-init))
 #+end_src
 ** company-box
-   =company-box= is a company front-end with icons.
+   =company-box= is a company front-end with icons. It provides a great, modern
+   looking UI for company completions similar to something like Visual Studio
+   Code.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package company-box
