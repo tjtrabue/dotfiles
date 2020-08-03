@@ -1,0 +1,20 @@
+#+title:  Dumb Jump: Definition Jumper
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:08:03
+#+tags:
+
+=dumb-jump= is a jump-to-definition package that uses =grep=, =ag=, and =rg= to
+figure out how to jump to the chosen definition. It require essentially no
+configuration nor any TAGS files, making it a great out-of-the-box solution for
+finding definitions at point. All you must do is add =dumb-jump= to the list of
+=xref= backend functions, and you're off to the races!
+
+After you've set up your =xref= hook, you can find the definition under the
+cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dumb-jump
+    :hook
+    (xref-backend-functions . dumb-jump-xref-activate))
+#+end_src

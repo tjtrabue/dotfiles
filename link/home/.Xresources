@@ -32,7 +32,7 @@ XTerm*faceSize: 11
 XTerm*font: *-fixed-*-*-*-18-*
 
 ! Emacs font
-Emacs.font: FiraCode Nerd Font-11
+Emacs.font: Hasklig:style=Semibold
 ! }}}
 
 ! Key bindings {{{
