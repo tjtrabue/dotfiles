@@ -159,7 +159,7 @@ for any programming language that supports a formatting tool.")
           ;; Make sure we are using completion at point.
           lsp-completion-provider :capf
           ;; The length that lsp-mode waits to begin completion
-          lsp-idle-delay 0.200))
+          lsp-idle-delay 0.000))
 #+end_src
 
 * Plugins

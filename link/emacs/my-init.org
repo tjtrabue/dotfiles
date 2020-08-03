@@ -171,11 +171,11 @@ with straight.el.")
   ;; The threshold value used to determine how many bytes can be consed
   ;; before garbage collection occurs.  This needs to be a larger value
   ;; than its default for the sake of making lsp-mode usably fast.
-  (setq gc-cons-threshold 200000000) ;; 200MiB
+  (setq gc-cons-threshold 400000000) ;; 400MiB
 
   ;; Increase the amount of data Emacs reads per unit time from a given process.
   ;; The initial value is 4KB, far too low for modern day applications.
-  (setq read-process-output-max (* 5 (* 1024 1024))) ;; 5MB
+  (setq read-process-output-max (* 10 (* 1024 1024))) ;; 10MB
 
   ;; Set the max number of variable bindings allowed at one time to a
   ;; number considerably higher than the default (which is 1600).
