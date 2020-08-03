@@ -103,10 +103,10 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-rg
-    :after (helm rg)
+    :after (helm projectile rg)
     :config
     ;; Extra CLI options to pass to ripgrep
-    (setq helm-rg-default-extra-args "--hidden --no-heading"))
+    (setq helm-rg-default-extra-args '("--hidden")))
 #+end_src
 
 ** helm-ag
@@ -132,7 +132,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-projectile
-    :after (helm projectile rg helm-rg helm-ag)
+    :after (helm projectile ag rg helm-rg helm-ag)
     :bind
     (:map projectile-mode-map
           ;; Use ripgrep instead of standard grep for speed.
@@ -347,4 +347,11 @@ Configuration for all things helm-related, including helm-projectile integration
     :after (helm)
     :bind
     ("C-c h S" . helm-system-packages))
+#+end_src
+
+** helm-dash
+   Documentation browser plugin using Dash
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-dash)
 #+end_src

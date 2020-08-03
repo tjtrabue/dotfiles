@@ -30,9 +30,6 @@ XTerm*faceName: FiraCode Nerd Font:style=Medium
 XTerm*faceSize: 11
 ! Set default font size
 XTerm*font: *-fixed-*-*-*-18-*
-
-! Emacs font
-Emacs.font: Hasklig:style=Semibold
 ! }}}
 
 ! Key bindings {{{

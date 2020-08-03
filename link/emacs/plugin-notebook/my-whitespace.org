@@ -11,6 +11,16 @@ professional software developer. This practice accomplishes two important tasks:
 first, it ensures that any commits you make to a code base have as few edited
 lines as is necessary, and second, it keeps your code contributions clean.
 
+* whitespace-cleanup-mode
+  Cleans trailing whitespace on buffer save, but only for lines of code that
+  have been edited.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package whitespace-cleanup-mode
+    :config
+    (global-whitespace-cleanup-mode))
+#+end_src
+
 * clean-aindent-mode
   This minor mode makes sure to trim trailing whitespace left over once you hit
   Return on your keyboard and =electric-indent-mode= places your cursor at an
@@ -41,14 +51,4 @@ lines as is necessary, and second, it keeps your code contributions clean.
     (setq dtrt-indent-verbosity 0)
     :config
     (dtrt-indent-mode))
-#+end_src
-
-* ws-butler
-  =ws-butler= manages whitespace on every /edited/ line of code, which helps you
-  write clean code without noisy whitespace.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package ws-butler
-    :hook
-    (prog-mode . ws-butler-mode))
 #+end_src

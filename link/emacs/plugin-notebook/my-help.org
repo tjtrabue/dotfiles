@@ -6,6 +6,24 @@
 Plugins and configuration for Emacs' help features.
 See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][EmacsWiki]] for more information.
 
+* helpful
+  =helpful= is an alternative to Emacs' built-in help system that provides far
+  more contextual information. It is essentially a drop-in replacement for the
+  help system.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helpful
+    :bind (
+    ;; Replace standard help functions with helpful functions
+    ("C-h f" . helpful-callable)
+    ("C-h v" . helpful-variable)
+    ("C-h k" . helpful-key)
+    ;; Other useful keybindings
+    ("C-h C" . helpful-command)
+    ("C-h F" . helpful-function)
+    ("C-c C-d" . helpful-at-point)))
+#+end_src
+
 * help+
   Enhance Emacs' help system with new functions and key bindings.
 #+begin_src emacs-lisp :tangle yes
