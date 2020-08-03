@@ -1,4 +1,4 @@
-#+title: Emacs Initialization File
+#+title: emacs Initialization File
 #+author: Thomas Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:5:25
@@ -171,7 +171,7 @@ with straight.el.")
   ;; The threshold value used to determine how many bytes can be consed
   ;; before garbage collection occurs.  This needs to be a larger value
   ;; than its default for the sake of making lsp-mode usably fast.
-  (setq gc-cons-threshold 100000000) ;; 100MiB
+  (setq gc-cons-threshold 200000000) ;; 200MiB
 
   ;; Increase the amount of data Emacs reads per unit time from a given process.
   ;; The initial value is 4KB, far too low for modern day applications.

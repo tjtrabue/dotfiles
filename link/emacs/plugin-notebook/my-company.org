@@ -203,27 +203,10 @@ optionally for extra modes"
     (add-to-list 'company-backends 'company-auctex)
     (company-auctex-init))
 #+end_src
-
-** company-lsp
-   =company= backend for =lsp-mode=. I've heard this plugin is no longer
-   supported by =lsp-mode=, but the GitHub page appears active to me, so I'll
-   still use it for now. It's much, much faster than using =company-capf=.
+** company-box
+   =company-box= is a company front-end with icons.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package company-lsp
-    :after (company lsp-mode)
-    :hook
-    (lsp-mode . (lambda ()
-      ;; Use company-lsp backend whenever editing a file in lsp-mode
-      (when (member 'company-lsp company-backends)
-        ;; Remove company-lsp if it is already present.
-        (setq-local company-backends (delete 'company-lsp company-backends)))
-      (setq-local company-backends (cons '(company-lsp company-yasnippet)
-                                         company-backends))))
-    :init
-    (setq company-lsp-cache-candidates 'auto
-          company-lsp-async t
-          company-lsp-enable-snippet t
-          ;; If non-nil, recomplete any completion candidates before point.
-          company-lsp-enable-recompletion t))
+  (use-package company-box
+    :hook (company-mode . company-box-mode))
 #+end_src
