@@ -14,11 +14,11 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
 #+begin_src emacs-lisp :tangle yes
   (use-package helpful
     :bind (
-    ;; Replace standard help functions with helpful functions
+    ;; Replace standard help functions with helpful functions.
     ("C-h f" . helpful-callable)
     ("C-h v" . helpful-variable)
     ("C-h k" . helpful-key)
-    ;; Other useful keybindings
+    ;; Other useful keybindings.
     ("C-h C" . helpful-command)
     ("C-h F" . helpful-function)
     ("C-c C-d" . helpful-at-point)))

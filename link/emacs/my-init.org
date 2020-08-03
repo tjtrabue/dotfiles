@@ -396,7 +396,8 @@ with straight.el.")
     (require 'cl-lib)
     (cl-flet ((load-it (f)
                (funcall load-fn (concat (file-name-as-directory dir) f))))
-     (mapc #'load-it (directory-files dir nil pattern))))
+     (if (file-directory-p dir)
+       (mapc #'load-it (directory-files dir nil pattern)))))
 
   (defun download-elisp-lib (url &optional file-name)
     "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
