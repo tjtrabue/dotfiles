@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Author: Thomas J. Trabue
+# This middle-man binary cleans output from the larger _matrix_menu binary and
+# returns it to the user.
+#
+# NOTE: This is the binary that you SHOULD be using. Using '_matrix_menu' by itself
+# returns some nasty hidden characters with your selection that will mess up
+# any code trying to make use of the returned content.
+
+item_to_return=$(_matrix_menu $@)
+item_to_return="$(echo $item_to_return | cat -v | sed "s:\^\[\[.*::")"
+echo "$item_to_return"

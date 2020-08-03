@@ -1,0 +1,54 @@
+#+title:  Persp Window Layout Manager
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+=persp-mode= is a window configuration management plugin that allows you to save
+and restore window layouts from one Emacs session to another.
+
+As long as you are using Emacs >= 24.4 =persp-mode= has no dependencies. If you
+are on an older version of Emacs then you also need the =workgroups.el= package.
+
+https://github.com/Bad-ptr/persp-mode.el
+
+Note that all =persp-mode= keybinding keys must proceed after the
+=persp-keymap-prefix= has been pressed. This prefix defaults to =C-c p=, but of
+course can be configured to whatever you like. I rebound the keymap prefix
+because I use =C-c p= as my =projectile= keymap prefix.
+
+* persp-mode
+  The main package.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package persp-mode
+    :hook
+    (after-init . (lambda ()
+                    (persp-mode 1)))
+    :init
+          ;; switch off animation
+    (setq wg-morph-on nil
+          persp-autokill-buffer-on-remove 'kill-weak
+          ;; Change persp-keymap-prefix so as not to conflict with projectile.
+          ;; Needs to be set here in :init rather than in :config so that the
+          ;; change actually takes place.
+          persp-keymap-prefix (kbd "C-c u")
+          ;; This variable sets the number of seconds until persp-mode
+          ;; automatically resumes the last perspective from the autosave
+          ;; file. If its value is <= 0, do not resume last perspective.
+          persp-auto-resume-time 3.0))
+#+end_src
+
+* Plugins
+** Projectile Bridge
+   This is a package to integrate =persp-mode= with =projectile=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package persp-mode-projectile-bridge
+    :after (persp-mode projectile)
+    :hook
+    ((persp-mode-projectile-bridge-mode . (lambda ()
+       (if persp-mode-projectile-bridge-mode
+           (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
+         (persp-mode-projectile-bridge-kill-perspectives))))
+     (after-init . persp-mode-projectile-bridge-mode)))
+#+end_src

@@ -1,0 +1,96 @@
+#+title:  ECB: Emacs Code Browser
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:06:22
+#+tags:   ecb code browser
+
+=ECB= is another old Emacs package similar and complementary to =CEDET= used to
+explore the source code of software projects through graphical windows and tree
+layouts.
+
+* Variables
+  =ECB= related user variables.
+
+#+begin_src emacs-lisp :tangle yes
+  (defvar my/ecb-git-home (concat my/straight-repos-dir "ecb/")
+    "Local ECB development repository.")
+  (defvar my/ecb-makefile (concat my/ecb-git-home "Makefile")
+    "The path to the Makefile for ECB.")
+#+end_src
+
+* straight-use-package specification
+  We're skipping the =use-package= macro altogether in favor of the simpler
+  =straight-use-package= system since all we need to do is clone the repository.
+  =use-package= gets very unhappy when there is nothing to build or autoload,
+  and it also has no utility for running generic build commands, which is what
+  we desperately want. Thus, once again, we have to hack our way to glory.
+
+#+begin_src emacs-lisp :tangle yes
+  (straight-use-package `(ecb :no-build t))
+  (add-to-list 'load-path my/ecb-git-home)
+#+end_src
+
+* Build and Byte-Compile ECB
+  Build the ECB project using its Makefile.  =straight.el= does /not/ yet
+  support running generic build commands, so we must compile ECB outside of the
+  straight directive itself.  This makes installing ECB a major pain, but it's
+  the only way that I can think of at the moment.
+
+#+begin_src emacs-lisp :tangle yes
+  (let ((default-directory my/ecb-git-home)
+        (ecb-autoloads-file (concat my/ecb-git-home "ecb-autoloads.el")))
+    ;; We have to build the ECB project if the autoloads file is not present.
+    (when (not (file-exists-p ecb-autoloads-file))
+      (call-process "make" nil nil nil "-f" my/ecb-makefile)))
+#+end_src
+
+* Load ECB Libraries
+  Require important ECB Elisp features.
+
+#+begin_src emacs-lisp :tangle yes
+  (let ((byte-compile-verbose nil)
+        (byte-compile-warnings nil))
+    (require 'ecb))
+#+end_src
+
+* Configuration
+  And /finally/ we come to the configuration section.  Seriously, people. Add
+  generic build commands to =use-package= and =straight=!
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Enable version control features in all cases.
+  (setq ecb-vc-enable-support t
+        ;; Use speedbar instead of the native file tree browser.
+        ;; The value of this variable determines which of the ECB windows
+        ;; gets overwritten by speedbar. If the value is nil, then speedbar
+        ;; is not used.
+        ecb-use-speedbar-instead-native-tree-buffer nil
+        ;; Do not show "tip of the day" every time ECB activates.
+        ecb-tip-of-the-day nil
+        ;; The width of the special ECB windows.
+        ;; If you enter a value less than 1, then the windows will be that
+        ;; fraction of the frame width.
+        ecb-windows-width 0.25
+        ;; Place ECB windows on both the left and the right side of the edit
+        ;; area since our modern screens are pretty big.
+        ecb-layout-name "leftright2"
+        ;; This must be nil to use directory caching!
+        ecb-show-sources-in-directories-buffer nil
+        ;; The height of the compilation window at the bottom of the screen.
+        ;; Probably should not set this value in code and only activate the
+        ;; compile window when necessary with `ecb-toggle-compile-window'.
+        ecb-compile-window-height nil)
+
+  ;; Activate ECB when we're dealing with a EDE project.
+  ;; You probably do NOT want to start ECB automatically.
+  ;; It is quite a hefy program, and it makes switching buffers somewhat of a
+  ;; pain. Only start it when you have a C/C++ project you need to work on,
+  ;; that's my advice.
+  ;; (add-hook 'ede-minor-mode-hook #'(lambda ()
+  ;;   (ecb-activate)))
+
+  ;; Turn on escreen integration for window management.
+  ;; (does not seem to work too well)
+  (with-eval-after-load "escreen"
+    (ecb-winman-escreen-enable-support))
+#+end_src

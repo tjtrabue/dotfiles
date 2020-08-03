@@ -1,0 +1,32 @@
+-- OverloadedStrings is often useful.
+:set -XOverloadedStrings
+
+-- Scoped type variables is often useful so we can specify the types
+-- of variables (for example, in lambda expressions).
+:set -XScopedTypeVariables
+
+-- useful for import from specified package
+:set -XPackageImports
+
+-- Force load dependencies
+-- :set -package funnyprint
+
+-- Show the types of evaluated expressions
+:set +t
+
+-- And stats
+:set +s
+
+-- Enable multi-line expressions with :{ and :}
+:set +m
+
+-- Make the prompt a little more colorful.
+-- And pretty-printing values
+
+-- :def color (\_ -> return (":set -interactive-print=FunnyPrint.funnyPrint\n:set prompt \"" ++ FunnyPrint.prompt "λ " "%s" " ¬\\nλ > " ++ "\"" ++ "\n:set prompt2 \"" ++ FunnyPrint.prompt2 "λ" "" " | " ++ "\""))
+-- :def nocolor (\_ -> return ":set -interactive-print=print\n:set prompt \"%s> \"\n:set prompt2 \"%s| \"")
+
+-- turn fun on
+-- :color
+
+:set prompt "\ESC[34m\STX%s\n\ESC[32m\STX\x03BB=> \ESC[m\STX"

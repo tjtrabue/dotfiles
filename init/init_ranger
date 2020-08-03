@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+declare RANGER_CONFIG_HOME="$HOME/.config/ranger"
+declare RANGER_PLUGINS="${RANGER_CONFIG_HOME}/plugins"
+
+# The user's Ranger configuration file
+declare RANGER_USER_CONFIG="${RANGER_CONFIG_HOME}/rc.conf"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+source "${HOME}/.vars"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Make sure that Ranger is configured properly for work like it should, including
+downloading and enabling devicons.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+  exit 0
+}
+
+make_directories() {
+  mkdir -p "$RANGER_CONFIG_HOME"
+}
+
+# Clone ranger_devicons into the ranger plugins directory
+clone_ranger_devicons() {
+  local deviconsBasename="ranger_devicons"
+  local rangerDeviconsGitUrl="git@github.com:alexanderjeurissen/${deviconsBasename}.git"
+  if [ ! -d "${RANGER_PLUGINS}/ranger_devicons" ]; then
+    log_info "Cloning Ranger Dev Icons"
+    git clone "$rangerDeviconsGitUrl" "${RANGER_PLUGINS}/${deviconsBasename}"
+  fi
+}
+
+ensure_ranger_configured_for_devicons() {
+  if ! grep "default_linemode devicons" "$RANGER_USER_CONFIG" &>/dev/null; then
+    log_info "Adding option to $RANGER_USER_CONFIG to enable devicons"
+    echo "default_linemode devicons" >>"$RANGER_USER_CONFIG"
+  fi
+}
+
+main() {
+  make_directories
+  clone_ranger_devicons
+  ensure_ranger_configured_for_devicons
+  succ "Done!"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
+
+  -h | --help)
+    _help
+    shift
+    break
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main
+
+# vim:foldenable:foldmethod=marker:

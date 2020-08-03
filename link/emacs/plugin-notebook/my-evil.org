@@ -1,0 +1,222 @@
+#+title:  evil-mode Configuration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+The Extensible VI Layer (AKA evil.  AKA the only way to use Emacs).
+=evil-mode= is a fully featured VI emulator for Emacs, even improving upon the
+features of Vim at times.
+
+* evil-mode
+  The Evil mode plugin itself.
+
+  *NOTE*: If you want to use =evil-leader=, you need to load =evil-leader=
+  /before/ loading =evil=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil
+    :after evil-leader
+    :bind
+    (:map evil-normal-state-map
+          ("H" . evil-window-top)
+          ("L" . evil-window-bottom)
+          ;; Only scroll half a page up/down with C-b and C-f instead of a full
+          ;; page.
+          ([remap evil-scroll-page-up] . evil-scroll-up)
+          ([remap evil-scroll-page-down] . evil-scroll-down))
+    ;; NOTE: We must set all variables for evil-mode in evil-leader's
+    ;;       use-package directive because it loads first, and it in turn
+    ;;       loads evil mode.
+    ;; :init
+    :config
+    (evil-mode 1))
+#+end_src
+
+* Plugins
+** evil-leader
+   =evil-leader= is an emulator for Vim's mapleader feature allowing users to
+   define key bindings based on pressing a leader key (usually comma) followed
+   by an arbitrary succession of additional key strokes to call a predefined
+   function. It's similar in nature to Emacs' =key-chord= plugin.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-leader
+    :init
+    ;; Set evil-mode variables here.
+    ;; These values must be set here because evil-leader loads before evil
+    ;; itself. Thus, these variables will have already been set by the time
+    ;; Evil's use-package specification loads, making any variable definitions
+    ;; set there useless.
+    ;;
+    ;; Tell Evil that 'Y' in normal state yanks from point to the end of line
+    ;; as opposed to the entire line like 'yy'.
+    (setq evil-want-Y-yank-to-eol t
+          ;; Need this for evil-collection; loads evil-integration.el
+          evil-want-integration t
+          ;; Do not use any default keybinding since evil-collection
+          ;; takes care of that part.
+          evil-want-keybinding nil)
+    :config
+    (evil-leader/set-leader ",")
+    (evil-leader/set-key
+      ;; ace-jump-mode (inspired by vim-easymotion)
+      ",w" 'ace-jump-word-mode
+      ",f" 'ace-jump-char-mode
+      ",l" 'ace-jump-line-mode
+      ;; Buffer
+      "bb" 'helm-buffers-list
+      "bk" 'kill-this-buffer
+      ;; eshell
+      "es" 'eshell-below
+      ;; Magit
+      "gg" 'magit-status
+      "gd" 'magit-dispatch
+      ;; ace-window
+      "jk" 'ace-window
+      ;; File
+      "lf" 'load-file
+      "of" 'org-babel-load-file
+      ;; Flycheck
+      "fn" 'flycheck-next-error
+      "fp" 'flycheck-previous-error
+      ;; Treemacs
+      "tm" 'treemacs
+      ;; undo-tree
+      "ut" 'undo-tree-visualize
+      ;; M-x
+      "xx" 'helm-M-x)
+    (global-evil-leader-mode t))
+#+end_src
+
+** evil-collection
+  Used to provide default Vim keybindings for all standard Emacs modes.
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-collection
+    :after evil
+    :init
+    ;; Whether or not to use Vim keys in the minibuffer.
+    (setq evil-collection-setup-minibuffer nil)
+    :config
+    (evil-collection-init))
+#+end_src
+
+** evil-surround
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-surround
+    :config (global-evil-surround-mode 1))
+#+end_src
+
+** evil-numbers
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-numbers
+    :config
+    (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+    (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+#+end_src
+
+** evil-commentary
+#+begin_src emacs-lisp :tangle yes
+  ;; Use the incredible vim-commentary plugin
+  (use-package evil-commentary
+    :config (evil-commentary-mode t))
+#+end_src
+
+** evil-mark-replace
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-mark-replace)
+#+end_src
+
+** evil-matchit
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-matchit
+    :config (global-evil-matchit-mode t))
+#+end_src
+
+** evil-magit
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-magit)
+#+end_src
+
+** evil-exchange
+#+begin_src emacs-lisp :tangle yes
+  ;; Port of vim-exchange used to exchange two text selections based on two
+  ;; consecutive motions beginning with 'gx'
+  (use-package evil-exchange)
+#+end_src
+
+** evil-extra-operator
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-extra-operator)
+#+end_src
+
+** evil-args
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-args
+    :bind
+    (:map evil-inner-text-objects-map
+      ("a" . evil-inner-arg)
+    :map evil-outer-text-objects-map
+      ("a" . evil-outer-arg)
+    :map evil-normal-state-map
+      ("C-c a l" . evil-forward-arg)
+      ("C-c a h" . evil-backward-arg)
+      ("C-c a k" . evil-jump-out-arg)
+    :map evil-motion-state-map
+      ("C-c a l" . evil-forward-arg)
+      ("C-c a h" . evil-backward-arg)))
+#+end_src
+
+** evil-visualstar
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-visualstar
+    :config (global-evil-visualstar-mode t))
+#+end_src
+
+** evil-snipe
+#+begin_src emacs-lisp :tangle yes
+  (use-package evil-snipe
+    :hook
+    ;; Turn off snipe in magit-mode for compatibility.
+    (magit-mode . turn-off-evil-snipe-override-mode)
+    :config
+    (evil-snipe-override-mode t))
+#+end_src
+
+** dash
+#+begin_src emacs-lisp :tangle yes
+  (use-package dash)
+#+end_src
+
+** monitor
+#+begin_src emacs-lisp :tangle yes
+  (use-package monitor)
+#+end_src
+
+** org-evil
+#+begin_src emacs-lisp :tangle yes
+  (use-package org-evil)
+#+end_src
+
+** vertigo
+#+begin_src emacs-lisp :tangle yes
+  (use-package vertigo)
+#+end_src
+
+** sentence-navigation
+#+begin_src emacs-lisp :tangle yes
+  (use-package sentence-navigation
+    :defer t
+    :config
+    (define-key evil-motion-state-map ")"
+      'sentence-nav-evil-forward)
+    (define-key evil-motion-state-map "("
+      'sentence-nav-evil-backward)
+    (define-key evil-motion-state-map "g)"
+      'sentence-nav-evil-forward-end)
+    (define-key evil-motion-state-map "g("
+      'sentence-nav-evil-backward-end)
+    (define-key evil-outer-text-objects-map "s"
+      'sentence-nav-evil-a-sentence)
+    (define-key evil-inner-text-objects-map "s"
+      'sentence-nav-evil-inner-sentence))
+#+end_src

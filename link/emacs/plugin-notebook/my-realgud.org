@@ -1,0 +1,39 @@
+#+title:  RealGUD: Unified Debugger for Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:06:20
+#+tags:   debugger debug debugging
+
+=realgud= is a smooth, modular Emacs front end for interacting with external
+debuggers. It is quite feature-rich, and I recommend you take a look at its
+[[https://github.com/realgud/realgud][GitHub page]] for more information.
+
+* realgud
+  This is the debugging package itself.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package realgud)
+#+end_src
+
+* Plugins
+
+** realgud-byebug
+   =realgud= interface to =byebug=, a popular Ruby debugger.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package realgud-byebug)
+#+end_src
+
+** realgud-ipdb
+   =realgud= interface to =ipdb=, a Python debugger that leverages IPython.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package realgud-ipdb)
+#+end_src
+
+** realgud-trepan-ni
+   Node.js debugger.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package realgud-trepan-ni)
+#+end_src

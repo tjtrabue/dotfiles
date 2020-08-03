@@ -1,0 +1,53 @@
+hotkeys:
+    profile: {}
+    shell: {}
+    pane-nav-right:
+        - - Ctrl-Alt-ArrowRight
+        - - Ctrl-Shift-L
+    pane-nav-left:
+        - - Ctrl-Alt-ArrowLeft
+        - - Ctrl-Shift-H
+    pane-nav-down:
+        - - Ctrl-Alt-ArrowDown
+        - - Ctrl-Shift-J
+    pane-nav-up:
+        - - Ctrl-Alt-ArrowUp
+        - - Ctrl-Shift-K
+ssh: {}
+terminal:
+    colorScheme:
+        name: Base16 Default Dark
+        foreground: "#d8d8d8"
+        background: "#181818"
+        cursor: "#d8d8d8"
+        colors:
+            - "#181818"
+            - "#ab4642"
+            - "#a1b56c"
+            - "#f7ca88"
+            - "#7cafc2"
+            - "#ba8baf"
+            - "#86c1b9"
+            - "#d8d8d8"
+            - "#585858"
+            - "#ab4642"
+            - "#a1b56c"
+            - "#f7ca88"
+            - "#7cafc2"
+            - "#ba8baf"
+            - "#86c1b9"
+            - "#f8f8f8"
+            - "#dc9656"
+            - "#a16946"
+            - "#282828"
+            - "#383838"
+            - "#b8b8b8"
+            - "#e8e8e8"
+    fontSize: 14
+    customColorSchemes: []
+    environment: {}
+    background: theme
+    font: Hasklug Nerd Font
+appearance:
+    opacity: 0.48
+enableWelcomeTab: false

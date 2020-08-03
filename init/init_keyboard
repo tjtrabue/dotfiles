@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
+
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare VERBOSE=false;
+
+declare WALLY_BIN_URL="https://configure.ergodox-ez.com/wally"
+declare WALLY_BIN_URL_LINUX="${WALLY_BIN_URL}/linux"
+declare WALLY_BIN_PATH="${HOME}/Downloads/wally"
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash";
+source "${IMPORT}/functions_log.bash";
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Install software necessary to flash and configure keyboards.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+exit 0;
+}
+
+create_udev_rule_for_wally() {
+  sudo tee /etc/udev/rules.d/50-wally.rules &> /dev/null <<EOF
+# Teensy rules for the Ergodox EZ Original / Shine / Glow
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+
+# STM32 rules for the Planck EZ Standard / Glow
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
+    MODE:="0666", \
+    SYMLINK+="stm32_dfu"
+EOF
+}
+
+init_keyboard_linux() {
+  log_info "Linux OS detected"
+  create_udev_rule_for_wally
+}
+
+download_wally() {
+  log_info "Downloading Wally keyboard firmware flasher"
+  wget -O "$WALLY_BIN_PATH" "$WALLY_BIN_URL_LINUX"
+  chmod +x "$WALLY_BIN_PATH"
+}
+
+main() {
+  print_header "Initializing Keyboard Software";
+  download_wally
+  init_keyboard_linux
+  succ "Done."
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true;
+      shift;
+      ;;
+
+    -h | --help)
+      _help;
+      shift;
+      break;
+      ;;
+
+    --)
+      shift;
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main;
+
+# vim:foldenable:foldmethod=marker:

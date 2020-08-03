@@ -1,0 +1,24 @@
+#+title:  Common Lisp Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Contains configuration for the SLIME (Superior Lisp Interaction
+Mode for Emacs) package used to integrate Emacs with Common Lisp.
+SLIME essentially turns Emacs into a Common Lisp IDE.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package slime
+    :hook
+    ((lisp-mode . slime-mode)
+     (inferior-lisp-mode . inferior-slime-mode))
+    :config
+    ;; Bring in additional packages
+    (require 'slime-autoloads)
+    ;; Tell SLIME the name of the Inferior Lisp program to run in lisp-mode. In
+    ;; this case, we use the 'roswell' full-stack development tool to install and
+    ;; run our Common Lisp implementations.
+    (setq inferior-lisp-program "ros run")
+    ;; Bring in almost every contributor package (that's what slime-fancy does).
+    (setq slime-contribs '(slime-fancy)))
+#+end_src

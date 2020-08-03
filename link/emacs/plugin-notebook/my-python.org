@@ -1,0 +1,50 @@
+#+title:  Python Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Plugins and configuration for programming in Python.
+
+* elpy
+  =elpy= is a complete Python development environment for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package elpy
+    :defer t
+    :hook
+    ((elpy-mode . flycheck-mode)
+     ;; Do not use Elpy currently; use a language server instead
+     ;; (pipenv-mode . elpy-rpc-restart)
+     ;; (python-mode . elpy-enable)
+    )
+    :no-require t
+    :config
+    ;; Use IPython for REPL
+    (setq python-shell-interpreter "jupyter"
+          python-shell-interpreter-args "console --simple-prompt"
+          python-shell-prompt-detect-failure-warning nil)
+    (add-to-list 'python-shell-completion-native-disabled-interpreters
+                 "jupyter")
+    ;; Use flycheck instead of flymake for error checking.
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+#+end_src
+
+* pipenv
+  Pipenv integration for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package pipenv
+  :hook
+  (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
+#+end_src
+
+* ein
+  Emacs Jupyter Notebook plugin.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package ein)
+#+end_src

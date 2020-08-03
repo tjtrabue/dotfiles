@@ -1,0 +1,36 @@
+{
+  "name": "Tomorrow Night Eighties for shell",
+  "groups": {
+    "mode": {
+      "fg": "tne:black",
+      "bg": "tne:blue",
+      "attrs": [
+        "bold"
+      ]
+    }
+  },
+  "mode_translations": {
+    "vicmd": {
+      "groups": {
+        "mode": {
+          "fg": "tne:dark_grey",
+          "bg": "tne:orange",
+          "attrs": [
+            "bold"
+          ]
+        }
+      }
+    },
+    "viins": {
+      "groups": {
+        "mode": {
+          "fg": "tne:black",
+          "bg": "tne:green",
+          "attrs": [
+            "bold"
+          ]
+        }
+      }
+    }
+  }
+}

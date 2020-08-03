@@ -1,0 +1,17 @@
+#+title:  Fill Column Indicator
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Draws a Vim-like vertical ruler at the number indicated by the =fill-column=
+variable.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package fill-column-indicator
+  ;; WARNING: Highly problematic right now.
+  ;; :hook
+  ;; ;; Draw ruler automatically in all editing modes
+  ;; ;; (May want to change this later)
+  ;; ((prog-mode text-mode) . fci-mode)
+  )
+#+end_src

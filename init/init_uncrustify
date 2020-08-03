@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# Exit on error
+set -e
+
+# Variables {{{
+declare WS="${HOME}/Workspace";
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare UNCRUSTIFY_GIT_URL="https://github.com/uncrustify/uncrustify.git";
+declare UNCRUSTIFY_INSTALL_DIR="${WS}/uncrustify";
+declare UNCRUSTIFY_BUILD_DIR="${UNCRUSTIFY_INSTALL_DIR}/build";
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash";
+source "${IMPORT}/functions_log.bash";
+# }}}
+
+# Functions {{{
+clone_uncrustify() {
+  if [[ ! -d "$UNCRUSTIFY_INSTALL_DIR" ]]; then
+    git clone "$UNCRUSTIFY_GIT_URL" "$UNCRUSTIFY_INSTALL_DIR";
+  else
+    warn "uncrustify directory already installed at ${UNCRUSTIFY_INSTALL_DIR}.";
+  fi
+}
+
+update_uncrustify_repo() {
+  pushd "$UNCRUSTIFY_INSTALL_DIR" &> /dev/null;
+  git checkout master &> /dev/null;
+  git pull;
+  popd &> /dev/null;
+}
+
+build_uncrustify() {
+  pushd "$UNCRUSTIFY_INSTALL_DIR" &> /dev/null;
+  [[ -d "$UNCRUSTIFY_BUILD_DIR" ]] && rm -rf "$UNCRUSTIFY_BUILD_DIR";
+  mkdir -p "$UNCRUSTIFY_BUILD_DIR";
+  pushd "$UNCRUSTIFY_BUILD_DIR" &> /dev/null;
+  cmake ..;
+  cmake --build .;
+  popd &> /dev/null;
+  popd &> /dev/null;
+}
+
+main() {
+  clone_uncrustify;
+  update_uncrustify_repo;
+  build_uncrustify;
+}
+# }}}
+
+main;
+
+# vim:foldenable:foldmethod=marker:

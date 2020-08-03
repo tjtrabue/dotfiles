@@ -1,0 +1,25 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Rules for all filetypes
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Makefiles must use tab characters instead of spaces for indenting
+[Makefile]
+indent_style = tab
+
+# 4 spaces per indent in Python code
+[*.py]
+indent_size = 4
+
+# Indent UltiSnips snippet files with tabs
+[*.snippets]
+indent_style = tab

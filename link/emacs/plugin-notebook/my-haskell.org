@@ -1,0 +1,80 @@
+#+title:  Haskell Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+=haskell= may very well be the most beautiful programming language ever
+created. It's not often that I look at a piece of code and go "Wow! How can
+something so complicated look so simple?" Then again, it's one of the hardest
+languages for young programmers to pick up, so there's that, too. But! Fear not,
+for Emacs just so happens to be the best IDE for writing Haskell code. With the
+incredible =haskell-mode= and =lsp-mode= features working together, Emacs will
+strengthen your Haskell game in no time.
+
+* haskell-mode
+  The most important Haskell plugin for Emacs has to be =haskell-mode=. Far more
+  than a simple syntax highlighter, =haskell-mode= provides integration with
+  =ghci=, =stack=, =cabal=, and other Haskell tools, as well as =ghci='s
+  built-in debugger.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package haskell-mode
+    :after (evil evil-collection)
+    :init
+      ;; Format Haskell code when file is saved
+      (setq haskell-stylish-on-save t
+            ;; (Re)generate tags file whenever code is saved
+            haskell-tags-on-save t
+            ;; Some handy and benign features
+            haskell-process-suggest-remove-import-lines t
+            haskell-process-auto-import-loaded-modules t
+            haskell-process-log t)
+    :config
+    ;; We need to use with-eval-after-load because the map keeps getting
+    ;; reported as void otherwise; must be a loading mismatch in haskell-mode.
+    (with-eval-after-load 'haskell
+      (add-hook 'haskell-mode-hook #'(lambda ()
+                                       ;; Used to integrate Emacs with
+                                       ;; inferior-haskell shells.
+                                       (interactive-haskell-mode)
+                                       ;; Enable declaration scanning mode for
+                                       ;; better menu support.
+                                       (haskell-decl-scan-mode)
+                                       ;; Insert a module template at the
+                                       ;; beginning of a new Haskell file.
+                                       (haskell-auto-insert-module-template)
+                                       ;; Automatically enable haskell-unicode
+                                       ;; input method.
+                                       (turn-on-haskell-unicode-input-method)))
+      ;; Add Vim-like bindings for navigating history
+      (define-key haskell-interactive-mode-map (kbd "M-k")
+        'haskell-interactive-mode-history-previous)
+      (define-key haskell-interactive-mode-map (kbd "M-j")
+        'haskell-interactive-mode-history-next)
+      ;; Jump to error at point
+      (define-key haskell-interactive-mode-map (kbd "M-.")
+        'haskell-mode-goto-loc)
+      ;; Show the type of the variable at point
+      (define-key haskell-interactive-mode-map (kbd "C-c C-t")
+        'haskell-mode-show-type-at)))
+#+end_src
+
+* structured-haskell-mode (shm)
+   Structured Haskell Mode
+
+   Not currently used because it's hard to get it to work globally.
+
+#+begin_src emacs-lisp :tangle yes
+;; (use-package shm
+;;   :hook (haskell-mode . structured-haskell-mode)
+;;   :config
+;;   (haskell-indent-mode -1))
+#+end_src
+
+* ghci-completion
+   =ghci= command completions for =inferior-haskell= buffers. The completion's
+   appearance is very similar to that of the =fish= shell.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package ghci-completion)
+#+end_src

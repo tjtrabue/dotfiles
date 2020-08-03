@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Author: Thomas J. Trabue
+# This middle-man binary cleans output from the larger menu binary and
+# returns it to the user. This binary is my pride and joy, and I use it all
+# the time when writing other programs.
+#
+# NOTE: This is the binary that you SHOULD be using. Using '_menu' by itself
+# returns some nasty hidden characters with your selection that will mess up
+# any code trying to make use of the returned content.
+
+item_to_return=$(_menu $@)
+item_to_return="$(echo $item_to_return | cat -v | sed "s:\^\[\[.*::")"
+echo "$item_to_return"

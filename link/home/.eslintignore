@@ -1,0 +1,4 @@
+# Ignore file for the ESLint Javascript code checker. The syntax is the same as any other *ignore
+# file.
+
+!.eslintrc*

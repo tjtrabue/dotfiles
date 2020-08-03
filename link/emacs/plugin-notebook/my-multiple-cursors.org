@@ -1,0 +1,19 @@
+#+title:  Use Multiple Cursors in Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+This is a Sublime Text-like multiple cursors plugin for Emacs, and it's
+fantastic!  Use the keybindings set up in the =use-package= directive to set
+your cursors around the Emacs window.
+
+When you want to get rid of your additional cursors, simply press =C-g=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package multiple-cursors
+    :bind
+    (("C-S-c C-S-c" . mc/edit-lines)
+     ("C->" . mc/mark-next-like-this)
+     ("C-<" . mc/mark-previous-like-this)
+     ("C-c C-<" . mc/mark-all-like-this)))
+#+end_src

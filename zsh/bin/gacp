@@ -1,0 +1,98 @@
+ #!/usr/bin/env zsh
+
+# GACP = Git Add Commit Push
+# This is a binary used for adding, committing, and pushing files in a
+# git repository to a remote branch.
+
+ function gacp_usage() {
+    echo "Add, commit, and push files to remote repository" 1>&2
+    echo "all in one command." 1>&2
+    echo "" 1>&2
+    echo "Usage:" 1>&2
+    echo "gacp [-m (message) -b (branch name) <file names>]" 1>&2
+    echo "" 1>&2
+    echo "Options:" 1>&2
+    echo "  -m <message> : the commit message (will be prompted for one if this arguemnet is omitted)" 1>&2
+    echo "  -b <remote branch> : the name of the remote branch to push changes to (\"master\" by default)" 1>&2
+    echo "  -a : specifies that the changes should be added to the previous commit" 1>&2
+}
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    gacp_usage
+    exit 0
+fi
+
+git rev-parse --is-inside-work-tree >> /dev/null
+if [[ "$?" -ne 0 ]]; then
+    echo "Not a git repository" 1>&2
+    echo "Aborting" 1>&2
+    exit 1
+fi
+
+# Variables
+commit_message=""
+remote_branch="master"
+amend=false
+
+while getopts ":m:b:a" o; do
+    case "${o}" in
+        m)
+            commit_message="${OPTARG}"
+            ;;
+        b)
+            remote_branch="${OPTARG}"
+            ;;
+        a)
+            amend=true
+            ;;
+        *)
+            echo -e "${RED}ERROR${NC}: Unknown operand $o"
+            gacp_usage
+            exit 2
+            ;;
+    esac
+done
+
+# Add any files the user specifies:
+for file in "$@"; do
+    git add "$file"
+done
+
+# Make sure there are files staged for commit. If not, ask user whether or
+# not to add all changed files to the commit:
+if [[ $(git diff --cached --numstat | wc -l | sed -e "s/[ \t]//g") -eq 0 ]]; then
+    echo "No files staged for commit." 1>&2
+    response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echo "Add all modified files in repo to commit? [y/n]" 1>&2
+        read -sn 1 response
+        response=${response:-y}
+    done
+    if [[ "$response" =~ [Yy] ]]; then
+        git add "$(git rev-parse --show-toplevel)"
+    else
+        exit 3
+    fi
+fi
+
+# Prompt for commit message if needed:
+if ! $amend; then
+    while [[ "$commit_message" == "" ]]; do
+        echo "Type a commit message, then press ENTER:" 1>&2
+        read commit_message
+    done
+    # Push all that mess up!
+    git commit -m "$commit_message"
+    git push origin "$remote_branch"
+else
+    response=""
+    while [[ ! $response =~ [Yy] && ! $response =~ [Nn] ]]; do
+        echo "Amend previous commit and push to $remote_branch? [y/n]" 1>&2
+        read -sn 1 response
+        response=${response:-y}
+    done
+    if [[ $reponse =~ [Yy] ]]; then
+        git commit --amend
+        git push origin "$remote_branch"
+    fi
+fi

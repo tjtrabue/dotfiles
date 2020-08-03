@@ -1,0 +1,10 @@
+#+title:  Erlang Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+This file sets up Erlang integration for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package erlang)
+#+end_src

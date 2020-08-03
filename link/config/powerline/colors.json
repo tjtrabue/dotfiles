@@ -1,0 +1,108 @@
+{
+  "colors": {
+    "purify:black": [
+      235,
+      "282c34"
+    ],
+    "purify:white": [
+      15,
+      "ffffff"
+    ],
+    "purify:red": [
+      196,
+      "ff0000"
+    ],
+    "purify:green": [
+      84,
+      "5fff87"
+    ],
+    "purify:blue": [
+      75,
+      "5fafff"
+    ],
+    "purify:yellow": [
+      228,
+      "ffff87"
+    ],
+    "purify:pink": [
+      212,
+      "ff79c6"
+    ],
+    "purify:salmon": [
+      209,
+      "ff875f"
+    ],
+    "purify:purple": [
+      141,
+      "af87ff"
+    ],
+    "purify:dark_yellow": [
+      173,
+      "d19a66"
+    ],
+    "purify:light_grey": [
+      61,
+      "5f5f87"
+    ],
+    "purify:dark_grey": [
+      237,
+      "3e4452"
+    ],
+    "tne:black": [
+      236,
+      "2d2d2d"
+    ],
+    "tne:white": [
+      252,
+      "cccccc"
+    ],
+    "tne:red": [
+      210,
+      "f2777a"
+    ],
+    "tne:green": [
+      114,
+      "99cc99"
+    ],
+    "tne:blue": [
+      68,
+      "6699cc"
+    ],
+    "tne:cyan": [
+      80,
+      "66cccc"
+    ],
+    "tne:yellow": [
+      221,
+      "ffcc66"
+    ],
+    "tne:pink": [
+      212,
+      "ff79c6"
+    ],
+    "tne:orange": [
+      209,
+      "ff875f"
+    ],
+    "tne:purple": [
+      176,
+      "cc99cc"
+    ],
+    "tne:gold": [
+      178,
+      "d7af00"
+    ],
+    "tne:dark_yellow": [
+      136,
+      "af8700"
+    ],
+    "tne:light_grey": [
+      246,
+      "5f5f87"
+    ],
+    "tne:dark_grey": [
+      239,
+      "3e4452"
+    ]
+  }
+}

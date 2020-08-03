@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+# IMPORTANT: You probably don't need to run this script! Most if not all of the
+#            icon themes listed in this script can be installed by most system
+#            package managers. Check your package repositories before running
+#            this script to see if your favorite icon themes can be installed
+#            automatically through your package management system.
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+declare USER_ICON_DIR="$HOME/.local/share/icons"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+source "${HOME}/.vars"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Initialize all icons for the current GNU/Linux system.
+
+IMPORTANT: You can often install all of these icon themes via your system's
+package manager, so this script may very well prove unnecessary for you.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+  exit 0
+}
+
+make_directories() {
+  mkdir -p "$USER_ICON_DIR"
+}
+
+clone_icon_repos() {
+  local flatRemixBasename="flat-remix"
+  git clone "git@github.com:daniruiz/${flatRemixBasename}.git" "${WS}/${flatRemixBasename}"
+}
+
+main() {
+  make_directories
+  clone_icon_repos
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
+
+  -h | --help)
+    _help
+    shift
+    break
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main
+
+# vim:foldenable:foldmethod=marker

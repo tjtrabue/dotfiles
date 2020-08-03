@@ -1,0 +1,115 @@
+#+title:  Emacs Theme Customization
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+#+tags:   color colors theme
+
+This is where we set Emacs' primary color theme.
+
+*WARNING:* Do NOT set themes via the 'M-x load-theme' command or through
+customize! Those systems will add a ton of 'safety' checks to ~/.emacs and mess
+up our nice, easy method of loading themes from right here in this file. If you
+do, you'll need to go through the custom-set-variables section and delete the
+theme code added by customize.
+
+* Provide Package
+#+begin_src emacs-lisp :tangle yes
+  (provide 'my-theme)
+#+end_src
+
+* Functions
+
+#+begin_src emacs-lisp :tangle yes
+  (defun my/set-color-theme-alist (theme-alist &optional sublist)
+    "Sets `my/color-theme-alist' to the specified THEME-ALIST.
+
+If the user specifies SUBLIST as the name of a nested alist within
+THEME-ALIST, then use that nested SUBLIST as the main theme alist."
+    (require 'my-colors)
+    (let ((the-right-alist theme-alist))
+      (if sublist
+          (setq the-right-alist (cdr (assq sublist theme-alist))))
+      (setq my/color-theme-alist the-right-alist)))
+
+  (defun my/set-semantic-colors-for-theme ()
+    "Make Semantic's faces match our theme."
+    (set-face-attribute 'semantic-tag-boundary-face nil :overline
+      (alist-get 'purple my/color-theme-alist)))
+
+  (defun my/set-ecb-colors-for-theme ()
+    "Make some of the faces in ECB cohesive with our color theme."
+    (set-face-attribute 'ecb-default-highlight-face nil
+      :foreground (alist-get 'alt-background my/color-theme-alist)
+      :background (alist-get 'orange my/color-theme-alist)
+      :weight 'extra-bold))
+#+end_src
+
+* Theme Packages
+  These are some great themes from Emacs contributors. I marked the theme I
+  currently use by appending "(active)" to the end of its =org-mode= heading.
+
+** color-theme-sanityinc-tomorrow (active)
+   The predecessor to the =base-16= color theme system.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package color-theme-sanityinc-tomorrow
+    :after (org-beautify-theme)
+    :init
+    (load-theme 'sanityinc-tomorrow-eighties t)
+    :config
+    (my/set-color-theme-alist color-theme-sanityinc-tomorrow-colors 'eighties)
+    (if (not (custom-theme-enabled-p 'org-beautify-theme))
+      (load-theme 'org-beautify t)))
+#+end_src
+
+** moe-theme
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package moe-theme
+  ;;   :defer t
+  ;;   :init (load-theme 'moe-dark t)
+  ;;   )
+#+end_src
+
+** spacemacs-theme
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package spacemacs-theme
+  ;;   :defer t
+  ;;   :init (load-theme 'spacemacs-dark t)
+  ;;   )
+#+end_src
+
+** zenburn-theme
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package zenburn-theme
+  ;;   :defer t
+  ;;   :init (load-theme 'zenburn t)
+  ;;   )
+#+end_src
+
+* theme-magic
+  This package applies your Emacs theme to the rest of Linux. It. Is. Awesome.
+
+  It also depends on =pywal=, so make sure that you have it installed on
+  your =PATH=. =pywal= is a Python package, so installing it is easy:
+
+#+begin_src shell
+python3 -m pip install --user --upgrade pywal
+#+end_src
+
+** use-package specification
+#+begin_src emacs-lisp :tangle yes
+  (use-package theme-magic
+    :config
+    ;; This global minor mode automatically updates your Linux theme
+    ;; whenever Emacs' theme changes.
+    (theme-magic-export-theme-mode))
+#+end_src
+
+* Apply theme to other faces
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
+  (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
+#+end_src

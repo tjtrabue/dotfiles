@@ -1,0 +1,17 @@
+#+title:  Clojure Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Integration for the awesome Clojure programming language.  Thanks, Rich! The
+world needed another Lisp.
+
+* clojure-mode
+#+begin_src emacs-lisp :tangle yes
+(use-package clojure-mode)
+#+end_src
+
+* cider
+#+begin_src emacs-lisp :tangle yes
+(use-package cider)
+#+end_src

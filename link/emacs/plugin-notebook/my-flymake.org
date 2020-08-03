@@ -1,0 +1,26 @@
+#+title:  Flymake (the Flycheck predecessor)
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+=flymake= is the largely outdated syntax checker built-in to Emacs.
+=flycheck= supersedes =flymake=, so try to use that tool instead whenever
+possible.
+
+* Plugins
+** haskell-multi
+
+#+begin_src emacs-lisp :tangle yes
+(use-package flymake-haskell-multi
+  ;; NOTE: Not loading anything right now because of lsp-mode.
+  ;; :hook
+  ;; ((haskell-mode)
+  ;;   . (lambda () (flymake-haskell-multi-load)))
+  )
+#+end_src
+
+** lua
+
+#+begin_src emacs-lisp :tangle yes
+(use-package flymake-lua)
+#+end_src

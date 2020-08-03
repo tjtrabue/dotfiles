@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# This file is a shell script that the X server runs before the Window Manager
+# starts, and thus acts as a place to configure services and start other one-
+# time applications before you are dropped into a graphical session.
+#
+# You do not want to store such configuration in ~/.bashrc or other shell
+# profile because they are tied to a particular shell environment
+# (i.e., terminal) which is not only logically incohesive with starting global
+# services, but could also cause duplicate service sessions to be created.
+
+echoe() {
+  echo "$*" 1>&2
+}
+
+# Conditionally start a program in the background if such a program exists
+# on the system.
+start_program_if_available() {
+  local cmd="$1"
+  local opts="$2"
+  local cmdString="$cmd"
+
+  if [ -n "$opts" ]; then
+    cmdString+=" $opts"
+  else
+    echoe "WARN: No options given for program ${cmd} in .xprofile"
+  fi
+
+  if [ "$(command -v "$cmd")" != "" ]; then
+    eval "$cmdString"
+  else
+    echoe "ERROR: Program ${cmd} not found in PATH"
+    return 1
+  fi
+}
+
+# Set X user preferences
+if [ "$(command -v xset)" != "" ]; then
+  # Set the keyboard typing rate/delay to increase input speed.
+  # rate  = first number
+  # delay = second number
+  xset r rate 300 50
+fi
+
+# Start Pulseaudio
+start_program_if_available "pulseaudio" "--start &"
+
+# Start XScreenSaver
+start_program_if_available "xscreensaver" "-no-splash &"
+
+# Start the compositing manager in the background
+start_program_if_available "picom" "-b"
+
+# (Re-)start the PulseAudio daemon
+start_program_if_available "pulseaudio" "--kill"
+start_program_if_available "pulseaudio" "--start"
+
+# Merge the .Xresources file into xrdb database
+[ -f "${HOME}/.Xresources" ] && xrdb -merge "${HOME}/.Xresources"

@@ -1,0 +1,224 @@
+# Settings
+
+# User settings (ALL OF THEM MUST BEGIN WITH 'my_')
+set my_user = tom.trabue
+
+# User directory containing Mutt config files
+set my_mutt_config_dir = $HOME/.config/mutt
+
+# IMAP configuration {{{
+# Gmail username
+# NOTE: imap_pass must be set in $DOTFILES_HOME/secure/muttrc
+#       in order to keep it secret.
+set imap_user = $my_user@gmail.com
+
+# Application-specific password for gmail.
+# Get it from a file in the `secure' subdirectory.
+# If you ever lose the passphrase, erase it using the
+# Gmail interface and create a new one.
+# That file should contain the following line:
+#   set imap_pass = <app_password>
+source $DOTFILES_HOME/secure/muttrc
+
+# Set up Maildir
+# set mbox_type = Maildir
+# set folder = $HOME/mail
+# set spoolfile=+/
+# set header_cache = $my_mutt_config_dir/cache
+
+# Folder to house email.
+set folder=imaps://tom.trabue@imap.gmail.com/
+
+# The folder where unfiltered email arrives.
+set spoolfile=+INBOX
+
+# Allow Mutt to open a new IMAP connection automatically
+set imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account
+# which may speed things up even more.
+set header_cache = $my_mutt_config_dir/cache
+
+# Store messages locally to speed things up, like searching message bodies.
+# Can be the same folder as header_cache.
+# This could cost important disk space depending on your email amount.
+set message_cachedir = $my_mutt_config_dir/cache
+
+# Specify where to save and/or look for postponed messages.
+set postponed = +[Gmail]/Drafts
+
+# How often to check for new mail (time in seconds)
+set mail_check = 120
+
+# Check for all subscribed IMAP folders
+# (as if all were added with a `mailboxes' line)
+set imap_check_subscribed
+# }}}
+
+# POP configuration {{{
+# These settings are similar to IMAP, and are used to receive mail.
+set pop_user = $my_user
+set pop_pass = $imap_pass
+set pop_host = pops://$pop_user:$pop_pass@pop.gmail.com
+# }}}
+
+# SMTP configuration {{{
+set realname = 'Tom Trabue'
+set from = $my_user@gmail.com
+set use_from = yes
+
+set smtp_url = smtps://$my_user:$imap_pass@smtp.gmail.com
+
+# Make sure to always use TLS
+set ssl_force_tls = yes
+# }}}
+
+# Use GPG to encrypt email before sending
+source $my_mutt_config_dir/gpg.rc
+
+# Key bindings {{{
+# VI Key bindings {{{
+bind pager j next-line
+bind pager k previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+# }}}
+
+# Sidebar key bindings {{{
+bind index,pager B sidebar-toggle-visible
+bind index,pager ] sidebar-next
+bind index,pager [ sidebar-prev
+# Bind Ctrl+o to open the folder currently highlighted in the sidebar
+bind index,pager \CO sidebar-open
+# }}}
+# }}}
+
+# Character encoding {{{
+# Avoid using ISO-8859-1 encoding (which normall has priority over UTF-8)
+set send_charset = "us-ascii:utf-8"
+# }}}
+
+# Editor {{{
+set editor = `echo \$EDITOR`
+# }}}
+
+# Custom headers {{{
+# Allow user to customize headers in email
+set edit_headers = yes
+
+# Clear old headers
+unmy_hdr *
+
+# Clear other variables that may impact headers
+unset user_agent
+
+# Set custom headers:
+# Extra info
+my_hdr X-Info: Keep It Simple, Stupid.
+# OS info
+my_hdr X-Operating-System: `uname -s`, kernel `uname -r`
+# This header appears to MS Outlook users
+my_hdr X-Message-Flag: WARNING!! Outlook sucks
+# Custom Mail-User-Agent ID.
+my_hdr User-Agent: mutt
+# }}}
+
+# Colors {{{
+# Palette for use with the Linux console.
+# Based on purify theme for Vim
+set my_purify_black = "color235"
+set my_purify_white = "color15"
+set my_purify_red = "color196"
+set my_purify_green = "color84"
+set my_purify_blue = "color75"
+set my_purify_yellow = "color228"
+set my_purify_pink = "color212"
+set my_purify_salmon = "color209"
+set my_purify_purple = "color141"
+set my_purify_dark_yellow = "color173"
+set my_purify_light_grey = "color61"
+set my_purify_dark_grey = "color237"
+set my_purify_bg = "color237"
+
+color hdrdefault $my_purify_blue $my_purify_bg
+color quoted $my_purify_blue $my_purify_bg
+color signature $my_purify_blue $my_purify_bg
+color attachment $my_purify_red $my_purify_bg
+color prompt brightmagenta $my_purify_bg
+color message brightred $my_purify_bg
+color error brightred $my_purify_bg
+color indicator $my_purify_bg $my_purify_salmon
+color status $my_purify_yellow $my_purify_blue
+color tree white $my_purify_bg
+color normal white $my_purify_bg
+color markers $my_purify_red $my_purify_bg
+color search white $my_purify_bg
+color tilde brightmagenta $my_purify_bg
+color index $my_purify_blue $my_purify_bg ~F
+color index $my_purify_red $my_purify_bg "~N|~O"
+
+# color body brightwhite black '\*+[^*]+\*+'
+# color body brightwhite black '_+[^_]+_+'
+# }}}
+
+# Index format {{{
+set date_format = "%y-%m-%d %T"
+set index_format = "%2C | %Z [%d] %-30.30F (%-4.4c) %s"
+
+## Adjust columns on terminal resize.
+## From field gets 30% of remaining space, Subject gets 70%.
+## Remaining space is the total width minus the other fields (35), minus the sidebar (24)
+set my_index_format_pre='set my_col_from = `echo $((30 * ($(tput cols)-35-24) / 100))`; set my_col_subject = `echo $((70 * ($(tput cols)-35-24) / 100))`; set index_format="%2C | %Z [%d] %-$my_col_from.${my_col_from}'
+set my_index_format_post=' (%-4.4c) %?M?<%M> ?%-$my_col_subject.${my_col_subject}s"'
+
+folder-hook .*[sS]ent.* "$my_index_format_pre"t"$my_index_format_post"
+folder-hook ! .*[sS]ent.* "$my_index_format_pre"F"$my_index_format_post"
+# }}}
+
+# Sidebar {{{
+set sidebar_visible = yes
+# }}}
+
+# Contact Management {{{
+# The alias file contains contact aliases for Mutt.
+# The syntax for the file is as follows:
+#
+# alias = nickname [long name] <address>
+# nickname  - what you will type into Mutt to get your contact address.
+#             One word only, should be easy to remember.
+# long name - Optional; may be several words (no quotes around it).
+# address   - Must be in valid format (i.e., with an @)
+#             NOTE: The address must be enclosed within angle brackets <>
+
+set alias_file = "$my_mutt_config_dir/aliases"
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+# }}}
+
+# Replies {{{
+# Tell Mutt not to ask for confirmation when replying to an email
+set fast_reply = yes
+# Inlcude original mail in your reply
+set include = yes
+
+# Ignore own address in group replies
+alternates tom.trabue@gmail.com
+# }}}
+
+# Pager {{{
+# Show context lines when going to next page
+set pager_context = 3
+# Stop at the end instead of displaying next mail
+set pager_stop = yes
+# }}}
+
+# vim:foldenable:foldmethod=marker

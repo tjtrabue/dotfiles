@@ -1,0 +1,12 @@
+#+title:  Prodigy: External Service Management
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:27
+
+=prodigy= is a tool for managing external system services from within
+Emacs. With =prodigy= you can start, list, stop, and restart various services
+without resorting to using a terminal.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package prodigy)
+#+end_src

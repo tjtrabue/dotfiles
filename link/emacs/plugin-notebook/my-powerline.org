@@ -1,0 +1,14 @@
+#+title:  Powerline Status
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Powerline is perhaps the most popular statusline theme for UNIX programs.
+It started as a plugin for customizing Vim's modeline, and due to its popularity
+it has grown into a staple of nearly every persistent UNIX application, terminal
+or GUI oriented.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package powerline
+  :config (powerline-default-theme))
+#+end_src

@@ -1,0 +1,16 @@
+#+title:  C# Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:06:25
+#+tags:
+
+C# has long been Microsoft's pride and joy in the domain of application
+programming, being exclusively available to Windows users. These days, however,
+Microsoft's Common Language Runtime (CLR) has seen an open source release, so
+now anybody can create CLR applications using Microsoft's languages. Hence, it
+may be useful to configure Emacs for CLR programming, even if you're a
+non-Windows programmer.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package csharp-mode)
+#+end_src

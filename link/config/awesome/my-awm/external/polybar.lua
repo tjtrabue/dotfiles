@@ -1,0 +1,3 @@
+-- Polybar Integration
+-- Launch polybar
+-- os.execute("$HOME/.config/polybar/launch.sh")

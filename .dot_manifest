@@ -1,0 +1,11 @@
+.bashrc
+.bash_login
+.bash_logout
+.bash_profile
+.login
+.logout
+.profile
+.tmux.conf
+.vimrc
+.zshrc
+.zshenv

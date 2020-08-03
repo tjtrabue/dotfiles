@@ -1,0 +1,16 @@
+{
+  "libs": [
+    "browser",
+    "jquery",
+    "angular",
+    "node",
+    "ecma5",
+    "ecma6"
+  ],
+  "plugins": {
+    "node": {},
+    "es_modules": {},
+    "angular": {}
+  },
+  "ecmaVersion": 8
+}

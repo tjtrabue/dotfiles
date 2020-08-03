@@ -1,0 +1,16 @@
+#+title:  Dev Ops Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+This file configures various dev-ops packages for Emacs.
+
+* ansible
+#+begin_src emacs-lisp :tangle yes
+(use-package ansible)
+#+end_src
+
+* docker
+#+begin_src emacs-lisp :tangle yes
+(use-package docker)
+#+end_src

@@ -1,0 +1,17 @@
+#+title:  Dimmer: Dim Inactive Windows
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:27
+
+=dimmer= dynamically adjusts inactive windows in Emacs to be dimmer than the
+active window.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dimmer
+      :config
+      (dimmer-configure-which-key)
+      (dimmer-configure-helm)
+      ;; dimmer messes with lsp-mode
+      ;; (dimmer-mode t)
+  )
+#+end_src

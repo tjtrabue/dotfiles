@@ -1,0 +1,10 @@
+#+title:  Elixir Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Integration with Elixir, a functional, process-oriented programming language.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package alchemist)
+#+end_src

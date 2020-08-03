@@ -1,0 +1,13 @@
+#+title:  WhichKey Configuration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+=which-key= is a plugin that displays key completions after you type an
+incomplete key command (a prefix) in a popup.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package which-key
+    :config
+    (which-key-mode t))
+#+end_src

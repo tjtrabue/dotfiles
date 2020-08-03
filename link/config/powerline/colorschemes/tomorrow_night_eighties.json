@@ -1,0 +1,246 @@
+{
+  "name": "Tomorrow Night Eighties",
+  "groups": {
+    "information:additional": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "information:regular": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "information:highlighted": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "information:priority": {
+      "fg": "tne:dark_grey",
+      "bg": "tne:yellow",
+      "attrs": []
+    },
+    "warning:regular": {
+      "fg": "tne:white",
+      "bg": "tne:red",
+      "attrs": []
+    },
+    "critical:failure": {
+      "fg": "tne:white",
+      "bg": "tne:red",
+      "attrs": []
+    },
+    "critical:success": {
+      "fg": "tne:white",
+      "bg": "tne:green",
+      "attrs": []
+    },
+    "background": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "background:divider": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "user": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "virtualenv": {
+      "fg": "tne:black",
+      "bg": "tne:green",
+      "attrs": []
+    },
+    "branch": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "branch_dirty": {
+      "fg": "tne:yellow",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "branch_clean": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "stash": "branch_dirty",
+    "email_alert_gradient": {
+      "fg": "tne:white",
+      "bg": "tne:dark_yellow",
+      "attrs": []
+    },
+    "email_alert": "warning:regular",
+    "cwd": {
+      "fg": "tne:green",
+      "bg": "tne:black",
+      "attrs": []
+    },
+    "cwd:current_folder": {
+      "fg": "tne:cyan",
+      "bg": "tne:black",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "cwd:divider": {
+      "fg": "tne:dark_grey",
+      "bg": "tne:black",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "network_load": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "network_load:divider": "network_load",
+    "network_load_gradient": {
+      "fg": "green_yellow_orange_red",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "network_load_sent_gradient": "network_load_gradient",
+    "network_load_recv_gradient": "network_load_gradient",
+    "hostname": {
+      "fg": "tne:black",
+      "bg": "tne:orange",
+      "attrs": []
+    },
+    "environment": {
+      "fg": "tne:white",
+      "bg": "tne:green",
+      "attrs": []
+    },
+    "attached_clients": {
+      "fg": "tne:white",
+      "bg": "tne:green",
+      "attrs": []
+    },
+    "date": {
+      "fg": "tne:cyan",
+      "bg": "tne:dark_grey",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "time": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "time:divider": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "system_load": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "weather_temp_gradient": {
+      "fg": "blue_red",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "weather": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "uptime": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus": {
+      "fg": "tne:light_grey",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_branch": {
+      "fg": "gray8",
+      "bg": "gray2",
+      "attrs": [
+        "bold"
+      ]
+    },
+    "gitstatus_branch_clean": {
+      "fg": "tne:black",
+      "bg": "tne:green",
+      "attrs": []
+    },
+    "gitstatus_branch_dirty": {
+      "fg": "tne:black",
+      "bg": "tne:dark_yellow",
+      "attrs": []
+    },
+    "gitstatus_branch_detached": {
+      "fg": "tne:black",
+      "bg": "tne:purple",
+      "attrs": []
+    },
+    "gitstatus_tag": {
+      "fg": "tne:black",
+      "bg": "tne:yellow",
+      "attrs": []
+    },
+    "gitstatus_behind": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_ahead": {
+      "fg": "tne:white",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_staged": {
+      "fg": "tne:green",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_unmerged": {
+      "fg": "tne:blue",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_changed": {
+      "fg": "tne:dark_yellow",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_untracked": {
+      "fg": "tne:light_grey",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus_stashed": {
+      "fg": "tne:blue",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    },
+    "gitstatus:divider": {
+      "fg": "tne:light_grey",
+      "bg": "tne:dark_grey",
+      "attrs": []
+    }
+  }
+}

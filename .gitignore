@@ -1,0 +1,85 @@
+# The file marking the repo as installed (will be present after running
+# the install script)
+.dotfiles_installed
+
+# Ignore files in the backup folder, which are backups made during the initial install.
+backup/
+
+# Ignore the test directory, used for developing test scripts:
+test/
+
+# Compiled Python files
+*.pyc
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Ctags
+tags
+tags.lock
+tags.temp
+
+# Ignore all log files
+*.log
+
+# Extra config directories to ignore
+link/config/dconf/
+link/config/pulse/
+link/config/configstore/
+
+# coc.nvim
+link/config/coc/*
+link/config/configstore/update-notifier-npm.json
+!link/config/coc/extensions/package.json
+
+# Emacs straight package manager
+link/emacs/straight/build*
+link/emacs/straight/modified
+link/emacs/straight/repos
+
+# ccls
+.ccls-cache
+
+# Do not track files in the 'secure' folder
+secure/
+
+# Emacs backup files
+*~
+*#*
+# Compiled Emacs lisp files
+*.elc
+# .emacs backup file(s) created by ECB
+.emacs.before*
+# Auto-generated Emacs config files based on org-mode source files
+my-init.el
+cedet-rc.el
+# Other auto-generated Elisp files from Org files
+**/plugin-notebook/*.el
+
+# Any 'test' files
+*test*
+
+# Mutt/Neomutt
+link/config/mutt/cache
+# Do not store mutt aliases
+link/config/mutt/aliases
+
+# Do not track vendor features repos for Awesome WM
+link/config/awesome/awesome-*
+# Ignore custom set wallpaper
+link/config/awesome/wallpaper/
+
+# Do not track Ranger plugins
+link/config/ranger/plugins
+
+# Ignore libreoffice config
+link/config/libreoffice

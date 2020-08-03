@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Directory variables
+export DOTFILES_HOME="$HOME/.dotfiles";
+export SSH_HOME="$HOME/.ssh";
+export VIM_HOME="$HOME/.vim";
+
+# File variables
+export DIR_ALIAS_FILE="$HOME/.zsh_dirs";

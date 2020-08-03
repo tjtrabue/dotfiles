@@ -1,0 +1,39 @@
+#+title:  Ace Navigation
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Configuration for the fantastic ace modes, such as ace-jump-mode used to
+quickly move around a buffer, or ace-window used as a replacement for C-o.
+
+*NOTE:* Most keybindings are set in my-evil.el since that is where
+      evil-mode's map leader key bindings must be set.
+
+* Ace Jump Mode
+#+begin_src emacs-lisp :tangle yes
+  (use-package ace-jump-mode)
+#+end_src
+
+* Ace Window
+#+begin_src emacs-lisp :tangle yes
+  ;; Quick and easy window navigation with M-o.
+  (use-package ace-window
+    :after (evil evil-collection)
+    :bind
+    ;; Remap C-o to the ace-window function
+    (([remap other-window] . ace-window)
+    ;; Also use M-p to call the ace-window function
+    ("M-p" . ace-window))
+    :config
+    ;; Set window selection keys to the home row ones.
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+#+end_src
+
+* Ace Link
+#+begin_src emacs-lisp :tangle yes
+  ;; Quickly follow links in org-mode, help-mode, info-mode, etc.
+  ;; Uses the 'o' key by default to select a link.
+  (use-package ace-link
+    :config
+    (ace-link-setup-default))
+#+end_src

@@ -1,0 +1,12 @@
+#History lists
+
+[shortcuts]
+".[path](null)"
+"Home[path]/home/shinepo"
+"Desktop[path]/home/shinepo/Desktop"
+"Collections[path]/home/shinepo/.local/share/geeqie/collections"
+
+[path_list]
+"/usr/share/icons/Flat-Remix-Blue/actions/scalable"
+
+#end

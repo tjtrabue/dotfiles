@@ -1,0 +1,17 @@
+#+title:  Move Blocks of Text Around
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Move lines of text up and down with the =move-text= package.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package move-text
+  :after (evil)
+  :config
+  (move-text-default-bindings)
+  (define-key evil-normal-state-map (kbd "M-k") 'move-text-up)
+  (define-key evil-normal-state-map (kbd "M-j") 'move-text-down)
+  (define-key evil-visual-state-map (kbd "M-k") 'move-text-region-up)
+  (define-key evil-visual-state-map (kbd "M-j") 'move-text-region-down))
+#+end_src

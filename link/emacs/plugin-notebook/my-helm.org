@@ -1,0 +1,350 @@
+#+title:  Helm Completion/Selection System
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Configuration for all things helm-related, including helm-projectile integration.
+
+* helm
+  =helm= is a generic completion framework for Emacs that is far more powerful
+  than basic tab-completion. I don't want to rewrite the whole Bible on Helm
+  right here in my dotfiles, so I recommend you read up on the package on its
+  home page.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm
+    :after (evil)
+    ;; Key bindings
+    :bind
+    (;; Main key bindings
+     ([remap find-file] . helm-find-files)
+     ([remap occur] . helm-occur)
+     ;; Use helm-buffers-list for both 'C-x b' and 'C-x C-b'
+     ([remap list-buffers] . helm-buffers-list)
+     ([remap switch-to-buffer] . helm-buffers-list)
+     ([remap dabbrev-expand] . helm-dabbrev)
+     ([remap execute-extended-command] . helm-M-x)
+     ([remap recentf-open-files] . helm-recentf)
+     ;; 'Ctrl-c h' is the starting point for launching a generic helm command.
+     ("C-c h" . helm-command-prefix)
+     ("C-x c" . nil)
+     ;; Have Helm manage kill ring
+     ("M-y" . helm-show-kill-ring)
+     :map helm-map
+     ;; Rebind tab/C-tab to toggle candidates for performing actions
+     ("<tab>" . helm-toggle-visible-mark-forward)
+     ("<C-tab>" . helm-toggle-visible-mark-backward)
+     ;; C-i executes persistent action (i.e., executes the default action
+     ;; without closing helm)
+     ("C-i" . helm-execute-persistent-action)
+     ;; Navigation keys
+     ("C-j" . helm-next-line)
+     ("C-k" . helm-previous-line)
+     ;; list actions using C-z
+     ("C-z" . helm-select-action)
+     :map evil-normal-state-map
+     ([remap evil-paste-pop-next] . helm-buffers-list)
+     :map helm-buffer-map
+     ;; Kill marked buffers in helm-buffer mode
+     ("C-d" . helm-buffer-run-kill-buffers))
+
+    ;; Hooks go here (notice that each hook name does not include the '-hook'
+    ;; suffix in use-package)
+    :hook
+    ((kill-emacs .
+                 (lambda () (and (file-exists-p "$CONF_FILE") (delete-file "$CONF_FILE"))))
+     (helm-minibuffer-set-up . spacemacs//helm-hide-minibuffer-maybe))
+
+    :init
+    ;; Set all variables here
+    (setq helm-split-window-in-side-p t
+          helm-move-to-line-cycle-in-source t
+          helm-ff-search-library-in-sexp t
+          helm-scroll-amount 8
+          helm-ff-file-name-history-use-recentf t
+          helm-echo-input-in-header-line t
+          ;; Use Emacs regular expressions in helm mode.
+          helm-completion-style 'emacs
+
+          ;; Force helm buffer to stay a certain size, otherwise it will change
+          ;; based on the number of matches.
+          helm-autoresize-min-height 40
+          helm-autoresize-max-height 0)
+    ;; This is the new way to enable fuzzy matching globally for helm.
+    (add-to-list 'completion-styles 'flex)
+    :config
+    (require 'helm-config)
+    (unless (boundp 'completion-in-region-function)
+      (define-key lisp-interaction-mode-map [remap completion-at-point]
+        'helm-lisp-completion-at-point)
+      (define-key emacs-lisp-mode-map       [remap completion-at-point]
+        'helm-lisp-completion-at-point))
+
+    (when (executable-find "curl")
+      (setq helm-google-suggest-use-curl-p t))
+
+    (defun spacemacs//helm-hide-minibuffer-maybe ()
+      "Hide minibuffer in Helm session if we use the header line as input field."
+      (when (with-helm-buffer helm-echo-input-in-header-line)
+        (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+          (overlay-put ov 'window (selected-window))
+          (overlay-put ov 'face
+                       (let ((bg-color (face-background 'default nil)))
+                         `(:background ,bg-color :foreground ,bg-color)))
+          (setq-local cursor-type nil))))
+
+    (helm-autoresize-mode t)
+    (helm-mode t))
+#+end_src
+
+* Plugins
+** helm-rg
+  Helm integration with =ripgrep=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-rg
+    :after (helm rg)
+    :config
+    ;; Extra CLI options to pass to ripgrep
+    (setq helm-rg-default-extra-args "--hidden --no-heading"))
+#+end_src
+
+** helm-ag
+  Helm integration with =the_silver_searcher=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-ag
+    :after (helm)
+    :config
+    ;; Use ripgrep if available
+    (if (executable-find "rg")
+        #'(lambda ()
+        (setq helm-grep-ag-command "rg --hidden --smart-case --no-heading --line-number %s %s %s"))))
+#+end_src
+
+** helm-projectile
+   Use special helm functions to enhance projectile.
+
+   NOTE: We don't want to use all helm-projectile functions because they
+   break certain functionalities we like, such as with projectile-find-file.
+   That function prompts for a project if we're not already in one,
+   whereas helm-projectile-find-file does not.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-projectile
+    :after (helm projectile rg helm-rg helm-ag)
+    :bind
+    (:map projectile-mode-map
+          ;; Use ripgrep instead of standard grep for speed.
+          ([remap projectile-grep] . helm-projectile-rg)
+          ([remap projectile-ag] . helm-projectile-ag)))
+#+end_src
+
+** helm-ghc
+  Haskell GHC integration with Helm.
+
+#+begin_src emacs-lisp :tangle yes
+
+  (use-package helm-ghc)
+#+end_src
+
+** helm-swoop
+  Creates a narrowing find buffer for locating and manipulating text within
+  open buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you
+  will enter an edit mode. Press =C-x C-s= from the edit buffer to apply your changes.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-swoop
+    :after (helm projectile)
+    :bind
+    (;; Main key bindings
+     ("M-i" . helm-swoop)
+     ("M-I" . helm-swoop-back-to-last-point)
+     ("C-c M-i" . helm-multi-swoop)
+     ("C-x M-i" . helm-multi-swoop-all)
+     :map isearch-mode-map
+     ("M-i" . helm-swoop-from-isearch)
+     :map helm-swoop-map
+     ("M-i" . helm-multi-swoop-all-from-helm-swoop)
+     ;; Instead of helm-multi-swoop-all, you can also use
+     ;; helm-multi-swoop-current-mode
+     ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
+     ;; Move up and down like isearch
+     ("C-r" . helm-previous-line)
+     ("C-s" . helm-next-line)
+     :map helm-multi-swoop-map
+     ("C-r" . helm-previous-line)
+     ("C-s" . helm-next-line)
+     :map projectile-command-map
+     ;; Swoop all open project buffers with C-c p w
+     ("w" . helm-multi-swoop-projectile))
+    :config
+    ;; When doing evil-search, hand the word over to helm-swoop
+    ;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
+
+    ;; Save buffer when helm-multi-swoop-edit complete
+    (setq helm-multi-swoop-edit-save t
+          ;; If this value is t, split window inside the current window
+          helm-swoop-split-with-multiple-windows nil
+          ;; Split direction. 'split-window-vertically or 'split-window-horizontally
+          helm-swoop-split-direction 'split-window-vertically
+          ;; If nil, you can slightly boost invoke speed in exchange for text color
+          helm-swoop-speed-or-color nil
+          ;; Go to the opposite side of line from the end or beginning of line
+          helm-swoop-move-to-line-cycle t
+          ;; Optional face for line numbers
+          ;; Face name is `helm-swoop-line-number-face`
+          helm-swoop-use-line-number-face t
+          ;; If you prefer fuzzy matching
+          helm-swoop-use-fuzzy-match t))
+#+end_src
+
+** helm-gtags
+  Helm integration with the GNU Global source code tagging system. Global is
+  much like C-tags or =etags=, but differs in that it is not dependent on any
+  particular editor. Global works the same way regardless of where it is
+  installed.
+
+  *NOTE*: You should use this package /or/ =ggtags=, not both at once.  They are
+          alternatives, and each has its own set of benefits and drawbacks.
+
+*** Additional functions
+#+begin_src emacs-lisp :tangle yes
+  (defun my/create-helm-gtags-keybindings ()
+    "Create my own custom keybindings for helm-gtags commands."
+    (let* ((my/helm-gtags-prefix-key "C-c g")
+          (command-table '(("h" . helm-gtags-display-browser)
+                           ("a" . helm-gtags-tags-in-this-function)
+                           ("f" . helm-gtags-find-files)
+                           ("F" . helm-gtags-parse-file)
+                           ("g" . helm-gtags-find-pattern)
+                           ("s" . helm-gtags-find-symbol)
+                           ("r" . helm-gtags-find-rtag)
+                           ("t" . helm-gtags-dwim)
+                           ("d" . helm-gtags-find-tag)
+                           ("u" . helm-gtags-update-tags)))
+        ;; If we're starting the prefix with an escape sequence, simply
+        ;; concatenate the prefix and the new key. Otherwise, perform the
+        ;; usual (kbd) operation on the key chord string.
+        (key-func (if (string-prefix-p "\\" my/helm-gtags-prefix-key)
+                      #'concat
+                    (lambda (prefix key) (kbd (concat prefix " " key))))))
+    (cl-loop for (key . command) in command-table do
+      (define-key helm-gtags-mode-map
+        (funcall key-func my/helm-gtags-prefix-key key) command))))
+
+  (defun my/helm-gtags-hook-fn ()
+    "Takes care of initialization logic for `helm-gtags-mode'."
+     ;; Start helm-gtags-mode only for specific major modes
+     ;; c-mode-common-hook runs for all modes derived from the C programming
+     ;; language.
+     (when (and my/use-helm-gtags (derived-mode-p 'c-mode 'c++-mode 'java-mode
+                                                  'asm-mode))
+        (helm-gtags-mode)))
+#+end_src
+
+*** use-package definition
+    *NOTE*: Currently unused due to =ccls= along with =helm-lsp= being a better
+    alternative
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-gtags
+    :after (helm)
+    :init
+    (setq helm-gtags-prefix-key (kbd "C-c g"))
+    :bind
+    (:map helm-gtags-mode-map
+      ("C-j"                         . helm-gtags-select)
+      ;; Remapping for M-.
+      ([remap evil-repeat-pop-next]  . helm-gtags-dwim)
+      ;; Remapping for M-,
+      ([remap xref-pop-marker-stack] . helm-gtags-pop-stack)
+      ("C-c <"                       . helm-gtags-previous-history)
+      ("C-c >"                       . helm-gtags-next-history))
+    ;; :hook
+    ;; (c-mode-common . my/helm-gtags-hook-fn)
+    :config
+    ;; Key mapping of gtags-mode.
+    (my/create-helm-gtags-keybindings))
+#+end_src
+
+** helm-escreen
+   =helm= source for the =escreen= window manager plugin.  This package is not
+   in any of the Emacs Elisp repositories, so we have to use =straight= to clone
+   it from GitHub and build it.
+
+   Now this has to be said: =escreen= is not a terribly powerful program. It
+   shares buffers across screen sessions, and it has no mechanism for persisting
+   screens configurations between Emacs sessions. =escreen= is also very old,
+   hailing from 1992, so it is unlikely that it will improve much more.  A
+   better alternative for managing workspaces is =persp-mode=, and I have a
+   working configuration for =persp-mode= in my plugins notebook. I only use
+   =escreen= for ECB integration, but even that does not work too well. I use
+   =persp-mode= for everything else.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-escreen
+    :after (helm escreen)
+    :straight (helm-escreen :host github
+                            :repo "dmh43/helm-escreen")
+    :bind
+    (("C-c r c" . helm-escreen-create-screen)
+     ("C-c r s" . helm-escreen-select-escreen)
+     ("C-c r k" . helm-escreen-kill-escreen)
+     ("C-c r r" . helm-escreen-prompt-rename)))
+#+end_src
+
+** helm-lsp
+   This package provides an alternative to the built-in =xref-apropos= for
+   =lsp-mode=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-lsp
+    :after (lsp-mode helm)
+    :bind
+    (:map lsp-mode-map
+     ([remap xref-find-apropos] . helm-lsp-workspace-symbol)
+     ("C-j" . helm-lsp-workspace-symbol))
+    :commands helm-lsp-workspace-symbol)
+#+end_src
+
+** helm-make
+   Integration between =helm=, =projectile=, and =make=. This package provides a
+   bunch of useful functions but no default keybindings, so we must do that
+   ourselves.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-make
+    :after (helm projectile)
+    :init
+    ;; Save files automatically before executing a make target.
+    (setq helm-make-do-save t
+          ;; How to parse the Makefile for targets.
+          ;; 'qp is more accurate then 'default, but it could be slower.
+          helm-make-list-target-method 'qp
+          ;; Sort targets in the helm buffer.
+          ;; If this slows you down too much, set it back to nil.
+          helm-make-sort-targets t
+          ;; I don't know if this option is necessary anymore since you can now
+          ;; use flex matching in helm by default.
+          helm-make-fuzzy-matching nil
+          ;; The number of processes to run in parallel (aka, the argument to
+          ;; '-j'). If set to 0, helm-make uses the number of available
+          ;; processors as the value, so 0 is a good value for this variable.
+          helm-make-nproc 0))
+#+end_src
+** helm-system-packages
+   Helm wrapper around =system-packages= plugin used to manager operating system
+   packages from within Emacs.
+
+   This package is not an alternative to =system-packages=, since all
+   =helm-system-packages= can do is operating on individual packages (install,
+   update, delete, etc.) whereas =system-packages= can operate on packages en
+   mass.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-system-packages
+    :after (helm)
+    :bind
+    ("C-c h S" . helm-system-packages))
+#+end_src

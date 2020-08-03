@@ -1,0 +1,18 @@
+{
+  "name": "Purify for shell",
+  "groups": {
+    "mode": { "fg": "purify:black", "bg": "purify:blue", "attrs": ["bold"] }
+  },
+  "mode_translations": {
+    "vicmd": {
+      "groups": {
+        "mode": { "fg": "purify:black", "bg": "purify:salmon", "attrs": ["bold"] }
+      }
+    },
+    "viins": {
+      "groups": {
+        "mode": { "fg": "purify:black", "bg": "purify:green", "attrs": ["bold"] }
+      }
+    }
+  }
+}

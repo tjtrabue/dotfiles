@@ -1,0 +1,59 @@
+#+title:  The Flycheck Syntax Checker
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+=flycheck= is a phenomenal general-purpose syntax checker based on a number of plugins.
+=flycheck= comes pre-packaged with a huge number of language syntax plugins, so
+it will probably work for you without any extra configuration. However, should
+you need to install a few new =flycheck= plugins it is very simple to do.
+
+* flycheck
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck
+    :hook
+    ((prog-mode . (lambda ()
+       ;; Enable flycheck mode by default when editing any programming language
+       ;; file.
+       (flycheck-mode)
+       ;; Turn on the flyspell spell-checker for comments and strings.
+       (flyspell-prog-mode)))
+     ;; Check spelling in text documents as you type.
+     (text-mode . flyspell-mode))
+    :config
+    (global-flycheck-mode))
+#+end_src
+
+* Plugins
+** cask
+#+begin_src emacs-lisp :tangle yes
+(use-package flycheck-cask
+  :after (flycheck))
+#+end_src
+
+** clojure
+#+begin_src emacs-lisp :tangle yes
+(use-package flycheck-clojure
+  :after (flycheck))
+#+end_src
+
+** haskell
+#+begin_src emacs-lisp :tangle yes
+(use-package flycheck-haskell
+  :after (flycheck))
+#+end_src
+
+** relint
+#+begin_src emacs-lisp :tangle yes
+(use-package flycheck-relint
+  :after (flycheck)
+  :config
+  (flycheck-relint-setup))
+#+end_src
+
+** rust
+#+begin_src emacs-lisp :tangle yes
+(use-package flycheck-rust
+  :after (flycheck))
+#+end_src

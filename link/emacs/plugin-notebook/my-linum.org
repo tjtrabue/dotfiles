@@ -1,0 +1,17 @@
+#+title:  Relative Line Numbers for Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+* linum-relative
+
+  This plugin allows Emacs to use relative line numbers just like Vim, a vastly
+  superior text editor in every regard.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package linum-relative
+  :config
+  (linum-mode t)
+  (linum-relative-global-mode t)
+  (setq linum-relative-current-symbol ""))
+#+end_src

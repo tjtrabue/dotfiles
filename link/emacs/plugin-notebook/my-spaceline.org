@@ -1,0 +1,128 @@
+#+title:  Spaceline: Fancy Modeline
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+#+tags:   spaceline modeline theme colors
+
+Use Spacemacs' pretty modeline without using Spacemacs itself.  This is one of
+the prettier features available for Emacs. One area where Emacs absolutely lags
+behind Neovim is in terms of beautification and themeing, but =spaceline= is a
+huge step in the right direction for Emacs. =spaceline= is somewhat similar to
+Vim's =airline= plugin for developing cool =powerline= status lines, although
+right now I'm tempted to say that =spaceline= is not as easy to configure,
+especially since I had to dig through its source code to figure out how to
+change its colors.
+
+* spaceline
+  =spaceline= is a specialized =powerline= status bar that's super pretty and
+  informative. Getting =spaceline= to work with its default configuration is
+  quite easy, it's simply a function call. However, we want more than that...we
+  want =spaceline='s colors to match our main Emacs theme. This is a bit tricky,
+  and involves setting some variables and defining a few helper functions. Since
+  I use =evil-mode= all day every day, I want to use =spaceline='s
+  =spaceline-highlight-face-evil-state= function to change =spaceline='s color
+  based on the current evil state (i.e., normal, insert, visual, replace). This
+  function is built-in to =spaceline=; unfortunately, it uses hard-coded color
+  values, so I must define my own analogous function that uses my custom colors.
+
+** Required modules
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'my-colors)
+#+end_src
+
+** Variables
+   We need to define a custom alist of evil state faces for =spaceline= to use
+   when changing color based on evil's state.
+
+#+begin_src emacs-lisp :tangle yes
+    (defvar my/spaceline-evil-state-faces
+        '((normal . spaceline-custom-evil-normal)
+            (insert . spaceline-custom-evil-insert)
+            (emacs . spaceline-custom-evil-emacs)
+            (replace . spaceline-custom-evil-replace)
+            (visual . spaceline-custom-evil-visual)
+            (motion . spaceline-custom-evil-motion))
+        "Association list mapping evil states to their corresponding highlight
+faces. Is used by `my/spaceline-highlight-face-evil-state'.")
+#+end_src
+
+** Functions
+
+#+begin_src emacs-lisp :tangle yes
+  (defun my/set-spaceline-evil-faces ()
+    "Set the spaceline colors to match custom Emacs theme."
+    (dolist (s `((spaceline-custom-evil-normal
+                  ,(my/get-color-orange) "Evil normal state face.")
+                (spaceline-custom-evil-insert
+                  ,(my/get-color-green) "Evil insert state face.")
+                (spaceline-custom-evil-emacs
+                  ,(my/get-color-aqua) "Evil emacs state face.")
+                (spaceline-custom-evil-replace
+                  ,(my/get-color-yellow) "Evil replace state face.")
+                (spaceline-custom-evil-visual
+                  ,(my/get-color-foreground) "Evil visual state face.")
+                (spaceline-custom-evil-motion
+                  ,(my/get-color-purple) "Evil motion state face.")
+                (spaceline-unmodified
+                  ,(my/get-color-orange) "Unmodified buffer face.")
+                (spaceline-modified
+                  ,(my/get-color-aqua) "Modified buffer face.")
+                (spaceline-read-only
+                  ,(my/get-color-purple) "Read-only buffer face.")))
+            (eval `(defface ,(nth 0 s)
+                    `((t (:background ,(nth 1 s)
+                            :foreground ,(my/get-color-alt-background)
+                            :inherit 'mode-line)))
+                    ,(nth 2 s)
+                    :group 'spaceline))))
+
+  (defun my/spaceline-highlight-face-evil-state ()
+  "Set the highlight face depending on the evil state.
+  Set `spaceline-highlight-face-func' to
+  `my/spaceline-highlight-face-evil-state' to use this."
+  (if (bound-and-true-p evil-local-mode)
+      (let* ((state (if (eq 'operator evil-state) evil-previous-state evil-state))
+              (face (assq state my/spaceline-evil-state-faces)))
+          (if face (cdr face) (spaceline-highlight-face-default)))
+      (spaceline-highlight-face-default)))
+#+end_src
+
+** use-package specification
+#+begin_src emacs-lisp :tangle yes
+  (use-package spaceline
+    :after (powerline color-theme-sanityinc-tomorrow)
+    :init
+    ;; Tell spaceline to reflect evil-mode's current state (i.e., Vim mode) by
+    ;; changing color.
+    (setq spaceline-highlight-face-func
+          'my/spaceline-highlight-face-evil-state)
+    :config
+    (spaceline-helm-mode 1)
+    ;; Set spaceline evil colors to match main color theme.
+    (my/set-spaceline-evil-faces)
+    ;; Turn on certain spaceline segments.
+    (spaceline-toggle-version-control-on)
+    (spaceline-toggle-flycheck-error-on)
+    (spaceline-toggle-flycheck-warning-on)
+    (spaceline-toggle-flycheck-info-on)
+    (spaceline-toggle-line-column-on)
+    (spaceline-toggle-projectile-root-on))
+#+end_src
+
+* spaceline-all-the-icons
+  Add a collection of awesome development icons to =spaceline= to spiff it up.
+  This is a lot like =vim-devicons= integration with =airline=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package spaceline-all-the-icons
+    :after (spaceline color-theme-sanityinc-tomorrow)
+    :config
+    (spaceline-all-the-icons-theme)
+    ;; Activate extensions
+    (spaceline-all-the-icons--setup-anzu)
+    (spaceline-all-the-icons--setup-package-updates)
+    (spaceline-all-the-icons--setup-git-ahead)
+    (spaceline-all-the-icons--setup-paradox)
+    (spaceline-all-the-icons--setup-neotree))
+#+end_src

@@ -1,0 +1,46 @@
+#+title:  LaTeX Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+LaTeX plugins and configuration for Emacs.
+
+* auctex
+  AucTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
+  integration systems of all time. Its features are too numerous to mention
+  here, but I highly recommend you peruse the online documentation, and maybe
+  work through a tutorial or two.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package tex-site
+  :straight auctex
+  :defer t
+  :hook
+  (((LaTeX-mode) .
+    (visual-line-mode flyspell-mode LaTeX-math-mode turn-on-reftex)))
+  :config
+  (setq TeX-auto-save t
+	TeX-parse-self t
+	;; Compile to PDF by default
+	TeX-PDF-mode t
+	reftex-plug-into-AUCTeX t
+	;; Do not ask for permission before saving TeX files when compiling
+	TeX-save-query nil)
+  ;; Allow AUCTeX to work with multiple files like a project
+  (setq-default TeX-master nil)
+  ;; Revert pdf-view after compilation
+  (add-hook 'TeX-after-compilation-finished-functions
+	    #'TeX-revert-document-buffer))
+#+end_src
+
+* auctex-lua
+
+#+begin_src emacs-lisp :tangle yes
+(use-package auctex-lua)
+#+end_src
+
+* auctex-latexmk
+
+#+begin_src emacs-lisp :tangle yes
+(use-package auctex-latexmk)
+#+end_src

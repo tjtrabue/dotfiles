@@ -1,0 +1,17 @@
+#+title:  Sublime Text Features for Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Cool Sublime Text like features for Emacs.
+Contains features for smooth scrolling, distraction-free editing, and a minimap feature.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package sublimity
+  :config
+  (require 'sublimity-scroll)
+  (require 'sublimity-attractive)
+  ;; (require 'sublimity-map) ;; The mini-map is experimental and very slow
+  ;; (sublimity-map-set-delay nil) ;; Make the mini-map update constantly
+  (sublimity-mode t))
+#+end_src

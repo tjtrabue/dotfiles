@@ -1,0 +1,31 @@
+" Start deoplete when Vim is started
+set runtimepath+=~/.vim/plugged/deoplete.nvim/
+let g:deoplete#enable_at_startup=1
+
+" Use Ctrl+J and Ctrl+K to cycle through completion choices
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+
+" deoplete-clang {{{
+let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-6.0/lib/libclang-6.0.so.1"
+let g:deoplete#sources#clang#clang_header = "/usr/include/clang"
+" }}}
+
+" deoplete-ternjs {{{
+" Include JSDoc strings in completion
+let g:deoplete#sources#ternjs#docs = 1
+
+" Add extra filetypes
+let g:deoplete#sources#ternjs#filetypes = [
+  \ 'jsx',
+  \ 'javascript.jsx',
+  \ 'vue',
+\ ]
+
+" Integration with tern_for_vim
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
+" }}}
+
+" vim:foldenable:foldmethod=marker:foldlevel=0

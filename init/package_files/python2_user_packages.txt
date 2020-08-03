@@ -1,0 +1,14 @@
+autopep8
+django
+flake8
+jedi
+powerline-gitstatus
+powerline-status
+pylint
+pynvim
+python-language-server
+vint
+virtualenv
+virtualenvwrapper
+yapf
+yamllint

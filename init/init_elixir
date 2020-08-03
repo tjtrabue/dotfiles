@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+
+#  Setup / Cleanup {{{
+# Performs initial setup.
+setup() {
+  log_info "Setting up...";
+}
+
+# Cleanup after the program finishes.
+cleanup() {
+  log_info "Cleaning up...";
+}
+trap cleanup EXIT
+# }}}
+
+# Printing Functions {{{
+# General purpose printing function
+echoe() {
+  echo -e "$*" 1>&2;
+}
+
+# Error printing function.
+err() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${RED}ERROR${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+
+# Warning printing function.
+warn() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${YELLOW}WARNING${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+
+# Success printing function.
+succ() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${GREEN}SUCCESS${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+
+# Success printing function.
+log_info() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${GREEN}INFO${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+# }}}
+
+# Primary Functions {{{
+# Install Elixr and OTP on an Ubuntu machine.
+install_elixir_ubuntu() {
+  wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && \
+    sudo dpkg -i erlang-solutions_1.0_all.deb
+  sudo apt-get update;
+  sudo apt-get install esl-erlang;
+  sudo apt-get install elixir;
+}
+
+# Install elixir differently depending on the Linux distribution
+install_elixir() {
+  local linuxDistro="$(getdistro)";
+
+  case "$linuxDistro" in
+    "Ubuntu")
+      install_elixir_ubuntu;
+      ;;
+
+    *)
+      echo_err "Unsupported Linux distribution $linuxDistro";
+  esac
+}
+
+# Install dialyxir for global use
+install_dialyxir_globally() {
+  git clone "$DIALYXIR_REPO_URL" "$DIALYXIR_REPO_DIR";
+  pushd "$DIALYXIR_REPO_DIR" &> /dev/null;
+  mix deps.get
+  mix deps.compile
+  eval "MIX_ENV=prod mix do compile, archive.build, archive.install";
+  popd &> /dev/null;
+}
+
+# Install the language client for Elixir
+install_elixir_ls() {
+  git clone "$DIALYXIR_REPO_URL" "$DIALYXIR_REPO_DIR";
+  pushd "$DIALYXIR_REPO_URL" &> /dev/null;
+  mix deps.get
+  mix deps.compile
+  mix compile
+  mix elixir_ls.release;
+  popd &> /dev/null;
+}
+
+# Build the dialyzer Persistent Lookup Table.
+build_dialyzer_plt() {
+  mix dialyzer --plt;
+}
+
+main() {
+  setup;
+  install_elixir;
+  install_dialyxir_globally;
+  build_dialyzer_plt;
+  install_elixir_ls;
+}
+# }}}
+
+# Variable Definitions {{{
+# Directories
+declare DOTFILES_HOME="$HOME/.dotfiles";
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare DOTFILES_LINK="$DOTFILES_REPO/link";
+declare DOTFILES_SOURCE="$DOTFILES_REPO/bash/source";
+declare LINK_HOME="$DOTFILES_LINK/home";
+declare LINK_CONFIG="$DOTFILES_LINK/config";
+declare BACKUP_DIR="$DOTFILES_REPO/backup";
+declare -a BACKUP_FILES=($(find "$LINK_HOME" -type f -exec basename '{}' \;));
+declare WORKSPACE="$HOME/Workspace";
+
+declare DIALYXIR_REPO_URL="git@github.com:jeremyjh/dialyxir.git";
+declare DIALYXIR_REPO_DIR="${WORKSPACE}/dialyxir";
+declare ELIXIR_LS_REPO_URL="git@github.com:elixir-lsp/elixir-ls.git";
+declare ELIXIR_LS_REPO_DIR="${WORKSPACE}/elixir-ls";
+
+# Colors {{{
+# Foreground:
+declare NC="\e[39m"; # Default color
+declare BLACK="\e[30m";
+declare RED="\e[31m";
+declare GREEN="\e[32m";
+declare YELLOW="\e[33m";
+declare BLUE="\e[34m";
+declare MAGENTA="\e[35m";
+declare CYAN="\e[36m";
+declare LIGHT_GRAY="\e[37m";
+declare DARK_GRAY="\e[90m";
+declare LIGHT_RED="\e[91m";
+declare LIGHT_GREEN="\e[92m";
+declare LIGHT_YELLOW="\e[93m";
+declare LIGHT_BLUE="\e[94m";
+declare LIGHT_MAGENTA="\e[95m";
+declare LIGHT_CYAN="\e[96m";
+declare WHITE="\e[97m";
+
+# Background:
+declare NBG="\e[49m"; # Default background
+declare BLACK_BG="\e[40m";
+declare RED_BG="\e[41m";
+declare GREEN_BG="\e[42m";
+declare YELLOW_BG="\e[43m";
+declare BLUE_BG="\e[44m";
+declare MAGENTA_BG="\e[45m";
+declare CYAN_BG="\e[46m";
+declare LIGHT_GRAY_BG="\e[47m";
+declare DARK_GRAY_BG="\e[100m";
+declare LIGHT_RED_BG="\e[101m";
+declare LIGHT_GREEN_BG="\e[102m";
+declare LIGHT_YELLOW_BG="\e[103m";
+declare LIGHT_BLUE_BG="\e[104m";
+declare LIGHT_MAGENTA_BG="\e[105m";
+declare LIGHT_CYAN_BG="\e[106m";
+declare WHITE_BG="\e[107m";
+# }}}
+# }}}
+
+# shellcheck source=./bash/source/functions_os.bash
+source "$DOTFILES_SOURCE/functions_os.bash";
+
+main;
+
+# vim:foldenable:foldmethod=marker

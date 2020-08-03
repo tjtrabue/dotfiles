@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+
+################################################################################
+##                                                                            ##
+##                               Usage Functions                              ##
+##                                                                            ##
+################################################################################
+
+# Full help message
+function gref_help() {
+    echo "gref is a tool for searching for files based on a pattern. It stands for 'grep find,'" 1>&2
+    echo "since it uses a combination of these tools to search." 1>&2
+    gref_usage
+}
+
+# Usage message
+function gref_usage() {
+    echo "Usage:" 1>&2
+    echo "    gref [options] [pattern to search files for]" 1>&2
+    echo "Options:" 1>&2
+    echo "    --dir | -d <directory path> " 1>&2
+    echo "        the base directory to search in" 1>&2
+    echo "    --file-pattern | -f <pattern>" 1>&2
+    echo "        a file pattern to narrow down search results" 1>&2
+    echo "    --pattern | -p <pattern>" 1>&2
+    echo "        the actual string pattern to search for (can also be entered" 1>&2
+    echo "        without any flags after all other arguments have been entered)" 1>&2
+    echo "    --non-recursive | -n" 1>&2
+    echo "        tell gref to only check the working directory for matches" 1>&2
+    echo "    --max-depth | -M <int>        " 1>&2
+    echo "        the maximum level of directories to recurse down when searching" 1>&2
+    echo "    --min-depth | -m <int>        " 1>&2
+    echo "        the minimum level of directories to recurse down when searching" 1>&2
+    echo "    --help | -h                   " 1>&2
+    echo "        print help message and exit" 1>&2
+}
+
+################################################################################
+##                                                                            ##
+##                               Exit Functions                               ##
+##                                                                            ##
+################################################################################
+
+# Exit the program if the user requests help
+function exit_if_help_requested() {
+    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+        gref_help
+        exit 0
+    fi
+}
+
+# Exit program if user doesn't supply correct input
+function exit_if_input_incorrect() {
+    if [[ "$#" -eq 0 || ("$#" -eq 1 && $1 =~ \-.*) ]]; then
+        echoe "You must supply a search pattern"
+        gref_usage
+        exit 1
+    fi
+}
+
+################################################################################
+##                                                                            ##
+##                             Supporting Functions                           ##
+##                                                                            ##
+################################################################################
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
+################################################################################
+##                                                                            ##
+##                                  Variables                                 ##
+##                                                                            ##
+################################################################################
+
+dir_path="."
+file_pattern="-iname \"*\""
+grep_pattern=""
+max_depth=""
+min_depth=""
+
+find_args=""
+
+################################################################################
+##                                                                            ##
+##                                 Main Program                               ##
+##                                                                            ##
+################################################################################
+
+# Parse user input:
+for arg in "$@"; do
+    case "$arg" in
+        --dir | -d)
+            dir_path="$2"
+            shift 2
+            ;;
+        --file-pattern | -f)
+            file_pattern="-iname \"$2\""
+            shift 2
+            ;;
+        --pattern | -p)
+            grep_pattern="$2"
+            shift 2
+            ;;
+        --non-recursive | -n)
+            max_depth="-maxdepth 1"
+            min_depth=""
+            shift 1
+            ;;
+        --max-depth | -M)
+            max_depth="-maxdepth $2"
+            shift 2
+            ;;
+        --min-depth | -m)
+            min_depth="-mindepth $2"
+            shift 2
+            ;;
+        --* | -*)
+            echoe "Unknown argument '$arg' to gref"
+            gref_usage
+            exit 2
+    esac
+done
+
+# Exit conditions:
+exit_if_help_requested "$@"
+exit_if_input_incorrect "$@"
+
+# Put all the arguments together:
+find_args="$dir_path -type f"
+for param in "$max_depth" "$min_depth" "$file_pattern"; do
+    if [[ "$param" != "" ]]; then
+        find_args="$find_args $param"
+    fi
+done
+find_args="$find_args -print0"
+
+# If user enters the grep pattern without any flags, just accept it as is:
+if [[ "$#" -gt 0 ]]; then
+    grep_pattern="$1"
+fi
+
+# Actually perform the search:
+eval "find $find_args" 2> /dev/null \
+    | xargs -0 grep -c "$grep_pattern" 2> /dev/null \
+    | grep -v ":0$" 2> /dev/null

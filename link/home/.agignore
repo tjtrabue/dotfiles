@@ -1,0 +1,47 @@
+# This file describes global ignore rules for The Silver Searcher (i.e., the `ag' command line
+# tool). All patterns listed here will not be considered by ag when searching.
+#
+# Its syntax is exactly like that of any other ignore file, such as .ignore or .gitignore.
+
+# Version control directories
+.git/*
+.hg/*
+.subversion/*
+
+# NodeJS
+node_modules/*
+
+# Temporary files
+*.tmp
+*.temp
+*'~'
+
+# Compiled source files
+*.com
+*.class
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Databases
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

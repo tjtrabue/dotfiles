@@ -1,0 +1,9 @@
+ccls-git
+emacs-git
+flat-remix
+haskell-ide-engine-git
+lua-emmy-language-server-bin
+neovim-git
+polybar-git
+roswell-git
+transset-df

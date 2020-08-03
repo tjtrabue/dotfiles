@@ -1,0 +1,54 @@
+#+title:  Whitespace Management
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:06:20
+#+tags:   whitespace strip trailing
+
+Here we place plugins for managing whitespace across files as you edit them. The
+ability to edit an existing file while both respecting existing whitespace
+content and not introducing more trailing whitespace is a mark of a seasoned and
+professional software developer. This practice accomplishes two important tasks:
+first, it ensures that any commits you make to a code base have as few edited
+lines as is necessary, and second, it keeps your code contributions clean.
+
+* clean-aindent-mode
+  This minor mode makes sure to trim trailing whitespace left over once you hit
+  Return on your keyboard and =electric-indent-mode= places your cursor at an
+  indented column on the new line. Normally, if you use your navigation keys to
+  move the cursor off of that indented location, then the whitespace is left
+  hanging there. However, with =clean-aindent-mode= those spaces will be removed
+  once your cursor moves away.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package clean-aindent-mode
+    :bind
+    (("RET" . newline-and-indent))
+    :init
+    (setq clean-aindent-is-simple-indent t)
+    :config
+    ;; Turn off electric-indent-mode, since auto-indent is sufficient.
+    (electric-indent-mode -1)
+    (clean-aindent-mode))
+#+end_src
+
+* dtrt-indent
+  =dtrt-indent-mode= guesses the indentation offset for any file in which it is
+  enabled.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dtrt-indent
+    :init
+    (setq dtrt-indent-verbosity 0)
+    :config
+    (dtrt-indent-mode))
+#+end_src
+
+* ws-butler
+  =ws-butler= manages whitespace on every /edited/ line of code, which helps you
+  write clean code without noisy whitespace.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ws-butler
+    :hook
+    (prog-mode . ws-butler-mode))
+#+end_src

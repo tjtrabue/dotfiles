@@ -1,0 +1,28 @@
+#+title:  Ripgrep for Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:06:08
+#+tags:
+
+=ripgrep= or =rg= is an incredibly fast searching tool for UNIX-based operating
+systems.  It behaves similarly to =grep= and =ag=, but is faster than either of
+them. I highly recommend that you use =rg= over =grep= or even =ag= whenever
+possible.
+
+* rg
+  =rg= is the primary =ripgrep= package for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rg
+    :after (helm)
+    :config
+    (rg-enable-default-bindings))
+#+end_src
+
+* ripgrep
+  Another =ripgrep= integration package. Can be handy if the standard =rg=
+  package is not working properly.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ripgrep)
+#+end_src

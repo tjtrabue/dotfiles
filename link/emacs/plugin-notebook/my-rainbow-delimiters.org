@@ -1,0 +1,17 @@
+#+title:  Rainbow Delimiters
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Adds cool colors to delimiters such as parentheses, braces, brackets, etc.
+in order to highlight their depth relative to one another.  Super handy for
+ELisp and other delimiter-heavy languages.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rainbow-delimiters
+    :config
+    ;; Add hooks for various major modes (please do not use prog-mode-hook!)
+    (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'haskell-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'sh-mode-hook #'rainbow-delimiters-mode))
+#+end_src

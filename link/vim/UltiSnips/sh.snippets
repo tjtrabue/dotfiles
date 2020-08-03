@@ -1,0 +1,16 @@
+snippet whileresponse
+local response="";
+while [[ ! "$response" =~ [YyNn] ]]; do
+	echoe "${1:message}";
+	read -sn1 response;
+done
+[[ "$response" =~ [Nn] ]] && return 1;
+endsnippet
+
+snippet pushd
+pushd "${1:directory}" &> /dev/null;
+endsnippet
+
+snippet popd
+popd &> /dev/null;
+endsnippet

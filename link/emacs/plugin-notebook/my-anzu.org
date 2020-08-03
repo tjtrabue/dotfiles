@@ -1,0 +1,23 @@
+#+title:  Anzu
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+=anzu= highlights all searches as you type.
+
+* anzu
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package anzu
+    :bind
+    (([remap query-replace] . anzu-query-replace)
+    ([remap query-replace-regexp] . anzu-query-replace-regexp)
+    :map isearch-mode-map
+    ([remap isearch-query-replace] . anzu-isearch-query-replace)
+    ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+    :config
+    (global-anzu-mode 1)
+    ;; Turn off anzu's modeline capability so that spaceline will handle anzu
+    ;; information instead.
+    (setq anzu-cons-mode-line-p nil))
+#+end_src

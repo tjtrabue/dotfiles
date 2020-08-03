@@ -1,0 +1,35 @@
+#+title:  Emacs Help Configuration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Plugins and configuration for Emacs' help features.
+See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][EmacsWiki]] for more information.
+
+* help+
+  Enhance Emacs' help system with new functions and key bindings.
+#+begin_src emacs-lisp :tangle yes
+(use-package help+)
+#+end_src
+
+* help+ plugins
+  Extra plugins to complete =help+='s power.
+
+** help-fns+
+  Add cool new help functions, such as describe-keymap
+
+#+begin_src emacs-lisp :tangle yes
+(use-package help-fns+)
+#+end_src
+
+** help-macro+
+
+#+begin_src emacs-lisp :tangle yes
+(use-package help-macro+)
+#+end_src
+
+** help-mode+
+
+#+begin_src emacs-lisp :tangle yes
+(use-package help-mode+)
+#+end_src

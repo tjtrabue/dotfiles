@@ -1,0 +1,10 @@
+#+title:  Mutt Mail Client Configuration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Package for integrating Emacs with the =mutt= terminal mail client.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mutt-mode)
+#+end_src

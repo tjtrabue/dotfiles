@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+# Basic variables
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Polybar variables
+declare POLYBAR_CONFIG_HOME="$HOME/.config/polybar"
+
+# Polybar Themes variables
+declare POLYBAR_THEMES_GIT_URL="https://github.com/adi1090x/polybar-themes.git"
+declare POLYBAR_THEMES_DEST_DIR="${WS}/polybar-themes"
+declare POLYBAR_THEME_SELECTION_NUM
+
+# Fonts
+declare USER_FONTS="$HOME/.local/share/fonts"
+
+# Program flags
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+declare LOG_TO_FILE="$DOTFILES_HOME/dotfiles.log"
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+# }}}
+
+# Functions {{{
+
+# Help {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Initialize polybar configuration with an opional third party theme.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+
+  -t | --theme-number <NUMBER>
+    Specify which optional polybar theme to install.
+EOF
+  exit 0
+}
+# }}}
+
+clone_polybar_themes() {
+  if [ ! -d "$POLYBAR_THEMES_DEST_DIR" ]; then
+    log_info "Cloning Polybar Themes..."
+    git clone "$POLYBAR_THEMES_GIT_URL" "$POLYBAR_THEMES_DEST_DIR" &>/dev/null
+  else
+    warn "Polybar themes directory is already present."
+    log_info "Updating polybar themes repository..."
+    pushd "$POLYBAR_THEMES_DEST_DIR" &>/dev/null || return
+    git pull &>/dev/null
+    popd &>/dev/null || return
+  fi
+}
+
+prompt_user_for_theme_selection() {
+  local response=""
+  while [ ! "$response" =~ [0-9]+ ] && [ "$response" -ne -1 ]; do
+    echoe ""
+    find "$POLYBAR_THEMES_DEST_DIR" -maxdepth 1 -mindepth 1 -type d \
+      -iname "*polybar-*" -printf "%f\n" | sort
+    echoe "Select Theme Number (-1 for no theme):"
+    read -er response
+  done
+  POLYBAR_THEME_SELECTION_NUM="$response"
+}
+
+install_polybar_theme() {
+  log_info "Installing Polybar Theme ${POLYBAR_THEME_SELECTION_NUM}"
+  local selectedThemeDir="$(find "$POLYBAR_THEMES_DEST_DIR" \
+    -MAXDEPTH 1 -mindepth 1 -type d -iname "*polybar-${POLYBAR_THEME_SELECTION_NUM}")"
+
+  local selectedFontsDir="$(find "$selectedThemeDir" \
+    -maxdepth 1 -mindepth 1 -type d -iname "*fonts")"
+
+  rm -rf "${POLYBAR_CONFIG_HOME:?}"/*
+  cp -r "$selectedThemeDir"/* "$POLYBAR_CONFIG_HOME"/
+
+  # Install fonts
+  find "$selectedFontsDir" -iname "*.ttf" -exec cp '{}' "$USER_FONTS"/ \;
+  fc-cache
+}
+
+init_polybar_themes() {
+  clone_polybar_themes
+
+  if [ -z "$POLYBAR_THEME_SELECTION_NUM" ]; then
+    prompt_user_for_theme_selection
+  fi
+
+  if [ $POLYBAR_THEME_SELECTION_NUM -gt 0 ]; then
+    install_polybar_theme
+  fi
+}
+
+main() {
+  init_polybar_themes
+  succ "Done!"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvt: --long help,verbose,theme-number: -n 'init_polybar' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
+
+  -h | --help)
+    _help
+    shift
+    break
+    ;;
+
+  -t | --theme-number)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      POLYBAR_THEME_SELECTION_NUM="$2"
+      shift 2
+      ;;
+    esac
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main
+
+# vim:foldenable:foldmethod=marker:

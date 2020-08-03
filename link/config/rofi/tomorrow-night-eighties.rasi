@@ -1,0 +1,152 @@
+/*
+ * ROFI color theme
+ *
+ * Based on Tomorrow Night Eighties theme (https://github.com/ntpeters/base16-materialtheme-scheme)
+ *
+ * User: Thomas Trabue
+ * Copyright: Thomas Trabue
+ */
+
+* {
+
+  /* background */
+	base00: #2D2D2D;
+  /* black */
+	base01: #2D2D2D;
+  /* selection */
+	base02: #515151;
+  /* current line */
+	base03: #393939;
+  /* comment */
+	base04: #999999;
+  /* foreground */
+	base05: #CCCCCC;
+	base06: #CCCCCC;
+  /* white */
+	base07: #FFFFFF;
+  /* pink */
+	base08: #CC99CC;
+  /* orange */
+	base09: #F99157;
+  /* yellow */
+	base0A: #FFCC66;
+  /* green */
+	base0B: #99CC99;
+  /* cyan/aqua */
+	base0C: #66CCCC;
+  /* blue */
+	base0D: #6699CC;
+  /* purple */
+	base0E: #CC99CC;
+  /* red */
+	base0F: #F2777A;
+
+	/*base0D: #00BCD4;*/
+
+	spacing: 0;
+	background-color: transparent;
+
+	font: "Roboto Mono 13";
+}
+
+window {
+	transparency: "real";
+	/*fullscreen: true;*/
+	/*background-color: #263238CC; base00 + CC (80% opacity)*/
+	background-color: #2D2D2DCC; /*base00 + CC (80% opacity)*/
+}
+
+mainbox {
+	children: [inputbar, message, mode-switcher, listview];
+	spacing: 30px;
+	/*margin: 20%;*/
+	padding: 30px 0;
+	border: 1px;
+	border-color: @base02;
+}
+
+inputbar {
+	padding: 0 30px;
+	children: [prompt, textbox-prompt-colon, entry, case-indicator];
+}
+
+prompt {
+	text-color: @base09;
+  font-weight: bold;
+}
+
+textbox-prompt-colon {
+	expand: false;
+	str: ":";
+	margin: 0 1ch 0 0;
+	text-color: @base09;
+}
+
+entry {
+	text-color: @base05;
+}
+
+case-indicator {
+	text-color: @base0F;
+}
+
+mode-switcher, message {
+	border: 1px 0;
+	border-color: @base02;
+}
+
+button, textbox {
+	background-color: @base03;
+	text-color: @base05;
+	padding: 5px;
+}
+
+button selected {
+	background-color: @base09;
+	text-color: @base00;
+}
+
+listview {
+	scrollbar: true;
+	margin: 0 10px 0 30px;
+}
+
+scrollbar {
+	background-color: @base03;
+	handle-color: @base02;
+	handle-width: 10px;
+	border: 0 1px;
+	border-color: @base02;
+	margin: 0 0 0 20px;
+}
+
+element {
+	padding: 5px;
+	highlight: bold underline;
+}
+
+element normal {
+	background-color: transparent;
+}
+
+element selected {
+	background-color: @base02;
+  font-weight: bold;
+	text-color: @base05;
+}
+
+element alternate {
+	/*background-color: @base03;*/
+}
+
+element normal normal, element alternate normal {
+	text-color: @base05;
+}
+
+element normal urgent, element selected urgent, element alternate urgent {
+	text-color: @base0F;
+}
+
+element normal active, element selected active, element alternate active {
+	text-color: @base0C;
+}

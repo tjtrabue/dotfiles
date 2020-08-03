@@ -1,0 +1,15 @@
+#+title:  Expand Code Regions Incrementally
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:27
+
+=expand-region= operates by incrementally expanding the currently selected
+textual region to broader and broader scopes as you continue to press the
+prescribed selection key.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package expand-region
+    :bind
+    ;; Pressing 'C-=' will gradually expand the selection under the cursor.
+    ("C-=" . er/expand-region))
+#+end_src

@@ -1,0 +1,38 @@
+
+xmonad.hs:43:12: warning: [-Wdeprecations]
+    In the use of ‘defaultConfig’
+    (imported from XMonad, but defined in XMonad.Config):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad and XMonad.Config) instead."
+   |
+43 | myConfig = defaultConfig { workspaces = workspaces'
+   |            ^^^^^^^^^^^^^
+
+xmonad.hs:52:1: warning: [-Wtabs]
+    Tab character found here, and in 11 further locations.
+    Please use spaces instead.
+   |
+52 |                          , handleEventHook = fullscreenEventHook
+   | ^^^^^^^^
+
+xmonad.hs:71:12: warning: [-Wdeprecations]
+    In the use of ‘defaultPP’ (imported from XMonad.Hooks.DynamicLog):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad.Hooks.DynamicLog) instead."
+   |
+71 | customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
+   |            ^^^^^^^^^
+
+xmonad.hs:80:14: warning: [-Wdeprecations]
+    In the use of ‘defaultGSConfig’
+    (imported from XMonad.Actions.GridSelect):
+    Deprecated: "Use def (from Data.Default, and re-exported from XMonad.Actions.GridSelect) instead."
+   |
+80 | myGSConfig = defaultGSConfig { gs_cellwidth = 160 }
+   |              ^^^^^^^^^^^^^^^
+
+xmonad.hs:91:13: warning: [-Wdeprecations]
+    In the use of ‘defaultTheme’
+    (imported from XMonad.Layout.Tabbed, but defined in XMonad.Layout.Decoration):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad.Layout.Decoration) instead."
+   |
+91 | tabTheme1 = defaultTheme { decoHeight = 16
+   |             ^^^^^^^^^^^^

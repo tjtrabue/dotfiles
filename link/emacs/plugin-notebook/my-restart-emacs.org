@@ -1,0 +1,11 @@
+#+title:  Restart Emacs from Within Emacs
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Pretty straightforward. This package provides a function called =restart-emacs=
+that does just that: restarts Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package restart-emacs)
+#+end_src

@@ -1,0 +1,6 @@
+# key: shell
+# name: shell
+# --
+#+begin_src sh
+$0
+#+end_src

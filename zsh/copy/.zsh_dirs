@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+alias -g dot="$HOME/.dotfiles";
+alias -g sshhome="$HOME/.ssh";
+alias -g vhome="$HOME/.vim";

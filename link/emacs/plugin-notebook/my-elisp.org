@@ -1,0 +1,48 @@
+#+title:  Emacs Lisp Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Emacs Lisp is the Emacs Lisp dialect of the age-old Lisp programming language.
+This file contains Emacs plugins and configuration for writin Emacs Lisp.
+
+* Plugins
+** highlight-defined
+   Highlights defined Elisp symbols.
+   Recognizes Lisp function, built-in function, macro, face and variable names.
+#+begin_src emacs-lisp :tangle yes
+(use-package highlight-defined
+  :hook
+  ((emacs-lisp-mode) . highlight-defined-mode))
+#+end_src
+
+** suggest
+   Discover elisp functions that do what you want
+#+begin_src emacs-lisp :tangle yes
+(use-package suggest)
+#+end_src
+
+** easy-escape
+   Fix escapes in Elisp regular expressions.
+#+begin_src emacs-lisp :tangle yes
+(use-package easy-escape
+  :hook
+  ((lisp-mode emacs-lisp-mode) . easy-escape-minor-mode))
+#+end_src
+
+** eros
+   Provides a cool overlay when evaluating an Elisp expression that looks like
+     (expr) => output
+   For example,
+     (number-sequence 1 10) => 1 2 3 4 5 6 7 8 9 10
+#+begin_src emacs-lisp :tangle yes
+(use-package eros
+  :hook
+  ((emacs-lisp-mode) . (lambda ()
+			 (eros-mode 1))))
+#+end_src
+
+** elmacro
+#+begin_src emacs-lisp :tangle yes
+(use-package elmacro)
+#+end_src

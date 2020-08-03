@@ -1,0 +1,5 @@
+brittany
+hasktags
+hlint
+hoogle
+stylish-haskell

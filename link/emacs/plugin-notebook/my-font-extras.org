@@ -1,0 +1,13 @@
+#+title:  Extra Font Configuration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:07:28
+#+tags:   font ligature
+
+* hasklig-mode
+  Use fancy ligatures for Haskell programming.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package hasklig-mode
+  :hook (haskell-mode))
+#+end_src

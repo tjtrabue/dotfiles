@@ -1,0 +1,12 @@
+# Ignore all directories with a '.' prefix (except where specifically stated)
+.*/
+
+# Ignore compiled files
+*.class
+*.pyc
+
+# Ignore temporary, swap, and backup files
+*.tmp
+*.temp
+*.swp
+*.bak

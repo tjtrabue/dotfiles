@@ -1,0 +1,11 @@
+#+title:  CMake Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Integration with CMake within Emacs.
+
+* cmake-mode
+#+begin_src emacs-lisp :tangle yes
+(use-package cmake-mode)
+#+end_src

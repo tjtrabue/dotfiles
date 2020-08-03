@@ -1,0 +1,12 @@
+#+title:  Go-Lang Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Here are a few Emacs plugins and settings for the =go= programming language.
+
+* go-mode
+
+#+begin_src emacs-lisp :tangle yes
+(use-package go-mode)
+#+end_src

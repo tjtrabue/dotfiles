@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
+
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare VERBOSE=false;
+
+declare GHCUP_HOME="$HOME/.ghcup"
+declare GHCUP_ENV="$GHCUP_HOME/env"
+declare GHC_VERSIONS=('8.8.3' '8.10.1')
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash";
+source "${IMPORT}/functions_log.bash";
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Prepares the Haskell development environment.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+exit 0;
+}
+
+# Install the ghcup-hs utility for installing specific ghc versions
+install_ghcup() {
+  log_info "Installing ghcup. This is an interactive process!"
+  local getGhcupUrl="https://get-ghcup.haskell.org"
+
+  curl --proto '=https' --tlsv1.2 -sSf "$getGhcupUrl" | sh
+
+  # Source ghcup environment
+  [ -f "$GHCUP_ENV" ] && source "$GHCUP_ENV"
+}
+
+install_ghc_versions() {
+  log_info "Installing ghc versions and cabal-install"
+  local version
+
+  # Install requested ghc versions and cabal-install
+  for version in "${GHC_VERSIONS[@]}"; do
+    ghcup install "$version"
+  done
+
+  ghcup install-cabal
+}
+
+main() {
+  install_ghcup
+  install_ghc_versions
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true;
+      shift;
+      ;;
+
+    -h | --help)
+      _help;
+      shift;
+      break;
+      ;;
+
+    --)
+      shift;
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main;
+
+# vim:foldenable:foldmethod=marker:

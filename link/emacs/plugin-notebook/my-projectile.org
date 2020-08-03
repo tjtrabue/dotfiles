@@ -1,0 +1,53 @@
+#+title:  Projectile Project Management
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Projectile is a project management plugin for Emacs that helps you perform
+important coding actions at the project level. Such actions include searching
+for project files, searching for text, renaming files, etc.
+
+* Variables
+#+begin_src emacs-lisp :tangle yes
+  (defvar default-ecb-source-path (list '("~/workspace" "Workspace")
+                  '("~/" "~/")
+                  '("/" "/"))
+    "Default directories for ECB mode. Useful for Projectile integration with
+ECB.")
+#+end_src
+
+* Functions
+#+begin_src emacs-lisp :tangle yes
+  (defun my/sync-ecb-with-projectile ()
+    "Hook function for ECB that puts it in sync with Projectile."
+    (when (functionp 'projectile-get-project-directories)
+      (when (projectile-project-p)
+        (dolist (path-dir (projectile-get-project-directories))
+          (unless (member (list path-dir path-dir) default-ecb-source-path)
+            (push (list path-dir path-dir) default-ecb-source-path)
+            (customize-set-variable 'ecb-source-path default-ecb-source-path))))))
+#+end_src
+
+* projectile
+#+begin_src emacs-lisp :tangle yes
+  (use-package projectile
+    :after (ecb evil)
+    :bind
+    (:map evil-normal-state-map
+     ([remap evil-paste-pop] . projectile-find-file)
+     :map projectile-mode-map
+     ("C-c p" . projectile-command-map))
+    :hook
+    (ecb-basic-buffer-sync . my/sync-ecb-with-projectile)
+    :config
+    (setq projectile-completion-system 'helm)
+
+    ;; Make projects in workspace discovered automatically.
+    ;; The list is a space-separated collection of directory paths
+    ;; that projectile should use when searching for projects.
+    (setq projectile-project-search-path '("~/workspace/"))
+
+    ;; Add extra ignored directories here.
+    (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d/straight")
+    (projectile-mode t))
+#+end_src

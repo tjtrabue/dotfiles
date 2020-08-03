@@ -1,0 +1,57 @@
+" Configuration file for the Asynchronous Linting Engine.
+
+" Options {{{
+" Change highlight for sign column itself.
+let g:ale_change_sign_column_color = 1
+
+" Close the preview window when entering insert mode.
+let g:ale_close_preview_on_insert = 1
+
+" Use completion support
+let g:ale_completion_enabled = 1
+
+" Turn off ALE's popup window, opting to use the single line version instead.
+let g:ale_cursor_detail = 0
+
+" Use ALE's single line linter output instead of the whole popup window.
+let g:ale_echo_cursor = 1
+
+" Fire off the configured ALE fixers when a file is saved.
+let g:ale_fix_on_save = 1
+
+" Set height of ALE popup window.
+let g:ale_list_window_size = 7
+" }}}
+
+" Leader shortcuts {{{
+" View full linter output for problem at cursor with ',ad'
+nnoremap <leader>ad :ALEDetail<CR>
+
+" Fix file with ',af'
+nnoremap <leader>af :ALEFix<CR>
+
+" Bring up debug information with ',ai'
+nnoremap <leader>ai :ALEInfo<CR>
+" }}}
+
+" Linters {{{
+let g:ale_linters = {
+  \ 'elixir': ['credo', 'dialyxir', 'dogma', 'elixir-ls'],
+\ }
+" }}}
+
+" Fixers {{{
+let g:ale_fixers = {
+  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \ 'javascript': ['eslint'],
+  \ 'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf'],
+\ }
+" }}}
+
+" Elixir {{{
+" Elixir Language Server release directory path
+let g:ale_elixir_elixir_ls_release = $WORKSPACE . '/elixir-ls/release'
+" }}}
+
+" Modeline for this file. LEAVE IT COMMENTED!
+" vim:foldenable:foldmethod=marker:foldlevel=0

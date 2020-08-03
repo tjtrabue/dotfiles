@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: org header
+# key: header
+# --
+#+title:  $1
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   ${2:`(shell-command-to-string "echo -n $(date +%Y:%m:%d)")`}
+#+tags:   $3
+
+$0

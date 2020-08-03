@@ -1,0 +1,38 @@
+{sys_panel,#{interval => 10}}.
+{perf_panel,#{fetch => 2,secs => 60}}.
+{allc_panel,#{fetch => 1,secs => 60}}.
+{app_panel,#{}}.
+{pro_panel,#{acc => false,interval => 10}}.
+{port_panel,#{}}.
+{tv_panel,#{sys_hidden => true,type => ets,unread_hidden => true}}.
+{trace_panel,#{match_specs =>
+                   [{ms,funcs,
+                        [[{name,"Return Trace"},
+                          {term,[{'_',[],[{return_trace}]}]},
+                          {func,"fun(_) -> return_trace() end"}],
+                         [{name,"Exception Trace"},
+                          {term,[{'_',[],[{exception_trace}]}]},
+                          {func,"fun(_) -> exception_trace() end"}],
+                         [{name,"Message Caller"},
+                          {term,[{'_',[],[{message,{caller}}]}]},
+                          {func,"fun(_) -> message(caller()) end"}],
+                         [{name,"Message Dump"},
+                          {term,[{'_',[],[{message,{process_dump}}]}]},
+                          {func,"fun(_) -> message(process_dump()) end"}]]},
+                    {ms,send,
+                        [[{name,"To local node"},
+                          {term,[{['$1','_'],[{'==',{node,'$1'},{node}}],[]}]},
+                          {func,"fun([Pid,_]) when node(Pid)==node() ->\n    true\nend"}],
+                         [{name,"To remote node"},
+                          {term,[{['$1','_'],
+                                  [{'=/=',{node,'$1'},{node}}],
+                                  []}]},
+                          {func,"fun([Pid,_]) when node(Pid)=/=node() ->\n    true\nend"}]]},
+                    {ms,'receive',
+                        [[{name,"From local node"},
+                          {term,[{['$1','_','_'],[{'==','$1',{node}}],[]}]},
+                          {func,"fun([Node,_,_]) when Node==node() ->\n    true\nend"}],
+                         [{name,"From remote node"},
+                          {term,[{['$1','_','_'],[{'=/=','$1',{node}}],[]}]},
+                          {func,"fun([Node,_,_]) when Node=/=node() ->\n    true\nend"}]]}],
+               output => [],portflags => [],procflags => []}}.

@@ -1,0 +1,10 @@
+#+title:  Xwidget Color Picker
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+This is a cool color picker written as an Xwidget.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package webkit-color-picker)
+#+end_src

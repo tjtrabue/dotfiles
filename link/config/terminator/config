@@ -1,0 +1,106 @@
+[global_config]
+  always_split_with_profile = True
+  enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  hide_from_taskbar = True
+  putty_paste_style = True
+  suppress_multiple_term_dialog = True
+  window_state = maximise
+[keybindings]
+  close_term = <Primary><Shift>w
+  close_window = <Primary><Shift>q
+  go_down = <Primary><Shift>j
+  go_left = <Primary><Shift>h
+  go_right = <Primary><Shift>l
+  go_up = <Primary><Shift>k
+  hide_window = <Primary><Shift><Alt>a
+  layout_launcher = None
+  next_tab = <Primary><Shift><Alt>n
+  prev_tab = <Primary><Shift><Alt>p
+  resize_down = <Primary><Shift><Alt>j
+  resize_left = <Primary><Shift><Alt>h
+  resize_right = <Primary><Shift><Alt>l
+  resize_up = <Primary><Shift><Alt>k
+  scaled_zoom = <Shift><Alt>z
+  search = <Shift><Alt>f
+  split_horiz = <Primary><Shift>o
+  split_vert = <Primary><Shift>e
+[layouts]
+  [[default]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 0:0
+      size = 1920, 1015
+      title = tjtrabu:~
+      type = Window
+    [[[terminal1]]]
+      order = 0
+      parent = child0
+      profile = Material-Ocean
+      type = Terminal
+      uuid = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
+  [[coding]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 0:0
+      size = 1920, 1015
+      title = tjtrabu:~
+      type = Window
+    [[[terminal1]]]
+      order = 0
+      parent = child0
+      profile = Material-Ocean
+      type = Terminal
+      uuid = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
+[plugins]
+[profiles]
+  [[default]]
+    cursor_color = "#aaaaaa"
+    font = Hasklug Nerd Font Semibold 10
+  [[Material]]
+    cursor_color = "#aaaaaa"
+    font = Hasklug Nerd Font Semibold 10
+  [[Material colors]]
+    background_color = "#1e282c"
+    cursor_color = "#657B83"
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#c3c7d1"
+    palette = "#073641:#eb606b:#c3e88d:#f7eb95:#80cbc3:#ff2490:#aeddff:#ffffff:#002b36:#eb606b:#c3e88d:#f7eb95:#7dc6bf:#6c71c3:#34434d:#ffffff"
+  [[Material-Ocean]]
+    background_color = "#0f111a"
+    background_darkness = 0.8
+    background_type = transparent
+    cursor_color = "#ffcc00"
+    cursor_color_fg = als
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#8f93a2"
+    palette = "#2e3436:#ff5370:#c3e88d:#ffcb6b:#82aaff:#c792ea:#89ddff:#d3d7cf:#555753:#f07178:#c3e88d:#f78c6c:#729fcf:#bb80b3:#89ddff:#eeeeec"
+    scrollback_lines = 1000
+    use_system_font = False
+  [[Material-Palenight]]
+    cursor_color = "#aaaaaa"
+    font = Hasklug Nerd Font Semibold 10
+    use_system_font = False
+  [[MaterialDark]]
+    background_color = "#232322"
+    cursor_color = "#16afca"
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#e5e5e5"
+    palette = "#212121:#b7141f:#457b24:#f6981e:#134eb2:#560088:#0e717c:#efefef:#424242:#e83b3f:#7aba3a:#ffea2e:#54a4f3:#aa4dbc:#26bbd1:#d9d9d9"
+    use_system_font = False
+  [[OceanicMaterial]]
+    background_color = "#1c262b"
+    cursor_color = "#b3b8c3"
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#c2c8d7"
+    palette = "#000000:#ee2b2a:#40a33f:#ffea2e:#1e80f0:#8800a0:#16afca:#a4a4a4:#777777:#dc5c60:#70be71:#fff163:#54a4f3:#aa4dbc:#42c7da:#ffffff"
+    use_system_font = False

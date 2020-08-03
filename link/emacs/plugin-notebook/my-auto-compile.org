@@ -1,0 +1,15 @@
+#+title:  Auto Compile
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Automatically compile Emacs Lisp files on save.
+
+* auto-compile
+
+#+begin_src emacs-lisp :tangle yes
+(use-package auto-compile
+  :config
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
+#+end_src

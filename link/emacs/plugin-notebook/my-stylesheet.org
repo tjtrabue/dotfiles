@@ -1,0 +1,18 @@
+#+title:  Stylesheet Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Plugins and configuration for various stylesheet languages, such as CSS, LESS, and SCSS.
+
+* less-css-mode
+
+#+begin_src emacs-lisp :tangle yes
+(use-package less-css-mode)
+#+end_src
+
+* scss-mode
+
+#+begin_src emacs-lisp :tangle yes
+(use-package scss-mode)
+#+end_src

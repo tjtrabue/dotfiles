@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+
+#  Setup / Cleanup {{{
+# Performs initial setup.
+setup() {
+  log_info "Setting up...";
+}
+
+# Cleanup after the program finishes.
+cleanup() {
+  log_info "Cleaning up...";
+}
+trap cleanup EXIT
+# }}}
+
+# Printing Functions {{{
+# General purpose printing function
+echoe() {
+  echo -e "$*" 1>&2;
+}
+
+# Error printing function.
+err() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${RED}ERROR${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+
+# Warning printing function.
+warn() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${YELLOW}WARNING${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+
+# Success printing function.
+succ() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${GREEN}SUCCESS${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+
+# Success printing function.
+log_info() {
+  local funcName="${FUNCNAME[1]}";
+  local lineNo="${BASH_LINENO[1]}";
+  echoe "[${GREEN}INFO${NC}:${MAGENTA}${funcName}${NC}:${CYAN}${lineNo}${NC}] $*";
+}
+# }}}
+
+# Primary Functions {{{
+create_directories() {
+  mkdir -p "$LOCAL_FONTS" "$FONT_CONFIG";
+}
+
+install_pip_dependencies() {
+  pip install --user psutil pygit2==0.26.3 bzr pyuv i3ipc;
+  pip2 install --user psutil pygit2==0.26.3 pyuv i3ipc;
+}
+
+install_pip_packages() {
+  pip install --user powerline-status powerline-gitstatus;
+  pip2 install --user powerline-status powerline-gitstatus;
+}
+
+install_fonts() {
+  wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+  wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+
+  mv PowerlineSymbols.otf "$LOCAL_FONTS";
+  fc-cache -vf "$LOCAL_FONTS";
+
+  mv 10-powerline-symbols.conf "$FONT_CONFIG";
+}
+
+main() {
+  setup;
+  create_directories;
+  install_pip_dependencies;
+  install_pip_packages;
+  install_fonts;
+}
+# }}}
+
+# Variable Definitions {{{
+# Directories
+declare DOTFILES_HOME="$HOME/.dotfiles";
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)";
+declare LOCAL_FONTS="$HOME/.local/share/fonts";
+declare FONT_CONFIG="$HOME/.config/fontconfig/confg.d";
+
+# Colors {{{
+# Foreground:
+declare NC="\e[39m"; # Default color
+declare BLACK="\e[30m";
+declare RED="\e[31m";
+declare GREEN="\e[32m";
+declare YELLOW="\e[33m";
+declare BLUE="\e[34m";
+declare MAGENTA="\e[35m";
+declare CYAN="\e[36m";
+declare LIGHT_GRAY="\e[37m";
+declare DARK_GRAY="\e[90m";
+declare LIGHT_RED="\e[91m";
+declare LIGHT_GREEN="\e[92m";
+declare LIGHT_YELLOW="\e[93m";
+declare LIGHT_BLUE="\e[94m";
+declare LIGHT_MAGENTA="\e[95m";
+declare LIGHT_CYAN="\e[96m";
+declare WHITE="\e[97m";
+
+# Background:
+declare NBG="\e[49m"; # Default background
+declare BLACK_BG="\e[40m";
+declare RED_BG="\e[41m";
+declare GREEN_BG="\e[42m";
+declare YELLOW_BG="\e[43m";
+declare BLUE_BG="\e[44m";
+declare MAGENTA_BG="\e[45m";
+declare CYAN_BG="\e[46m";
+declare LIGHT_GRAY_BG="\e[47m";
+declare DARK_GRAY_BG="\e[100m";
+declare LIGHT_RED_BG="\e[101m";
+declare LIGHT_GREEN_BG="\e[102m";
+declare LIGHT_YELLOW_BG="\e[103m";
+declare LIGHT_BLUE_BG="\e[104m";
+declare LIGHT_MAGENTA_BG="\e[105m";
+declare LIGHT_CYAN_BG="\e[106m";
+declare WHITE_BG="\e[107m";
+# }}}
+# }}}
+
+main;
+
+# Modeline for this file (LEAVE IT COMMENTED)
+# vim:foldmethod=marker:

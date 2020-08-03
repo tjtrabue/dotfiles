@@ -1,0 +1,32 @@
+#+title:  GNU Global Emacs Integration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:06:08
+#+tags:   gnu-global ggtags
+
+GNU Global is a source code tagging system like C-tags, but is designed to be
+cross-platform.
+
+* ggtags
+  =ggtags= is Emacs' front end to GNU Global.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ggtags
+   :bind
+   (:map ggtags-mode-map
+    ("C-c g s" . ggtags-find-other-symbol)
+    ("C-c g h" . ggtags-view-tag-history)
+    ("C-c g r" . ggtags-find-reference)
+    ("C-c g f" . ggtags-find-file)
+    ("C-c g c" . ggtags-create-tags)
+    ("C-c g u" . ggtags-update-tags)
+    ("M-,"     . pop-tag-mark))
+
+    :hook
+    ;; Start helm-gtags-mode only for specific major modes
+    ;; c-mode-common-hook runs for all major modes derived from the C
+    ;; programming language.
+    (c-mode-common . (lambda ()
+      (when (and (not my/use-helm-gtags) (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode))
+          (ggtags-mode)))))
+#+end_src

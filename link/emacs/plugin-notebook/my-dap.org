@@ -1,0 +1,21 @@
+#+title:  Debug Adapter Protocol
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+=dap= is a generic API for designing and interfacing with programming language
+debuggers. It builds on the LanguageServerProtocol to perform its duties. In
+fact, many modern LSP servers also provide a DAP server.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dap-mode
+    :after (lsp-mode lsp-treemacs)
+    :hook
+    ((dap-stopped . (lambda (arg)
+      ;; Automatically trigger the built-in dap-mode hydra when the debugger
+      ;; hits a breakpoint.
+      (call-interactively #'dap-hydra)))
+    (lsp-mode . (lambda ()
+      ;; Automatically configure dap-mode with default settings
+      (dap-auto-configure-mode 1)))))
+#+end_src

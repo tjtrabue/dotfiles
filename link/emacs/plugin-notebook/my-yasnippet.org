@@ -1,0 +1,46 @@
+#+title:  Yasnippet Snippet System
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+=yasnippet= is the snippet engine for Emacs. It behaves in a similar fashion to
+UltiSnips for Vim, or TextMate's snippet system. You use =yasnippet= by typing a
+snippet's /key/, which is a word used as an abbreviation for expanding the
+snippet, followed by a /trigger/ for the snippet, which is a key or key chord
+that expands the snippet based on the abbreviation before point.
+
+* yasnippet
+  =yasnippet= itself.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package yasnippet
+  :config
+  (yas-global-mode t)
+  ;; Redefine the snippet expand key.
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  ;; Use conditional expansion, falling back on helm-yas-complete if there is
+  ;; no precise snippet name before point.
+  (define-key yas-minor-mode-map (kbd "C-c y") yas-maybe-expand))
+#+end_src
+
+* yasnippet-snippets
+  A big collection of pre-written snippets for =yasnippet=.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package yasnippet-snippets
+  :after (yasnippet))
+#+end_src
+
+* helm-c-yasnippet
+  Use helm menu for yasnippet completions
+
+#+begin_src emacs-lisp :tangle yes
+(use-package helm-c-yasnippet
+  :after (helm yasnippet)
+  :config
+  (setq helm-yas-space-match-any-greedy t)
+  ;; Must use global-set-key here because this function must be defined at the
+  ;; top level to be used in conjunction with yas-maybe-expand.
+  (global-set-key (kbd "C-c y") 'helm-yas-complete))
+#+end_src

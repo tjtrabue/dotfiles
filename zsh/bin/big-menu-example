@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+num_arr=()
+for i in `seq 1 60`; do
+    num_arr+=("entry-$i-yeah")
+done
+
+my_choice="$(menu "${num_arr[@]}")"
+
+echo "My chosen entry is: $my_choice"

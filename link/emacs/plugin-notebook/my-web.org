@@ -1,0 +1,94 @@
+#+title:  Web Development Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+* web-mode
+  =web-mode= is the godfather of all website code editing modes in Emacs.
+  It is mainly for editing web templates, such as =.jsp= or =.php= files.
+#+begin_src emacs-lisp :tangle yes
+  (use-package web-mode
+    :config
+    ;; Automatically start files with the following file extensions in web-mode
+    ;; HTML
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    ;; PHP template files (virtually the same thing as .php files)
+    (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+    ;; Other PHP template files
+    (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+    ;; ASP.NET, Grails, JSP template files
+    (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+    ;; More ASP.NET template files
+    (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+    ;; Ruby Script template
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+    ;; Mustache templating system
+    (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+    ;; Django template
+    (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+
+    ;; Hooks for web-mode
+    (add-hook 'web-mode-hook #'(lambda ()
+                                 ())))
+#+end_src
+
+* emmet-mode
+  This is Emacs' Emmet package.
+  The default expand key for emmet snippets is =C-j=.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package emmet-mode
+  :hook
+  ;; Auto start Emmet in certain modes, such as any markup language or CSS
+  ((css-mode sgml-mode web-mode) . emmet-mode)
+  :config
+  ;; Emmet mode hooks
+  (add-hook 'emmet-mode-hook #'(lambda ()
+                                 ;; Move the cursor between the first empty
+                                 ;; quotes after expanding
+                                 (setq emmet-move-cursor-between-quotes t))))
+
+#+end_src
+
+* restclient
+  Awesome REST client for Emacs!
+#+begin_src emacs-lisp :tangle yes
+(use-package restclient)
+#+end_src
+
+* ob-restclient
+  Extension for =restclient.el= for org-babel support.
+  With this, you can press =C-c C-c= in a restclient source block
+  to execute a REST query:
+
+#+BEGIN_SRC restclient
+GET http://example.com
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC html
+<!doctype html>
+<html>
+<head>
+...
+</head>
+</html>
+#+END_SRC
+
+#+begin_src emacs-lisp :tangle yes
+(use-package ob-restclient
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t))))
+#+end_src
+
+* skewer-mode
+  Provides a live development environemnt for JavaScript, CSS, and HTML from
+  within Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package skewer-mode
+  :config
+  (skewer-setup))
+#+end_src

@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+declare VIM_HOME="$HOME/.vim"
+declare VIM_DF="$DOTFILES_REPO/link/vim"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Initializes Neovim with necessary configuration.
+NOTE: This does not actually install neovim. Use your
+package manager to accomplish that task.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+  exit 0
+}
+
+install_python_providers() {
+  # Make sure legacy "neovim" package is uninstalled
+  python2 -m pip uninstall neovim
+  python3 -m pip uninstall neovim
+
+  python2 -m pip install --user --upgrade pynvim
+  python3 -m pip install --user --upgrade pynvim
+}
+
+install_nodejs_provider() {
+  npm install -g neovim
+}
+
+install_ruby_provider() {
+  gem install neovim
+}
+
+# Make sure important Vim directories are in place.
+make_vim_dirs() {
+  log_info "Creating Vim directories"
+  mkdir -p "$VIM_HOME"
+  mkdir -p "$VIM_HOME/backups"
+  mkdir -p "$VIM_HOME/swaps"
+}
+
+# Link dotfiles config dirs under ~/.vim
+link_vim_dirs() {
+  log_info "Linking Vim directories"
+  find "$VIM_DF" -mindepth 1 -maxdepth 1 -exec ln -s -t "$VIM_HOME" '{}' \;
+}
+
+main() {
+  log_info "Initializing Neovim"
+  make_vim_dirs
+  link_vim_dirs
+  install_python_providers
+  install_nodejs_provider
+  install_ruby_provider
+  log_info "Done."
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
+
+  -h | --help)
+    _help
+    shift
+    break
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main
+
+# vim:foldenable:foldmethod=marker:

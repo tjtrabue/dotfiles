@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# Exit on error
+set -e
+
+# Imports {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+source "${HOME}/.vars"
+source "${HOME}/.dirs"
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+# }}}
+
+# Variables {{{
+declare NERD_FONTS_GIT_URL="https://github.com/ryanoasis/nerd-fonts.git"
+declare NERD_FONTS_DEST_DIR="$WS/nerd-fonts"
+# }}}
+
+# Functions {{{
+clone_nerd_fonts_repo() {
+  git clone --depth 1 "${NERD_FONTS_GIT_URL}" "${NERD_FONTS_DEST_DIR}"
+}
+
+install_nerd_fonts() {
+  pushd "$NERD_FONTS_DEST_DIR" &>/dev/null
+  ./install.sh
+  popd &>/dev/null
+}
+
+main() {
+  log_info "Initializing Nerd Fonts"
+  clone_nerd_fonts_repo
+  install_nerd_fonts
+  log_info "Done"
+}
+# }}}
+
+main
+
+# vim:foldenable:foldmethod=marker

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+export PATH="$PATH:$DOTFILES_HOME/git/bin"
+export PATH="$PATH:$DOTFILES_HOME/$(basename "$SHELL")/bin"

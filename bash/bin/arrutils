@@ -1,0 +1,260 @@
+#!/usr/bin/env bash
+
+# A binary for working with arrays in bash. This tool has option flags for a
+# number of different operations to perform on arrays, providing a centralized
+# area for manipulating them. Bash itself is pretty screwy when it comes to
+# arrays, and does not provide many handy operations by default; hence, the
+# need for a tool such as this.
+# Treat this binary kind of like the Array class in Java.
+#
+# Usage:
+#   arrutils []
+#
+# Options:
+#   --remove <arr> <element>  : Removes the specified element from the array if
+#                                it exists within the array.
+#   --remove-each <arr> <element> : removes each occurance of element within arr.
+#   --get-index-of <arr> <element> : Returns a set of integer indecies of a specified
+#                                    element within arr. Returns -1 if the element is not present.
+#   --get-each-index-of <arr> <element> : returns an array of indecies representing each occurance
+#                                         of element in arr.
+#   --prepend <arr> <element> : prepends element to the beginning of arr.
+#   --append <arr> <element> : appends element to the end of arr.
+#   --sort <arr> : quick sorts the array.
+
+
+################################################################################
+##                                                                            ##
+##                           Supporting Functions                             ##
+##                                                                            ##
+################################################################################
+
+# Usage message:
+function arrutils_usage() {
+    echo "Usage:" 1>&2
+    echo "  arrutils <options>" 1>&2
+    echo "Options:" 1>&2
+    echo "  --get-index-of arr element   : returns the index of the first occurance of element in" 1>&2
+    echo "                                 arr. Returns -1 if element does not exist in arr." 1>&2
+    echo "  --get-each-index-of arr element : returns an array containing each index where element occurs" 1>&2
+    echo "                                    withing arr. Will be empty if there are no occurances." 1>&2
+    echo "  --remove arr element : removes the first occurance of element in arr. Does nothing" 1>&2
+    echo "                                 element does not exist in arr." 1>&2
+    echo "  --remove-each arr element : removes each occurance of element within arr." 1>&2
+    echo "  --prepend arr element : places element at the beginning of arr" 1>&2
+    echo "  --append arr element : places element at the end of arr" 1>&2
+    echo "  --sort arr : performs a quick sort on the array" 1>&2
+}
+
+# Parses the user's input and decides a course of action:
+function parse_user_input() {
+    if [[ "$#" -eq 0 ]]; then
+        arrutils_usage
+        exit 1
+    fi
+    local user_option="$1"
+    shift
+
+    case "$user_option" in
+        --get-index-of)
+            get_index_of "$@"
+            ;;
+        --get-each-index-of)
+            get_each_index_of "$@"
+            ;;
+        --remove)
+            remove "$@"
+            ;;
+        --remove-each)
+            remove_each "$@"
+            ;;
+        --prepend)
+            prepend "$@"
+            ;;
+        --append)
+            append "$@"
+            ;;
+        --sort)
+            sort "$@"
+            ;;
+        *)
+            echoe "Unknown option ${RED}$user_option${NC}"
+            exit 2
+    esac
+}
+
+# Used for printing errors:
+function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+
+# Used for printing warnings:
+function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+
+################################################################################
+##                                                                            ##
+##                                Main Functions                              ##
+##                                                                            ##
+################################################################################
+
+# Gets the incex of the first occurance of an element in an array
+# Syntax:
+#   get-index-of arr $element
+function get_index_of() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of params passed to get-index-of"
+        return 1
+    fi
+    local arr_copy=$1[@]
+    local element="$2"
+    local ind=0
+    for e in "${arr_copy[@]}"; do
+        if [[ "$e" == "$element" ]]; then
+            echo $ind
+            return 0
+        else
+            ((ind+=1))
+        fi
+    done
+    echo -1
+}
+
+function get_each_index_of() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of params passed to get-each-index-of"
+        return 1
+    fi
+    local arr_copy=$1[@]
+    local element="$2"
+    local ind=0
+    local index_arr=()
+    for e in "${arr_copy[@]}"; do
+        if [[ "$e" == "$element" ]]; then
+            index_arr+=($ind)
+        fi
+        ((ind+=1))
+    done
+    echo "${index_arr[@]}"
+}
+
+# Removes the first occurance of an element from a specified array
+function remove() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of params passed to remove"
+        return 1
+    fi
+    local arr_copy=$1[@]
+    local element="$2"
+    local ind="$(get-index-of arr_copy "$element")"
+    if [[ "$ind" -ne -1 ]]; then
+        arr_copy=(${arr_copy[@]:0:$ind} ${arr_copy[@]:$(($ind + 1))})
+    fi
+    echo "${arr_copy[@]}"
+}
+
+# Removes all occurances of a specified element within a specified array
+function remove_each() {
+    if [[ "$#" -ne 2 ]]; then
+        echoe "Incorrect number of params passed to remove-each"
+        return 1
+    fi
+    local arr_copy=$1[@]
+    local element="$2"
+    local indecies=($(get_each_index_of arr_copy "$element"))
+    if [[ "${#indecies[@]}" -ne 0 ]]; then
+        for ind in "${indecies[@]}"; do
+            arr_copy=(${arr_copy[@]:0:$ind} ${arr_copy[@]:$(($ind + 1))})
+        done
+    fi
+    echo "${arr_copy[@]}"
+}
+
+# Puts the specified element at the beginning of the array
+function prepend() {
+    local arr_copy=$1[@]
+    local element="$2"
+    arr_copy=("$element" "${arr_copy[@]}")
+    echo "${arr_copy[@]}"
+}
+
+# Puts the specified element at the end of the array
+function append() {
+    local arr_copy=$1[@]
+    local element="$2"
+    arr_copy=("${arr_copy[@]}" "$element")
+    echo "${arr_copy[@]}"
+}
+
+
+################################################################################
+##                                                                            ##
+##                             Sorting Function                               ##
+##                                                                            ##
+################################################################################
+
+# Quick sorts the array passed in
+# Syntax:
+#   sort arr_name
+function sort() {
+    local arr_copy=$1[@]
+    local left=0
+    local right=$((${#arr_copy[@]} - 1))
+    _quick_sort "$@"
+}
+
+# The actual sorting function:
+function _quick_sort() {
+    local arr_copy=$1[@]
+    local left="$2"
+    local right"$3"
+    local index="$(_partition arr_copy $left $right)"
+    if [[ "$left" -lt $((index - 1)) ]]; then
+        _quick_sort arr_copy $left $((index - 1))
+    fi
+    if [[ "$index" -lt $right ]]; then
+        _quick_sort arr_copy $index $right
+    fi
+}
+
+# Private method for partitioning the array for sorting purposes
+function _partition() {
+    local arr_copy=$1[@]
+    local i="$2"
+    local j="$3"
+    local tmp=0
+    local pivot=$(( ($i + $j) / 2 ))
+
+    while [[ $i -le $j ]]; do
+        while [[ ${arr_copy[$i]} -lt $pivot ]]; do
+            ((i+=1))
+        done
+        while [[ ${arr_copy[$j]} -gt $pivot ]]; do
+            ((j-=1))
+        done
+        if [[ $i -le $j ]]; then
+            tmp=${arr_copy[$i]}
+            arr_copy[$i]=${arr_copy[$j]}
+            arr_copy[$j]=$tmp
+            ((i+=1))
+            ((j-=1))
+        fi
+    done
+
+    echo "$i"
+}
+
+################################################################################
+##                                                                            ##
+##                                  Variables                                 ##
+##                                                                            ##
+################################################################################
+
+
+
+################################################################################
+##                                                                            ##
+##                                 Main Program                               ##
+##                                                                            ##
+################################################################################
+
+parse_user_input "$@"
+
+

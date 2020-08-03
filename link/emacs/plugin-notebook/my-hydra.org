@@ -1,0 +1,46 @@
+#+title: The Hydra Keyboard Macro System
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:5:25
+
+This file contains Plugins and configuration for the hydra hotkey macro package.
+
+=hydra= is a system for defining a hotkey as a "gateway" to a group of
+related hotkey commands. For instance, =C-*= could be mapped to the hydra
+for zooming the current window in and out with the =j= and =k= keys. In fact,
+such a hydra is defined within this file! To get rid of (or slay) the hydra,
+all you have to do is hit any other key not defined within the current hydra.
+After you do that, the hydra disappears, and the key that you just hit to
+slay the hydra performs its normal function. Thus, if you were zooming in and
+out with the =j= and =k= keys after hitting =C-*= and you hit =p= to slay the
+hydra, then assuming you are using =evil-mode=, the hydra would disappear and
+the contents of the selected paste register would be pasted at point.
+
+* Hydras
+  This is where we define our hydras for use in various modes.
+
+** hydra-zoom
+   This is a simple, nearly trivial hydra used as an example and starting point
+   for creating more complex specimens. All that =hydra-zoom= accomplishes is
+   defining a zoom in/out hydra for the global keymap.
+
+#+begin_src emacs-lisp :tangle yes
+       ;; Check spelling as you type.
+       (flyspell-mode 1)
+  (defun define-hydra-zoom ()
+    "Wrapper function for defhydra hydra-zoom"
+
+    (defhydra hydra-zoom (global-map "C-*")
+    "Zoom in/out in the current window:"
+    ("k" text-scale-increase "in")
+    ("j" text-scale-decrease "out")))
+#+end_src
+
+* use-package macro
+
+#+begin_src emacs-lisp :tangle yes
+(use-package hydra
+  :after (evil evil-collection)
+  :config
+  (define-hydra-zoom))
+#+end_src

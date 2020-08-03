@@ -1,0 +1,15 @@
+#+title:  Ivy
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+Ivy is an alternative to =helm=, and I do not currently use it.
+This file is essentially a stub for future development.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ivy
+                                          ;:commands ivy-mode ; Currently using helm instead
+                                          ;:config (setq ivy-use-virtual-buffers t)
+                                          ;(setq enable-recursive-minibuffers t)
+    )
+#+end_src

@@ -1,0 +1,14 @@
+#+title:  Rainbow Mode
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Colorize color names/hex codes in buffers to help you visualize what actual
+color a name refers to.  Very handy!
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rainbow-mode
+    :hook
+    ;; Automatically turn on rainbow-mode when editing a source code file
+    ((prog-mode org-mode) . rainbow-mode))
+#+end_src

@@ -1,0 +1,214 @@
+#!/usr/bin/env bash
+
+# Exit on error
+set -e
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
+declare VERBOSE=false;
+declare DESKTOP_ENV;
+declare XINIT_FILE="$HOME/.xinitrc";
+declare PACKAGES_FILE="$DOTFILES_REPO/init/package_files/arch_packages.txt";
+# }}}
+
+# Imports {{{
+source "${HOME}/.vars";
+source "${HOME}/.dirs";
+source "${IMPORT}/colors.bash";
+source "${IMPORT}/functions_log.bash";
+# }}}
+
+# Help function {{{
+_help () {
+  cat <<EOF
+${THIS_EXEC}
+
+Initialize a new Arch Linux installation.
+
+WARNING: This script installs a bunch of packages.
+You may want to look at the list of packages in the script
+and comment out the ones you don't want.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print this message and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+
+  -d | --desktop-env <GNOME|KDE|i3>
+    Install and configure the given desktop environment.
+EOF
+exit 0;
+}
+# }}}
+
+# Desktop functions {{{
+configure_kde() {
+  cat <<EOF > "$XINIT_FILE"
+exec startkde
+EOF
+}
+
+configure_gnome() {
+  sudo systemctl enable gdm.service;
+  set_gnome_power_save_options;
+  cat <<EOF > "$XINIT_FILE"
+export GDK_BACKEND=x11
+exec gnome-session
+EOF
+}
+
+configure_i3() {
+  cat <<EOF > "$XINIT_FILE"
+exec i3
+EOF
+}
+
+install_gnome() {
+  sudo pacman -S \
+    gnome \
+    ;
+}
+
+install_kde() {
+  sudo pacman -S \
+    plasma \
+    ;
+}
+
+install_i3() {
+  sudo pacman -S \
+    i3-gaps \
+    i3status \
+    dmenu \
+    lightdm \
+    lightdm-webkit2-greeter \
+    lightdm-webkit2-theme-litarvan \
+    ;
+}
+
+install_desktop_env() {
+  if [[ -n "$DESKTOP_ENV" ]]; then
+    case "$DESKTOP_ENV" in
+      "GNOME")
+        install_gnome;
+        configure_gnome;
+        ;;
+      "KDE")
+        install_kde;
+        configure_kde;
+        ;;
+      "i3")
+        install_i3;
+        configure_i3;
+        ;;
+    esac
+  fi
+}
+# }}}
+
+# Primary functions {{{
+install_arch_packages() {
+  sudo pacman -S --needed - < "$PACKAGES_FILE";
+
+  if [[ -n "$DESKTOP_ENV" ]]; then
+    install_desktop_env
+  fi
+}
+
+init_powerline() {
+  local installString="install --user --upgrade powerline-status powerline-gitstatus";
+
+  eval "pip ${installString}";
+  eval "pip2 ${installString}";
+}
+
+init_neovim() {
+  local installString="install --user --upgrade neovim";
+  eval "pip ${installString}";
+  eval "pip2 ${installString}";
+}
+
+set_gnome_power_save_options {
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 3600
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type hibernate
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 1800
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type hibernate
+  gsettings set org.gnome.settings-daemon.plugins.power power-button-action suspend
+  gsettings set org.gnome.desktop.lockdown disable-lock-screen false
+}
+
+unmute_sound_channels() {
+  amixer sset Master unmute;
+  amixer sset Speaker unmute;
+  amixer sset Headphone unmute;
+  amixer sset Master 100%;
+}
+
+do_configure() {
+  unmute_sound_channels;
+}
+
+main() {
+  log_info "Initializing Arch Linux";
+
+  install_arch_packages;
+  init_powerline;
+  init_neovim;
+  do_configure;
+
+  log_info "Done.";
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvd: --long help,verbose,desktop-env: -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true;
+      shift;
+      ;;
+
+    -h | --help)
+      _help;
+      shift;
+      ;;
+
+    -d | --desktop-env)
+      case "$2" in
+        "")
+          shift 2;
+          ;;
+        *)
+          DESKTOP_ENV="$(echo "$2" | tr '[:lower:]' '[:upper:]')";
+          shift 2;
+          ;;
+      esac
+      ;;
+
+    --)
+      shift;
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to init_arch"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main;
+
+# vim:foldenable:foldmethod=marker:

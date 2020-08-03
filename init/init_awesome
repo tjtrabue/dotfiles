@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
+
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare VERBOSE=false;
+
+declare BASE_GIT_URL="https://github.com";
+declare WIDGETS_REPO_URL="${BASE_GIT_URL}/streetturtle/awesome-wm-widgets.git"
+declare CYCLEFOCUS_REPO_URL="${BASE_GIT_URL}/blueyed/awesome-cyclefocus"
+
+declare CONFIG_HOME="${HOME}/.config"
+declare AWESOME_CONFIG_DIR="${CONFIG_HOME}/awesome"
+declare WIDGETS_REPO_DIR="${AWESOME_CONFIG_DIR}/awesome-wm-widgets"
+declare CYCLEFOCUS_REPO_DIR="${AWESOME_CONFIG_DIR}/awesome-cyclefocus"
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash";
+source "${IMPORT}/functions_log.bash";
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Initialize configuration for the Awesome window manager.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+exit 0;
+}
+
+clone_extra_repositories() {
+  log_info "Cloning additional features repositories"
+
+  if [ ! -d "$WIDGETS_REPO_DIR" ]; then
+    git clone "$WIDGETS_REPO_URL" "$WIDGETS_REPO_DIR"
+  else
+    warn "Widgets directory already present at $WIDGETS_REPO_DIR"
+  fi
+
+  if [ ! -d "$CYCLEFOCUS_REPO_DIR" ]; then
+    git clone "$CYCLEFOCUS_REPO_URL" "$CYCLEFOCUS_REPO_DIR"
+  else
+    warn "cyclefocus directory already present at $CYCLEFOCUS_REPO_DIR"
+  fi
+}
+
+main() {
+  print_header "Configuring Awesome WM"
+  clone_extra_repositories;
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true;
+      shift;
+      ;;
+
+    -h | --help)
+      _help;
+      shift;
+      break;
+      ;;
+
+    --)
+      shift;
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main;
+
+# vim:foldenable:foldmethod=marker:

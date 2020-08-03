@@ -1,0 +1,8 @@
+#+title:  e2ansi
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+#+begin_src emacs-lisp :tangle yes
+(use-package e2ansi)
+#+end_src

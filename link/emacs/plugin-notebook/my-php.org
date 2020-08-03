@@ -1,0 +1,13 @@
+#+title:  PHP Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+Emacs plugins and configuration for the PHP dynamic web programming language.
+
+* php-mode
+  Major mode for editing PHP files.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package php-mode)
+#+end_src

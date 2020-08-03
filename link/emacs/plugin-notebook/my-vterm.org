@@ -1,0 +1,14 @@
+#+title:  vterm Terminal Emulator
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+=vterm= is a full on terminal emulator for Emacs. It is not at all like
+=eshell=, which is a custom shell written in Emacs Lisp completely different
+than Bash, Zsh, etc. In contrast, =vterm= is a terminal emulator much like
+=xterm=, or =termite=, which in turn can run any shell installed on your
+operating system like Bash or Zsh.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package vterm)
+#+end_src

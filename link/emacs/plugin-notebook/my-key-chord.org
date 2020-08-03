@@ -1,0 +1,43 @@
+#+title:  Key Chord Configuration
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+It is difficult in Emacs to map a series of keystrokes to a particular function,
+which is a common task in Vim. Emacs tends to favor mapping a large combination
+of keys hit in unison, also known as key chords. The =key-chord= library
+provides functionality for achieving Vim-like key mappings within Emacs.
+
+* Variable definitions
+#+begin_src emacs-lisp :tangle yes
+  (defvar my/key-chord-config-file
+    (concat (file-name-sans-extension
+              (or load-file-name buffer-file-name)) ".org")
+    "The full path to the file containing my key-chord configuration.")
+#+end_src
+
+* Function definitions
+
+#+begin_src emacs-lisp :tangle yes
+  (defun rechord ()
+    "Re-load the my-key-chord config file to fix issues."
+    (interactive)
+    (org-babel-load-file my/key-chord-config-file))
+#+end_src
+
+* key-chord
+#+begin_src emacs-lisp :tangle yes
+  (use-package key-chord
+    :after (evil)
+    :config
+    (key-chord-mode 1)
+    ;; Revert back to normal mode with 'jk'
+    ;; Have to use key-chord.el because define-key will keep us from
+    ;; ever typing 'j' as text since j will thitherto be a leader key in
+    ;; evil-insert-state-mode.
+    (let ((revert-to-normal "jk"))
+      (key-chord-define evil-insert-state-map revert-to-normal
+                        'evil-normal-state)
+      (key-chord-define evil-replace-state-map revert-to-normal
+                        'evil-normal-state)))
+#+end_src
