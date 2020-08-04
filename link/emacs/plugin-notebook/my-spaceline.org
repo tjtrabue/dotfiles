@@ -13,6 +13,12 @@ right now I'm tempted to say that =spaceline= is not as easy to configure,
 especially since I had to dig through its source code to figure out how to
 change its colors.
 
+Currently not using lexical binding because it's breaking my loop.
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: nil; -*-
+
+#+end_src
+
 * spaceline
   =spaceline= is a specialized =powerline= status bar that's super pretty and
   informative. Getting =spaceline= to work with its default configuration is
@@ -52,7 +58,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 #+begin_src emacs-lisp :tangle yes
   (defun my/set-spaceline-evil-faces ()
     "Set the spaceline colors to match custom Emacs theme."
-    (dolist (s `((spaceline-custom-evil-normal
+    (cl-loop for s in `((spaceline-custom-evil-normal
                   ,(my/get-color-orange) "Evil normal state face.")
                 (spaceline-custom-evil-insert
                   ,(my/get-color-green) "Evil insert state face.")
@@ -69,7 +75,8 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
                 (spaceline-modified
                   ,(my/get-color-aqua) "Modified buffer face.")
                 (spaceline-read-only
-                  ,(my/get-color-purple) "Read-only buffer face.")))
+                  ,(my/get-color-purple) "Read-only buffer face."))
+            do
             (eval `(defface ,(nth 0 s)
                     `((t (:background ,(nth 1 s)
                             :foreground ,(my/get-color-alt-background)

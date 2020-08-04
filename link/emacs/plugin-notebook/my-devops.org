@@ -5,6 +5,12 @@
 
 This file configures various dev-ops packages for Emacs.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * ansible
 #+begin_src emacs-lisp :tangle yes
 (use-package ansible)

@@ -9,6 +9,12 @@ explorer known as =dired=.
 To use =image-dired= mode properly, you must install =exiftool= on your system.
 This is a Perl based tool, and its installation varies from system to system.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * dired+
   Use the improved =dired+= plugin for a better =dired= experience.
 

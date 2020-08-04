@@ -5,6 +5,12 @@
 
 Here are a few Emacs plugins and settings for the =go= programming language.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * go-mode
 
 #+begin_src emacs-lisp :tangle yes

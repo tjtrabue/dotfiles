@@ -8,6 +8,12 @@
 debuggers. It is quite feature-rich, and I recommend you take a look at its
 [[https://github.com/realgud/realgud][GitHub page]] for more information.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * realgud
   This is the debugging package itself.
 

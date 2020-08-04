@@ -7,6 +7,12 @@ Adds cool colors to delimiters such as parentheses, braces, brackets, etc.
 in order to highlight their depth relative to one another.  Super handy for
 ELisp and other delimiter-heavy languages.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   (use-package rainbow-delimiters
     :config

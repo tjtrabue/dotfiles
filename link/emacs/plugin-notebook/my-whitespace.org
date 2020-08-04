@@ -11,6 +11,12 @@ professional software developer. This practice accomplishes two important tasks:
 first, it ensures that any commits you make to a code base have as few edited
 lines as is necessary, and second, it keeps your code contributions clean.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * whitespace-cleanup-mode
   Cleans trailing whitespace on buffer save, but only for lines of code that
   have been edited.

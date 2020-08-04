@@ -6,6 +6,12 @@
 Draws a Vim-like vertical ruler at the number indicated by the =fill-column=
 variable.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
 (use-package fill-column-indicator
   ;; WARNING: Highly problematic right now.

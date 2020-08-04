@@ -5,6 +5,12 @@
 
 Emacs plugins and configuration for the PHP dynamic web programming language.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * php-mode
   Major mode for editing PHP files.
 

@@ -4,6 +4,12 @@
 #+date:   2020:06:25
 #+tags:   os operating-system
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * system-packages
   Manage your operating system packages from inside Emacs. =system-packages=
   know about a lot of package managers by default, but you can always register

@@ -10,6 +10,12 @@ mode due to Emacs 27's native JSON parsing capability.
 If you run =lsp= and get a message like '<filename> not in project or was
 blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Notes about specific LSP servers
   - *CCLS*: Available as an AUR packge on Arch Linux. This LSP server requires the
     =ccls= Emacs package from MELPA, as well.

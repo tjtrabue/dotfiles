@@ -7,6 +7,12 @@
 =company= is a fantastic alternative to =auto-complete= for as-you-type text
 completion.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * company
   This is the configuration section for =company= itself.
 

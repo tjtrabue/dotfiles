@@ -11,6 +11,12 @@ of tools, notably *Semantic* (intellisense, code completion, navigation), *EDE*
 (project management and library inclusion), and *Senator* (tag integration and
 simpler code completion/navigation).
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Important Notes on CEDET Tools (Please Read!)
 ** Semantic Notes
   Semantic is a semantic analyzer for various coding languages. It is also old,

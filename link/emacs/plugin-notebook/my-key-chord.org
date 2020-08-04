@@ -8,6 +8,12 @@ which is a common task in Vim. Emacs tends to favor mapping a large combination
 of keys hit in unison, also known as key chords. The =key-chord= library
 provides functionality for achieving Vim-like key mappings within Emacs.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Variable definitions
 #+begin_src emacs-lisp :tangle yes
   (defvar my/key-chord-config-file

@@ -6,6 +6,12 @@
 =beacon= is a global minor-mode for briefly highlighting your cursor as it jumps
 around a window. Very pretty and very helpful.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   (use-package beacon
     :config

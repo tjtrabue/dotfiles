@@ -9,6 +9,12 @@ systems.  It behaves similarly to =grep= and =ag=, but is faster than either of
 them. I highly recommend that you use =rg= over =grep= or even =ag= whenever
 possible.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * ag
   Emacs plugin for =the_silver_searcher=.
 

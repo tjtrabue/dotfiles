@@ -3,6 +3,12 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * web-mode
   =web-mode= is the godfather of all website code editing modes in Emacs.
   It is mainly for editing web templates, such as =.jsp= or =.php= files.

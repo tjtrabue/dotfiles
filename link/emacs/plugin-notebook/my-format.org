@@ -5,6 +5,12 @@
 
 Assorted code formatting plugins.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Variables
 
 #+begin_src emacs-lisp :tangle yes

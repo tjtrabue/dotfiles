@@ -6,6 +6,12 @@
 Pretty straightforward. This package provides a function called =restart-emacs=
 that does just that: restarts Emacs.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   (use-package restart-emacs)
 #+end_src

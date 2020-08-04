@@ -16,6 +16,12 @@ Note that all =persp-mode= keybinding keys must proceed after the
 course can be configured to whatever you like. I rebound the keymap prefix
 because I use =C-c p= as my =projectile= keymap prefix.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * persp-mode
   The main package.
 

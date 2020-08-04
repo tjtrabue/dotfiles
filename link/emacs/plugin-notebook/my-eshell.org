@@ -11,6 +11,12 @@ lot of getting used to, but the reward is well worth the effort.  Most of the
 functions within this file were taken directly or adapted from Howard Abrams'
 eshell dotfiles.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * eshell
   This is the configuration for =eshell= itself. We use =use-package= to specify
   the configuration for =eshell= even though =eshell= is built-in to Emacs. This

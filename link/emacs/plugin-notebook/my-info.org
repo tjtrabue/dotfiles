@@ -5,6 +5,12 @@
 
 Contains additional packages and configuration for Emacs' built-in =info-mode=.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Download info+ from the EmacsWiki
   Use =info+=
   The custom code below is used to grab the working version from the EmacsWiki website.

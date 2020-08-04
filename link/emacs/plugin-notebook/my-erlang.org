@@ -5,6 +5,12 @@
 
 This file sets up Erlang integration for Emacs.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
 (use-package erlang)
 #+end_src

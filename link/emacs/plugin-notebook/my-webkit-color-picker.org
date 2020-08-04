@@ -5,6 +5,12 @@
 
 This is a cool color picker written as an Xwidget.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
 (use-package webkit-color-picker)
 #+end_src

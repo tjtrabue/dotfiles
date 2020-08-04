@@ -7,6 +7,12 @@
 debuggers. It builds on the LanguageServerProtocol to perform its duties. In
 fact, many modern LSP servers also provide a DAP server.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   (use-package dap-mode
     :after (lsp-mode lsp-treemacs)

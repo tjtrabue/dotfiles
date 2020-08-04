@@ -7,6 +7,12 @@ Contains configuration for the SLIME (Superior Lisp Interaction
 Mode for Emacs) package used to integrate Emacs with Common Lisp.
 SLIME essentially turns Emacs into a Common Lisp IDE.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   (use-package slime
     :hook

@@ -9,6 +9,15 @@ than Bash, Zsh, etc. In contrast, =vterm= is a terminal emulator much like
 =xterm=, or =termite=, which in turn can run any shell installed on your
 operating system like Bash or Zsh.
 
+Not currently using =vterm= because EShell is largely a better alternative, and
+an actual terminal emulator is usually better when EShell isn't enough.
+
+Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-(use-package vterm)
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package vterm)
 #+end_src

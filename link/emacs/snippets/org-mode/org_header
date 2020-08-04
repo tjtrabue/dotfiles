@@ -9,3 +9,10 @@
 #+tags:   $3
 
 $0
+
+Needed for performance improvements:
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src

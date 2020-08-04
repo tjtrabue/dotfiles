@@ -6,6 +6,12 @@
 Plugins and configuration for Emacs' help features.
 See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][EmacsWiki]] for more information.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * helpful
   =helpful= is an alternative to Emacs' built-in help system that provides far
   more contextual information. It is essentially a drop-in replacement for the

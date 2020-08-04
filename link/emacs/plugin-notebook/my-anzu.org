@@ -5,6 +5,12 @@
 
 =anzu= highlights all searches as you type.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * anzu
 
 #+begin_src emacs-lisp :tangle yes

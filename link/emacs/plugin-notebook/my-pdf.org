@@ -7,6 +7,12 @@
 This file contains plugin specifications for integrating various PDF tools with
 Emacs.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools)
 #+end_src

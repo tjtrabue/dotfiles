@@ -5,6 +5,12 @@
 
 Configuration for all things helm-related, including helm-projectile integration.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * helm
   =helm= is a generic completion framework for Emacs that is far more powerful
   than basic tab-completion. I don't want to rewrite the whole Bible on Helm

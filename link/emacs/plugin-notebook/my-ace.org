@@ -9,6 +9,12 @@ quickly move around a buffer, or ace-window used as a replacement for C-o.
 *NOTE:* Most keybindings are set in my-evil.el since that is where
       evil-mode's map leader key bindings must be set.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Ace Jump Mode
 #+begin_src emacs-lisp :tangle yes
   (use-package ace-jump-mode)

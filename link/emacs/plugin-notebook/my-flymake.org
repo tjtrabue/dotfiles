@@ -7,16 +7,22 @@
 =flycheck= supersedes =flymake=, so try to use that tool instead whenever
 possible.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * Plugins
 ** haskell-multi
 
 #+begin_src emacs-lisp :tangle yes
-(use-package flymake-haskell-multi
-  ;; NOTE: Not loading anything right now because of lsp-mode.
-  ;; :hook
-  ;; ((haskell-mode)
-  ;;   . (lambda () (flymake-haskell-multi-load)))
-  )
+  ;; (use-package flymake-haskell-multi
+  ;;   ;; NOTE: Not loading anything right now because of lsp-mode.
+  ;;   ;; :hook
+  ;;   ((haskell-mode)
+  ;;     . (lambda () (flymake-haskell-multi-load)))
+  ;;   )
 #+end_src
 
 ** lua

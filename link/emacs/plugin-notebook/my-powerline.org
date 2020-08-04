@@ -8,6 +8,12 @@ It started as a plugin for customizing Vim's modeline, and due to its popularity
 it has grown into a staple of nearly every persistent UNIX application, terminal
 or GUI oriented.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes
 (use-package powerline
   :config (powerline-default-theme))

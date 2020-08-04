@@ -7,6 +7,12 @@ The Extensible VI Layer (AKA evil.  AKA the only way to use Emacs).
 =evil-mode= is a fully featured VI emulator for Emacs, even improving upon the
 features of Vim at times.
 
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
 * evil-mode
   The Evil mode plugin itself.
 

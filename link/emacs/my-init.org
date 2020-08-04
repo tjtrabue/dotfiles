@@ -1,4 +1,4 @@
-#+title: emacs Initialization File
+#+title: Emacs Initialization File
 #+author: Thomas Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:5:25
@@ -6,6 +6,13 @@
 This Org document contains my primary Emacs configuration. =~/.emacs= only
 holds custom-set-variables and a few core pieces of code needed to load this
 file. The full repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][here]].
+
+We always begin our Org Mode Elisp config files with this line to speed up our
+loads:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
 
 * Require statements
   These are 'require directives used to import elisp modules.
@@ -170,11 +177,6 @@ with straight.el.")
 
   ;; Get rid of scrollbars since l33t programmers don't need any.
   (setq vertical-scroll-bar nil)
-
-  ;; The threshold value used to determine how many bytes can be consed
-  ;; before garbage collection occurs.  This needs to be a larger value
-  ;; than its default for the sake of making lsp-mode usably fast.
-  (setq gc-cons-threshold 100000000)
 
   ;; Increase the amount of bytes Emacs reads per unit time from a given
   ;; process. The initial value is 4KB, far too low for modern day applications.
@@ -530,6 +532,19 @@ lock file."
        (auto-revert-mode 1)))
 #+end_src
 
+** emacs-startup hooks
+   These run after loading init files and handling the command line.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; after startup, it is important you reset this to some reasonable default. A
+  ;; large gc-cons-threshold will cause freezing and stuttering during long-term
+  ;; interactive use. I find these are nice defaults:
+  (add-hook 'emacs-startup-hook #'(lambda ()
+    (setq gc-cons-threshold 16777216
+          gc-cons-percentage 0.1
+          file-name-handler-alist last-file-name-handler-alist)))
+#+end_src
+
 ** prog-mode hooks
 #+begin_src emacs-lisp :tangle yes
   ;; These commands run whenever Emacs finds a file of any programming language.
@@ -628,7 +643,11 @@ lock file."
         ;; to install packages if you specify ':stright t' instead of ':ensure t'.
         ;; If you have set straight-use-package-by-default to t, this is
         ;; unnecessary.
-        (straight-use-package 'use-package))))
+        (straight-use-package 'use-package)
+        ;; Also install use-package-chords for key-chord definitions
+        (use-package use-package-chords
+          :config
+          (key-chord-mode 1)))))
 #+end_src
 
 * Load External Configuration Files
