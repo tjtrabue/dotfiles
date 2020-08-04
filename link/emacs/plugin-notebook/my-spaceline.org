@@ -1,4 +1,4 @@
-#+title:  Spaceline: Fancy Modeline
+#+title:  Spaceline: Fancy SpaceMacs Modeline
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
@@ -13,7 +13,7 @@ right now I'm tempted to say that =spaceline= is not as easy to configure,
 especially since I had to dig through its source code to figure out how to
 change its colors.
 
-Currently not using lexical binding because it's breaking my loop.
+Specifies whether or not to use lexical bindings.
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: nil; -*-
 
@@ -56,33 +56,34 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 ** Functions
 
 #+begin_src emacs-lisp :tangle yes
+(let (face)
   (defun my/set-spaceline-evil-faces ()
     "Set the spaceline colors to match custom Emacs theme."
-    (cl-loop for s in `((spaceline-custom-evil-normal
-                  ,(my/get-color-orange) "Evil normal state face.")
-                (spaceline-custom-evil-insert
-                  ,(my/get-color-green) "Evil insert state face.")
-                (spaceline-custom-evil-emacs
-                  ,(my/get-color-aqua) "Evil emacs state face.")
-                (spaceline-custom-evil-replace
-                  ,(my/get-color-yellow) "Evil replace state face.")
-                (spaceline-custom-evil-visual
-                  ,(my/get-color-foreground) "Evil visual state face.")
-                (spaceline-custom-evil-motion
-                  ,(my/get-color-purple) "Evil motion state face.")
-                (spaceline-unmodified
-                  ,(my/get-color-orange) "Unmodified buffer face.")
-                (spaceline-modified
-                  ,(my/get-color-aqua) "Modified buffer face.")
-                (spaceline-read-only
-                  ,(my/get-color-purple) "Read-only buffer face."))
-            do
-            (eval `(defface ,(nth 0 s)
-                    `((t (:background ,(nth 1 s)
-                            :foreground ,(my/get-color-alt-background)
-                            :inherit 'mode-line)))
-                    ,(nth 2 s)
-                    :group 'spaceline))))
+    (let ((face nil))
+      (dolist (face `((spaceline-custom-evil-normal
+          ,(my/get-color-orange) "Evil normal state face.")
+          (spaceline-custom-evil-insert
+          ,(my/get-color-green) "Evil insert state face.")
+          (spaceline-custom-evil-emacs
+          ,(my/get-color-aqua) "Evil emacs state face.")
+          (spaceline-custom-evil-replace
+          ,(my/get-color-yellow) "Evil replace state face.")
+          (spaceline-custom-evil-visual
+          ,(my/get-color-foreground) "Evil visual state face.")
+          (spaceline-custom-evil-motion
+          ,(my/get-color-purple) "Evil motion state face.")
+          (spaceline-unmodified
+          ,(my/get-color-orange) "Unmodified buffer face.")
+          (spaceline-modified
+          ,(my/get-color-aqua) "Modified buffer face.")
+          (spaceline-read-only
+          ,(my/get-color-blue) "Read-only buffer face.")))
+        (eval `(defface ,(nth 0 face)
+          `((t (:background ,(nth 1 face)
+          :foreground ,(my/get-color-alt-background)
+          :inherit 'mode-line)))
+                      ,(nth 2 face)
+                    :group 'spaceline) 'lexical)))))
 
   (defun my/spaceline-highlight-face-evil-state ()
   "Set the highlight face depending on the evil state.

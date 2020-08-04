@@ -1,5 +1,4 @@
-;; -*- lexical-binding: t; -*-
-;;; .emacs --- The standard Emacs configuration file
+;;; .emacs --- summary -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;  This is the standard Emacs configuration file.  It uses the Emacs Lisp
