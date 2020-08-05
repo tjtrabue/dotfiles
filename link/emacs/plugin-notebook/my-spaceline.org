@@ -13,9 +13,10 @@ right now I'm tempted to say that =spaceline= is not as easy to configure,
 especially since I had to dig through its source code to figure out how to
 change its colors.
 
-Specifies whether or not to use lexical bindings.
+Specifies whether or not to use lexical bindings. Lexical bindings speed up
+Elisp quite a bit.
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: nil; -*-
+;; -*- lexical-binding: t; -*-
 
 #+end_src
 
@@ -56,11 +57,10 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 ** Functions
 
 #+begin_src emacs-lisp :tangle yes
-(let (face)
   (defun my/set-spaceline-evil-faces ()
     "Set the spaceline colors to match custom Emacs theme."
-    (let ((face nil))
-      (dolist (face `((spaceline-custom-evil-normal
+    (let (face-color face)
+      (dolist (face-color `((spaceline-custom-evil-normal
           ,(my/get-color-orange) "Evil normal state face.")
           (spaceline-custom-evil-insert
           ,(my/get-color-green) "Evil insert state face.")
@@ -78,12 +78,13 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           ,(my/get-color-aqua) "Modified buffer face.")
           (spaceline-read-only
           ,(my/get-color-blue) "Read-only buffer face.")))
-        (eval `(defface ,(nth 0 face)
-          `((t (:background ,(nth 1 face)
+        (setq face `(defface ,(nth 0 face-color)
+          '((t :background ,(nth 1 face-color)
           :foreground ,(my/get-color-alt-background)
-          :inherit 'mode-line)))
-                      ,(nth 2 face)
-                    :group 'spaceline) 'lexical)))))
+          :inherit 'mode-line))
+                      ,(nth 2 face-color)
+                    :group 'spaceline))
+        (eval face 'lexical))))
 
   (defun my/spaceline-highlight-face-evil-state ()
   "Set the highlight face depending on the evil state.
