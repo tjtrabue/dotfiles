@@ -1,8 +1,9 @@
 #+title:  Spaceline: Fancy SpaceMacs Modeline
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:26
-#+tags:   spaceline modeline theme colors
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:05:26
+#+property: header-args:emacs-lisp :lexical t
+#+tags:     spaceline modeline theme colors
 
 Use Spacemacs' pretty modeline without using Spacemacs itself.  This is one of
 the prettier features available for Emacs. One area where Emacs absolutely lags
@@ -43,14 +44,14 @@ Elisp quite a bit.
    when changing color based on evil's state.
 
 #+begin_src emacs-lisp :tangle yes
-    (defvar my/spaceline-evil-state-faces
-        '((normal . spaceline-custom-evil-normal)
-            (insert . spaceline-custom-evil-insert)
-            (emacs . spaceline-custom-evil-emacs)
-            (replace . spaceline-custom-evil-replace)
-            (visual . spaceline-custom-evil-visual)
-            (motion . spaceline-custom-evil-motion))
-        "Association list mapping evil states to their corresponding highlight
+  (defvar my/spaceline-evil-state-faces
+      '((normal . spaceline-custom-evil-normal)
+          (insert . spaceline-custom-evil-insert)
+          (emacs . spaceline-custom-evil-emacs)
+          (replace . spaceline-custom-evil-replace)
+          (visual . spaceline-custom-evil-visual)
+          (motion . spaceline-custom-evil-motion))
+      "Association list mapping evil states to their corresponding highlight
 faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 #+end_src
 
@@ -69,7 +70,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           (spaceline-custom-evil-replace
           ,(my/get-color-yellow) "Evil replace state face.")
           (spaceline-custom-evil-visual
-          ,(my/get-color-aqua) "Evil visual state face.")
+          ,(my/get-color-blue) "Evil visual state face.")
           (spaceline-custom-evil-motion
           ,(my/get-color-purple) "Evil motion state face.")
           (spaceline-unmodified
@@ -77,7 +78,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           (spaceline-modified
           ,(my/get-color-purple) "Modified buffer face.")
           (spaceline-read-only
-          ,(my/get-color-blue) "Read-only buffer face.")))
+          ,(my/get-color-aqua) "Read-only buffer face.")))
         (setq face `(defface ,(nth 0 face-color)
           '((t :background ,(nth 1 face-color)
           :foreground ,(my/get-color-alt-background)
