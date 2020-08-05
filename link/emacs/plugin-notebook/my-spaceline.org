@@ -69,13 +69,13 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           (spaceline-custom-evil-replace
           ,(my/get-color-yellow) "Evil replace state face.")
           (spaceline-custom-evil-visual
-          ,(my/get-color-foreground) "Evil visual state face.")
+          ,(my/get-color-aqua) "Evil visual state face.")
           (spaceline-custom-evil-motion
           ,(my/get-color-purple) "Evil motion state face.")
           (spaceline-unmodified
           ,(my/get-color-orange) "Unmodified buffer face.")
           (spaceline-modified
-          ,(my/get-color-aqua) "Modified buffer face.")
+          ,(my/get-color-purple) "Modified buffer face.")
           (spaceline-read-only
           ,(my/get-color-blue) "Read-only buffer face.")))
         (setq face `(defface ,(nth 0 face-color)

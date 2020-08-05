@@ -52,67 +52,81 @@ THEME is one of 'night, 'day, 'bright, 'blue, or 'eighties."
   (let ((theme-alist (my/get-theme-colors-alist)))
     (cdr (assq color theme-alist))))
 
-;; Convenience functions for retrieving specific colors
+;;; Convenience functions for retrieving specific colors
+
+;;;###autoload
 (defun my/get-color-background ()
   "Return the BACKGROUND color within the currently set theme."
   (interactive)
   (my/get-color 'background))
 
+;;;###autoload
 (defun my/get-color-alt-background ()
   "Return the ALT-BACKGROUND color within the currently set theme."
   (interactive)
   (my/get-color 'alt-background))
 
+;;;###autoload
 (defun my/get-color-current-line ()
   "Return the CURRENT-LINE color within the currently set theme."
   (interactive)
   (my/get-color 'current-line))
 
+;;;###autoload
 (defun my/get-color-selection ()
   "Return the SELECTION color within the currently set theme."
   (interactive)
   (my/get-color 'selection))
 
+;;;###autoload
 (defun my/get-color-foreground ()
   "Return the FOREGROUND color within the currently set theme."
   (interactive)
   (my/get-color 'foreground))
 
+;;;###autoload
 (defun my/get-color-comment ()
   "Return the COMMENT color within the currently set theme."
   (interactive)
   (my/get-color 'comment))
 
+;;;###autoload
 (defun my/get-color-red ()
   "Return the RED color within the currently set theme."
   (interactive)
   (my/get-color 'red))
 
+;;;###autoload
 (defun my/get-color-orange ()
   "Return the ORANGE color within the currently set theme."
   (interactive)
   (my/get-color 'orange))
 
+;;;###autoload
 (defun my/get-color-yellow ()
   "Return the YELLOW color within the currently set theme."
   (interactive)
   (my/get-color 'yellow))
 
+;;;###autoload
 (defun my/get-color-green ()
   "Return the GREEN color within the currently set theme."
   (interactive)
   (my/get-color 'green))
 
+;;;###autoload
 (defun my/get-color-aqua ()
   "Return the AQUA color within the currently set theme."
   (interactive)
   (my/get-color 'aqua))
 
+;;;###autoload
 (defun my/get-color-blue ()
   "Return the BLUE color within the currently set theme."
   (interactive)
   (my/get-color 'blue))
 
+;;;###autoload
 (defun my/get-color-purple ()
   "Return the PURPLE color within the currently set theme."
   (interactive)
