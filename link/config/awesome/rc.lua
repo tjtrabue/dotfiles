@@ -2,6 +2,18 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+-- REMOVE THIS ONCE AWESOME UPDATES TO LUA 5.4!
+--[[
+  Right now this statement is necessary for Awesome to find our user-installed
+  LuaRocks for Lua 5.3. The reason for this is that once our system-wide Lua
+  version got bumped up to 5.4 it also updated luarocks to be a Lua 5.4
+  package. Thus, the 'pcall(require, "luarocks.loader")' line above this only
+  works for Lua 5.4 luarocks packages. However, Awesome WM is still a Lua 5.3
+  application and therefore will not see our system-wide luarocks installation
+  at all, meaning that we have to manually set the luarocks path here.
+--]]
+package.path = package.path .. ";" .. os.getenv("HOME") .. "/.luarocks/share/lua/5.3/?.lua"
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
