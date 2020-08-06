@@ -2,7 +2,14 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+-- Pull in helper functions
+local helpers = require("my-awm.helper-fns")
+
+-- The version of Lua currently running.
+local my_ver = string.sub(_VERSION, string.find(_VERSION, "%d.%d"))
+
 -- REMOVE THIS ONCE AWESOME UPDATES TO LUA 5.4!
+-- Test before you remove it, of course.
 --[[
   Right now this statement is necessary for Awesome to find our user-installed
   LuaRocks for Lua 5.3. The reason for this is that once our system-wide Lua
@@ -12,8 +19,7 @@ pcall(require, "luarocks.loader")
   application and therefore will not see our system-wide luarocks installation
   at all, meaning that we have to manually set the luarocks path here.
 --]]
-package.path = package.path .. ";" .. os.getenv("HOME") .. "/.luarocks/share/lua/5.3/?.lua"
-package.path = package.path .. ";" .. os.getenv("HOME") .. "/.luarocks/share/lua/5.3/?/init.lua"
+helpers.add_luarocks_paths(my_ver)
 
 -- Standard awesome library
 local gears = require("gears")
@@ -30,7 +36,6 @@ local menubar = require("menubar")
 -- Import local components
 require("my-awm.error")
 local my_vars = require("my-awm.vars")
-local my_helpers = require("my-awm.helper-fns")
 local wp_util = require("my-awm.wallpaper")
 local mouse_buttons = require("my-awm.mouse.mouse-buttons")
 local autorun = require("my-awm.autorun")
