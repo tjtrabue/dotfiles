@@ -13,6 +13,7 @@ pcall(require, "luarocks.loader")
   at all, meaning that we have to manually set the luarocks path here.
 --]]
 package.path = package.path .. ";" .. os.getenv("HOME") .. "/.luarocks/share/lua/5.3/?.lua"
+package.path = package.path .. ";" .. os.getenv("HOME") .. "/.luarocks/share/lua/5.3/?/init.lua"
 
 -- Standard awesome library
 local gears = require("gears")
