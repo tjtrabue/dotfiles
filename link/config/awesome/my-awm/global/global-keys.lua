@@ -5,6 +5,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+-- For a better Modkey+Tab cycling experience (must be cloned)
+local cyclefocus = require("awesome-cyclefocus")
 
 local my_vars = require("my-awm.vars")
 local main_menu = require("my-awm.main-menu")

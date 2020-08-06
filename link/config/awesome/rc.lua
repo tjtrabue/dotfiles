@@ -5,7 +5,7 @@ pcall(require, "luarocks.loader")
 -- Pull in helper functions
 local helpers = require("my-awm.helper-fns")
 
--- The version of Lua currently running.
+-- The numeric version of Lua currently running (like '5.3').
 local my_ver = string.sub(_VERSION, string.find(_VERSION, "%d.%d"))
 
 -- REMOVE THIS ONCE AWESOME UPDATES TO LUA 5.4!
@@ -40,16 +40,8 @@ local wp_util = require("my-awm.wallpaper")
 local mouse_buttons = require("my-awm.mouse.mouse-buttons")
 local autorun = require("my-awm.autorun")
 
--- Load additional features
--- For a better Modkey+Tab cycling experience (must be cloned)
-local cyclefocus = require("awesome-cyclefocus")
-
 -- Load file containing all layouts defined for Awesome session
 require("my-awm.layout")
-
--- Menu
--- Menu for the Awesome button and right-click context
-local main_menu = require("my-awm.main-menu")
 
 -- Menubar configuration
 -- Set the terminal for applications that require it
@@ -63,12 +55,12 @@ awful.screen.connect_for_each_screen(screen_util.connect_screen)
 root.buttons(mouse_buttons)
 
 -- Key bindings
-local globalkeys = require("my-awm.global.global-keys")
+local global_keys = require("my-awm.global.global-keys")
 
 require("my-awm.taglist.taglist-keys")
 
 -- Set keys
-root.keys(globalkeys)
+root.keys(global_keys)
 
 -- Apply rules to new clients as they appear
 require("my-awm.client.client-rules")
