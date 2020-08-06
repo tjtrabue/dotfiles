@@ -82,6 +82,8 @@ src() {
   # Re-read the ~/.inputrc file.
   [ -f "${HOME}/.inputrc" ] && bind -f "${HOME}/.inputrc"
   src_os
+  # Make sure LuaRocks are discoverable
+  src_lua_path
   # Also source the path file
   spath
 }

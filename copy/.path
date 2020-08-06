@@ -2,8 +2,8 @@
 /sbin
 /usr/bin
 /usr/bin/vendor_perl
-/usr/local/bin
 /usr/sbin
+/usr/local/bin
 $HOME/bin
 $HOME/.local/bin
 $HOME/.dotfiles/bash/bin
