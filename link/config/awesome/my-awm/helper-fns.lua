@@ -1,3 +1,5 @@
+local paths = require("my-awm.paths")
+
 -- Helper functions for use in configuring Awesome WM.
 local helpers = {}
 
@@ -18,8 +20,7 @@ end
   @param lua_version The lua version to add LuaRocks for (such as '5.3')
 --]]
 function helpers.add_luarocks_paths(lua_version)
-    local luarocks_user_home = os.getenv("HOME") .. "/.luarocks"
-    local luarocks_lib_home = luarocks_user_home .. "/share/lua/" .. lua_version
+    local luarocks_lib_home = paths.luarocks_user_dir .. "/share/lua/" .. lua_version
     -- Add important lib paths to package.path
     add_to_package_path(luarocks_lib_home .. "/?.lua")
     add_to_package_path(luarocks_lib_home .. "/?/init.lua")

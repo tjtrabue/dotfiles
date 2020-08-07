@@ -57,6 +57,7 @@ root.buttons(mouse_buttons)
 -- Key bindings
 local global_keys = require("my-awm.global.global-keys")
 
+-- Set taglist keybindings.
 require("my-awm.taglist.taglist-keys")
 
 -- Set keys

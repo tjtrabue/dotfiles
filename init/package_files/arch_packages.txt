@@ -11,6 +11,7 @@ biber
 cabal-install
 clang
 cmake
+cmus
 ctags
 cups
 cups-pdf
@@ -44,6 +45,7 @@ inkscape
 iotop
 iproute2
 jdk-openjdk
+khal
 libreoffice-fresh
 lightdm
 lightdm-webkit-theme-litarvan
@@ -67,6 +69,7 @@ ntfs-3g
 openssh
 openssl
 parallel
+pass
 pdfjam
 perl-image-exiftool
 picom
@@ -83,6 +86,7 @@ ripgrep
 rofi
 ruby
 rust
+scrot
 shellcheck
 stack
 texinfo
@@ -100,6 +104,7 @@ wireless_tools
 wpa_supplicant
 xclip
 xcompmgr
+xdotool
 xmobar
 xmonad
 xmonad-contrib
