@@ -9,6 +9,7 @@ local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local cyclefocus = require("awesome-cyclefocus")
 
 local my_vars = require("my-awm.vars")
+local default_progs = require("my-awm.default-programs")
 local main_menu = require("my-awm.main-menu")
 
 -- Global Awesome WM keybindings
@@ -113,7 +114,7 @@ local global_keys =
         {my_vars.modkey},
         "Return",
         function()
-            awful.spawn(my_vars.terminal)
+            awful.spawn(default_progs.terminal)
         end,
         {description = "open a terminal", group = "launcher"}
     ),
@@ -129,9 +130,9 @@ local global_keys =
         {my_vars.modkey, "Shift"},
         "f",
         function()
-            awful.spawn(my_vars.browser)
+            awful.spawn(default_progs.browser)
         end,
-        {description = "open " .. my_vars.browser, group = "launcher"}
+        {description = "open " .. default_progs.browser, group = "launcher"}
     ),
     awful.key({my_vars.modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
     awful.key({my_vars.modkey, "Shift"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),

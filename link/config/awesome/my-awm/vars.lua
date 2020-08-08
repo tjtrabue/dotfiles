@@ -16,12 +16,6 @@ if not my_helpers.file_exists(vars.theme) then
 end
 beautiful.init(vars.theme)
 
--- This is used later as the default terminal and editor to run.
-vars.terminal = "alacritty"
-vars.browser = "firefox"
-vars.editor = os.getenv("EDITOR") or "vim"
-vars.editor_cmd = vars.terminal .. " -e " .. vars.editor
-
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,

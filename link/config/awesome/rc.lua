@@ -36,6 +36,7 @@ local menubar = require("menubar")
 -- Import local components
 require("my-awm.error")
 local my_vars = require("my-awm.vars")
+local default_progs = require("my-awm.default-programs")
 local wp_util = require("my-awm.wallpaper")
 local mouse_buttons = require("my-awm.mouse.mouse-buttons")
 local autorun = require("my-awm.autorun")
@@ -45,7 +46,7 @@ require("my-awm.layout")
 
 -- Menubar configuration
 -- Set the terminal for applications that require it
-menubar.utils.terminal = my_vars.terminal
+menubar.utils.terminal = default_progs.terminal
 
 --  Initialize screens (wibar, tasklist, wallpaper, etc.)
 local screen_util = require("my-awm.screen")
@@ -73,17 +74,17 @@ require("my-awm.client.client-signals")
 local apps_to_autorun = {
     -- Terminals
     {
-        name = my_vars.terminal,
+        name = default_progs.terminal,
         opts = "",
         tag = "main"
     },
     {
-        name = my_vars.terminal,
+        name = default_progs.terminal,
         opts = "",
         tag = "main"
     },
     {
-        name = my_vars.terminal,
+        name = default_progs.terminal,
         opts = "",
         tag = "main"
     },
@@ -95,7 +96,7 @@ local apps_to_autorun = {
     },
     -- Web browser
     {
-        name = my_vars.browser,
+        name = default_progs.browser,
         opts = "",
         tag = "www"
     }

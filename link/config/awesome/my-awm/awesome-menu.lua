@@ -2,6 +2,7 @@ pcall(require, "luarocks.loader")
 
 local awful = require("awful")
 local my_vars = require("my-awm.vars")
+local default_progs = require("my-awm.default-programs")
 require("awful.hotkeys_popup.keys")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
@@ -13,8 +14,8 @@ local my_awesome_menu = {
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end
     },
-    {"manual", my_vars.terminal .. " -e man awesome"},
-    {"edit config", my_vars.editor_cmd .. " " .. awesome.conffile},
+    {"manual", default_progs.terminal .. " -e man awesome"},
+    {"edit config", default_progs.editor_cmd .. " " .. awesome.conffile},
     {"restart", awesome.restart},
     {
         "quit",

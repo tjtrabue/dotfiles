@@ -4,6 +4,7 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 local awesome_menu = require("my-awm.awesome-menu")
 local vars = require("my-awm.vars")
+local default_progs = require("my-awm.default-programs")
 
 -- The menu in the top left hand corner of the screen.
 local main_menu =
@@ -11,7 +12,7 @@ local main_menu =
     {
         items = {
             {"awesome", awesome_menu, beautiful.awesome_icon},
-            {"open terminal", vars.terminal}
+            {"open terminal", default_progs.terminal}
         }
     }
 )
