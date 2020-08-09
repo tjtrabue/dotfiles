@@ -12,6 +12,21 @@ local theme_customization = {}
 theme_customization.theme_file = "theme.lua"
 theme_customization.custom_file = "custom.lua"
 
+-- @return The name of the Awesome WM theme to use from the custom theme file
+function theme_customization.get_theme_name_from_file(awesome_paths)
+    local theme_fname = awesome_paths.themes_custom_file
+    local theme_name = "default"
+    if gfs.file_readable(theme_fname) then
+        local f = io.open(theme_fname, "r")
+        for line in f:lines() do
+            if string.find(line, "^%s*[^#]") ~= nil then
+                theme_name = line:gsub("^%s*(.-)%s*$", "%1")
+            end
+        end
+        f:close()
+    end
+end
+
 -- Set the Awesome WM theme.
 function theme_customization.set_custom_theme(theme, awesome_paths)
     -- Locate theme file
