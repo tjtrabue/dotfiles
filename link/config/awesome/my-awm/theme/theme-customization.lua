@@ -10,10 +10,9 @@ local gfs = require("gears.filesystem")
 
 -- Local imports
 local paths = require("my-awm.paths")
+local theme_vars = require("my-awm.theme.theme-vars")
 
 local theme_customization = {}
-theme_customization.theme_file = "theme.lua"
-theme_customization.custom_file = "custom.lua"
 
 -- @return the first file found on a table of file paths.
 local function get_first_found_file(path_list, fname)
@@ -50,13 +49,13 @@ function theme_customization.set_custom_theme(theme)
         paths.themes_custom_dir .. "/" .. theme,
         paths.themes_system_dir .. "/" .. theme
     }
-    local fname_theme = get_first_found_file(path_list, theme_customization.theme_file)
+    local fname_theme = get_first_found_file(path_list, theme_vars.theme_file)
     if not fname_theme then
         return
     end
 
     -- Locate customization file
-    local fname_custom = get_first_found_file(path_list, theme_customization.custom_file)
+    local fname_custom = get_first_found_file(path_list, theme_vars.custom_file)
 
     -- Initialize beautiful theme
     beautiful.init(fname_theme)
@@ -83,57 +82,6 @@ function theme_customization.set_custom_theme(theme)
             beautiful[key] = value
         end
     end
-end
-
-function theme_customization.create_themes_menu()
-    -- List of search paths
-    local path_list = {
-        paths.themes_custom_dir,
-        paths.themes_system_dir
-    }
-
-    -- Initialize table
-    local theme_list = {}
-
-    -- Perform search
-    for _, path in ipairs(path_list) do
-        for fold in lfs.dir(path) do
-            local f_attr = lfs.attributes(path .. "/" .. fold, "mode")
-            if f_attr and f_attr == "directory" and fold ~= "." and fold ~= ".." then
-                fname_full = path .. "/" .. fold .. "/" .. theme_customization.theme_file
-                if gfs.file_readable(fname_full) then
-                    if not theme_list[fold] then
-                        theme_list[fold] = path .. "/" .. fold .. "/" .. theme_customization.theme_file
-                    end
-                end
-            end
-        end
-    end
-
-    -- Create menu
-    local menuitems = {}
-    for theme_name, theme_file in pairs(theme_list) do
-        theme = nil
-        theme = dofile(theme_file)
-        theme_icon = theme.awesome_icon
-        theme = nil
-        table.insert(
-            menuitems,
-            {
-                theme_name,
-                function()
-                    local theme_fname = paths.themes_custom_dir .. "/theme"
-                    local file = io.open(theme_fname, "w")
-                    file:write(theme_name .. "\n")
-                    file:close()
-                    awesome.restart()
-                end,
-                theme_icon
-            }
-        )
-    end
-
-    return menuitems
 end
 
 return theme_customization

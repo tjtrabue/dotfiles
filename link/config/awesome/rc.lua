@@ -72,9 +72,6 @@ require("my-awm.client.client-rules")
 -- Signals
 require("my-awm.client.client-signals")
 
--- Create the Awesome themes menu.
-local theme_menu_items = theme_customization.create_themes_menu()
-
 -- Get the custom theme name and set it.
 local theme_name = theme_customization.get_theme_name_from_file()
 theme_customization.set_custom_theme(theme_name)
