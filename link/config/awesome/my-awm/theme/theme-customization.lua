@@ -6,7 +6,7 @@ local lfs = require("lfs")
 local beautiful = require("beautiful")
 local gears = require("gears")
 local awful = require("awful")
-local util = require("awful.util")
+local gfs = require("gears.filesystem")
 
 local theme_customization = {}
 theme_customization.theme_file = "theme.lua"
@@ -34,7 +34,7 @@ function theme_customization.set_custom_theme(theme, awesome_paths)
     -- regular themes)
     local fname_custom_defaults = awesome_paths.themes_custom_dir .. "/custom_defaults.lua"
     local custom_defaults = {}
-    if util.file_readable(fname_custom_defaults) then
+    if gfs.file_readable(fname_custom_defaults) then
         -- `custom_defaults` table
         custom_defaults = dofile(fname_custom_defaults)
     end
@@ -70,7 +70,7 @@ function theme_customization.create_themes_menu(awesome_paths)
             f_attr = lfs.attributes(path .. "/" .. fold, "mode")
             if f_attr and f_attr == "directory" and fold ~= "." and fold ~= ".." then
                 fname_full = path .. "/" .. fold .. "/" .. theme_customization.theme_file
-                if util.file_readable(fname_full) then
+                if gfs.file_readable(fname_full) then
                     if not theme_list[fold] then
                         theme_list[fold] = path .. "/" .. fold .. "/" .. theme_customization.theme_file
                     end
@@ -110,7 +110,7 @@ local function get_first_found_file(path_list, fname)
     local fname_full
     for _, f in ipairs(path_list) do
         fname_full = f .. "/" .. fname
-        if util.file_readable(fname_full) then
+        if gfs.file_readable(fname_full) then
             return fname_full
         end
     end
