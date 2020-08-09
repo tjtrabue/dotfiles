@@ -8,14 +8,6 @@ local my_helpers = require("my-awm.helper-fns")
 
 local vars = {}
 
--- Themes define colours, icons, font and wallpapers.
-vars.theme = "/home/" .. os.getenv("USER") .. "/.config/awesome/theme.lua"
-if not my_helpers.file_exists(vars.theme) then
-    -- Fall back to default theme if user theme does not exist
-    theme = gears.filesystem.get_themes_dir() .. "default/theme.lua"
-end
-beautiful.init(vars.theme)
-
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,

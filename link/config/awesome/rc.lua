@@ -41,7 +41,11 @@ local wp_util = require("my-awm.wallpaper")
 local mouse_buttons = require("my-awm.mouse.mouse-buttons")
 local autorun = require("my-awm.autorun")
 local paths = require("my-awm.paths")
-local theme_customization = require("my-awm.theme.theme-customization")
+local theme_manager = require("my-awm.theme.theme-manager")
+
+-- Get the custom theme name from the theme file and set it.
+local theme_name = theme_manager.get_theme_name_from_file()
+theme_manager.set_custom_theme(theme_name)
 
 -- Load file containing all layouts defined for Awesome session
 require("my-awm.layout")
@@ -71,10 +75,6 @@ require("my-awm.client.client-rules")
 
 -- Signals
 require("my-awm.client.client-signals")
-
--- Get the custom theme name and set it.
-local theme_name = theme_customization.get_theme_name_from_file()
-theme_customization.set_custom_theme(theme_name)
 
 -- List of apps to run on startup.
 local apps_to_autorun = {
