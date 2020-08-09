@@ -1,18 +1,21 @@
 --- Theme helper functions.
 --- Adapted from thibaultmarin's dotfiles.
 
+-- Main imports
 local dofile = dofile
 local lfs = require("lfs")
-local beautiful = require("beautiful")
-local gears = require("gears")
 local awful = require("awful")
+local beautiful = require("beautiful")
 local gfs = require("gears.filesystem")
+
+-- Local imports
+local paths = require("my-awm.paths")
 
 local theme_customization = {}
 theme_customization.theme_file = "theme.lua"
 theme_customization.custom_file = "custom.lua"
 
---- Return the first file found on a table of file paths.
+-- @return the first file found on a table of file paths.
 local function get_first_found_file(path_list, fname)
     local fname_full
     for _, f in ipairs(path_list) do
@@ -25,8 +28,8 @@ local function get_first_found_file(path_list, fname)
 end
 
 -- @return The name of the Awesome WM theme to use from the custom theme file
-function theme_customization.get_theme_name_from_file(awesome_paths)
-    local theme_fname = awesome_paths.themes_custom_file
+function theme_customization.get_theme_name_from_file()
+    local theme_fname = paths.themes_custom_file
     local theme_name = "default"
     if gfs.file_readable(theme_fname) then
         local f = io.open(theme_fname, "r")
@@ -41,11 +44,11 @@ function theme_customization.get_theme_name_from_file(awesome_paths)
 end
 
 -- Set the Awesome WM theme.
-function theme_customization.set_custom_theme(theme, awesome_paths)
+function theme_customization.set_custom_theme(theme)
     -- Locate theme file
     local path_list = {
-        awesome_paths.themes_custom_dir .. "/" .. theme,
-        awesome_paths.themes_system_dir .. "/" .. theme
+        paths.themes_custom_dir .. "/" .. theme,
+        paths.themes_system_dir .. "/" .. theme
     }
     local fname_theme = get_first_found_file(path_list, theme_customization.theme_file)
     if not fname_theme then
@@ -60,7 +63,7 @@ function theme_customization.set_custom_theme(theme, awesome_paths)
 
     -- Load default customization (fields required by rc.lua not defined by
     -- regular themes)
-    local fname_custom_defaults = awesome_paths.themes_custom_dir .. "/custom_defaults.lua"
+    local fname_custom_defaults = paths.themes_custom_dir .. "/custom_defaults.lua"
     local custom_defaults = {}
     if gfs.file_readable(fname_custom_defaults) then
         -- `custom_defaults` table
@@ -82,11 +85,11 @@ function theme_customization.set_custom_theme(theme, awesome_paths)
     end
 end
 
-function theme_customization.create_themes_menu(awesome_paths)
+function theme_customization.create_themes_menu()
     -- List of search paths
     local path_list = {
-        awesome_paths.themes_custom_dir,
-        awesome_paths.themes_system_dir
+        paths.themes_custom_dir,
+        paths.themes_system_dir
     }
 
     -- Initialize table
@@ -119,7 +122,7 @@ function theme_customization.create_themes_menu(awesome_paths)
             {
                 theme_name,
                 function()
-                    local theme_fname = awesome_paths.themes_custom_dir .. "/theme"
+                    local theme_fname = paths.themes_custom_dir .. "/theme"
                     local file = io.open(theme_fname, "w")
                     file:write(theme_name .. "\n")
                     file:close()
