@@ -8,15 +8,16 @@ local gears = require("gears")
 local awful = require("awful")
 local util = require("awful.util")
 
-theme_customization = {}
+local theme_customization = {}
 theme_customization.theme_file = "theme.lua"
 theme_customization.custom_file = "custom.lua"
 
+-- Set the Awesome WM theme.
 function theme_customization.set_custom_theme(theme, awesome_paths)
     -- Locate theme file
     local path_list = {
-        awesome_paths.themes_custom_path .. theme,
-        awesome_paths.themes_system_path .. theme
+        awesome_paths.themes_custom_dir .. "/" .. theme,
+        awesome_paths.themes_system_dir .. "/" .. theme
     }
     local fname_theme = get_first_found_file(path_list, theme_customization.theme_file)
     if not fname_theme then
@@ -31,7 +32,7 @@ function theme_customization.set_custom_theme(theme, awesome_paths)
 
     -- Load default customization (fields required by rc.lua not defined by
     -- regular themes)
-    local fname_custom_defaults = awesome_paths.themes_custom_path .. "/custom_defaults.lua"
+    local fname_custom_defaults = awesome_paths.themes_custom_dir .. "/custom_defaults.lua"
     local custom_defaults = {}
     if util.file_readable(fname_custom_defaults) then
         -- `custom_defaults` table
@@ -56,8 +57,8 @@ end
 function theme_customization.create_themes_menu(awesome_paths)
     -- List of search paths
     local path_list = {
-        awesome_paths.themes_custom_path,
-        awesome_paths.themes_system_path
+        awesome_paths.themes_custom_dir,
+        awesome_paths.themes_system_dir
     }
 
     -- Initialize table
@@ -90,7 +91,7 @@ function theme_customization.create_themes_menu(awesome_paths)
             {
                 theme_name,
                 function()
-                    local theme_fname = awesome_paths.themes_custom_path .. "/theme"
+                    local theme_fname = awesome_paths.themes_custom_dir .. "/theme"
                     local file = io.open(theme_fname, "w")
                     file:write(theme_name .. "\n")
                     file:close()

@@ -4,7 +4,7 @@
     autocrlf = input
     whitespace = fix,space-before-tab,tab-in-indent,trailing-space
     excludesfile = /Users/tom/.gitignore_global
-    editor = vim
+    editor = nvim
     pager = cat
 
 [apply]
