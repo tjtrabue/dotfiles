@@ -83,3 +83,9 @@ link/config/ranger/plugins
 
 # Ignore libreoffice config
 link/config/libreoffice
+
+# cmus files
+link/config/cmus/autosave
+link/config/cmus/cache
+link/config/cmus/command-history
+link/config/cmus/lib.pl

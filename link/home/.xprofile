@@ -39,7 +39,7 @@ if [ "$(command -v xset)" != "" ]; then
   # Set the keyboard typing rate/delay to increase input speed.
   # rate  = first number
   # delay = second number
-  xset r rate 300 50
+  xset r rate 225 50
 fi
 
 # Start Pulseaudio
