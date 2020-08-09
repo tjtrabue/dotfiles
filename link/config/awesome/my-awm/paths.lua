@@ -16,7 +16,7 @@ paths.home_dir = os.getenv("HOME")
 paths.luarocks_user_dir = paths.home_dir .. "/.luarocks"
 -- Awesome theme directory paths (theme = color scheme in the Awesome world)
 paths.themes_system_dir = gfs.get_themes_dir()
-paths.themes_custom_dir = paths.config_dir .. "/themes"
+paths.themes_custom_dir = paths.config_dir .. "themes"
 -- This file contains a single line, which is the name of the theme to use
 paths.themes_custom_file = paths.themes_custom_dir .. "/theme"
 

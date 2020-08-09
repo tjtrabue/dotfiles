@@ -12,6 +12,18 @@ local theme_customization = {}
 theme_customization.theme_file = "theme.lua"
 theme_customization.custom_file = "custom.lua"
 
+--- Return the first file found on a table of file paths.
+local function get_first_found_file(path_list, fname)
+    local fname_full
+    for _, f in ipairs(path_list) do
+        fname_full = f .. "/" .. fname
+        if gfs.file_readable(fname_full) then
+            return fname_full
+        end
+    end
+    return nil
+end
+
 -- @return The name of the Awesome WM theme to use from the custom theme file
 function theme_customization.get_theme_name_from_file(awesome_paths)
     local theme_fname = awesome_paths.themes_custom_file
@@ -25,6 +37,7 @@ function theme_customization.get_theme_name_from_file(awesome_paths)
         end
         f:close()
     end
+    return theme_name
 end
 
 -- Set the Awesome WM theme.
@@ -82,7 +95,7 @@ function theme_customization.create_themes_menu(awesome_paths)
     -- Perform search
     for _, path in ipairs(path_list) do
         for fold in lfs.dir(path) do
-            f_attr = lfs.attributes(path .. "/" .. fold, "mode")
+            local f_attr = lfs.attributes(path .. "/" .. fold, "mode")
             if f_attr and f_attr == "directory" and fold ~= "." and fold ~= ".." then
                 fname_full = path .. "/" .. fold .. "/" .. theme_customization.theme_file
                 if gfs.file_readable(fname_full) then
@@ -118,18 +131,6 @@ function theme_customization.create_themes_menu(awesome_paths)
     end
 
     return menuitems
-end
-
---- Return the first file found on a table of file paths.
-local function get_first_found_file(path_list, fname)
-    local fname_full
-    for _, f in ipairs(path_list) do
-        fname_full = f .. "/" .. fname
-        if gfs.file_readable(fname_full) then
-            return fname_full
-        end
-    end
-    return nil
 end
 
 return theme_customization
