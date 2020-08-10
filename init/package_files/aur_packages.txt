@@ -3,6 +3,7 @@ emacs-git
 flat-remix
 haskell-ide-engine-git
 lua-emmy-language-server-bin
+lua-language-server-git
 neovim-git
 polybar-git
 roswell-git

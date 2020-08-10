@@ -121,6 +121,28 @@ for any programming language that supports a formatting tool.")
         (member mode my/lsp-enabled-modes)))
 #+end_src
 
+* Register New LSP Servers
+  Here we use =lsp-mode= add support for new LSP servers.
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/register-lsp-servers ()
+  "Register all custom LSP servers that we want."
+  (my/register-lua-lsp-servers))
+#+end_src
+
+** lua
+
+#+begin_src emacs-lisp :tangle yes
+  (defun my/register-lua-lsp-servers ()
+    "Register Lua languageservers for use with `lsp-mode'."
+    ;; Add lua-language-server (can be installed from GitHub or from the AUR on
+    ;; Arch Linux)
+    (lsp-register-client
+      (make-lsp-client
+        :new-connection (lsp-stdio-connection "lua-language-server")
+        :major-modes '(lua-mode)
+        :server-id 'lua-language-server)))
+#+end_src
 * lsp-mode
   =lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
   heavy lifting of starting up Language Servers and managing connections to
@@ -165,7 +187,9 @@ for any programming language that supports a formatting tool.")
           ;; Make sure we are using completion at point.
           lsp-completion-provider :capf
           ;; The length that lsp-mode waits to begin completion.
-          lsp-idle-delay 0.000))
+          lsp-idle-delay 0.000)
+    :config
+    (my/register-lua-lsp-servers))
 #+end_src
 
 * Plugins
