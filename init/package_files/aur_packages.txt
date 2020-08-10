@@ -2,6 +2,8 @@ ccls-git
 emacs-git
 flat-remix
 haskell-ide-engine-git
+icons-in-terminal
+ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
 neovim-git

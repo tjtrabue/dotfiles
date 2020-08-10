@@ -142,6 +142,13 @@ fi
 # Load fzf keybindings
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# These icons are supplied by the icons-in-terminal project
+use_icons_in_terminal() {
+  local iconScript="$HOME/.local/share/icons-in-terminal/icons_bash.sh"
+  [ -f "$iconScript" ] && source "$iconScript"
+}
+use_icons_in_terminal
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
