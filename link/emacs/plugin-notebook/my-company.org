@@ -216,7 +216,5 @@ optionally for extra modes"
 
 #+begin_src emacs-lisp :tangle yes
   (use-package company-box
-    ;; REALLY slow right now
-    ;; :hook (company-mode . company-box-mode)
-  )
+    :hook (company-mode . company-box-mode))
 #+end_src
