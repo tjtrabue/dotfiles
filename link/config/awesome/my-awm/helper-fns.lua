@@ -4,9 +4,16 @@ local paths = require("my-awm.paths")
 local helpers = {}
 
 -- Adds a given path string to the end of the package.path global variable.
--- @param path The path to add to package.path
-local function add_to_package_path(path)
-    package.path = package.path .. ";" .. path
+-- @param path_var The name of the package path variable to use (i.e., package.path)
+-- @param path The path to add to the path variable
+local function add_to_path(path_var, path)
+    path_var = path_var or "package.path"
+    -- Create a string containing the Lua code for the package path assignment
+    -- statement.
+    local path_assignment_code = path_var .. " = " .. path_var .. " .. " .. "';" .. path .. "'"
+    local assignment_func = load(path_assignment_code)
+    -- Execute the assignment.
+    assignment_func()
 end
 
 --[[
@@ -20,10 +27,14 @@ end
   @param lua_version The lua version to add LuaRocks for (such as '5.3')
 --]]
 function helpers.add_luarocks_paths(lua_version)
-    local luarocks_lib_home = paths.luarocks_user_dir .. "/share/lua/" .. lua_version
+    local luarocks_share_home = paths.luarocks_user_dir .. "/share/lua/" .. lua_version
+    local luarocks_lib_home = paths.luarocks_user_dir .. "/lib/lua/" .. lua_version
+
     -- Add important lib paths to package.path
-    add_to_package_path(luarocks_lib_home .. "/?.lua")
-    add_to_package_path(luarocks_lib_home .. "/?/init.lua")
+    add_to_path("package.path", luarocks_share_home .. "/?.lua")
+    add_to_path("package.path", luarocks_share_home .. "/?/init.lua")
+    -- Add extra dynamically linked libraries to package.cpath
+    add_to_path("package.cpath", luarocks_lib_home .. "/?.so")
 end
 
 -- Checks for the existence of an input file path.
