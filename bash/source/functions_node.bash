@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-install_npm_global_packages() {
+install_node_packages() {
   if [ "$(command -v parallel)" != "" ]; then
-    parallel --bar npm install -g :::: "$NPM_GLOBAL_PACKAGES_FILE"
+    parallel --bar npm install -g :::: "$NODE_PACKAGES_FILE"
   else
-    xargs npm install -g < "$NPM_GLOBAL_PACKAGES_FILE"
+    xargs npm install -g <"$NODE_PACKAGES_FILE"
   fi
 }
 
-update_npm_global_packages() {
+update_node_packages() {
   # Uses the npm-check-updates tool to get packages marked for update
-  local packagesToUpdate="$(ncu -gu 2> /dev/null | grep '^npm' | sed '/^$/d')"
+  local packagesToUpdate="$(ncu -gu 2>/dev/null | grep '^npm' | sed '/^$/d')"
 
   if [ -n "$packagesToUpdate" ]; then
     eval "npm install -g" "$packagesToUpdate"

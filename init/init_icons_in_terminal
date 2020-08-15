@@ -43,14 +43,35 @@ install_icons_in_terminal() {
   local iotDest="${WS}/icons-in-terminal"
   git clone "$iotUrl" "$iotDest"
   # Run the installer
+  log_info "Installing icons-in-terminal"
   (
     cd "$iotDest"
     ./install.sh
   )
 }
 
+install_ls_icons() {
+  log_info "Cloning ls-icons"
+  local lsIconsUrl="git@github.com:sebastiencs/ls-icons.git"
+  local lsIconsDest="${WS}/ls-icons"
+  git clone "$lsIconsUrl" "$lsIconsDest"
+  log_info "Installing ls-icons"
+  (
+    cd "$lsIconsDest"
+    ./bootstrap
+    # Execute this line _only_ if your terminal doesn't support true colours
+    # export CFLAGS=-DNO_TRUE_COLOURS=1
+    export CC=clang CXX=clang++
+    ./configure --prefix=/opt/coreutils
+    make
+    sudo make install
+    # /opt/coreutils/bin/ls
+  )
+}
+
 main() {
   install_icons_in_terminal
+  install_ls_icons
 }
 # }}}
 
