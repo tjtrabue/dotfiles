@@ -1,8 +1,10 @@
 ccls-git
+elixir-ls-git
 emacs-git
 flat-remix
 haskell-ide-engine-git
 icons-in-terminal
+jdtls
 ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git

@@ -122,7 +122,7 @@ for any programming language that supports a formatting tool.")
 #+end_src
 
 * Register New LSP Servers
-  Here we use =lsp-mode= add support for new LSP servers.
+  Here we add =lsp-mode= support for new LSP servers not supported by default.
 
 #+begin_src emacs-lisp :tangle yes
 (defun my/register-lsp-servers ()
@@ -131,6 +131,8 @@ for any programming language that supports a formatting tool.")
 #+end_src
 
 ** lua
+   =lua-language-server= is a much more complete language server right now than
+   =lua-lsp=, but it is not supported out of the box by =lsp-mode=.
 
 #+begin_src emacs-lisp :tangle yes
   (defun my/register-lua-lsp-servers ()
@@ -232,7 +234,9 @@ for any programming language that supports a formatting tool.")
 
 #+begin_src emacs-lisp :tangle yes
   (use-package lsp-java
-    :after (lsp-mode))
+    :after lsp-mode
+    :hook
+    (java-mode . lsp))
 #+end_src
 
 ** lsp-treemacs
@@ -365,22 +369,6 @@ of."
     ;;       which is a Python package.
     ((c-mode c++-mode objc-mode makefile-mode) . (lambda ()
         (require 'ccls))))
-#+end_src
-
-** lsp-elixir
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-elixir
-    :after (lsp-mode)
-    :hook elixir-mode)
-#+end_src
-
-** lsp-intellij
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-intellij
-    :after (lsp-mode)
-    :hook java-mode)
 #+end_src
 
 ** lsp-origami
