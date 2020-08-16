@@ -37,6 +37,7 @@ EOF
   exit 0
 }
 
+# Install icons-in-terminal from GitHub
 install_icons_in_terminal() {
   log_info "Cloning icons-in-terminal"
   local iotUrl="git@github.com:sebastiencs/icons-in-terminal.git"
@@ -50,6 +51,7 @@ install_icons_in_terminal() {
   )
 }
 
+# Install ls-icons from GitHub
 install_ls_icons() {
   log_info "Cloning ls-icons"
   local lsIconsUrl="git@github.com:sebastiencs/ls-icons.git"

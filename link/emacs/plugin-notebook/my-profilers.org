@@ -1,0 +1,24 @@
+#+title:    Emacs Performance Profilers
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:08:16
+#+property: header-args:emacs-lisp :lexical t
+#+tags:     profile profiler startup
+
+This file defines configuration for a number of Eamcs profiling programs.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* ESUP
+  =ESUP= is the Emacs Start-Up Profiler. It does not currently work with my
+  convoluted configuration.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package esup
+  ;;   ;; To use MELPA Stable use ":pin mepla-stable",
+  ;;   ;; :pin melpa
+  ;;   :commands (esup))
+#+end_src
