@@ -196,7 +196,7 @@ with straight.el.")
     whitespace-style '(face lines-tail))
 
   ;; Set smooth scrolling
-  ;; (also see the sublimity configuration in my-sublimity.el)
+  ;; (also see the sublimity plugin configuration)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-follow-mouse 't)

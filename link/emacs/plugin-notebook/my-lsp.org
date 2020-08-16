@@ -188,8 +188,10 @@ for any programming language that supports a formatting tool.")
           lsp-file-watch-threshold nil
           ;; Make sure we are using completion at point.
           lsp-completion-provider :capf
-          ;; The length that lsp-mode waits to begin completion.
-          lsp-idle-delay 0.000)
+          ;; The length that lsp-mode waits to begin completion. Most of the
+          ;; time the variable you want to tweak is company-idle-delay, not this
+          ;; one.
+          lsp-idle-delay 0.500)
     :config
     (my/register-lua-lsp-servers))
 #+end_src
