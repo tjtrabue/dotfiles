@@ -18,7 +18,7 @@ set imap_user = $my_user@gmail.com
 # Gmail interface and create a new one.
 # That file should contain the following line:
 #   set imap_pass = <app_password>
-source $DOTFILES_HOME/secure/muttrc
+source $my_mutt_config_dir/secure/muttrc
 
 # Set up Maildir
 # set mbox_type = Maildir
@@ -198,10 +198,12 @@ set sidebar_visible = yes
 # address   - Must be in valid format (i.e., with an @)
 #             NOTE: The address must be enclosed within angle brackets <>
 
-set alias_file = "$my_mutt_config_dir/aliases"
+# set alias_file = "$my_mutt_config_dir/aliases"
 set sort_alias = alias
 set reverse_alias = yes
-source $alias_file
+# source $alias_file
+# Conditionally source the aliases file if it exists
+source `alias_file=$HOME/.config/mutt/aliases; if [ ! -s "$alias_file" ]; then alias_file=/dev/null; fi; echo "$alias_file"`
 # }}}
 
 # Replies {{{
