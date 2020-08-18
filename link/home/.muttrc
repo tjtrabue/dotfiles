@@ -7,7 +7,8 @@ set my_user = tom.trabue
 set my_mutt_config_dir = $HOME/.config/mutt
 
 # Themes/colorschemes directory
-set my_themes_dir = $my_mutt_config_dir/themes
+# (This is a separate project on GitHub)
+set my_themes_dir = $WS/mutt-themes
 
 # IMAP configuration {{{
 # Gmail username
