@@ -137,7 +137,7 @@ my_hdr User-Agent: mutt
 # Colors {{{
 # Palette for use with the Linux console.
 # source "$my_themes_dir/purify"
-source "$my_themes_dir/tomorrow-night-eighties"
+source "$my_themes_dir/tomorrow-night-eighties.muttrc"
 
 # color body brightwhite black '\*+[^*]+\*+'
 # color body brightwhite black '_+[^_]+_+'

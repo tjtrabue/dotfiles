@@ -17,22 +17,21 @@ set my_current_line = "color237"
 set my_bg = "color236"
 
 # basic components
-color hdrdefault $my_aqua $my_bg
-color quoted     $my_blue $my_bg
+color hdrdefault $my_green $my_bg
 color signature  $my_blue $my_bg
-color attachment $my_red $my_bg
+color attachment $my_yellow $my_bg
 color prompt     $my_purple $my_bg
-color message    $my_red $my_bg
+color message    $my_blue $my_bg
 color error      $my_red $my_bg
 color indicator  $my_white $my_selection
 color status     $my_bg $my_orange
 color tree       $my_white $my_bg
 color normal     $my_white $my_bg
 color markers    $my_red $my_bg
-color search     $my_white $my_bg
+color search     $my_bg $my_yellow
 color tilde      $my_purple $my_bg
-color index      $my_blue $my_bg ~F
-color index      $my_red $my_bg "~N|~O"
+color index      $my_green $my_bg ~F
+color index      $my_blue $my_bg "~N|~O"
 
 ### Highlights inside the body of a message ###
 
@@ -68,6 +67,17 @@ color header $my_yellow $my_bg "^X-Message-Flag:"
 color header $my_yellow $my_bg "^X-Spam-Status:"
 color header $my_yellow $my_bg "^X-SpamProbe:"
 color header $my_red    $my_bg "^X-SpamProbe: SPAM"
+
+### Coloring quoted text - coloring the first 7 levels ###
+
+color quoted  $my_aqua   $my_bg
+color quoted1 $my_yellow $my_bg
+color quoted2 $my_red    $my_bg
+color quoted3 $my_green  $my_bg
+color quoted4 $my_aqua   $my_bg
+color quoted5 $my_yellow $my_bg
+color quoted6 $my_red    $my_bg
+color quoted7 $my_green  $my_bg
 
 ### sidebar colors ###
 
