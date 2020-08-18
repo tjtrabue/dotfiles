@@ -1,3 +1,4 @@
+# Color definitions
 set my_black = "color236"
 set my_white = "color252"
 set my_red = "color210"
@@ -15,19 +16,63 @@ set my_selection = "color239"
 set my_current_line = "color237"
 set my_bg = "color236"
 
-color hdrdefault $my_green $my_bg
-color quoted $my_blue $my_bg
-color signature $my_blue $my_bg
+# basic components
+color hdrdefault $my_aqua $my_bg
+color quoted     $my_blue $my_bg
+color signature  $my_blue $my_bg
 color attachment $my_red $my_bg
-color prompt $my_purple $my_bg
-color message brightred $my_bg
-color error brightred $my_bg
-color indicator $my_white $my_selection
-color status $my_bg $my_orange
-color tree white $my_bg
-color normal white $my_bg
-color markers $my_red $my_bg
-color search white $my_bg
-color tilde brightmagenta $my_bg
-color index $my_blue $my_bg ~F
-color index $my_red $my_bg "~N|~O"
+color prompt     $my_purple $my_bg
+color message    $my_red $my_bg
+color error      $my_red $my_bg
+color indicator  $my_white $my_selection
+color status     $my_bg $my_orange
+color tree       $my_white $my_bg
+color normal     $my_white $my_bg
+color markers    $my_red $my_bg
+color search     $my_white $my_bg
+color tilde      $my_purple $my_bg
+color index      $my_blue $my_bg ~F
+color index      $my_red $my_bg "~N|~O"
+
+### Highlights inside the body of a message ###
+
+# URLs
+color body $my_aqua $my_bg "(https?|s?ftp|news|telnet|finger)://[^ \"\t\r\n]*"
+color body $my_aqua $my_bg "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+mono body bold "(https?|s?ftp|news|telnet|finger)://[^ \"\t\r\n]*"
+mono body bold "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+
+# email addresses
+color body $my_green $my_bg "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+#mono body bold "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+### Header components ###
+
+color header $my_green  $my_bg "^from:"
+color header $my_green  $my_bg "^to:"
+color header $my_green  $my_bg "^cc:"
+color header $my_green  $my_bg "^date:"
+color header $my_yellow $my_bg "^newsgroups:"
+color header $my_yellow $my_bg "^reply-to:"
+color header $my_aqua   $my_bg "^subject:"
+color header $my_red    $my_bg "^x-spam-rule:"
+color header $my_green  $my_bg "^x-mailer:"
+color header $my_yellow $my_bg "^message-id:"
+color header $my_yellow $my_bg "^Organization:"
+color header $my_yellow $my_bg "^Organisation:"
+color header $my_yellow $my_bg "^User-Agent:"
+color header $my_yellow $my_bg "^message-id: .*pine"
+color header $my_yellow $my_bg "^X-Fnord:"
+color header $my_yellow $my_bg "^X-WebTV-Stationery:"
+color header $my_yellow $my_bg "^X-Message-Flag:"
+color header $my_yellow $my_bg "^X-Spam-Status:"
+color header $my_yellow $my_bg "^X-SpamProbe:"
+color header $my_red    $my_bg "^X-SpamProbe: SPAM"
+
+### sidebar colors ###
+
+color sidebar_divider   $my_light_grey $my_bg
+color sidebar_flagged   $my_aqua $my_bg
+color sidebar_highlight $my_bg $my_yellow
+color sidebar_new       $my_green $my_bg
+color sidebar_spoolfile $my_blue $my_bg
