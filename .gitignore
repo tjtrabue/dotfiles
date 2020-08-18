@@ -72,6 +72,9 @@ cedet-rc.el
 link/config/mutt/cache
 # Do not store mutt aliases
 link/config/mutt/aliases
+# Do not track Mutt themes (it's a separate repo now)
+link/config/mutt/themes
+link/config/mutt/mutt-themes
 
 # Do not track vendor features repos for Awesome WM
 link/config/awesome/awesome-*
