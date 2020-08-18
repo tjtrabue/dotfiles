@@ -1,0 +1,33 @@
+set my_black = "color236"
+set my_white = "color252"
+set my_red = "color210"
+set my_green = "color114"
+set my_blue = "color68"
+set my_aqua = "color80"
+set my_yellow = "color221"
+set my_pink = "color212"
+set my_orange = "color209"
+set my_purple = "color176"
+set my_dark_yellow = "color173"
+set my_light_grey = "color246"
+set my_dark_grey = "color239"
+set my_selection = "color239"
+set my_current_line = "color237"
+set my_bg = "color236"
+
+color hdrdefault $my_green $my_bg
+color quoted $my_blue $my_bg
+color signature $my_blue $my_bg
+color attachment $my_red $my_bg
+color prompt $my_purple $my_bg
+color message brightred $my_bg
+color error brightred $my_bg
+color indicator $my_white $my_selection
+color status $my_bg $my_orange
+color tree white $my_bg
+color normal white $my_bg
+color markers $my_red $my_bg
+color search white $my_bg
+color tilde brightmagenta $my_bg
+color index $my_blue $my_bg ~F
+color index $my_red $my_bg "~N|~O"
