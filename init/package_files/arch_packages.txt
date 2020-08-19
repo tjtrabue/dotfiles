@@ -97,6 +97,11 @@ texlive-most
 texworks
 the_silver_searcher
 tree
+ttf-croscore
+ttf-fira-code
+ttf-fira-mono
+ttf-hack
+ttf-liberation
 udevil
 upower
 vi

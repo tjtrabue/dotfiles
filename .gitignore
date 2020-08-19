@@ -92,3 +92,6 @@ link/config/cmus/autosave
 link/config/cmus/cache
 link/config/cmus/command-history
 link/config/cmus/lib.pl
+
+# Ignore chromium config by defaul
+link/config/chromium
