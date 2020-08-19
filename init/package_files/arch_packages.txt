@@ -9,6 +9,7 @@ aspell-en
 awesome
 biber
 cabal-install
+chromium
 clang
 cmake
 cmus
@@ -50,6 +51,7 @@ libreoffice-fresh
 lightdm
 lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
+lld
 lua
 luarocks
 lxappearance
@@ -57,6 +59,7 @@ lynx
 man-db
 man-pages
 mlocate
+nano
 neofetch
 neomutt
 neovim
@@ -96,6 +99,7 @@ the_silver_searcher
 tree
 udevil
 upower
+vi
 vim
 vlc
 w3m

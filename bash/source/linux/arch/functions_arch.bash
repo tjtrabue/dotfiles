@@ -393,13 +393,6 @@ install_aur_packages() {
   sudo aura --noconfirm -Axa $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
 }
 
-# Install these packages from the AUR but edit the PKGBUILD file before
-# installing.
-install_aur_packages_hotedit() {
-  sudo aura -Axa emacs-git --hotedit
-  sudo aura -Axa haskell-ide-engine-git --hotedit
-}
-
 # Update all AUR packages installed with Aura.
 update_aur_packages() {
   sudo aura -Auax

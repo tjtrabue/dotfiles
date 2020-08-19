@@ -10,4 +10,8 @@ alias pacs="sudo pacman -S"
 alias pacss="sudo pacman -Ss"
 alias pacsyu="sudo pacman -Syyu"
 
+# Aura AUR package manager
+alias aurai="sudo aura -Aax"
+alias aurau="sudo aura -Aaxu --noconfirm"
+
 # vim:foldenable:foldmethod=marker:
