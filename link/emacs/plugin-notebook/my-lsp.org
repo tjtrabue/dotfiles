@@ -24,12 +24,14 @@ Needed for performance:
     in the =~/.emacs.d/= directory.
   - *haskell-ide-engine*: Available as an AUR packge on Arch Linux.
 
-* Variables
+* Variable
   Define special =lsp-mode= variables here.
 
 #+begin_src emacs-lisp :tangle yes
   (defvar my/lsp-format-major-mode-blacklist '(
+      cperl-mode
       lua-mode
+      perl-mode
       python-mode
       sh-mode
     )
@@ -40,10 +42,12 @@ the reformatter package provides a generic interface for creating formatters
 for any programming language that supports a formatting tool.")
 
   (defvar my/lsp-enabled-modes '(
-      c-mode
+      LaTeX-mode
       c++-mode
+      c-mode
       clojure-mode
       cmake-mode
+      cperl-mode
       css-mode
       elixir-mode
       go-mode
@@ -53,7 +57,6 @@ for any programming language that supports a formatting tool.")
       javascript-mode
       js-mode
       json-mode
-      LaTeX-mode
       less-css-mode
       lua-mode
       objc-mode
@@ -119,6 +122,12 @@ for any programming language that supports a formatting tool.")
                 (not (cl-set-difference full-modes my/lsp-enabled-modes))
               (cl-intersection full-modes my/lsp-enabled-modes)))
         (member mode my/lsp-enabled-modes)))
+
+  (defun my/lsp-add-language-ids ()
+    "Add more major-mode to language server mappings. This allows
+  Emacs to automatically start lsp-mode with a particular server
+  when a certain type of file is found."
+    (add-to-list 'lsp-language-id-configuration '(cperl-mode . "perl")))
 #+end_src
 
 * Register New LSP Servers
@@ -193,7 +202,8 @@ for any programming language that supports a formatting tool.")
           ;; one.
           lsp-idle-delay 0.500)
     :config
-    (my/register-lua-lsp-servers))
+    (my/register-lua-lsp-servers)
+    (my/lsp-add-language-ids))
 #+end_src
 
 * Plugins
