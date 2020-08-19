@@ -109,6 +109,16 @@
         }
       }
     },
+    "perl": {
+      "command": "perl",
+      "args": ["-MPerl::LanguageServer", "-e Perl::LanguageServer::run"],
+      "filetypes": ["pl", "plx", "perl"],
+      "rootPatterns": [
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ]
+    },
     "efm": {
       "command": "efm-langserver",
       "args": [],

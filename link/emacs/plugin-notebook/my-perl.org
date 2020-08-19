@@ -1,0 +1,25 @@
+#+title:    Perl Configuration/Plugins
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:08:18
+#+property: header-args:emacs-lisp :lexical t
+#+tags:     perl raku
+
+Here's my Perl configuration for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* Plugins
+** cperl-mode
+   =cperl-mode= is a more advanced Perl editing mode than the standard
+   =perl-mode=.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package cperl-mode
+  :init
+  ;; Alias perl-mode to cperl-mode so that we always use cperl-mode
+  (defalias 'perl-mode 'cperl-mode))
+#+end_src

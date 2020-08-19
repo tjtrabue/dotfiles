@@ -150,6 +150,9 @@ Plug 'moll/vim-node'
 " Ruby {{{
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 " }}}
+" Perl {{{
+Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
+" }}}
 " Haskell {{{
 Plug 'neovimhaskell/haskell-vim', {'for': 'haskell'}
 " }}}
