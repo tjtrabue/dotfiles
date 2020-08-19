@@ -19,10 +19,10 @@ source "${IMPORT}/functions_log.bash"
 
 # Functions {{{
 _help() {
-	cat <<EOF
+  cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Get Perl ready to rock on the system.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -34,16 +34,16 @@ OPTIONS:
   -v | --verbose
     Run with extra logging output.
 EOF
-	exit 0
+  exit 0
 }
 
 bootstrap_cpanm() {
-	log_info "Bootstrapping cpanm"
-	curl -L https://cpanmin.us | perl - App::cpanminus
+  log_info "Bootstrapping cpanm"
+  curl -L https://cpanmin.us | perl - App::cpanminus
 }
 
 main() {
-	bootstrap_cpanm
+  bootstrap_cpanm
 }
 # }}}
 
@@ -53,28 +53,28 @@ eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
-	case "$1" in
-	-v | --verbose)
-		VERBOSE=true
-		shift
-		;;
+  case "$1" in
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
 
-	-h | --help)
-		_help
-		shift
-		break
-		;;
+  -h | --help)
+    _help
+    shift
+    break
+    ;;
 
-	--)
-		shift
-		break
-		;;
+  --)
+    shift
+    break
+    ;;
 
-	*)
-		err "Unknown option $1 to ${THIS_EXEC}"
-		exit 2
-		;;
-	esac
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
 done
 # }}}
 
