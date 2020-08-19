@@ -380,4 +380,29 @@ repicom() {
   pkill picom && sleep 1 && picom -b
 }
 
+# Install the Aura package manager for the Arch Linux AUR.
+install_aura() {
+  aur install aura
+}
+
+# Install all AUR packages with Aura
+install_aur_packages() {
+  if [ "$(command -v "aura")" == "" ]; then
+    install_aura
+  fi
+  sudo aura --noconfirm -Axa $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
+}
+
+# Install these packages from the AUR but edit the PKGBUILD file before
+# installing.
+install_aur_packages_hotedit() {
+  sudo aura -Axa emacs-git --hotedit
+  sudo aura -Axa haskell-ide-engine-git --hotedit
+}
+
+# Update all AUR packages installed with Aura.
+update_aur_packages() {
+  sudo aura -Auax
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

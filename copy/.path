@@ -1,6 +1,7 @@
 /bin
 /sbin
 /usr/bin
+/usr/bin/core_perl
 /usr/bin/vendor_perl
 /usr/sbin
 /usr/local/bin

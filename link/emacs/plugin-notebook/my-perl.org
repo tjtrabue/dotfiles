@@ -12,14 +12,38 @@ Here's my Perl configuration for Emacs.
 
 #+end_src
 
+* PDE
+  PDE is a collection of Emacs Lisp modules for interacting with Perl code
+  distributed through CPAN in a package named =Emacs::PDE=. Thus, you must
+  install =Emacs::PDE= through your CPAN install utility, usually =cpanm=. Once
+  you have installed PDE, you may load it in Emacs.
+
+  *NOTE*: I do not recommend you use PDE right now as it can hijack a number of
+  different configuration settings, such as =helm=.
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/load-pde ()
+  "Load the Perl Development Environment."
+  (let* ((pde-dir (concat user-emacs-directory "pde"))
+         (pde-load-file (concat pde-dir "/pde-load.el")))
+    (add-to-list 'load-path pde-dir)
+    (when (file-exists-p pde-load-file)
+      (load pde-load-file))))
+#+end_src
+
 * Plugins
 ** cperl-mode
    =cperl-mode= is a more advanced Perl editing mode than the standard
    =perl-mode=.
 
 #+begin_src emacs-lisp :tangle yes
-(use-package cperl-mode
-  :init
-  ;; Alias perl-mode to cperl-mode so that we always use cperl-mode
-  (defalias 'perl-mode 'cperl-mode))
+  (use-package cperl-mode
+    :config
+    ;; Not currently loading PDE because it's changing a bunch of plugins on me.
+    ;; (my/load-pde)
+    ;; Add cperl-mode to auto-mode-alist for editing perl files.
+    (mapc (lambda (pair)
+        (if (eq (cdr pair) 'perl-mode)
+            (setcdr pair 'cperl-mode)))
+      (append auto-mode-alist interpreter-mode-alist)))
 #+end_src

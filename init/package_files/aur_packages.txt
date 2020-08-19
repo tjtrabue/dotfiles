@@ -1,8 +1,6 @@
 ccls-git
 elixir-ls-git
-emacs-git
 flat-remix
-haskell-ide-engine-git
 icons-in-terminal
 jdtls
 ls-icons
