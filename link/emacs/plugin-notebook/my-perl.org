@@ -22,13 +22,22 @@ Here's my Perl configuration for Emacs.
   different configuration settings, such as =helm=.
 
 #+begin_src emacs-lisp :tangle yes
-(defun my/load-pde ()
+;; Add the Elisp code in the PDE directory to load-path.
+(let ((pde-dir (concat user-emacs-directory "pde")))
+  (when (file-directory-p pde-dir)
+    (add-to-list 'load-path pde-dir)))
+
+(defun load-pde ()
   "Load the Perl Development Environment."
+  (interactive)
   (let* ((pde-dir (concat user-emacs-directory "pde"))
          (pde-load-file (concat pde-dir "/pde-load.el")))
-    (add-to-list 'load-path pde-dir)
     (when (file-exists-p pde-load-file)
       (load pde-load-file))))
+
+(define-minor-mode pde-mode
+  "Minor mode for activating the Perl Development Environment package from CPAN."
+  :lighter " PDE")
 #+end_src
 
 * Plugins
@@ -38,9 +47,9 @@ Here's my Perl configuration for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
+    ;; :hook
+    ;; (cperl-mode . pde-mode)
     :config
-    ;; Not currently loading PDE because it's changing a bunch of plugins on me.
-    ;; (my/load-pde)
     ;; Add cperl-mode to auto-mode-alist for editing perl files.
     (mapc (lambda (pair)
         (if (eq (cdr pair) 'perl-mode)

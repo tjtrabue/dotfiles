@@ -28,18 +28,18 @@ Needed for performance:
   Define special =lsp-mode= variables here.
 
 #+begin_src emacs-lisp :tangle yes
-  (defvar my/lsp-format-major-mode-blacklist '(
-      cperl-mode
-      lua-mode
-      perl-mode
-      python-mode
-      sh-mode
-    )
-    "List of major modes to ignore when activating lsp-format hooks, usually
-because the LSP server for these major modes does not yet support document
-formatting, or because their formatters are lacking in features. Thankfully
-the reformatter package provides a generic interface for creating formatters
-for any programming language that supports a formatting tool.")
+    (defvar my/lsp-format-major-mode-blacklist '(
+        cperl-mode
+        lua-mode
+        perl-mode
+        python-mode
+        sh-mode
+      )
+      "List of major modes to ignore when activating lsp-format hooks, usually
+  because the LSP server for these major modes does not yet support document
+  formatting, or because their formatters are lacking in features. Thankfully
+  the reformatter package provides a generic interface for creating formatters
+  for any programming language that supports a formatting tool.")
 
   (defvar my/lsp-enabled-modes '(
       LaTeX-mode

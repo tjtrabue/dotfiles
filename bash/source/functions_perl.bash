@@ -4,7 +4,7 @@ install_perl_packages() {
   local package
 
   while read -r package || [ -n "$package" ]; do
-    cpanm install --force "$package"
+    cpanm install "$package"
   done <"$PERL_PACKAGES_FILE"
 }
 

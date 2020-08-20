@@ -514,15 +514,16 @@ lock file."
 
 ** Perl
    Perl's operations depends on a number of environment variables that Emacs
-   will not recognize by default.
+   will not recognize by default, so we must set them here.
 
 #+begin_src emacs-lisp :tangle yes
   (let* ((perl-local-lib-root (concat (getenv "HOME") "/perl5"))
          (perl-local-lib (concat perl-local-lib-root "/lib/perl5")))
     (setenv "PERL5LIB" perl-local-lib)
-    (setenv "PERL_LOCAL_LIB_ROOT" perl-local-lib-root)
+    (setenv "PERL_LOCAL_LIB_ROOT"
+      (concat perl-local-lib-root ":$PERL_LOCAL_LIB_ROOT") 'subst-env-vars)
     (setenv "PERL_MB_OPT" (concat "--install_base '" perl-local-lib-root "'"))
-    (setenv "PERL_MM_OPT" (concat "INSTALL_BASE=" (getenv "HOME") "/perl4'"))
+    (setenv "PERL_MM_OPT" (concat "INSTALL_BASE=" perl-local-lib-root))
     (setenv "PERL_MM_USE_DEFAULT" "1"))
 #+end_src
 

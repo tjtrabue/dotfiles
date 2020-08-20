@@ -1,3 +1,4 @@
 Emacs::PDE
+Perl::Critic
 Perl::LanguageServer
 Perl::Tidy
