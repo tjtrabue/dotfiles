@@ -390,11 +390,17 @@ install_aur_packages() {
   if [ "$(command -v "aura")" == "" ]; then
     install_aura
   fi
-  sudo aura --noconfirm -Axa $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
+  sudo aura --noconfirm -Aax $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
 }
 
 # Update all AUR packages installed with Aura.
 update_aur_packages() {
+  sudo aura -Auax
+}
+
+# Update all Arch Linux packages, from both the standard and AUR repos.
+uparch() {
+  sudo pacman -Syyu
   sudo aura -Auax
 }
 

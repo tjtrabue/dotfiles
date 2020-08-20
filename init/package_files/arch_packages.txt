@@ -83,7 +83,6 @@ python
 python-pip
 python2
 python2-pip
-qutebrowser
 ranger
 ripgrep
 rofi
