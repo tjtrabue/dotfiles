@@ -206,7 +206,8 @@ optionally for extra modes"
 ** company-plsense
    This is a company backend for the =plsense= intellisense engine for Perl.
    Make sure you've already installed =plsense= and run =plsense config= on the
-   command line before trying to use this plugin.
+   command line before trying to use this plugin, since this plugin depends on
+   the =~/.plsense= configuration file.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package company-plsense
