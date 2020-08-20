@@ -32,6 +32,12 @@
 
 ;;; Code:
 
+(defun ps/install-perly-sense-if-not-found ()
+  "Install the Devel::PerlySense package from CPAN."
+  (when (not (executable-find "perly_sense"))
+    (message "Installing Devel::PerlySense from CPAN")
+    (shell-command "cpanm -i --force Devel::PerlySense")))
+
 (defun ps/load-perly-sense ()
   "Load the perly-sense.el file."
   ;; *** PerlySense load (don't touch) ***
@@ -93,6 +99,9 @@
 
 (defun ps/activate-perly-sense-mode ()
   "Activation hook for `perly-sense-mode'."
+
+  ;; Install PerlySense if it is not found on $PATH.
+  (ps/install-perly-sense-if-not-found)
 
   ;; Define local variables for this mode:
   (make-local-variable 'ps/key-prefix)
