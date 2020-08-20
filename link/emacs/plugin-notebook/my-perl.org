@@ -40,6 +40,17 @@ Here's my Perl configuration for Emacs.
   :lighter " PDE")
 #+end_src
 
+* PerlySense
+  PerlySense is an IDE backend for Perl. It interfaces with Emacs quite nicely.
+  Much like PDE, You must install PerlySense via CPAN from the Devel::PerlySense
+  package.
+
+#+begin_src emacs-lisp :tangle yes
+;; This minor mode is defined in a separate file called perly-sense-mode.el
+;; in the ~/.emacs.d/require directory.
+(require 'perly-sense-mode)
+#+end_src
+
 * Plugins
 ** cperl-mode
    =cperl-mode= is a more advanced Perl editing mode than the standard
@@ -47,8 +58,8 @@ Here's my Perl configuration for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
-    ;; :hook
-    ;; (cperl-mode . pde-mode)
+    :hook
+    (cperl-mode . perly-sense-mode)
     :config
     ;; Add cperl-mode to auto-mode-alist for editing perl files.
     (mapc (lambda (pair)

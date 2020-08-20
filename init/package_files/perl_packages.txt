@@ -1,3 +1,4 @@
+Devel::PerlySense
 Emacs::PDE
 Perl::Critic
 Perl::LanguageServer

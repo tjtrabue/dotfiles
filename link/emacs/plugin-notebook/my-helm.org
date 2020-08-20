@@ -245,7 +245,7 @@ Needed for performance:
      ;; c-mode-common-hook runs for all modes derived from the C programming
      ;; language.
      (when (and my/use-helm-gtags (derived-mode-p 'c-mode 'c++-mode 'java-mode
-                                                  'asm-mode))
+                                                  'asm-mode 'perl-mode))
         (helm-gtags-mode)))
 #+end_src
 

@@ -47,7 +47,7 @@ Needed for performance:
       c-mode
       clojure-mode
       cmake-mode
-      cperl-mode
+      ;; cperl-mode
       css-mode
       elixir-mode
       go-mode
@@ -60,7 +60,7 @@ Needed for performance:
       less-css-mode
       lua-mode
       objc-mode
-      perl-mode
+      ;; perl-mode
       php-mode
       python-mode
       ruby-mode
