@@ -9,7 +9,10 @@ install_plsense() {
   # Full download URL.
   local full_url="${base_url}/v${version}/PlSense-${version}.tar.gz"
 
-  cpanm -i --force "$full_url"
+  if cpanm -i --force "$full_url"; then
+    # Add plsense configuration after installing.
+    plsense config
+  fi
 }
 
 install_perl_packages() {

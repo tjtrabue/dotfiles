@@ -216,7 +216,8 @@ optionally for extra modes"
       ;; Turn on company-plsense for perl and cperl mode.
       (make-local-variable 'company-backends)
       (add-to-list 'company-backends 'company-plsense)
-      (company-plsense-setup)))
+      ;; Make sure the buffer gets initialized for company-plsense.
+      (company-plsense-init)))
     :init
     (setq company-plsense-ignore-compile-errors nil))
 #+end_src
