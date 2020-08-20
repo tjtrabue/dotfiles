@@ -204,10 +204,13 @@ optionally for extra modes"
 #+end_src
 
 ** company-plsense
-   This is a company backend for the =plsense= intellisense engine for Perl.
+   This is a company backend for the =plsense= intellisense engine for Perl.  It
+   is a good alternative to LSP mode for Perl, since the Perl LanguageServer
+   currently does not seem to provide any useful features.
+
    Make sure you've already installed =plsense= and run =plsense config= on the
    command line before trying to use this plugin, since this plugin depends on
-   the =~/.plsense= configuration file.
+   the =~/.plsense= configuration file containing the proper settings.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package company-plsense
@@ -228,6 +231,52 @@ optionally for extra modes"
     :config
     (add-to-list 'company-backends 'company-auctex)
     (company-auctex-init))
+#+end_src
+
+** company-lsp
+   =company-lsp= is a company backend supporting =lsp-mode=.
+
+   *NOTE*: You should never have to use =company-lsp=! It is a deprecated
+    package that is only useful in particular circumstances. The only supported
+    company backend for =lsp-mode= is =company-capf=, so try using that one
+    first.
+
+*** Variables
+
+#+begin_src emacs-lisp :tangle yes
+  (defvar my/modes-for-company-lsp '(
+    cperl-mode
+    perl-mode
+    sh-mode)
+  "This is a list of major modes to associate with the
+  `company-lsp' completion backend")
+#+end_src
+
+*** Functions
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/add-company-lsp-hooks ()
+  "Add hooks to specific major modes for using company-lsp."
+    (mapc #'(lambda (mode)
+        (lexical-let ((mode mode)
+                      (mode-hook-name (concat (symbol-name mode) "-hook")))
+          (add-hook (intern mode-hook-name) #'(lambda ()
+            (make-local-variable 'company-backends)
+            (add-to-list 'company-backends 'company-lsp)))))
+      my/modes-for-company-lsp))
+#+end_src
+
+*** use-package specification
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package company-lsp
+    :after (company lsp-mode)
+    :init
+    (my/add-company-lsp-hooks)
+    (setq company-lsp-cache-candidates nil
+          company-lsp-async t
+          company-lsp-enable-snippet t
+          company-lsp-enable-recompletion t))
 #+end_src
 ** company-box
    =company-box= is a company front-end with icons. It provides a great, modern
