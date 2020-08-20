@@ -50,7 +50,9 @@ Here's my Perl configuration for Emacs.
   ;; in the ~/.emacs.d/require directory.
   (use-package perly-sense-mode
     :ensure nil
-    :straight nil)
+    :straight nil
+    :after cperl-mode
+    :hook ((cperl-mode perl-mode) . perly-sense-mode))
 #+end_src
 
 * Plugins
@@ -60,9 +62,6 @@ Here's my Perl configuration for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
-    :after perly-sense-mode
-    :hook
-    (cperl-mode . perly-sense-mode)
     :config
     ;; Add cperl-mode to auto-mode-alist for editing perl files.
     (mapc (lambda (pair)
