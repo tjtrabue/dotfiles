@@ -46,13 +46,19 @@ Here's my Perl configuration for Emacs.
   package.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; This minor mode is defined in a separate file called perly-sense-mode.el
-  ;; in the ~/.emacs.d/require directory.
   (use-package perly-sense-mode
-    :ensure nil
-    :straight nil
+    :straight
+    (perly-sense-mode :type git :host github :repo "tjtrabue/perly-sense-mode")
     :after cperl-mode
-    :hook ((cperl-mode perl-mode) . perly-sense-mode))
+    :hook ((cperl-mode perl-mode) . perly-sense-mode)
+    :init
+    ;; The PerlySense prefix key (unset only if needed)
+    (global-unset-key (kbd "C-c C-o"))
+    (setq ps/key-prefix (kbd "C-c C-o"))
+    ;; Load flymake if t
+    (setq ps/load-flymake nil)
+    :config
+    (install-perly-sense))
 #+end_src
 
 * Plugins
