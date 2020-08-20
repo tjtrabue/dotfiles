@@ -46,9 +46,11 @@ Here's my Perl configuration for Emacs.
   package.
 
 #+begin_src emacs-lisp :tangle yes
-;; This minor mode is defined in a separate file called perly-sense-mode.el
-;; in the ~/.emacs.d/require directory.
-(require 'perly-sense-mode)
+  ;; This minor mode is defined in a separate file called perly-sense-mode.el
+  ;; in the ~/.emacs.d/require directory.
+  (use-package perly-sense-mode
+    :ensure nil
+    :straight nil)
 #+end_src
 
 * Plugins
@@ -58,6 +60,7 @@ Here's my Perl configuration for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
+    :after perly-sense-mode
     :hook
     (cperl-mode . perly-sense-mode)
     :config

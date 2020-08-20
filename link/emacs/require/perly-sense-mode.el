@@ -26,7 +26,9 @@
 
 ;;; Commentary:
 
-;; commentary
+;; perly-sense-mode is a minor-mode associated with the Devel::PerlySense
+;; CPAN module, which is in turn essentially an IDE backend for Perl
+;; specifically for Emacs.
 
 ;;; Code:
 
@@ -91,7 +93,8 @@
 
 (defun ps/activate-perly-sense-mode ()
   "Activation hook for `perly-sense-mode'."
-  ;; Define local variables for this mode
+
+  ;; Define local variables for this mode:
   (make-local-variable 'ps/key-prefix)
   (make-local-variable 'ps/load-flymake)
   (make-local-variable 'ps/external-dir)

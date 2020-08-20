@@ -40,6 +40,9 @@ Mostly for enumerating and configuring downloaded plugins.")
   (defvar my/elisp-lib-dir (expand-file-name
                             (concat user-emacs-directory "require"))
     "Directory for custom Emacs Lisp library files.")
+  (defvar my/local-repos-dir (expand-file-name
+                              (concat user-emacs-directory "local-repos"))
+    "Directory for local `straight' repos.")
   (defvar my/emacs-backup-dir (expand-file-name
                                (concat user-emacs-directory "backups"))
     "Directory housing all Emacs backup files.")
