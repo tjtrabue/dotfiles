@@ -203,6 +203,22 @@ optionally for extra modes"
 (use-package company-cabal)
 #+end_src
 
+** company-plsense
+   This is a company backend for the =plsense= intellisense engine for Perl.
+   Make sure you've already installed =plsense= and run =plsense config= on the
+   command line before trying to use this plugin.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package company-plsense
+    :hook
+    ((cperl-mode perl-mode) . (lambda ()
+      ;; Turn on company-plsense for perl and cperl mode.
+      (make-local-variable 'company-backends)
+      (add-to-list 'company-backends 'company-plsense)
+      (company-plsense-setup)))
+    :init
+    (setq company-plsense-ignore-compile-errors nil))
+#+end_src
 ** company-auctex
 #+begin_src emacs-lisp :tangle yes
   (use-package company-auctex
