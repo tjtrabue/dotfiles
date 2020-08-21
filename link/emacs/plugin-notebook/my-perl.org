@@ -82,20 +82,49 @@ Here's my Perl configuration for Emacs.
    Much like =company-plsense=, this is another Emacs interface plugin for
    =plsense=, but while =company-plsense= focuses on automatically completing
    what you type, this one provides other IDE features, such as
-   jump-to-definition.
+   jump-to-definition, managing the =plsense= servers, etc.
+
+   Please note that you must have already installed the =plsense= Perl package
+   before you can use this plugin.
+
+   *NOTE*: Please do /not/ use the =plsense-config-default= function in the
+   =:config= block! It enables =auto-complete-mode=, something that I do not
+   use, and it does so in a way that makes getting rid of =auto-complete-mode=
+   in any Perl buffer automatically very difficult. Instead of using
+   =plsense-config-default=, simply put all of your =plsense= initialization
+   logic in the =:hook= block in the =use-package= specification below. As you
+   can see, my chosen suite of initialization functions are heavily inspired by
+   =plsense-config-default=, but I leave out the =auto-complete-mode=
+   parts. Some may call this duplication of effort. However, I believe that the
+   flexibility that my approach affords me more than makes up for the hassle
+   incurred by rewriting =plsense-config-defaul=, and given how old this plugin
+   is and the slow pace of its change history, I doubt that it will change much
+   in the near future.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package plsense
-    :after cperl-mode
-    :hook
-    ((cperl-mode perl-mode) . (lambda ()
-      ;; Start the plsense servers automatically.
-      (plsense-server-start)))
-    :init
-    ;; Key binding
-    (setq plsense-popup-help-key "C-:")
-    (setq plsense-display-help-buffer-key "M-:")
-    (setq plsense-jump-to-definition-key "C-k")
-    :config
-    (plsense-config-default))
+    (use-package plsense
+      :after cperl-mode
+      :hook
+      ((cperl-mode perl-mode) . (lambda ()
+        (make-local-variable 'after-save-hook)
+        ;; Start the plsense servers automatically.
+        (plsense-server-start)
+        ;; Add keybindings and such.
+        (plsense-setup-current-buffer)
+        (plsense-update-current-buffer)
+        ;; Turn auto-complete-mode OFF.
+        ;; This must come after plsense-setup-current-buffer
+        (auto-complete-mode -1)
+        ;; Tell plsense to update the buffer after saving.
+        (add-hook 'after-save-hook 'plsense-update-current-buffer t)
+        ;; Define advice for informing changes of current buffer to server.
+        (plsense-server-sync-trigger-ize newline)
+        (plsense-server-sync-trigger-ize newline-and-indent)
+        (plsense-server-sync-trigger-ize yank)
+        (plsense-server-sync-trigger-ize yas/commit-snippet)))
+      :init
+      ;; Key binding
+      (setq plsense-popup-help-key "C-:")
+      (setq plsense-display-help-buffer-key "M-:")
+      (setq plsense-jump-to-definition-key "C-k"))
 #+end_src
