@@ -238,15 +238,6 @@ Needed for performance:
     (cl-loop for (key . command) in command-table do
       (define-key helm-gtags-mode-map
         (funcall key-func my/helm-gtags-prefix-key key) command))))
-
-  (defun my/helm-gtags-hook-fn ()
-    "Takes care of initialization logic for `helm-gtags-mode'."
-     ;; Start helm-gtags-mode only for specific major modes
-     ;; c-mode-common-hook runs for all modes derived from the C programming
-     ;; language.
-     (when (and my/use-helm-gtags (derived-mode-p 'c-mode 'c++-mode 'java-mode
-                                                  'asm-mode 'perl-mode))
-        (helm-gtags-mode)))
 #+end_src
 
 *** use-package definition
@@ -267,8 +258,11 @@ Needed for performance:
       ([remap xref-pop-marker-stack] . helm-gtags-pop-stack)
       ("C-c <"                       . helm-gtags-previous-history)
       ("C-c >"                       . helm-gtags-next-history))
-    ;; :hook
-    ;; (c-mode-common . my/helm-gtags-hook-fn)
+    :hook
+    ;; Only start helm-gtags-mode for specific major modes
+    ((cperl-mode perl-mode) . (lambda ()
+      (when my/use-helm-gtags
+        (helm-gtags-mode))))
     :config
     ;; Key mapping of gtags-mode.
     (my/create-helm-gtags-keybindings))

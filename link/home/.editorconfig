@@ -20,6 +20,10 @@ indent_style = tab
 [*.py]
 indent_size = 4
 
+# 4 spaces per indent in Perl code
+[*.{pl,plx}]
+indent_size = 4
+
 # Indent UltiSnips snippet files with tabs
 [*.snippets]
 indent_style = tab

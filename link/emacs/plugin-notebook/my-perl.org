@@ -40,7 +40,24 @@ Here's my Perl configuration for Emacs.
   :lighter " PDE")
 #+end_src
 
-* PerlySense
+* Plugins
+** cperl-mode
+   =cperl-mode= is a more advanced Perl editing mode than the standard
+   =perl-mode=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package cperl-mode
+    :config
+    ;; Add cperl-mode to auto-mode-alist for editing perl files.
+    (mapc (lambda (pair)
+        (if (eq (cdr pair) 'perl-mode)
+            (setcdr pair 'cperl-mode)))
+      (append auto-mode-alist interpreter-mode-alist))
+    ;; Get rid of troublesome keybindings
+    (unbind-key (kbd "C-j") 'cperl-mode-map))
+#+end_src
+
+** perly-sense-mode
   PerlySense is an IDE backend for Perl. It interfaces with Emacs quite nicely.
   Much like PDE, You must install PerlySense via CPAN from the Devel::PerlySense
   package.
@@ -61,17 +78,24 @@ Here's my Perl configuration for Emacs.
     (install-perly-sense))
 #+end_src
 
-* Plugins
-** cperl-mode
-   =cperl-mode= is a more advanced Perl editing mode than the standard
-   =perl-mode=.
+** plsense
+   Much like =company-plsense=, this is another Emacs interface plugin for
+   =plsense=, but while =company-plsense= focuses on automatically completing
+   what you type, this one provides other IDE features, such as
+   jump-to-definition.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package cperl-mode
+  (use-package plsense
+    :after cperl-mode
+    :hook
+    ((cperl-mode perl-mode) . (lambda ()
+      ;; Start the plsense servers automatically.
+      (plsense-server-start)))
+    :init
+    ;; Key binding
+    (setq plsense-popup-help-key "C-:")
+    (setq plsense-display-help-buffer-key "M-:")
+    (setq plsense-jump-to-definition-key "C-k")
     :config
-    ;; Add cperl-mode to auto-mode-alist for editing perl files.
-    (mapc (lambda (pair)
-        (if (eq (cdr pair) 'perl-mode)
-            (setcdr pair 'cperl-mode)))
-      (append auto-mode-alist interpreter-mode-alist)))
+    (plsense-config-default))
 #+end_src

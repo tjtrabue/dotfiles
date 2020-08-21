@@ -103,7 +103,13 @@ Needed for performance:
     ;; Whether or not to use Vim keys in the minibuffer.
     (setq evil-collection-setup-minibuffer nil)
     :config
-    (evil-collection-init))
+    (evil-collection-init)
+    ;; Get rid of troublesome keybindings:
+    ;; We do not need to kill a line with C-k anymore since we're using
+    ;; Vim keys.
+    (global-unset-key (kbd "C-k"))
+    ;; We never need to insert digraphs!
+    (unbind-key (kbd "C-k") 'evil-insert-state-map))
 #+end_src
 
 ** evil-surround
