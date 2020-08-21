@@ -21,6 +21,7 @@ Needed for performance:
       ;; c++-mode
       clojure-mode
       ;; cmake-mode
+      cperl-mode
       ;; css-mode
       ;; elixir-mode
       emacs-lisp-mode

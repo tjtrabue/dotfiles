@@ -220,6 +220,7 @@ optionally for extra modes"
       (make-local-variable 'company-backends)
       (add-to-list 'company-backends 'company-plsense)
       ;; Make sure the buffer gets initialized for company-plsense.
+      ;; This starts the plsense servers, amongst other things.
       (company-plsense-init)))
     :init
     (setq company-plsense-ignore-compile-errors nil))
@@ -241,42 +242,18 @@ optionally for extra modes"
     company backend for =lsp-mode= is =company-capf=, so try using that one
     first.
 
-*** Variables
-
 #+begin_src emacs-lisp :tangle yes
-  (defvar my/modes-for-company-lsp '(
-    cperl-mode
-    perl-mode
-    sh-mode)
-  "This is a list of major modes to associate with the
-  `company-lsp' completion backend")
-#+end_src
-
-*** Functions
-
-#+begin_src emacs-lisp :tangle yes
-(defun my/add-company-lsp-hooks ()
-  "Add hooks to specific major modes for using company-lsp."
-    (mapc #'(lambda (mode)
-        (lexical-let ((mode mode)
-                      (mode-hook-name (concat (symbol-name mode) "-hook")))
-          (add-hook (intern mode-hook-name) #'(lambda ()
-            (make-local-variable 'company-backends)
-            (add-to-list 'company-backends 'company-lsp)))))
-      my/modes-for-company-lsp))
-#+end_src
-
-*** use-package specification
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package company-lsp
-    :after (company lsp-mode)
-    :init
-    (my/add-company-lsp-hooks)
-    (setq company-lsp-cache-candidates nil
-          company-lsp-async t
-          company-lsp-enable-snippet t
-          company-lsp-enable-recompletion t))
+  ;; (use-package company-lsp
+  ;;   :after (company lsp-mode)
+  ;;   :hook
+  ;;   (sh-mode . (lambda ()
+  ;;           (make-local-variable 'company-backends)
+  ;;           (add-to-list 'company-backends 'company-lsp)))
+  ;;   :init
+  ;;   (setq company-lsp-cache-candidates nil
+  ;;         company-lsp-async t
+  ;;         company-lsp-enable-snippet t
+  ;;         company-lsp-enable-recompletion t))
 #+end_src
 ** company-box
    =company-box= is a company front-end with icons. It provides a great, modern
