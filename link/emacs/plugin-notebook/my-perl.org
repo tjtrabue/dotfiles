@@ -58,20 +58,30 @@ Here's my Perl configuration for Emacs.
 #+end_src
 
 ** perly-sense-mode
-  PerlySense is an IDE backend for Perl. It interfaces with Emacs quite nicely.
-  Much like PDE, You must install PerlySense via CPAN from the Devel::PerlySense
-  package.
+    PerlySense is an IDE backend for Perl. It interfaces with Emacs quite
+    nicely.  Much like PDE, You must install PerlySense via CPAN from the
+    Devel::PerlySense package. It provides some fancy IDE features such as class
+    hierarchies, documentation for the thing at point, searching through a
+    project for Perl files containing given text, and even showing test
+    coverage.
+
+    PerlySense is most useful for Object Oriented Perl projects, since most of
+    the IDE's features revolve around class hierarchies, documentation at point,
+    go-to-definition for classes only, etc. However, where PerlySense falls
+    short, =plsense= shines. I highly recommend you use both, but I do find that
+    =plsense= is more generally useful.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package perly-sense-mode
     :straight
     (perly-sense-mode :type git :host github :repo "tjtrabue/perly-sense-mode")
-    :after cperl-mode
-    :hook ((cperl-mode perl-mode) . perly-sense-mode)
+    :after (cperl-mode evil-collection)
+    :hook ((cperl-mode perl-mode) . (lambda ()
+             (perly-sense-mode)))
     :init
     ;; The PerlySense prefix key (unset only if needed)
-    (global-unset-key (kbd "C-c C-o"))
     (setq ps/key-prefix (kbd "C-c C-o"))
+    (global-unset-key ps/key-prefix)
     ;; Load flymake if t
     (setq ps/load-flymake nil)
     :config

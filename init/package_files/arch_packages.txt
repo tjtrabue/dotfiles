@@ -1,3 +1,4 @@
+ack
 acpi
 alacritty
 alsa-firmware
@@ -13,6 +14,7 @@ chromium
 clang
 cmake
 cmus
+crypto++
 ctags
 cups
 cups-pdf
@@ -48,10 +50,12 @@ iproute2
 jdk-openjdk
 khal
 libreoffice-fresh
+libxcrypt
 lightdm
 lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
 lld
+lsof
 lua
 luarocks
 lxappearance

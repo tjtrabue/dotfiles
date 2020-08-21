@@ -1,5 +1,7 @@
+Devel::CoverX::Covered
 Devel::PerlySense
 Emacs::PDE
+File::Corresponding
 Perl::Critic
 Perl::LanguageServer
 Perl::Tidy
