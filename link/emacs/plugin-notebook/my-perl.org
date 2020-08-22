@@ -108,13 +108,21 @@ such plugins is sure to slow your system down significantly.
       (if path
           (find-file path)
         (error "Module '%s' not found" module-name))))
+
+  (defun my/cperl-eldoc-documentation-function ()
+    "Return meaningful doc string for `eldoc-mode'."
+    (car
+      (let ((cperl-message-on-help-error nil))
+        (cperl-get-help))))
 #+end_src
 
 *** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
     :hook
-    (cperl-mode-hook . (lambda ()
+    (cperl-mode . (lambda ()
+      (make-local-variable 'eldoc-documentation-function)
+      (setq eldoc-documentation-function #'my/cperl-eldoc-documentation-function)
       (cperl-lazy-install)))
     :config
     ;; Add cperl-mode to auto-mode-alist for editing perl files.
