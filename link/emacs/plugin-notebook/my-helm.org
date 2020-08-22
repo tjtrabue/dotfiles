@@ -355,3 +355,20 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-dash)
 #+end_src
+** helm-perldoc
+   Search =perldoc= documentation with =helm=. It has lots of nice helm actions
+   built into it, as well.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helm-perldoc
+    :after cperl-mode
+    :bind
+    (:map cperl-mode-map
+     ;; Don't just remap cperl-perldoc to helm-perldoc because they are not quite
+     ;; the same thing. cperl-perldoc finds any function, whereas helm-perldoc
+     ;; only seems to find custom installed modules.
+     ("C-c C-h C-p" . helm-perldoc))
+    :hook
+    ((cperl-mode perl-mode) . (lambda ()
+      (helm-perldoc:setup))))
+#+end_src

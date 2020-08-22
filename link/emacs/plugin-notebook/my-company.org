@@ -218,9 +218,12 @@ optionally for extra modes"
     ((cperl-mode perl-mode) . (lambda ()
       ;; Turn on company-plsense for perl and cperl mode.
       (make-local-variable 'company-backends)
-      (add-to-list 'company-backends 'company-plsense)))
+      (add-to-list 'company-backends 'company-plsense)
+      (when (not company-plsense--server-started-p)
+        (company-plsense-start-server))
+      (company-plsense-init)))
     :init
-    (setq company-plsense-ignore-compile-errors nil))
+    (setq company-plsense-ignore-compile-errors t))
 #+end_src
 
 ** company-auctex

@@ -27,39 +27,94 @@ Needed for performance:
        (flyspell-prog-mode)))
      ;; Check spelling in text documents as you type.
      (text-mode . flyspell-mode))
-    :config
-    (global-flycheck-mode))
+    :init
+    ;; The allotted time before displaying errors at point.
+    (setq flycheck-display-errors-delay 0.1))
 #+end_src
 
 * Plugins
-** cask
+** flycheck-cask
 #+begin_src emacs-lisp :tangle yes
 (use-package flycheck-cask
   :after (flycheck))
 #+end_src
 
-** clojure
+** flycheck-clojure
+
 #+begin_src emacs-lisp :tangle yes
 (use-package flycheck-clojure
-  :after (flycheck))
+  :after flycheck)
 #+end_src
 
-** haskell
+** flycheck-haskell
 #+begin_src emacs-lisp :tangle yes
 (use-package flycheck-haskell
-  :after (flycheck))
+  :after flycheck)
 #+end_src
 
-** relint
+** flycheck-inline
+   Shows Flycheck output inline right beneath their reporting location.  This is
+   an alternative to =flycheck-pos-tip=. I tend to like =flycheck-pos-tip=
+   better, though.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package flycheck-inline
+  ;;   :after (flycheck quick-peek)
+  ;;   :hook
+  ;;   (flycheck-mode . flycheck-inline-mode))
+#+end_src
+
+** flycheck-package
+   Check Emacs Lisp packages for common errors.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck-package
+    :after flycheck
+    :config
+    (flycheck-package-setup))
+#+end_src
+
+** flycheck-pkg-config
+   Allows Flycheck to use =pkg-config= when determining C/C++ library headers.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck-pkg-config
+    :after flycheck)
+#+end_src
+
+** flycheck-pos-tip
+   Shows the error at point in a =pos-tip= graphical popup.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck-pos-tip
+    :after flycheck
+    :hook
+    (flycheck-mode . flycheck-pos-tip-mode))
+#+end_src
+
+** flycheck-relint
+   Checks regular expression syntax.
+
 #+begin_src emacs-lisp :tangle yes
 (use-package flycheck-relint
-  :after (flycheck)
+  :after flycheck
   :config
   (flycheck-relint-setup))
 #+end_src
 
-** rust
+** flycheck-rust
+
 #+begin_src emacs-lisp :tangle yes
 (use-package flycheck-rust
-  :after (flycheck))
+  :after flycheck)
+#+end_src
+
+** flycheck-status-emoji
+   Replaces standard Flycheck indicators with expressive emojis.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck-status-emoji
+    :after flycheck
+    :hook
+    (flycheck-mode . flycheck-status-emoji-mode))
 #+end_src
