@@ -162,11 +162,13 @@ with straight.el.")
   as LanguageServerProtocol clients and servers.
 
 #+begin_src emacs-lisp :tangle yes
-  ; Show diagnostic output in the event of an error.
-  (setq debug-on-error t)
-  ; Always follow symlinks
+  ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
+  ;; screen with debugging output seems to mess with evil-mode, so I find it
+  ;; prudent to turn this variable off until I have a reason to turn it on.
+  (setq debug-on-error nil)
+  ;; Always follow symlinks
   (setq vc-follow-symlinks t)
-  ; Reduce risk of loading outdated bytecode
+  ;; Reduce risk of loading outdated bytecode
   (setq load-prefer-newer t)
 
   ;; Do not show standard GNU Emacs welcome screen when Emacs starts,
