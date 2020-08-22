@@ -44,7 +44,10 @@ such plugins is sure to slow your system down significantly.
 
 (define-minor-mode pde-mode
   "Minor mode for activating the Perl Development Environment package from CPAN."
-  :lighter " PDE")
+  :lighter " PDE"
+  (if pde-mode
+      (load-pde)
+    (unload-feature 'pde-load)))
 #+end_src
 
 * Plugins
@@ -52,8 +55,67 @@ such plugins is sure to slow your system down significantly.
    =cperl-mode= is a more advanced Perl editing mode than the standard
    =perl-mode=.
 
+*** Variables
+#+begin_src emacs-lisp :tangle yes
+  (defvar my/ffap-perl-inc-dirs
+        (apply 'append
+        (mapcar (function ffap-all-subdirs)
+          (split-string (shell-command-to-string
+              "perl -e 'pop @INC; print join(q/ /,@INC);'"))))
+    "Directories from the @INC variables in Perl used to locate
+    files at point.")
+#+end_src
+
+*** Functions
+#+begin_src emacs-lisp :tangle yes
+  (defun my/cperl-ffap-locate(name)
+    "Return cperl module for find-file-at-point."
+    (let* ((r (replace-regexp-in-string ":" "/" (file-name-sans-extension name)))
+           (e (replace-regexp-in-string "//" "/" r))
+           (x (ffap-locate-file e '(".pm" ".pl" ".xs") my/ffap-perl-inc-dirs)))
+      x))
+
+  (defun my/perl-module-path (module-name)
+    "Return the path to the given Perl module."
+    (let* ((file-name
+            (concat (replace-regexp-in-string "::" "/" module-name)
+                    ".pm"))
+           (command-line
+            (concat "perl -M'"
+                    module-name
+                    "' -e'print $INC{q{"
+                    file-name
+                    "}}'"))
+           (path (shell-command-to-string command-line))
+           (cant-locate (string-match "^Can't locate " path)))
+      (if cant-locate
+          nil
+        path)))
+
+  (defun find-perl-module (module-name)
+    "Open a Perl module's source file."
+    (interactive (list (let* ((default-arg (cperl-word-at-point))
+                              (input (read-string (format "Perl module name%s: "
+                                                          (if (string= default-arg "")
+                                                              ""
+                                                            (format " (default %s)" default-arg))))))
+                         (if (string= input "")
+                             (if (string= default-arg "")
+                                 (error "No Perl module given")
+                               default-arg)
+                           input))))
+    (let ((path (my/perl-module-path module-name)))
+      (if path
+          (find-file path)
+        (error "Module '%s' not found" module-name))))
+#+end_src
+
+*** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
+    :hook
+    (cperl-mode-hook . (lambda ()
+      (cperl-lazy-install)))
     :config
     ;; Add cperl-mode to auto-mode-alist for editing perl files.
     (mapc (lambda (pair)
@@ -61,7 +123,9 @@ such plugins is sure to slow your system down significantly.
             (setcdr pair 'cperl-mode)))
       (append auto-mode-alist interpreter-mode-alist))
     ;; Get rid of troublesome keybindings
-    (unbind-key (kbd "C-j") 'cperl-mode-map))
+    (unbind-key (kbd "C-j") 'cperl-mode-map)
+    ;; Add find-file-at-point function for cperl-mode.
+    (add-to-list 'ffap-alist  '(cperl-mode . my/cperl-ffap-locate)))
 #+end_src
 
 ** perly-sense-mode
