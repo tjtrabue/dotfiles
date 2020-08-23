@@ -1,4 +1,4 @@
-#+title:  Spaceline: Fancy SpaceMacs Modeline
+#+title:  Spaceline: Fancy SpaceMacs-Inspired Modeline
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2020:05:26
@@ -137,13 +137,19 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
   (use-package spaceline-all-the-icons
     :after (spaceline color-theme-sanityinc-tomorrow)
     :init
-    ;; Change the separator for the main spaaceline bar.
+    ;; Change the separator for the main spaaceline bar
     (setq spaceline-all-the-icons-separator-type 'wave
           ;; Change the spaceline separator characters
           spaceline-all-the-icons-primary-separator "⟡"
           spaceline-all-the-icons-secondary-separator "➢"
+          ;; Whether or not to invert the direction of segment separators
+          spaceline-all-the-icons-separators-invert-direction nil
           ;; Enlarge the spaceline separators to account for the bigger modeline.
-          spaceline-all-the-icons-separator-scale 1.8)
+          ;; Otherwise, the separators do not align with the height of the
+          ;; modeline properly.  Hopefully we can decrease this factor once a true
+          ;; fix emerges.
+          spaceline-all-the-icons-separator-scale 2.5
+          powerline-text-scale-factor 1.00)
     :config
     (spaceline-all-the-icons-theme)
     ;; Activate extensions
@@ -151,5 +157,13 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     (spaceline-all-the-icons--setup-package-updates)
     (spaceline-all-the-icons--setup-git-ahead)
     (spaceline-all-the-icons--setup-paradox)
-    (spaceline-all-the-icons--setup-neotree))
+    (spaceline-all-the-icons--setup-neotree)
+    ;; Show if file is bookmarked
+    (spaceline-toggle-all-the-icons-bookmark-on)
+    ;; Show current buffer position as percentage
+    (spaceline-toggle-all-the-icons-buffer-position-on)
+    ;; Whether or not the buffer has been narrowed
+    (spaceline-toggle-all-the-icons-narrowed-on)
+    ;; Show text scaling in spaceline
+    (spaceline-toggle-all-the-icons-text-scale-on))
 #+end_src

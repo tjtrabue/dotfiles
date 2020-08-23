@@ -1,4 +1,4 @@
-#+title:  Powerline Status
+#+title:  Powerline Modeline for Emacs
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
@@ -11,7 +11,7 @@ or GUI oriented.
 I prefer the =spaceline= modeline to =powerline= since it's fancier and more
 extensible.
 
-Note that you do not need to manually installing this plugin in order to
+*NOTE*: you do not need to manually installing this plugin in order to
 installing =spaceline=, I have left my configuration because =spaceline= does
 inherit some of =powerline='s properties.
 
@@ -23,8 +23,10 @@ inherit some of =powerline='s properties.
 #+begin_src emacs-lisp :tangle yes
   (use-package powerline
     :init
-    (setq powerline-default-separator 'contour)
+    ;; Set the shape of the segment separator
+    (setq powerline-default-separator 'wave)
     ;; :config
-    ;; (powerline-default-theme)
+    ;; ;; The powerline theme to use
+    ;; (powerline-center-evil-theme)
   )
 #+end_src
