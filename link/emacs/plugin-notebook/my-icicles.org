@@ -1,0 +1,18 @@
+#+title:    Icicles: Text Completion
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:08:22
+#+property: header-args:emacs-lisp :lexical t
+#+tags:     icicles minibuffer text
+
+Icicles is a text completion framework for Emacs. I'd use =helm= whenever
+possible since it is vastly more powerful and flexible.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package icicles)
+#+end_src

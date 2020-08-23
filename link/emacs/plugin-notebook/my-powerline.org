@@ -16,5 +16,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
 (use-package powerline
+  :init
+  (setq powerline-default-separator 'contour)
   :config (powerline-default-theme))
 #+end_src
