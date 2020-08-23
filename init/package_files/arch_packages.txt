@@ -39,6 +39,7 @@ gnupg
 go
 gpicview
 grub
+hacksaw
 haskell-haddock-library
 htop
 hunspell
@@ -60,6 +61,7 @@ lua
 luarocks
 lxappearance
 lynx
+maim
 man-db
 man-pages
 mlocate
@@ -94,6 +96,7 @@ ruby
 rust
 scrot
 shellcheck
+shotgun
 stack
 texinfo
 texlive-most

@@ -105,7 +105,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package spaceline
-    :after (powerline color-theme-sanityinc-tomorrow)
+    :after (color-theme-sanityinc-tomorrow)
     :init
     ;; Make sure to use Unicode by default
     (setq spaceline-window-numbers-unicode t
@@ -117,7 +117,6 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           spaceline-highlight-face-func
             'my/spaceline-highlight-face-evil-state)
     :config
-    (spaceline-compile)
     (spaceline-helm-mode 1)
     ;; Set spaceline evil colors to match main color theme.
     (my/set-spaceline-evil-faces)
@@ -142,7 +141,9 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     (setq spaceline-all-the-icons-separator-type 'wave
           ;; Change the spaceline separator characters
           spaceline-all-the-icons-primary-separator "⟡"
-          spaceline-all-the-icons-secondary-separator "➢")
+          spaceline-all-the-icons-secondary-separator "➢"
+          ;; Enlarge the spaceline separators to account for the bigger modeline.
+          spaceline-all-the-icons-separator-scale 1.8)
     :config
     (spaceline-all-the-icons-theme)
     ;; Activate extensions
