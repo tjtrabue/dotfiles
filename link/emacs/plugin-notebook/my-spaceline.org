@@ -142,7 +142,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     (setq spaceline-all-the-icons-separator-type 'wave
           ;; Change the spaceline separator characters
           spaceline-all-the-icons-primary-separator "⟡"
-          spaceline-all-the-icons-secondary-separator "⍟")
+          spaceline-all-the-icons-secondary-separator "➢")
     :config
     (spaceline-all-the-icons-theme)
     ;; Activate extensions
