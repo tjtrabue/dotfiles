@@ -111,13 +111,18 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     (setq spaceline-window-numbers-unicode t
           spaceline-workspace-numbers-unicode t
           ;; The character separating minor modes in spaceline
-          spaceline-minor-modes-separator "⟡"
+          spaceline-minor-modes-separator "|"
+          ;; Boost up font size in modeline to account for separator size
+          ;; powerline-text-scale-factor 1.5
           ;; Tell spaceline to reflect evil-mode's current state (i.e., Vim mode)
           ;; by changing color.
           spaceline-highlight-face-func
             'my/spaceline-highlight-face-evil-state)
     :config
+    (spaceline-emacs-theme)
+    ;; Turn on special modes
     (spaceline-helm-mode 1)
+    (spaceline-info-mode 1)
     ;; Set spaceline evil colors to match main color theme.
     (my/set-spaceline-evil-faces)
     ;; Turn on certain spaceline segments.
@@ -139,17 +144,8 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     :init
     ;; Change the separator for the main spaaceline bar
     (setq spaceline-all-the-icons-separator-type 'wave
-          ;; Change the spaceline separator characters
-          spaceline-all-the-icons-primary-separator "⟡"
-          spaceline-all-the-icons-secondary-separator "➢"
           ;; Whether or not to invert the direction of segment separators
-          spaceline-all-the-icons-separators-invert-direction nil
-          ;; Enlarge the spaceline separators to account for the bigger modeline.
-          ;; Otherwise, the separators do not align with the height of the
-          ;; modeline properly.  Hopefully we can decrease this factor once a true
-          ;; fix emerges.
-          spaceline-all-the-icons-separator-scale 2.5
-          powerline-text-scale-factor 1.00)
+          spaceline-all-the-icons-separators-invert-direction nil)
     :config
     (spaceline-all-the-icons-theme)
     ;; Activate extensions
