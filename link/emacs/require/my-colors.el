@@ -42,8 +42,9 @@ Can be one of 'night, 'day, 'bright, 'blue, or 'eighties")
   "The alist of all color name-value pairs for the current theme.")
 
 ;; Functions
-(defun my-colors-get-sinct-colors-alist ()
-  "Return the alist of all colors used by the current color theme."
+;;;###autoload
+(defun my-colors-get-colors-alist ()
+  "Return the colors alist for my chosen theme."
   (let (theme-alist)
     ;; Evaluate the theme alist name:
     (cond ((stringp my-colors-theme-alist-name)
@@ -52,13 +53,7 @@ Can be one of 'night, 'day, 'bright, 'blue, or 'eighties")
            (setq theme-alist (eval my-colors-theme-alist-name)))
           (t
            (setq theme-alist my-colors-theme-alist-name)))
-    ;; Return the alist
     (cdr (assq my-colors-sinct-theme theme-alist))))
-
-;;;###autoload
-(defun my-colors-get-colors-alist ()
-  "Return the colors alist for my chosen theme."
-  (my-colors-get-sinct-colors-alist))
 
 ;;;###autoload
 (defun my-colors-get-color (color)
