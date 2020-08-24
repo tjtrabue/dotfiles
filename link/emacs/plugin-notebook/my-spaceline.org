@@ -68,19 +68,19 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
       (dolist (face-color `((spaceline-custom-evil-normal
           ,(my-colors-get-color-orange) "Evil normal state face.")
           (spaceline-custom-evil-insert
-          ,(my-colors-get-color-green) "Evil insert state face.")
+          ,(my-colors-get-color-aqua) "Evil insert state face.")
           (spaceline-custom-evil-emacs
-          ,(my-colors-get-color-aqua) "Evil emacs state face.")
+          ,(my-colors-get-color-purple) "Evil emacs state face.")
           (spaceline-custom-evil-replace
           ,(my-colors-get-color-yellow) "Evil replace state face.")
           (spaceline-custom-evil-visual
           ,(my-colors-get-color-blue) "Evil visual state face.")
           (spaceline-custom-evil-motion
-          ,(my-colors-get-color-purple) "Evil motion state face.")
+          ,(my-colors-get-color-green) "Evil motion state face.")
           (spaceline-unmodified
           ,(my-colors-get-color-orange) "Unmodified buffer face.")
           (spaceline-modified
-          ,(my-colors-get-color-purple) "Modified buffer face.")
+          ,(my-colors-get-color-red) "Modified buffer face.")
           (spaceline-read-only
           ,(my-colors-get-color-aqua) "Read-only buffer face.")))
         (setq face `(defface ,(nth 0 face-color)
@@ -93,6 +93,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 
   (defun my/spaceline-highlight-face-evil-state ()
   "Set the highlight face depending on the evil state.
+
   Set `spaceline-highlight-face-func' to
   `my/spaceline-highlight-face-evil-state' to use this."
   (if (bound-and-true-p evil-local-mode)
@@ -112,8 +113,6 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           spaceline-workspace-numbers-unicode t
           ;; The character separating minor modes in spaceline
           spaceline-minor-modes-separator "|"
-          ;; Boost up font size in modeline to account for separator size
-          ;; powerline-text-scale-factor 1.5
           ;; Tell spaceline to reflect evil-mode's current state (i.e., Vim mode)
           ;; by changing color.
           spaceline-highlight-face-func
@@ -144,6 +143,9 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     :init
     ;; Change the separator for the main spaaceline bar
     (setq spaceline-all-the-icons-separator-type 'wave
+          ;; Change intra-segment separators
+          spaceline-all-the-icons-primary-separator ""
+          spaceline-all-the-icons-secondary-separator ""
           ;; Whether or not to invert the direction of segment separators
           spaceline-all-the-icons-separators-invert-direction nil)
     :config
