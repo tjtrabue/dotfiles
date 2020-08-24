@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 
-;; Color theme and accompanying functions used by me.
+;; This package provides an API for interacting with my chosen color theme.
 
 ;;; Code:
 
@@ -35,13 +35,30 @@
 
 Can be one of 'night, 'day, 'bright, 'blue, or 'eighties")
 
+(defvar my-colors-theme-alist-name "color-theme-sanityinc-tomorrow-colors"
+  "The name of the main colors theme alist.")
+
 (defvar my-colors-color-theme-alist nil
   "The alist of all color name-value pairs for the current theme.")
 
 ;; Functions
-(defun my-colors-get-theme-colors-alist ()
+(defun my-colors-get-sinct-colors-alist ()
   "Return the alist of all colors used by the current color theme."
-  (cdr (assq my-colors-sinct-theme color-theme-sanityinc-tomorrow-colors)))
+  (let (theme-alist)
+    ;; Evaluate the theme alist name:
+    (cond ((stringp my-colors-theme-alist-name)
+           (setq theme-alist (eval (intern my-colors-theme-alist-name))))
+          ((symbolp my-colors-theme-alist-name)
+           (setq theme-alist (eval my-colors-theme-alist-name)))
+          (t
+           (setq theme-alist my-colors-theme-alist-name)))
+    ;; Return the alist
+    (cdr (assq my-colors-sinct-theme theme-alist))))
+
+;;;###autoload
+(defun my-colors-get-colors-alist ()
+  "Return the colors alist for my chosen theme."
+  (my-colors-get-sinct-colors-alist))
 
 ;;;###autoload
 (defun my-colors-get-color (color)
@@ -63,7 +80,7 @@ COLOR is one of the following symbols:
   'blue
   'purple"
 
-  (let ((theme-alist (my-colors-get-theme-colors-alist)))
+  (let ((theme-alist (my-colors-get-colors-alist)))
     (cdr (assq color theme-alist))))
 
 ;; Export this module
