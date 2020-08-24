@@ -72,11 +72,11 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
           (spaceline-custom-evil-emacs
           ,(my-colors-get-color-purple) "Evil emacs state face.")
           (spaceline-custom-evil-replace
-          ,(my-colors-get-color-yellow) "Evil replace state face.")
+          ,(my-colors-get-color-blue) "Evil replace state face.")
           (spaceline-custom-evil-visual
-          ,(my-colors-get-color-blue) "Evil visual state face.")
+          ,(my-colors-get-color-green) "Evil visual state face.")
           (spaceline-custom-evil-motion
-          ,(my-colors-get-color-green) "Evil motion state face.")
+          ,(my-colors-get-color-yellow) "Evil motion state face.")
           (spaceline-unmodified
           ,(my-colors-get-color-orange) "Unmodified buffer face.")
           (spaceline-modified
