@@ -14,8 +14,6 @@ right now I'm tempted to say that =spaceline= is not as easy to configure,
 especially since I had to dig through its source code to figure out how to
 change its colors.
 
-Specifies whether or not to use lexical bindings. Lexical bindings speed up
-Elisp quite a bit.
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
