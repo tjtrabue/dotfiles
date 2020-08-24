@@ -48,19 +48,29 @@ exit 0;
 # Take care of setup logic.
 setup() {
   log_info "Setting up"
+  local other_docbook2texi="$(which "docbook2texi")"
+  local regular_docbook2texi_bin="/usr/bin/docbook2x-texi"
+
   mkdir -p "${LOCAL_INFO_DIR}"
+  # Symlink the docbook2texi executable if necessary.
+  if [ "$(command -v "${other_docbook2texi}")" != "" ]; then
+    sudo ln -s "${other_docbook2texi}" "$regular_docbook2texi_bin"
+  fi
 }
 
 # Install info pages for the Git version control system.
 install_git_info() {
   local git_info_url="https://github.com/git/git/archive/master.tar.gz"
-  local git_info_tar="git-master.tar.gz"
+  local git_info_dir="git-master"
+  local git_info_tar="${git_info_dir}.tar.gz"
+  local git_info_doc_dir="${git_info_dir}/Documentation"
 
   print_header "Installing Git Info Manual"
   wget -c -O "${git_info_tar}" "$git_info_url"
   tar -zxvf "$git_info_tar"
   (
-    cd git-master/Documentation || return 1
+    cd "${git_info_doc_dir}" || return 1
+    sed -i "s/docbook2x-texi/docbook2texi/g" Makefile
     make git.info gitman.info
     mv git.info gitman.info "${LOCAL_INFO_DIR}"
   )
@@ -69,6 +79,9 @@ install_git_info() {
     install-info git.info dir
     install-info gitman.info dir
   )
+
+  rm -f "${git_info_tar}"
+  rm -rf "${git_info_dir}"
   succ "Done"
 }
 
@@ -82,6 +95,7 @@ install_python_info() {
   tar -zxvf "$python_info_tar"
   (
     cd cpython-master/Doc || return 1
+    sed -i "s/docbook2x-texi/docbook2texi"
     sphinx-build -b texinfo -d build/doctrees . build/texinfo
     cd build/texinfo && make
     mv python.info "${LOCAL_INFO_DIR}"

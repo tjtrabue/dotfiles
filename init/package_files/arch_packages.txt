@@ -6,6 +6,8 @@ alsa-plugins
 alsa-utils
 arc-gtk-theme
 arc-icon-theme
+docbook2x
+asciidoc
 aspell-en
 awesome
 biber
