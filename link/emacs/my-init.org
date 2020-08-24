@@ -68,7 +68,9 @@ with straight.el.")
   (defvar my/line-width 80 "The width of each line of code.")
   (defvar my/use-helm-gtags t
     "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")
-  )
+  (defvar my/user-info-dir (expand-file-name (concat (getenv "HOME") "/.local/share/info"))
+    "The directory containing extra info pages installed by the user.")
+)
 #+end_src
 
 * Language/Encoding
@@ -219,6 +221,17 @@ with straight.el.")
   (setq evil-want-keybinding nil)
 #+end_src
 
+* Info
+  =info= is Emacs' built in help system. You use =info= to browse various
+  documentation pages. However, by default, Emacs only looks in a small number
+  of locations for help pages. Here we add more locations for browsing
+  user-installed info pages.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Make sure user-installed info pages are available.
+  (add-to-list 'Info-default-directory-list my/user-info-dir)
+#+end_src
+
 * Aliases
   Here we alias existing functions to new names, usually to tell Emacs to run a
   different function whenever it tries to use one we don't like.
@@ -288,10 +301,13 @@ with straight.el.")
 
 * Key Bindings
   Custom key bindings.
+
 ** Global
+   Key bindings available in any major mode.
+
 #+begin_src emacs-lisp :tangle yes
-  ;; (global-set-key (kbd "C-c j") 'next-buffer)
-  ;; (global-set-key (kbd "C-c k") 'previous-buffer)
+  ;; Find file at point ("g f" in evil-mode)
+  ;; (global-set-key (kbd "C-c f p") 'ffap)
 #+end_src
 
 * Email

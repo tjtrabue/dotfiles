@@ -53,7 +53,10 @@ such plugins is sure to slow your system down significantly.
 * Plugins
 ** cperl-mode
    =cperl-mode= is a more advanced Perl editing mode than the standard
-   =perl-mode=.
+   =perl-mode=, with better syntax highlighting and more editing functions.
+   You should always, always use =cperl-mode=, never use =perl-mode=. Also,
+   =cperl-mode= is built into Emacs, so there's nothing to install. I don't know
+   why it's not the default Perl editing mode.
 
 *** Variables
 #+begin_src emacs-lisp :tangle yes
@@ -216,4 +219,17 @@ such plugins is sure to slow your system down significantly.
   ;;   (setq plsense-popup-help-key "C-:")
   ;;   (setq plsense-display-help-buffer-key "M-:")
   ;;   (setq plsense-jump-to-definition-key "C-k"))
+#+end_src
+
+** perl-find-library
+   This is a community package for finding Perl library source files.
+   It really supersedes my custom =find-perl-module= function.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package perl-find-library
+    :after perl-mode
+    :bind
+    (:map cperl-mode-map
+     ("C-c f l" . perl-find-library)
+     ([remap cperl-perldoc] . perldoc)))
 #+end_src

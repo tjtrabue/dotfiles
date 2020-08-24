@@ -73,6 +73,6 @@ while true ; do
 done
 # }}}
 
-main;
+main "${@}";
 
 # vim:foldenable:foldmethod=marker:

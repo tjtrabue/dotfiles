@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
+
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare VERBOSE=false;
+
+# User's info directory for third party info manuals.
+declare LOCAL_INFO_DIR="${HOME}/.local/share/info"
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash";
+source "${IMPORT}/functions_log.bash";
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Install extra Emacs info pages.
+
+Requires a number of prerequisite tools:
+
+- asciidoc
+- docbook2x
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+exit 0;
+}
+
+setup() {
+  mkdir -p ""
+}
+
+# Install info pages for the Git version control system.
+install_git_info() {
+  print_header "Installing Git Info Manual"
+  wget "https://github.com/git/git/archive/master.tar.gz"
+  tar xf master.tar.gz
+  cd git-master/Documentation
+  make git.info gitman.info
+  mv git.info gitman.info ~/.local/share/info
+  cd "$LOCAL_INFO_DIR"
+  install-info git.info dir
+  install-info gitman.info dir
+  succ "Done"
+}
+
+# Install info pages for the Python programming language.
+install_python_info() {
+  print_header "Installing Python Info Manual"
+  wget "https://github.com/python/cpython/archive/master.tar.gz"
+  tar xf master.tar.gz
+  cd cpython-master/Doc
+  sphinx-build -b texinfo -d build/doctrees . build/texinfo
+  cd build/texinfo && make
+  mv python.info "${LOCAL_INFO_DIR}"
+  cd "${LOCAL_INFO_DIR}"
+  install-info python.info dir
+}
+
+# Install info pages for the Perl programming language.
+install_perl_info() {
+  print_header "Installing Perl Info Manual"
+  wget "https://perl5.git.perl.org/perl.git/snapshot/HEAD.tar.gz"
+  tar xf HEAD.tar.gz
+  cd perl-HEAD-*/pod
+  for pod in perl*.pod; do
+    base=$(basename $pod .pod)
+    pod2texi "$pod" > "$base.texi" \
+    && makeinfo "$base.texi"
+  done
+  touch perl-menu.info
+  for info in *.info; do
+    base=$(basename $info .info)
+    install-info --entry="* $base: ($info). " --section=Perl $info perl-menu.info
+  done
+  mv *.info* "${LOCAL_INFO_DIR}"
+  cd "${LOCAL_INFO_DIR}"
+  install-info --entry="* Perl: (perl-menu.info). " --section=Perl perl-menu.info dir
+}
+
+# Install info pages for GNU's standard C++ library.
+install_stdlibpp_info() {
+  print_header "Installing stdlib++ Info Manual"
+  wget "http://www.netgull.com/gcc/infrastructure/libg%2B%2B-2.8.1.3.tar.gz"
+  tar -xvf libg++-2.8.1.3.tar.gz libg++-2.8.1.3/libg++/texinfo/lgpl.texinfo
+  tar -xvf libg++-2.8.1.3.tar.gz libg++-2.8.1.3/libg++/libg++.texi
+  (
+    cd libg++-2.8.1.3/libg++/
+    cp texinfo/lgpl.texinfo .
+    makeinfo libg++.texi
+    cp libg++.info "${LOCAL_INFO_DIR}"
+  )
+  cd "${LOCAL_INFO_DIR}"
+  install-info libg++.info dir
+}
+
+# Main entry point for the program.
+main() {
+  print_header "Installing Extra Emacs Info Manuals"
+  install_git_info
+  install_python_info
+  install_perl_info
+  install_stdlibpp_info
+  succ "Successfully installed all info manuals"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true;
+      shift;
+      ;;
+
+    -h | --help)
+      _help;
+      shift;
+      break;
+      ;;
+
+    --)
+      shift;
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main "${@}";
+
+# vim:foldenable:foldmethod=marker:
