@@ -33,7 +33,7 @@ Elisp quite a bit.
   function is built-in to =spaceline=; unfortunately, it uses hard-coded color
   values, so I must define my own analogous function that uses my custom colors.
 
-** Required modules
+** Load custom colors package
 
 #+begin_src emacs-lisp :tangle yes
   ;; Pull in my own custom color theme features.
@@ -66,26 +66,26 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
     "Set the spaceline colors to match custom Emacs theme."
     (let (face-color face)
       (dolist (face-color `((spaceline-custom-evil-normal
-          ,(my-colors-get-color-orange) "Evil normal state face.")
+          ,(my-colors-get-color 'orange) "Evil normal state face.")
           (spaceline-custom-evil-insert
-          ,(my-colors-get-color-aqua) "Evil insert state face.")
+          ,(my-colors-get-color 'aqua) "Evil insert state face.")
           (spaceline-custom-evil-emacs
-          ,(my-colors-get-color-purple) "Evil emacs state face.")
+          ,(my-colors-get-color 'purple) "Evil emacs state face.")
           (spaceline-custom-evil-replace
-          ,(my-colors-get-color-blue) "Evil replace state face.")
+          ,(my-colors-get-color 'blue) "Evil replace state face.")
           (spaceline-custom-evil-visual
-          ,(my-colors-get-color-green) "Evil visual state face.")
+          ,(my-colors-get-color 'green) "Evil visual state face.")
           (spaceline-custom-evil-motion
-          ,(my-colors-get-color-yellow) "Evil motion state face.")
+          ,(my-colors-get-color 'yellow) "Evil motion state face.")
           (spaceline-unmodified
-          ,(my-colors-get-color-orange) "Unmodified buffer face.")
+          ,(my-colors-get-color 'orange) "Unmodified buffer face.")
           (spaceline-modified
-          ,(my-colors-get-color-red) "Modified buffer face.")
+          ,(my-colors-get-color 'red) "Modified buffer face.")
           (spaceline-read-only
-          ,(my-colors-get-color-aqua) "Read-only buffer face.")))
+          ,(my-colors-get-color 'aqua) "Read-only buffer face.")))
         (setq face `(defface ,(nth 0 face-color)
           '((t :background ,(nth 1 face-color)
-          :foreground ,(my-colors-get-color-alt-background)
+          :foreground ,(my-colors-get-color 'alt-background)
           :inherit 'mode-line))
                       ,(nth 2 face-color)
                     :group 'spaceline))
@@ -106,7 +106,7 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package spaceline
-    :after (color-theme-sanityinc-tomorrow)
+    :after (my-colors color-theme-sanityinc-tomorrow)
     :init
     ;; Make sure to use Unicode by default
     (setq spaceline-window-numbers-unicode t

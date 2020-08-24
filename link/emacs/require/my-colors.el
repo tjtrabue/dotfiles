@@ -1,7 +1,7 @@
 ;;; my-colors.el --- summary -*- lexical-binding: t -*-
 
-;; Author:
-;; Maintainer:
+;; Author: Tom Trabue
+;; Maintainer: Tom Trabue
 ;; Version: 1.0.0
 ;; Package-Requires: (version-num)
 ;; Homepage: homepage
@@ -25,11 +25,9 @@
 
 ;;; Commentary:
 
-;; Color theme and functions used by me.
+;; Color theme and accompanying functions used by me.
 
 ;;; Code:
-
-;; (require 'color-theme-sanityinc-tomorrow)
 
 ;; Variables
 (defvar my-colors-sinct-theme 'eighties
@@ -45,90 +43,28 @@ Can be one of 'night, 'day, 'bright, 'blue, or 'eighties")
   "Return the alist of all colors used by the current color theme."
   (cdr (assq my-colors-sinct-theme color-theme-sanityinc-tomorrow-colors)))
 
+;;;###autoload
 (defun my-colors-get-color (color)
-  "Return COLOR from the color theme alist."
+  "Return COLOR from the color theme alist.
+
+COLOR is one of the following symbols:
+
+  'background
+  'alt-background
+  'foreground
+  'current-line
+  'selection
+  'comment
+  'red
+  'orange
+  'yellow
+  'green
+  'aqua
+  'blue
+  'purple"
+
   (let ((theme-alist (my-colors-get-theme-colors-alist)))
     (cdr (assq color theme-alist))))
-
-;;; Convenience functions for retrieving specific colors
-
-;;;###autoload
-(defun my-colors-get-color-background ()
-  "Return the BACKGROUND color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'background))
-
-;;;###autoload
-(defun my-colors-get-color-alt-background ()
-  "Return the ALT-BACKGROUND color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'alt-background))
-
-;;;###autoload
-(defun my-colors-get-color-current-line ()
-  "Return the CURRENT-LINE color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'current-line))
-
-;;;###autoload
-(defun my-colors-get-color-selection ()
-  "Return the SELECTION color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'selection))
-
-;;;###autoload
-(defun my-colors-get-color-foreground ()
-  "Return the FOREGROUND color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'foreground))
-
-;;;###autoload
-(defun my-colors-get-color-comment ()
-  "Return the COMMENT color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'comment))
-
-;;;###autoload
-(defun my-colors-get-color-red ()
-  "Return the RED color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'red))
-
-;;;###autoload
-(defun my-colors-get-color-orange ()
-  "Return the ORANGE color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'orange))
-
-;;;###autoload
-(defun my-colors-get-color-yellow ()
-  "Return the YELLOW color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'yellow))
-
-;;;###autoload
-(defun my-colors-get-color-green ()
-  "Return the GREEN color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'green))
-
-;;;###autoload
-(defun my-colors-get-color-aqua ()
-  "Return the AQUA color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'aqua))
-
-;;;###autoload
-(defun my-colors-get-color-blue ()
-  "Return the BLUE color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'blue))
-
-;;;###autoload
-(defun my-colors-get-color-purple ()
-  "Return the PURPLE color within the currently set theme."
-  (interactive)
-  (my-colors-get-color 'purple))
 
 ;; Export this module
 (provide 'my-colors)
