@@ -32,3 +32,9 @@ Needed for performance:
     :bind (:map dired-mode-map
            ("P" . peep-dired)))
 #+end_src
+* dired-git-info
+  Shows git info inside =dired=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dired-git-info)
+#+end_src

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Trap errors and print error message
-set -uo pipefail
+set -euo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
@@ -47,18 +47,22 @@ exit 0;
 
 # Take care of setup logic.
 setup() {
+  log_info "Setting up"
   mkdir -p "${LOCAL_INFO_DIR}"
 }
 
 # Install info pages for the Git version control system.
 install_git_info() {
+  local git_info_url="https://github.com/git/git/archive/master.tar.gz"
+  local git_info_tar="git-master.tar.gz"
+
   print_header "Installing Git Info Manual"
-  wget "https://github.com/git/git/archive/master.tar.gz"
-  tar xf master.tar.gz
+  wget -c -O "${git_info_tar}" "$git_info_url"
+  tar -zxvf "$git_info_tar"
   (
     cd git-master/Documentation || return 1
     make git.info gitman.info
-    mv git.info gitman.info ~/.local/share/info
+    mv git.info gitman.info "${LOCAL_INFO_DIR}"
   )
   (
     cd "$LOCAL_INFO_DIR" || return 1
@@ -70,9 +74,12 @@ install_git_info() {
 
 # Install info pages for the Python programming language.
 install_python_info() {
+  local python_info_url="https://github.com/python/cpython/archive/master.tar.gz"
+  local python_info_tar="master.tar.gz"
+
   print_header "Installing Python Info Manual"
-  wget "https://github.com/python/cpython/archive/master.tar.gz"
-  tar xf master.tar.gz
+  wget "${python_info_url}"
+  tar -zxvf "$python_info_tar"
   (
     cd cpython-master/Doc || return 1
     sphinx-build -b texinfo -d build/doctrees . build/texinfo
@@ -83,6 +90,7 @@ install_python_info() {
     cd "${LOCAL_INFO_DIR}" || return 1
     install-info python.info dir
   )
+  succ "Done"
 }
 
 # Install info pages for the Perl programming language.
@@ -108,6 +116,7 @@ install_perl_info() {
     cd "${LOCAL_INFO_DIR}" || return 1
     install-info --entry="* Perl: (perl-menu.info). " --section=Perl perl-menu.info dir
   )
+  succ "Done"
 }
 
 # Install info pages for GNU's standard C++ library.
@@ -126,6 +135,25 @@ install_stdlibpp_info() {
     cd "${LOCAL_INFO_DIR}" || return 1
     install-info libg++.info dir
   )
+  succ "Done"
+}
+
+install_lisp_spec_info() {
+  local cl_info_dir="/tmp/cl-info"
+  local lisp_spec_url="ftp://ftp.gnu.org/pub/gnu/gcl/gcl.info.tgz"
+  local lisp_spec_tar="gcl.tar.gz"
+
+  print_header "Installing Lisp Spec Info Manual"
+  mkdir -p "${cl_info_dir}"
+  (
+    cd "${cl_info_dir}" || return 1
+    wget -O "${lisp_spec_tar}" "${lisp_spec_url}"
+    mv info/* "${LOCAL_INFO_DIR}"
+    install-info --section="Software development" \
+      --entry="* HyperSpec: (gcl). Common Lisp HyperSpec." \
+      "${LOCAL_INFO_DIR}/gcl.info" "${LOCAL_INFO_DIR}/dir"
+  )
+  succ "Done"
 }
 
 # Main entry point for the program.
@@ -133,9 +161,10 @@ main() {
   print_header "Installing Extra Emacs Info Manuals"
   setup
   install_git_info
-  install_python_info
-  install_perl_info
-  install_stdlibpp_info
+  # install_python_info
+  # install_perl_info
+  # install_stdlibpp_info
+  # install_lisp_spec_info
   succ "Successfully installed all info manuals"
 }
 # }}}
