@@ -12,6 +12,7 @@ alias pacsyu="sudo pacman -Syyu"
 
 # Aura AUR package manager
 alias aurai="sudo aura -Aax"
+alias aurah="sudo aura -Aax --hotedit"
 alias aurau="sudo aura -Aaxu --noconfirm"
 
 # vim:foldenable:foldmethod=marker:

@@ -6,7 +6,6 @@ alsa-plugins
 alsa-utils
 arc-gtk-theme
 arc-icon-theme
-docbook2x
 asciidoc
 aspell-en
 awesome
@@ -24,6 +23,7 @@ dhclient
 dialog
 dmenu
 dnsutils
+docbook2x
 efibootmgr
 elixir
 evince
@@ -73,6 +73,7 @@ neomutt
 neovim
 network-manager-applet
 networkmanager
+ninja
 nodejs
 noto-fonts
 npm
