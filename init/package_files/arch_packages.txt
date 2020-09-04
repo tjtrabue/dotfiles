@@ -95,6 +95,7 @@ python2-pip
 ranger
 ripgrep
 rofi
+rsync
 ruby
 rust
 scrot

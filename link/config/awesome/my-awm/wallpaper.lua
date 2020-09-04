@@ -7,7 +7,6 @@ local my_vars = require("my-awm.vars")
 -- Set according to wallpaper directory
 local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/1920x1080/"
 -- Other variables
-local num_files = 0
 local wp_all = {}
 local wp_selected = {}
 
@@ -19,41 +18,56 @@ for i = 1, 10 do
     math.random()
 end
 
+--- Return the number of files in a directory.
+-- @param directory The directory to use for counting files.
+local function get_num_files(directory)
+    local nfiles = 0
+    for filename in io.popen('ls -a "' .. directory .. '"'):lines() do
+        -- If case to disregard "." and ".."
+        if (not (filename == "." or filename == "..")) then
+            nfiles = nfiles + 1
+        end
+    end
+    return nfiles
+end
+
 --- LUA implementation of PHP scan dir
 --- Returns all files (except . and ..) in "directory"
 -- @param directory The directory to scan for files
 local function scandir(directory)
-    num_files, t, popen = 0, {}, io.popen
-    for filename in popen('ls -a "' .. directory .. '"'):lines() do
+    local t = {}
+    local i = 0
+    for filename in io.popen('ls -a "' .. directory .. '"'):lines() do
         -- If case to disregard "." and ".."
         if (not (filename == "." or filename == "..")) then
-            num_files = num_files + 1
-            t[num_files] = filename
+            t[i] = filename
+            i = i + 1
         end
     end
     return t
 end
 
 --- Basically a modern Fisher-Yates shuffle
---- Returns "tabs" elements from an table "wp" of length "files"
+--- Returns "tags" elements from a table "wp" of length "nfiles"
 --- Guarantees no duplicated elements in the return while having linear runtime
 -- @param wp The wallpaper image file array
--- @param files The files array
+-- @param nfiles The files array
 -- @param tags The array of tags
-local function select(wp, files, tags)
+local function select_wallpaper(wp, nfiles, tags)
     local selected = {}
+    local position
     for i = 1, tags do
-        position = math.random(1, files)
+        position = math.random(1, nfiles)
         selected[i] = wp[position]
-        wp[position] = wp[files]
-        files = files - 1
+        wp[position] = wp[nfiles]
+        nfiles = nfiles - 1
     end
     return selected
 end
 
 -- Get the names of "my_vars.num_tags" files from "num_files" total files in the
 -- wallpaper directory path.
-wp_selected = select(scandir(wallpaper_dir_path), num_files, my_vars.num_tags)
+wp_selected = select_wallpaper(scandir(wallpaper_dir_path), get_num_files(wallpaper_dir_path), my_vars.num_tags)
 
 --- Randomly sets wallpaper for each tag in a screen from a wallpaper directory.
 -- @param scr Screen variable
