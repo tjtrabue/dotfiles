@@ -10,13 +10,13 @@ local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/1920x1080/"
 -- Total number of wallpaper image files
 local num_wallpaper_files
 -- List of selected wallpaper image files
-local wp_selected = {}
+local wp_selected = nil
 
 local wp_util = {}
 
 math.randomseed(os.time())
 -- To guarantee unique random numbers on every platform, pop a few
-for i = 1, 10 do
+for _ = 1, 10 do
     math.random()
 end
 
