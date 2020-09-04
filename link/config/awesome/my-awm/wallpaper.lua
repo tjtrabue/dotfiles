@@ -3,11 +3,13 @@
 local gears = require("gears")
 
 local my_vars = require("my-awm.vars")
+local helpers = require("my-awm.helper-fns")
 
 -- Set according to wallpaper directory
 local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/1920x1080/"
--- Other variables
-local wp_all = {}
+-- Total number of wallpaper image files
+local num_wallpaper_files
+-- List of selected wallpaper image files
 local wp_selected = {}
 
 local wp_util = {}
@@ -65,18 +67,41 @@ local function select_wallpaper(wp, nfiles, tags)
     return selected
 end
 
--- Get the names of "my_vars.num_tags" files from "num_files" total files in the
--- wallpaper directory path.
-wp_selected = select_wallpaper(scandir(wallpaper_dir_path), get_num_files(wallpaper_dir_path), my_vars.num_tags)
+-- If we have a valid wallpaper directory that contains at least as many image
+-- files as we have tags, create a random list of wallpaper images for use as
+-- desktop backgrounds.
+if helpers.directory_exists(wallpaper_dir_path) then
+    num_wallpaper_files = get_num_files(wallpaper_dir_path)
+    if num_wallpaper_files >= my_vars.num_tags then
+        wp_selected = select_wallpaper(scandir(wallpaper_dir_path), num_wallpaper_files, my_vars.num_tags)
+    end
+end
+
+--- Set the desktop wallpaper for a specific tag, given its screen and index.
+-- @param scr The screen to which the tag is attached
+-- @param index The tag's index within the screen
+local function set_wallpaper_for_tag(scr, index)
+    local default_wp = gears.filesystem.get_themes_dir() .. "/default/background.png"
+
+    if wp_selected then
+        -- Use a randomly selected image if we have a valid
+        -- wallpaper directory
+        gears.wallpaper.fit(wallpaper_dir_path .. wp_selected[index], scr)
+    else
+        -- Otherwise, just use the default wallpaper image.
+        gears.wallpaper.fit(default_wp, scr)
+    end
+end
 
 --- Randomly sets wallpaper for each tag in a screen from a wallpaper directory.
 -- @param scr Screen variable
 function wp_util.set_wallpaper(scr)
     -- Set wallpaper on first tag (else it would be empty at start up)
-    gears.wallpaper.fit(wallpaper_dir_path .. wp_selected[1], scr)
+    set_wallpaper_for_tag(scr, 1)
+
     -- Go over each tag
-    for t = 1, my_vars.num_tags do
-        scr.tags[t]:connect_signal(
+    for index = 1, my_vars.num_tags do
+        scr.tags[index]:connect_signal(
             "property::selected",
             function(tag)
                 -- And if selected
@@ -84,7 +109,7 @@ function wp_util.set_wallpaper(scr)
                     return
                 end
                 -- Set wallpaper
-                gears.wallpaper.fit(wallpaper_dir_path .. wp_selected[t], scr)
+                set_wallpaper_for_tag(scr, index)
             end
         )
     end
