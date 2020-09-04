@@ -4,25 +4,23 @@ local gears = require("gears")
 
 local my_vars = require("my-awm.vars")
 local file_util = require("my-awm.util.file-util")
-local os_util = require("my-awm.util.os-util")
+-- local os_util = require("my-awm.util.os-util")
 
 --- Set screen resolution
 -- This command returns the screen's resolution dynamically.
 -- Should be formatted like '1920x1080'.
-local resolution = os_util.cmd_to_string("xrandr | fgrep '*' | head -1 | awk '{ print $1 }'")
+-- local resolution = os_util.cmd_to_string("xrandr | fgrep '*' | head -1 | awk '{ print $1 }'")
 -- This is the hard-coded resolution (mostly for testing)
 -- local resolution = "1920x1080"
 
 -- Set according to wallpaper directory
-local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/" .. resolution .. "/"
+local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/"
 -- Total number of wallpaper image files
 local num_wallpaper_files
 -- List of selected wallpaper image files
 local wp_selected = nil
 
 local wp_util = {}
-
-print("Screen Resolution: " .. resolution)
 
 math.randomseed(os.time())
 -- To guarantee unique random numbers on every platform, pop a few
@@ -56,6 +54,9 @@ if file_util.directory_exists(wallpaper_dir_path) then
     num_wallpaper_files = file_util.get_num_files(wallpaper_dir_path)
     if num_wallpaper_files >= my_vars.num_tags then
         wp_selected = select_wallpaper(file_util.scandir(wallpaper_dir_path), num_wallpaper_files, my_vars.num_tags)
+        print("Successfully retrieved wallpaper images")
+    else
+        print("Not enough wallpaper images in directory")
     end
 else
     print("No wallpaper directory found")
