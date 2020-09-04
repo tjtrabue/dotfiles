@@ -34,9 +34,12 @@ Needed for performance:
 * key-chord
 #+begin_src emacs-lisp :tangle yes
   (use-package key-chord
-    :after (evil)
+    :after (evil evil-collection)
+    :hook
+    ;; Start key-chord-mode for all programming/text editing modes
+    ((prog-mode text-mode) . (lambda ()
+      (key-chord-mode 1)))
     :config
-    (key-chord-mode 1)
     ;; Revert back to normal mode with 'jk'
     ;; Have to use key-chord.el because define-key will keep us from
     ;; ever typing 'j' as text since j will thitherto be a leader key in
