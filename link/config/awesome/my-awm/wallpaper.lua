@@ -5,8 +5,15 @@ local gears = require("gears")
 local my_vars = require("my-awm.vars")
 local helpers = require("my-awm.helper-fns")
 
--- Set screen resolution
-local resolution = "1920x1080"
+--- Set screen resolution
+-- This command returns the screen's resolution dynamically
+local resolution =
+    helpers.cmd_to_string(
+    "xrandr | grep 'Screen 0' | awk -F ',' '{ print $2 }' | egrep -o '[0-9]+ *x *[0-9]+' | tr -d ' ,'"
+)
+-- This is the hard-coded resolution (mostly for testing)
+-- local resolution = "1920x1080"
+
 -- Set according to wallpaper directory
 local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/" .. resolution .. "/"
 -- Total number of wallpaper image files
@@ -15,6 +22,8 @@ local num_wallpaper_files
 local wp_selected = nil
 
 local wp_util = {}
+
+print("Screen Resolution: " .. resolution)
 
 math.randomseed(os.time())
 -- To guarantee unique random numbers on every platform, pop a few
