@@ -5,8 +5,10 @@ local gears = require("gears")
 local my_vars = require("my-awm.vars")
 local helpers = require("my-awm.helper-fns")
 
+-- Set screen resolution
+local resolution = "1920x1080"
 -- Set according to wallpaper directory
-local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/1920x1080/"
+local wallpaper_dir_path = os.getenv("HOME") .. "/wallpaper/" .. resolution .. "/"
 -- Total number of wallpaper image files
 local num_wallpaper_files
 -- List of selected wallpaper image files

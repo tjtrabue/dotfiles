@@ -62,4 +62,29 @@ function helpers.file_exists(path)
     return file_or_dir_exists(path) and not helpers.directory_exists(path)
 end
 
+--- Executes a shell command and returns the output as a string.
+-- @param cmd The command string to execute
+function helpers.cmd_to_string(cmd)
+    -- The output string to return
+    local str = ""
+    -- get a temporary file name
+    local tmp = os.tmpname()
+
+    -- execute a command
+    os.execute(cmd .. " > " .. tmp)
+
+    -- display output
+    for line in io.lines(tmp) do
+        if str ~= "" then
+            str = str .. "\n"
+        end
+        str = str .. line
+    end
+
+    -- remove temporary file
+    os.remove(tmp)
+
+    return str
+end
+
 return helpers
