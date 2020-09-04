@@ -7,10 +7,7 @@ local helpers = require("my-awm.helper-fns")
 
 --- Set screen resolution
 -- This command returns the screen's resolution dynamically
-local resolution =
-    helpers.cmd_to_string(
-    "xrandr | grep 'Screen 0' | awk -F ',' '{ print $2 }' | egrep -o '[0-9]+ *x *[0-9]+' | tr -d ' ,'"
-)
+local resolution = helpers.cmd_to_string("xrandr | fgrep '*' | head -1 | awk '{ print $1 }'")
 -- This is the hard-coded resolution (mostly for testing)
 -- local resolution = "1920x1080"
 
