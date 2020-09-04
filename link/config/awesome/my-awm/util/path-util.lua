@@ -1,20 +1,8 @@
 local paths = require("my-awm.paths")
 
--- Helper functions for use in configuring Awesome WM.
-local helpers = {}
+local path_util = {}
 
---- Check if a file or directory exists in this path
--- @param path The file/directory path to check
-local function file_or_dir_exists(path)
-    local ok, _, code = os.rename(path, path)
-    if not ok then
-        if code == 13 then
-            -- Permission denied, but it exists
-            return true
-        end
-    end
-    return ok
-end
+--- Local definitions ---
 
 -- Adds a given path string to the end of the package.path global variable.
 -- @param path_var The name of the package path variable to use (i.e., package.path)
@@ -29,6 +17,8 @@ local function add_to_path(path_var, path)
     assignment_func()
 end
 
+--- Public API ---
+
 --[[
   Adds paths for user installed LuaRocks packages to package.path.
   This function exists to cover up a gaping flaw in the LuaRocks system,
@@ -39,7 +29,7 @@ end
 
   @param lua_version The lua version to add LuaRocks for (such as '5.3')
 --]]
-function helpers.add_luarocks_paths(lua_version)
+function path_util.add_luarocks_paths(lua_version)
     local luarocks_share_home = paths.luarocks_user_dir .. "/share/lua/" .. lua_version
     local luarocks_lib_home = paths.luarocks_user_dir .. "/lib/lua/" .. lua_version
 
@@ -50,41 +40,4 @@ function helpers.add_luarocks_paths(lua_version)
     add_to_path("package.cpath", luarocks_lib_home .. "/?.so")
 end
 
--- Checks for the existence of a directory based on its path.
--- @param path The directory path
-function helpers.directory_exists(path)
-    return file_or_dir_exists(path .. "/")
-end
-
--- Checks for the existence of an input file path.
--- @param path The file path to check
-function helpers.file_exists(path)
-    return file_or_dir_exists(path) and not helpers.directory_exists(path)
-end
-
---- Executes a shell command and returns the output as a string.
--- @param cmd The command string to execute
-function helpers.cmd_to_string(cmd)
-    -- The output string to return
-    local str = ""
-    -- get a temporary file name
-    local tmp = os.tmpname()
-
-    -- execute a command
-    os.execute(cmd .. " > " .. tmp)
-
-    -- display output
-    for line in io.lines(tmp) do
-        if str ~= "" then
-            str = str .. "\n"
-        end
-        str = str .. line
-    end
-
-    -- remove temporary file
-    os.remove(tmp)
-
-    return str
-end
-
-return helpers
+return path_util

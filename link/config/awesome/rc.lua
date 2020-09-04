@@ -2,8 +2,8 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Pull in helper functions
-local helpers = require("my-awm.helper-fns")
+-- Pull in utility service providers
+local path_util = require("my-awm.util.path-util")
 
 -- The numeric version of Lua currently running (like '5.3').
 local my_ver = string.sub(_VERSION, string.find(_VERSION, "%d.%d"))
@@ -19,7 +19,7 @@ local my_ver = string.sub(_VERSION, string.find(_VERSION, "%d.%d"))
   application and therefore will not see our system-wide luarocks installation
   at all, meaning that we have to manually set the luarocks path here.
 --]]
-helpers.add_luarocks_paths(my_ver)
+path_util.add_luarocks_paths(my_ver)
 
 -- Standard awesome library
 local awful = require("awful")

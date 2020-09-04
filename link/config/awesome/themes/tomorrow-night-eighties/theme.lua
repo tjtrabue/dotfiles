@@ -17,16 +17,6 @@ local my_config_path = gfs.get_configuration_dir()
 
 local theme = {}
 
-function file_exists(name)
-    local f = io.open(name, "r")
-    if f ~= nil then
-        io.close(f)
-        return true
-    else
-        return false
-    end
-end
-
 theme.font = "Hasklug Nerd Font Semibold 9"
 
 -- Tomorrow Night Eighties colorscheme reference

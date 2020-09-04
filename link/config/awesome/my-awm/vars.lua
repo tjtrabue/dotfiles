@@ -1,11 +1,5 @@
 -- Variables to use throughout Awesome
 
-local beautiful = require("beautiful")
-local gears = require("gears")
-
--- Local imports
-local my_helpers = require("my-awm.helper-fns")
-
 local vars = {}
 
 -- Default modkey.

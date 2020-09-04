@@ -3,11 +3,13 @@
 local gears = require("gears")
 
 local my_vars = require("my-awm.vars")
-local helpers = require("my-awm.helper-fns")
+local file_util = require("my-awm.util.file-util")
+local os_util = require("my-awm.util.os-util")
 
 --- Set screen resolution
--- This command returns the screen's resolution dynamically
-local resolution = helpers.cmd_to_string("xrandr | fgrep '*' | head -1 | awk '{ print $1 }'")
+-- This command returns the screen's resolution dynamically.
+-- Should be formatted like '1920x1080'.
+local resolution = os_util.cmd_to_string("xrandr | fgrep '*' | head -1 | awk '{ print $1 }'")
 -- This is the hard-coded resolution (mostly for testing)
 -- local resolution = "1920x1080"
 
@@ -28,49 +30,20 @@ for _ = 1, 10 do
     math.random()
 end
 
---- Return the number of files in a directory.
--- @param directory The directory to use for counting files.
-local function get_num_files(directory)
-    local nfiles = 0
-    for filename in io.popen('ls -a "' .. directory .. '"'):lines() do
-        -- If case to disregard "." and ".."
-        if (not (filename == "." or filename == "..")) then
-            nfiles = nfiles + 1
-        end
-    end
-    return nfiles
-end
-
---- LUA implementation of PHP scan dir
---- Returns all files (except . and ..) in "directory"
--- @param directory The directory to scan for files
-local function scandir(directory)
-    local t = {}
-    local i = 0
-    for filename in io.popen('ls -a "' .. directory .. '"'):lines() do
-        -- If case to disregard "." and ".."
-        if (not (filename == "." or filename == "..")) then
-            t[i] = filename
-            i = i + 1
-        end
-    end
-    return t
-end
-
 --- Basically a modern Fisher-Yates shuffle
 --- Returns "tags" elements from a table "wp" of length "nfiles"
 --- Guarantees no duplicated elements in the return while having linear runtime
 -- @param wp The wallpaper image file array
--- @param nfiles The files array
--- @param tags The array of tags
-local function select_wallpaper(wp, nfiles, tags)
+-- @param num_files The number of image files in the wallpaper directory
+-- @param num_tags Number of tags per screen
+local function select_wallpaper(wp, num_files, num_tags)
     local selected = {}
     local position
-    for i = 1, tags do
-        position = math.random(1, nfiles)
+    for i = 1, num_tags do
+        position = math.random(1, num_files)
         selected[i] = wp[position]
-        wp[position] = wp[nfiles]
-        nfiles = nfiles - 1
+        wp[position] = wp[num_files]
+        num_files = num_files - 1
     end
     return selected
 end
@@ -78,16 +51,19 @@ end
 -- If we have a valid wallpaper directory that contains at least as many image
 -- files as we have tags, create a random list of wallpaper images for use as
 -- desktop backgrounds.
-if helpers.directory_exists(wallpaper_dir_path) then
-    num_wallpaper_files = get_num_files(wallpaper_dir_path)
+if file_util.directory_exists(wallpaper_dir_path) then
+    print("Found wallpaper directory")
+    num_wallpaper_files = file_util.get_num_files(wallpaper_dir_path)
     if num_wallpaper_files >= my_vars.num_tags then
-        wp_selected = select_wallpaper(scandir(wallpaper_dir_path), num_wallpaper_files, my_vars.num_tags)
+        wp_selected = select_wallpaper(file_util.scandir(wallpaper_dir_path), num_wallpaper_files, my_vars.num_tags)
     end
+else
+    print("No wallpaper directory found")
 end
 
 --- Set the desktop wallpaper for a specific tag, given its screen and index.
 -- @param scr The screen to which the tag is attached
--- @param index The tag's index within the screen
+-- @param index The tag's index within the screen (starting at 1)
 local function set_wallpaper_for_tag(scr, index)
     local default_wp = gears.filesystem.get_themes_dir() .. "/default/background.png"
 
