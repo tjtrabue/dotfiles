@@ -211,17 +211,19 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package lsp-ui
-    :after (lsp-mode)
-    :commands lsp-ui-mode
-    :hook (lsp . lsp-ui)
+    :after lsp-mode
     :bind
     (:map lsp-ui-mode-map
      ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
      ([remap xref-find-references] . lsp-ui-peek-find-references))
     :init
     (setq lsp-ui-sideline-ignore-duplicate t
+          lsp-ui-sideline-show-diagnostics t
+          lsp-ui-sideline-show-code-actions t
+          lsp-ui-sideline-show-hover t
           ;; How long to wait before showing documentation in a floating window
           lsp-ui-doc-delay 0.2
+          ;; Enable the fancy peek feature for previewing code actions
           lsp-ui-peek-enable t
           ;; Show directories of files
           lsp-ui-peek-show-directory t

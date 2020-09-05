@@ -3,10 +3,11 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
 
-=flycheck= is a phenomenal general-purpose syntax checker based on a number of plugins.
-=flycheck= comes pre-packaged with a huge number of language syntax plugins, so
-it will probably work for you without any extra configuration. However, should
-you need to install a few new =flycheck= plugins it is very simple to do.
+=flycheck= is a phenomenal general-purpose syntax checker based on a number of
+plugins.  =flycheck= comes pre-packaged with a huge number of language syntax
+plugins, so it will probably work for you without any extra
+configuration. However, should you need to install a few new =flycheck= plugins
+it is very simple to do.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
@@ -89,7 +90,11 @@ Needed for performance:
   (use-package flycheck-pos-tip
     :after flycheck
     :hook
-    (flycheck-mode . flycheck-pos-tip-mode))
+    (flycheck-mode . (lambda ()
+     ;; Put errors in tooltips if we're not in lsp-mode, since lsp-mode
+     ;; does its own thing and doing so would cause duplication.
+     (if (not (bound-and-true-p lsp-mode))
+      (flycheck-pos-tip-mode 1)))))
 #+end_src
 
 ** flycheck-relint
