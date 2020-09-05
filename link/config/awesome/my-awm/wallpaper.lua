@@ -7,6 +7,11 @@ local file_util = require("my-awm.util.file-util")
 -- local os_util = require("my-awm.util.os-util")
 
 --- Set screen resolution
+--- Currently unused because it's a little overkill. I've come to believe that
+--- it's better to have a single wallpaper directory with whatever quality
+--- images you prefer and just deal with it. Trying to dynamically figure out
+--- which images you need based on your screen size is a very difficult problem
+--- to get right, especially if you have multiple monitors of different sizes.
 -- This command returns the screen's resolution dynamically.
 -- Should be formatted like '1920x1080'.
 -- local resolution = os_util.cmd_to_string("xrandr | fgrep '*' | head -1 | awk '{ print $1 }'")
