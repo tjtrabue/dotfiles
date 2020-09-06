@@ -227,7 +227,12 @@ Needed for performance:
           lsp-ui-peek-enable t
           ;; Show directories of files
           lsp-ui-peek-show-directory t
-          lsp-ui-doc-enable t))
+          lsp-ui-doc-enable t)
+    :config
+    (add-hook 'lsp-mode-hook #'(lambda ()
+      ;; Turn off flycheck tool tips if they are active.
+      (if (bound-and-true-p flycheck-pos-tip-mode)
+        (flycheck-pos-tip-mode -1)))))
 #+end_src
 
 ** lsp-haskell

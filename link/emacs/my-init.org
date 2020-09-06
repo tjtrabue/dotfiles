@@ -214,6 +214,10 @@ with straight.el.")
   ;; Automatically reload TAGS file without prompting us.
   (setq tags-revert-without-query t)
 
+  ;; Never prompt us to take tags tables with us when moving between
+  ;; directories. Always assume "no".
+  (setq tags-add-tables nil)
+
   ;; This must be set to nil in order for evil-collection to replace
   ;; evil-integration in all important ways. This variable must be set
   ;; here, NOT in the :config or :init blocks of a use-package expression.
