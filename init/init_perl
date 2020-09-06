@@ -15,6 +15,7 @@ declare VERBOSE=false
 # Imports {{{
 source "${IMPORT}/colors.bash"
 source "${IMPORT}/functions_log.bash"
+source "${IMPORT}/functions_perl.bash"
 # }}}
 
 # Functions {{{
@@ -44,6 +45,7 @@ bootstrap_cpanm() {
 
 main() {
   bootstrap_cpanm
+  install_perl_packages
 }
 # }}}
 
