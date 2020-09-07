@@ -51,11 +51,14 @@ setup() {
   local other_docbook2texi="$(which "docbook2texi")"
   local regular_docbook2texi_bin="/usr/bin/docbook2x-texi"
 
-  mkdir -p "${LOCAL_INFO_DIR}"
-  # Symlink the docbook2texi executable if necessary.
-  if [ "$(command -v "${other_docbook2texi}")" != "" ]; then
-    sudo ln -s "${other_docbook2texi}" "$regular_docbook2texi_bin"
+  # Alias the docbook2texi command for compatibility with Debian.
+  if [ "$(command -v "docbook2texi")" != "" ]; then
+    alias docbook2x-texi="docbook2texi"
+  else
+    alias docbook2texi="docbook2x-texi"
   fi
+
+  mkdir -p "${LOCAL_INFO_DIR}"
 }
 
 # Install info pages for the Git version control system.
@@ -66,11 +69,10 @@ install_git_info() {
   local git_info_doc_dir="${git_info_dir}/Documentation"
 
   print_header "Installing Git Info Manual"
-  wget -c -O "${git_info_tar}" "$git_info_url"
+  wget -O "${git_info_tar}" "$git_info_url"
   tar -zxvf "$git_info_tar"
   (
     cd "${git_info_doc_dir}" || return 1
-    sed -i "s/docbook2x-texi/docbook2texi/g" Makefile
     make git.info gitman.info
     mv git.info gitman.info "${LOCAL_INFO_DIR}"
   )
@@ -89,13 +91,13 @@ install_git_info() {
 install_python_info() {
   local python_info_url="https://github.com/python/cpython/archive/master.tar.gz"
   local python_info_tar="master.tar.gz"
+  local cpython_dir="cpython-master"
 
   print_header "Installing Python Info Manual"
-  wget "${python_info_url}"
+  wget -O "${python_info_tar}" "${python_info_url}"
   tar -zxvf "$python_info_tar"
   (
-    cd cpython-master/Doc || return 1
-    sed -i "s/docbook2x-texi/docbook2texi"
+    cd "${cpython_dir}/Doc" || return 1
     sphinx-build -b texinfo -d build/doctrees . build/texinfo
     cd build/texinfo && make
     mv python.info "${LOCAL_INFO_DIR}"
@@ -104,32 +106,41 @@ install_python_info() {
     cd "${LOCAL_INFO_DIR}" || return 1
     install-info python.info dir
   )
+
+  rm -f "${python_info_tar}"
+  rm -rf "${cpython_dir}"
   succ "Done"
 }
 
 # Install info pages for the Perl programming language.
 install_perl_info() {
+  local perl_info_url="https://github.com/Perl/perl5.git"
+  local perl_dir="perl"
+  local base
+  local txi
+
   print_header "Installing Perl Info Manual"
-  wget "https://perl5.git.perl.org/perl.git/snapshot/HEAD.tar.gz"
-  tar xf HEAD.tar.gz
+  git clone "${perl_info_url}" "${perl_dir}"
   (
-    cd perl-HEAD-*/pod || return 1
+    cd "${perl_dir}/pod" || return 1
     for pod in perl*.pod; do
-      base=$(basename $pod .pod)
-      pod2texi "$pod" > "$base.texi" \
-      && makeinfo "$base.texi"
+      base="$(basename "${pod}" '.pod')"
+      txi="${base}.texi"
+      pod2texi "${pod}" > "${txi}" && makeinfo "${txi}"
     done
     touch perl-menu.info
     for info in *.info; do
-      base=$(basename $info .info)
-      install-info --entry="* $base: ($info). " --section=Perl $info perl-menu.info
+      base="$(basename "${info}" '.info')"
+      install-info --entry="* ${base}: (${info}). " --section=Perl "${info}" perl-menu.info
     done
-    mv *.info* "${LOCAL_INFO_DIR}"
+    find . -maxdepth 1 -mindepth 1 -iname "*.info*" -exec mv -t "${LOCAL_INFO_DIR}" '{}' \;
   )
   (
     cd "${LOCAL_INFO_DIR}" || return 1
     install-info --entry="* Perl: (perl-menu.info). " --section=Perl perl-menu.info dir
   )
+
+  rm -rf "${perl_dir}"
   succ "Done"
 }
 
@@ -174,9 +185,9 @@ install_lisp_spec_info() {
 main() {
   print_header "Installing Extra Emacs Info Manuals"
   setup
-  install_git_info
+  # install_git_info
   # install_python_info
-  # install_perl_info
+  install_perl_info
   # install_stdlibpp_info
   # install_lisp_spec_info
   succ "Successfully installed all info manuals"
