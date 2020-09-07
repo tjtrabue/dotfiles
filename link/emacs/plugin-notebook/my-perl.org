@@ -3,7 +3,7 @@
 #+email:    tom.trabue@gmail.com
 #+date:     2020:08:18
 #+property: header-args:emacs-lisp :lexical t
-#+tags:     perl raku
+#+tags:     perl cperl raku plsense pde perly-sense
 
 Here's my Perl configuration for Emacs. If there's one thing I've discovered in
 my exploration of Emacs/Perl integration, it's that all the Perl plugins are old
@@ -227,7 +227,7 @@ such plugins is sure to slow your system down significantly.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package perl-find-library
-    :after perl-mode
+    :after cperl-mode
     :bind
     (:map cperl-mode-map
      ("C-c f l" . perl-find-library)
