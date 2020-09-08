@@ -13,7 +13,7 @@ my @stdin = <STDIN>;
 sub get_field_lengths {
 
     # Hash map of field name to max field length
-    my %field_lengths = {
+    my %field_lengths = (
         perms         => 0,
         user          => 0,
         num_hardlinks => 0,
@@ -21,7 +21,7 @@ sub get_field_lengths {
         month_edited  => 0,
         day_edited    => 0,
         time_edited   => 0,
-    };
+    );
 
     my @fields;
     my $len;
@@ -62,7 +62,21 @@ sub get_perms_segment {
     my ($perms_string) = @_;
     my $colorized = "";
     foreach my $char ( split( '', $perms_string ) ) {
-        $colorized = $colorized . colored( $char, "blue" );
+        if ( $char eq "d" ) {
+            $colorized = $colorized . colored( $char, "blue" );
+        }
+        elsif ( $char eq "r" ) {
+            $colorized = $colorized . colored( $char, "magenta" );
+        }
+        elsif ( $char eq "w" ) {
+            $colorized = $colorized . colored( $char, "cyan" );
+        }
+        elsif ( $char eq "x" ) {
+            $colorized = $colorized . colored( $char, "green" );
+        }
+        else {
+            $colorized = $colorized . $char;
+        }
     }
     return $colorized;
 }
