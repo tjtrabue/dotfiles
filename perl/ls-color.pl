@@ -81,10 +81,59 @@ sub get_perms_segment {
     return $colorized;
 }
 
+sub get_hardlinks_segment {
+    my ($num_hardlinks) = @_;
+    my $colorized = colored( $num_hardlinks, "yellow" );
+    return $colorized;
+}
+
+sub get_user_segment {
+    my ($user) = @_;
+    my $colorized;
+    if ( $user eq "root" ) {
+        $colorized = colored( $user, "red" );
+    }
+    else {
+        $colorized = colored( $user, "green" );
+    }
+    return $colorized;
+}
+
+sub get_size_segment {
+    my ($size) = @_;
+    my $colorized = colored( $size, "cyan" );
+    return $colorized;
+}
+
+sub get_month_edited_segment {
+    my ($month_edited) = @_;
+    my $colorized = colored( $month_edited, "magenta" );
+    return $colorized;
+}
+
+sub get_day_edited_segment {
+    my ($day_edited) = @_;
+    my $colorized = colored( $day_edited, "magenta" );
+    return $colorized;
+}
+
+sub get_time_edited_segment {
+    my ($time_edited) = @_;
+    my $colorized = colored( $time_edited, "magenta" );
+    return $colorized;
+}
+
+sub get_filename_segment {
+    my ($filename) = @_;
+    my $colorized;
+    return $colorized;
+}
+
 sub get_colorized_record {
     my ( $perms, $num_hardlinks, $user, $size, $month_edited, $day_edited,
-        $time_edited )
+        $time_edited, $filename )
       = @_;
+    my @colorized_record;
 
     # printf( "Permissions: %s\n",   $perms );
     # printf( "Num Hardlinks: %s\n", $num_hardlinks );
@@ -93,18 +142,28 @@ sub get_colorized_record {
     # printf( "Month edited: %s\n",  $month_edited );
     # printf( "Day edited: %s\n",    $day_edited );
     # printf( "Time edited: %s\n",   $time_edited );
-    my $colorized_record = "";
-    $colorized_record = get_perms_segment($perms);
-    return $colorized_record;
+    # printf( "Filename: %s\n",      $filename );
+    push @colorized_record, get_perms_segment($perms);
+    push @colorized_record, get_hardlinks_segment($num_hardlinks);
+    push @colorized_record, get_user_segment($user);
+    push @colorized_record, get_size_segment($size);
+    push @colorized_record, get_month_edited_segment($month_edited);
+    push @colorized_record, get_day_edited_segment($day_edited);
+    push @colorized_record, get_time_edited_segment($time_edited);
+    push @colorized_record, get_filename_segment($filename);
+    return @colorized_record;
 }
 
 sub main {
     my @field_lengths = get_field_lengths();
     my @fields;
     for my $i ( 0 .. $#stdin ) {
-        next if ( $i == 0 );
+        if ( $i == 0 ) {
+            print $stdin[$i];
+            next;
+        }
         @fields = split( " ", $stdin[$i] );
-        print get_colorized_record(@fields), "\n";
+        print join( " ", get_colorized_record(@fields) ), "\n";
     }
 }
 
