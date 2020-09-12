@@ -425,4 +425,49 @@ do_multiple() {
 }
 # }}}
 
+# Directory listing {{{
+# Figure out which version of 'ls' we want to run based on what's installed, and
+# then run the darn thing.
+__do_ls() {
+  local flags="$1"
+  local dir_to_list="${2:-.}"
+  local ls_color_script="${DOTFILES_HOME}/perl/ls-color.pl"
+  local colorflag
+
+  # Detect which `ls` flavor is in use
+  if ls --color > /dev/null 2>&1; then # GNU `ls`
+      colorflag="--color"
+  else # OS X `ls`
+      colorflag="-G"
+  fi
+  flags="${flags} ${colorflag}"
+
+  if $USE_LS_ICONS && [ "$(command -v "ls-icons")" != "" ]; then
+    eval "command ls-icons ${flags} ${dir_to_list}"
+  elif [ "$(command -v perl)" != "" ]; then
+    eval "command ls ${flags} ${dir_to_list} | perl ${ls_color_script}"
+  else
+    eval "command ls ${flags} ${dir_to_list}"
+  fi
+}
+
+ll() {
+  local flags="-lFh"
+  local dir_to_list="${*:-.}"
+  __do_ls "$flags" "$dir_to_list"
+}
+
+la() {
+  local flags="-lAFh"
+  local dir_to_list="${*:-.}"
+  __do_ls "$flags" "$dir_to_list"
+}
+
+laa() {
+  local flags="-laFh"
+  local dir_to_list="${*:-.}"
+  __do_ls "$flags" "$dir_to_list"
+}
+# }}}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
