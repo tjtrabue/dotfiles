@@ -10,16 +10,113 @@ use v5.32;
 # For colorized output
 use Term::ANSIColor;
 
-# For file path information
-use File::Spec;
+# For determining number vs. string types
+use Scalar::Util;
 
 my @stdin = <STDIN>;
 
+# Map of storage units to their corresponding color.
+my %UNIT_CHAR_COLOR =
+  ( "K" => "blue", "M" => "green", "G" => "yellow", "T" => "red" );
+
+# Whether we display the user's group in the ls output.
+my $SHOW_GROUP = 1;
+
+# Figure out whether or not we are presenting group information to the user.
+sub determine_show_group {
+    my ($record) = @_;
+    my @fields = split( " ", $record );
+    if ( Scalar::Util::looks_like_number( $fields[3] ) ) {
+        $SHOW_GROUP = 0;
+    }
+}
+determine_show_group( $stdin[0] );
+
+sub construct_segment_struct {
+    my ( $segment, $index ) = @_;
+    my %segment_struct = ( segment => $segment, next_field_index => $index, );
+    return %segment_struct;
+}
+
+sub parse_perms_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_hardlinks_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_user_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_group_segment {
+    my ( $fields_ref, $index ) = @_;
+    my $group = "";
+    if ($SHOW_GROUP) {
+        $group = $$fields_ref[$index];
+    }
+    return construct_segement_struct( $group, ++$index );
+}
+
+sub parse_size_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_month_modified_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_day_modified_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_time_modified_segment {
+    my ( $fields_ref, $index ) = @_;
+    return construct_segement_struct( $$fields_ref[$index], ++$index );
+}
+
+sub parse_filename_segment {
+    my ( $fields_ref, $index ) = @_;
+    my $len     = $#$fields_ref;
+    my $segment = join( " ", @$fields_ref[ $index .. $len ] );
+    return construct_segement_struct( $segment, $len );
+}
+
 sub get_segments_for_record {
-    my ($record)   = @_;
-    my @fields     = split( " ", $record );
-    my $num_fields = @fields;
-    my %segments   = (
+    my ($record)           = @_;
+    my @fields             = split( " ", $record );
+    my $num_fields         = @fields;
+    my $index_field_name   = "next_field_index";
+    my $segment_field_name = "segment";
+
+    my %perms_seg = parse_perms_segment( \@fields, 0 );
+    my %hardlinks_seg =
+      parse_hardlinks_segment( \@fields, $perms_seg{$index_field_name} );
+    my %user_seg =
+      parse_user_segment( \@fields, $hardlinks_seg{$index_field_name} );
+    my %group_seg =
+      parse_group_segment( \@fields, $user_seg{$index_field_name} );
+    my %size_seg =
+      parse_size_segment( \@fields, $group_seg{$index_field_name} );
+    my %month_modified_seg =
+      parse_month_modified_segment( \@fields, $size_seg{$index_field_name} );
+    my %day_modified_seg =
+      parse_day_modified_segment( \@fields,
+        $month_modified_seg{$index_field_name} );
+    my %time_modified_seg =
+      parse_time_modified_segment( \@fields,
+        $day_modified_seg{$index_field_name} );
+    my %filename_seg =
+      parse_filename_segment( \@fields, $time_modified_seg{$index_field_name} );
+
+    my %segments = (
         "perms"         => $fields[0],
         "num_hardlinks" => $fields[1],
         "user"          => $fields[2],
@@ -101,7 +198,7 @@ sub format_field {
 }
 
 # Returns the colorized permissions string for a record.
-sub get_perms_segment {
+sub get_colorized_perms_segment {
     my ($perms) = @_;
     my $colorized = "";
     foreach my $char ( split( '', $perms ) ) {
@@ -127,13 +224,13 @@ sub get_perms_segment {
     return format_field( $colorized, $FIELD_WIDTHS{"perms"} );
 }
 
-sub get_hardlinks_segment {
+sub get_colorized_hardlinks_segment {
     my ($num_hardlinks) = @_;
     my $colorized = colored( $num_hardlinks, "yellow" );
     return format_field( $colorized, $FIELD_WIDTHS{"num_hardlinks"} );
 }
 
-sub get_user_segment {
+sub get_colorized_user_segment {
     my ($user) = @_;
     my $colorized = colored( $user, "green" );
     if ( $user eq "root" ) {
@@ -142,7 +239,7 @@ sub get_user_segment {
     return format_field( $colorized, $FIELD_WIDTHS{"user"} );
 }
 
-sub get_group_segment {
+sub get_colorized_group_segment {
     my ($group) = @_;
     my $colorized = colored( $group, "blue" );
     if ( $group eq "root" ) {
@@ -151,31 +248,31 @@ sub get_group_segment {
     return format_field( $colorized, $FIELD_WIDTHS{"group"} );
 }
 
-sub get_size_segment {
+sub get_colorized_size_segment {
     my ($size) = @_;
     my $colorized = colored( $size, "cyan" );
     return format_field( $colorized, $FIELD_WIDTHS{"size"} );
 }
 
-sub get_month_edited_segment {
+sub get_colorized_month_edited_segment {
     my ($month_edited) = @_;
     my $colorized = colored( $month_edited, "magenta" );
     return format_field( $colorized, $FIELD_WIDTHS{"month_edited"} );
 }
 
-sub get_day_edited_segment {
+sub get_colorized_day_edited_segment {
     my ($day_edited) = @_;
     my $colorized = colored( $day_edited, "magenta" );
     return format_field( $colorized, $FIELD_WIDTHS{"day_edited"} );
 }
 
-sub get_time_edited_segment {
+sub get_colorized_time_edited_segment {
     my ($time_edited) = @_;
     my $colorized = colored( $time_edited, "magenta" );
     return format_field( $colorized, $FIELD_WIDTHS{"time_edited"} );
 }
 
-sub get_filename_segment {
+sub get_colorized_filename_segment {
     my ($filename_ref) = @_;
     my @filename_components = @$filename_ref;
     return join( " ", @filename_components );
@@ -187,15 +284,15 @@ sub print_record {
 
     printf(
         "%s %s %s %s %s %s %s %s %s\n",
-        get_perms_segment( $segments{"perms"} ),
-        get_hardlinks_segment( $segments{"num_hardlinks"} ),
-        get_user_segment( $segments{"user"} ),
-        get_group_segment( $segments{"group"} ),
-        get_size_segment( $segments{"size"} ),
-        get_month_edited_segment( $segments{"month_edited"} ),
-        get_day_edited_segment( $segments{"day_edited"} ),
-        get_time_edited_segment( $segments{"time_edited"} ),
-        get_filename_segment( $segments{"filename"} )
+        get_colorized_perms_segment( $segments{"perms"} ),
+        get_colorized_hardlinks_segment( $segments{"num_hardlinks"} ),
+        get_colorized_user_segment( $segments{"user"} ),
+        get_colorized_group_segment( $segments{"group"} ),
+        get_colorized_size_segment( $segments{"size"} ),
+        get_colorized_month_edited_segment( $segments{"month_edited"} ),
+        get_colorized_day_edited_segment( $segments{"day_edited"} ),
+        get_colorized_time_edited_segment( $segments{"time_edited"} ),
+        get_colorized_filename_segment( $segments{"filename"} )
     );
 }
 

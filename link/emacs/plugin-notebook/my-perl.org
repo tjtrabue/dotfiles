@@ -125,8 +125,10 @@ such plugins is sure to slow your system down significantly.
     :hook
     (cperl-mode . (lambda ()
       (make-local-variable 'eldoc-documentation-function)
+      (make-local-variable 'after-save-hook)
       (setq eldoc-documentation-function #'my/cperl-eldoc-documentation-function)
-      (cperl-lazy-install)))
+      (cperl-lazy-install)
+      (add-hook 'after-save-hook #'font-lock-fontify-buffer)))
     :config
     ;; Add cperl-mode to auto-mode-alist for editing perl files.
     (mapc (lambda (pair)
