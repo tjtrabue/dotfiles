@@ -442,11 +442,19 @@ __do_ls() {
   fi
   flags="${flags} ${colorflag}"
 
-  if $USE_LS_ICONS && [ "$(command -v "ls-icons")" != "" ]; then
+  if [ "$(command -v colorls)" != "" ]; then
+    # Ruby's amazing colorls tool is probably the best ls colorizer out there.
+    # Take out flags that colorls does not understand.
+    flags="$(echo "$flags" | sed -r 's/[Fh]//')"
+    eval "command colorls ${flags} ${dir_to_list}"
+  elif $USE_LS_ICONS && [ "$(command -v "ls-icons")" != "" ]; then
+    # Use the fancy ls-icons tool if it's installed
     eval "command ls-icons ${flags} ${dir_to_list}"
   elif [ "$(command -v perl)" != "" ]; then
+    # Use our beautiful perl coloration script if we have access to perl
     eval "command ls ${flags} ${dir_to_list} | perl ${ls_color_script}"
   else
+    # Or, if all else fails, just run ls
     eval "command ls ${flags} ${dir_to_list}"
   fi
 }
