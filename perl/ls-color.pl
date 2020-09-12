@@ -334,18 +334,61 @@ sub get_colorized_time_modified_segment {
     return $colorized;
 }
 
+# The filename's segment's colors are determined by the LS_COLORS variable, not
+# by this script itself.
 sub get_colorized_filename_segment {
-    my ($filename_ref) = @_;
-    my @filename_components = @$filename_ref;
-    return join( " ", @filename_components );
+    my ($filename) = @_;
+    return $filename;
+}
+
+sub get_colorized_segments_for_record {
+    my ($record) = @_;
+
+    my %colorized_segments_map = {
+        "perms"          => "",
+        "num_hardlinks"  => "",
+        "user"           => "",
+        "size"           => "",
+        "month_modified" => "",
+        "day_modified"   => "",
+        "time_modified"  => "",
+        "filename"       => "",
+    };
+
+    my %segments_map = get_segments_map_for_record($record);
+    my ( $perms, $num_hardlinks, $user, $size, $month_modified, $day_modified,
+        $time_modified, $filename )
+      = @segments_map{
+        "perms",          "num_hardlinks", "user",          "size",
+        "month_modified", "day_modified",  "time_modified", "filename"
+      };
+
+    $colorized_segments_map{"perms"} = get_colorized_perms_seg($perms);
+    $colorized_segments_map{"num_hardlinks"} =
+      get_colorized_hardlinks_seg($num_hardlinks);
+    $colorized_segments_map{"user"} = get_colorized_user_seg($user);
+    $colorized_segments_map{"size"} = get_colorized_size_seg($size);
+    $colorized_segments_map{"month_modified"} =
+      get_colorized_month_modified_seg($month_modified);
+    $colorized_segments_map{"day_modified"} =
+      get_colorized_day_modified_seg($day_modified);
+    $colorized_segments_map{"time_modified"} =
+      get_colorized_time_modified_seg($time_modified);
+    $colorized_segments_map{"filename"} = get_colorized_filename_seg($filename);
+
+    if ($SHOW_GROUP) {
+        my $group = $segments_map{"group"};
+        $colorized_segments_map{"group"} = get_colorized_group_seg($group);
+    }
+
+    return %colorized_segments_map;
 }
 
 sub print_record {
     my ($record) = @_;
     my %segments = get_segment_for_record($record);
 
-    printf(
-        "%s %s %s %s %s %s %s %s %s\n",
+    printf( "user",
         get_colorized_perms_segment( $segments{"perms"} ),
         get_colorized_hardlinks_segment( $segments{"num_hardlinks"} ),
         get_colorized_user_segment( $segments{"user"} ),
@@ -354,8 +397,7 @@ sub print_record {
         get_colorized_month_modified_segment( $segments{"month_modified"} ),
         get_colorized_day_modified_segment( $segments{"day_modified"} ),
         get_colorized_time_modified_segment( $segments{"time_modified"} ),
-        get_colorized_filename_segment( $segments{"filename"} )
-    );
+        get_colorized_filename_segment( $segments{"filename"} ) );
 }
 
 sub main {
