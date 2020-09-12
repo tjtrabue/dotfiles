@@ -407,29 +407,34 @@ sub print_total_record {
     print $colorized, "\n";
 }
 
-sub print_record {
-    my ($record) = @_;
-    my %segments = get_segment_for_record($record);
+sub print_colorized_record {
+    my ($colorized_segments_ref) = @_;
+    my %colorized_segments_map = %{$colorized_segments_ref};
 
-    printf( "user",
-        get_colorized_perms_segment( $segments{"perms"} ),
-        get_colorized_hardlinks_segment( $segments{"num_hardlinks"} ),
-        get_colorized_user_segment( $segments{"user"} ),
-        get_colorized_group_segment( $segments{"group"} ),
-        get_colorized_size_segment( $segments{"size"} ),
-        get_colorized_month_modified_segment( $segments{"month_modified"} ),
-        get_colorized_day_modified_segment( $segments{"day_modified"} ),
-        get_colorized_time_modified_segment( $segments{"time_modified"} ),
-        get_colorized_filename_segment( $segments{"filename"} ) );
+    my $record = $colorized_segments_map{"perms"} . " ";
+    $record = $record . $colorized_segments_map{"num_hardlinks"} . " ";
+    $record = $record . $colorized_segments_map{"user"} . " ";
+    if ($SHOW_GROUP) {
+        $record = $record . $colorized_segments_map{"group"} . " ";
+    }
+    $record = $record . $colorized_segments_map{"size"} . " ";
+    $record = $record . $colorized_segments_map{"month_modified"} . " ";
+    $record = $record . $colorized_segments_map{"day_modified"} . " ";
+    $record = $record . $colorized_segments_map{"time_modified"} . " ";
+    $record = $record . $colorized_segments_map{"filename"};
+
+    print $record, "\n";
 }
 
 sub main {
+    my %colorized_segments_map;
     foreach my $line (@stdin) {
         if ( $line =~ /^total/ ) {
-            print "${line}\n";
+            print_total_record($line);
             next;
         }
-        print_record($line);
+        %colorized_segments_map = get_colorized_segments_for_record($line);
+        print_colorized_record( \%colorized_segments_map );
     }
 }
 
