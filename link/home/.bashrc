@@ -91,7 +91,7 @@ src
 # }}}
 
 # Change ls colors (dircolors) {{{
-dircolorsFile="$HOME/.dir_colors/purify.dircolors"
+dircolorsFile="$HOME/.dir_colors/tomorrow-night-eighties.dircolors"
 if [ -f "$dircolorsFile" ]; then
   eval "$(dircolors "$dircolorsFile")"
 fi
