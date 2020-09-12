@@ -122,15 +122,15 @@ sub get_segments_for_record {
       parse_filename_segment( \@fields, $time_modified_seg{$index_field_name} );
 
     my %segments = (
-        "perms"         => $perms_seg{$segment_field_name},
-        "num_hardlinks" => $hardlinks_seg{$segment_field_name},
-        "user"          => $user_seg{$segment_field_name},
-        "group"         => $group_seg{$segment_field_name},
-        "size"          => $size_seg{$segment_field_name},
-        "month_edited"  => $month_modified_seg{$segment_field_name},
-        "day_edited"    => $day_modified_seg{$segment_field_name},
-        "time_edited"   => $time_modified_seg{$segment_field_name},
-        "filename"      => $filename_seg{$segment_field_name},
+        "perms"          => $perms_seg{$segment_field_name},
+        "num_hardlinks"  => $hardlinks_seg{$segment_field_name},
+        "user"           => $user_seg{$segment_field_name},
+        "group"          => $group_seg{$segment_field_name},
+        "size"           => $size_seg{$segment_field_name},
+        "month_modified" => $month_modified_seg{$segment_field_name},
+        "day_modified"   => $day_modified_seg{$segment_field_name},
+        "time_modified"  => $time_modified_seg{$segment_field_name},
+        "filename"       => $filename_seg{$segment_field_name},
     );
 
     return %segments;
@@ -158,12 +158,12 @@ sub update_field_widths {
       update_field_width( \%field_widths, "user", length( $segments{"user"} ) );
     %field_widths =
       update_field_width( \%field_widths, "size", length( $segments{"size"} ) );
-    %field_widths = update_field_width( \%field_widths, "month_edited",
-        length( $segments{"month_edited"} ) );
-    %field_widths = update_field_width( \%field_widths, "day_edited",
-        length( $segments{"day_edited"} ) );
-    %field_widths = update_field_width( \%field_widths, "time_edited",
-        length( $segments{"time_edited"} ) );
+    %field_widths = update_field_width( \%field_widths, "month_modified",
+        length( $segments{"month_modified"} ) );
+    %field_widths = update_field_width( \%field_widths, "day_modified",
+        length( $segments{"day_modified"} ) );
+    %field_widths = update_field_width( \%field_widths, "time_modified",
+        length( $segments{"time_modified"} ) );
 
     # May or may not have group information
     if ($SHOW_GROUP) {
@@ -178,14 +178,14 @@ sub get_field_widths {
 
     # Hash map of field name to max field length
     my %field_widths = (
-        perms         => 0,
-        user          => 0,
-        group         => 0,
-        num_hardlinks => 0,
-        size          => 0,
-        month_edited  => 0,
-        day_edited    => 0,
-        time_edited   => 0,
+        perms          => 0,
+        user           => 0,
+        group          => 0,
+        num_hardlinks  => 0,
+        size           => 0,
+        month_modified => 0,
+        day_modified   => 0,
+        time_modified  => 0,
     );
 
     foreach my $line (@stdin) {
@@ -211,9 +211,10 @@ sub format_field {
 
 # Returns the colorized permissions string for a record.
 sub get_colorized_perms_segment {
-    my ($perms) = @_;
-    my $colorized = "";
-    foreach my $char ( split( '', $perms ) ) {
+    my ($perms)         = @_;
+    my $formatted_perms = format_fields( $perms, $FIELD_WIDTHS{"perms"} );
+    my $colorized       = "";
+    foreach my $char ( split( '', $formatted_perms ) ) {
 
         # Directories
         if ( $char eq "d" ) {
@@ -252,30 +253,38 @@ sub get_colorized_perms_segment {
         }
     }
 
-    return format_field( $colorized, $FIELD_WIDTHS{"perms"} );
+    return $colorized;
 }
 
 sub get_colorized_hardlinks_segment {
     my ($num_hardlinks) = @_;
-    my $colorized = colored( $num_hardlinks, "cyan" );
+    my $colorized =
+      colored( format_field( $num_hardlinks, $FIELD_WIDTHS{"num_hardlinks"} ),
+        "cyan" );
 
-    return format_field( $colorized, $FIELD_WIDTHS{"num_hardlinks"} );
+    return $colorized;
 }
 
 sub get_colorized_user_segment {
     my ($user) = @_;
+    my $formatted_user = format_field( $user, $FIELD_WIDTHS{"user"} );
     my $colorized =
-      $user eq "root" ? colored( $user, "red" ) : colored( $user, "blue" );
+      $user eq "root"
+      ? colored( $formatted_user, "red" )
+      : colored( $formatted_user, "blue" );
 
-    return format_field( $colorized, $FIELD_WIDTHS{"user"} );
+    return $colorized;
 }
 
 sub get_colorized_group_segment {
     my ($group) = @_;
+    my $formatted_group = format_field( $group, $FIELD_WIDTHS{"group"} );
     my $colorized =
-      $group eq "root" ? colored( $group, "red" ) : colored( $group, "green" );
+      $group eq "root"
+      ? colored( $formatted_group, "red" )
+      : colored( $formatted_group, "green" );
 
-    return format_field( $colorized, $FIELD_WIDTHS{"group"} );
+    return $colorized;
 }
 
 sub get_colorized_size_segment {
@@ -298,22 +307,31 @@ sub get_colorized_size_segment {
     return $colorized;
 }
 
-sub get_colorized_month_edited_segment {
-    my ($month_edited) = @_;
-    my $colorized = colored( $month_edited, "magenta" );
-    return format_field( $colorized, $FIELD_WIDTHS{"month_edited"} );
+sub get_colorized_month_modified_segment {
+    my ($month_modified) = @_;
+    my $colorized =
+      colored( format_field( $month_modified, $FIELD_WIDTHS{"month_modified"} ),
+        "magenta" );
+
+    return $colorized;
 }
 
-sub get_colorized_day_edited_segment {
-    my ($day_edited) = @_;
-    my $colorized = colored( $day_edited, "magenta" );
-    return format_field( $colorized, $FIELD_WIDTHS{"day_edited"} );
+sub get_colorized_day_modified_segment {
+    my ($day_modified) = @_;
+    my $colorized =
+      colored( format_field( $day_modified, $FIELD_WIDTHS{"day_modified"} ),
+        "magenta" );
+
+    return $colorized;
 }
 
-sub get_colorized_time_edited_segment {
-    my ($time_edited) = @_;
-    my $colorized = colored( $time_edited, "magenta" );
-    return format_field( $colorized, $FIELD_WIDTHS{"time_edited"} );
+sub get_colorized_time_modified_segment {
+    my ($time_modified) = @_;
+    my $colorized =
+      colored( format_field( $time_modified, $FIELD_WIDTHS{"time_modified"} ),
+        "magenta" );
+
+    return $colorized;
 }
 
 sub get_colorized_filename_segment {
@@ -333,9 +351,9 @@ sub print_record {
         get_colorized_user_segment( $segments{"user"} ),
         get_colorized_group_segment( $segments{"group"} ),
         get_colorized_size_segment( $segments{"size"} ),
-        get_colorized_month_edited_segment( $segments{"month_edited"} ),
-        get_colorized_day_edited_segment( $segments{"day_edited"} ),
-        get_colorized_time_edited_segment( $segments{"time_edited"} ),
+        get_colorized_month_modified_segment( $segments{"month_modified"} ),
+        get_colorized_day_modified_segment( $segments{"day_modified"} ),
+        get_colorized_time_modified_segment( $segments{"time_modified"} ),
         get_colorized_filename_segment( $segments{"filename"} )
     );
 }
