@@ -121,18 +121,18 @@ This function is called as part of the `shell-mode-hook'."
     is currently in a Git repository.
 
 #+begin_src emacs-lisp :tangle yes
-  (defun in-git-repo (pwd)
-    "Returns t if PWD is part of a Git repository.
+  (defun in-git-repo (curr-dir)
+    "Returns t if CURR-DIR is part of a Git repository.
         Returns nil otherwise."
-    (and (not (file-remote-p pwd))
+    (and (not (file-remote-p curr-dir))
          (eshell-search-path "git")
-         (locate-dominating-file pwd ".git")))
+         (locate-dominating-file curr-dir ".git")))
 
-  (defun my/prompt-git-segment (pwd)
+  (defun my/prompt-git-segment (curr-dir)
     "Returns current git branch as a string, or the empty string if
-        PWD is not in a git repo (or the git command is not found)."
+        CURR-DIR is not in a git repo (or the git command is not found)."
     (interactive)
-    (when (in-git-repo pwd)
+    (when (in-git-repo curr-dir)
       (let* ((git-url (shell-command-to-string "git config --get remote.origin.url"))
              (git-repo (file-name-base (s-trim git-url)))
              (git-output (shell-command-to-string (concat "git rev-parse --abbrev-ref HEAD")))
@@ -141,7 +141,7 @@ This function is called as part of the `shell-mode-hook'."
              (git-icon2 (propertize "\xf020" 'face `(:family "octicons"))))
         (concat git-repo " " git-icon2 " " git-branch))))
 
-  (defun git-symbol-number (pwd icon-hex-code shell-cmd-string)
+  (defun git-symbol-number (curr-dir icon-hex-code shell-cmd-string)
     "Generic pattern for returning a symbol and a number corresponding to a
         number of files in a Git repository that are marked for one of many reasons,
         such as being changed, added to the index, untracked by Git, etc.
@@ -151,7 +151,7 @@ This function is called as part of the `shell-mode-hook'."
 
         SHELL-CMD-STRING is a shell command to run to return the number of files
         of interest."
-    (when (in-git-repo pwd)
+    (when (in-git-repo curr-dir)
       (let* ((num-files (shell-command-to-string shell-cmd-string))
              ;; Important to trim shell output to remove trailing newlines!
              (num-files-trimmed (s-trim num-files)))
@@ -159,77 +159,83 @@ This function is called as part of the `shell-mode-hook'."
             (concat " " icon-hex-code " " num-files-trimmed)
           ""))))
 
-  (defun git-num-commits (ahead)
+  (defun git-num-commits (curr-dir &optional ahead)
     "Return the how far ahead or behind the current branch is from its remote
-  tracking branch in terms of commits."
+  tracking branch in terms of commits. CURR-DIR is the current directory.
+
+  Return number of commits ahead of remote branch unless AHEAD is nil, in which
+  case return the number of commits behind the remote branch."
     (interactive)
     (let* ((curr-branch (s-trim (shell-command-to-string
              "git rev-parse --abbrev-ref HEAD")))
            (remote-branch (s-trim (shell-command-to-string
              "git rev-parse --abbrev-ref --symbolic-full-name @{u}"))))
+      ;; Assume 'ahead is true if its value was not provided
+      (unless ahead
+        (setq ahead t))
       (if ahead
-          (git-symbol-number pwd "\xf55c"
+          (git-symbol-number curr-dir "\xf55c"
             (concat "git rev-list --count " remote-branch ".." curr-branch))
-        (git-symbol-number pwd "\xf544"
+        (git-symbol-number curr-dir "\xf544"
           (concat "git rev-list --count " curr-branch ".." remote-branch)))))
 
-  (defun git-num-commits-ahead (pwd)
+  (defun git-num-commits-ahead (curr-dir)
     "Return number of commits the current branch has that are not part of
   its remote counterpart."
     (interactive)
-    (git-num-commits t))
+    (git-num-commits curr-dir t))
 
-  (defun git-num-commits-behind (pwd)
+  (defun git-num-commits-behind (curr-dir)
     "Return number of commits present in the remote tracking branch for the
   current branch that are not present in the current branch. "
     (interactive)
-    (git-num-commits nil))
+    (git-num-commits curr-dir nil))
 
-  (defun git-num-changed-files (pwd)
+  (defun git-num-changed-files (curr-dir)
     "Return number of files changed in the current Git directory."
     (interactive)
-    (git-symbol-number pwd "\xf6c1"
+    (git-symbol-number curr-dir "\xf6c1"
       "git diff --name-only --format=oneline | cat | wc -l"))
 
-  (defun git-num-added-files (pwd)
+  (defun git-num-added-files (curr-dir)
     "Return number of files added to the current Git index."
     (interactive)
-    (git-symbol-number pwd "\xf067"
+    (git-symbol-number curr-dir "\xf067"
       "git diff --cached --name-only --format=oneline | cat | wc -l"))
 
-  (defun git-num-untracked-files (pwd)
+  (defun git-num-untracked-files (curr-dir)
     "Return number of files in the current Git repository untracked by Git."
     (interactive)
-    (git-symbol-number pwd "\xf420"
+    (git-symbol-number curr-dir "\xf420"
       "git -C \"$(git rev-parse --show-toplevel)\" ls-files --others --exclude-standard | wc -l"))
 
-  (defun git-num-stashed-files (pwd)
+  (defun git-num-stashed-files (curr-dir)
     "Return number of files added to the current Git index."
     (interactive)
-    (git-symbol-number pwd "\xf024" "git stash list | cat | wc -l"))
+    (git-symbol-number curr-dir "\xf024" "git stash list | cat | wc -l"))
 
-  (defun create-git-segment (pwd branch face-for-separator)
+  (defun create-git-segment (curr-dir branch face-for-separator)
     "Put together pieces of Git information into a cohesive, informative
     segment."
     (interactive)
-    (let ((for-branch      `(:foreground ,(my/get-color-green) :weight bold))
-          (for-delta       `(:foreground ,(my/get-color-yellow)))
-          (for-added       `(:foreground ,(my/get-color-green)))
-          (for-untracked   `(:foreground ,(my/get-color-red)))
-          (for-stashed     `(:foreground ,(my/get-color-blue)))
+    (let ((for-branch      `(:foreground ,(my-colors-get-color 'green) :weight bold))
+          (for-delta       `(:foreground ,(my-colors-get-color 'yellow)))
+          (for-added       `(:foreground ,(my-colors-get-color 'green)))
+          (for-untracked   `(:foreground ,(my-colors-get-color 'red)))
+          (for-stashed     `(:foreground ,(my-colors-get-color 'blue)))
           (for-ahead       `(:weight bold))
           (for-behind      `(:weight bold))
-          (delta-files     (git-num-changed-files pwd))
-          (added-files     (git-num-added-files pwd))
-          (untracked-files (git-num-untracked-files pwd))
-          (stashed-files   (git-num-stashed-files pwd))
-          (commits-ahead   (git-num-commits-ahead pwd))
-          (commits-behind  (git-num-commits-behind pwd)))
+          (delta-files     (git-num-changed-files curr-dir))
+          (added-files     (git-num-added-files curr-dir))
+          (untracked-files (git-num-untracked-files curr-dir))
+          (stashed-files   (git-num-stashed-files curr-dir))
+          (commits-ahead   (git-num-commits-ahead curr-dir))
+          (commits-behind  (git-num-commits-behind curr-dir)))
       ;; Change color of git prompt if index is dirty.
       (if (not (and (string= "" delta-files)
                     (string= "" added-files)
                     (string= "" untracked-files)))
-          (setq for-branch `(:foreground ,(my/get-color-orange))))
+          (setq for-branch `(:foreground ,(my-colors-get-color 'orange))))
       (concat (propertize " ── "    'face face-for-separator)
               (propertize branch   'face for-branch)
               (propertize delta-files 'face for-delta)
@@ -244,20 +250,20 @@ This function is called as part of the `shell-mode-hook'."
      This is the standard directory path segment of the prompt.
 
 #+begin_src emacs-lisp :tangle yes
-  (defun pwd-replace-home (pwd)
-    "Replace home in PWD with tilde (~) character."
+  (defun pwd-replace-home (curr-dir)
+    "Replace home in CURR-DIR with tilde (~) character."
     (interactive)
     (let* ((home (expand-file-name (getenv "HOME")))
            (home-len (length home)))
       (if (and
-           (>= (length pwd) home-len)
-           (equal home (substring pwd 0 home-len)))
-          (concat "~" (substring pwd home-len))
-        pwd)))
+           (>= (length curr-dir) home-len)
+           (equal home (substring curr-dir 0 home-len)))
+          (concat "~" (substring curr-dir home-len))
+        curr-dir)))
 
-  (defun pwd-shorten-dirs (pwd)
-    "Shorten all directory names in PWD except the last two."
-    (let ((p-lst (split-string pwd "/")))
+  (defun pwd-shorten-dirs (curr-dir)
+    "Shorten all directory names in CURR-DIR except the last two."
+    (let ((p-lst (split-string curr-dir "/")))
       (if (> (length p-lst) 2)
           (concat
            (mapconcat (lambda (elm) (if (zerop (length elm)) ""
@@ -268,7 +274,7 @@ This function is called as part of the `shell-mode-hook'."
            (mapconcat (lambda (elm) elm)
                       (last p-lst 2)
                       "/"))
-        pwd)))  ;; Otherwise, we just return the PWD
+        curr-dir)))  ;; Otherwise, we just return the CURR-DIR
 
   (defun split-directory-prompt (directory)
     "Break up the directory into a 'parent' and a 'base'"
@@ -317,8 +323,8 @@ This function is called as part of the `shell-mode-hook'."
     (interactive)
     (let* ((username (getenv "USER"))
            (for-user (if (string= username "root")
-             `(:foreground ,(my/get-color-red) :weight bold)
-             `(:foreground ,(my/get-color-aqua) :weight bold)))
+             `(:foreground ,(my-colors-get-color 'red) :weight bold)
+             `(:foreground ,(my-colors-get-color 'aqua) :weight bold)))
            (user (propertize username 'face for-user))
            (user-icon (propertize "\xf2be" 'face for-user)))
       (concat user-icon " " user)))
@@ -327,18 +333,17 @@ This function is called as part of the `shell-mode-hook'."
 ***** Directory segment
 
 #+begin_src emacs-lisp :tangle yes
-    (defun my/prompt-dir-segment ()
+    (defun my/prompt-dir-segment (curr-dir)
       "Return the propertiezed directory segment of the eshell prompt."
       (interactive)
       (let* ((dark-env (eq 'dark (frame-parameter nil 'background-mode)))
-            (for-parent  (if dark-env `(:foreground ,(my/get-color-yellow))
-                          `(:foreground ,(my/get-color-blue))))
-            (for-dir     (if dark-env `(:foreground ,(my/get-color-purple) :weight bold)
-                           `(:foreground ,(my/get-color-orange) :weight bold)))
+            (for-parent  (if dark-env `(:foreground ,(my-colors-get-color 'yellow))
+                          `(:foreground ,(my-colors-get-color 'blue))))
+            (for-dir     (if dark-env `(:foreground ,(my-colors-get-color 'purple) :weight bold)
+                           `(:foreground ,(my-colors-get-color 'orange) :weight bold)))
             (dir-icon (propertize "\xf413" 'face for-dir))
             (directory (split-directory-prompt
-                      (pwd-shorten-dirs
-                      (pwd-replace-home pwd))))
+                      (pwd-shorten-dirs (pwd-replace-home curr-dir))))
             (parent (propertize (car directory) 'face for-parent))
             (name   (propertize (cadr directory) 'face for-dir)))
         (concat dir-icon " " parent name)))
@@ -354,23 +359,23 @@ This function is called as part of the `shell-mode-hook'."
   that it could run certain commands) in order to make a prettier,
   more-helpful local prompt."
         (interactive)
-        (let* ((pwd (eshell/pwd))
+        (let* ((curr-dir (eshell/pwd))
               ;; Colors/faces
               (for-div    `(:weight bold))
-              (for-ruby   `(:foreground ,(my/get-color-red)))
-              (for-python `(:foreground ,(my/get-color-blue)))
+              (for-ruby   `(:foreground ,(my-colors-get-color 'red)))
+              (for-python `(:foreground ,(my-colors-get-color 'blue)))
               ;; Symbolic segment connectors
               (seg-begin (propertize "╭⟣─ " 'face for-div))
               (seg-continue (propertize " ── " 'face for-div))
               (user (my/prompt-user-segment))
-              (dir (my/prompt-dir-segment))
-              (branch (my/prompt-git-segment pwd))
+              (dir (my/prompt-dir-segment curr-dir))
+              (branch (my/prompt-git-segment curr-dir))
 
-              (ruby   (when (not (file-remote-p pwd)) (my/prompt-ruby-segment)))
-              (python (when (not (file-remote-p pwd)) (my/prompt-python-segment))))
+              (ruby   (when (not (file-remote-p curr-dir)) (my/prompt-ruby-segment)))
+              (python (when (not (file-remote-p curr-dir)) (my/prompt-python-segment))))
 
         (concat seg-begin user seg-continue dir
-            (when branch (create-git-segment pwd branch for-div))
+            (when branch (create-git-segment curr-dir branch for-div))
             (when ruby
             (concat (seg-continue)
                     (propertize ruby   'face for-ruby)))
