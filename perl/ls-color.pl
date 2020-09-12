@@ -55,15 +55,20 @@ sub parse_user_segment {
 
 sub parse_group_segment {
     my ( $fields_ref, $index ) = @_;
-    my $group = "";
-    if ($SHOW_GROUP) {
-        $group = $$fields_ref[$index];
-    }
-    return construct_segement_struct( $group, ++$index );
+    my $group = $SHOW_GROUP ? $$fields_ref[ $index++ ] : "";
+    return construct_segement_struct( $group, $index );
 }
 
 sub parse_size_segment {
     my ( $fields_ref, $index ) = @_;
+    my $size = "";
+    my $field;
+
+    do {
+        $field = $$fields_ref[ $index++ ];
+        $size  = $size . " " . $field;
+    } while ( $field =~ /,/ );
+
     return construct_segement_struct( $$fields_ref[$index], ++$index );
 }
 
@@ -117,15 +122,15 @@ sub get_segments_for_record {
       parse_filename_segment( \@fields, $time_modified_seg{$index_field_name} );
 
     my %segments = (
-        "perms"         => $fields[0],
-        "num_hardlinks" => $fields[1],
-        "user"          => $fields[2],
-        "group"         => $fields[3],
-        "size"          => $fields[4],
-        "month_edited"  => $fields[5],
-        "day_edited"    => $fields[6],
-        "time_edited"   => $fields[7],
-        "filename"      => $fields[ 7 .. $num_fields ],
+        "perms"         => $perms_seg{$segment_field_name},
+        "num_hardlinks" => $hardlinks_seg{$segment_field_name},
+        "user"          => $user_seg{$segment_field_name},
+        "group"         => $group_seg{$segment_field_name},
+        "size"          => $size_seg{$segment_field_name},
+        "month_edited"  => $month_modified_seg{$segment_field_name},
+        "day_edited"    => $day_modified_seg{$segment_field_name},
+        "time_edited"   => $time_modified_seg{$segment_field_name},
+        "filename"      => $filename_seg{$segment_field_name},
     );
 
     return %segments;
