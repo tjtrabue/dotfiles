@@ -384,6 +384,29 @@ sub get_colorized_segments_for_record {
     return %colorized_segments_map;
 }
 
+### End Segments Functions ###
+
+sub print_total_record {
+    my ($record) = @_;
+    my @fields   = split( " ", $record );
+    my $total    = $fields[0];
+    my $size     = $fields[1];
+
+    my $colorized = colored( $total, "green" ) . " ";
+    foreach my $char ( split( "", $size ) ) {
+        if ( Scalar::Util::looks_like_number($char) ) {
+            $colorized = $colorized . colored( $char, "yellow" );
+        }
+        elsif ( $UNIT_CHAR_COLOR{$char} ) {
+            $colorized = $colorized . colored( $char, $UNIT_CHAR_COLOR{$char} );
+        }
+        else {
+            $colorized = $colorized . $char;
+        }
+    }
+    print $colorized, "\n";
+}
+
 sub print_record {
     my ($record) = @_;
     my %segments = get_segment_for_record($record);
