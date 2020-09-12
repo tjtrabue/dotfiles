@@ -141,6 +141,7 @@ sub update_field_width {
     my %field_widths = %$field_widths_ref;
 
     $field_widths{$field} = $new_len if $new_len > $field_widths{$field};
+
     return %field_widths;
 }
 
@@ -155,8 +156,6 @@ sub update_field_widths {
         length( $segments{"num_hardlinks"} ) );
     %field_widths =
       update_field_width( \%field_widths, "user", length( $segments{"user"} ) );
-    %field_widths = update_field_width( \%field_widths, "group",
-        length( $segments{"group"} ) );
     %field_widths =
       update_field_width( \%field_widths, "size", length( $segments{"size"} ) );
     %field_widths = update_field_width( \%field_widths, "month_edited",
@@ -165,6 +164,12 @@ sub update_field_widths {
         length( $segments{"day_edited"} ) );
     %field_widths = update_field_width( \%field_widths, "time_edited",
         length( $segments{"time_edited"} ) );
+
+    # May or may not have group information
+    if ($SHOW_GROUP) {
+        %field_widths = update_field_width( \%field_widths, "group",
+            length( $segments{"group"} ) );
+    }
 
     return %field_widths;
 }
@@ -202,17 +207,35 @@ sub format_field {
     return sprintf( "%${field_width}s", $field );
 }
 
+### Begin Segments Functions ###
+
 # Returns the colorized permissions string for a record.
 sub get_colorized_perms_segment {
     my ($perms) = @_;
     my $colorized = "";
     foreach my $char ( split( '', $perms ) ) {
+
+        # Directories
         if ( $char eq "d" ) {
             $colorized = $colorized . colored( $char, "blue" );
         }
+
+        # Symlinks
         elsif ( $char eq "l" ) {
             $colorized = $colorized . colored( $char, "cyan" );
         }
+
+        # Block special devices
+        elsif ( $char eq "b" ) {
+            $colorized = $colorized . colored( $char, "red" );
+        }
+
+        # Character special devices
+        elsif ( $char eq "c" ) {
+            $colorized = $colorized . colored( $char, "red" );
+        }
+
+        # Permissions
         elsif ( $char eq "r" ) {
             $colorized = $colorized . colored( $char, "yellow" );
         }
@@ -222,41 +245,57 @@ sub get_colorized_perms_segment {
         elsif ( $char eq "x" ) {
             $colorized = $colorized . colored( $char, "green" );
         }
+
+        # Default: no color
         else {
             $colorized = $colorized . $char;
         }
     }
+
     return format_field( $colorized, $FIELD_WIDTHS{"perms"} );
 }
 
 sub get_colorized_hardlinks_segment {
     my ($num_hardlinks) = @_;
-    my $colorized = colored( $num_hardlinks, "yellow" );
+    my $colorized = colored( $num_hardlinks, "cyan" );
+
     return format_field( $colorized, $FIELD_WIDTHS{"num_hardlinks"} );
 }
 
 sub get_colorized_user_segment {
     my ($user) = @_;
-    my $colorized = colored( $user, "green" );
-    if ( $user eq "root" ) {
-        $colorized = colored( $user, "red" );
-    }
+    my $colorized =
+      $user eq "root" ? colored( $user, "red" ) : colored( $user, "blue" );
+
     return format_field( $colorized, $FIELD_WIDTHS{"user"} );
 }
 
 sub get_colorized_group_segment {
     my ($group) = @_;
-    my $colorized = colored( $group, "blue" );
-    if ( $group eq "root" ) {
-        $colorized = colored( $group, "red" );
-    }
+    my $colorized =
+      $group eq "root" ? colored( $group, "red" ) : colored( $group, "green" );
+
     return format_field( $colorized, $FIELD_WIDTHS{"group"} );
 }
 
 sub get_colorized_size_segment {
-    my ($size) = @_;
-    my $colorized = colored( $size, "cyan" );
-    return format_field( $colorized, $FIELD_WIDTHS{"size"} );
+    my ($size)         = @_;
+    my $formatted_size = format_field( $size, $FIELD_WIDTHS{"size"} );
+    my $colorized      = "";
+
+    foreach my $char ( split( "", $formatted_size ) ) {
+        if ( Scalar::Util::looks_like_number($char) ) {
+            $colorized = $colorized . colored( $char, "yellow" );
+        }
+        elsif ( $UNIT_CHAR_COLOR{$char} ) {
+            $colorized = $colorized . colored( $char, $UNIT_CHAR_COLOR{$char} );
+        }
+        else {
+            $colorized = $colorized . $char;
+        }
+    }
+
+    return $colorized;
 }
 
 sub get_colorized_month_edited_segment {
