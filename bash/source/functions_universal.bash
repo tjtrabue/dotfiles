@@ -446,6 +446,7 @@ __do_ls() {
     # Ruby's amazing colorls tool is probably the best ls colorizer out there.
     # Take out flags that colorls does not understand.
     flags="$(echo "$flags" | sed -r 's/[Fh]//')"
+    flags="${flags} --sd --gs"
     eval "command colorls ${flags} ${dir_to_list}"
   elif $USE_LS_ICONS && [ "$(command -v "ls-icons")" != "" ]; then
     # Use the fancy ls-icons tool if it's installed
@@ -475,6 +476,13 @@ laa() {
   local flags="-laFh"
   local dir_to_list="${*:-.}"
   __do_ls "$flags" "$dir_to_list"
+}
+# }}}
+
+# Vim {{{
+# Remove all swap files
+rmswap() {
+  rm -f "${VIM_CONFIG_HOME}/swaps/*"
 }
 # }}}
 
