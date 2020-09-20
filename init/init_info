@@ -5,11 +5,13 @@ set -euo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
-declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
+declare DOTFILES_REPO
+DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC
+THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
-declare IMPORT="${DOTFILES_REPO}/bash/source";
-declare VERBOSE=false;
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
 
 # User's info directory for third party info manuals.
 declare LOCAL_INFO_DIR="${HOME}/.local/share/info"
@@ -18,8 +20,8 @@ declare INFO_INSTALL_HOME="${HOME}/info"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash";
-source "${IMPORT}/functions_log.bash";
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
 # }}}
 
 # Functions {{{
@@ -44,7 +46,7 @@ OPTIONS:
   -v | --verbose
     Run with extra logging output.
 EOF
-exit 0;
+exit 0
 }
 
 # Take care of setup logic.
@@ -142,7 +144,7 @@ install_perl_info() {
       base="$(basename "${info}" '.info')"
       install-info --entry="* ${base}: (${info}). " --section=Perl "${info}" perl-menu.info
     done
-    find . -maxdepth 1 -mindepth 1 -iname "*.info*" -exec mv -t "${LOCAL_INFO_DIR}" '{}' \;
+    find . -maxdepth 1 -mindepth 1 -iname "*.info*" -exec mv -t "${LOCAL_INFO_DIR}" '{}' \
   )
   (
     cd "${LOCAL_INFO_DIR}" || return 1
@@ -212,18 +214,18 @@ eval set -- "$args"
 while true ; do
   case "$1" in
     -v | --verbose)
-      VERBOSE=true;
-      shift;
+      VERBOSE=true
+      shift
       ;;
 
     -h | --help)
-      _help;
-      shift;
-      break;
+      _help
+      shift
+      break
       ;;
 
     --)
-      shift;
+      shift
       break
       ;;
 
@@ -235,6 +237,6 @@ while true ; do
 done
 # }}}
 
-main "${@}";
+main "${@}"
 
 # vim:foldenable:foldmethod=marker:
