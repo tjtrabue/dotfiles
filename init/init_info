@@ -13,6 +13,8 @@ declare VERBOSE=false;
 
 # User's info directory for third party info manuals.
 declare LOCAL_INFO_DIR="${HOME}/.local/share/info"
+# The directory to clone info directories into
+declare INFO_INSTALL_HOME="${HOME}/info"
 # }}}
 
 # Imports {{{
@@ -58,13 +60,20 @@ setup() {
     alias docbook2texi="docbook2x-texi"
   fi
 
-  mkdir -p "${LOCAL_INFO_DIR}"
+  mkdir -p "${LOCAL_INFO_DIR}" "${INFO_INSTALL_HOME}"
 }
+
+# Clean up after this script is finished.
+cleanup() {
+  log_info "Cleaning up"
+  rm -rf "${INFO_INSTALL_HOME}"
+}
+trap cleanup EXIT
 
 # Install info pages for the Git version control system.
 install_git_info() {
   local git_info_url="https://github.com/git/git/archive/master.tar.gz"
-  local git_info_dir="git-master"
+  local git_info_dir="${INFO_INSTALL_HOME}/git-master"
   local git_info_tar="${git_info_dir}.tar.gz"
   local git_info_doc_dir="${git_info_dir}/Documentation"
 
@@ -84,14 +93,14 @@ install_git_info() {
 
   rm -f "${git_info_tar}"
   rm -rf "${git_info_dir}"
-  succ "Done"
+  succ "Done installing git info"
 }
 
 # Install info pages for the Python programming language.
 install_python_info() {
   local python_info_url="https://github.com/python/cpython/archive/master.tar.gz"
   local python_info_tar="master.tar.gz"
-  local cpython_dir="cpython-master"
+  local cpython_dir="${INFO_INSTALL_HOME}/cpython-master"
 
   print_header "Installing Python Info Manual"
   wget -O "${python_info_tar}" "${python_info_url}"
@@ -109,13 +118,13 @@ install_python_info() {
 
   rm -f "${python_info_tar}"
   rm -rf "${cpython_dir}"
-  succ "Done"
+  succ "Done installing python info"
 }
 
 # Install info pages for the Perl programming language.
 install_perl_info() {
   local perl_info_url="https://github.com/Perl/perl5.git"
-  local perl_dir="perl"
+  local perl_dir="${INFO_INSTALL_HOME}/perl"
   local base
   local txi
 
@@ -141,7 +150,7 @@ install_perl_info() {
   )
 
   rm -rf "${perl_dir}"
-  succ "Done"
+  succ "Done installing perl info"
 }
 
 # Install info pages for GNU's standard C++ library.
@@ -160,36 +169,37 @@ install_stdlibpp_info() {
     cd "${LOCAL_INFO_DIR}" || return 1
     install-info libg++.info dir
   )
-  succ "Done"
+  succ "Done installing stdlibpp info"
 }
 
 install_lisp_spec_info() {
-  local cl_info_dir="/tmp/cl-info"
+  local cl_info_dir="${INFO_INSTALL_HOME}/cl-info"
   local lisp_spec_url="ftp://ftp.gnu.org/pub/gnu/gcl/gcl.info.tgz"
   local lisp_spec_tar="gcl.tar.gz"
 
   print_header "Installing Lisp Spec Info Manual"
   mkdir -p "${cl_info_dir}"
   (
-    cd "${cl_info_dir}" || return 1
+    cd "${cl_info_dir}"
     wget -O "${lisp_spec_tar}" "${lisp_spec_url}"
+    tar -zxvf "${lisp_spec_tar}"
     mv info/* "${LOCAL_INFO_DIR}"
     install-info --section="Software development" \
       --entry="* HyperSpec: (gcl). Common Lisp HyperSpec." \
       "${LOCAL_INFO_DIR}/gcl.info" "${LOCAL_INFO_DIR}/dir"
   )
-  succ "Done"
+  succ "Done installing lisp spec info"
 }
 
 # Main entry point for the program.
 main() {
   print_header "Installing Extra Emacs Info Manuals"
   setup
-  # install_git_info
-  # install_python_info
+  install_git_info
+  install_python_info
   install_perl_info
-  # install_stdlibpp_info
-  # install_lisp_spec_info
+  install_stdlibpp_info
+  install_lisp_spec_info
   succ "Successfully installed all info manuals"
 }
 # }}}
