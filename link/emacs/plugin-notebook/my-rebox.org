@@ -14,11 +14,7 @@
 
 #+begin_src emacs-lisp :tangle yes
   (use-package rebox2
-    :after (evil evil-leader)
     :hook
     ((prog-mode . (lambda ()
-      (rebox-mode 1)))
-     (rebox-mode . (lambda ()
-      (define-key evil-insert-state-map (kbd "<return>") 'rebox-indent-new-line)))))
-
+      (rebox-mode 1)))))
 #+end_src
