@@ -108,13 +108,13 @@ install_python_info() {
   wget -O "${python_info_tar}" "${python_info_url}"
   tar -zxvf "$python_info_tar"
   (
-    cd "${cpython_dir}/Doc" || return 1
+    cd "${cpython_dir}/Doc"
     sphinx-build -b texinfo -d build/doctrees . build/texinfo
     cd build/texinfo && make
     mv python.info "${LOCAL_INFO_DIR}"
   )
   (
-    cd "${LOCAL_INFO_DIR}" || return 1
+    cd "${LOCAL_INFO_DIR}"
     install-info python.info dir
   )
 
@@ -133,7 +133,7 @@ install_perl_info() {
   print_header "Installing Perl Info Manual"
   git clone "${perl_info_url}" "${perl_dir}"
   (
-    cd "${perl_dir}/pod" || return 1
+    cd "${perl_dir}/pod"
     for pod in perl*.pod; do
       base="$(basename "${pod}" '.pod')"
       txi="${base}.texi"
@@ -144,10 +144,11 @@ install_perl_info() {
       base="$(basename "${info}" '.info')"
       install-info --entry="* ${base}: (${info}). " --section=Perl "${info}" perl-menu.info
     done
-    find . -maxdepth 1 -mindepth 1 -iname "*.info*" -exec mv -t "${LOCAL_INFO_DIR}" '{}' \
+    find . -maxdepth 1 -mindepth 1 -iname "*.info*" \
+      -exec mv -t "${LOCAL_INFO_DIR}" '{}' \;
   )
   (
-    cd "${LOCAL_INFO_DIR}" || return 1
+    cd "${LOCAL_INFO_DIR}"
     install-info --entry="* Perl: (perl-menu.info). " --section=Perl perl-menu.info dir
   )
 
@@ -168,7 +169,7 @@ install_stdlibpp_info() {
     cp libg++.info "${LOCAL_INFO_DIR}"
   )
   (
-    cd "${LOCAL_INFO_DIR}" || return 1
+    cd "${LOCAL_INFO_DIR}"
     install-info libg++.info dir
   )
   succ "Done installing stdlibpp info"
