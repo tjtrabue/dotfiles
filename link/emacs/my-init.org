@@ -312,6 +312,12 @@ with straight.el.")
 #+begin_src emacs-lisp :tangle yes
   ;; Find file at point ("g f" in evil-mode)
   ;; (global-set-key (kbd "C-c f p") 'ffap)
+
+  ;; Change window size (Vim-like bindings)
+  (global-set-key (kbd "S-C-l") 'enlarge-window-horizontally)
+  (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
+  (global-set-key (kbd "S-C-j") 'enlarge-window)
+  (global-set-key (kbd "S-C-k") 'shrink-window)
 #+end_src
 
 * Email
