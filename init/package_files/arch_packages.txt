@@ -4,6 +4,7 @@ alacritty
 alsa-firmware
 alsa-plugins
 alsa-utils
+arandr
 arc-gtk-theme
 arc-icon-theme
 asciidoc

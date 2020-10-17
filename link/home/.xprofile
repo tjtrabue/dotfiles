@@ -59,3 +59,10 @@ start_program_if_available "pulseaudio" "--start"
 
 # Merge the .Xresources file into xrdb database
 [ -f "${HOME}/.Xresources" ] && xrdb -merge "${HOME}/.Xresources"
+
+# Start up a saved xrandr multihead session (if available)
+layoutFile="${HOME}/.screenlayout/monitor_layout.sh"
+if [ -f "$layoutFile" ] && [ "$(command -v arandr)" != "" ]; then
+  arandr "$layoutFile"
+fi
+unset layoutFile
