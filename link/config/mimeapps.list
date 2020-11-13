@@ -1,0 +1,4 @@
+
+[Default Applications]
+x-scheme-handler/eclipse+installer=_home_shinepo_applications_eclipse-installer_.desktop
+x-scheme-handler/eclipse+command x-scheme-handler/eclipse+mpc=_home_shinepo_eclipse_jee-2020-09_eclipse_.desktop

@@ -40,3 +40,4 @@ vscode-html-languageserver-bin
 vscode-json-languageserver
 vue-language-server
 yaml-language-server
+yarn
