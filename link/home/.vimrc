@@ -697,6 +697,9 @@ if has('autocmd')
     " Move cursor to last known position when reopening a file
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
           \| exe "normal! g'\"" | endif
+
+    " Interpret config files for IDE Vim plugins as Vim syntax
+    autocmd BufNewFile,BufRead .vrapperrc set filetype=vim syntax=vim
 endif
 " }}}
 

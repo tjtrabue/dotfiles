@@ -1,0 +1,30 @@
+" Configuration file for Eclipse's Vim emulation layer
+
+set smartindent
+set autoindent
+
+set ignorecase
+set smartcase
+
+set hlsearch
+set incsearch
+
+set list
+
+set number
+
+set cursorline
+
+set scrolloff=2
+
+set textwidth=80
+
+set softtabstop=2
+set tabstop=2
+set expandtab
+set shiftround
+set shiftwidth=2
+
+set clipboard=unnamedplus
+
+set wrapscan
