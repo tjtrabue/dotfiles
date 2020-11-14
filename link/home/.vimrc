@@ -118,8 +118,10 @@ Plug 'eagletmt/neco-ghc'
 Plug 'slashmili/alchemist.vim'
 Plug 'mhartington/nvim-typescript'
 " coc.nvim {{{
-" Installed from latest tag
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+" This command installs the latest release version
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" This command installs directly from master (unstable)
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-neco'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 " }}}
