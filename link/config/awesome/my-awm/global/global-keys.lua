@@ -57,7 +57,7 @@ local global_keys =
     -- Layout manipulation
     awful.key(
         {my_vars.modkey, "Shift"},
-        "j",
+        "l",
         function()
             awful.client.swap.byidx(1)
         end,
@@ -65,30 +65,30 @@ local global_keys =
     ),
     awful.key(
         {my_vars.modkey, "Shift"},
-        "k",
+        "h",
         function()
             awful.client.swap.byidx(-1)
         end,
         {description = "swap with previous client by index", group = "client"}
     ),
     awful.key(
-        {my_vars.modkey, "Control"},
-        "j",
+        {my_vars.modkey, "Shift"},
+        "k",
         function()
             awful.screen.focus_relative(1)
         end,
         {description = "focus the next screen", group = "screen"}
     ),
     awful.key(
-        {my_vars.modkey, "Control"},
-        "k",
+        {my_vars.modkey, "Shift"},
+        "j",
         function()
             awful.screen.focus_relative(-1)
         end,
         {description = "focus the previous screen", group = "screen"}
     ),
     awful.key(
-        {my_vars.modkey, "Shift"},
+        {my_vars.modkey, "Control"},
         "u",
         awful.client.urgent.jumpto,
         {description = "jump to urgent client", group = "client"}
@@ -153,16 +153,16 @@ local global_keys =
         {description = "decrease master width factor", group = "layout"}
     ),
     awful.key(
-        {my_vars.modkey, "Shift"},
-        "h",
+        {my_vars.modkey, "Control"},
+        "k",
         function()
             awful.tag.incnmaster(1, nil, true)
         end,
         {description = "increase the number of master clients", group = "layout"}
     ),
     awful.key(
-        {my_vars.modkey, "Shift"},
-        "l",
+        {my_vars.modkey, "Control"},
+        "j",
         function()
             awful.tag.incnmaster(-1, nil, true)
         end,
