@@ -37,9 +37,9 @@ link/config/pulse/
 link/config/configstore/
 
 # coc.nvim
-link/config/coc/*
+link/config/coc/extensions/*
+!/link/config/coc/extensions/package.json
 link/config/configstore/update-notifier-npm.json
-!link/config/coc/extensions/package.json
 
 # Emacs straight package manager
 link/emacs/straight/build*
