@@ -3,7 +3,7 @@
 pcall(require, "luarocks.loader")
 
 -- Pull in utility service providers
-local path_util = require("my-awm.util.path-util")
+local lua_path_util = require("my-awm.util.lua-path-util")
 
 -- The numeric version of Lua currently running (like '5.3').
 local my_ver = string.sub(_VERSION, string.find(_VERSION, "%d.%d"))
@@ -19,7 +19,12 @@ local my_ver = string.sub(_VERSION, string.find(_VERSION, "%d.%d"))
   application and therefore will not see our system-wide luarocks installation
   at all, meaning that we have to manually set the luarocks path here.
 --]]
-path_util.add_luarocks_paths(my_ver)
+lua_path_util.add_luarocks_paths(my_ver)
+
+local os_util = require("my-awm.util.os-util")
+-- Add extra executable paths to $PATH
+local user_home_dir = os.getenv("HOME")
+os_util.add_to_path(user_home_dir .. "/bin", user_home_dir .. "/.local/bin")
 
 -- Standard awesome library
 local awful = require("awful")

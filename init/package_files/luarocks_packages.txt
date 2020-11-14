@@ -4,3 +4,4 @@ lanes
 lcf
 luacheck
 luafilesystem
+luaposix
