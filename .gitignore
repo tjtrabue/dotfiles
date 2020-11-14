@@ -37,6 +37,16 @@ link/config/pulse/
 link/config/configstore/
 
 # coc.nvim
+link/config/coc/commands
+link/config/coc/explorer-actions
+link/config/coc/history.json
+link/config/coc/list-extensions-history.json
+link/config/coc/list-files-history.json
+link/config/coc/list-lists-history.json
+link/config/coc/lists
+link/config/coc/memos.json
+link/config/coc/mru
+link/config/coc/snippets-mru
 link/config/coc/extensions/*
 !/link/config/coc/extensions/package.json
 link/config/configstore/update-notifier-npm.json
