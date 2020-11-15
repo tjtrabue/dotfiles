@@ -10,6 +10,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
 declare IMPORT="${DOTFILES_REPO}/bash/source";
 declare VERBOSE=false;
+declare FORCE=false;
 
 # The home directory for all custom xrandr configuration.
 declare XRANDR_HOME="${HOME}/.xrandr"
@@ -27,7 +28,7 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Initialize configuration for the xrandr display manipulation tool.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -38,12 +39,23 @@ OPTIONS:
 
   -v | --verbose
     Run with extra logging output.
+
+  -f | --force
+    Force overwriting of any existing xrandr config directories on the file
+    system. Please exercise caution when using this option, as it may destroy
+    your personal configuration!
 EOF
-exit 0
 }
 
 copy_xrandr_config_files() {
   log_info "Copying xrandr configuration files to ${XRANDR_HOME}"
+  if [ -d "${XRANDR_HOME}" ] && ! "${FORCE}"; then
+    warn "${XRANDR_HOME} already exists! Not overwriting." \
+      "Re-run with --force to force overwriting of this directory."
+    return 1
+  elif "${FORCE}"; then
+    rm -rf "${XRANDR_HOME}"
+  fi
   cp -r "${XRANDR_DOT}" "${XRANDR_HOME}"
 }
 
@@ -54,7 +66,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+args=$(getopt -o hvf --long help,verbose,force -n 'init_xrandr' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -68,6 +80,11 @@ while true ; do
     -h | --help)
       _help
       exit 0
+      ;;
+
+    -f | --force)
+      FORCE=true
+      shift
       ;;
 
     --)

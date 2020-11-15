@@ -34,7 +34,6 @@ OPTIONS:
   -v | --verbose
     Run with extra logging output.
 EOF
-exit 0
 }
 
 main() {
@@ -43,7 +42,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+args=$(getopt -o hv --long help,verbose -n 'init_<name_here>' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
