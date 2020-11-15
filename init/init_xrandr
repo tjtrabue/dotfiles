@@ -8,8 +8,13 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
-declare IMPORT="${DOTFILES_REPO}/bash/source"
-declare VERBOSE=false
+declare IMPORT="${DOTFILES_REPO}/bash/source";
+declare VERBOSE=false;
+
+# The home directory for all custom xrandr configuration.
+declare XRANDR_HOME="${HOME}/.xrandr"
+# The xrandr configuration subdirextory in this dotfiles repository
+declare XRANDR_DOT="${DOTFILES_REPO}/copy/xrandr"
 # }}}
 
 # Imports {{{
@@ -37,8 +42,14 @@ EOF
 exit 0
 }
 
+copy_xrandr_config_files() {
+  log_info "Copying xrandr configuration files to ${XRANDR_HOME}"
+  cp -r "${XRANDR_DOT}" "${XRANDR_HOME}"
+}
+
 main() {
-  log_info "Hello, world!"
+  copy_xrandr_config_files
+  succ "Done!"
 }
 # }}}
 
