@@ -3,7 +3,8 @@
 # This script runs the xrandr utility to enable additional monitors.
 #
 # NOTE: You may need to adjust the arguments to --output, as the names of your
-# output devices may differ
+# output devices may differ. Use 'xrandr -q' to get a list of your output
+# devices and their available modes.
 
 # Output (i.e., monitor) name variables
 main_monitor="eDP-1"

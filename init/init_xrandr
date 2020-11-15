@@ -61,7 +61,20 @@ copy_xrandr_config_files() {
 
 main() {
   copy_xrandr_config_files
-  succ "Done!"
+
+  cat <<EOF
+Done! Don't forget to look at the xrandr script located at:
+  ${XRANDR_HOME}
+and make any adjustments necessary for your particular output device setup.
+
+This script is executed in ~/.xprofile by default. If you do not want the xrandr
+script to be run when you login to an X session, see the relevant section of
+~/.xprofile and remove that block of code.
+
+The example script contains a configuration that worked for the script's author,
+but it likely will not work for you without tweaking the names of the output
+devices at the very least.
+EOF
 }
 # }}}
 
