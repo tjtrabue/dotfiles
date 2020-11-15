@@ -15,4 +15,14 @@ esf() {
   popd &> /dev/null;
 }
 
+# Remove all Vim swap files
+rmvimswap() {
+  rm -f "${VIM_SWAPS}"/*
+}
+
+# Remove all Vim backup files
+rmvimbackup() {
+  rm -f "${VIM_BACKUPS}"/*
+}
+
 # vim:foldenable:foldmethod=indent

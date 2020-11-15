@@ -79,6 +79,7 @@ nodejs
 noto-fonts
 npm
 ntfs-3g
+numlockx
 openssh
 openssl
 parallel
