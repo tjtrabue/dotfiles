@@ -149,6 +149,11 @@ use_icons_in_terminal() {
 }
 use_icons_in_terminal
 
+# Use jenv to manage installed Java versions (if available)
+if [ -n "$(command -v jenv)" ]; then
+  eval "$(jenv init -)"
+fi
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then

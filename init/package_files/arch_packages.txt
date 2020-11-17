@@ -52,6 +52,7 @@ inkscape
 iotop
 iproute2
 jdk-openjdk
+jdk8-openjdk
 khal
 libreoffice-fresh
 libxcrypt

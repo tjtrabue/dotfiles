@@ -51,6 +51,9 @@ link/config/coc/extensions/*
 !/link/config/coc/extensions/package.json
 link/config/configstore/update-notifier-npm.json
 
+# Ignore TabNine cache and lock files
+link/config/TabNine/monitoring
+
 # Emacs straight package manager
 link/emacs/straight/build*
 link/emacs/straight/modified

@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -euo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+declare JENV_HOME="${HOME}/.jenv"
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+source "${IMPORT}/functions_path.bash"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Initializes the jenv Java version manager. jenv is similar to rbenv, the Ruby
+environment manager, and is largely based upon rbenv.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+}
+
+install_jenv() {
+  git clone "https://github.com/jenv/jenv.git" "${JENV_HOME}"
+}
+
+add_jenv_bin_to_path() {
+  atp "${JENV_HOME}/bin"
+}
+
+main() {
+  print_header "Installing the Jenv Java Version Manager"
+  install_jenv
+  add_jenv_bin_to_path
+  succ "Done!"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hv --long help,verbose -n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true
+      shift
+      ;;
+
+    -h | --help)
+      _help
+      exit 0
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
