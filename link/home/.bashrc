@@ -83,7 +83,7 @@ src() {
   [ -f "${HOME}/.inputrc" ] && bind -f "${HOME}/.inputrc"
   src_os
   # Also source the path file
-  spath
+  spath "${PATH_FILE:-${HOME}/.path}" "PATH"
   # Make sure LuaRocks are discoverable.
   src_lua_path
 }

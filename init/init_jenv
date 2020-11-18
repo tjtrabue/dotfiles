@@ -43,15 +43,38 @@ install_jenv() {
   git clone "https://github.com/jenv/jenv.git" "${JENV_HOME}"
 }
 
+# Add the path to the jenv bin directory to $PATH
 add_jenv_bin_to_path() {
   atp "${JENV_HOME}/bin"
+  spath "${PATH_FILE:-${HOME}/.path}" "PATH"
+}
+
+initialize_jenv() {
+  log_info "Initializing jenv for environment"
+  # Have to source the ~/.bashrc file to get the shim working.
+  eval "$(jenv init -)"
+  eval "${JENV_HOME}/bin/jenv" "enable-plugin export"
 }
 
 main() {
   print_header "Installing the Jenv Java Version Manager"
   install_jenv
   add_jenv_bin_to_path
-  succ "Done!"
+  initialize_jenv
+
+  cat <<EOF
+Done! You may want to restart your terminal before using jenv.
+
+The next step is to add the path(s) to your Java home directory to jenv.
+To do this, run:
+
+  jenv add </path/to/java/home>
+
+Some examples:
+
+  jenv add /usr/lib/jvm/default       # (on Arch Linux)
+  jenv add \$(/usr/libexec/java_home) # (on macOS)
+EOF
 }
 # }}}
 
