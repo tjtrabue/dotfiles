@@ -11,11 +11,13 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare IMPORT="${DOTFILES_REPO}/bash/source"
 declare VERBOSE=false
 declare JENV_HOME="${HOME}/.jenv"
+declare ADDED_JENV_PATHS_AUTOMATICALLY=false
 # }}}
 
 # Imports {{{
 source "${IMPORT}/colors.bash"
 source "${IMPORT}/functions_log.bash"
+source "${IMPORT}/functions_os.bash"
 source "${IMPORT}/functions_path.bash"
 # }}}
 
@@ -53,7 +55,29 @@ initialize_jenv() {
   log_info "Initializing jenv for environment"
   # Have to source the ~/.bashrc file to get the shim working.
   eval "$(jenv init -)"
-  eval "${JENV_HOME}/bin/jenv" "enable-plugin export"
+  eval "${JENV_HOME}/bin/jenv enable-plugin export"
+}
+
+add_arch_paths_to_jenv() {
+  find '/usr/lib/jvm' -maxdepth 1 -mindepth 1 -type d \
+    -regextype 'posix-extended' \
+    -regex '.*java-[0-9]+-openjdk' \
+    -exec jenv add '{}' \;
+}
+
+add_java_home_paths_to_jenv() {
+  local distro
+  distro="$(getdistro)"
+
+  case "${distro}" in
+    "Arch Linux")
+      add_arch_paths_to_jenv
+      ADDED_JENV_PATHS_AUTOMATICALLY=true
+      ;;
+    *)
+      warn "Unknown OS type ${distro}. Cannot add paths to jenv automatically."
+      ;;
+  esac
 }
 
 main() {
@@ -61,9 +85,13 @@ main() {
   install_jenv
   add_jenv_bin_to_path
   initialize_jenv
+  add_java_home_paths_to_jenv
 
-  cat <<EOF
-Done! You may want to restart your terminal before using jenv.
+  if ! $ADDED_JENV_PATHS_AUTOMATICALLY; then
+    # Only print the informative message if we did not already add java paths
+    # automatically.
+    cat <<EOF
+Done! You may want to restart your shell before using jenv.
 
 The next step is to add the path(s) to your Java home directory to jenv.
 To do this, run:
@@ -75,6 +103,12 @@ Some examples:
   jenv add /usr/lib/jvm/default       # (on Arch Linux)
   jenv add \$(/usr/libexec/java_home) # (on macOS)
 EOF
+  else
+    # Otherwise, just print a short message.
+    cat <<EOF
+Done! Restart your shell before using jenv.
+EOF
+  fi
 }
 # }}}
 
