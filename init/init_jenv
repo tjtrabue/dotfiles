@@ -42,7 +42,15 @@ EOF
 }
 
 install_jenv() {
-  git clone "https://github.com/jenv/jenv.git" "${JENV_HOME}"
+  if [ ! -d "${JENV_HOME}" ]; then
+    git clone "https://github.com/jenv/jenv.git" "${JENV_HOME}"
+  else
+    warn "Existing jenv installation found at ${JENV_HOME}." \
+      "Updating installation."
+    git stash save &> /dev/null
+    git -C "${JENV_HOME}" pull
+    git stash pop &> /dev/null
+  fi
 }
 
 # Add the path to the jenv bin directory to $PATH
@@ -62,7 +70,7 @@ add_arch_paths_to_jenv() {
   find '/usr/lib/jvm' -maxdepth 1 -mindepth 1 -type d \
     -regextype 'posix-extended' \
     -regex '.*java-[0-9]+-openjdk' \
-    -exec jenv add '{}' \;
+    -exec "${JENV_HOME}"/bin/jenv add '{}' \;
 }
 
 add_java_home_paths_to_jenv() {
