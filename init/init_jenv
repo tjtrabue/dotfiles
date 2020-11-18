@@ -63,7 +63,7 @@ initialize_jenv() {
   log_info "Initializing jenv for environment"
   # Have to source the ~/.bashrc file to get the shim working.
   eval "$(jenv init -)"
-  eval "${JENV_HOME}/bin/jenv enable-plugin export"
+  "${JENV_HOME}"/bin/jenv enable-plugin export
 }
 
 add_arch_paths_to_jenv() {
