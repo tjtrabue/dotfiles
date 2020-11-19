@@ -51,6 +51,10 @@ imagemagick
 inkscape
 iotop
 iproute2
+java-openjfx
+java-openjfx-doc
+java8-openjfx
+java8-openjfx-doc
 jdk-openjdk
 jdk8-openjdk
 khal
@@ -81,6 +85,8 @@ noto-fonts
 npm
 ntfs-3g
 numlockx
+openjdk-doc
+openjdk8-doc
 openssh
 openssl
 parallel
