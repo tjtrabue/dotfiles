@@ -83,11 +83,10 @@ start_program_if_available "pulseaudio" "--start"
 [ -f "${HOME}/.Xresources" ] && xrdb -merge "${HOME}/.Xresources"
 
 # Start up a saved xrandr multihead session (if available)
-xrandrFile="${HOME}/.xrandr/multi_monitor.sh"
-if [ -f "${xrandrFile}" ] && [ "$(command -v xrandr)" != "" ]; then
-  bash "${xrandrFile}"
+autorandrProfile="$(autorandr --detected | head -1)"
+if [ "$(command -v autorandr)" != "" ] && [ -n "${autorandrProfile}" ]; then
+  autorandr --load "${autorandrProfile}"
 fi
-unset xrandrFile
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
