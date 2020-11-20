@@ -9,6 +9,7 @@ arc-gtk-theme
 arc-icon-theme
 asciidoc
 aspell-en
+autorandr
 awesome
 biber
 cabal-install

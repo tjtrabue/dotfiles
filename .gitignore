@@ -51,6 +51,9 @@ link/config/coc/extensions/*
 !/link/config/coc/extensions/package.json
 link/config/configstore/update-notifier-npm.json
 
+# Ignore saved autorandr profiles since they are largely hardware-dependent
+link/config/autorandr
+
 # Ignore TabNine cache and lock files
 link/config/TabNine/monitoring
 
