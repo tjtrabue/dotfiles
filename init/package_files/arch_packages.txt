@@ -35,6 +35,7 @@ fd
 feh
 findutils
 firefox
+fwupd
 fzf
 gdb
 git
@@ -61,6 +62,7 @@ jdk8-openjdk
 khal
 libreoffice-fresh
 libxcrypt
+light-locker
 lightdm
 lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
@@ -103,6 +105,7 @@ python-pip
 python2
 python2-pip
 ranger
+read-edid
 ripgrep
 rofi
 rsync
