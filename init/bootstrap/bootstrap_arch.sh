@@ -361,25 +361,6 @@ info_log "Configuring GRUB"
 arch-chroot "$mountRoot" grub-mkconfig -o /boot/grub/grub.cfg
 # }}}
 
-# Configure display manager {{{
-info_log "Configuring display manager"
-arch-chroot "$mountRoot" sed -i -r \
-  's/^#greeter-session.*/greeter-session=lightdm-webkit2-greeter/' \
-  /etc/lightdm/lightdm.conf
-
-# Make sure graphics driver loads before LightDM starts to avoid black screen
-arch-chroot "$mountRoot" sed -i -r \
-  's/^#(logind-check-graphical)=false/\1=true/' \
-  /etc/lightdm/lightdm.conf
-
-# Change webkit greeter theme
-arch-chroot "$mountRoot" sed -i -r \
-  's/^webkit_theme.*/webkit_theme = litarvan/' \
-  /etc/lightdm/lightdm-webkit2-greeter.conf
-
-arch-chroot "$mountRoot" systemctl enable lightdm
-# }}}
-
 # Enable other services {{{
 # CUPS for printer integration
 arch-chroot "$mountRoot" systemctl enable org.cups.cupsd
@@ -423,6 +404,9 @@ arch-chroot "$mountRoot" runuser "$user" -c \
 # }}}
 
 # Run init scripts {{{
+# LightDM
+arch-chroot "$mountRoot" runuser -l "$user" -c \
+  "bash ${dotfilesHome}/init/init_lightdm"
 # Emacs
 arch-chroot "$mountRoot" runuser -l "$user" -c \
   "bash ${dotfilesHome}/init/init_emacs"

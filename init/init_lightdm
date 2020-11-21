@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -euo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+<insert description here>
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+}
+
+# The webkit2 greeter is a fancy, high-fidelity greeter for LightDM that makes a
+# user's experience logging in much more pleasant.
+configure_webkit2_greeter() {
+  local webkit2GreeterConf='/etc/lightdm/lightdm-webkit2-greeter.conf'
+  local webkit2GreeterTheme='litarvan'
+
+  # Change webkit greeter theme
+  sudo sed -i -r "s/^(webkit_theme).*/\1 = ${webkit2GreeterTheme}/" \
+    "${webkit2GreeterConf}"
+}
+
+# Set main LightDM configuration.
+configure_lightdm() {
+  # The primary X session that the user wishes to use.
+  local lightdmXSession="awesome"
+  # The main lightdm configuration file.
+  local lightdmConf="/etc/lightdm/lightdm.conf"
+
+  # Turn on webkit2 greeter
+  sudo sed -i -r 's/^#(greeter-session).*/\1=lightdm-webkit2-greeter/' \
+    "${lightdmConf}"
+
+  # Make sure graphics driver loads before LightDM starts to avoid black screen
+  sudo sed -i -r 's/^#(logind-check-graphical)=false/\1=true/' "${lightdmConf}"
+
+  # Allow main user to login automatically.
+  sudo sed -i -r "s/^#(autologin-user)=.*/\1=${USER}/" "${lightdmConf}"
+  sudo sed -i -r "s/^#(autologin-session)=.*/\1=${lightdmXSession}/" \
+    "${lightdmConf}"
+
+  sudo systemctl enable lightdm
+}
+
+main() {
+  print_header "Configuring LightDM"
+  configure_lightdm
+  configure_webkit2_greeter
+  succ "Done configuring LightDM!"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hv --long help,verbose -n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true
+      shift
+      ;;
+
+    -h | --help)
+      _help
+      exit 0
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:

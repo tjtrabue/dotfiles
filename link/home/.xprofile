@@ -81,7 +81,8 @@ start_program_if_available "pulseaudio" "--kill"
 start_program_if_available "pulseaudio" "--start"
 
 # Start light-locker screen locker daemon
-start_program_if_available "light-locker" "&"
+# Kind of annoying, so only use it if you're someplace public
+# start_program_if_available "light-locker" "&"
 
 # Merge the .Xresources file into xrdb database
 [ -f "${HOME}/.Xresources" ] && xrdb -merge "${HOME}/.Xresources"
