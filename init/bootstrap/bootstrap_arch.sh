@@ -404,6 +404,9 @@ arch-chroot "$mountRoot" runuser "$user" -c \
 # }}}
 
 # Run init scripts {{{
+# Standard Arch configuration
+arch-chroot "$mountRoot" runuser -l "$user" -c \
+  "bash ${dotfilesHome}/init/init_arch"
 # LightDM
 arch-chroot "$mountRoot" runuser -l "$user" -c \
   "bash ${dotfilesHome}/init/init_lightdm"
