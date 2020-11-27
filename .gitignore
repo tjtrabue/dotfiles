@@ -55,6 +55,7 @@ link/config/configstore/update-notifier-npm.json
 link/config/autorandr
 
 # Ignore TabNine cache and lock files
+link/config/TabNine/defaults
 link/config/TabNine/monitoring
 
 # Emacs straight package manager
