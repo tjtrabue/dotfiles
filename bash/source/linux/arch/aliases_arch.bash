@@ -5,10 +5,14 @@ alias suspend="systemctl suspend"
 alias afk="xscreensaver-command -lock"
 
 # Pacman package manager {{{
-alias pacq="sudo pacman -Q"
+# Install a package
 alias pacs="sudo pacman -S"
+# Search for a package in the Arch repositories
 alias pacss="sudo pacman -Ss"
-alias pacsyu="sudo pacman -Syyu"
+# Search for an installed package
+alias pacq="sudo pacman -Q"
+# Update/upgrade all installed packages
+alias pacup="sudo pacman -Syyu"
 # }}}
 
 # Aura AUR package manager {{{
