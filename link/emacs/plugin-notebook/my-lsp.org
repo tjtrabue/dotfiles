@@ -235,22 +235,32 @@ debugging."
 #+begin_src emacs-lisp :tangle yes
   (use-package lsp-ui
     :after lsp-mode
+    :custom
+    ;; How long to wait before showing documentation in a floating window
+    (lsp-ui-doc-delay 0.2)
+    ;; Show directories of files
+    (lsp-ui-peek-show-directory t)
+    ;; Customize what gets shown in the sideline
+    (lsp-ui-sideline-ignore-duplicate t)
+    (lsp-ui-sideline-show-diagnostics t)
+    (lsp-ui-sideline-show-code-actions t)
+    (lsp-ui-sideline-show-hover t)
+    ;; Enable the fancy peek feature for previewing code actions
+    (lsp-ui-peek-enable t)
+    ;; Show documentation for the thing at point
+    (lsp-ui-doc-enable t)
+    ;; Where to display documentation tooltip
+    (lsp-ui-doc-position 'at-point)
     :bind
     (:map lsp-ui-mode-map
      ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-     ([remap xref-find-references] . lsp-ui-peek-find-references))
-    :init
-    (setq lsp-ui-sideline-ignore-duplicate t
-          lsp-ui-sideline-show-diagnostics t
-          lsp-ui-sideline-show-code-actions t
-          lsp-ui-sideline-show-hover t
-          ;; How long to wait before showing documentation in a floating window
-          lsp-ui-doc-delay 0.2
-          ;; Enable the fancy peek feature for previewing code actions
-          lsp-ui-peek-enable t
-          ;; Show directories of files
-          lsp-ui-peek-show-directory t
-          lsp-ui-doc-enable t)
+     ([remap xref-find-references] . lsp-ui-peek-find-references)
+     :map lsp-ui-peek-mode-map
+     ;; Navigate through the peek menu for references
+     ("C-j" . lsp-ui-peek--select-next)
+     ("C-k" . lsp-ui-peek--select-prev)
+     ("M-j" . lsp-ui-peek--select-next-file)
+     ("M-k" . lsp-ui-peek--select-prev-file))
     :config
     (add-hook 'lsp-mode-hook #'(lambda ()
       ;; Turn off flycheck tool tips if they are active.
