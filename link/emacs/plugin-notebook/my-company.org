@@ -246,8 +246,9 @@ optionally for extra modes"
 #+begin_src emacs-lisp :tangle yes
   ;; (use-package company-lsp
   ;;   :after (company lsp-mode)
+  ;;   ;; Only activate company-lsp for specific modes
   ;;   :hook
-  ;;   (sh-mode . (lambda ()
+  ;;   ((sh-mode c-mode-common) . (lambda ()
   ;;           (make-local-variable 'company-backends)
   ;;           (add-to-list 'company-backends 'company-lsp)))
   ;;   :init

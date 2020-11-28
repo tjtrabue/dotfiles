@@ -373,11 +373,12 @@ of."
   ;;       by projectile). Put a ".ccls-root" file in the project root
   ;;       directory to fix this problem.
   (use-package ccls
+    :after (evil projectile)
+    :ensure-system-package ccls
     :bind
     (:map evil-insert-state-map
     ("<C-return>" . my/insert-semicolon-eol))
     :init
-    (setq ccls-executable (executable-find "ccls"))
     ;; Always use flycheck, not flymake.
     (setq lsp-diagnostic-package :auto)
     ;; Turn off other syntax checkers
@@ -385,9 +386,21 @@ of."
                   '(c/c++-clang c/c++-cppcheck c/c++-gcc))
     :hook
     ;; NOTE: CMake now has its own language server: cmake-language-server
-    ;;       which is a Python package.
+    ;;       It is a Python package.
     ((c-mode c++-mode objc-mode makefile-mode) . (lambda ()
-        (require 'ccls))))
+        (require 'ccls)))
+   ;; Set package's customizable variables
+   :custom
+   (ccls-args nil)
+   ;; Make sure this plugin can actually find CCLS
+   (ccls-executable (executable-find "ccls"))
+   ;; Make CCLS project files indicative of a projectile project root.
+   (projectile-project-root-files-top-down-recurring
+     (append '("compile_commands.json" ".ccls")
+       projectile-project-root-files-top-down-recurring))
+   :config
+   ;; Always ignore the .ccls-cache directory
+   (push ".ccls-cache" projectile-globally-ignored-directories))
 #+end_src
 
 ** lsp-origami
