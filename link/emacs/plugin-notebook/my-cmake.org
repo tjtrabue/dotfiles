@@ -29,35 +29,38 @@ Needed for performance:
 * cmake-ide
   Adds IDE-like features to Emacs when editing CMake projects.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package cmake-ide
-    :after projectile
-    :hook
-    ((c-mode c++-mode objc-mode) . my/cmake-ide-find-project)
-    ;; The :preface block makes the byte-compiler happy.
-    ;; Everything executed in the :preface block is evaluated at both load time
-    ;; and at byte-compilation time, in order to ensure that definitions are
-    ;; seen by both the Lisp evaluator and the byte-compiler. Thus, you should
-    ;; NOT include any side-effectful code in the :preface block, and instead
-    ;; limit code in the :preface block only to symbol declarations and
-    ;; definitions.
-    :preface
-    (defun my/cmake-ide-find-project ()
-      "Finds the directory of the project for cmake-ide."
-      (with-eval-after-load 'projectile
-        (setq cmake-ide-project-dir (projectile-project-root))
-        (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
-      (setq cmake-ide-compile-command
-              (concat "cd " cmake-ide-build-dir " && cmake .. && make"))
-      (cmake-ide-load-db))
+  *NOTE*: This package interferes with =lsp-mode=, so I do not recommend that
+  you use it, currently.
 
-    (defun my/switch-to-compilation-window ()
-      "Switches to the *compilation* buffer after compilation."
-      (other-window 1))
-    :bind
-    ([remap comment-region] . cmake-ide-compile)
-    :init
-    (cmake-ide-setup)
-    :config
-    (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package cmake-ide
+  ;;   :after projectile
+  ;;   :hook
+  ;;   ((c-mode c++-mode objc-mode) . my/cmake-ide-find-project)
+  ;;   ;; The :preface block makes the byte-compiler happy.
+  ;;   ;; Everything executed in the :preface block is evaluated at both load time
+  ;;   ;; and at byte-compilation time, in order to ensure that definitions are
+  ;;   ;; seen by both the Lisp evaluator and the byte-compiler. Thus, you should
+  ;;   ;; NOT include any side-effectful code in the :preface block, and instead
+  ;;   ;; limit code in the :preface block only to symbol declarations and
+  ;;   ;; definitions.
+  ;;   :preface
+  ;;   (defun my/cmake-ide-find-project ()
+  ;;     "Finds the directory of the project for cmake-ide."
+  ;;     (with-eval-after-load 'projectile
+  ;;       (setq cmake-ide-project-dir (projectile-project-root))
+  ;;       (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
+  ;;     (setq cmake-ide-compile-command
+  ;;             (concat "cd " cmake-ide-build-dir " && cmake .. && make"))
+  ;;     (cmake-ide-load-db))
+
+  ;;   (defun my/switch-to-compilation-window ()
+  ;;     "Switches to the *compilation* buffer after compilation."
+  ;;     (other-window 1))
+  ;;   :bind
+  ;;   ([remap comment-region] . cmake-ide-compile)
+  ;;   :init
+  ;;   (cmake-ide-setup)
+  ;;   :config
+  ;;   (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
 #+end_src
