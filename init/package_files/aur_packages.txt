@@ -1,6 +1,7 @@
 ccls-git
+drive-git
 elixir-ls-git
-emacs-git
+emacs-native-comp-git
 flat-remix
 haskell-ide-engine-git
 icons-in-terminal

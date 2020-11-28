@@ -37,13 +37,17 @@ ECB.")
 * projectile
 #+begin_src emacs-lisp :tangle yes
   (use-package projectile
-    :after (ecb evil)
+    ;; IMPORTANT: You may need to change the :after block below to suit your use
+    ;; of ECB (either ecb or ecb-autoloads). Check my-ecb.org for more
+    ;; information.
+    :after (evil ecb-autoloads)
     :bind
     (:map evil-normal-state-map
      ([remap evil-paste-pop] . projectile-find-file)
      :map projectile-mode-map
      ("C-c p" . projectile-command-map))
     :hook
+    ;; Keep ECB in sync with the current Projectile project
     (ecb-basic-buffer-sync . my/sync-ecb-with-projectile)
     :config
     (setq projectile-completion-system 'helm)
