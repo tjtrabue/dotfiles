@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Trap errors and print error message
-set -euo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
@@ -40,11 +38,15 @@ EOF
 # Adjust the /etc/makepkg.conf file to suit our needs.
 edit_makepkg_file() {
   local systemMkpkgConfFile="/etc/makepkg.conf"
-  log_info "Configuring ${systemMkpkgConfFile}"
-  # Make sure that the makepkg utility utilized all processor cores to speed up
-  # pacman package builds.
-  sudo sed -i -r "s/^(MAKEFLAGS)=.*/\1=\"-j\$(nproc)\"/" \
-    "${systemMkpkgConfFile}"
+  if [ -f "${systemMkpkgConfFile}" ]; then
+    log_info "Configuring ${systemMkpkgConfFile}"
+    # Make sure that the makepkg utility utilized all processor cores to speed up
+    # pacman package builds.
+    sudo sed -i -r "s/^(MAKEFLAGS)=.*/\1=\"-j\$(nproc)\"/" \
+      "${systemMkpkgConfFile}"
+  else
+    warn "No ${systemMkpkgConfFile} file found!"
+  fi
 }
 
 main() {
