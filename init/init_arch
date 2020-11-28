@@ -37,8 +37,19 @@ OPTIONS:
 EOF
 }
 
+# Adjust the /etc/makepkg.conf file to suit our needs.
+edit_makepkg_file() {
+  local systemMkpkgConfFile="/etc/makepkg.conf"
+  log_info "Configuring ${systemMkpkgConfFile}"
+  # Make sure that the makepkg utility utilized all processor cores to speed up
+  # pacman package builds.
+  sudo sed -i -r "s/^(MAKEFLAGS)=.*/\1=\"-j\$(nproc)\"/" \
+    "${systemMkpkgConfFile}"
+}
+
 main() {
   print_header "Initializing Arch Linux"
+  edit_makepkg_file
   # Make sure that aura is available to the user
   install_aura
   succ "Done initializing Arch Linux!"

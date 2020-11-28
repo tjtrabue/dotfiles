@@ -52,6 +52,7 @@ declare mountHome="${mountRoot}/home"
 declare userHome=""
 declare workspace=""
 declare dotfilesHome=""
+declare dotfilesInit=""
 declare efiDir="/sys/firmware/efi/efivars"
 # }}}
 
@@ -176,6 +177,7 @@ get_device
 userHome="/home/${user}"
 workspace="${userHome}/workspace"
 dotfilesHome="${workspace}/dotfiles"
+dotfilesInit="${dotfilesHome}/init"
 
 # Files
 xinitFile="${userHome}/.xinitrc"
@@ -376,7 +378,7 @@ EOF
 # Create .xinitrc file {{{
 info_log "Configuring xinit"
 cat <<EOF >"${mountRoot}${xinitFile}"
-exec i3
+exec awesome
 EOF
 arch-chroot "$mountRoot" chown "${user}:${user}" "$xinitFile"
 arch-chroot "$mountRoot" chmod 644 "$xinitFile"
@@ -406,22 +408,22 @@ arch-chroot "$mountRoot" runuser "$user" -c \
 # Run init scripts {{{
 # Standard Arch configuration
 arch-chroot "$mountRoot" runuser -l "$user" -c \
-  "bash ${dotfilesHome}/init/init_arch"
+  "bash ${dotfilesInit}/init_arch"
 # LightDM
 arch-chroot "$mountRoot" runuser -l "$user" -c \
-  "bash ${dotfilesHome}/init/init_lightdm"
+  "bash ${dotfilesInit}/init_lightdm"
 # Emacs
 arch-chroot "$mountRoot" runuser -l "$user" -c \
-  "bash ${dotfilesHome}/init/init_emacs"
+  "bash ${dotfilesInit}/init_emacs"
 # Vim/Neovim
 arch-chroot "$mountRoot" runuser -l "$user" -c \
-  "bash ${dotfilesHome}/init/init_neovim"
+  "bash ${dotfilesInit}/init_neovim"
 # Nerd Fonts
 arch-chroot "$mountRoot" runuser -l "$user" -c \
-  "bash ${dotfilesHome}/init/init_nerd_fonts"
+  "bash ${dotfilesInit}/init_nerd_fonts"
 # Awesome WM
 arch-chroot "$mountRoot" runuser -l "$user" -c \
-  "bash ${dotfilesHome}/init/init_awesome"
+  "bash ${dotfilesInit}/init_awesome"
 # }}}
 
 # Run language-specific package install scripts {{{
@@ -436,7 +438,7 @@ arch-chroot "$mountRoot" runuser -l "$user" -c "install_go_packages"
 if [ "$isLaptop" -eq 0 ]; then
   info_log "Performing laptop configuration"
   arch-chroot "$mountRoot" runuser -l "$user" -c \
-    "bash ${dotfilesHome}/init/bootstrap/configure_arch_laptop.sh"
+    "bash ${dotfilesInit}/bootstrap/configure_arch_laptop.sh"
 fi
 # }}}
 

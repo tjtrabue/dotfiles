@@ -5,6 +5,7 @@ flat-remix
 haskell-ide-engine-git
 icons-in-terminal
 jdtls
+libgccjit
 lightdm-webkit-theme-aether
 ls-icons
 lua-emmy-language-server-bin

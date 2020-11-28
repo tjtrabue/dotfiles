@@ -21,6 +21,7 @@ crypto++
 ctags
 cups
 cups-pdf
+dejagnu
 dhclient
 dialog
 dmenu
