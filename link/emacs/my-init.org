@@ -22,6 +22,8 @@ loads:
   (require 'man)
   ;; Newer dired library
   (require 'dired-x)
+  ;; String manipulation library
+  (require 'subr-x)
 #+end_src
 
 * Define User Variables
@@ -70,6 +72,8 @@ with straight.el.")
     "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")
   (defvar my/user-info-dir (expand-file-name (concat (getenv "HOME") "/.local/share/info"))
     "The directory containing extra info pages installed by the user.")
+  (defvar my/max-worker-processes (string-trim (shell-command-to-string "nproc"))
+    "The maximum number of processor threads that can be running at once.")
 )
 #+end_src
 
@@ -458,39 +462,18 @@ with straight.el.")
     (when (my/gtags-root-dir)
       (my/gtags-update)))
 
-  (defun my/s-trim-left (s)
-    "Remove whitespace at the beginning of S
+  (defun my/trimmed-shell-result (shell-command-str)
+    "Execute a shell command and return the result without leading or
+trailing whitespace.
 
-Copy of function from s.el to use before load."
-    (declare (pure t) (side-effect-free t))
-    (save-match-data
-      (if (string-match "\\`[ \t\n\r]+" s)
-          (replace-match "" t t s)
-        s)))
+SHELL-COMMAND-STR is the shell command to execute."
+    (string-trim (shell-command-to-string shell-command-str)))
 
-  (defun my/s-trim-right (s)
-    "Remove whitespace at the end of S.
+  (defun my/tool-installed-p (tool)
+    "Determine whether or not a given executable (TOOL) exists
 
-Copy of function from s.el to use before load."
-    (save-match-data
-      (declare (pure t) (side-effect-free t))
-      (if (string-match "[ \t\n\r]+\\'" s)
-          (replace-match "" t t s)
-        s)))
-
-  (defun my/s-trim (s)
-    "Remove whitespace at the beginning and end of S.
-
-Copy of function from s.el to use before load."
-    (declare (pure t) (side-effect-free t))
-    (my/s-trim-left (my/s-trim-right s)))
-
-    (defun my/tool-installed-p (tool)
-      "Determine whether or not a given executable (TOOL) exists
-
-  TOOL is a string corresponding to an executable in the UNIX environment."
-      (not (string= "" (my/s-trim (shell-command-to-string
-                                (concat "command -v " tool))))))
+TOOL is a string corresponding to an executable in the UNIX environment."
+    (not (string= "" (my/trimmed-shell-result (concat "command -v " tool)))))
 
   (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
     "Recursively add directories from a BASE-DIR to load-path.

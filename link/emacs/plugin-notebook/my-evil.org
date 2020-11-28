@@ -106,6 +106,10 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package evil-collection
     :after evil
+    :bind
+    (:map evil-normal-state-map
+      ;; Unbind some unused mappings
+     ("M-." . nil))
     :init
     ;; Whether or not to use Vim keys in the minibuffer.
     (setq evil-collection-setup-minibuffer nil)

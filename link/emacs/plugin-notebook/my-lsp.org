@@ -172,10 +172,13 @@ debugging."
     :after format-all
     ;; Here you can change the package's customizable variables.
     :custom
+    ;;; General settings
     (lsp-keymap-prefix "C-c l")
     (lsp-enable-snippet t)
     (lsp-enable-semantic-highlighting t)
-    (lsp-bash-highlight-parsing-errors t)
+    ;; Whether to include all info returned by document/onHover in the eldoc
+    ;; echo area rather than simply basic info.
+    (lsp-eldoc-render-all nil)
     ;; Use this to enable debugging output
     ;; NOTE: Enabling logging can slow lsp-mode considerably!
     (lsp-log-io nil)
@@ -187,8 +190,15 @@ debugging."
     ;; time the variable you want to tweak is company-idle-delay, not this
     ;; one.
     (lsp-idle-delay 0.000)
-    ;; clangd
-    (lsp-clients-clangd-args nil)
+    ;;; bash-language-server
+    (lsp-bash-highlight-parsing-errors t)
+    ;;; clangd
+    ;; Make sure to use all processor cores, and to
+    (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
+                                  "--background-index" "--log=error"
+                                  "--clang-tidy"
+                                  "--header-insertion-decorators"
+                                  "--suggest-missing-includes"))
     (lsp-clients-clangd-executable (executable-find "clangd"))
     :bind-keymap
     ;; Redefine lsp command prefix (default is "s-l" which messes with
