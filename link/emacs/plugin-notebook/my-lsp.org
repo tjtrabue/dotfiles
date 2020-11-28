@@ -128,6 +128,13 @@ Needed for performance:
   Emacs to automatically start lsp-mode with a particular server
   when a certain type of file is found."
     (add-to-list 'lsp-language-id-configuration '(cperl-mode . "perl")))
+
+  (defun my/lsp-add-dap-mode-tool-hooks ()
+    "Add hooks for various languages to pull in `dap-mode' tools to aid in
+debugging."
+    ;; Add C++ DAP tools when entering c++-mode
+    (add-hook 'c++-mode-hook #'(lambda ()
+      (require 'dap-cpptools))))
 #+end_src
 
 * Register New LSP Servers
@@ -200,15 +207,14 @@ Needed for performance:
           ;; (the default number is 1000).
           ;; If nil, then no warning is printed for any number of files.
           lsp-file-watch-threshold nil
-          ;; Make sure we are using completion at point.
-          lsp-completion-provider :capf
           ;; The length that lsp-mode waits to begin completion. Most of the
           ;; time the variable you want to tweak is company-idle-delay, not this
           ;; one.
-          lsp-idle-delay 0.000)
+          lsp-idle-delay 0.100)
     :config
     (my/register-lua-lsp-servers)
-    (my/lsp-add-language-ids))
+    (my/lsp-add-language-ids)
+    (my/lsp-add-dap-mode-tool-hooks))
 #+end_src
 
 * Plugins
