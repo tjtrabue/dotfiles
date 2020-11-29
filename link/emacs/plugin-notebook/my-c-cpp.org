@@ -1,0 +1,22 @@
+#+title:    C and C++ Configuration
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:11:29
+#+property: header-args:emacs-lisp :lexical t
+#+tags: c cpp c++
+
+C and C++ extensions and configuration for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* google-c-style
+  Integrates Google's style guide for C and C++ into flycheck.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package google-c-style
+    :hook
+    (c-mode-common . google-set-c-style))
+#+end_src

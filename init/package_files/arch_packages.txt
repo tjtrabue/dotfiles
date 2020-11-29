@@ -27,6 +27,7 @@ dialog
 dmenu
 dnsutils
 docbook2x
+doxygen
 efibootmgr
 elixir
 evince

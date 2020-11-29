@@ -249,7 +249,7 @@ debugging."
     (lsp-ui-peek-enable t)
     ;; Show documentation for the thing at point
     (lsp-ui-doc-enable t)
-    ;; Where to display documentation tooltip
+    ;; Where to display the documentation tooltip
     (lsp-ui-doc-position 'at-point)
     :bind
     (:map lsp-ui-mode-map
