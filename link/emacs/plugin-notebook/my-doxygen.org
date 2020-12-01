@@ -1,0 +1,31 @@
+#+title:    Doxygen Documentation System
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:11:29
+#+property: header-args:emacs-lisp :lexical t
+#+tags: doxygen comment documentation
+
+
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* highlight-doxygen
+  Adds advanced syntax highlighting to Doxygen comments.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package highlight-doxygen
+    :hook
+    ((prog-mode text-mode) . highlight-doxygen-mode))
+#+end_src
+
+* doxy-graph-mode
+  Interactively view call graph or inverted call graph of a function.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doxy-graph-mode
+    :hook
+    ((c-mode-common python-mode) . doxy-graph-mode))
+#+end_src

@@ -336,13 +336,23 @@ arch-chroot "$mountRoot" amixer sset Headphone unmute
 arch-chroot "$mountRoot" amixer sset Master 100%
 # }}}
 
-# Configure network manager {{{
+# WiFi {{{
+# wpa_supplicant
+info_log "Configuring wpa_supplicant"
+cat <<EOF >"${mountRoot}/etc/wpa_supplicant/wpa_supplicant.conf"
+ctrl_interface=/run/wpa_supplicant
+update_config=1
+EOF
+
+# Network manager
 info_log "Configuring NetworkManager"
 cat <<EOF >"${mountRoot}/etc/NetworkManager/conf.d/dhcp-client.conf"
 [main]
 dhcp=dhclient
 EOF
 
+# Activate WiFi services
+arch-chroot "$mountRoot" systemctl enable wpa_supplicant
 arch-chroot "$mountRoot" systemctl enable NetworkManager
 # }}}
 
