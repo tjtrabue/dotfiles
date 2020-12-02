@@ -241,8 +241,7 @@ Needed for performance:
 #+end_src
 
 *** use-package definition
-    *NOTE*: Currently unused due to =ccls= along with =helm-lsp= being a better
-    alternative
+    *NOTE*: Currently deprecated in favor of =helm-lsp=
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-gtags
