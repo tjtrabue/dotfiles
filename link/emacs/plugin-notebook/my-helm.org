@@ -19,7 +19,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm
-    :after (evil)
+    :after evil
     ;; Key bindings
     :bind
     (;; Main key bindings
@@ -56,10 +56,6 @@ Needed for performance:
 
     ;; Hooks go here (notice that each hook name does not include the '-hook'
     ;; suffix in use-package)
-    :hook
-    ((kill-emacs .
-                 (lambda () (and (file-exists-p "$CONF_FILE") (delete-file "$CONF_FILE"))))
-     (helm-minibuffer-set-up . spacemacs//helm-hide-minibuffer-maybe))
 
     :init
     ;; Set all variables here

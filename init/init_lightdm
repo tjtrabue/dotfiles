@@ -36,6 +36,12 @@ OPTIONS:
 EOF
 }
 
+create_autologin_group() {
+  local autologinGroup="autologin"
+  sudo groupadd -r "${autologinGroup}"
+  sudo gpasswd -a "${USER}" "${autologinGroup}"
+}
+
 # The webkit2 greeter is a fancy, high-fidelity greeter for LightDM that makes a
 # user's experience logging in much more pleasant.
 configure_webkit2_greeter() {
