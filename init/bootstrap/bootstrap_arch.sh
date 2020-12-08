@@ -207,7 +207,7 @@ bootEnd=$((bootSize + 1))
 swapSize=$(free --gibi | awk '/Mem:/ {print $2}')
 swapEnd=$((swapSize))
 # Root size given in GiB
-rootSize=80
+rootSize=120
 rootEnd=$((swapEnd + rootSize + 1))
 
 # The label for the storage device. This depends on whether or not UEFI mode is
@@ -375,7 +375,7 @@ arch-chroot "$mountRoot" grub-mkconfig -o /boot/grub/grub.cfg
 
 # Enable other services {{{
 # CUPS for printer integration
-arch-chroot "$mountRoot" systemctl enable org.cups.cupsd
+arch-chroot "$mountRoot" systemctl enable cups
 # }}}
 
 # Enable magic SysRq shorcuts {{{
