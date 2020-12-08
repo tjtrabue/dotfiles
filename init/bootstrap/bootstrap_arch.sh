@@ -97,6 +97,15 @@ err_log() {
 # }}}
 
 # Setup/cleanup {{{
+# Install packages necessary for this script to work.
+install_necessary_packages() {
+  pacman -Sy dialog
+}
+
+setup() {
+  install_necessary_packages
+}
+
 cleanup() {
   info_log "Cleaning up"
   umount -R "$mountRoot"
@@ -162,6 +171,10 @@ get_device() {
   clear
 }
 # }}}
+# }}}
+
+# Setup {{{
+setup
 # }}}
 
 # Get user input {{{
