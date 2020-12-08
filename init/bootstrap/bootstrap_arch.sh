@@ -99,7 +99,7 @@ err_log() {
 # Setup/cleanup {{{
 # Install packages necessary for this script to work.
 install_necessary_packages() {
-  pacman -Sy dialog
+  pacman -Sy --noconfirm dialog
 }
 
 setup() {
