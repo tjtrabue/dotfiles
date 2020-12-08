@@ -7,6 +7,17 @@ install_ruby_packages() {
   done <"$RUBY_PACKAGES_FILE"
 }
 
+add_gem_bin_dirs_to_path() {
+  local gemHomeDir="${HOME}/.gem/ruby"
+  local versionedBinDir
+
+  while read -r versionedBinDir || [ -n "${versionedBinDir}" ]; do
+    log_info "Adding Ruby Gem dir ${versionedBinDir} to PATH"
+    atp "${versionedBinDir}"
+  done <<<"$(find "${gemHomeDir}" -maxdepth 1 -mindepth 1 -type d \
+    -exec echo '{}'/bin \;)"
+}
+
 update_ruby_packages() {
   gem update
 }

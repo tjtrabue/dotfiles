@@ -453,6 +453,7 @@ arch-chroot "$mountRoot" runuser -l "$user" -c \
 info_log "Running language-specific package installations"
 arch-chroot "$mountRoot" runuser -l "$user" -c "install_python_packages"
 arch-chroot "$mountRoot" runuser -l "$user" -c "install_node_packages"
+arch-chroot "$mountRoot" runuser -l "$user" -c "install_ruby_packages"
 arch-chroot "$mountRoot" runuser -l "$user" -c "install_lua_packages"
 arch-chroot "$mountRoot" runuser -l "$user" -c "install_go_packages"
 # }}}

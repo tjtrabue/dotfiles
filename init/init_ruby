@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -euo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare VERBOSE=false
+# }}}
+
+# Imports {{{
+source "${IMPORT}/colors.bash"
+source "${IMPORT}/functions_log.bash"
+source "${IMPORT}/functions_ruby.bash"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+Initialize ruby on this platform
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -v | --verbose
+    Run with extra logging output.
+EOF
+}
+
+main() {
+  install_ruby_packages
+  add_gem_bin_dirs_to_path
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hv --long help,verbose -n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true ; do
+  case "$1" in
+    -v | --verbose)
+      VERBOSE=true
+      shift
+      ;;
+
+    -h | --help)
+      _help
+      exit 0
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:

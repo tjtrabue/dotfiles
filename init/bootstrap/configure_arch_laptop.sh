@@ -2,7 +2,7 @@
 
 # Laptop-related packages {{{
 install_laptop_packages() {
-  sudo pacman -S --needed --noconfirm \
+  sudo pacman -Sy --noconfirm \
     acpid \
     tlp \
     ;
@@ -39,9 +39,9 @@ enable_services() {
 # }}}
 
 main() {
-  install_laptop_packages;
-  set_touchpad_options;
-  enable_services;
+  install_laptop_packages
+  set_touchpad_options
+  enable_services
 }
 
 main;
