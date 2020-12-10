@@ -1,0 +1,82 @@
+#+title:  Swiper, Ivy, Counsel
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+
+These three primary plugins are a great alternative to =helm=.
+
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* Ivy
+  =ivy= is a generic completion mechanism for Emacs, and a faster alternative to
+  =helm=. While it operates similarly to other completion schemes such as
+  =icomplete-mode=, =ivy= aims to be more efficient, smaller, simpler, and
+  smoother to use, yet highly customizable.
+
+** use-package-specification
+#+begin_src emacs-lisp :tangle yes
+  (use-package ivy
+    :defer 0.1
+    :bind
+    (:map ivy-switch-buffer-map
+     ;; Make sure that navigation shortcuts work
+     ("C-k" . ivy-previous-line)
+     ;; Rebind the switch-buffer-kill function to something sane
+     ("C-d" . ivy-switch-buffer-kill)
+     :map ivy-minibuffer-map
+     ("C-j" . ivy-next-line)
+     ("C-k" . ivy-previous-line))
+    :custom
+    (ivy-use-virtual-buffers t)
+    (enable-recursive-minibuffers t)
+    :init
+    ;; Make the ivy window's height a function of its parent frame's height
+    (setq ivy-height-alist
+      '((t
+         lambda (_caller)
+         (/ (frame-height) 3))))
+    :config
+    (ivy-mode))
+#+end_src
+
+** Plugins
+*** ivy-all-the-icons
+    Ivy integration plugin for the incredible =all-the-icons= plugin.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package all-the-icons-ivy
+  :hook
+  (after-init . all-the-icons-ivy-setup))
+#+end_src
+
+* Counsel
+  =counsel= is a collection of =ivy= enhancements for standard Emacs functions,
+  such as =find-file= and =switch-to-buffer=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package counsel
+    :after ivy
+    :config
+    (counsel-mode))
+#+end_src
+
+* Swiper
+  =swiper= is an alternative to =isearch=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package swiper
+    :after (ivy evil-collection)
+    :bind
+    (("C-s" . swiper)
+     ("C-r" . swiper)
+     :map evil-normal-state-map
+     ;; Use swiper for evil-mode's forward and reverse search
+     ;; functions, as well.
+     ("/" . swiper)
+     ("?" . swiper)))
+#+end_src
+#+end_src

@@ -17,10 +17,16 @@ Needed for performance:
   right here in my dotfiles, so I recommend you read up on the package on its
   home page.
 
+  *NOTE ABOUT NATIVE COMPILATION*: If you are using =gccemacs=, that is, the
+  experimental native-comp branch of Emacs, you may experience compilation
+  errors in Helm, notably in =helm-config.el=, citing undefined/void variables
+  as the reason for halting compilation. I recommend you use =ivy= in this case.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package helm
+    :straight
+    (helm :type git :host github :repo "emacs-helm/helm" :branch "devel")
     :after evil
-
     :custom
     ;; Set all customizable variables here
     (helm-command-prefix-key (kbd "C-c h"))
@@ -36,23 +42,23 @@ Needed for performance:
     ;; based on the number of matches.
     (helm-autoresize-min-height 40)
     (helm-autoresize-max-height 0)
-
     :bind
     ;; Key bindings
     (;; Main key bindings
-     ([remap find-file] . helm-find-files)
-     ([remap occur] . helm-occur)
+     ;; NOTE: Keybindings unused in favor of ivy
+     ;; ([remap find-file] . helm-find-files)
+     ;; ([remap occur] . helm-occur)
      ;; Use helm-buffers-list for both 'C-x b' and 'C-x C-b'
-     ([remap list-buffers] . helm-buffers-list)
-     ([remap switch-to-buffer] . helm-buffers-list)
-     ([remap dabbrev-expand] . helm-dabbrev)
-     ([remap execute-extended-command] . helm-M-x)
-     ([remap recentf-open-files] . helm-recentf)
+     ;; ([remap list-buffers] . helm-buffers-list)
+     ;; ([remap switch-to-buffer] . helm-buffers-list)
+     ;; ([remap dabbrev-expand] . helm-dabbrev)
+     ;; ([remap execute-extended-command] . helm-M-x)
+     ;; ([remap recentf-open-files] . helm-recentf)
+     ;; Have Helm manage kill ring
+     ;; ("M-y" . helm-show-kill-ring)
      ;; 'Ctrl-c h' is the starting point for launching a generic helm command.
      ("C-c h" . helm-command-prefix)
      ("C-x c" . nil)
-     ;; Have Helm manage kill ring
-     ("M-y" . helm-show-kill-ring)
      :map helm-map
      ;; Rebind tab/C-tab to toggle candidates for performing actions
      ("<tab>" . helm-toggle-visible-mark-forward)
@@ -70,16 +76,11 @@ Needed for performance:
      :map helm-buffer-map
      ;; Kill marked buffers in helm-buffer mode
      ("C-d" . helm-buffer-run-kill-buffers))
-
-    :preface
-    ;; Present at byte-compile time
-    (require 'helm-config)
-
     :init
     ;; This is the new way to enable fuzzy matching globally for helm.
     (add-to-list 'completion-styles 'flex)
-
     :config
+    (require 'helm-config)
     (unless (boundp 'completion-in-region-function)
       (define-key lisp-interaction-mode-map [remap completion-at-point]
         'helm-lisp-completion-at-point)
