@@ -3,7 +3,9 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
 
-These three primary plugins are a great alternative to =helm=.
+These three plugins are a great alternative to =helm=. =ivy= is the primary
+plugin in this tool suite, and =swiper= and =counsel= sit on top of =ivy=,
+depending on it for their operations.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
@@ -17,7 +19,7 @@ Needed for performance:
   =icomplete-mode=, =ivy= aims to be more efficient, smaller, simpler, and
   smoother to use, yet highly customizable.
 
-** use-package-specification
+** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
     :defer 0.1
@@ -57,6 +59,7 @@ Needed for performance:
   =counsel= is a collection of =ivy= enhancements for standard Emacs functions,
   such as =find-file= and =switch-to-buffer=.
 
+** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package counsel
     :after ivy
@@ -64,8 +67,18 @@ Needed for performance:
     (counsel-mode))
 #+end_src
 
+** Plugins
+*** counsel-projectile
+#+begin_src emacs-lisp :tangle yes
+  (use-package counsel-projectile
+    :after (counsel projectile)
+    :config
+    (counsel-projectile-mode))
+#+end_src
+
 * Swiper
-  =swiper= is an alternative to =isearch=.
+  =swiper= is a narrowing search tool which serves as an alternative to
+  =isearch=.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package swiper
@@ -78,5 +91,4 @@ Needed for performance:
      ;; functions, as well.
      ("/" . swiper)
      ("?" . swiper)))
-#+end_src
 #+end_src

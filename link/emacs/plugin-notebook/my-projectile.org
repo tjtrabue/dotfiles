@@ -55,7 +55,9 @@ ECB.")
     ;; Keep ECB in sync with the current Projectile project
     (ecb-basic-buffer-sync . my/sync-ecb-with-projectile)
     :config
-    (setq projectile-completion-system 'helm)
+    ;; Use Ivy for projectile completion
+    ;; (can also use helm or ido).
+    (setq projectile-completion-system 'ivy)
 
     ;; Make projects in workspace discovered automatically.
     ;; The list is a space-separated collection of directory paths
