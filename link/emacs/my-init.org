@@ -181,6 +181,9 @@ with straight.el.")
   ;; but instead enter the *scratch* buffer.
   (setq inhibit-startup-screen t)
 
+  ;; Silence the annoying error/warning bell
+  (setq ring-bell-function 'ignore)
+
   ;; Up the maximum depth for eval, apply, and funcall functions.
   ;; This variable is supposed to catch infinite recursions before
   ;; they cause a stack overflow, but its default value is very low.

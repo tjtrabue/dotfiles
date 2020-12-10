@@ -5,6 +5,32 @@ emacs_rm_backups() {
        -regex ".*(~)|(.*#.*)$" -delete;
 }
 
+# Completely clean the ~/.emacs.d/ directory to prepare it for a reset.
+emacs_wipe_config_dir() {
+  local emacsHome="${HOME}/.emacs.d"
+
+  rm -rf "${emacsHome}/auto-save-list" \
+    "${emacsHome}/backups" \
+    "${emacsHome}/el-get" \
+    "${emacsHome}/eln-cache" \
+    "${emacsHome}/persp-confs" \
+    "${emacsHome}/semanticdb" \
+    "${emacsHome}/transient" \
+    "${emacsHome}/straight/build" \
+    "${emacsHome}/straight/repos" \
+    ;
+
+  rm -f "${emacsHome}/company-statistics-cache.el" \
+    "${emacsHome}/ede-projects.el" \
+    "${emacsHome}/forge-database.sqlite" \
+    "${emacsHome}/places" \
+    "${emacsHome}/projectile-bookmarks.eld" \
+    "${emacsHome}/recentf" \
+    "${emacsHome}/srecode-map.el" \
+    "${emacsHome}/straight/build-cache.el" \
+    ;
+}
+
 # Start Emacs in Gnus mode to read email/news.
 gnus() {
   emacs -f "gnus" &
@@ -35,6 +61,10 @@ eclient() {
   emacsclient -create-frame --alternate-editor="" &
 }
 
+# Shut down the Emacs server
 shutdown_emacsdaemon() {
   emacsclient -e "(kill-emacs)"
 }
+
+# Modeline for this file (leave it commented!)
+# vim:foldenable:foldmethod=syntax:foldnestmax=1

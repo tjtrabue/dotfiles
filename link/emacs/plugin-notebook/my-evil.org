@@ -120,7 +120,7 @@ Needed for performance:
     ;; Vim keys.
     (global-unset-key (kbd "C-k"))
     ;; We never need to insert digraphs!
-    (unbind-key (kbd "C-k") 'evil-insert-state-map))
+    (define-key evil-insert-state-map (kbd "C-k") nil))
 #+end_src
 
 ** evil-surround
@@ -205,19 +205,17 @@ Needed for performance:
     (evil-snipe-override-mode t))
 #+end_src
 
-** dash
+** evil-org
 #+begin_src emacs-lisp :tangle yes
-  (use-package dash)
-#+end_src
-
-** monitor
-#+begin_src emacs-lisp :tangle yes
-  (use-package monitor)
-#+end_src
-
-** org-evil
-#+begin_src emacs-lisp :tangle yes
-  (use-package org-evil)
+  (use-package evil-org
+    :after (org evil)
+    :hook
+    ((org-mode . evil-org-mode)
+     (evil-org-mode . (lambda ()
+       (evil-org-set-key-theme))))
+    :config
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
 #+end_src
 
 ** vertigo

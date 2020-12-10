@@ -14,5 +14,6 @@ possible since it is vastly more powerful and flexible.
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package icicles)
+  ;; Currently unused in favor of helm
+  ;; (use-package icicles)
 #+end_src

@@ -57,14 +57,14 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
    The predecessor to the =base-16= color theme system.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package color-theme-sanityinc-tomorrow
-    :after (org-beautify-theme)
-    :init
-    (load-theme 'sanityinc-tomorrow-eighties t)
-    :config
-    (my/set-color-theme-alist color-theme-sanityinc-tomorrow-colors 'eighties)
-    (if (not (custom-theme-enabled-p 'org-beautify-theme))
-      (load-theme 'org-beautify t)))
+    (use-package color-theme-sanityinc-tomorrow
+      :after org-beautify-theme
+      :init
+      (load-theme 'sanityinc-tomorrow-eighties t)
+      :config
+      (my/set-color-theme-alist color-theme-sanityinc-tomorrow-colors 'eighties)
+      (if (not (custom-theme-enabled-p 'org-beautify-theme))
+        (load-theme 'org-beautify t)))
 #+end_src
 
 ** moe-theme

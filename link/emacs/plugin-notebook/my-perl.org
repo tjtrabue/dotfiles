@@ -136,7 +136,7 @@ such plugins is sure to slow your system down significantly.
             (setcdr pair 'cperl-mode)))
       (append auto-mode-alist interpreter-mode-alist))
     ;; Get rid of troublesome keybindings
-    (unbind-key (kbd "C-j") 'cperl-mode-map)
+    (define-key cperl-mode-map (kbd "C-j") nil)
     ;; Add find-file-at-point function for cperl-mode.
     (add-to-list 'ffap-alist  '(cperl-mode . my/cperl-ffap-locate)))
 #+end_src

@@ -4,7 +4,7 @@
 ;;  This is the standard Emacs configuration file.  It uses the Emacs Lisp
 ;;  dialect of the Lisp programming language for its specification.  Note that
 ;;  the majority of the configuration is in ~/.emacs.d/my-init.org, since ORG
-;;  markup is far better for layout and organization than standard Elisp. This
+;;  markup is far better for layout and organization than standard Elisp.  This
 ;;  file loads that ORG file at the very end, once it completes all setup
 ;;  operations.
 

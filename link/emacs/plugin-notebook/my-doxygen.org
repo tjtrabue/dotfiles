@@ -6,7 +6,6 @@
 #+tags: doxygen comment documentation
 
 
-
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
@@ -19,13 +18,4 @@
   (use-package highlight-doxygen
     :hook
     ((prog-mode text-mode) . highlight-doxygen-mode))
-#+end_src
-
-* doxy-graph-mode
-  Interactively view call graph or inverted call graph of a function.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package doxy-graph-mode
-    :hook
-    ((c-mode-common python-mode) . doxy-graph-mode))
 #+end_src

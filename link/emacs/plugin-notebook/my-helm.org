@@ -20,8 +20,25 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package helm
     :after evil
-    ;; Key bindings
+
+    :custom
+    ;; Set all customizable variables here
+    (helm-command-prefix-key (kbd "C-c h"))
+    (helm-split-window-inside-p t)
+    (helm-move-to-line-cycle-in-source t)
+    (helm-ff-search-library-in-sexp t)
+    (helm-scroll-amount 8)
+    (helm-ff-file-name-history-use-recentf t)
+    (helm-echo-input-in-header-line t)
+    ;; Use Emacs regular expressions in helm mode.
+    (helm-completion-style 'emacs)
+    ;; Force helm buffer to stay a certain size, otherwise it will change
+    ;; based on the number of matches.
+    (helm-autoresize-min-height 40)
+    (helm-autoresize-max-height 0)
+
     :bind
+    ;; Key bindings
     (;; Main key bindings
      ([remap find-file] . helm-find-files)
      ([remap occur] . helm-occur)
@@ -54,47 +71,22 @@ Needed for performance:
      ;; Kill marked buffers in helm-buffer mode
      ("C-d" . helm-buffer-run-kill-buffers))
 
-    ;; Hooks go here (notice that each hook name does not include the '-hook'
-    ;; suffix in use-package)
+    :preface
+    ;; Present at byte-compile time
+    (require 'helm-config)
 
     :init
-    ;; Set all variables here
-    (setq helm-split-window-in-side-p t
-          helm-move-to-line-cycle-in-source t
-          helm-ff-search-library-in-sexp t
-          helm-scroll-amount 8
-          helm-ff-file-name-history-use-recentf t
-          helm-echo-input-in-header-line t
-          ;; Use Emacs regular expressions in helm mode.
-          helm-completion-style 'emacs
-
-          ;; Force helm buffer to stay a certain size, otherwise it will change
-          ;; based on the number of matches.
-          helm-autoresize-min-height 40
-          helm-autoresize-max-height 0)
     ;; This is the new way to enable fuzzy matching globally for helm.
     (add-to-list 'completion-styles 'flex)
+
     :config
-    (require 'helm-config)
     (unless (boundp 'completion-in-region-function)
       (define-key lisp-interaction-mode-map [remap completion-at-point]
         'helm-lisp-completion-at-point)
       (define-key emacs-lisp-mode-map       [remap completion-at-point]
         'helm-lisp-completion-at-point))
-
     (when (executable-find "curl")
       (setq helm-google-suggest-use-curl-p t))
-
-    (defun spacemacs//helm-hide-minibuffer-maybe ()
-      "Hide minibuffer in Helm session if we use the header line as input field."
-      (when (with-helm-buffer helm-echo-input-in-header-line)
-        (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
-          (overlay-put ov 'window (selected-window))
-          (overlay-put ov 'face
-                       (let ((bg-color (face-background 'default nil)))
-                         `(:background ,bg-color :foreground ,bg-color)))
-          (setq-local cursor-type nil))))
-
     (helm-autoresize-mode t)
     (helm-mode t))
 #+end_src
@@ -339,9 +331,10 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-system-packages
-    :after (helm)
+    :after helm
     :bind
-    ("C-c h S" . helm-system-packages))
+    (:map helm-map
+     ("S" . helm-system-packages)))
 #+end_src
 
 ** helm-dash

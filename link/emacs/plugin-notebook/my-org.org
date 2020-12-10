@@ -25,8 +25,7 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package org-bullets
     :hook
-    (org-mode . (lambda ()
-                  (org-bullets-mode 1))))
+    (org-mode . (lambda () (org-bullets-mode 1))))
 #+end_src
 
 ** org-beautify-theme
