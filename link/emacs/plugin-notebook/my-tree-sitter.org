@@ -1,0 +1,37 @@
+#+title:    tree-sitter: Faster Syntax Parsing
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:12:11
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+=tree-sitter= is an incremental parsing system, and is not specific to Emacs.
+It provides, among other things, an alternative to =font-lock= for syntax
+highlighting.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* tree-sitter
+#+begin_src emacs-lisp :tangle yes
+  (use-package tree-sitter
+    :after tree-sitter-langs
+    :hook
+    ((prog-mode text-mode) . (lambda ()
+      ;; Activate tree-sitter's improved syntax highlighting only if we are
+      ;; using a major-mode that has a compatible tree-sitter syntax parser
+      (if (assq major-mode tree-sitter-major-mode-language-alist)
+        (tree-sitter-hl-mode))))
+    :config
+    (global-tree-sitter-mode 1))
+#+end_src
+
+* tree-sitter-langs
+  This is a bundle of pre-defined =tree-sitter= programming languages syntax
+  packs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package tree-sitter-langs)
+#+end_src
