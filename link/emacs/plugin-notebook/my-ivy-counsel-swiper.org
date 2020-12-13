@@ -45,9 +45,7 @@ Needed for performance:
      ("C-j" . ivy-next-line)
      ("C-k" . ivy-previous-line)
      ;; Use TAB to mark/unmark candidates
-     ([remap ivy-partial-or-done] . my/ivy-toggle-mark)
-     ;; Also use SPACE to mark/unmark candidates
-     ("SPC" . my/ivy-toggle-mark))
+     ("TAB" . my/ivy-toggle-mark))
     :custom
     (ivy-use-virtual-buffers t)
     (enable-recursive-minibuffers t)
