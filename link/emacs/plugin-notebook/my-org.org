@@ -14,8 +14,8 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package org
-    :config
-    (setq org-hide-leading-stars 1))
+    :custom
+    (org-hide-leading-stars 1))
 #+end_src
 
 * Plugins

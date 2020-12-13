@@ -14,8 +14,14 @@
 * highlight-doxygen
   Adds advanced syntax highlighting to Doxygen comments.
 
+  *NOTE*: Do *NOT* activate this minor mode in =org-mode=!!! Doing so will slow
+  Emacs to an absolute crawl. This problem was incredibly hard to debug. Please,
+  for the love of efficient text editing, do not repeat my mistake.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package highlight-doxygen
     :hook
-    ((prog-mode text-mode) . highlight-doxygen-mode))
+    ;; Only highlight doxygen comments in appropriate languages
+    ((c-mode-common java-mode perl-mode php-mode python-mode)
+       . highlight-doxygen-mode))
 #+end_src
