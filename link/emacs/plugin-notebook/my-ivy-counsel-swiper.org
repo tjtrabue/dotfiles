@@ -1,4 +1,4 @@
-#+title:  Swiper, Ivy, Counsel
+#+title:  Ivy, Counsel, Swiper: Narrowing Search Framework
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
@@ -19,6 +19,18 @@ Needed for performance:
   =icomplete-mode=, =ivy= aims to be more efficient, smaller, simpler, and
   smoother to use, yet highly customizable.
 
+** Functions
+
+#+begin_src emacs-lisp :tangle yes
+    (defun my/ivy-toggle-mark ()
+  "Used to toggle an ivy mark in the ivy minibuffer. If the current
+  candidate is not marked, mark it. Otherwise, unmark the marked candidate."
+      (interactive)
+      (if (ivy--marked-p)
+          (ivy-unmark)
+        (ivy-mark)))
+#+end_src
+
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
@@ -31,7 +43,11 @@ Needed for performance:
      ("C-d" . ivy-switch-buffer-kill)
      :map ivy-minibuffer-map
      ("C-j" . ivy-next-line)
-     ("C-k" . ivy-previous-line))
+     ("C-k" . ivy-previous-line)
+     ;; Use TAB to mark/unmark candidates
+     ([remap ivy-partial-or-done] . my/ivy-toggle-mark)
+     ;; Also use SPACE to mark/unmark candidates
+     ("SPC" . my/ivy-toggle-mark))
     :custom
     (ivy-use-virtual-buffers t)
     (enable-recursive-minibuffers t)
