@@ -74,10 +74,12 @@ local function set_wallpaper_for_tag(scr, index)
     local default_wp = gears.filesystem.get_themes_dir() .. "/default/background.png"
 
     if wp_selected then
+        print("Using custom wallpaper")
         -- Use a randomly selected image if we have a valid
         -- wallpaper directory
         gears.wallpaper.fit(wallpaper_dir_path .. wp_selected[index], scr)
     else
+        print("Using default wallpaper")
         -- Otherwise, just use the default wallpaper image.
         gears.wallpaper.fit(default_wp, scr)
     end

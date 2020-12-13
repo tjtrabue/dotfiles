@@ -132,7 +132,7 @@ with straight.el.")
 
 * Color Configuration
   Here we configure ANSI colors for various modes used throughout Emacs.
-  We need to make comint-mode, which all shell emulators in Emacs (known as
+  We need to make =comint-mode=, which all shell emulators in Emacs (known as
   inferior interpreters) inherit from, recognize ANSI color escape sequences
   so that shells don't look like a hot mess. We also want colorized man pages.
 
@@ -293,6 +293,9 @@ with straight.el.")
 
   ;; Allow tooltips in pop-up mini-frames.
   (tooltip-mode 1)
+
+  ;; Turn on syntax highlighting (AKA font locking) by default.
+  (global-font-lock-mode 1)
 #+end_src
 
 * Advice
