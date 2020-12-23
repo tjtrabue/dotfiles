@@ -49,6 +49,7 @@ Needed for performance:
       cmake-mode
       ;; cperl-mode
       css-mode
+      dart-mode
       elixir-mode
       go-mode
       haskell-mode
@@ -444,4 +445,10 @@ of."
 #+begin_src emacs-lisp :tangle yes
   (use-package lsp-origami
     :after (lsp-mode))
+#+end_src
+** lsp-dart
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package lsp-dart
+    :after lsp-mode)
 #+end_src

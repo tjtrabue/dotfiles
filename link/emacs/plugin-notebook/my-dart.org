@@ -1,0 +1,19 @@
+#+title:    Dart Programming Language Config/Plugins
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2020:12:23
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+Plugins and configuration for the Dart programming language.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* dart-mode
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dart-mode)
+#+end_src

@@ -143,6 +143,9 @@ Plug 'cakebaker/scss-syntax.vim'
 "          necessary now that coc.nvim exists.
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " }}}
+" Dart {{{
+Plug 'dart-lang/dart-vim-plugin'
+" }}}
 " Javascript {{{
 Plug 'pangloss/vim-javascript', { 'for': ['javascript',  'javascript.jsx' ]}
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx']}
