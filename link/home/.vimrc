@@ -94,6 +94,9 @@ Plug 'mattn/emmet-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'shime/vim-livedown'
 " }}}
+" TOML {{{
+Plug 'cespare/vim-toml'
+" }}}
 " Autocompletion / IDE Integration {{{
 " deoplete and deoplete plugins (DISABLED in favor of coc.nvim) {{{
 " if has('nvim')
