@@ -21,6 +21,7 @@ crypto++
 ctags
 cups
 cups-pdf
+dart
 dejagnu
 dhclient
 dialog

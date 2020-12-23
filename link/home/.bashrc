@@ -98,13 +98,22 @@ fi
 unset dircolorsFile
 # }}}
 
-# Powerline {{{
-POWERLINE_HOME="$HOME/.local/lib/python2.7/site-packages/powerline"
-if [ -f "$POWERLINE_HOME/bindings/bash/powerline.sh" ]; then
+# Special Prompts {{{
+POWERLINE_BASH_BINDINGS="$(find "${HOME}/.local/lib/" -type f \
+  -regextype 'posix-extended' \
+  -regex '.*python3.[0-9]+.*bindings/bash/powerline.sh' \
+  | sort -V \
+  | tail -1)"
+
+if [ -x "$(command -v starship)" ]; then
+  # The starship prompt is a beautiful, informative, cross-shell prompt
+  eval "$(starship init bash)"
+elif [ -f "${POWERLINE_BASH_BINDINGS}" ]; then
+  # Default to powerline if no other prompt installed
   powerline-daemon -q
-  POWERLINE_BASH_CONTINUATION=1
-  POWERLINE_BASH_SELECT=1
-  source "$POWERLINE_HOME/bindings/bash/powerline.sh"
+  export POWERLINE_BASH_CONTINUATION=1
+  export POWERLINE_BASH_SELECT=1
+  source "${POWERLINE_BASH_BINDINGS}"
 fi
 # }}}
 
@@ -136,9 +145,6 @@ if [ "$(command -v fasd)" != "" ]; then
   unset fasd_cache
 fi
 
-# Print neofetch info when the terminal first opens
-[ "$(command -v neofetch)" != "" ] && neofetch 1>&2
-
 # Load fzf keybindings
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -159,5 +165,8 @@ export SDKMAN_DIR="$HOME/.sdkman"
 if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
   source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
+
+# Print neofetch info when the terminal first opens
+[ "$(command -v neofetch)" != "" ] && neofetch 1>&2
 
 # vim:foldenable:foldmethod=marker
