@@ -31,6 +31,13 @@ tags.temp
 # Ignore all log files
 *.log
 
+# Compiled object files
+*.o
+
+# Libraries
+*.so
+*.a
+
 # Extra config directories to ignore
 link/config/dconf/
 link/config/pulse/
