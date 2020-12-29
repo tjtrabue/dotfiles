@@ -404,4 +404,13 @@ uparch() {
   sudo aura -Auax
 }
 
+# NOTE: You will need to reboot after installing optimus-manager
+install_optimus_manager() {
+  aurai "optimus-manager"
+  # Copy the config file for editing later
+  sudo cp "/usr/share/optimus-manager.conf" "/etc/optimus-manager/"
+  # Enable the service
+  sudo systemctl enable --now optimus-manager
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

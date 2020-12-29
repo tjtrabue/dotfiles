@@ -11,6 +11,7 @@ ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
 neovim-git
+optimus-manager
 polybar-git
 roswell-git
 transset-df

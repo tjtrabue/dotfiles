@@ -4,6 +4,10 @@
 alias suspend="systemctl suspend"
 alias afk="xscreensaver-command -lock"
 
+# Listing kernel drivers {{{
+alias lskern="sudo lspci -k | less"
+# }}}
+
 # Pacman package manager {{{
 # Install a package
 alias pacs="sudo pacman -S"
