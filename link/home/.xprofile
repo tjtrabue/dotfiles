@@ -87,12 +87,20 @@ start_program_if_available "pulseaudio" "--start"
 # Merge the .Xresources file into xrdb database
 [ -f "${HOME}/.Xresources" ] && xrdb -merge "${HOME}/.Xresources"
 
-# Start up a saved xrandr multihead session (if available)
-# To save an autorandr profile, use xrandr to configure your multihead settings,
-# and then run:
-#  autorandr --save "<profile_name>"
+# Send nvidia-settings config to X server, if applicable
+nvidiaSettingsConfig="${HOME}/.nvidia-settings-rc"
+if [ -x "$(command -v nvidia-settings)" ] && \
+   [ -f "${nvidiaSettingsConfig}" ]; then
+  nvidia-settings --load-config-only
+fi
+unset nvidiaSettingsConfig
+
+# Start up a saved xrandr multihead session, if available
 autorandrProfile="$(autorandr --detected | head -1)"
-if [ -n "$(command -v autorandr)" ] && [ -n "${autorandrProfile}" ]; then
+if [ -x "$(command -v autorandr)" ] && [ -n "${autorandrProfile}" ]; then
+  # To save an autorandr profile, use xrandr to configure your multihead
+  # settings, and then run:
+  #  autorandr --save "<profile_name>"
   autorandr --load "${autorandrProfile}"
 fi
 unset autorandrProfile
