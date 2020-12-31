@@ -2,7 +2,8 @@
 
 # WARNING: This script will destory data on the selected disk.
 # This script can be run by executing the following:
-#   curl -sL https://git.io/fjHK3 | bash
+#   curl -sL https://git.io/JLQlu | bash
+
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -197,7 +198,7 @@ xinitFile="${userHome}/.xinitrc"
 # }}}
 
 # Determine if motherboard uses UEFI or BIOS {{{
-if [ -d "$efiDir" ]; then
+if [ -d "${efiDir}" ]; then
   info_log "UEFI mode enabled! Running in UEFI mode"
   uefiEnabled=true
 else
@@ -228,24 +229,24 @@ rootEnd=$((swapEnd + rootSize + 1))
 diskLabel="msdos"
 bootPartType="primary"
 bootPartFs="ext4"
-if $uefiEnabled; then
+if ${uefiEnabled}; then
   diskLabel="gpt"
   bootPartType="ESP"
   bootPartFs="fat32"
 fi
 
 parted --script "${device}" -- \
-  mklabel "$diskLabel" \
-  mkpart "$bootPartType" "$bootPartFs" 1MiB ${bootEnd} \
+  mklabel "${diskLabel}" \
+  mkpart "${bootPartType}" "${bootPartFs}" 1MiB ${bootEnd} \
   set 1 boot on \
   mkpart primary linux-swap ${bootEnd}MiB ${swapEnd}GiB \
   mkpart primary ext4 ${swapEnd}GiB ${rootEnd}GiB \
   mkpart primary ext4 ${rootEnd}GiB 100%
 
-partBoot="$(find "$(dirname "$device")" -type b -regex "${device}p?1")"
-partSwap="$(find "$(dirname "$device")" -type b -regex "${device}p?2")"
-partRoot="$(find "$(dirname "$device")" -type b -regex "${device}p?3")"
-partHome="$(find "$(dirname "$device")" -type b -regex "${device}p?4")"
+partBoot="$(find "$(dirname "${device}")" -type b -regex "${device}p?1")"
+partSwap="$(find "$(dirname "${device}")" -type b -regex "${device}p?2")"
+partRoot="$(find "$(dirname "${device}")" -type b -regex "${device}p?3")"
+partHome="$(find "$(dirname "${device}")" -type b -regex "${device}p?4")"
 
 # Create file systems on each partition.
 if $uefiEnabled; then
@@ -278,47 +279,48 @@ mount "${partHome}" "${mountHome}"
 
 # Install base packages {{{
 info_log "Installing base packages"
-pacstrap "$mountRoot" base linux linux-firmware base-devel
+pacstrap "${mountRoot}" base linux linux-firmware base-devel
 # }}}
 
 # Host/locale information {{{
 info_log "Configuring host/locale information"
 
-genfstab -U "$mountRoot" >>"$mountRoot"/etc/fstab
-echo "${hostname}" >"$mountRoot"/etc/hostname
+genfstab -U "${mountRoot}" >>"${mountRoot}/etc/fstab"
+echo "${hostname}" >"${mountRoot}/etc/hostname"
 
-arch-chroot "$mountRoot" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
-arch-chroot "$mountRoot" hwclock --systohc
-arch-chroot "$mountRoot" sed -i -r 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
-arch-chroot "$mountRoot" locale-gen
+arch-chroot "${mountRoot}" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
+arch-chroot "${mountRoot}" hwclock --systohc
+arch-chroot "${mountRoot}" sed -i -r 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
+arch-chroot "${mountRoot}" locale-gen
 
-echo "LANG=en_US.UTF-8" >"$mountRoot"/etc/locale.conf
+echo "LANG=en_US.UTF-8" >"${mountRoot}/etc/locale.conf"
 # }}}
 
 # Add admin user and set password {{{
 info_log "Configuring users and groups"
-info_log "Adding user $user"
-arch-chroot "$mountRoot" useradd -mU -G wheel,uucp,video,audio,storage,games,input "$user"
+info_log "Adding user ${user}"
+arch-chroot "${mountRoot}" useradd -mU -G wheel,uucp,video,audio,storage,games,input "${user}"
 
-info_log "Changing pasword for $user"
-arch-chroot "$mountRoot" chpasswd <<<"${user}:${password}"
-arch-chroot "$mountRoot" chpasswd <<<"root:${password}"
+info_log "Changing pasword for ${user}"
+arch-chroot "${mountRoot}" chpasswd <<<"${user}:${password}"
+arch-chroot "${mountRoot}" chpasswd <<<"root:${password}"
 # }}}
 
 # Configure the sudoers file {{{
 info_log "Configuring sudoers file"
-arch-chroot "$mountRoot" sed -i \
+arch-chroot "${mountRoot}" sed -i \
   's/^#\s*%wheel\s*ALL=(ALL)\s*NOPASSWD:\s*ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' \
   /etc/sudoers
 
 # Make sure the user's sudo password propogates to all open terminals
-arch-chroot "$mountRoot" echo "Defaults !tty_tickets" >>/etc/sudoers
+arch-chroot "${mountRoot}" echo "Defaults !tty_tickets" >>/etc/sudoers
 # }}}
 
 # Install additional packages {{{
 info_log "Installing additional packages"
 # Grab packages file from github repo
-arch-chroot "$mountRoot" pacman -S --needed --noconfirm - <<<"$(curl -sL "$packageUrl")"
+arch-chroot "${mountRoot}" pacman -S --needed \
+  --noconfirm - <<<"$(curl -sL "${packageUrl}")"
 # }}}
 
 # Sound configuration {{{
@@ -372,13 +374,13 @@ arch-chroot "$mountRoot" systemctl enable NetworkManager
 # Configure bootloader {{{
 # Install GRUB
 info_log "Installing GRUB"
-if $uefiEnabled; then
-  arch-chroot "$mountRoot" grub-install \
+if ${uefiEnabled}; then
+  arch-chroot "${mountRoot}" grub-install \
     --target=x86_64-efi \
-    --efi-directory="/$(basename "$mountBoot")" \
+    --efi-directory="/$(basename "${mountBoot}")" \
     --bootloader-id=GRUB
 else
-  arch-chroot "$mountRoot" grub-install --target=i386-pc "${device}"
+  arch-chroot "${mountRoot}" grub-install --target=i386-pc "${device}"
 fi
 
 # Generate GRUB config file
@@ -388,7 +390,7 @@ arch-chroot "$mountRoot" grub-mkconfig -o /boot/grub/grub.cfg
 
 # Enable other services {{{
 # CUPS for printer integration
-arch-chroot "$mountRoot" systemctl enable cups
+arch-chroot "${mountRoot}" systemctl enable cups
 # }}}
 
 # Enable magic SysRq shorcuts {{{
@@ -403,65 +405,65 @@ info_log "Configuring xinit"
 cat <<EOF >"${mountRoot}${xinitFile}"
 exec awesome
 EOF
-arch-chroot "$mountRoot" chown "${user}:${user}" "$xinitFile"
-arch-chroot "$mountRoot" chmod 644 "$xinitFile"
+arch-chroot "${mountRoot}" chown "${user}:${user}" "${xinitFile}"
+arch-chroot "${mountRoot}" chmod 644 "${xinitFile}"
 # }}}
 
 # Clone dotfiles {{{
 info_log "Cloning dotfiles"
-arch-chroot "$mountRoot" mkdir -p "$workspace"
-arch-chroot "$mountRoot" git clone "$dotfilesRepoUrl" "$dotfilesHome"
-arch-chroot "$mountRoot" chown -R "${user}:${user}" "$workspace"
-arch-chroot "$mountRoot" chmod -R a+rX "$workspace"
+arch-chroot "${mountRoot}" mkdir -p "${workspace}"
+arch-chroot "${mountRoot}" git clone "${dotfilesRepoUrl}" "${dotfilesHome}"
+arch-chroot "${mountRoot}" chown -R "${user}:${user}" "${workspace}"
+arch-chroot "${mountRoot}" chmod -R a+rX "${workspace}"
 
 # Change the dotfiles URL to the SSH version so that we may push commits to the
 # repository later on.
 # NOTE: 'git -C /path/to/repo' is how you run a git command for a repo without
 #       actually being in the repo.
-arch-chroot "$mountRoot" runuser "$user" -c \
-  "git -C $dotfilesHome remote set-url origin $dotfilesGitUrl"
+arch-chroot "${mountRoot}" runuser "${user}" -c \
+  "git -C ${dotfilesHome} remote set-url origin ${dotfilesGitUrl}"
 # }}}
 
 # Run installers {{{
 info_log "Running install scripts"
-arch-chroot "$mountRoot" runuser "$user" -c \
+arch-chroot "${mountRoot}" runuser "${user}" -c \
   "bash ${dotfilesHome}/install.sh --force"
 # }}}
 
 # Run init scripts {{{
 # Standard Arch configuration
-arch-chroot "$mountRoot" runuser -l "$user" -c \
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   "bash ${dotfilesInit}/init_arch"
 # LightDM
-arch-chroot "$mountRoot" runuser -l "$user" -c \
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   "bash ${dotfilesInit}/init_lightdm"
 # Emacs
-arch-chroot "$mountRoot" runuser -l "$user" -c \
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   "bash ${dotfilesInit}/init_emacs"
 # Vim/Neovim
-arch-chroot "$mountRoot" runuser -l "$user" -c \
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   "bash ${dotfilesInit}/init_neovim"
 # Nerd Fonts
-arch-chroot "$mountRoot" runuser -l "$user" -c \
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   "bash ${dotfilesInit}/init_nerd_fonts"
 # Awesome WM
-arch-chroot "$mountRoot" runuser -l "$user" -c \
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   "bash ${dotfilesInit}/init_awesome"
 # }}}
 
 # Run language-specific package install scripts {{{
 info_log "Running language-specific package installations"
-arch-chroot "$mountRoot" runuser -l "$user" -c "install_python_packages"
-arch-chroot "$mountRoot" runuser -l "$user" -c "install_node_packages"
-arch-chroot "$mountRoot" runuser -l "$user" -c "install_ruby_packages"
-arch-chroot "$mountRoot" runuser -l "$user" -c "install_lua_packages"
-arch-chroot "$mountRoot" runuser -l "$user" -c "install_go_packages"
+arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_python_packages"
+arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_node_packages"
+arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_ruby_packages"
+arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_lua_packages"
+arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_go_packages"
 # }}}
 
 # Laptop configuration (if computer is a laptop) {{{
 if [ "$isLaptop" -eq 0 ]; then
   info_log "Performing laptop configuration"
-  arch-chroot "$mountRoot" runuser -l "$user" -c \
+  arch-chroot "${mountRoot}" runuser -l "${user}" -c \
     "bash ${dotfilesInit}/bootstrap/configure_arch_laptop.sh"
 fi
 # }}}
@@ -475,10 +477,10 @@ configurations are correct. Don't forget to reboot the system after you're
 satisfied with your new Arch Linux installation.
 
 To test your installation as your newly configured user, run the following:
-  mount $partRoot $mountRoot
-  mount $partHome $mountHome
-  arch-chroot $mountRoot
-  su --login - $user
+  mount ${partRoot} ${mountRoot}
+  mount ${partHome} ${mountHome}
+  arch-chroot ${mountRoot}
+  su --login - ${user}
 EOF
 # }}}
 
