@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# This script install packages and adds configuration necessary to use Arch
+# Linux with the proprietary NVIDIA driver, which is a good deal more performant
+# than the open-source nouveau driver that ships with Arch.
+
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
@@ -57,12 +61,13 @@ configure_optimus_manager() {
 
 install_optimus_manager() {
   log_info "Installing optimus-manager"
+  local optimusManagerPackage="optimus-manager"
 
   if [ -x "$(command -v aura)" ]; then
-    aura -Aax --noconfirm "optimus-manager"
+    aura -Aax --noconfirm "${optimusManagerPackage}"
   else
     warn "aura not installed. Falling back on 'aur' function"
-    aur install "optimus-manager"
+    aur install "${optimusManagerPackage}"
   fi
   configure_optimus_manager
 }
