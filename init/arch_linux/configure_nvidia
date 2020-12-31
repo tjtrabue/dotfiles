@@ -1,23 +1,87 @@
 #!/usr/bin/env bash
 
-echoe() {
-  printf "%s\n" "$*" 1>&2
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+# }}}
+
+# Imports {{{
+source "${IMPORT}/functions_log.bash"
+source "${IMPORT}/linux/arch/functions_arch.bash"
+# }}}
+
+add_mkinitcpio_hook_for_nvidia() {
+  local pacmanHooksDir="/etc/pacman.d/hooks"
+  local nvidiaPacmanHook="${pacmanHooksDir}/nvidia.hook"
+
+  log_info "Adding mkinitcpio hook for NVIDIA"
+  sudo mkdir -p "${pacmanHooksDir}"
+
+  sudo tee "${nvidiaPacmanHook}" <<EOF &>/dev/null
+# This hook avoids the possibility of forgetting to update initramfs when
+# the nvidia package updates
+
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+# Change the linux part above and in the Exec line if a different kernel is used
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+EOF
 }
 
-install_packages() {
-  echoe "Installing packages"
-  pacman -S --noconfirm "nvidia" "nvidia-settings"
+configure_optimus_manager() {
+  local baseOptimusConfigFile="/usr/share/optimus-manager.conf"
+  local mainOptimusConfigFile="/etc/optimus-manager/optimus-manager.conf"
+
+  log_info "Configuring optimus-manager"
+
+  # Copy the optimus-manager config file to the proper place and edit it.
+  sudo cp -f "${baseOptimusConfigFile}" "${mainOptimusConfigFile}"
+  sudo sed -i -r 's/^(startup_mode)=.*$/\1=auto/' "${mainOptimusConfigFile}"
+
+  # Start up the optimus-manager systemd unit
+  sudo systemctl enable --now optimus-manager
+}
+
+install_optimus_manager() {
+  log_info "Installing optimus-manager"
 
   if [ -x "$(command -v aura)" ]; then
     aura -Aax --noconfirm "optimus-manager"
   else
-    echoe "WARNING: aura not installed. Falling back on 'aur' function"
-    aur install "optimus-manager" || echoe "ERROR: cannot install AUR packages"
+    warn "aura not installed. Falling back on 'aur' function"
+    aur install "optimus-manager"
   fi
+  configure_optimus_manager
+}
+
+install_arch_nvidia_packages() {
+  log_info "Installing NVIDIA packages"
+  pacman -S --noconfirm "nvidia" "nvidia-settings"
+}
+
+install_and_configure_packages() {
+  install_arch_nvidia_packages
+  install_optimus_manager
 }
 
 main() {
-  install_packages
+  print_header "Configuring Arch Linux for Nvidia"
+  no_log_to_file
+  install_and_configure_packages
+  add_mkinitcpio_hook_for_nvidia
 }
 
 main "$@"
