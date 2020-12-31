@@ -74,7 +74,7 @@ start_program_if_available "pulseaudio" "--start &"
 start_program_if_available "xscreensaver" "-no-splash &"
 
 # Start the compositing manager in the background
-start_program_if_available "picom" "-b"
+start_program_if_available "picom" "-b -c -C -G"
 
 # (Re-)start the PulseAudio daemon
 start_program_if_available "pulseaudio" "--kill"

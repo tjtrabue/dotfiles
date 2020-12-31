@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+echoe() {
+  printf "%s\n" "$*" 1>&2
+}
+
+install_packages() {
+  echoe "Installing packages"
+  pacman -S --noconfirm "nvidia" "nvidia-settings"
+
+  if [ -x "$(command -v aura)" ]; then
+    aura -Aax --noconfirm "optimus-manager"
+  else
+    echoe "WARNING: aura not installed. Falling back on 'aur' function"
+    aur install "optimus-manager" || echoe "ERROR: cannot install AUR packages"
+  fi
+}
+
+main() {
+  install_packages
+}
+
+main "$@"
+
+# vim:foldenable:foldmethod=marker:foldlevel=0
