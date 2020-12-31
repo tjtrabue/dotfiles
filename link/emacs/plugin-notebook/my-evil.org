@@ -155,11 +155,6 @@ Needed for performance:
     :config (global-evil-matchit-mode t))
 #+end_src
 
-** evil-magit
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-magit)
-#+end_src
-
 ** evil-exchange
 #+begin_src emacs-lisp :tangle yes
   ;; Port of vim-exchange used to exchange two text selections based on two

@@ -17,15 +17,16 @@ highlighting.
 * tree-sitter
 #+begin_src emacs-lisp :tangle yes
   (use-package tree-sitter
-    :after tree-sitter-langs
     :hook
     ((prog-mode text-mode) . (lambda ()
       ;; Activate tree-sitter's improved syntax highlighting only if we are
       ;; using a major-mode that has a compatible tree-sitter syntax parser
-      (if (assq major-mode tree-sitter-major-mode-language-alist)
+      (if (and (boundp 'tree-sitter-major-mode-language-alist)
+               (assq major-mode tree-sitter-major-mode-language-alist))
         (tree-sitter-hl-mode))))
     :config
-    (global-tree-sitter-mode 1))
+    (global-tree-sitter-mode 1)
+    )
 #+end_src
 
 * tree-sitter-langs
