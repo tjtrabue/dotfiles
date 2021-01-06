@@ -89,6 +89,7 @@ networkmanager
 ninja
 nodejs
 noto-fonts
+noto-fonts-extra
 npm
 ntfs-3g
 numlockx
