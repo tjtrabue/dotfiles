@@ -316,6 +316,15 @@ arch-chroot "${mountRoot}" sed -i \
 arch-chroot "${mountRoot}" echo "Defaults !tty_tickets" >>/etc/sudoers
 # }}}
 
+# Configure pacman.conf file {{{
+cat <<EOF >>"${mountRoot}/etc/pacman.conf"
+
+# Enable 32-bit applications on your x86_64 system:
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+EOF
+# }}}
+
 # Install additional packages {{{
 info_log "Installing additional packages"
 # Grab packages file from github repo
