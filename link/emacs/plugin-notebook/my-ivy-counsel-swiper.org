@@ -19,6 +19,10 @@ Needed for performance:
   =icomplete-mode=, =ivy= aims to be more efficient, smaller, simpler, and
   smoother to use, yet highly customizable.
 
+  *NOTE:* Currently deprecated in favor of =selectrum=, which is a newer,
+  fancier narrowing selection framework for Emacs. See =my-selectrum= for more
+  details.
+
 ** Functions
 
 #+begin_src emacs-lisp :tangle yes
@@ -33,30 +37,30 @@ Needed for performance:
 
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
-  (use-package ivy
-    :defer 0.1
-    :bind
-    (:map ivy-switch-buffer-map
-     ;; Make sure that navigation shortcuts work
-     ("C-k" . ivy-previous-line)
-     ;; Rebind the switch-buffer-kill function to something sane
-     ("C-d" . ivy-switch-buffer-kill)
-     :map ivy-minibuffer-map
-     ("C-j" . ivy-next-line)
-     ("C-k" . ivy-previous-line)
-     ;; Use TAB to mark/unmark candidates
-     ("TAB" . my/ivy-toggle-mark))
-    :custom
-    (ivy-use-virtual-buffers t)
-    (enable-recursive-minibuffers t)
-    :init
-    ;; Make the ivy window's height a function of its parent frame's height
-    (setq ivy-height-alist
-      '((t
-         lambda (_caller)
-         (/ (frame-height) 3))))
-    :config
-    (ivy-mode))
+  ;; (use-package ivy
+  ;;   :defer 0.1
+  ;;   :bind
+  ;;   (:map ivy-switch-buffer-map
+  ;;    ;; Make sure that navigation shortcuts work
+  ;;    ("C-k" . ivy-previous-line)
+  ;;    ;; Rebind the switch-buffer-kill function to something sane
+  ;;    ("C-d" . ivy-switch-buffer-kill)
+  ;;    :map ivy-minibuffer-map
+  ;;    ("C-j" . ivy-next-line)
+  ;;    ("C-k" . ivy-previous-line)
+  ;;    ;; Use TAB to mark/unmark candidates
+  ;;    ("TAB" . my/ivy-toggle-mark))
+  ;;   :custom
+  ;;   (ivy-use-virtual-buffers t)
+  ;;   (enable-recursive-minibuffers t)
+  ;;   :init
+  ;;   ;; Make the ivy window's height a function of its parent frame's height
+  ;;   (setq ivy-height-alist
+  ;;     '((t
+  ;;        lambda (_caller)
+  ;;        (/ (frame-height) 3))))
+  ;;   :config
+  ;;   (ivy-mode))
 #+end_src
 
 ** Plugins
@@ -64,30 +68,42 @@ Needed for performance:
     Ivy integration plugin for the incredible =all-the-icons= plugin.
 
 #+begin_src emacs-lisp :tangle yes
-(use-package all-the-icons-ivy
-  :hook
-  (after-init . all-the-icons-ivy-setup))
+  ;; (use-package all-the-icons-ivy
+  ;;   :hook
+  ;;   (after-init . all-the-icons-ivy-setup))
+#+end_src
+
+*** ivy-prescient
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package ivy-prescient
+  ;;   :config
+  ;;   (ivy-prescient-mode 1))
 #+end_src
 
 * Counsel
   =counsel= is a collection of =ivy= enhancements for standard Emacs functions,
   such as =find-file= and =switch-to-buffer=.
 
+  *NOTE:* Currently deprecated in favor of =selectrum=, which is a newer,
+  fancier narrowing selection framework for Emacs. See =my-selectrum= for more
+  details.
+
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
-  (use-package counsel
-    :after ivy
-    :config
-    (counsel-mode))
+  ;; (use-package counsel
+  ;;   :after ivy
+  ;;   :config
+  ;;   (counsel-mode))
 #+end_src
 
 ** Plugins
 *** counsel-projectile
 #+begin_src emacs-lisp :tangle yes
-  (use-package counsel-projectile
-    :after (counsel projectile)
-    :config
-    (counsel-projectile-mode))
+  ;; (use-package counsel-projectile
+  ;;   :after (counsel projectile)
+  ;;   :config
+  ;;   (counsel-projectile-mode))
 #+end_src
 
 * Swiper
@@ -96,7 +112,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package swiper
-    :after (ivy evil-collection)
+    :after (evil-collection)
     :bind
     (("C-s" . swiper)
      ("C-r" . swiper)

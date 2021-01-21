@@ -1,0 +1,19 @@
+#+title:    Prescient: Sort and Filter Intelligently
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:01:21
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+=prescient= provides more intelligent sorting and filtering functions for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package prescient
+    :config
+    (prescient-persist-mode 1))
+#+end_src

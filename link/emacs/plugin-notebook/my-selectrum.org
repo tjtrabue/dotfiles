@@ -1,0 +1,40 @@
+#+title:    Selectrum: Modern Alternative to Helm, Ivy, Ido
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:01:21
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+Selectrum is a great replacement for Helm, Ivy, and Ido.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* use-package specification
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package selectrum
+    :custom
+    (selectrum-num-candidates-displayed 20)
+    (selectrum-fix-minibuffer-height t)
+    :bind
+    (:map selectrum-minibuffer-map
+     ("C-j" . selectrum-next-candidate)
+     ("C-k" . selectrum-previous-candidate))
+    :config
+    (selectrum-mode 1)
+    (selectrum-helm-mode 1))
+#+end_src
+
+* Plugins
+** selectrum-prescient
+   Integrates =selectrum= with =prescient= for intelligent sorting and
+   filtering.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package selectrum-prescient
+    :config
+    (selectrum-prescient-mode 1))
+#+end_src

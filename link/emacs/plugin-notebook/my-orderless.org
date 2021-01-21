@@ -1,0 +1,24 @@
+#+title:    Orderless: Smart Completion Backend
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:01:21
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+=orderless= is a smart completion backend for Emacs.
+
+*NOTE:* Currently unused in favor of =prescient= because orderless is quite slow
+by comparison.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  ;; (use-package orderless
+  ;;   :init
+  ;;   (icomplete-mode)
+  ;;   :custom
+  ;;   (completion-styles '(orderless)))
+#+end_src

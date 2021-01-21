@@ -241,15 +241,18 @@ expression."
 
 ** CEDET Development Repository
 #+begin_src emacs-lisp :tangle yes
-  (use-package cedet
-    :straight (cedet :type git :host github :repo "alexott/cedet" :branch "devel")
-    :hook
-    ;; Need to activate semantic-mode later on to make sure our third-party
-    ;; plugins are available.
-    (c-mode-common . my/cedet-hook-fn)
-    :config
-    (add-hook 'semantic-mode-hook #'my/semantic-hook-fn)
-    (add-hook 'ede-minor-mode-hook #'my/semantic-hook-fn))
+  ;; Currently unused because straight.el is being stupid.
+  ;; Uncomment once straight.el gets its act together.
+  ;; (use-package cedet
+  ;;   :straight
+  ;;   (cedet :type git :host github :repo "alexott/cedet" :branch "devel")
+  ;;   :hook
+  ;;   ;; Need to activate semantic-mode later on to make sure our third-party
+  ;;   ;; plugins are available.
+  ;;   (c-mode-common . my/cedet-hook-fn)
+  ;;   :config
+  ;;   (add-hook 'semantic-mode-hook #'my/semantic-hook-fn)
+  ;;   (add-hook 'ede-minor-mode-hook #'my/semantic-hook-fn))
 #+end_src
 
 * Plugins
