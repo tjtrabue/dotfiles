@@ -2,7 +2,7 @@
 
 local default_progs = {}
 
-default_progs.terminal = "alacritty"
+default_progs.terminal = "kitty"
 default_progs.browser = "firefox"
 default_progs.music = "cmus"
 default_progs.editor = os.getenv("EDITOR") or "vim"
