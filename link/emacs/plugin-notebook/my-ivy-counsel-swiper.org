@@ -38,7 +38,7 @@ Needed for performance:
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
-    :defer 0.1
+    :after (helm)
     :bind
     (:map ivy-switch-buffer-map
      ;; Make sure that navigation shortcuts work

@@ -1,0 +1,47 @@
+#+title:  Code Folding Configuration/Plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+
+=origami= is a smart code-folding plugin for Emacs.
+
+As a rule, Emacs supports lots of different code-folding minor modes, some
+of which are built-in, some are external plugins. =origami= is of the latter
+category, and it is one of the best representatives.
+
+Needed for performance:
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* origami
+  Code folding backend for Emacs. Works best with ALGOL-derived programming
+  languages (C, C++, Java, etc.).
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package origami
+    :hook
+    ((prog-mode conf-mode conf-space-mode) . origami-mode))
+#+end_src
+
+* vimish-fold
+  =vimish-fold= adds Vim's native code-folding style to Emacs. My personal
+  favorite code-folding system.
+
+  The default keybinding for toggling a vimish fold is =C-`=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package vimish-fold
+    :after (evil-collection)
+    :hook
+    ((prog-mode conf-mode conf-space-mode) . vimish-fold-mode)
+    ;; These bindings get in the way of standard folding via origami.
+    ;; :bind (:map evil-normal-state-map
+    ;;  ([remap evil-open-fold] . vimish-fold-unfold)
+    ;;  ([remap evil-close-fold] . vimish-fold-refold)
+    ;;  ([remap evil-toggle-fold] . vimish-fold-toggle)
+    ;;  ([remap evil-open-folds] . vimish-fold-unfold-all)
+    ;;  ([remap evil-close-folds] . vimish-fold-refold-all))
+  )
+#+end_src

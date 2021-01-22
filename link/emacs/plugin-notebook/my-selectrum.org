@@ -9,8 +9,9 @@
 fancier, more configurable plugin that builds on the lessons learned from the
 aforementioned three tools.
 
-I'm currently using =selectrum= in concert with =ivy=, since they both have nice
-features, and it helps me avoid =helm= altogether. =helm= is just too slow.
+Currently, =selectrum= and =projectile= just don't play well together. Until the
+=selectrum= boys get some interoperability, I'm sticking with =ivy= as my
+completion framework.
 
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
@@ -20,27 +21,25 @@ features, and it helps me avoid =helm= altogether. =helm= is just too slow.
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package selectrum
-    :after (helm ivy)
-    :custom
-    (selectrum-num-candidates-displayed 20)
-    (selectrum-fix-minibuffer-height t)
-    :bind
-    (:map selectrum-minibuffer-map
-     ("C-j" . selectrum-next-candidate)
-     ("C-k" . selectrum-previous-candidate))
-    :config
-    (selectrum-mode 1)
-    (selectrum-helm-mode 1))
+  ;; (use-package selectrum
+  ;;   :custom
+  ;;   (selectrum-num-candidates-displayed 20)
+  ;;   (selectrum-fix-minibuffer-height t)
+  ;;   :bind
+  ;;   (:map selectrum-minibuffer-map
+  ;;    ("C-j" . selectrum-next-candidate)
+  ;;    ("C-k" . selectrum-previous-candidate))
+  ;;   :config
+  ;;   (selectrum-mode 1)
+  ;;   (selectrum-helm-mode 1))
 #+end_src
-
 * Plugins
 ** selectrum-prescient
    Integrates =selectrum= with =prescient= for intelligent sorting and
    filtering.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package selectrum-prescient
-    :config
-    (selectrum-prescient-mode 1))
+  ;; (use-package selectrum-prescient
+  ;;   :config
+  ;;   (selectrum-prescient-mode 1))
 #+end_src
