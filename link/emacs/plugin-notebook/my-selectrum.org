@@ -5,7 +5,12 @@
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
 
-Selectrum is a great replacement for Helm, Ivy, and Ido.
+=selectrum= is a great replacement for =helm=, =ivy=, and =ido=. It's a newer,
+fancier, more configurable plugin that builds on the lessons learned from the
+aforementioned three tools.
+
+*NOTE:* Currently unused in favor of =ivy= because =selectrum= does not yet have
+=projectile= support.
 
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
@@ -15,17 +20,17 @@ Selectrum is a great replacement for Helm, Ivy, and Ido.
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package selectrum
-    :custom
-    (selectrum-num-candidates-displayed 20)
-    (selectrum-fix-minibuffer-height t)
-    :bind
-    (:map selectrum-minibuffer-map
-     ("C-j" . selectrum-next-candidate)
-     ("C-k" . selectrum-previous-candidate))
-    :config
-    (selectrum-mode 1)
-    (selectrum-helm-mode 1))
+  ;; (use-package selectrum
+  ;;   :custom
+  ;;   (selectrum-num-candidates-displayed 20)
+  ;;   (selectrum-fix-minibuffer-height t)
+  ;;   :bind
+  ;;   (:map selectrum-minibuffer-map
+  ;;    ("C-j" . selectrum-next-candidate)
+  ;;    ("C-k" . selectrum-previous-candidate))
+  ;;   :config
+  ;;   (selectrum-mode 1)
+  ;;   (selectrum-helm-mode 1))
 #+end_src
 
 * Plugins
@@ -34,7 +39,7 @@ Selectrum is a great replacement for Helm, Ivy, and Ido.
    filtering.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package selectrum-prescient
-    :config
-    (selectrum-prescient-mode 1))
+  ;; (use-package selectrum-prescient
+  ;;   :config
+  ;;   (selectrum-prescient-mode 1))
 #+end_src
