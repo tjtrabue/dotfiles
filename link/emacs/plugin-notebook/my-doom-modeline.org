@@ -20,5 +20,8 @@ modeline from Doom Emacs.
     :after (all-the-icons doom-themes)
     :hook (after-init . doom-modeline-mode)
     :custom
+    ;; How tall the modeline should be.
+    (doom-modeline-height 35)
+    ;; Use Unicode instead of ASCII as fallback if icons are not found.
     (doom-modeline-unicode-fallback t))
 #+end_src

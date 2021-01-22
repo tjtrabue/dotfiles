@@ -125,14 +125,17 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
   (use-package doom-themes
     :after (all-the-icons)
     :custom
+    ;; Enable bold fonts
     (doom-themes-enable-bold t)
+    ;; Enable italic fonts
     (doom-themes-enable-italic t)
+    ;; A more colorful theme for Treemacs that leverages all-the-icons.
     (doom-themes-treemacs-theme "doom-colors")
     :config
     (load-theme 'doom-vibrant t)
     ;; Flash the modeline when the Emacs bell rings.
     ;; (doom-themes-visual-bell-config)
-    ;; Two treemacs icons themes: one that takes after Atom's themes, and
+    ;; Two treemacs icon themes: one that takes after Atom's themes, and
     ;; another more colorful theme.
     (doom-themes-treemacs-config)
     ;; Correct and improve some of org-mode's native fontification.
