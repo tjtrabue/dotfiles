@@ -266,3 +266,11 @@ optionally for extra modes"
   (use-package company-box
     :hook (company-mode . company-box-mode))
 #+end_src
+** company-prescient
+   =prescient= intelligent completion support for =company-mode=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package company-prescient
+    :config
+    (company-prescient-mode 1))
+#+end_src

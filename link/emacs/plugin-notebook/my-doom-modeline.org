@@ -1,0 +1,24 @@
+#+title:    Modeline from Doom Emacs
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:01:22
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+=doom-modeline= allows any Emacs configuration to use the fancy, modular
+modeline from Doom Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* doom-modeline
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-modeline
+    :after (all-the-icons doom-themes)
+    :hook (after-init . doom-modeline-mode)
+    :custom
+    (doom-modeline-unicode-fallback t))
+#+end_src

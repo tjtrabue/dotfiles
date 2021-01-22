@@ -22,6 +22,12 @@ theme code added by customize.
   (provide 'my-theme)
 #+end_src
 
+* Variables
+#+begin_src emacs-lisp :tangle yes
+  (defvar my-theme-after-load-hook nil
+    "Functions to run after the primary theme loads.")
+#+end_src
+
 * Functions
 
 #+begin_src emacs-lisp :tangle yes
@@ -49,22 +55,39 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
       :weight 'extra-bold))
 #+end_src
 
+* Add theme hooks
+  There are some appearance-based functions that can only run after the primary
+  theme has loaded, so we should put all such logic inside of an "after load"
+  hook.
+
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'my-theme-after-load-hook #'(lambda ()
+    ;; It's important to load org-beautify-theme after the main theme has
+    ;; loaded.
+    (with-eval-after-load "org-beautify-theme"
+      (if (not (custom-theme-enabled-p 'org-beautify-theme))
+        (load-theme 'org-beautify t)))
+    ;; Fix org-mode line number height.
+    (let ((height (face-attribute 'default :height)))
+      ;; for all linum/nlinum users
+      (set-face-attribute 'linum nil :height height)
+      ;; only for `linum-relative' users:
+      (set-face-attribute 'linum-relative-current-face nil :height height))))
+#+end_src
+
 * Theme Packages
   These are some great themes from Emacs contributors. I marked the theme I
   currently use by appending "(active)" to the end of its =org-mode= heading.
 
-** color-theme-sanityinc-tomorrow (active)
+** color-theme-sanityinc-tomorrow
    The predecessor to the =base-16= color theme system.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package color-theme-sanityinc-tomorrow
-    :init
-    (load-theme 'sanityinc-tomorrow-eighties t)
+    ;; :init
+    ;; (load-theme 'sanityinc-tomorrow-eighties t)
     :config
-    (my/set-color-theme-alist color-theme-sanityinc-tomorrow-colors 'eighties)
-    (with-eval-after-load "org-beautify-theme"
-      (if (not (custom-theme-enabled-p 'org-beautify-theme))
-        (load-theme 'org-beautify t))))
+    (my/set-color-theme-alist color-theme-sanityinc-tomorrow-colors 'eighties))
 #+end_src
 
 ** moe-theme
@@ -94,6 +117,28 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
   ;;   )
 #+end_src
 
+** doom-themes
+   This is a /huge/ collection of Emacs themes contributed by the very gracious
+   creator of Doom Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-themes
+    :after (all-the-icons)
+    :custom
+    (doom-themes-enable-bold t)
+    (doom-themes-enable-italic t)
+    (doom-themes-treemacs-theme "doom-colors")
+    :config
+    (load-theme 'doom-vibrant t)
+    ;; Flash the modeline when the Emacs bell rings.
+    ;; (doom-themes-visual-bell-config)
+    ;; Two treemacs icons themes: one that takes after Atom's themes, and
+    ;; another more colorful theme.
+    (doom-themes-treemacs-config)
+    ;; Correct and improve some of org-mode's native fontification.
+    (doom-themes-org-config)
+    (run-hooks 'my-theme-after-load-hook))
+#+end_src
 * theme-magic
   This package applies your Emacs theme to the rest of Linux. It. Is. Awesome.
 
@@ -115,6 +160,6 @@ python3 -m pip install --user --upgrade pywal
 
 * Apply theme to other faces
 #+begin_src emacs-lisp :tangle yes
-  (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
-  (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
+  ;; (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
+  ;; (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
 #+end_src

@@ -3,7 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
 
-This file configures various dev-ops packages for Emacs.
+Various dev-ops packages and configuration for Emacs.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
@@ -18,5 +18,18 @@ Needed for performance:
 
 * docker
 #+begin_src emacs-lisp :tangle yes
-(use-package docker)
+(use-package docker
+  :bind
+  (("C-c d" . docker)))
+#+end_src
+
+* kubernetes
+  A magit-style interface to the Kubernetes command-line client.
+  There is also a =kubernetes-evil= plugin for evil-mode support.
+  See =my-evil= for its configuration.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package kubernetes
+    :commands
+    (kubernetes-overview))
 #+end_src

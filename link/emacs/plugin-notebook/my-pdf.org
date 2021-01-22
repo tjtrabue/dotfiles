@@ -13,6 +13,19 @@ Needed for performance:
 
 #+end_src
 
+* pdf-tools
+
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools)
+#+end_src
+
+* pdf-view-restore
+  An add-on to =pdf-tools= that allows users to open PDFs at their last known
+  position.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package pdf-view-restore
+    :after (pdf-tools)
+    :hook
+    (pdf-view-mode . pdf-view-restore-mode))
 #+end_src

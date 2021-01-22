@@ -14,6 +14,9 @@ right now I'm tempted to say that =spaceline= is not as easy to configure,
 especially since I had to dig through its source code to figure out how to
 change its colors.
 
+*NOTE:* Currently unused in favor of =doom-modeline=, a newer, more easily
+configurable modeline taken from Doom Emacs.
+
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
@@ -46,15 +49,15 @@ change its colors.
    when changing color based on evil's state.
 
 #+begin_src emacs-lisp :tangle yes
-  (defvar my/spaceline-evil-state-faces
-      '((normal . spaceline-custom-evil-normal)
-          (insert . spaceline-custom-evil-insert)
-          (emacs . spaceline-custom-evil-emacs)
-          (replace . spaceline-custom-evil-replace)
-          (visual . spaceline-custom-evil-visual)
-          (motion . spaceline-custom-evil-motion))
-      "Association list mapping evil states to their corresponding highlight
-faces. Is used by `my/spaceline-highlight-face-evil-state'.")
+    (defvar my/spaceline-evil-state-faces
+        '((normal . spaceline-custom-evil-normal)
+            (insert . spaceline-custom-evil-insert)
+            (emacs . spaceline-custom-evil-emacs)
+            (replace . spaceline-custom-evil-replace)
+            (visual . spaceline-custom-evil-visual)
+            (motion . spaceline-custom-evil-motion))
+        "Association list mapping evil states to their corresponding highlight
+  faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 #+end_src
 
 ** Functions
@@ -103,32 +106,32 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
 
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
-  (use-package spaceline
-    :after (my-colors color-theme-sanityinc-tomorrow)
-    :init
-    ;; Make sure to use Unicode by default
-    (setq spaceline-window-numbers-unicode t
-          spaceline-workspace-numbers-unicode t
-          ;; The character separating minor modes in spaceline
-          spaceline-minor-modes-separator "|"
-          ;; Tell spaceline to reflect evil-mode's current state (i.e., Vim mode)
-          ;; by changing color.
-          spaceline-highlight-face-func
-            'my/spaceline-highlight-face-evil-state)
-    :config
-    (spaceline-emacs-theme)
-    ;; Turn on special modes
-    (spaceline-helm-mode 1)
-    (spaceline-info-mode 1)
-    ;; Set spaceline evil colors to match main color theme.
-    (my/set-spaceline-evil-faces)
-    ;; Turn on certain spaceline segments.
-    (spaceline-toggle-version-control-on)
-    (spaceline-toggle-flycheck-error-on)
-    (spaceline-toggle-flycheck-warning-on)
-    (spaceline-toggle-flycheck-info-on)
-    (spaceline-toggle-line-column-on)
-    (spaceline-toggle-projectile-root-on))
+  ;; (use-package spaceline
+  ;;   :after (my-colors color-theme-sanityinc-tomorrow)
+  ;;   :init
+  ;;   ;; Make sure to use Unicode by default
+  ;;   (setq spaceline-window-numbers-unicode t
+  ;;         spaceline-workspace-numbers-unicode t
+  ;;         ;; The character separating minor modes in spaceline
+  ;;         spaceline-minor-modes-separator "|"
+  ;;         ;; Tell spaceline to reflect evil-mode's current state (i.e., Vim mode)
+  ;;         ;; by changing color.
+  ;;         spaceline-highlight-face-func
+  ;;           'my/spaceline-highlight-face-evil-state)
+  ;;   :config
+  ;;   (spaceline-emacs-theme)
+  ;;   ;; Turn on special modes
+  ;;   (spaceline-helm-mode 1)
+  ;;   (spaceline-info-mode 1)
+  ;;   ;; Set spaceline evil colors to match main color theme.
+  ;;   (my/set-spaceline-evil-faces)
+  ;;   ;; Turn on certain spaceline segments.
+  ;;   (spaceline-toggle-version-control-on)
+  ;;   (spaceline-toggle-flycheck-error-on)
+  ;;   (spaceline-toggle-flycheck-warning-on)
+  ;;   (spaceline-toggle-flycheck-info-on)
+  ;;   (spaceline-toggle-line-column-on)
+  ;;   (spaceline-toggle-projectile-root-on))
 #+end_src
 
 * spaceline-all-the-icons
@@ -136,30 +139,30 @@ faces. Is used by `my/spaceline-highlight-face-evil-state'.")
   This is a lot like =vim-devicons= integration with =airline=.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package spaceline-all-the-icons
-    :after (spaceline color-theme-sanityinc-tomorrow)
-    :init
-    ;; Change the separator for the main spaaceline bar
-    (setq spaceline-all-the-icons-separator-type 'wave
-          ;; Change intra-segment separators
-          spaceline-all-the-icons-primary-separator ""
-          spaceline-all-the-icons-secondary-separator ""
-          ;; Whether or not to invert the direction of segment separators
-          spaceline-all-the-icons-separators-invert-direction nil)
-    :config
-    (spaceline-all-the-icons-theme)
-    ;; Activate extensions
-    (spaceline-all-the-icons--setup-anzu)
-    (spaceline-all-the-icons--setup-package-updates)
-    (spaceline-all-the-icons--setup-git-ahead)
-    (spaceline-all-the-icons--setup-paradox)
-    (spaceline-all-the-icons--setup-neotree)
-    ;; Show if file is bookmarked
-    (spaceline-toggle-all-the-icons-bookmark-on)
-    ;; Show current buffer position as percentage
-    (spaceline-toggle-all-the-icons-buffer-position-on)
-    ;; Whether or not the buffer has been narrowed
-    (spaceline-toggle-all-the-icons-narrowed-on)
-    ;; Show text scaling in spaceline
-    (spaceline-toggle-all-the-icons-text-scale-on))
+  ;; (use-package spaceline-all-the-icons
+  ;;   :after (spaceline color-theme-sanityinc-tomorrow)
+  ;;   :init
+  ;;   ;; Change the separator for the main spaaceline bar
+  ;;   (setq spaceline-all-the-icons-separator-type 'wave
+  ;;         ;; Change intra-segment separators
+  ;;         spaceline-all-the-icons-primary-separator ""
+  ;;         spaceline-all-the-icons-secondary-separator ""
+  ;;         ;; Whether or not to invert the direction of segment separators
+  ;;         spaceline-all-the-icons-separators-invert-direction nil)
+  ;;   :config
+  ;;   (spaceline-all-the-icons-theme)
+  ;;   ;; Activate extensions
+  ;;   (spaceline-all-the-icons--setup-anzu)
+  ;;   (spaceline-all-the-icons--setup-package-updates)
+  ;;   (spaceline-all-the-icons--setup-git-ahead)
+  ;;   (spaceline-all-the-icons--setup-paradox)
+  ;;   (spaceline-all-the-icons--setup-neotree)
+  ;;   ;; Show if file is bookmarked
+  ;;   (spaceline-toggle-all-the-icons-bookmark-on)
+  ;;   ;; Show current buffer position as percentage
+  ;;   (spaceline-toggle-all-the-icons-buffer-position-on)
+  ;;   ;; Whether or not the buffer has been narrowed
+  ;;   (spaceline-toggle-all-the-icons-narrowed-on)
+  ;;   ;; Show text scaling in spaceline
+  ;;   (spaceline-toggle-all-the-icons-text-scale-on))
 #+end_src

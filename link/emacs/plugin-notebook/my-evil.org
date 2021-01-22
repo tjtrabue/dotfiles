@@ -236,3 +236,10 @@ Needed for performance:
     (define-key evil-inner-text-objects-map "s"
       'sentence-nav-evil-inner-sentence))
 #+end_src
+
+** kubernetes-evil
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package kubernetes-evil
+    :after (evil kubernetes))
+#+end_src
