@@ -3,7 +3,7 @@
 #+email:    tom.trabue@gmail.com
 #+date:     2021:01:22
 #+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+tags: modeline theme doom
 
 =doom-modeline= allows any Emacs configuration to use the fancy, modular
 modeline from Doom Emacs.

@@ -18,5 +18,5 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package origami
     :hook
-    (prog-mode . origami-mode))
+    ((prog-mode conf-mode) . origami-mode))
 #+end_src
