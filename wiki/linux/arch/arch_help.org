@@ -1,0 +1,27 @@
+#+title:    Helpful Arch Linux Notes
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:01:22
+#+tags:
+
+* Graphical Issues
+  First thing's first, make sure you are using the correct driver for your
+  purposes. If you are running multiple monitors, you almost always want to use
+  the proprietary NVIDIA driver.
+
+** Screen Discoloration under NVIDIA proprietary driver
+   If you experience screen discoloration when a screen updates, such as when
+   scrolling a browser, make sure you have the following options set in your
+   =/etc/X11/xorg.conf.d/20-nvidia.conf= file. Note that your board name will
+   most likely be different than what is listed below:
+
+#+begin_src sh
+Section "Device"
+  Identifier     "Device0"
+  Driver         "nvidia"
+  VendorName     "NVIDIA Corporation"
+  BoardName      "GeForce GTX 1650 with Max-Q Design"
+  Option         "TripleBuffer" "True"
+  Option         "AllowIndirectGLXProtocol" "off"
+EndSection
+#+end_src

@@ -63,6 +63,7 @@ java8-openjfx-doc
 jdk-openjdk
 jdk8-openjdk
 khal
+kitty
 libreoffice-fresh
 libxcrypt
 light-locker
