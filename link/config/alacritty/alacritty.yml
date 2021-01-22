@@ -207,33 +207,33 @@ font:
 # Tomorrow Night Eighties Theme
 colors:
     selection:
-        text: "0xCCCCCC"
+        text: "0xcccccc"
         background: "0x515151"
 
     # Normal colors
     primary:
-        background: "0x2D2D2D"
-        foreground: "0xCCCCCC"
+        background: "0x2d2d2d"
+        foreground: "0xcccccc"
     normal:
-        black: "0x282C34"
-        red: "0xF2777A"
-        green: "0x99CC99"
-        yellow: "0xFFCC66"
-        blue: "0x6699CC"
-        magenta: "0xCC99CC"
-        cyan: "0x66CCCC"
-        white: "0xCCCCCC"
+        black: "0x282c34"
+        red: "0xf2777a"
+        green: "0x99cc99"
+        yellow: "0xffcc66"
+        blue: "0x6699cc"
+        magenta: "0xcc99cc"
+        cyan: "0x66cccc"
+        white: "0xcccccc"
 
     # Bright colors
     bright:
-        black: "0x282C34"
-        red: "0xF2777A"
-        green: "0x99CC99"
-        yellow: "0xFFCC66"
-        blue: "0x6699CC"
-        magenta: "0xCC99CC"
-        cyan: "0x66CCCC"
-        white: "0xCCCCCC"
+        black: "0x434956"
+        red: "0xf6a2a3"
+        green: "0xbbddbb"
+        yellow: "0xffdd99"
+        blue: "0x8cb3d9"
+        magenta: "0xddbbdd"
+        cyan: "0x8cd9d9"
+        white: "0xe6e6e6"
     xt_with_bright_colors: true
 
 # Visual Bell
