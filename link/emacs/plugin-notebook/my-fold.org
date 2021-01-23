@@ -34,8 +34,17 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package vimish-fold
     :after (evil-collection)
+    :custom
+    ;; Where to indicate a fold
+    (vimish-fold-indication-mode 'right-fringe)
+    ;; Whether to save folds on buffer saving.
+    (vimish-fold-persist-on-saving t)
     :hook
-    ((prog-mode conf-mode conf-space-mode) . vimish-fold-mode)
+    ((prog-mode conf-mode conf-space-mode) . (lambda ()
+        ;; Turn on vimish-fold-mode on the specified major modes
+        (vimish-fold-mode)
+        ;; Re-create marked folds every so often to keep them up-to-date.
+        (run-with-timer 0 5 'vimish-fold-from-marks)))
     ;; These bindings get in the way of standard folding via origami.
     ;; :bind (:map evil-normal-state-map
     ;;  ([remap evil-open-fold] . vimish-fold-unfold)
