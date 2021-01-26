@@ -19,7 +19,7 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 # Completion {{{
 # Add Bash completion if the file has been installed.
 if [ -f "/etc/bash_completion" ]; then
-  source "/etc/bash_completion"
+  . "/etc/bash_completion"
 fi
 # }}}
 
@@ -28,7 +28,7 @@ src_one_time_transfers() {
   local file
 
   for file in "$HOME"/.{dirs,vars}; do
-    source "$file"
+    . "$file"
   done
 }
 
@@ -43,7 +43,7 @@ src_in_dir() {
   fi
 
   for file in $(find "$dir" -maxdepth 1 -mindepth 1 -type f); do
-    source "$file"
+    . "$file"
   done
 }
 
@@ -54,7 +54,7 @@ src_os() {
   local archSrcDir="${linuxSrcDir}/arch"
 
   # Make sure to get reference to "getosinfo" function
-  source "$bashSrcDir/functions_os.bash"
+  . "$bashSrcDir/functions_os.bash"
   local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
 
   case "$os" in
@@ -101,9 +101,9 @@ unset dircolorsFile
 # Special Prompts {{{
 POWERLINE_BASH_BINDINGS="$(find "${HOME}/.local/lib/" -type f \
   -regextype 'posix-extended' \
-  -regex '.*python3.[0-9]+.*bindings/bash/powerline.sh' \
-  | sort -V \
-  | tail -1)"
+  -regex '.*python3.[0-9]+.*bindings/bash/powerline.sh' |
+  sort -V |
+  tail -1)"
 
 if [ -x "$(command -v starship)" ]; then
   # The starship prompt is a beautiful, informative, cross-shell prompt
@@ -113,7 +113,7 @@ elif [ -f "${POWERLINE_BASH_BINDINGS}" ]; then
   powerline-daemon -q
   export POWERLINE_BASH_CONTINUATION=1
   export POWERLINE_BASH_SELECT=1
-  source "${POWERLINE_BASH_BINDINGS}"
+  . "${POWERLINE_BASH_BINDINGS}"
 fi
 # }}}
 
@@ -141,17 +141,17 @@ if [ "$(command -v fasd)" != "" ]; then
     [ ! -s "$fasd_cache" ]; then
     fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >"$fasd_cache"
   fi
-  source "$fasd_cache"
+  . "$fasd_cache"
   unset fasd_cache
 fi
 
 # Load fzf keybindings
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
 
 # These icons are supplied by the icons-in-terminal project
 use_icons_in_terminal() {
   local iconScript="$HOME/.local/share/icons-in-terminal/icons_bash.sh"
-  [ -f "$iconScript" ] && source "$iconScript"
+  [ -f "$iconScript" ] && . "$iconScript"
 }
 use_icons_in_terminal
 
@@ -161,9 +161,10 @@ if [ -n "$(command -v jenv)" ]; then
 fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
-  source "$HOME/.sdkman/bin/sdkman-init.sh"
+# Home directory for sdkman program.
+export SDKMAN_DIR="${HOME}/.sdkman"
+if [ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]; then
+  . "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
 
 # Print neofetch info when the terminal first opens

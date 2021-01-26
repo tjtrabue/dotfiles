@@ -435,10 +435,10 @@ __do_ls() {
   local colorflag
 
   # Detect which `ls` flavor is in use
-  if ls --color > /dev/null 2>&1; then # GNU `ls`
-      colorflag="--color"
+  if ls --color >/dev/null 2>&1; then # GNU `ls`
+    colorflag="--color"
   else # OS X `ls`
-      colorflag="-G"
+    colorflag="-G"
   fi
   flags="${flags} ${colorflag}"
 
@@ -483,6 +483,30 @@ laa() {
 # Remove all swap files
 rmswap() {
   rm -f "${VIM_CONFIG_HOME}/swaps/*"
+}
+# }}}
+
+# Init scripts {{{
+
+# Run the initialization script for a given topic name.
+#
+# Usage: runinit test -> ~/.dotfiles/init/init_test
+runinit() {
+  local initName="${1}"
+  local initFile="init_${initName}"
+  local fullPath="${DOTFILES_INIT}/${initFile}"
+
+  if [ -z "${initName}" ]; then
+    err "No initialization topic provided."
+    return 1
+  fi
+
+  if [ -x "${fullPath}" ]; then
+    "${fullPath}"
+  else
+    err "init file non-executable or does not exist: ${fullPath} "
+    return 2
+  fi
 }
 # }}}
 
