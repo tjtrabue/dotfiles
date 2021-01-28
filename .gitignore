@@ -38,6 +38,9 @@ tags.temp
 *.so
 *.a
 
+# Eclipse files
+link/config/mimeapps.list
+
 # Extra config directories to ignore
 link/config/dconf/
 link/config/pulse/
