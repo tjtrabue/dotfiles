@@ -38,8 +38,9 @@ tags.temp
 *.so
 *.a
 
-# Eclipse files
+# Eclipse config cache
 link/config/mimeapps.list
+link/config/jgit/
 
 # Extra config directories to ignore
 link/config/dconf/
