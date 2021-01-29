@@ -17,32 +17,34 @@ an offline IMAP sync of the user's email account for reading email.
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package mu4e
-    :straight (mu4e :files (:defaults "mu4e/*.el"))
-    :init
-    (defvar my/maildir "~/Mail" "Local email folder.")
-    (defvar my/remote-mail-inbox-dir "/Inbox"
-      "Email inbox directory.")
-    (defvar my/remote-mail-drafts-dir "/[Gmail]/Drafts"
-      "Remote Drafts email directory.")
-    (defvar my/remote-mail-sent-dir "/[Gmail]/Sent Mail"
-      "Remote Sent email directory.")
-    (defvar my/remote-mail-refile-dir "/[Gmail]/All Mail"
-      "Remote Refile email directory.")
-    (defvar my/remote-mail-trash-dir "/[Gmail]/Trash"
-      "Remote Trash email directory.")
-    (setq mu4e-change-filenames-when-moving t
-          mu4e-update-interval (* 10 60)
-          mu4e-get-mail-command "mbsync -a"
-          mu4e-maildir my/maildir
-          mu4e-drafts-folder my/remote-mail-drafts-dir
-          mu4e-sent-folder my/remote-mail-sent-dir
-          mu4e-refile-folder my/remote-mail-refile-dir
-          mu4e-trash-folder my/remote-mail-trash-dir
-          mu4e-maildir-shortcuts
-           '((my/remote-mail-inbox-dir  . ?i)
-             (my/remote-mail-sent-dir   . ?s)
-             (my/remote-mail-trash-dir  . ?t)
-             (my/remote-mail-drafts-dir . ?d)
-             (my/remote-mail-refile-dir . ?a))))
+  ;; Only load mu4e if we have the requisite executables installed.
+  (when (and (executable-find "mu") (executable-find "mbsync"))
+    (use-package mu4e
+      :straight (mu4e :files (:defaults "mu4e/*.el"))
+      :init
+      (defvar my/maildir "~/Mail" "Local email folder.")
+      (defvar my/remote-mail-inbox-dir "/Inbox"
+        "Email inbox directory.")
+      (defvar my/remote-mail-drafts-dir "/[Gmail]/Drafts"
+        "Remote Drafts email directory.")
+      (defvar my/remote-mail-sent-dir "/[Gmail]/Sent Mail"
+        "Remote Sent email directory.")
+      (defvar my/remote-mail-refile-dir "/[Gmail]/All Mail"
+        "Remote Refile email directory.")
+      (defvar my/remote-mail-trash-dir "/[Gmail]/Trash"
+        "Remote Trash email directory.")
+      (setq mu4e-change-filenames-when-moving t
+            mu4e-update-interval (* 10 60)
+            mu4e-get-mail-command "mbsync -a"
+            mu4e-maildir my/maildir
+            mu4e-drafts-folder my/remote-mail-drafts-dir
+            mu4e-sent-folder my/remote-mail-sent-dir
+            mu4e-refile-folder my/remote-mail-refile-dir
+            mu4e-trash-folder my/remote-mail-trash-dir
+            mu4e-maildir-shortcuts
+            '((my/remote-mail-inbox-dir  . ?i)
+              (my/remote-mail-sent-dir   . ?s)
+              (my/remote-mail-trash-dir  . ?t)
+              (my/remote-mail-drafts-dir . ?d)
+              (my/remote-mail-refile-dir . ?a)))))
 #+end_src
