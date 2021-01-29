@@ -3,10 +3,10 @@
 # Adds a path to the $PATH environment variable.
 atp() {
   local pathToAdd="${1:-$(pwd)}"
-  pathToAdd="$(shortpath "$pathToAdd")"
+  pathToAdd="$(shortpath "${pathToAdd}")"
 
-  if ! __evaluate_paths | grep -Fxq "$(eval echo "$pathToAdd")"; then
-    echo "$pathToAdd" >>"$PATH_FILE"
+  if ! __evaluate_paths | grep -Fxq "$(eval echo "${pathToAdd}")"; then
+    echo "${pathToAdd}" >>"${PATH_FILE}"
   fi
 }
 
@@ -18,15 +18,15 @@ shortpath() {
   local best_to_replace=""
   local input_path="$1"
 
-  grep -E "^\s*export" "$DIR_ALIAS_FILE" | sed 's:^ *export *::' | sed 's:=.*::' | {
+  grep -E "^\s*export" "${DIR_ALIAS_FILE}" | sed 's:^ *export *::' | sed 's:=.*::' | {
     while read -rs var; do
       dir_alias="$(env | grep -E "^${var}\b")"
-      if [ -n "$dir_alias" ]; then
-        to_replace="$(echo "$dir_alias" | sed -e "s:${var}=::" -e 's:"::g')"
+      if [ -n "${dir_alias}" ]; then
+        to_replace="$(echo "${dir_alias}" | sed -e "s:${var}=::" -e 's:"::g')"
         if [[ "$input_path" =~ ^"${to_replace%/}/".* ]]; then
           if [ "${#to_replace}" -gt "${#best_to_replace}" ]; then
-            best_to_replace="$to_replace"
-            best_var="$var"
+            best_to_replace="${to_replace}"
+            best_var="${var}"
           fi
         fi
       fi

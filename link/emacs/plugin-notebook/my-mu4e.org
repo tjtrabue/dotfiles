@@ -14,29 +14,55 @@ an offline IMAP sync of the user's email account for reading email.
 
 #+end_src
 
+* Installing mu4e
+  Installing =mu4e= is a different creature than most Emacs packages. Instead of
+  installing =mu4e= from MELPA, you must install the =mu= or =maildir-utils=
+  system utility using your distribution's package manager. =mu4e= is simply a
+  collection of =mu= bindings for Emacs. If your package repositories do not
+  contain =mu= or =maildir-utils=, you must install =mu= from source. Check the
+  GitHub repository for manual installation instructions if you must go that
+  route.
+
+** Installing with straight.el (why you shouldn't!)
+   It is theoretically /possible/ to install both =mu= and =mu4e= using
+   straight.el. However, this approach is not recommended for a number of
+   reasons. First, =mu= is a collection of system utilities, it is not just an
+   Emacs package. This means that straight.el will not be able to determine if
+   your system has all of the requisite dependencies installed in order to use
+   =mu=. That's what your /system's package manager/ is for. Second, you must
+   keep =mu= and =mu4e= in sync with one another. This is best accomplished by
+   installing =mu= as a system package, which will build and install both =mu=
+   and a compatible version of =mu4e=, removing the hassle of manually
+   installing interoperable versions of the two tools.
+
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes
   ;; Only load mu4e if we have the requisite executables installed.
   (when (and (executable-find "mu") (executable-find "mbsync"))
     (use-package mu4e
-      :straight (mu4e :files (:defaults "mu4e/*.el"))
+      ;; Remember: we do not want to use straight.el to install mu4e!
+      :ensure nil
       :init
-      (defvar my/maildir "~/Mail" "Local email folder.")
+      ;; Set the user's mail dir if not already set from environment variable.
+      (defvar my/mail-dir (getenv "MAIL_DIR") "Local email folder.")
+      (if (not my/mail-dir) (setq my/mail-dir (concat my/home-dir "/Mail")))
       (defvar my/remote-mail-inbox-dir "/Inbox"
-        "Email inbox directory.")
+        "Email inbox directory on remote server.")
       (defvar my/remote-mail-drafts-dir "/[Gmail]/Drafts"
-        "Remote Drafts email directory.")
+        "Remote Drafts email directory on remote server.")
       (defvar my/remote-mail-sent-dir "/[Gmail]/Sent Mail"
-        "Remote Sent email directory.")
+        "Remote Sent email directory on remote server.")
       (defvar my/remote-mail-refile-dir "/[Gmail]/All Mail"
-        "Remote Refile email directory.")
+        "Remote Refile email directory on remote server.")
       (defvar my/remote-mail-trash-dir "/[Gmail]/Trash"
-        "Remote Trash email directory.")
+        "Remote Trash email directory on remote server.")
       (setq mu4e-change-filenames-when-moving t
+            ;; Refresh mail using isync every 10 minutes.
             mu4e-update-interval (* 10 60)
             mu4e-get-mail-command "mbsync -a"
-            mu4e-maildir my/maildir
+            ;; mu4e-maildir my/mail-dir
+
             mu4e-drafts-folder my/remote-mail-drafts-dir
             mu4e-sent-folder my/remote-mail-sent-dir
             mu4e-refile-folder my/remote-mail-refile-dir
