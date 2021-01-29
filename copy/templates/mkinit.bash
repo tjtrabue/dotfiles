@@ -12,8 +12,8 @@ declare IMPORT="${DOTFILES_REPO}/bash/source"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
+. "${IMPORT}/colors.bash"
+. "${IMPORT}/functions_log.bash"
 # }}}
 
 # Functions {{{

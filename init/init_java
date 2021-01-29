@@ -21,9 +21,9 @@ declare JAVA_VERSIONS_TO_INSTALL=(
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
-source "${IMPORT}/functions_java.bash"
+. "${IMPORT}/colors.bash"
+. "${IMPORT}/functions_log.bash"
+. "${IMPORT}/functions_java.bash"
 # }}}
 
 # Functions {{{

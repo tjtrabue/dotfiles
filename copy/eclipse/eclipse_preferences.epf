@@ -1,14 +1,14 @@
-#Wed Jan 27 21:45:22 EST 2021
+#Thu Jan 28 20:30:55 EST 2021
 \!/=
 /configuration/com.genuitec.eclipse.codetogether.ui/check.profile.iu=true
 /configuration/com.genuitec.eclipse.codetogether.ui/codetogether.main.view.displayed=true
 /configuration/com.genuitec.eclipse.codetogether.ui/track.install.first.use=true
 /configuration/com.genuitec.eclipse.meexplorer/breadcrumb.show.default=true
-/configuration/com.genuitec.eclipse.monitor//webclipse/ideused/dayOfMonth=27
+/configuration/com.genuitec.eclipse.monitor//webclipse/ideused/dayOfMonth=28
 /configuration/com.genuitec.eclipse.monitor//webclipse/ideused/month=0
-/configuration/com.genuitec.eclipse.monitor/ideused=1
-/configuration/com.genuitec.eclipse.startup/features=[{"launchCount"\:7,"id"\:"com.genuitec.eclipse.theming.designer.feature","version"\:"1.11.0.202012111554"},{"launchCount"\:7,"id"\:"com.genuitec.eclipse.theming.feature","version"\:"1.11.0.202012111554"}]
-/configuration/com.genuitec.eclipse.startup/launchCount=7
+/configuration/com.genuitec.eclipse.monitor/ideused=2
+/configuration/com.genuitec.eclipse.startup/features=[{"launchCount"\:8,"id"\:"com.genuitec.eclipse.theming.designer.feature","version"\:"1.11.0.202012111554"},{"launchCount"\:8,"id"\:"com.genuitec.eclipse.theming.feature","version"\:"1.11.0.202012111554"}]
+/configuration/com.genuitec.eclipse.startup/launchCount=8
 /configuration/com.genuitec.eclipse.startup/welcomeFlowVersionShown=3
 /configuration/com.genuitec.eclipse.theming.ui/PEFontSize=0
 /configuration/com.genuitec.eclipse.theming.ui/applyBackground=false
@@ -18,7 +18,7 @@
 /configuration/com.genuitec.eclipse.theming.ui/overridePEFontSize=false
 /configuration/com.genuitec.eclipse.theming.ui/showWelcomeDialog=false
 /configuration/com.genuitec.eclipse.theming.ui/workbench.theme=Dark Gray
-/configuration/com.genuitec.eclipse.webclipse.evergreen/devstyle.manifest.check.timestamp=1611797002154
+/configuration/com.genuitec.eclipse.webclipse.evergreen/devstyle.manifest.check.timestamp=1611883664628
 /configuration/com.genuitec.eclipse.webclipse.evergreen/manifest.devstyle.download.cache={"updates"\:{"release-version"\:"1.11.0.202012111554","eclipse-version"\:"[4.5.0,5.0.0)","release-notes"\:{"id"\:"ci20201211","delivery-log-url"\:"https\:\\/\\/www.genuitec.com\\/products\\/devstyle\\/deliverylog\\/","release-label"\:"CI 2020.12.11","updates"\:[{"heading"\:"General Fixes and Eclipse 2020-12","message"\:"This release picks up additional fixes for stability and compatibility with Eclipse 2020-12.","bullet"\:{"padding"\:"tiny","overlayicon"\:"ionicons\:ios-moon","color"\:"blue","overlayscale"\:"xlarge","icon"\:"fontawesome\:square","scale"\:"full","type"\:"overlayed","overlaycolor"\:"black","size"\:"32x32","position"\:"center"},"show-if"\:{"bundles"\:["com.genuitec.eclipse.theming.ui"]}}]},"eclipse-roots"\:[{"id"\:"com.genuitec.eclipse.theming.core.feature.feature.group","version"\:"1.11.0.202012111554"},{"id"\:"com.genuitec.eclipse.theming.feature.feature.group","version"\:"1.11.0.202012111554"},{"id"\:"com.genuitec.eclipse.theming.designer.feature.feature.group","version"\:"1.11.0.202012111554"}],"binary-roots"\:[],"repository-url"\:"http\:\\/\\/downloads.genuitec.com\\/downloads\\/products\\/devstyle\\/updates\\/ds20201211","check-interval"\:28800000,"notify-updated"\:14400000},"notifications"\:[],"notifications2"\:[]}
 /configuration/com.genuitec.eclipse.webclipse.evergreen/manifest.devstyle.download.etag="5fd3af2f-4b2"
 /configuration/com.genuitec.eclipse.webclipse.evergreen/manifest.devstyle.download.modified.date=Fri, 11 Dec 2020 17\:41\:03 GMT
@@ -368,7 +368,7 @@
 /instance/com.dubture.twig.ui/editorStmtColorBoundarymaker=\#E2E2E2 | null | null | null | null | null
 /instance/com.dubture.twig.ui/overriddenByCSS=,editorBlocknameColor,editorColorKeyword,editorColorHeredoc,editorColorPhpdoc,codeStyleNormal,editorColorComment,editorColorTask,editorColorVariable,editorColorBoundarymaker,editorColorPHPDocComment,editorColorString,editorStmtColorBoundarymaker,editorColorLineComment,editorColorNumber,
 /instance/com.genuitec.eclipse.codetogether.ui/codetogether.main.view.displayed=true
-/instance/com.genuitec.eclipse.monitor/last.upload.time=1611797002822
+/instance/com.genuitec.eclipse.monitor/last.upload.time=1611883726975
 /instance/com.genuitec.eclipse.sqlexplorer/overriddenByCSS=,sql_columns,sql_default,sql_keyword,sql_multi_line_comment,sql_single_line_comment,sql_string,sql_table,
 /instance/com.genuitec.eclipse.sqlexplorer/sql_columns=171,115,255
 /instance/com.genuitec.eclipse.sqlexplorer/sql_default=210,215,218
@@ -383,8 +383,8 @@
 /instance/com.genuitec.eclipse.theming.ui/configurationInstallLocation=/home/tjtrabu/applications/eclipse/
 /instance/com.genuitec.eclipse.theming.ui/iconcolormode=pastel
 /instance/com.genuitec.eclipse.theming.ui/includeThemingInOomph=false
-/instance/com.genuitec.eclipse.theming.ui/last.download.attempt.time=1611801523276
-/instance/com.genuitec.eclipse.theming.ui/lastConfiguration=1611801517242
+/instance/com.genuitec.eclipse.theming.ui/last.download.attempt.time=1611883664500
+/instance/com.genuitec.eclipse.theming.ui/lastConfiguration=1611883658199
 /instance/com.genuitec.eclipse.theming.ui/newinstall=false
 /instance/com.genuitec.eclipse.theming.ui/showWelcomeDialog=false
 /instance/com.genuitec.eclipse.theming.ui/workbench.theme=Dark Gray
@@ -1670,7 +1670,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.tabulation.size=2
 /instance/org.eclipse.jdt.debug.ui/org.eclipse.jdt.debug.ui.prompt_unable_to_install_breakpoint=false
 /instance/org.eclipse.jdt.junit/org.eclipse.jdt.junit.content_assist_favorite_static_members_migrated=true
-/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1611801751930">\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\n        <vm id\="1611798297778" name\="jre" path\="/home/tjtrabu/applications/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_15.0.1.v20201027-0507/jre"/>\n        <vm id\="1611801684804" name\="8.0.282.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/8.0.282.hs-adpt"/>\n        <vm id\="1611801751930" name\="11.0.10.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/11.0.10.hs-adpt"/>\n        <vm id\="1611801807849" name\="15.0.2.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/15.0.2.hs-adpt"/>\n    </vmType>\n</vmSettings>\n
+/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1611801751930" defaultVMConnector\="">\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\n        <vm id\="1611798297778" name\="jre" path\="/home/tjtrabu/applications/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_15.0.1.v20201027-0507/jre"/>\n        <vm id\="1611801684804" name\="8.0.282.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/8.0.282.hs-adpt"/>\n        <vm id\="1611801751930" name\="11.0.10.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/11.0.10.hs-adpt"/>\n        <vm id\="1611801807849" name\="15.0.2.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/15.0.2.hs-adpt"/>\n    </vmType>\n</vmSettings>\n
 /instance/org.eclipse.jdt.ui/content_assist_autoactivation_delay=0
 /instance/org.eclipse.jdt.ui/content_assist_autoactivation_triggers_java=.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@
 /instance/org.eclipse.jdt.ui/content_assist_completion_replacement_background=200,200,0
@@ -2071,10 +2071,13 @@
 /instance/org.eclipse.ui.editors/STS4BootMarkerIndicationColor=54,81,25
 /instance/org.eclipse.ui.editors/TM4EMatchingPairColor=26,95,140
 /instance/org.eclipse.ui.editors/TextOccurrenceIndicationColor=27, 98, 145
+/instance/org.eclipse.ui.editors/additionIndicationColor=51,209,122
 /instance/org.eclipse.ui.editors/asOccurencesIndicationColor=65,65,4
 /instance/org.eclipse.ui.editors/breakpointIndicationColor=49,115,187
+/instance/org.eclipse.ui.editors/changeIndicationColor=53,132,228
 /instance/org.eclipse.ui.editors/currentIPColor=80,80,80
 /instance/org.eclipse.ui.editors/currentLineColor=50,57,62
+/instance/org.eclipse.ui.editors/deletionIndicationColor=237,51,59
 /instance/org.eclipse.ui.editors/filteredSearchResultIndicationColor=26,95,140
 /instance/org.eclipse.ui.editors/findBlockColor=255,165,0
 /instance/org.eclipse.ui.editors/findIndicationColor=47,58,119
@@ -2097,6 +2100,7 @@
 /instance/org.eclipse.ui.editors/printMargin=true
 /instance/org.eclipse.ui.editors/printMarginColor=192,192,192
 /instance/org.eclipse.ui.editors/pydevOccurrenceIndicationColor=65,65,4
+/instance/org.eclipse.ui.editors/quickdiff.defaultProvider=org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider
 /instance/org.eclipse.ui.editors/searchResultHighlighting=false
 /instance/org.eclipse.ui.editors/searchResultIndication=true
 /instance/org.eclipse.ui.editors/searchResultIndicationColor=70,68,103
@@ -2345,7 +2349,7 @@
 /instance/org.eclipse.ui.workbench/org.eclipse.pde.internal.ui.compare.ManifestContentMergeViewer=1|FiraCode Nerd Font Mono|10.0|0|GTK|1|;
 /instance/org.eclipse.ui.workbench/org.eclipse.pde.internal.ui.compare.PluginContentMergeViewer=1|FiraCode Nerd Font Mono|10.0|0|GTK|1|;
 /instance/org.eclipse.ui.workbench/org.eclipse.search.ui.match.highlight=73,83,90
-/instance/org.eclipse.ui.workbench/org.eclipse.ui.commands=<?xml version\="1.0" encoding\="UTF-8"?>\n<org.eclipse.ui.commands>\n<keyBinding commandId\="org.eclipse.ui.window.preferences" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+CTRL+SHIFT+P"/>\n<keyBinding contextId\="org.eclipse.ui.textEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+J"/>\n<keyBinding contextId\="org.eclipse.xtext.ui.embeddedTextEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+J"/>\n<keyBinding contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+P"/>\n<keyBinding contextId\="org.eclipse.ui.textEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+K"/>\n<keyBinding contextId\="org.eclipse.xtext.ui.embeddedTextEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+K"/>\n</org.eclipse.ui.commands>
+/instance/org.eclipse.ui.workbench/org.eclipse.ui.commands=<?xml version\="1.0" encoding\="UTF-8"?>\n<org.eclipse.ui.commands>\n<keyBinding commandId\="org.eclipse.ui.window.preferences" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+CTRL+SHIFT+P"/>\n<keyBinding contextId\="org.eclipse.xtext.ui.embeddedTextEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+K"/>\n<keyBinding contextId\="org.eclipse.ui.textEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+K"/>\n<keyBinding contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+P"/>\n<keyBinding contextId\="org.eclipse.xtext.ui.embeddedTextEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+J"/>\n<keyBinding contextId\="org.eclipse.ui.textEditorScope" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+J"/>\n<keyBinding contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+SHIFT+R"/>\n<keyBinding contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+SHIFT+R"/>\n<keyBinding commandId\="org.eclipse.ui.navigate.openResource" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+P"/>\n</org.eclipse.ui.commands>
 /instance/org.eclipse.ui.workbench/org.eclipse.ui.editors.backgroundColor=0,0,0
 /instance/org.eclipse.ui.workbench/org.eclipse.ui.editors.currentLineColor=7,8,8
 /instance/org.eclipse.ui.workbench/org.eclipse.ui.editors.findScope=62,70,76
