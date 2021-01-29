@@ -43,6 +43,10 @@ an offline IMAP sync of the user's email account for reading email.
     (use-package mu4e
       ;; Remember: we do not want to use straight.el to install mu4e!
       :ensure nil
+      :straight nil
+      ;; Probably not necessary to set this value, but may come in handy if mu4e
+      ;; doesn't load:
+      ;; :load-path "/usr/share/emacs/site-lisp/mu4e/"
       :init
       ;; Set the user's mail dir if not already set from environment variable.
       (defvar my/mail-dir (getenv "MAIL_DIR") "Local email folder.")
@@ -57,6 +61,7 @@ an offline IMAP sync of the user's email account for reading email.
         "Remote Refile email directory on remote server.")
       (defvar my/remote-mail-trash-dir "/[Gmail]/Trash"
         "Remote Trash email directory on remote server.")
+      ;; This is set to 't' to avoid mail syncing issues when using mbsync.
       (setq mu4e-change-filenames-when-moving t
             ;; Refresh mail using isync every 10 minutes.
             mu4e-update-interval (* 10 60)
