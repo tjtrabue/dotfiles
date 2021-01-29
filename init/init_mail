@@ -22,7 +22,10 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Set up maildir configuration on a new system.
+
+Please note that you will need to create a new application-specific password for
+your email address in most cases.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
