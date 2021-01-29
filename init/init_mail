@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -Eeuo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+declare IMPORT="${DOTFILES_REPO}/bash/source"
+# }}}
+
+# Imports {{{
+. "${HOME}/.vars"
+. "${IMPORT}/colors.bash"
+. "${IMPORT}/functions_log.bash"
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+<insert description here>
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+
+verify_dependencies_installed() {
+  local dependencies=(
+    mu
+    mbsync
+  )
+  local missingDeps=()
+  local dep
+  local failed=false
+
+  for dep in "${dependencies[@]}"; do
+    if [ ! -x "$(command -v "${dep}")" ]; then
+      missingDeps+=("${dep}")
+      failed=true
+    fi
+  done
+
+  if "${failed}"; then
+    err "Missing dependencies: ${missingDeps[*]}"
+    return 1
+  fi
+}
+
+# Make sure to create the mail directory.
+create_mail_dir() {
+  mkdir -p "${MAIL_DIR}"
+}
+
+# Sync the user's email directory over IMAP.
+sync_maildir() {
+  mbsync -a
+}
+
+# Make a searchable index of the newly created mail directory.
+index_maildir() {
+  mu init --maildir="${MAIL_DIR}" --my-address="${EMAIL}"
+  mu index
+}
+
+main() {
+  print_header "Initializing Email Configuration"
+  verify_dependencies_installed
+  create_mail_dir
+  sync_maildir
+  index_maildir
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help-n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:

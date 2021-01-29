@@ -1,7 +1,7 @@
 IMAPAccount gmail
 Host imap.gmail.com
 User tom.trabue@gmail.com
-PassCmd "cat ~/.oh-no-insecure-password.crt"
+PassCmd "cat ~/.password.crt"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 

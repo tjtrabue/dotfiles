@@ -1,0 +1,21 @@
+#+title:    mu4e: Maildir-based Email Client
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:01:28
+#+property: header-args:emacs-lisp :lexical t
+#+tags:     email mail mu
+
+=mu4e= is a maildir-based email client for Emacs. Quite different from programs
+like =gnus=, which get their information from a remote server, =mu4e= relies on
+an offline IMAP sync of the user's email account for reading email.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* use-package specification
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mu4e)
+#+end_src
