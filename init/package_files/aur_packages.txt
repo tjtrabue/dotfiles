@@ -10,7 +10,7 @@ lightdm-webkit-theme-aether
 ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
-mu-git
+mu
 neovim-git
 optimus-manager
 polybar-git
