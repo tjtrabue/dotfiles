@@ -17,17 +17,7 @@ however, making =avy= a better, more modern alternative.
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes
-  ;; NOTE: evil-snipe is still useful in evil's operator state, so please do not
-  ;;       remove it altogether! I simply prefer to use avy for moving around
-  ;;       based on characters in evil's normal state.
+  ;; NOTE: See evil-leader config for keybindings.
   (use-package avy
-    :after (evil-collection evil-snipe)
-    :bind
-    ;; avy has all sorts of buffer navigation functions. Check out its GitHub
-    ;; page for more details. I only set the most useful keybindings here.
-    (:map evil-normal-state-map
-      ;; Very similar to ace-jump-mode's goto-char function.
-      ("f" . avy-goto-char)
-      ;; Go to a word beginning with a character.
-      ("F" . avy-goto-word-1)))
+    :after (evil-collection evil-snipe))
 #+end_src

@@ -86,19 +86,25 @@ Needed for performance:
       "gd" 'magit-dispatch
       ;; ace-window
       "jk" 'ace-window
+      ;; avy (buffer navigation plugin)
+      "jj" 'avy-goto-char
+      "jl" 'avy-goto-line
+      "jw" 'avy-goto-word-1
+      "jW" 'avy-goto-word-0
       ;; File
       "lf" 'load-file
       "of" 'org-babel-load-file
       ;; Flycheck
       "fn" 'flycheck-next-error
       "fp" 'flycheck-previous-error
+      ;; evil-snipe
+      "ss" 'evil-snipe-s
+      "sS" 'evil-snipe-S
       ;; Treemacs
       "tm" 'treemacs
       ;; undo-tree
-      "ut" 'undo-tree-visualize
-      ;; M-x
-      "xx" 'helm-M-x)
-    (global-evil-leader-mode t))
+      "ut" 'undo-tree-visualize)
+    (global-evil-leader-mode 1))
 #+end_src
 
 ** evil-collection
@@ -194,17 +200,23 @@ Needed for performance:
    =evil-snipe= allows you to move around buffers a bit more flexibly using keys
    such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
 
-   *NOTE:* I prefer to use =avy= for buffer navigation using 'f' and 'F',
-   although =evil-snipe= is still very powerful and useful in evil's operator
-   state.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package evil-snipe
+    :after (evil-leader evil-collection)
     :hook
     ;; Turn off snipe in magit-mode for compatibility.
     (magit-mode . turn-off-evil-snipe-override-mode)
+    :custom
+    (evil-snipe-scope 'whole-visible)
+    (evil-snipe-repeat-scope 'whole-buffer)
+    (evil-snipe-spillover-scope 'whole-buffer)
     :config
-    (evil-snipe-override-mode t))
+    ;; Don't want snipe messing with evil-leader's mappings.
+    (unbind-key (kbd "<motion-state> ,") 'evil-snipe-override-mode-map)
+    (unbind-key (kbd "<motion-state> ,") 'evil-snipe-override-local-mode-map)
+    ;; Map '[' to match any opening delimiter in any snipe mode.
+    (push '(?\[ "[[{(]") evil-snipe-aliases)
+    (evil-snipe-override-mode 1))
 #+end_src
 
 ** evil-org
