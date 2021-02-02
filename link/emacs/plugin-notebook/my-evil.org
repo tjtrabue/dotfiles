@@ -212,8 +212,8 @@ Needed for performance:
     (evil-snipe-spillover-scope 'whole-buffer)
     :config
     ;; Don't want snipe messing with evil-leader's mappings.
-    (unbind-key (kbd "<motion-state> ,") 'evil-snipe-override-mode-map)
-    (unbind-key (kbd "<motion-state> ,") 'evil-snipe-override-local-mode-map)
+    (define-key evil-snipe-override-mode-map (kbd "<motion-state> ,") nil)
+    (define-key evil-snipe-override-local-mode-map (kbd "<motion-state> ,") nil)
     ;; Map '[' to match any opening delimiter in any snipe mode.
     (push '(?\[ "[[{(]") evil-snipe-aliases)
     (evil-snipe-override-mode 1))
