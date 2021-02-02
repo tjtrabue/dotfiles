@@ -23,7 +23,11 @@ however, making =avy= a better, more modern alternative.
   (use-package avy
     :after (evil-collection evil-snipe)
     :bind
+    ;; avy has all sorts of buffer navigation functions. Check out its GitHub
+    ;; page for more details. I only set the most useful keybindings here.
     (:map evil-normal-state-map
-     ("f" . avy-goto-char)
-     ("F" . avy-goto-char-2)))
+      ;; Very similar to ace-jump-mode's goto-char function.
+      ("f" . avy-goto-char)
+      ;; Go to a word beginning with a character.
+      ("F" . avy-goto-word-1)))
 #+end_src

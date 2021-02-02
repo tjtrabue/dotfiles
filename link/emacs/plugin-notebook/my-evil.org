@@ -191,6 +191,13 @@ Needed for performance:
 #+end_src
 
 ** evil-snipe
+   =evil-snipe= allows you to move around buffers a bit more flexibly using keys
+   such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
+
+   *NOTE:* I prefer to use =avy= for buffer navigation using 'f' and 'F',
+   although =evil-snipe= is still very powerful and useful in evil's operator
+   state.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package evil-snipe
     :hook
