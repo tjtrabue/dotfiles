@@ -1,0 +1,29 @@
+#+title:    Avy: Quickly Jump Around Buffers
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:02:02
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+=avy= is a similar plugin to =ace-jump-mode=, or =vim-easymotion= for
+Vim-derived editors. It is newer and more maintained than =ace-jump-mode=,
+however, making =avy= a better, more modern alternative.
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* use-package specification
+
+#+begin_src emacs-lisp :tangle yes
+  ;; NOTE: evil-snipe is still useful in evil's operator state, so please do not
+  ;;       remove it altogether! I simply prefer to use avy for moving around
+  ;;       based on characters in evil's normal state.
+  (use-package avy
+    :after (evil-collection evil-snipe)
+    :bind
+    (:map evil-normal-state-map
+     ("f" . avy-goto-char)
+     ("F" . avy-goto-char-2)))
+#+end_src

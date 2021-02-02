@@ -3,21 +3,18 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
 
-Configuration for the fantastic ace modes, such as ace-jump-mode used to
-quickly move around a buffer, or ace-window used as a replacement for C-o.
+Configuration for the fantastic ace modes, such as =ace-jump-mode= used to
+quickly move around a buffer, or ace-window used as a replacement for =C-o=.
 
-*NOTE:* Most keybindings are set in my-evil.el since that is where
-      evil-mode's map leader key bindings must be set.
+*NOTE:* Most keybindings are set in my-evil.el since that is where evil-mode's
+        map leader key bindings must be set. Also, =ace-jump-mode= is old and no
+        longer maintained, so I recommend using =avy= as a modern
+        alternative. See =my-avy= for configuration details.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
-#+end_src
-
-* Ace Jump Mode
-#+begin_src emacs-lisp :tangle yes
-  (use-package ace-jump-mode)
 #+end_src
 
 * Ace Window
