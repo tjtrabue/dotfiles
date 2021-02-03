@@ -21,6 +21,35 @@ laa() {
   __do_ls "$flags" "$dir_to_list"
 }
 
+# Figure out which version of 'ls' we want to run based on what's installed, and
+# then run the darn thing.
+__do_ls() {
+  local flags="$1"
+  local dir_to_list="${2:-.}"
+
+  flags="${flags} $(__get_ls_colorflag)"
+  __do_ls_auto "${flags}" "${dir_to_list}"
+}
+
+# Figure out which ls command to run automatically based on a prioritized list.
+__do_ls_auto() {
+  local flags="$1"
+  local dir_to_list="${2:-.}"
+
+  if [ -x "$(command -v colorls)" ]; then
+    __do_ls_colorls "${flags}" "${dir_to_list}"
+  elif $USE_LS_ICONS && [ -x "$(command -v "ls-icons")" ]; then
+    __do_ls_ls_icons "${flags}" "${dir_to_list}"
+  elif [ -x "$(command -v "exa")" ]; then
+    __do_ls_exa "${flags}" "${dir_to_list}"
+  elif [ -x "$(command -v perl)" ]; then
+    __do_ls_perl_script "${flags}" "${dir_to_list}"
+  else
+    # If all else fails, just run ls
+    eval "command ls ${flags} ${dir_to_list}"
+  fi
+}
+
 # Ruby's amazing colorls tool is probably the best ls colorizer out there.
 # Take out flags that colorls does not understand.
 __do_ls_colorls() {
@@ -55,12 +84,8 @@ __do_ls_perl_script() {
   eval "command ls ${flags} ${dir_to_list} | perl ${ls_color_script}"
 }
 
-# Figure out which version of 'ls' we want to run based on what's installed, and
-# then run the darn thing.
-__do_ls() {
-  local flags="$1"
-  local dir_to_list="${2:-.}"
-  local ls_color_script="${DOTFILES_HOME}/perl/ls-color.pl"
+# Retrieve the output coloration flag for ls based on the installed ls version.
+__get_ls_colorflag() {
   local colorflag
 
   # Detect which `ls` flavor is in use
@@ -69,21 +94,8 @@ __do_ls() {
   else # OS X `ls`
     colorflag="-G"
   fi
-  flags="${flags} ${colorflag}"
 
-  if [ -x "$(command -v colorls)" ]; then
-    __do_ls_colorls "${flags}" "${dir_to_list}"
-  elif $USE_LS_ICONS && [ -x "$(command -v "ls-icons")" ]; then
-    eval "command ls-icons ${flags} ${dir_to_list}"
-    __do_ls_ls_icons "${flags}" "${dir_to_list}"
-  elif [ -x "$(command -v "exa")" ]; then
-    __do_ls_exa "${flags}" "${dir_to_list}"
-  elif [ -x "$(command -v perl)" ]; then
-    __do_ls_perl_script "${flags}" "${dir_to_list}"
-  else
-    # If all else fails, just run ls
-    eval "command ls ${flags} ${dir_to_list}"
-  fi
+  echo "${colorflag}"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
