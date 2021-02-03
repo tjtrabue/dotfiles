@@ -32,6 +32,7 @@ doxygen
 efibootmgr
 elixir
 evince
+exa
 expac
 fasd
 fd

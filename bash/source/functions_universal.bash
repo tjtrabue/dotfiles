@@ -450,60 +450,6 @@ do_multiple() {
 }
 # }}}
 
-# Directory listing {{{
-# Figure out which version of 'ls' we want to run based on what's installed, and
-# then run the darn thing.
-__do_ls() {
-  local flags="$1"
-  local dir_to_list="${2:-.}"
-  local ls_color_script="${DOTFILES_HOME}/perl/ls-color.pl"
-  local colorflag
-
-  # Detect which `ls` flavor is in use
-  if ls --color >/dev/null 2>&1; then # GNU `ls`
-    colorflag="--color"
-  else # OS X `ls`
-    colorflag="-G"
-  fi
-  flags="${flags} ${colorflag}"
-
-  if [ "$(command -v colorls)" != "" ]; then
-    # Ruby's amazing colorls tool is probably the best ls colorizer out there.
-    # Take out flags that colorls does not understand.
-    flags="$(echo "$flags" | sed -r 's/[Fh]//')"
-    flags="${flags} --sd --gs"
-    eval "command colorls ${flags} ${dir_to_list}"
-  elif $USE_LS_ICONS && [ "$(command -v "ls-icons")" != "" ]; then
-    # Use the fancy ls-icons tool if it's installed
-    eval "command ls-icons ${flags} ${dir_to_list}"
-  elif [ "$(command -v perl)" != "" ]; then
-    # Use our beautiful perl coloration script if we have access to perl
-    eval "command ls ${flags} ${dir_to_list} | perl ${ls_color_script}"
-  else
-    # Or, if all else fails, just run ls
-    eval "command ls ${flags} ${dir_to_list}"
-  fi
-}
-
-ll() {
-  local flags="-lFh"
-  local dir_to_list="${*:-.}"
-  __do_ls "$flags" "$dir_to_list"
-}
-
-la() {
-  local flags="-lAFh"
-  local dir_to_list="${*:-.}"
-  __do_ls "$flags" "$dir_to_list"
-}
-
-laa() {
-  local flags="-laFh"
-  local dir_to_list="${*:-.}"
-  __do_ls "$flags" "$dir_to_list"
-}
-# }}}
-
 # Vim {{{
 # Remove all swap files
 rmswap() {
