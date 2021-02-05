@@ -11,6 +11,7 @@ asciidoc
 aspell-en
 autorandr
 awesome
+bash-completion
 biber
 cabal-install
 chromium
@@ -28,6 +29,7 @@ dialog
 dmenu
 dnsutils
 docbook2x
+docker
 doxygen
 efibootmgr
 elixir

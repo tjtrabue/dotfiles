@@ -27,6 +27,11 @@ else
 fi
 # }}}
 
+# Shell settings and bindings {{{
+# Turn off annoying error bell
+bind 'set bell-style none'
+# }}}
+
 # Functions {{{
 
 # Conditionally start a program in the background if such a program exists
@@ -89,8 +94,8 @@ start_program_if_available "pulseaudio" "--start"
 
 # Send nvidia-settings config to X server, if applicable
 nvidiaSettingsConfig="${HOME}/.nvidia-settings-rc"
-if [ -x "$(command -v nvidia-settings)" ] && \
-   [ -f "${nvidiaSettingsConfig}" ]; then
+if [ -x "$(command -v nvidia-settings)" ] &&
+  [ -f "${nvidiaSettingsConfig}" ]; then
   nvidia-settings --load-config-only
 fi
 unset nvidiaSettingsConfig

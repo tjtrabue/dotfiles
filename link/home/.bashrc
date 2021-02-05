@@ -16,13 +16,6 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 # of that by exporting all directories listed in ~/.path
 # }}}
 
-# Completion {{{
-# Add Bash completion if the file has been installed.
-if [ -f "/etc/bash_completion" ]; then
-  . "/etc/bash_completion"
-fi
-# }}}
-
 # Source additional files {{{
 src_one_time_transfers() {
   local file
@@ -88,6 +81,11 @@ src() {
   src_lua_path
 }
 src
+# }}}
+
+# Shell completion {{{
+# Include extra bash completions if available.
+add_bash_completions
 # }}}
 
 # Change ls colors (dircolors) {{{
