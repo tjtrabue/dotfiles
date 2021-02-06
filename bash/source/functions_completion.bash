@@ -34,6 +34,9 @@ __add_completions_to_command_alias() {
     return 2
   fi
 
+  # Actually create the alias before we add completions.
+  eval "alias ${cmdAlias}='${cmd}'"
+
   if funcp "_completion_loader"; then
     # Use the dynamic completion loader function included with bash-completion
     # if available.

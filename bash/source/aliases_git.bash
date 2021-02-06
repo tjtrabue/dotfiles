@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-alias g="git"
-
 # Branch alaises:
 alias gch="git checkout"
 alias newb="git checkout -b"
