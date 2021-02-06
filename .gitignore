@@ -93,9 +93,6 @@ cedet-rc.el
 # Other auto-generated Elisp files from Org files
 **/plugin-notebook/*.el
 
-# Any 'test' files
-*test*
-
 # Mutt/Neomutt
 link/config/mutt/cache
 # Do not store mutt aliases
