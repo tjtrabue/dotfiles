@@ -8,6 +8,10 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+
 declare IMPORT="${DOTFILES_REPO}/bash/source"
 # }}}
 
