@@ -440,24 +440,9 @@ arch-chroot "${mountRoot}" runuser "${user}" -c \
 # }}}
 
 # Run init scripts {{{
-# Standard Arch configuration
+info_log "Running initialization scripts for important topics"
 arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "bash ${dotfilesInit}/init_arch"
-# LightDM
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "bash ${dotfilesInit}/init_lightdm"
-# Emacs
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "bash ${dotfilesInit}/init_emacs"
-# Vim/Neovim
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "bash ${dotfilesInit}/init_neovim"
-# Nerd Fonts
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "bash ${dotfilesInit}/init_nerd_fonts"
-# Awesome WM
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "bash ${dotfilesInit}/init_awesome"
+  "runinit arch lightdm emacs neovim nerd_fonts awesome docker"
 # }}}
 
 # Run language-specific package install scripts {{{

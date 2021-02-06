@@ -459,25 +459,50 @@ rmswap() {
 
 # Init scripts {{{
 
-# Run the initialization script for a given topic name.
+# Run one or more initialization scripts based on input topics.
 #
-# Usage: runinit test -> ~/.dotfiles/init/init_test
+# Usage:
+#   runinit test      -> ~/.dotfiles/init/init_test
+#   runinit test java -> ~/.dotfiles/init/init_test; ~/.dotfiles/init/init_java
 runinit() {
-  local initName="${1}"
-  local initFile="init_${initName}"
-  local fullPath="${DOTFILES_INIT}/${initFile}"
+  local initTopics=("${@}")
+  local initFile
+  local fullPath
+  local initTopic
 
-  if [ -z "${initName}" ]; then
-    err "No initialization topic provided."
+  runinit_usage() {
+    cat <<EOF
+USAGE:
+  ${FUNCNAME[1]} TOPIC [...]
+
+DESCRIPTION:
+  Run one or more initialization scripts based on input topics.
+
+EXAMPLES:
+  # Run one init script and exit
+  ${FUNCNAME[1]} java
+
+  # Run two init scripts in sequence.
+  ${FUNCNAME[1]} java docker
+EOF
+  }
+
+  if [ "${#initTopics[@]}" -eq 0 ]; then
+    err "No initialization topic(s) provided."
+    runinit_usage
     return 1
   fi
 
-  if [ -x "${fullPath}" ]; then
-    "${fullPath}"
-  else
-    err "init file non-executable or does not exist: ${fullPath} "
-    return 2
-  fi
+  for initTopic in "${initTopics[@]}"; do
+    initFile="init_${initTopic}"
+    fullPath="${DOTFILES_INIT}/${initFile}"
+    if [ -x "${fullPath}" ]; then
+      "${fullPath}"
+    else
+      err "init file non-executable or does not exist: ${fullPath} "
+      return 2
+    fi
+  done
 }
 # }}}
 
