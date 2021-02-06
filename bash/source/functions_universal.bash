@@ -11,6 +11,21 @@ func() {
   fi
 }
 
+# Exit with 0 status if input name is a shell function.
+# Otherwise, exit with nonzero status.
+funcp() {
+  local LC_ALL=C
+  local funcName="${1}"
+
+  if [ -z "${funcName}" ]; then
+    err "No function name provided."
+    return 1
+  fi
+  {
+    type -t "${funcName}" | grep -q "function"
+  } &>/dev/null
+}
+
 # Returns the index of an array element
 # Syntax: get_index array_name (no $ in front of array name) $element
 get_index() {
