@@ -24,29 +24,40 @@ __add_git_alias_completions() {
 
   # Add more specific git alias completions
   if funcp "__git_complete"; then
-    alias ga='git add' && __git_complete ga _git_add
-    alias gb='git branch' && __git_complete gb _git_branch
-    alias gc='git commit' && __git_complete gc _git_commit
-    alias gcl='git clone' && __git_complete gcl _git_clone
-    alias gcle='git clean' && __git_complete gcle _git_clean
-    alias gco='git checkout' && __git_complete gco _git_checkout
-    alias gcon='git config' && __git_complete gcon _git_config
-    alias gd='git diff' && __git_complete gd _git_diff
-    alias gdes='git describe' && __git_complete gdes _git_describe
-    alias gm='git merge' && __git_complete gm _git_merge
-    alias gp='git push' && __git_complete gp _git_push
-    alias gpl='git pull' && __git_complete gpl _git_pull
-    alias grb='git rebase' && __git_complete grb _git_rebase
-    alias gre='git remote' && __git_complete gre _git_remote
-    alias gres='git reset' && __git_complete gres _git_reset
-    alias grest='git restore' && __git_complete grest _git_restore
-    alias grev='git revert' && __git_complete grev _git_revert
-    alias gs='git status' && __git_complete gs _git_status
-    alias gsb='git show-branch' && __git_complete gsb _git_show_branch
-    alias gst='git stash' && __git_complete gst _git_stash
-    alias gsw='git switch' && __git_complete gsw _git_switch
-    alias gt='git tag' && __git_complete gt _git_tag
+    __add_git_command_alias_completions "add" "ga" "_git_add"
+    __add_git_command_alias_completions "branch" "gb" "_git_branch"
+    __add_git_command_alias_completions "commit" "gc" "_git_commit"
+    __add_git_command_alias_completions "clone" "gcl" "_git_clone"
+    __add_git_command_alias_completions "clean" "gcle" "_git_clean"
+    __add_git_command_alias_completions "checkout" "gco" "_git_checkout"
+    __add_git_command_alias_completions "config" "gcon" "_git_config"
+    __add_git_command_alias_completions "diff" "gd" "_git_diff"
+    __add_git_command_alias_completions "describe" "gdes" "_git_describe"
+    __add_git_command_alias_completions "merge" "gm" "_git_merge"
+    __add_git_command_alias_completions "push" "gp" "_git_push"
+    __add_git_command_alias_completions "pull" "gpl" "_git_pull"
+    __add_git_command_alias_completions "rebase" "grb" "_git_rebase"
+    __add_git_command_alias_completions "remote" "gre" "_git_remote"
+    __add_git_command_alias_completions "reset" "gres" "_git_reset"
+    __add_git_command_alias_completions "restore" "grest" "_git_restore"
+    __add_git_command_alias_completions "revert" "grev" "_git_revert"
+    __add_git_command_alias_completions "status" "gs" "_git_status"
+    __add_git_command_alias_completions "show-branch" "gsb" "_git_show_branch"
+    __add_git_command_alias_completions "stash" "gst" "_git_stash"
+    __add_git_command_alias_completions "switch" "gsw" "_git_switch"
+    __add_git_command_alias_completions "tag" "gt" "_git_tag"
   fi
+}
+
+# Mark a particular alias a git command for the purpose of adding shell
+# completions, such as using `gco` for `git checkout` completions.
+__add_git_command_alias_completions() {
+  local cmd="${1}"
+  local cmdAlias="${2}"
+  local completionFunc="${3}"
+
+  eval "alias ${cmdAlias}='git ${cmd}'"
+  eval "__git_complete ${cmdAlias} ${completionFunc}"
 }
 
 # Add lots of cool docker completions to aliased docker commands.
