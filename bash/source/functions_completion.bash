@@ -34,16 +34,21 @@ __add_completions_to_command_alias() {
     return 2
   fi
 
+  if funcp "_completion_loader"; then
+    # Use the dynamic completion loader function included with bash-completion
+    # if available.
+    _completion_loader "${cmd}"
+  elif [ -f "${extraCompletionsDir}/${cmd}" ]; then
+    # Otherwise, try and source the command's completion file the old fashioned
+    # way.
+    . "${extraCompletionsDir}/${cmd}"
+  fi
+
+  completionCmdArr=($(complete -p "${cmd}"))
   # `complete -p <cmd>` returns the command needed to enable bash completions
   # for <cmd>. Thus, what we want to do is eval that command, but to do so
   # replacing the final term (the command) with an alias.
-  if [ -f "${extraCompletionsDir}/${cmd}" ]; then
-    . "${extraCompletionsDir}/${cmd}"
-    completionCmdArr=($(complete -p "${cmd}"))
-    # Expand the array representing the `complete` command, but do not include
-    # the final element. Instead, replace it with the command's alias.
-    eval "${completionCmdArr[*]::${#completionCmdArr[@]}-1} ${cmdAlias}"
-  fi
+  eval "${completionCmdArr[*]::${#completionCmdArr[@]}-1} ${cmdAlias}"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1

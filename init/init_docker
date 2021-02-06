@@ -47,6 +47,8 @@ check_docker_installed() {
 
 # In order for the main user to use Docker, they must first be added to the
 # docker group.
+# NOTE: The user will need to log out and log back in for these changes to
+#       take effect.
 add_user_to_docker_group() {
   log_info "Adding user to docker group..."
   sudo usermod -a -G docker "$(whoami)"
