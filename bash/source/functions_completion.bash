@@ -9,8 +9,7 @@ add_bash_completions() {
   # file.
   [ -f "${bashCompletionFile}" ] && . "${bashCompletionFile}"
 
-  # Add extra completions to special command aliases, such as `g` for `git`,
-  # and `r` for `docker`.
+  # Add extra completions to special command aliases
   __add_git_alias_completions
   __add_docker_alias_completions
 }
@@ -49,7 +48,7 @@ __add_git_alias_completions() {
   fi
 }
 
-# Mark a particular alias a git command for the purpose of adding shell
+# Mark a particular alias as a git command for the purpose of adding shell
 # completions, such as using `gco` for `git checkout` completions.
 __add_git_command_alias_completions() {
   local cmd="${1}"
@@ -62,10 +61,45 @@ __add_git_command_alias_completions() {
 
 # Add lots of cool docker completions to aliased docker commands.
 __add_docker_alias_completions() {
-  # Recognize `r` as an alias for `docker`, thereby enabling docker command line
-  # completions for `r`.
-  # NOTE: The `d` alias is already taken by `fasd` command line tool suite.
-  __add_completions_to_command_alias "docker" "r"
+  # Recognize `d` as an alias for `docker`, thereby enabling docker command line
+  # completions for `d`.
+  __add_completions_to_command_alias "docker" "d"
+
+  # Add extra docker aliases and completions.
+  __add_docker_command_alias_completions "attach" "dat" "_docker_attach"
+  __add_docker_command_alias_completions "build" "dbu" "_docker_build"
+  __add_docker_command_alias_completions "cp" "dcp" "_docker_cp"
+  __add_docker_command_alias_completions "diff" "ddi" "_docker_diff"
+  __add_docker_command_alias_completions "help" "dh" "_docker_help"
+  __add_docker_command_alias_completions "image" "dim" "_docker_image"
+  __add_docker_command_alias_completions "images" "dims" "_docker_images"
+  __add_docker_command_alias_completions "info" "din" "_docker_info"
+  __add_docker_command_alias_completions "inspect" "dins" "_docker_inspect"
+  __add_docker_command_alias_completions "kill" "dk" "_docker_kill"
+  __add_docker_command_alias_completions "login" "dlogin" "_docker_login"
+  __add_docker_command_alias_completions "logout" "dlogout" "_docker_logout"
+  __add_docker_command_alias_completions "logs" "dlo" "_docker_logs"
+  __add_docker_command_alias_completions "ps" "dps" "_docker_ps"
+  __add_docker_command_alias_completions "pull" "dpl" "_docker_pull"
+  __add_docker_command_alias_completions "restart" "dre" "_docker_restart"
+  __add_docker_command_alias_completions "rm" "drm" "_docker_rm"
+  __add_docker_command_alias_completions "run" "drn" "_docker_run"
+  __add_docker_command_alias_completions "stop" "dst" "_docker_stop"
+  __add_docker_command_alias_completions "tag" "dt" "_docker_tag"
+  __add_docker_command_alias_completions "update" "dup" "_docker_update"
+  __add_docker_command_alias_completions "unpause" "dun" "_docker_unpause"
+}
+
+# Mark a particular alias as a docker command for the purpose of adding shell
+# completions, such as using `dim` for `docker images`.
+__add_docker_command_alias_completions() {
+
+  local cmd="${1}"
+  local cmdAlias="${2}"
+  local completionFunc="${3}"
+
+  eval "alias ${cmdAlias}='docker ${cmd}'"
+  eval "complete -F ${completionFunc} ${cmdAlias}"
 }
 
 # Enable shell completions for a command alias, such as `g` for `git`.

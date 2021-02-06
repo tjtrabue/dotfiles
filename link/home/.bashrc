@@ -132,17 +132,6 @@ if [ "$(command -v pyenv)" != "" ]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# Initialize fasd if installed
-if [ "$(command -v fasd)" != "" ]; then
-  fasd_cache="$HOME/.fasd-init-bash"
-  if [ "$(command -v fasd)" -nt "$fasd_cache" ] ||
-    [ ! -s "$fasd_cache" ]; then
-    fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >"$fasd_cache"
-  fi
-  . "$fasd_cache"
-  unset fasd_cache
-fi
-
 # Load fzf keybindings
 [ -f ~/.fzf.bash ] && . ~/.fzf.bash
 

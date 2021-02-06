@@ -36,7 +36,6 @@ elixir
 evince
 exa
 expac
-fasd
 fd
 feh
 findutils
