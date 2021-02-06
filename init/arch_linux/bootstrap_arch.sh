@@ -447,11 +447,12 @@ arch-chroot "${mountRoot}" runuser -l "${user}" -c \
 
 # Run language-specific package install scripts {{{
 info_log "Running language-specific package installations"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_python_packages"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_node_packages"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_ruby_packages"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_lua_packages"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c "install_go_packages"
+arch-chroot "${mountRoot}" runuser -l "${user}" -c \
+  "install_python_packages
+  install_node_packages
+  install_ruby_packages
+  install_lua_packages
+  install_go_packages"
 # }}}
 
 # Laptop configuration (if computer is a laptop) {{{
