@@ -42,6 +42,7 @@ findutils
 firefox
 fwupd
 fzf
+fzy
 gdb
 git
 global

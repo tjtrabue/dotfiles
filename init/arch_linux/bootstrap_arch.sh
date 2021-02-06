@@ -442,7 +442,7 @@ arch-chroot "${mountRoot}" runuser "${user}" -c \
 # Run init scripts {{{
 info_log "Running initialization scripts for important topics"
 arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-  "runinit arch lightdm emacs neovim nerd_fonts awesome docker"
+  "runinit arch lightdm emacs neovim nerd_fonts awesome shell docker"
 # }}}
 
 # Run language-specific package install scripts {{{

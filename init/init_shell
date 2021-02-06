@@ -13,6 +13,8 @@ declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
 
 declare IMPORT="${DOTFILES_REPO}/bash/source"
+
+declare USER_BASH_COMPLETION_DIR="${HOME}/.bash_completion.d"
 # }}}
 
 # Imports {{{
@@ -37,8 +39,31 @@ OPTIONS:
 EOF
 }
 
+create_dirs() {
+  log_info "Creating special dirs"
+  mkdir -p "${USER_BASH_COMPLETION_DIR}"
+}
+
+install_z() {
+  log_info "Installing z"
+  curl "https://raw.githubusercontent.com/rupa/z/master/{z.sh}" \
+    -o "${USER_BASH_COMPLETION_DIR}/#1"
+}
+
+install_fz() {
+  log_info "Installing fz"
+  # NOTE: We add in extra 'z' characters as a prefix to fz.sh because fz.sh must
+  # be sourced AFTER z.sh, so we want it to come later alphabetically.
+  curl "https://raw.githubusercontent.com/changyuheng/fz/master/{fz.sh}" \
+    -o "${USER_BASH_COMPLETION_DIR}/zzz#1"
+}
+
 main() {
-  log_info "Hello, world!"
+  print_header "Initializing Shell Tools"
+  create_dirs
+  install_enhancd
+  install_z
+  install_fz
 }
 # }}}
 

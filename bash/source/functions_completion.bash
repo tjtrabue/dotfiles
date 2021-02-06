@@ -9,9 +9,24 @@ add_bash_completions() {
   # file.
   [ -f "${bashCompletionFile}" ] && . "${bashCompletionFile}"
 
+  # Source additional manually installed completion files.
+  __source_extra_bash_user_completions
+
   # Add extra completions to special command aliases
   __add_git_alias_completions
   __add_docker_alias_completions
+}
+
+# Source bash completion files installed manually by the user.
+__source_extra_bash_user_completions() {
+  local f
+  local completionDir="${USER_BASH_COMPLETION_DIR:-${HOME}/.bash_completion.d}"
+
+  if [ -d "${completionDir}" ]; then
+    for f in "${completionDir}"/*; do
+      . "${f}"
+    done
+  fi
 }
 
 # Add lots of cool completions for git aliases, such as `g` for `git`, and
