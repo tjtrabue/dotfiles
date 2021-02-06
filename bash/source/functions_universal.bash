@@ -466,6 +466,7 @@ rmswap() {
 #   runinit test java -> ~/.dotfiles/init/init_test; ~/.dotfiles/init/init_java
 runinit() {
   local initTopics=("${@}")
+  local funcName="${FUNCNAME[0]}"
   local initFile
   local fullPath
   local initTopic
@@ -473,17 +474,17 @@ runinit() {
   runinit_usage() {
     cat <<EOF
 USAGE:
-  ${FUNCNAME[1]} TOPIC [...]
+  ${funcName} TOPIC [...]
 
 DESCRIPTION:
   Run one or more initialization scripts based on input topics.
 
 EXAMPLES:
-  # Run one init script and exit
-  ${FUNCNAME[1]} java
+  # Run one init script and exit.
+  ${funcName} java
 
   # Run two init scripts in sequence.
-  ${FUNCNAME[1]} java docker
+  ${funcName} java docker
 EOF
   }
 
