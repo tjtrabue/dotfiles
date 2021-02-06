@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+alias g="git"
+
 # Branch alaises:
 alias gch="git checkout"
 alias newb="git checkout -b"
@@ -26,12 +28,12 @@ alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
 alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
 alias gp="git push"
-alias gpoh="git push origin HEAD";
+alias gpoh="git push origin HEAD"
 alias gpl="git pull"
 
 # Commit log aliases
-alias gl='git log --graph --color=always --format="%C(auto)%h%d %s %C(blue)%C(bold)%cr"';
-alias gll='git log --graph --color=always --format=full';
+alias gl='git log --graph --color=always --format="%C(auto)%h%d %s %C(blue)%C(bold)%cr"'
+alias gll='git log --graph --color=always --format=full'
 
 # Rebasing aliases:
 alias grb="git rebase"
@@ -39,4 +41,4 @@ alias grba="git rebase --abort"
 alias grbc="git rebase --continue"
 
 # Resetting aliases:
-alias greh="git reset HEAD";
+alias greh="git reset HEAD"

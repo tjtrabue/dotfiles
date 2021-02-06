@@ -15,12 +15,12 @@ alias rmrf="rm -rf"
 # }}}
 
 # Source aliases {{{
-alias sbrc="source $HOME/.bashrc";
-alias sbpr="source $HOME/.bash_profile";
-alias sdirs="source $HOME/.dirs";
-alias svar="source $HOME/.vars";
-alias sirc="bind -f $HOME/.inputrc";
-alias sxre="xrdb -merge $HOME/.Xresources";
+alias sbrc="source $HOME/.bashrc"
+alias sbpr="source $HOME/.bash_profile"
+alias sdirs="source $HOME/.dirs"
+alias svar="source $HOME/.vars"
+alias sirc="bind -f $HOME/.inputrc"
+alias sxre="xrdb -merge $HOME/.Xresources"
 # }}}
 
 # Find files with CRLF line endings
@@ -34,7 +34,7 @@ alias rsa="rsync -a"
 
 # Search aliases {{{
 # Change the default behavior of ag
-alias ag="ag --hidden";
+alias ag="ag --hidden"
 # }}}
 
 ###########################################################################
@@ -58,7 +58,6 @@ alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/IntelliJProjects"
-alias g="git"
 alias h="history"
 alias j="jobs"
 # }}}
@@ -94,18 +93,18 @@ alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Canonical hex dump; some systems have this symlinked
-command -v hd > /dev/null || alias hd="hexdump -C"
+command -v hd >/dev/null || alias hd="hexdump -C"
 
 # OS X has no `md5sum`, so use `md5` as a fallback
-command -v md5sum > /dev/null || alias md5sum="md5"
+command -v md5sum >/dev/null || alias md5sum="md5"
 
 # OS X has no `sha1sum`, so use `shasum` as a fallback
-command -v sha1sum > /dev/null || alias sha1sum="shasum"
+command -v sha1sum >/dev/null || alias sha1sum="shasum"
 
 # JavaScriptCore REPL
-jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc";
-[ -e "${jscbin}" ] && alias jsc="${jscbin}";
-unset jscbin;
+jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
+[ -e "${jscbin}" ] && alias jsc="${jscbin}"
+unset jscbin
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
@@ -149,11 +148,11 @@ alias map="xargs -n1"
 
 # One of @janmoesen’s ProTip™s
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-    alias "$method"="lwp-request -m '$method'"
+  alias "$method"="lwp-request -m '$method'"
 done
 
 # Make Grunt print stack traces by default
-command -v grunt > /dev/null && alias grunt="grunt --stack"
+command -v grunt >/dev/null && alias grunt="grunt --stack"
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
