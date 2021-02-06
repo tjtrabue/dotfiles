@@ -12,7 +12,7 @@ ctrlp() {
   fi
 
   if [ -n "${filesToEdit[*]}" ]; then
-    eval "edit" "${filesToEdit[@]}"
+    edit "${filesToEdit[@]}"
   fi
 }
 

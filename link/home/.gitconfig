@@ -5,7 +5,7 @@
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   excludesfile = /Users/tom/.gitignore_global
   editor = nvim
-  pager = cat
+  pager = less
 
 [apply]
   whitespace = fix

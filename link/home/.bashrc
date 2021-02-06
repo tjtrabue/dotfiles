@@ -135,6 +135,9 @@ fi
 # Load fzf keybindings
 [ -f ~/.fzf.bash ] && . ~/.fzf.bash
 
+# Source forgit git cli if available
+[ -f "${WS}/forgit/forgit.plugin.sh" ] && . "${WS}/forgit/forgit.plugin.sh"
+
 # These icons are supplied by the icons-in-terminal project
 use_icons_in_terminal() {
   local iconScript="$HOME/.local/share/icons-in-terminal/icons_bash.sh"

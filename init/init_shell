@@ -58,12 +58,21 @@ install_fz() {
     -o "${USER_BASH_COMPLETION_DIR}/zzz#1"
 }
 
+# forgit is an amazing, interactive CLI git client that leverages fuzzy finding
+# for fast results. You must have fzf installed to use it.
+install_forgit() {
+  if [ ! -d "${WS}/forgit" ]; then
+    log_info "Installing forgit git client"
+    git -C "${WS}" clone "git@github.com:wfxr/forgit.git"
+  fi
+}
+
 main() {
   print_header "Initializing Shell Tools"
   create_dirs
-  install_enhancd
   install_z
   install_fz
+  install_forgit
 }
 # }}}
 
