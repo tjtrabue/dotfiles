@@ -13,6 +13,7 @@ pylint
 pynvim
 python-language-server
 pywal
+rebound-cli
 ueberzug
 vint
 virtualenvwrapper
