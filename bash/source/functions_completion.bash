@@ -23,7 +23,7 @@ __source_extra_bash_user_completions() {
   local completionDir="${USER_BASH_COMPLETION_DIR:-${HOME}/.bash_completion.d}"
 
   if [ -d "${completionDir}" ]; then
-    for f in "${completionDir}"/*; do
+    for f in $(find "${completionDir}" -type f); do
       . "${f}"
     done
   fi
