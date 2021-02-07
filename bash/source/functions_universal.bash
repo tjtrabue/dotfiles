@@ -435,7 +435,17 @@ v() {
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 tre() {
-  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
+  if [ -x "$(command -v colorls)" ]; then
+    # Use fancy colorls tree command to show file tree, if we have colorls
+    # installed.
+    colorls --tree --color=always | less -Fr
+  elif [ -x "$(command -v tree)" ]; then
+    # Use standard tree command
+    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -Fr
+  else
+    err "No tree command available."
+    return 1
+  fi
 }
 # }}}
 

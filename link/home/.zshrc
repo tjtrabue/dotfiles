@@ -3,4 +3,4 @@
 
 
 # Modeline for this file (LEAVE IT COMMENTED!)
-# vim:foldmethod=marker
+# vim:foldenable:foldmethod=marker:foldlevel=0
