@@ -161,3 +161,5 @@ xscreensaver
 xterm
 zathura
 zathura-pdf-poppler
+zsh
+zsh-completions
