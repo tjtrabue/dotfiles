@@ -66,6 +66,7 @@ java8-openjfx
 java8-openjfx-doc
 jdk-openjdk
 jdk8-openjdk
+jq
 khal
 kitty
 libreoffice-fresh

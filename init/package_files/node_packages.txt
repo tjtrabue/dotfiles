@@ -32,6 +32,7 @@ npm-check-updates
 prettier
 stylelint
 tern
+tldr
 typescript
 typescript-language-server
 vim-language-server

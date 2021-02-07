@@ -9,7 +9,7 @@ ctrlp() {
   if [ -x "$(command -v fzf)" ]; then
     filesToEdit=($(fzf))
   elif [ -x "$(command -v fzy)" ]; then
-    filesToEdit=($(find . | fzy))
+    filesToEdit=($(fd -t f '.' . | fzy))
   fi
 
   if [ -n "${filesToEdit[*]}" ]; then
