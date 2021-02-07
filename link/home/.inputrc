@@ -82,3 +82,6 @@ TAB: menu-complete
 
 # Use Ctrl+o to open ranger and cd into final directory
 "\C-o": "ranger-cd\n"
+
+# Use Ctrl+l to use fzf's fuzzy search feature for cd.
+"\C-l": "cd \*\*\t"

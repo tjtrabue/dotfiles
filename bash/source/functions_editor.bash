@@ -5,10 +5,11 @@ ctrlp() {
   local fuzzyFinderTool="$(command -v fzy)"
   local filesToEdit=()
 
-  if [ -x "$(command -v fzy)" ]; then
-    filesToEdit=($(find . | fzy))
-  elif [ -x "$(command -v fzf)" ]; then
+  # Prioritized list of fuzzy search tools used to find files.
+  if [ -x "$(command -v fzf)" ]; then
     filesToEdit=($(fzf))
+  elif [ -x "$(command -v fzy)" ]; then
+    filesToEdit=($(find . | fzy))
   fi
 
   if [ -n "${filesToEdit[*]}" ]; then
