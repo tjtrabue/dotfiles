@@ -8,6 +8,14 @@ HISTFILE="${HISTFILE:-${HOME}/.zsh-history}"
 HISTSIZE=50000
 # Trim history when its length exceeds SAVEHIST by 20%.
 SAVEHIST=10000
+
+# dotfiles repository files/directories
+DOTFILES_HOME="${HOME}/.dotfiles"
+DOTFILES_ZSH="${DOTFILES_HOME}/zsh"
+DOTFILES_COMMON="${DOTFILES_HOME}/common"
+
+# zplug is a fast, flexible plugin manager for zsh inspired by vimplug.
+export ZPLUG_HOME="${HOME}/.zplug"
 # }}}
 
 # Options {{{
@@ -60,7 +68,6 @@ setopt prompt_subst
 
 # Plugins {{{
 # Install zplug if it does not already exist
-export ZPLUG_HOME="${HOME}/.zplug"
 if [ ! -d "${ZPLUG_HOME}" ]; then
   git clone "https://github.com/zplug/zplug" "${ZPLUG_HOME}"
 fi
@@ -69,7 +76,21 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # Ready zplug
   source "${ZPLUG_HOME}/init.zsh"
 
-  # Register plugins
+  ## Register plugins
+
+  # real-time type-ahead autocompletion.
+  # zplug "marlonrichert/zsh-autocomplete"
+
+  # autosuggestions {{{
+  # Show completion suggestions as you type, like in fish.
+  zplug "zsh-users/zsh-autosuggestions"
+  # Add special keybindings
+  # Use C-SPACE to move to end of current autosuggestion
+  bindkey '^ ' autosuggest-accept
+  # }}}
+
+  # Fish-like syntax highlighting that colorizes your commands as you type them.
+  zplug "zsh-users/zsh-syntax-highlighting"
 
   # Use C-n to leave insert mode.
   VIM_MODE_VICMD_KEY='^N'
@@ -93,6 +114,16 @@ zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+
+zstyle ':autocomplete:tab:*' insert-unambiguous yes
+zstyle ':autocomplete:tab:*' fzf-completion yes
+# }}}
+
+# Prompt {{{
+if [ -x "$(command -v starship)" ]; then
+  # Use the amazing, cross-shell starship prompt if available.
+  eval "$(starship init zsh)"
+fi
 # }}}
 
 # Modeline for this file (LEAVE IT COMMENTED!)
