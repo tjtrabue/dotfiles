@@ -54,7 +54,36 @@ setopt prompt_subst
 # }}}
 
 # Setup VI line editing mode {{{
-bindkey -v
+# Currently unused in favor of zsh-vim-mode.
+# bindkey -v
+# }}}
+
+# Plugins {{{
+# Install zplug if it does not already exist
+export ZPLUG_HOME="${HOME}/.zplug"
+if [ ! -d "${ZPLUG_HOME}" ]; then
+  git clone "https://github.com/zplug/zplug" "${ZPLUG_HOME}"
+fi
+
+if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
+  # Ready zplug
+  source "${ZPLUG_HOME}/init.zsh"
+
+  # Register plugins
+
+  # Use C-n to leave insert mode.
+  VIM_MODE_VICMD_KEY='^N'
+  zplug "softmoth/zsh-vim-mode"
+
+  # Install any registered plugins that have not yet been installed.
+  if ! zplug check; then
+    zplug install
+  fi
+
+  # Finally, load all plugins and add commands to $PATH.
+  # (use '--verbose' flag to see output as each plugin loads).
+  zplug load
+fi
 # }}}
 
 # zstyle {{{
