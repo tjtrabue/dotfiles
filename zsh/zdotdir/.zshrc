@@ -13,6 +13,7 @@ SAVEHIST=10000
 DOTFILES_HOME="${HOME}/.dotfiles"
 DOTFILES_ZSH="${DOTFILES_HOME}/zsh"
 DOTFILES_COMMON="${DOTFILES_HOME}/common"
+COMMON_SHELL_SOURCE="${DOTFILES_COMMON}/shell/source"
 
 # zplug is a fast, flexible plugin manager for zsh inspired by vimplug.
 export ZPLUG_HOME="${HOME}/.zplug"
@@ -61,6 +62,16 @@ setopt menu_complete
 setopt prompt_subst
 # }}}
 
+# Source aliases/functions {{{
+source "${COMMON_SHELL_SOURCE}/common.sh"
+src
+# }}}
+
+# $PATH {{{
+# Add extra binary paths to $PATH
+spath
+# }}}
+
 # Setup VI line editing mode {{{
 # Currently unused in favor of zsh-vim-mode.
 # bindkey -v
@@ -78,15 +89,18 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
 
   ## Register plugins
 
-  # real-time type-ahead autocompletion.
-  # zplug "marlonrichert/zsh-autocomplete"
-
   # autosuggestions {{{
   # Show completion suggestions as you type, like in fish.
   zplug "zsh-users/zsh-autosuggestions"
   # Add special keybindings
   # Use C-SPACE to move to end of current autosuggestion
   bindkey '^ ' autosuggest-accept
+  # }}}
+
+  # autocomplete {{{
+  # real-time type-ahead autocompletion.
+  # Fairly buggy. May want to wait before using.
+  # zplug "marlonrichert/zsh-autocomplete"
   # }}}
 
   # Fish-like syntax highlighting that colorizes your commands as you type them.
@@ -105,6 +119,28 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # (use '--verbose' flag to see output as each plugin loads).
   zplug load
 fi
+# }}}
+
+# fzf {{{
+FZF_SYSTEM="/usr/share/fzf"
+FZF_USER_SHELL="${HOME}/.fzf/shell"
+
+# Load fzf zsh keybindings
+if [ -f "${FZF_SYSTEM}/key-bindings.zsh" ]; then
+  source "${FZF_SYSTEM}/key-bindings.zsh"
+elif [ -f "${FZF_USER_SHELL}/key-bindings.zsh" ]; then
+  source "${FZF_USER_SHELL}/key-bindings.zsh"
+fi
+
+# Load fzf zsh completions
+if [ -f "${FZF_SYSTEM}/completion.zsh" ]; then
+  source "${FZF_SYSTEM}/completion.zsh"
+elif [ -f "${FZF_USER_SHELL}/completion.zsh" ]; then
+  source "${FZF_USER_SHELL}/completion.zsh"
+fi
+
+unset FZF_SYSTEM
+unset FZF_USER_SHELL
 # }}}
 
 # zstyle {{{
