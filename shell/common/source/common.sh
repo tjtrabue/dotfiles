@@ -8,11 +8,11 @@
 # Source all functions and alias files for any POSIX-compliant shell.
 src() {
   local currentShell="$(ps -p $$ | awk '{print $NF}' | tail -1)"
-  local dotfilesHome="${HOME}/.dotfiles"
-  local dotfilesBash="${dotfilesHome}/bash"
-  local dotfilesZsh="${dotfilesHome}/zsh"
-  local dotfilesCommonShell="${dotfilesHome}/common/shell"
-  local dotfilesCommonSource="${dotfilesCommonShell}/source"
+  local dotfilesHome="${DOTFILES_HOME:-${HOME}/.dotfiles}"
+  local dotfilesShell="${dotfilesHome}/shell"
+  local dotfilesBash="${dotfilesShell}/bash"
+  local dotfilesZsh="${dotfilesShell}/zsh"
+  local dotfilesCommonSource="${dotfilesShell}/common/source"
   local srcDir
   local f
   local d
@@ -48,5 +48,8 @@ src() {
 }
 
 src
+
+# Add extra binary paths to $PATH
+spath
 
 # vim:foldenable:foldmethod=marker:foldlevel=0

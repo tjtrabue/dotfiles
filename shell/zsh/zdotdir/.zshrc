@@ -65,7 +65,6 @@ setopt prompt_subst
 
 # Source aliases/functions {{{
 source "${COMMON_SHELL_SOURCE}/common.sh"
-src
 # }}}
 
 # $PATH {{{
