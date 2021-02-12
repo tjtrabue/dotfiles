@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# This file performs common initialization tasks for POSIX shells.
+# This file should be sourced as soon as possible by any POSIX-compliant
+# initialization file for the shell (i.e, by .bashrc or .zshrc) so that
+# common functions and aliases can be brought into the shell's environment.
+
 # Source all functions and alias files for any POSIX-compliant shell.
 src() {
   local currentShell="$(ps -p $$ | awk '{print $NF}' | tail -1)"
@@ -41,5 +46,7 @@ src() {
     fi
   done
 }
+
+src
 
 # vim:foldenable:foldmethod=marker:foldlevel=0

@@ -12,7 +12,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
 
-declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 # }}}
 
 # Imports {{{

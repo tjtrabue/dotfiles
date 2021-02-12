@@ -112,7 +112,7 @@ main() {
 declare DOTFILES_HOME="$HOME/.dotfiles";
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
 declare DOTFILES_LINK="$DOTFILES_REPO/link";
-declare DOTFILES_SOURCE="$DOTFILES_REPO/bash/source";
+declare DOTFILES_SOURCE="$DOTFILES_REPO/shell/bash/source";
 declare LINK_HOME="$DOTFILES_LINK/home";
 declare LINK_CONFIG="$DOTFILES_LINK/config";
 declare BACKUP_DIR="$DOTFILES_REPO/backup";

@@ -3,9 +3,12 @@
 # Exit on error
 set -e
 
-# Imports {{{
+# Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
+# }}}
+
+# Imports {{{
 source "${HOME}/.vars"
 source "${HOME}/.dirs"
 source "${IMPORT}/colors.bash"

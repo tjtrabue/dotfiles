@@ -4,7 +4,9 @@
 umask 022
 
 # Where the magic happens:
-export DOTFILES_HOME="${HOME}/.dotfiles"
+DOTFILES_HOME="${HOME}/.dotfiles"
+DOTFILES_BASH="${DOTFILES_HOME}/shell/bash"
+BASH_SOURCE_DIR="${DOTFILES_BASH}/source"
 
 # Additional $PATH settings {{{
 # Add sbin to PATH if it exists
@@ -42,17 +44,16 @@ src_in_dir() {
 
 # Source additional OS-specific files
 src_os() {
-  local bashSrcDir="${DOTFILES_HOME}/bash/source"
-  local linuxSrcDir="${bashSrcDir}/linux"
+  local linuxSrcDir="${BASH_SOURCE_DIR}/linux"
   local archSrcDir="${linuxSrcDir}/arch"
 
   # Make sure to get reference to "getosinfo" function
-  . "$bashSrcDir/functions_os.bash"
+  . "$BASH_SOURCE_DIR/functions_os.bash"
   local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
 
   case "$os" in
   "Arch Linux")
-    src_in_dir "$archSrcDir"
+    src_in_dir "${archSrcDir}"
     ;;
 
   *)
@@ -65,13 +66,12 @@ src_os() {
 # Main source function. This is the one that you will be frequently calling from
 # the command line.
 src() {
-  local bashSrcDir="${DOTFILES_HOME}/bash/source"
   local file
 
   # Source one-time transfer files
   src_one_time_transfers
   # Source all alias and function files
-  src_in_dir "$bashSrcDir"
+  src_in_dir "${BASH_SOURCE_DIR}"
   # Re-read the ~/.inputrc file.
   [ -f "${HOME}/.inputrc" ] && bind -f "${HOME}/.inputrc"
   src_os

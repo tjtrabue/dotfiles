@@ -2,7 +2,7 @@
 
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 
 declare DOTFILES_EMACS="${DOTFILES_REPO}/link/emacs"
 declare EMACS_CONF="${HOME}/.emacs.d"

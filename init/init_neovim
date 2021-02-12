@@ -7,7 +7,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare VIM_HOME="$HOME/.vim"
 declare VIM_DF="$DOTFILES_REPO/link/vim"
 
-declare IMPORT="${DOTFILES_REPO}/bash/source"
+declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 declare VERBOSE=false
 # }}}
 

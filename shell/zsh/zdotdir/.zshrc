@@ -11,9 +11,10 @@ SAVEHIST=10000
 
 # dotfiles repository files/directories
 DOTFILES_HOME="${HOME}/.dotfiles"
-DOTFILES_ZSH="${DOTFILES_HOME}/zsh"
-DOTFILES_COMMON="${DOTFILES_HOME}/common"
-COMMON_SHELL_SOURCE="${DOTFILES_COMMON}/shell/source"
+DOTFILES_SHELL="${DOTFILES_HOME}/shell"
+DOTFILES_ZSH="${DOTFILES_SHELL}/zsh"
+DOTFILES_COMMON="${DOTFILES_SHELL}/common"
+COMMON_SHELL_SOURCE="${DOTFILES_COMMON}/source"
 
 # zplug is a fast, flexible plugin manager for zsh inspired by vimplug.
 export ZPLUG_HOME="${HOME}/.zplug"
