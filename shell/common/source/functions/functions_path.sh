@@ -1,5 +1,43 @@
 #!/bin/sh
 
+# Adds a path to the $PATH environment variable.
+atp() {
+  local pathToAdd="${1:-$(pwd)}"
+  pathToAdd="$(shortpath "${pathToAdd}")"
+
+  if ! __evaluate_paths | grep -Fxq "$(eval echo "${pathToAdd}")"; then
+    echo "${pathToAdd}" >>"${PATH_FILE}"
+  fi
+}
+
+# Prefix a given path with any existing aliases
+shortpath() {
+  local dir_alias=""
+  local best_var=""
+  local to_replace=""
+  local best_to_replace=""
+  local input_path="$1"
+
+  grep -E "^\s*export" "${DIR_ALIAS_FILE}" | sed 's:^ *export *::' | sed 's:=.*::' | {
+    while read -rs var; do
+      dir_alias="$(env | grep -E "^${var}\b")"
+      if [ -n "${dir_alias}" ]; then
+        to_replace="$(echo "${dir_alias}" | sed -e "s:${var}=::" -e 's:"::g')"
+        if [[ "$input_path" =~ ^"${to_replace%/}/".* ]]; then
+          if [ "${#to_replace}" -gt "${#best_to_replace}" ]; then
+            best_to_replace="${to_replace}"
+            best_var="${var}"
+          fi
+        fi
+      fi
+    done
+    if [ -n "${best_to_replace}" ]; then
+      input_path=${input_path//${best_to_replace}/\$${best_var}}
+    fi
+    echo "${input_path}"
+  }
+}
+
 # Read a path file's contents into a path variable, then export the path
 # variable.
 # @param [$1=~/.path] - The path file to read from
@@ -13,6 +51,13 @@ spath() {
 
   eval "${pathVar}=${constructedPath}"
   export "${pathVar?}"
+}
+
+# Source the LuaRocks module path.
+src_lua_path() {
+  if [ "$(command -v luarocks)" != "" ]; then
+    eval "$(luarocks path)"
+  fi
 }
 
 # Print paths in $PATH file with all environment variables evaluated

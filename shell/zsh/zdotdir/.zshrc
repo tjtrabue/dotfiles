@@ -68,8 +68,6 @@ source "${COMMON_SHELL_SOURCE}/common.sh"
 # }}}
 
 # $PATH {{{
-# Add extra binary paths to $PATH
-spath
 # }}}
 
 # Setup VI line editing mode {{{

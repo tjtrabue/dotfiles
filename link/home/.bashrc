@@ -5,6 +5,7 @@ umask 022
 
 # Where the magic happens:
 DOTFILES_HOME="${HOME}/.dotfiles"
+DOTFILES_COMMON="${DOTFILES_HOME}/shell/common"
 DOTFILES_BASH="${DOTFILES_HOME}/shell/bash"
 BASH_SOURCE_DIR="${DOTFILES_BASH}/source"
 
@@ -18,70 +19,8 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 # of that by exporting all directories listed in ~/.path
 # }}}
 
-# Source additional files {{{
-src_one_time_transfers() {
-  local file
-
-  for file in "$HOME"/.{dirs,vars}; do
-    . "$file"
-  done
-}
-
-# Source all files in a given directory
-src_in_dir() {
-  local dir="$1"
-  local file
-
-  if [ ! -d "$dir" ]; then
-    echo "ERROR: No directory provided to function ${FUNCNAME[0]}" 1>&2
-    return 1
-  fi
-
-  for file in $(find "$dir" -maxdepth 1 -mindepth 1 -type f); do
-    . "$file"
-  done
-}
-
-# Source additional OS-specific files
-src_os() {
-  local linuxSrcDir="${BASH_SOURCE_DIR}/linux"
-  local archSrcDir="${linuxSrcDir}/arch"
-
-  # Make sure to get reference to "getosinfo" function
-  . "$BASH_SOURCE_DIR/functions_os.bash"
-  local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
-
-  case "$os" in
-  "Arch Linux")
-    src_in_dir "${archSrcDir}"
-    ;;
-
-  *)
-    echo "ERROR: Unknown OS for sourcing: ${os}" 1>&2
-    return 1
-    ;;
-  esac
-}
-
-# Main source function. This is the one that you will be frequently calling from
-# the command line.
-src() {
-  local file
-
-  # Source one-time transfer files
-  src_one_time_transfers
-  # Source all alias and function files
-  src_in_dir "${BASH_SOURCE_DIR}"
-  # Re-read the ~/.inputrc file.
-  [ -f "${HOME}/.inputrc" ] && bind -f "${HOME}/.inputrc"
-  src_os
-  # Also source the path file
-  spath "${PATH_FILE:-${HOME}/.path}" "PATH"
-  # Make sure LuaRocks are discoverable.
-  src_lua_path
-}
-src
-# }}}
+# Pull in common shell aliases/functions as soon as possible.
+source "${DOTFILES_COMMON}/source/common.sh"
 
 # Shell completion {{{
 # Include extra bash completions if available.
