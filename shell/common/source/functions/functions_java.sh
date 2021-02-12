@@ -23,4 +23,18 @@ initialize_sdkman_for_shell() {
   fi
 }
 
+# Source Java components in a profile initialization file, such as .bashrc
+# or .zshrc.
+src_java_for_profile() {
+  # Use jenv to manage installed Java versions (if available)
+  if [ -n "$(command -v jenv)" ]; then
+    eval "$(jenv init -)"
+  fi
+
+  #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+  # Home directory for sdkman program.
+  export SDKMAN_DIR="${HOME}/.sdkman"
+  initialize_sdkman_for_shell
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

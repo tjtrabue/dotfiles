@@ -84,17 +84,7 @@ use_icons_in_terminal() {
 }
 use_icons_in_terminal
 
-# Use jenv to manage installed Java versions (if available)
-if [ -n "$(command -v jenv)" ]; then
-  eval "$(jenv init -)"
-fi
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-# Home directory for sdkman program.
-export SDKMAN_DIR="${HOME}/.sdkman"
-if [ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]; then
-  . "${SDKMAN_DIR}/bin/sdkman-init.sh"
-fi
+src_java_for_profile
 
 # Print neofetch info when the terminal first opens
 [ "$(command -v neofetch)" != "" ] && neofetch 1>&2

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # General purpose printing function
 echoe() {
@@ -15,9 +15,9 @@ log() {
   local outputColor="[${logTypeColor}${infoColor}] $msg"
   local LOG_TO_FILE="${LOG_TO_FILE:-""}"
 
-  echoe "$outputColor"
-  if [[ -f "$LOG_TO_FILE" ]]; then
-    echoe "$output" >>"$LOG_TO_FILE"
+  echoe "${outputColor}"
+  if [ -f "${LOG_TO_FILE}" ]; then
+    echoe "${output}" >>"${LOG_TO_FILE}"
   fi
 }
 
@@ -86,10 +86,9 @@ __get_log_message_info() {
   local outputInColor="${1:-''}"
   local info=""
   local sep="|"
-  local calledFileIndex=$((${#BASH_SOURCE[@]} - 1))
-  local fileName="$(basename "${BASH_SOURCE[${calledFileIndex}]}")"
+  local fileName="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
   local funcName="${FUNCNAME[3]}"
-  local lineNo="${BASH_LINENO[2]}"
+  local lineNo="${LINENO[2]}"
 
   if [ -n "$fileName" ]; then
     if [ -n "$outputInColor" ]; then

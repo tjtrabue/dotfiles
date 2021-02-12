@@ -160,5 +160,20 @@ if [ -x "$(command -v starship)" ]; then
 fi
 # }}}
 
+# Source forgit git cli if available
+[ -f "${WS}/forgit/forgit.plugin.sh" ] && . "${WS}/forgit/forgit.plugin.sh"
+
+# These icons are supplied by the icons-in-terminal project
+use_icons_in_terminal() {
+  local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"
+  [ -f "${iconScript}" ] && . "${iconScript}"
+}
+use_icons_in_terminal
+
+src_java_for_profile
+
+# Print neofetch info when the terminal first opens
+[ "$(command -v neofetch)" != "" ] && neofetch 1>&2
+
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
