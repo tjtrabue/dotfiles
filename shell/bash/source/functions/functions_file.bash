@@ -54,24 +54,26 @@ mksource() {
 
 mkinit() {
   local newInit="$1"
-  local initTemplate="$DOTFILES_HOME/copy/templates/mkinit.bash"
+  local initTemplate="${DOTFILES_HOME}/copy/templates/mkinit.bash"
+  local initFileName
+  local initFilePath
 
-  if [[ -z "$newInit" ]]; then
+  if [ -z "$newInit" ]; then
     err "Must provide name for new init file"
     return 1
   fi
 
-  local initFileName="$newInit"
-  if [[ ! "$initFileName" =~ ^init_ ]]; then
+  initFileName="${newInit}"
+  if ! echo "${initFileName}" | grep -q "^init[_\-]"; then
     initFileName="init_${initFileName}"
   fi
-  if [[ ! "$initFileName" =~ .bash$ ]]; then
+  if ! echo "${initFileName}" | grep -E -q "\.(sh)|(bash)"; then
     initFileName="${initFileName}"
   fi
-  local initFilePath="${DOTFILES_HOME}/init/${initFileName}"
+  initFilePath="${DOTFILES_HOME}/init/${initFileName}"
 
-  cp "$initTemplate" "$initFilePath"
-  chmod 755 "$initFilePath"
+  cp "${initTemplate}" "${initFilePath}"
+  chmod 755 "${initFilePath}"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
