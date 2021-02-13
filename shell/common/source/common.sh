@@ -7,10 +7,11 @@
 
 # Variables {{{
 DOTFILES_HOME="${HOME}/.dotfiles"
-COMMON_SHELL="${DOTFILES_HOME}/shell/common"
+DOTFILES_SHELL="${DOTFILES_HOME}/shell"
+COMMON_SHELL="${DOTFILES_SHELL}/common"
+DOTFILES_BASH="${DOTFILES_SHELL}/bash"
+DOTFILES_ZSH="${DOTFILES_SHELL}/zsh"
 COMMON_SOURCE="${COMMON_SHELL}/source"
-DOTFILES_BASH="${DOTFILES_HOME}/shell/bash"
-DOTFILES_ZSH="${DOTFILES_HOME}/shell/zsh"
 LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 # }}}
 
@@ -59,8 +60,7 @@ __src_os() {
     ;;
 
   *)
-    echo "ERROR: Unknown OS for sourcing: ${os}" 1>&2
-    return 1
+    echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
     ;;
   esac
 }
