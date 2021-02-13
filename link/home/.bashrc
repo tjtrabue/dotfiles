@@ -23,8 +23,8 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 source "${DOTFILES_COMMON}/source/common.sh"
 
 # Shell completion {{{
-# Include extra bash completions if available.
-add_bash_completions
+# Include extra CLI completions if available.
+add_shell_completions
 # }}}
 
 # Change ls colors (dircolors) {{{

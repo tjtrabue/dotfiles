@@ -90,9 +90,6 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # autosuggestions {{{
   # Show completion suggestions as you type, like in fish.
   zplug "zsh-users/zsh-autosuggestions"
-  # Add special keybindings
-  # Use C-SPACE to move to end of current autosuggestion
-  bindkey '^ ' autosuggest-accept
   # }}}
 
   # autocomplete {{{
@@ -100,6 +97,9 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # Fairly buggy. May want to wait before using.
   # zplug "marlonrichert/zsh-autocomplete"
   # }}}
+
+  # Use extra community completions.
+  zplug "zsh-users/zsh-completions"
 
   # Fish-like syntax highlighting that colorizes your commands as you type them.
   zplug "zsh-users/zsh-syntax-highlighting"
@@ -141,6 +141,17 @@ unset FZF_SYSTEM
 unset FZF_USER_SHELL
 # }}}
 
+# Completions {{{
+# No need for this. All completions are included, or in the
+# zsh-completions plugin.
+# add_shell_completions
+# }}}
+
+# Keybindings {{{
+# Use C-L to move cursor to end of autosuggestion.
+bindkey "^L" autosuggest-accept
+# }}}
+
 # zstyle {{{
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
@@ -152,6 +163,9 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 zstyle ':autocomplete:tab:*' insert-unambiguous yes
 zstyle ':autocomplete:tab:*' fzf-completion yes
 # }}}
+
+# Initialize the shell's auto-complete functionality.
+# autoload -Uz compinit && compinit
 
 # Prompt {{{
 if [ -x "$(command -v starship)" ]; then

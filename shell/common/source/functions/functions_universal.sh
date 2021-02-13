@@ -52,27 +52,6 @@ syml() {
 
   ls -la "$directory" | grep '\->' | awk {'print $9 " " $10 " " $11'}
 }
-
-# Update OS X, Homebrew, Ruby, npm, sdkman, pip, and their installed packages
-update_macos() {
-  # Keep-alive: update existing `sudo` time stamp until the updates complete:
-  while true; do
-    sudo -n true
-    sleep 60
-    kill -0 "$$" || return
-  done 2>/dev/null &
-  sudo softwareupdate -i -a
-  brew update
-  brew upgrade --all
-  brew cleanup
-  npm install npm -g
-  npm update -g
-  sudo gem update --system
-  sudo gem update
-  sdk selfupdate
-  pip install --upgrade pip
-  pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
-}
 # }}}
 
 # File Manipulation {{{
@@ -443,6 +422,13 @@ tre() {
     err "No tree command available."
     return 1
   fi
+}
+# }}}
+
+# Shell {{{
+# Return the user's current shell name, such as "bash" or "zsh".
+currentshell() {
+  ps -p $$ | awk '{print $NF}' | tail -1
 }
 # }}}
 

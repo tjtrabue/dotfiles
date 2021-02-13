@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# Include extra shell completions for whatever shell the user currently uses.
+add_shell_completions() {
+  local currentShell="$(currentshell)"
+
+  if [ "${currentShell}" = "bash" ]; then
+    add_bash_completions
+  elif [ "${currentShell}" = "zsh" ]; then
+    add_zsh_completions
+  fi
+}
+
 # Include extra bash completions if available.
 add_bash_completions() {
   local bashCompletionHome="/usr/share/bash-completion"
@@ -15,6 +26,30 @@ add_bash_completions() {
   # Add extra completions to special command aliases
   __add_git_alias_completions
   __add_docker_alias_completions
+}
+
+# Add any extra Zsh completions.
+# NOTE ABOUT ZSH: Install and activate Zsh completions with a plugin manager,
+#                 such as zplug.
+add_zsh_completions() {
+  __add_zsh_git_completions
+}
+
+# Download extra Zsh completions for git.
+__add_zsh_git_completions() {
+  local completionsDir="${ZDOTDIR:-${HOME}/.zsh}"
+  local bashCompletionFile="${completionsDir}/git-completion.bash"
+  local zshCompletionFile="${completionsDir}/_git"
+
+  mkdir -p "${completionsDir}"
+  if [ ! -f "${bashCompletionFile}" ]; then
+    curl -o "${bashCompletionFile}" \
+      "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
+  fi
+  if [ ! -f "${zshCompletionFile}" ]; then
+    curl -o "${zshCompletionFile}" \
+      "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh"
+  fi
 }
 
 # Source bash completion files installed manually by the user.

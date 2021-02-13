@@ -89,7 +89,7 @@ __get_ls_colorflag() {
   local colorflag
 
   # Detect which `ls` flavor is in use
-  if ls --color >/dev/null 2>&1; then # GNU `ls`
+  if ls --color=auto >/dev/null 2>&1; then # GNU `ls`
     colorflag="--color"
   else # OS X `ls`
     colorflag="-G"

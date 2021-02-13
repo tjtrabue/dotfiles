@@ -20,16 +20,6 @@ mksource() {
   # Remove file extension from file name
   sourceFileName="${sourceFileName/.@(bash|zsh|sh)/}"
 
-  response=""
-  while ! echo "$response" | grep -q "[YyNn]"; do
-    echoe "Create file ${sourceFileName}? [Y/n]"
-    read -sn1 response
-    response="${response:-y}"
-  done
-  if echo "$response" | grep -q "[Nn]"; then
-    return 1
-  fi
-
   if echo "${sourceFileName}" | grep -q "^aliases"; then
     targetFile="${sourceDir}/aliases/${sourceFileName}.sh"
   elif echo "${sourceFileName}" | grep -q "^functions"; then
