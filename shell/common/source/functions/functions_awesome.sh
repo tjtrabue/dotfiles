@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Very useful for testing changes to the rc.lua file.
 test_awesome() {

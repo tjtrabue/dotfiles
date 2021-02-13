@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # PIP {{{
 alias pipu="pip install --user --upgrade";

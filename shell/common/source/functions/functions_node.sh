@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 install_node_packages() {
   if [ "$(command -v parallel)" != "" ]; then

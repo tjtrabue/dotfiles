@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Basic aliases {{{
 alias edit="$EDITOR"

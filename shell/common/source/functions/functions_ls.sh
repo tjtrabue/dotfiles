@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Alias function to list ls output in long-form.
 ll() {

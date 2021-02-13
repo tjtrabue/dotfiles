@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Install SDKMan, the manager for Java development SDKs and tools.
 install_sdkman() {

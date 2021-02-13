@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 install_haskell_packages() {
   local packageFile="$DOTFILES_PACKAGES_DIR/haskell_packages.txt"

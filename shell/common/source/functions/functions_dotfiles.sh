@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Make sure all dotfile symlinks are present in $HOME directory
 dotsync() {

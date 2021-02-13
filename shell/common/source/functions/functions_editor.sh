@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Fuzzy finds files and opens them in the configured editor.
 ctrlp() {

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Get all installed Lua versions
 __get_lua_versions() {

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 emacs_rm_backups() {
   find -L "$DOTFILES_HOME" -type f -regextype posix-extended \

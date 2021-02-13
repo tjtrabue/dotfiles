@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Use Mutt/Neomutt depending on what's installed,
 # and open in attachments directory if available.

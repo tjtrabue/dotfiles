@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # General {{{
 # Returns the block of sourced code for the function or alias given as an argument:

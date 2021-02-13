@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Connect to a WiFi network.
 # $1 - The network's SSID (i.e., name)

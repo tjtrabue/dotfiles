@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Printing / clearing aliases: {{{
 # NOTE: Most 'ls' aliases are now functions in functions_universal.bash.

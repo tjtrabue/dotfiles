@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Installs a python PIP package for both Python v2 and v3
 smartpip() {

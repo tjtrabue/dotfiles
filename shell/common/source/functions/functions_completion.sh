@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Include extra bash completions if available.
 add_bash_completions() {

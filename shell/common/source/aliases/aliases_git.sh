@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 ### NOTE CONCERNING "MISSING" ALIASES:
 # Many of the most common git aliases are listed in functions_completion.bash,

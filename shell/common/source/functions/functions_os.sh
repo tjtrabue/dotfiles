@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Gets the Linux OS's name and version.
 getosinfo() {

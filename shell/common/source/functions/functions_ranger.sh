@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 ranger-cd() {
   local tempFile="$(mktemp -t "ranger_cd.XXXXXXXXXX")"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Always use Vi keybindings for Lynx web browser.
 alias lynx="lynx -vikeys"

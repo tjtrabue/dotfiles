@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 get_current_projects() {
   do_multiple "git clone" "$CURRENT_PROJECTS_FILE"

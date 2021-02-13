@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Locate a given font via an input regular expression
 findfont() {

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 install_ruby_packages() {
   local line

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # Contains custom Git functions that can be run in the terminal.
 
 # General {{{

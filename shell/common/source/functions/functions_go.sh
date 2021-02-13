@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Install packages managed by the go-lang language.
 install_go_packages() {

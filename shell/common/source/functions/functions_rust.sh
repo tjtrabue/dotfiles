@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 install_rust_packages() {
   local githubPackageFile="$DOTFILES_PACKAGES_DIR/rust_repo_urls.txt"

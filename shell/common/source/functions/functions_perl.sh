@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Install plsense intellisense engine for Perl.
 # As of now it is not on CPAN.
