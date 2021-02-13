@@ -514,7 +514,7 @@ EOF
     err "No initialization topic(s) provided."
     runinit_usage
     return 1
-  elif [[ "${initTopics[0]}" =~ (-h)|(--help) ]]; then
+  elif echo "${initTopics[0]}" | grep -E -q "(-h)|(--help)"; then
     runinit_usage
     return 0
   fi
