@@ -7,7 +7,7 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
-declare DOTFILES_ZSH="${DOTFILES_REPO}/zsh"
+declare DOTFILES_ZSH="${DOTFILES_REPO}/shell/zsh"
 declare DOTFILES_ZDOTDIR="${DOTFILES_ZSH}/zdotdir"
 declare USER_ZDOTDIR="${HOME}/.zsh"
 

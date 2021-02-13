@@ -34,14 +34,13 @@ __src_in_dir() {
   if [ -z "$dir" ]; then
     echo "ERROR: No directory provided to function ${FUNCNAME[0]}" 1>&2
     return 1
-  elif [ ! -d "$dir" ]; then
-    echo "ERROR: ${dir} is not a directory" 1>&2
-    return 2
   fi
 
-  for file in $(find "$dir" -maxdepth 1 -mindepth 1 -type f); do
-    . "$file"
-  done
+  if [ -d "$dir" ]; then
+    for file in $(find "$dir" -maxdepth 1 -mindepth 1 -type f); do
+      . "$file"
+    done
+  fi
 }
 
 # Source additional OS-specific files

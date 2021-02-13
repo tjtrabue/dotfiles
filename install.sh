@@ -5,7 +5,9 @@
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare DOTFILES_HOME="$HOME/.dotfiles"
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-declare IMPORT="$DOTFILES_REPO/bash/source"
+declare DOTFILES_SHELL="${DOTFILES_REPO}/shell"
+declare COMMON_SHELL="${DOTFILES_SHELL}/common"
+declare COMMON_SOURCE="${COMMON_SHELL}/source"
 declare DOTFILES_LINK="$DOTFILES_REPO/link"
 declare DOTFILES_COPY="$DOTFILES_REPO/copy"
 declare LINK_HOME="$DOTFILES_LINK/home"
@@ -33,9 +35,9 @@ declare FORCE_INSTALL=false
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
-source "${IMPORT}/functions_os.bash"
+source "${COMMON_SOURCE}/colors.sh"
+source "${COMMON_SOURCE}/functions/functions_log.sh"
+source "${COMMON_SOURCE}/functions/functions_os.sh"
 # }}}
 
 # Setup and Cleanup Functions {{{
