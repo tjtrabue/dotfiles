@@ -148,8 +148,14 @@ unset FZF_USER_SHELL
 # }}}
 
 # Keybindings {{{
-# Use C-L to move cursor to end of autosuggestion.
-bindkey "^L" autosuggest-accept
+# Ctrl-P to edit files with fzf or fzy.
+# The '-s' option translates the input string to an output string that evaluates
+# as a shell command, as opposed to evaluating the second option as a Zsh
+# widget.
+bindkey -s '^P' 'ctrlp^M'
+
+# Ctrl-L to move cursor to end of autosuggestion.
+bindkey '^L' autosuggest-accept
 # }}}
 
 # zstyle {{{

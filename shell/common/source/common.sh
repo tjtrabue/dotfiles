@@ -94,10 +94,12 @@ src() {
   # Pull in ANSI color variables
   __src_colors
 
-  # Main alias/function sourcing logic
-  for d in {aliases,functions}; do
-    __src_in_dir "${COMMON_SOURCE}/${d}"
-    __src_in_dir "${srcDir}/${d}"
+  # Source all files in all directories under *source/
+  for d in $(find "$COMMON_SOURCE" -maxdepth 1 -mindepth 1 -type d); do
+    __src_in_dir "${d}"
+  done
+  for d in $(find "${srcDir}" -maxdepth 1 -mindepth 1 -type d); do
+    __src_in_dir "${d}"
   done
 
   # Source OS-specific aliases and functions.

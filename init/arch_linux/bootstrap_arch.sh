@@ -455,6 +455,11 @@ arch-chroot "${mountRoot}" runuser -l "${user}" -c \
   install_go_packages"
 # }}}
 
+# Change shell {{{
+# Change user's shell to Zsh.
+arch-chroot "${mountRoot}" chsh -s "/bin/zsh" "${user}"
+# }}}
+
 # Laptop configuration (if computer is a laptop) {{{
 if [ "$isLaptop" -eq 0 ]; then
   info_log "Performing laptop configuration"
