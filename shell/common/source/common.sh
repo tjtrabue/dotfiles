@@ -23,7 +23,7 @@ __src_one_time_transfers() {
   local file
 
   for file in "${HOME}"/.{dirs,vars}; do
-    . "${file}"
+    [ -f "${file}" ] && . "${file}"
   done
 }
 
@@ -65,12 +65,6 @@ __src_os() {
   esac
 }
 
-# Pull in ANSI colors as variables.
-__src_colors() {
-  local colorsFile="${COMMON_SOURCE}/colors.sh"
-  [ -f "${colorsFile}" ] && . "${colorsFile}"
-}
-
 # Source all functions and alias files for any POSIX-compliant shell.
 src() {
   local currentShell="$(ps -p $$ | awk '{print $NF}' | tail -1)"
@@ -90,9 +84,6 @@ src() {
 
   # Source .vars and .dirs.
   __src_one_time_transfers
-
-  # Pull in ANSI color variables
-  __src_colors
 
   # Source all files in all directories under *source/
   for d in $(find "$COMMON_SOURCE" -maxdepth 1 -mindepth 1 -type d); do
