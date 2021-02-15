@@ -19,8 +19,7 @@ declare XRANDR_DOT="${DOTFILES_REPO}/copy/xrandr"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

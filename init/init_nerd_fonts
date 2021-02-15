@@ -9,10 +9,7 @@ declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 # }}}
 
 # Imports {{{
-source "${HOME}/.vars"
-source "${HOME}/.dirs"
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Variables {{{

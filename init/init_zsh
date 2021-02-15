@@ -14,14 +14,10 @@ declare USER_ZDOTDIR="${HOME}/.zsh"
 # Logging variables
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
-
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 # }}}
 
 # Imports {{{
-. "${HOME}/.vars"
-. "${IMPORT}/colors.bash"
-. "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

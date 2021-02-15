@@ -8,7 +8,6 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
 
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source";
 declare VERBOSE=false;
 
 declare BASE_GIT_URL="https://github.com";
@@ -22,8 +21,7 @@ declare CYCLEFOCUS_REPO_DIR="${AWESOME_CONFIG_DIR}/awesome-cyclefocus"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash";
-source "${IMPORT}/functions_log.bash";
+source "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

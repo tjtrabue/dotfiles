@@ -12,8 +12,7 @@ declare EMACS_CONF_ORG_HOME="${EMACS_CONF}/${ORG_CONFIG_FILE_NAME}"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

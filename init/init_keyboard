@@ -17,8 +17,7 @@ declare WALLY_BIN_PATH="${HOME}/Downloads/wally"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash";
-source "${IMPORT}/functions_log.bash";
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

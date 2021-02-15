@@ -17,8 +17,7 @@ declare GHC_VERSIONS=('8.8.3' '8.10.1')
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash";
-source "${IMPORT}/functions_log.bash";
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

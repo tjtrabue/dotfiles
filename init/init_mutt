@@ -17,8 +17,7 @@ declare MUTT_CONFIG_TARGET="${HOME}/.mutt"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

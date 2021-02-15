@@ -18,9 +18,7 @@ declare VERBOSE=false
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
-source "${HOME}/.vars"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

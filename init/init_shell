@@ -18,9 +18,7 @@ declare USER_BASH_COMPLETION_DIR="${HOME}/.bash_completion.d"
 # }}}
 
 # Imports {{{
-. "${HOME}/.vars"
-. "${IMPORT}/colors.bash"
-. "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

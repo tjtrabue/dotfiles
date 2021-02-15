@@ -13,8 +13,7 @@ declare UNCRUSTIFY_BUILD_DIR="${UNCRUSTIFY_INSTALL_DIR}/build";
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash";
-source "${IMPORT}/functions_log.bash";
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

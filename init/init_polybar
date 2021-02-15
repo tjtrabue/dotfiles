@@ -27,8 +27,7 @@ declare LOG_TO_FILE="$DOTFILES_HOME/dotfiles.log"
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

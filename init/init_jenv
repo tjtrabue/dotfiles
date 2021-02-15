@@ -15,10 +15,7 @@ declare ADDED_JENV_PATHS_AUTOMATICALLY=false
 # }}}
 
 # Imports {{{
-source "${IMPORT}/colors.bash"
-source "${IMPORT}/functions_log.bash"
-source "${IMPORT}/functions_os.bash"
-source "${IMPORT}/functions_path.bash"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{
