@@ -5,7 +5,6 @@ set -e
 
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 # }}}
 
 # Imports {{{

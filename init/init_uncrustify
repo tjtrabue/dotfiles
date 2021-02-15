@@ -6,7 +6,6 @@ set -e
 # Variables {{{
 declare WS="${HOME}/Workspace";
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source";
 declare UNCRUSTIFY_GIT_URL="https://github.com/uncrustify/uncrustify.git";
 declare UNCRUSTIFY_INSTALL_DIR="${WS}/uncrustify";
 declare UNCRUSTIFY_BUILD_DIR="${UNCRUSTIFY_INSTALL_DIR}/build";

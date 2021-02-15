@@ -12,8 +12,6 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
 
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
-
 declare USER_BASH_COMPLETION_DIR="${HOME}/.bash_completion.d"
 # }}}
 

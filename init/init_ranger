@@ -13,7 +13,6 @@ declare RANGER_PLUGINS="${RANGER_CONFIG_HOME}/plugins"
 # The user's Ranger configuration file
 declare RANGER_USER_CONFIG="${RANGER_CONFIG_HOME}/rc.conf"
 
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 declare VERBOSE=false
 # }}}
 

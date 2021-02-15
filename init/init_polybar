@@ -21,7 +21,6 @@ declare POLYBAR_THEME_SELECTION_NUM
 declare USER_FONTS="$HOME/.local/share/fonts"
 
 # Program flags
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 declare VERBOSE=false
 declare LOG_TO_FILE="$DOTFILES_HOME/dotfiles.log"
 # }}}

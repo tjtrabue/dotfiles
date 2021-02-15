@@ -21,7 +21,7 @@ declare CYCLEFOCUS_REPO_DIR="${AWESOME_CONFIG_DIR}/awesome-cyclefocus"
 # }}}
 
 # Imports {{{
-source "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

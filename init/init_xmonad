@@ -2,8 +2,6 @@
 
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source";
-
 declare DOTFILES_XMONAD="${DOTFILES_REPO}/link/xmonad";
 declare XMONAD_CONF="${HOME}/.xmonad";
 # }}}

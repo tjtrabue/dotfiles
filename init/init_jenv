@@ -7,8 +7,6 @@
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
-
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 declare VERBOSE=false
 declare JENV_HOME="${HOME}/.jenv"
 declare ADDED_JENV_PATHS_AUTOMATICALLY=false
