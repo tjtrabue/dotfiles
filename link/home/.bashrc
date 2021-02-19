@@ -70,11 +70,6 @@ if [ -f "${HOME}/.fzf.bash" ]; then
 fi
 # }}}
 
-# Source forgit git cli if available.
-if [ -f "${WS}/forgit/forgit.plugin.sh" ]; then
-  . "${WS}/forgit/forgit.plugin.sh"
-fi
-
 # These icons are supplied by the icons-in-terminal project.
 use_icons_in_terminal() {
   local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"
@@ -84,6 +79,8 @@ use_icons_in_terminal() {
 }
 use_icons_in_terminal
 
+# Load forgit and other git-related things.
+src_git_for_profile
 # Load jenv and sdkman.
 src_java_for_profile
 # Load Ruby Version Manager (rvm).
