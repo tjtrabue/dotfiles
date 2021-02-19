@@ -44,7 +44,18 @@
 
 # Pull {{{
 [pull]
+  # Always rebase current branch on top of the pulled remote tracking branch.
   rebase = true
+# }}}
+
+# Push {{{
+[push]
+  # Use Git 1.x.x default to avoid errors on machines with old Git
+  # installations. To use `simple` instead, add this to your ~/.extra file:
+  # `git config --global push.default simple`.
+  default = matching
+  # Make `git push` push relevant annotated tags when pushing branches out.
+  followTags = true
 # }}}
 
 # Colors {{{
@@ -88,6 +99,12 @@
   nobranch = red reverse
   localBranch = yellow reverse
   remoteBranch = blue reverse
+# }}}
+
+# Help {{{
+[help]
+  # Automatically correct and execute mistyped commands
+  autocorrect = 1
 # }}}
 
 # Merge {{{
