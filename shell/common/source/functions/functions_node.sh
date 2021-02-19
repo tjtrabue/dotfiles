@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # Install Node Version Manager (nvm)
 install_nvm() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
@@ -31,12 +30,9 @@ install_latest_node() {
   nvm install node && nvm use node && nvm alias default node
 }
 
+# Install global NPM packages for the currently selected Node.js version.
 install_node_packages() {
-  if [ "$(command -v parallel)" != "" ]; then
-    parallel --bar npm install -g :::: "$NODE_PACKAGES_FILE"
-  else
-    xargs npm install -g <"$NODE_PACKAGES_FILE"
-  fi
+  xargs npm install -g <"${NODE_PACKAGES_FILE}"
 }
 
 update_node_packages() {

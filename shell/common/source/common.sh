@@ -99,21 +99,41 @@ __src() {
   # Source OS-specific aliases and functions.
   __src_os
 }
+
+# This function takes care of sourcing rvm, jenv, nvm, etc.
+# These version/environment managers all manipulate $PATH, so we MUST call them
+# AFTER we've constructed our custom $PATH, otherwise their work will be
+# overwritten.
+__src_extra_environment_profiles() {
+  src_git_for_profile
+  src_java_for_profile
+  src_node_for_profile
+  src_python_for_profile
+  src_ruby_for_profile
+}
 # }}}
 
 # Source all aliases/functions. This function acts as a single point-of-entry
 # for pulling extra definitions into a shell, and should work regardless of
 # the shell in use.
-src() {
+src_all() {
   # Immediately source all function/alias files.
   __src
   # Add extra binary paths to $PATH
   spath
   # Make sure luarocks are available
   src_lua_path
+  # This should come last!!!
+  __src_extra_environment_profiles
+}
+
+# A leaner version of src that just sources aliases/functions instead of the
+# entire environment.
+src() {
+  __src
 }
 
 # Source everything as soon as this file is sourced!
-src
+src_all
 
 # vim:foldenable:foldmethod=marker:foldlevel=0

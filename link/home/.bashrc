@@ -79,24 +79,13 @@ use_icons_in_terminal() {
 }
 use_icons_in_terminal
 
-# Load forgit and other git-related things.
-src_git_for_profile
-# Load jenv and sdkman.
-src_java_for_profile
-# Load Ruby Version Manager (rvm).
-src_ruby_for_profile
-# Load Node.js Version Manager (nvm).
-src_node_for_profile
-# Load pyenv.
-src_python_for_profile
+# One more src for good luck! Sometimes diraliases do not work after this
+# script sources common.sh, so we add an extra src command here.
+src
 
 # Print neofetch info when the terminal first opens
 if [ -x "$(command -v neofetch)" ]; then
   neofetch 1>&2
 fi
-
-# One more src for good luck! Sometimes diraliases do not work after this
-# script sources common.sh, so we add an extra src command here.
-src
 
 # vim:foldenable:foldmethod=marker:foldlevel=0

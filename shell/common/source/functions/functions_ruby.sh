@@ -62,6 +62,7 @@ src_ruby_for_profile() {
   # Load Ruby Version Manager (rvm) if available.
   if [ -s "${rvmHome}/scripts/rvm" ]; then
     . "${rvmHome}/scripts/rvm"
+    rvm use default >>/dev/null 2>&1
   fi
 }
 
