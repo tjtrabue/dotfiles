@@ -54,7 +54,7 @@ update_ruby_packages() {
 src_ruby_for_profile() {
   local rvmHome="${HOME}/.rvm"
   # Load Ruby Version Manager (rvm) if available.
-  if [ -f "${rvmHome}/scripts/rvm" ]; then
+  if [ -s "${rvmHome}/scripts/rvm" ]; then
     . "${rvmHome}/scripts/rvm"
   fi
 }

@@ -5,11 +5,8 @@ set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
-declare DOTFILES_ZSH="${DOTFILES_REPO}/shell/zsh"
-declare DOTFILES_ZDOTDIR="${DOTFILES_ZSH}/zdotdir"
-declare USER_ZDOTDIR="${HOME}/.zsh"
 
 # Logging variables
 declare LOG_TO_FILE=""
@@ -17,7 +14,7 @@ declare LOG_LEVEL=3
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_HOME}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{
@@ -25,7 +22,7 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Initialize Vim/Neovim on a new machine.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -36,14 +33,9 @@ OPTIONS:
 EOF
 }
 
-link_zdotdir() {
-  log_info "Linking Zsh dotfiles directory"
-  ln -s "${DOTFILES_ZDOTDIR}" "${USER_ZDOTDIR}"
-}
-
 main() {
-  print_header "Initializing Zsh Environment"
-  link_zdotdir
+  print_header "Initializing Vim/Neovim"
+  install_coc_extensions
 }
 # }}}
 

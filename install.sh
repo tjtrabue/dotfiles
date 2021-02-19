@@ -145,11 +145,15 @@ print_vars() {
 # Primary Functions {{{
 # Link the ~/.config directory
 init_config() {
-  log_info "Initializing ~/.config directory."
+  local homeConfig="${HOME}/.config"
 
-  local homeConfig="$HOME/.config"
-  [ -d "$homeConfig" ] && rm -rf "$homeConfig"
-  ln -sf "$LINK_CONFIG" "$homeConfig"
+  log_info "Initializing ${homeConfig} directory."
+  if [ -d "${homeConfig}" ]; then
+    warn "Backing up old ${homeConfig} directory."
+    mv "${homeConfig}"{,.bak}
+  fi
+  ln -sf "${LINK_CONFIG}" "${homeConfig}"
+
   succ "Done."
 }
 
@@ -157,16 +161,17 @@ init_config() {
 link_dotfiles() {
   log_info "Linking dotfiles"
   # Link the repository to ~/.dotfiles
-  ln -s "$DOTFILES_REPO" "$DOTFILES_HOME"
+  ln -s "${DOTFILES_REPO}" "${DOTFILES_HOME}"
   # Link $HOME files
-  find "$LINK_HOME" -type f -exec ln -sf '{}' "$HOME/" \;
+  find "${LINK_HOME}" -type f -exec ln -sf '{}' "${HOME}/" \;
   succ "Linking complete."
 }
 
 # Copy one-time transfer files
 copy_dotfiles() {
   log_info "Copying dotfiles"
-  find "$DOTFILES_COPY" -maxdepth 1 -mindepth 1 -type f -exec cp -f '{}' "$HOME/" \;
+  find "${DOTFILES_COPY}" -maxdepth 1 -mindepth 1 -type f \
+    -exec cp -f '{}' "${HOME}/" \;
   succ "Copying complete"
 }
 

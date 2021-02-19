@@ -191,6 +191,8 @@ use_icons_in_terminal() {
 use_icons_in_terminal
 
 src_java_for_profile
+src_ruby_for_profile
+src_node_for_profile
 
 # Print neofetch info when the terminal first opens
 [ "$(command -v neofetch)" != "" ] && neofetch 1>&2

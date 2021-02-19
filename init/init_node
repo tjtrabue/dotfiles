@@ -22,7 +22,7 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Initialize the Node.js development environment.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]

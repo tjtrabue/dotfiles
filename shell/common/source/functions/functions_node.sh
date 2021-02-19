@@ -52,12 +52,14 @@ update_node_packages() {
 # This function should be placed toward the end of your profile file, such as
 # ~/.bashrc, or ~/.zshrc.
 src_node_for_profile() {
-  if [ -d "${NVM_DIR}" ]; then
-    if [ -s "${NVM_DIR}/nvm.sh" ]; then
-      . "${NVM_DIR}/nvm.sh"
+  local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
+
+  if [ -d "${nvmDir}" ]; then
+    if [ -s "${nvmDir}/nvm.sh" ]; then
+      . "${nvmDir}/nvm.sh"
     fi
-    if [ -s "${NVM_DIR}/bash_completion" ]; then
-      . "${NVM_DIR}/bash_completion"
+    if [ -s "${nvmDir}/bash_completion" ]; then
+      . "${nvmDir}/bash_completion"
     fi
   fi
 }
