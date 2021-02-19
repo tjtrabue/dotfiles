@@ -3,7 +3,7 @@
 
 # Install Node Version Manager (nvm)
 install_nvm() {
-  local nvmDir="${HOME}/.nvm"
+  local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
 
   log_info "Installing nvm"
   if [ ! -d "${nvmDir}" ]; then
@@ -21,7 +21,9 @@ install_nvm() {
 
 # Use nvm to install the latest version of Node.js.
 install_latest_node() {
-  if ! __nvm_installed; then
+  local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
+
+  if ! __tool_installed "nvm" "${nvmDir}"; then
     install_nvm
   fi
   # Install latest Node.js and set it as the currently used version.
@@ -54,6 +56,12 @@ update_node_packages() {
 src_node_for_profile() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
 
+  # Install nvm if we do not yet have it installed.
+  if ! __tool_installed "nvm" "${nvmDir}"; then
+    install_nvm
+    install_latest_node
+  fi
+
   if [ -d "${nvmDir}" ]; then
     if [ -s "${nvmDir}/nvm.sh" ]; then
       . "${nvmDir}/nvm.sh"
@@ -62,17 +70,6 @@ src_node_for_profile() {
       . "${nvmDir}/bash_completion"
     fi
   fi
-}
-
-# Return 0 if nvm is installed. Return non-zero otherwise.
-__nvm_installed () {
-  local nvmHome="${HOME}/.nvm"
-
-  if [ "$(command -v nvm)" = "" ] && [ ! -d "${nvmHome}" ]; then
-    return 1
-  fi
-
-  return 0
 }
 
 #vim foldenable:foldmethod=indent:foldnestmax=1

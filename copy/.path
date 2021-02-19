@@ -14,5 +14,6 @@ $HOME/.cabal/bin
 $HOME/.luarocks/bin
 $HOME/.npm-global/bin
 $HOME/.cargo/bin
+$HOME/.jenv/bin
 $HOME/go/bin
 $HOME/perl5/bin

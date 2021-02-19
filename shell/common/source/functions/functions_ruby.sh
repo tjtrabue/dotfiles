@@ -21,7 +21,9 @@ add_gem_bin_dirs_to_path() {
 
 # Install Ruby Version Manager (rvm) for any supported platform.
 install_rvm() {
-  if ! __rvm_installed; then
+  local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
+
+  if ! __tool_installed "rvm" "${rvmHome}"; then
     curl -sSL "https://get.rvm.io" | bash
   else
     warn "rvm is already installed."
@@ -30,10 +32,10 @@ install_rvm() {
 
 # Use rvm to install the latest ruby.
 install_latest_ruby() {
-  local rvmHome="${HOME}/.rvm"
+  local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
   local rvmScriptsDir="${rvmHome}/scripts"
 
-  if ! __rvm_installed; then
+  if ! __tool_installed "rvm" "${rvmHome}"; then
     # Install rvm if necessary.
     install_rvm
     . "${rvmScriptsDir}/rvm"
@@ -52,20 +54,18 @@ update_ruby_packages() {
 
 # Prepare ruby environment for shell.
 src_ruby_for_profile() {
-  local rvmHome="${HOME}/.rvm"
+  local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
+
+  # Install rvm if we do not yet have it installed.
+  if ! __tool_installed "rvm" "${rvmHome}"; then
+    install_rvm
+    install_latest_ruby
+  fi
+
   # Load Ruby Version Manager (rvm) if available.
   if [ -s "${rvmHome}/scripts/rvm" ]; then
     . "${rvmHome}/scripts/rvm"
   fi
-}
-
-# Return 0 if rvm is installed. Return non-zero otherwise.
-__rvm_installed() {
-  local rvmHome="${HOME}/.rvm"
-  if [ "$(command -v rvm)" = "" ] && [ ! -d "${rvmHome}" ]; then
-    return 1
-  fi
-  return 0
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1

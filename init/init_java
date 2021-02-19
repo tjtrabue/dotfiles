@@ -81,7 +81,9 @@ install_gradle() {
 # Main point of entry.
 main() {
   print_header "Initializing Java Development Environment"
+  install_jenv
   install_sdkman
+  initialize_jenv_for_shell
   initialize_sdkman_for_shell
   install_java
   install_maven

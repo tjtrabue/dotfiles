@@ -105,3 +105,7 @@ if [ -x "$(command -v neofetch)" ]; then
 fi
 
 # vim:foldenable:foldmethod=marker
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/nfsdata/tjtrabu/.sdkman"
+[[ -s "/nfsdata/tjtrabu/.sdkman/bin/sdkman-init.sh" ]] && source "/nfsdata/tjtrabu/.sdkman/bin/sdkman-init.sh"
