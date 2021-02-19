@@ -47,6 +47,9 @@ link/config/dconf/
 link/config/pulse/
 link/config/configstore/
 
+# Ignore local desktop menu config
+link/config/menus
+
 # coc.nvim
 link/config/coc/commands
 link/config/coc/explorer-actions

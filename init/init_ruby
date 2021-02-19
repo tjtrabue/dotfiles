@@ -33,6 +33,8 @@ EOF
 }
 
 main() {
+  install_rvm
+  install_latest_ruby
   install_ruby_packages
   add_gem_bin_dirs_to_path
 }

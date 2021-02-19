@@ -20,10 +20,12 @@ LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 # Source files that were transferred from the dotfiles repo, but not linked
 # to track future changes.
 __src_one_time_transfers() {
-  local file
+  local f
 
-  for file in "${HOME}"/.{dirs,vars}; do
-    [ -f "${file}" ] && . "${file}"
+  for f in "${HOME}/.dirs" "${HOME}/.vars"; do
+    if [ -f "${f}" ]; then
+      . "${f}"
+    fi
   done
 }
 
@@ -33,7 +35,7 @@ __src_in_dir() {
   local file
 
   if [ -z "$dir" ]; then
-    echo "ERROR: No directory provided to function ${FUNCNAME[0]}" 1>&2
+    echo "ERROR: No directory provided to __src_in_dir" 1>&2
     return 1
   fi
 
@@ -60,7 +62,8 @@ __src_os() {
     ;;
 
   *)
-    echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
+    # This warning will quickly become annoying, but is sometimes useful.
+    # echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
     ;;
   esac
 }
@@ -77,7 +80,9 @@ src() {
   if [ "${currentShell}" = "bash" ]; then
     srcDir="${DOTFILES_BASH}/source"
     # Also load readline bindings if using Bash.
-    [ -f "${HOME}/.inputrc" ] && bind -f "${HOME}/.inputrc"
+    # NOTE: We only bind the readline file if our shell is interactive.
+    [ -f "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" \
+      && bind -f "${HOME}/.inputrc"
   elif [ "${currentShell}" = "zsh" ]; then
     srcDir="${DOTFILES_ZSH}/source"
   fi

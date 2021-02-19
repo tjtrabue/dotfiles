@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
 # Exit on error
-set -e
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare NERD_FONTS_GIT_URL="https://github.com/ryanoasis/nerd-fonts.git"
+declare NERD_FONTS_DEST_DIR
+declare LOG_LEVEL=3
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_HOME}/shell/common/source/common.sh"
 # }}}
 
-# Variables {{{
-declare NERD_FONTS_GIT_URL="https://github.com/ryanoasis/nerd-fonts.git"
-declare NERD_FONTS_DEST_DIR="$WS/nerd-fonts"
-# }}}
+setup() {
+  # Set variables that could not be set before importing definitions.
+  NERD_FONTS_DEST_DIR="$WS/nerd-fonts"
+}
 
 # Functions {{{
 clone_nerd_fonts_repo() {
@@ -22,12 +26,19 @@ clone_nerd_fonts_repo() {
 }
 
 install_nerd_fonts() {
-  pushd "$NERD_FONTS_DEST_DIR" &>/dev/null
-  ./install.sh
-  popd &>/dev/null
+  if [ -d "${NERD_FONTS_DEST_DIR}" ]; then
+    (
+      cd "${NERD_FONTS_DEST_DIR}"
+      ./install.sh
+    )
+  else
+    err "Nerd fonts directory does not exist."
+    return 1
+  fi
 }
 
 main() {
+  setup
   log_info "Initializing Nerd Fonts"
   clone_nerd_fonts_repo
   install_nerd_fonts

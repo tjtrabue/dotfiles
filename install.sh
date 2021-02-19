@@ -35,9 +35,7 @@ declare FORCE_INSTALL=false
 # }}}
 
 # Imports {{{
-source "${COMMON_SOURCE}/colors.sh"
-source "${COMMON_SOURCE}/functions/functions_log.sh"
-source "${COMMON_SOURCE}/functions/functions_os.sh"
+source "${COMMON_SOURCE}/common.sh"
 # }}}
 
 # Setup and Cleanup Functions {{{

@@ -60,33 +60,46 @@ if [ "$TERM" == "dumb" ]; then
 fi
 # }}}
 
-# Set transparency for xterm
+# Set transparency for xterm.
 if [ -n "$XTERM_VERSION" ] && [ "$(command -v transset-df)" != "" ]; then
   transset-df --id "$WINDOWID" >/dev/null
 fi
 
-# Load pyenv if available
+# Load pyenv if available.
 if [ "$(command -v pyenv)" != "" ]; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# Load fzf keybindings
-[ -f ~/.fzf.bash ] && . ~/.fzf.bash
+# Load Ruby Version Manager (rvm) if available.
+if [ -f "${HOME}/.rvm/scripts/rvm" ]; then
+  . "${HOME}/.rvm/scripts/rvm"
+fi
 
-# Source forgit git cli if available
-[ -f "${WS}/forgit/forgit.plugin.sh" ] && . "${WS}/forgit/forgit.plugin.sh"
+# Load fzf keybindings.
+if [ -f "${HOME}/.fzf.bash" ]; then
+  . "${HOME}/.fzf.bash"
+fi
 
-# These icons are supplied by the icons-in-terminal project
+# Source forgit git cli if available.
+if [ -f "${WS}/forgit/forgit.plugin.sh" ]; then
+  . "${WS}/forgit/forgit.plugin.sh"
+fi
+
+# These icons are supplied by the icons-in-terminal project.
 use_icons_in_terminal() {
-  local iconScript="$HOME/.local/share/icons-in-terminal/icons_bash.sh"
-  [ -f "$iconScript" ] && . "$iconScript"
+  local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"
+  if [ -f "${iconScript}" ]; then
+    . "${iconScript}"
+  fi
 }
 use_icons_in_terminal
 
 src_java_for_profile
 
 # Print neofetch info when the terminal first opens
-[ "$(command -v neofetch)" != "" ] && neofetch 1>&2
+if [ -x "$(command -v neofetch)" ]; then
+  neofetch 1>&2
+fi
 
 # vim:foldenable:foldmethod=marker

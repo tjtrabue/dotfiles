@@ -57,15 +57,15 @@ smartpip() {
 
 # Installs all packages listed in the pyhon2 and python3 package lists
 install_python_packages() {
-  if [ -f "$PYTHON2_PACKAGES_FILE" ]; then
-    python2 -m pip install --user --upgrade -r "$PYTHON2_PACKAGES_FILE";
+  if [ -f "${PYTHON2_PACKAGES_FILE}" ]; then
+    python2 -m pip install --user --upgrade -r "${PYTHON2_PACKAGES_FILE}";
   else
     err "Could not file Python 2 package file";
     return 1;
   fi
 
-  if [ -f "$PYTHON3_PACKAGES_FILE" ]; then
-    python3 -m pip install --user --upgrade -r "$PYTHON3_PACKAGES_FILE";
+  if [ -f "${PYTHON3_PACKAGES_FILE}" ]; then
+    python3 -m pip install --user --upgrade -r "${PYTHON3_PACKAGES_FILE}";
   else
     err "Could not file Python 3 package file";
     return 2;

@@ -3,7 +3,6 @@
   enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   hide_from_taskbar = True
   putty_paste_style = True
-  suppress_multiple_term_dialog = True
   window_state = maximise
 [keybindings]
   close_term = <Primary><Shift>w

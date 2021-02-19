@@ -1,24 +1,20 @@
 #!/usr/bin/env bash
 
 # Trap errors and print error message
-set -Eeuo pipefail
+set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
 # Logging variables
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
-
-declare IMPORT="${DOTFILES_REPO}/shell/bash/source"
 # }}}
 
 # Imports {{{
-. "${HOME}/.vars"
-. "${IMPORT}/colors.bash"
-. "${IMPORT}/functions_log.bash"
+. "${DOTFILES_HOME}/shell/common/source/common.sh"
 # }}}
 
 # Functions {{{

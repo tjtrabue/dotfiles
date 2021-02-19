@@ -82,13 +82,28 @@ no_log_to_file() {
   unset LOG_TO_FILE
 }
 
+# Return the current line number, which is trickier than it sounds. This
+# operation is highly shell-dependent.
+__get_line_number() {
+  local currentShell="$(currentshell)"
+
+  # Get line numbers array based on shell.
+  if [ "${currentShell}" = "bash" ]; then
+    echo "${BASH_LINENO[3]}"
+  elif [ "${currentShell}" = "zsh" ]; then
+    echo "${LINENO[3]}"
+  else
+   echo "${LINENO}"
+  fi
+}
+
 __get_log_message_info() {
   local outputInColor="${1:-''}"
   local info=""
   local sep="|"
   local fileName="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
   local funcName="${FUNCNAME[3]}"
-  local lineNo="${LINENO[2]}"
+  local lineNo="$(__get_line_number)"
 
   if [ -n "$fileName" ]; then
     if [ -n "$outputInColor" ]; then

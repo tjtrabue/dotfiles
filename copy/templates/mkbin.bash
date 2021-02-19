@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Trap errors and print error message
-set -uo pipefail
+set -euo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 #  Setup / Cleanup {{{
