@@ -181,21 +181,34 @@ fi
 # }}}
 
 # Source forgit git cli if available
-[ -f "${WS}/forgit/forgit.plugin.sh" ] && . "${WS}/forgit/forgit.plugin.sh"
+if [ -s "${WS}/forgit/forgit.plugin.sh" ]; then
+  . "${WS}/forgit/forgit.plugin.sh"
+fi
 
 # These icons are supplied by the icons-in-terminal project
 use_icons_in_terminal() {
   local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"
-  [ -f "${iconScript}" ] && . "${iconScript}"
+  if [ -s "${iconScript}" ]; then
+    . "${iconScript}"
+  fi
 }
 use_icons_in_terminal
 
+# Load jenv and sdkman.
 src_java_for_profile
+# Load Ruby Version Manager (rvm).
 src_ruby_for_profile
+# Load Node.js Version Manager (nvm).
 src_node_for_profile
 
 # Print neofetch info when the terminal first opens
-[ "$(command -v neofetch)" != "" ] && neofetch 1>&2
+if [ -x "$(command -v neofetch)" ]; then
+  neofetch 1>&2
+fi
+
+# One more src for good luck! Sometimes diraliases do not work after this
+# script sources common.sh, so we add an extra src command here.
+src
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0

@@ -6,8 +6,6 @@ umask 022
 # Where the magic happens:
 DOTFILES_HOME="${HOME}/.dotfiles"
 DOTFILES_COMMON="${DOTFILES_HOME}/shell/common"
-DOTFILES_BASH="${DOTFILES_HOME}/shell/bash"
-BASH_SOURCE_DIR="${DOTFILES_BASH}/source"
 
 # Additional $PATH settings {{{
 # Add sbin to PATH if it exists
@@ -21,7 +19,6 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 
 # Pull in common shell aliases/functions as soon as possible.
 . "${DOTFILES_COMMON}/source/common.sh"
-src
 
 # Shell completion {{{
 # Include extra CLI completions if available.
@@ -72,12 +69,6 @@ if [ "$(command -v pyenv)" != "" ]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# Load Ruby Version Manager (rvm) if available.
-src_ruby_for_profile
-
-# Load Node.js Version Manager (nvm) if available.
-src_node_for_profile
-
 # Load fzf keybindings.
 if [ -f "${HOME}/.fzf.bash" ]; then
   . "${HOME}/.fzf.bash"
@@ -97,15 +88,20 @@ use_icons_in_terminal() {
 }
 use_icons_in_terminal
 
+# Load jenv and sdkman.
 src_java_for_profile
+# Load Ruby Version Manager (rvm).
+src_ruby_for_profile
+# Load Node.js Version Manager (nvm).
+src_node_for_profile
 
 # Print neofetch info when the terminal first opens
 if [ -x "$(command -v neofetch)" ]; then
   neofetch 1>&2
 fi
 
-# vim:foldenable:foldmethod=marker
+# One more src for good luck! Sometimes diraliases do not work after this
+# script sources common.sh, so we add an extra src command here.
+src
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/nfsdata/tjtrabu/.sdkman"
-[[ -s "/nfsdata/tjtrabu/.sdkman/bin/sdkman-init.sh" ]] && source "/nfsdata/tjtrabu/.sdkman/bin/sdkman-init.sh"
+# vim:foldenable:foldmethod=marker

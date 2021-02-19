@@ -69,7 +69,7 @@ __src_os() {
 }
 
 # Source all functions and alias files for any POSIX-compliant shell.
-src() {
+__src() {
   local currentShell="$(ps -p $$ | awk '{print $NF}' | tail -1)"
   local srcDir
   local f
@@ -101,15 +101,19 @@ src() {
 }
 # }}}
 
-# Main entry point for this module.
-main() {
+# Source all aliases/functions. This function acts as a single point-of-entry
+# for pulling extra definitions into a shell, and should work regardless of
+# the shell in use.
+src() {
   # Immediately source all function/alias files.
-  src
+  __src
   # Add extra binary paths to $PATH
   spath
   # Make sure luarocks are available
   src_lua_path
 }
-main
+
+# Source everything as soon as this file is sourced!
+src
 
 # vim:foldenable:foldmethod=marker:foldlevel=0
