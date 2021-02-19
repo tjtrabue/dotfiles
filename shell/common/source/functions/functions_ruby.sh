@@ -23,11 +23,8 @@ add_gem_bin_dirs_to_path() {
 install_rvm() {
   local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
 
-  if ! __tool_installed "rvm" "${rvmHome}"; then
-    curl -sSL "https://get.rvm.io" | bash
-  else
-    warn "rvm is already installed."
-  fi
+  __install_tool_from_url_and_script "rvm" "${rvmHome}" \
+    "https://get.rvm.io"
 }
 
 # Use rvm to install the latest ruby.

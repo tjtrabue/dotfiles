@@ -200,6 +200,8 @@ src_java_for_profile
 src_ruby_for_profile
 # Load Node.js Version Manager (nvm).
 src_node_for_profile
+# Load pyenv.
+src_python_for_profile
 
 # Print neofetch info when the terminal first opens
 if [ -x "$(command -v neofetch)" ]; then

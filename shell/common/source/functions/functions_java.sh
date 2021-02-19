@@ -6,22 +6,17 @@ install_sdkman() {
   local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
 
   # Install SDKMAN if we don't already have it installed.
-  if ! __tool_installed "sdk" "${sdkmanHome}"; then
-    curl -s "https://get.sdkman.io" | bash
-  else
-    warn "SDKMAN directory already found at ${sdkmanHome}"
-  fi
+  __install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
+    "https://get.sdkman.io"
 }
 
 # Install jenv, the Java environment manager. It is a similar tool to pyenv.
 install_jenv() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
+  log_info "Installing JENV"
 
-  if ! __tool_installed "jenv" "${jenvHome}"; then
-    git clone "https://github.com/jenv/jenv.git" "${jenvHome}"
-  else
-    warn "jenv already installed. Check ${jenvHome}."
-  fi
+  __install_tool_from_git "jenv" "${jenvHome}" \
+    "https://github.com/jenv/jenv.git"
 }
 
 # Enable jenv in the current shell.

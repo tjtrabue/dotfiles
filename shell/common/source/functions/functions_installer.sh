@@ -23,4 +23,42 @@ __tool_installed() {
   return 0
 }
 
+# Install a tool, such as pyenv, jenv, sdkman, etc. from a remote url.
+# This function takes was inspired by observing a similar pattern appearing in
+# many different "install_x" type functions. Each of those functions operated
+# on a tool's name, home directory, and a url. Thus, it was easy to capture all
+# of their common logic in a single function.
+__install_tool_from_url_and_script() {
+  local toolCmd="$1"
+  local toolHomeDir="$2"
+  local installerUrl="$3"
+
+  __install_tool_generic "${toolCmd}" "${toolHomeDir}" \
+    "curl -sSL \"${installerUrl}\" | bash"
+}
+
+# This function is similar to __install_tool_from_url_and_script, only it clones
+# a git repository instead of running an installer script through bash.
+__install_tool_from_git() {
+  local toolCmd="$1"
+  local toolHomeDir="$2"
+  local gitRepoUrl="$3"
+
+  __install_tool_generic "${toolCmd}" "${toolHomeDir}" \
+    "git clone \"${gitRepoUrl}\" ${toolHomeDir}"
+}
+
+# Generic code for installing from an installer URL or a Git repository.
+__install_tool_generic() {
+  local toolCmd="$1"
+  local toolHomeDir="$2"
+  local installCmdString="$3"
+
+  if ! __tool_installed "${toolCmd}" "${toolHomeDir}"; then
+    eval "${installCmdString}"
+  else
+    warn "${toolCmd} is already installed. Check ${toolHomeDir}"
+  fi
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

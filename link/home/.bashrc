@@ -58,21 +58,17 @@ if [ "$TERM" == "dumb" ]; then
 fi
 # }}}
 
-# Set transparency for xterm.
+# Set transparency for xterm {{{
 if [ -n "$XTERM_VERSION" ] && [ "$(command -v transset-df)" != "" ]; then
   transset-df --id "$WINDOWID" >/dev/null
 fi
+# }}}
 
-# Load pyenv if available.
-if [ "$(command -v pyenv)" != "" ]; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-
-# Load fzf keybindings.
+# Load fzf keybindings {{{
 if [ -f "${HOME}/.fzf.bash" ]; then
   . "${HOME}/.fzf.bash"
 fi
+# }}}
 
 # Source forgit git cli if available.
 if [ -f "${WS}/forgit/forgit.plugin.sh" ]; then
@@ -94,6 +90,8 @@ src_java_for_profile
 src_ruby_for_profile
 # Load Node.js Version Manager (nvm).
 src_node_for_profile
+# Load pyenv.
+src_python_for_profile
 
 # Print neofetch info when the terminal first opens
 if [ -x "$(command -v neofetch)" ]; then
@@ -104,4 +102,4 @@ fi
 # script sources common.sh, so we add an extra src command here.
 src
 
-# vim:foldenable:foldmethod=marker
+# vim:foldenable:foldmethod=marker:foldlevel=0

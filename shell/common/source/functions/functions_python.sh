@@ -82,4 +82,26 @@ update_python_packages() {
     | cut -d = -f 1  | xargs -n1 python3 -m pip install --user --upgrade
 }
 
+# Install pyenv for managing python environments.
+install_pyenv() {
+  local pyenvHome="${PYENV_DIR:-${HOME}/.pyenv}"
+
+  __install_tool_from_url_and_script "pyenv" "${pyenvHome}" \
+    "https://pyenv.run"
+}
+
+# Prepare Python environment for the current shell.
+src_python_for_profile() {
+  local pyenvHome="${PYENV_DIR:-${HOME}/.pyenv}"
+
+  if ! __tool_installed "pyenv" "${pyenvHome}"; then
+    install_pyenv
+  fi
+
+  if [ "$(command -v pyenv)" != "" ]; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+  fi
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
