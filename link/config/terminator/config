@@ -2,7 +2,6 @@
   always_split_with_profile = True
   enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   hide_from_taskbar = True
-  putty_paste_style = True
   window_state = maximise
 [keybindings]
   close_term = <Primary><Shift>w
@@ -39,27 +38,51 @@
     [[[terminal1]]]
       order = 0
       parent = child0
-      profile = Material-Ocean
+      profile = Tomorrow Night Eighties
       type = Terminal
       uuid = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
   [[coding]]
     [[[child0]]]
       fullscreen = False
-      last_active_term = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
+      last_active_term = a5242ffd-9fa6-423f-ad85-0c943a83ed4d
       last_active_window = True
       maximised = True
       order = 0
       parent = ""
-      position = 0:0
-      size = 1920, 1015
+      position = 0:24
+      size = 1920, 886
       title = tjtrabu:~
       type = Window
-    [[[terminal1]]]
+    [[[child1]]]
       order = 0
       parent = child0
-      profile = Material-Ocean
+      position = 958
+      ratio = 0.500261096606
+      type = HPaned
+    [[[child3]]]
+      order = 1
+      parent = child1
+      position = 441
+      ratio = 0.50056753689
+      type = VPaned
+    [[[terminal2]]]
+      order = 0
+      parent = child1
+      profile = Tomorrow Night Eighties
       type = Terminal
-      uuid = 46e116a3-3a5c-4312-9ef3-c1332c85da7a
+      uuid = 582ac720-1498-42f7-a033-5582c594a6c6
+    [[[terminal4]]]
+      order = 0
+      parent = child3
+      profile = Tomorrow Night Eighties
+      type = Terminal
+      uuid = a5242ffd-9fa6-423f-ad85-0c943a83ed4d
+    [[[terminal5]]]
+      order = 1
+      parent = child3
+      profile = Tomorrow Night Eighties
+      type = Terminal
+      uuid = f0f203d8-9cb4-4c4e-9c59-f72d71ca2942
 [plugins]
 [profiles]
   [[default]]
@@ -96,6 +119,17 @@
     foreground_color = "#e5e5e5"
     palette = "#212121:#b7141f:#457b24:#f6981e:#134eb2:#560088:#0e717c:#efefef:#424242:#e83b3f:#7aba3a:#ffea2e:#54a4f3:#aa4dbc:#26bbd1:#d9d9d9"
     use_system_font = False
+  [[NightLion v1]]
+    cursor_color = "#bbbbbb"
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#bbbbbb"
+    palette = "#4c4c4c:#bb0000:#5fde8f:#f3f167:#276bd8:#bb00bb:#00dadf:#bbbbbb:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+  [[NightLion v2]]
+    background_color = "#171717"
+    cursor_color = "#bbbbbb"
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#bbbbbb"
+    palette = "#4c4c4c:#bb0000:#04f623:#f3f167:#64d0f0:#ce6fdb:#00dadf:#bbbbbb:#555555:#ff5555:#7df71d:#ffff55:#62cbe8:#ff9bf5:#00ccd8:#ffffff"
   [[OceanicMaterial]]
     background_color = "#1c262b"
     cursor_color = "#b3b8c3"
@@ -103,3 +137,9 @@
     foreground_color = "#c2c8d7"
     palette = "#000000:#ee2b2a:#40a33f:#ffea2e:#1e80f0:#8800a0:#16afca:#a4a4a4:#777777:#dc5c60:#70be71:#fff163:#54a4f3:#aa4dbc:#42c7da:#ffffff"
     use_system_font = False
+  [[Tomorrow Night Eighties]]
+    background_color = "#2d2d2d"
+    cursor_color = "#cccccc"
+    font = Hasklug Nerd Font Semibold 10
+    foreground_color = "#cccccc"
+    palette = "#000000:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#ffffff:#000000:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#ffffff"
