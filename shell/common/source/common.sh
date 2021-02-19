@@ -86,10 +86,8 @@ src() {
   __src_one_time_transfers
 
   # Source all files in all directories under *source/
-  for d in $(find "$COMMON_SOURCE" -maxdepth 1 -mindepth 1 -type d); do
-    __src_in_dir "${d}"
-  done
-  for d in $(find "${srcDir}" -maxdepth 1 -mindepth 1 -type d); do
+  for d in $(find "${COMMON_SOURCE}" "${srcDir}" \
+    -maxdepth 1 -mindepth 1 -type d); do
     __src_in_dir "${d}"
   done
 

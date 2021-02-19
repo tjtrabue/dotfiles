@@ -28,5 +28,6 @@
   "local_model_size": null,
   "model_hash_override": null,
   "local_indexing": null,
-  "heartbeat_interval_seconds": null
+  "heartbeat_interval_seconds": null,
+  "last_service_level": null
 }
