@@ -19,6 +19,8 @@ install_jenv() {
 
   if ! __tool_installed "jenv" "${jenvHome}"; then
     git clone "https://github.com/jenv/jenv.git" "${jenvHome}"
+  else
+    warn "jenv already installed. Check ${jenvHome}."
   fi
 }
 
