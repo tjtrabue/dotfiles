@@ -50,6 +50,15 @@ update_ruby_packages() {
   gem update
 }
 
+# Prepare ruby environment for shell.
+src_ruby_for_profile() {
+  local rvmHome="${HOME}/.rvm"
+  # Load Ruby Version Manager (rvm) if available.
+  if [ -f "${rvmHome}/scripts/rvm" ]; then
+    . "${rvmHome}/scripts/rvm"
+  fi
+}
+
 # Return 0 if rvm is installed. Return non-zero otherwise.
 __rvm_installed() {
   local rvmHome="${HOME}/.rvm"

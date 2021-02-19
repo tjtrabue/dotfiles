@@ -20,7 +20,8 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 # }}}
 
 # Pull in common shell aliases/functions as soon as possible.
-source "${DOTFILES_COMMON}/source/common.sh"
+. "${DOTFILES_COMMON}/source/common.sh"
+src
 
 # Shell completion {{{
 # Include extra CLI completions if available.
@@ -72,9 +73,10 @@ if [ "$(command -v pyenv)" != "" ]; then
 fi
 
 # Load Ruby Version Manager (rvm) if available.
-if [ -f "${HOME}/.rvm/scripts/rvm" ]; then
-  . "${HOME}/.rvm/scripts/rvm"
-fi
+src_ruby_for_profile
+
+# Load Node.js Version Manager (nvm) if available.
+src_node_for_profile
 
 # Load fzf keybindings.
 if [ -f "${HOME}/.fzf.bash" ]; then

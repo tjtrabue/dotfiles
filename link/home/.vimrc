@@ -231,7 +231,7 @@ set nocompatible
 " NOTE: tmux interferes with the unnamed register, so it may be beneficial
 " to disable this feature when using tmux.
 "if !exists('$TMUX')
-    set clipboard=unnamed
+set clipboard=unnamedplus
 "endif
 
 " Allow backspace in insert mode
