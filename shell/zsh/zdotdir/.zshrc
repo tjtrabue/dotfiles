@@ -200,14 +200,14 @@ src_node_for_profile
 # Load pyenv.
 src_python_for_profile
 
+# One more src for good luck! Sometimes diraliases do not work after this
+# script sources common.sh, so we add an extra src command here.
+src
+
 # Print neofetch info when the terminal first opens
 if [ -x "$(command -v neofetch)" ]; then
   neofetch 1>&2
 fi
-
-# One more src for good luck! Sometimes diraliases do not work after this
-# script sources common.sh, so we add an extra src command here.
-src
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0

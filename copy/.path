@@ -16,5 +16,7 @@ $HOME/.npm-global/bin
 $HOME/.cargo/bin
 $HOME/.jenv/bin
 $HOME/.pyenv/bin
+$HOME/.rvm/bin
+$HOME/.rvm/gems/default/bin
 $HOME/go/bin
 $HOME/perl5/bin
