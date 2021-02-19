@@ -85,6 +85,7 @@ lynx
 maim
 man-db
 man-pages
+meld
 mlocate
 nano
 neofetch

@@ -89,21 +89,13 @@
 # Merge {{{
 [merge]
   log = true
+  # Use meld as default mergetool
+  tool = meld
 # }}}
 
-# difftool {{{
-[difftool "Kaleidoscope"]
-  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
-
-[difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
-# }}}
-
-# mergetool {{{
-[mergetool "sourcetree"]
-  cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+# Diff {{{
+[diff]
+  tool = vimdiff
 # }}}
 
 # rerere {{{
