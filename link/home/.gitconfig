@@ -10,10 +10,14 @@
 # Core {{{
 [core]
   autocrlf = input
-  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+  whitespace = fix,space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
   excludesfile = /Users/tom/.gitignore_global
   editor = nvim
   pager = less
+  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+  precomposeunicode = false
+  # Speed up commands involving untracked files, such as `git status`.
+  untrackedCache = true
 # }}}
 
 # Apply {{{
@@ -37,6 +41,10 @@
 # }}}
 
 # Branch {{{
+[branch]
+  # Show most recently changed branches first.
+  sort = -committerdate
+
 [branch "master"]
   remote = origin
   merge = refs/heads/master
