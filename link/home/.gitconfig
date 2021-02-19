@@ -47,21 +47,16 @@
   rebase = true
 # }}}
 
-# Color configuration {{{
+# Colors {{{
 [color]
-  ui = auto
-  diff = auto
-  status = auto
   branch = auto
+  diff = auto
   interactive = auto
+  push = auto
   pager = true
+  status = auto
   transport = auto
-
-[color "interactive"]
-  prompt = green
-  header = yellow
-  help = blue
-  error = red
+  ui = auto
 
 [color "branch"]
   current = yellow reverse
@@ -73,6 +68,15 @@
   frag = magenta bold # line info
   old = red bold # deletions
   new = green bold # additions
+
+[color "interactive"]
+  prompt = green
+  header = yellow
+  help = blue
+  error = red
+
+[colo "push"]
+  error = true
 
 [color "status"]
   header = yellow
