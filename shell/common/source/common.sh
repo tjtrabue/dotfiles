@@ -113,9 +113,9 @@ __src_extra_environment_profiles() {
 }
 # }}}
 
-# Source all aliases/functions. This function acts as a single point-of-entry
-# for pulling extra definitions into a shell, and should work regardless of
-# the shell in use.
+# Source entire shell environment. This function acts as a single point-of-entry
+# for pulling extra definitions into a shell, and for invoking
+# rvm/nvm/pyenv/jenv. It should work regardless of the shell in use.
 src_all() {
   # Immediately source all function/alias files.
   __src
@@ -127,8 +127,14 @@ src_all() {
   __src_extra_environment_profiles
 }
 
-# A leaner version of src that just sources aliases/functions instead of the
-# entire environment.
+# A leaner source function that just sources aliases/functions instead of the
+# entire environment. That is, this function does NOT rebuild $PATH, does NOT
+# affect nvm/rvm/pyenv/jenv. It only re-sources functions and aliases.
+#
+# You won't want to continually revert to the default environment throughout
+# your shell session, so this function allows you to pull in newer alias and
+# function definitions without affecting the wider environment of rvm, nvm,
+# jenv, pyenv, etc.
 src() {
   __src
 }

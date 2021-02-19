@@ -15,19 +15,20 @@ alias rmrf="rm -rf"
 # }}}
 
 # Source aliases {{{
-alias sbrc="source $HOME/.bashrc"
-alias sbpr="source $HOME/.bash_profile"
-alias sdirs="source $HOME/.dirs"
-alias svar="source $HOME/.vars"
-alias sirc="bind -f $HOME/.inputrc"
-alias sxre="xrdb -merge $HOME/.Xresources"
+alias sbrc="source \${HOME}/.bashrc"
+alias szrc="source \${ZDOTDIR}/.zshrc"
+alias sbpr="source \${HOME}/.bash_profile"
+alias sdirs="source \${HOME}/.dirs"
+alias svar="source \${HOME}/.vars"
+alias sirc="bind -f \${HOME}/.inputrc"
+alias sxre="xrdb -merge \${HOME}/.Xresources"
 # }}}
 
 # Find files with CRLF line endings
 alias dosfiles="find . -not -type d -exec file '{}' ';' | grep CRLF | grep -o --color=never '^.*: ' | sed 's/..$//'"
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reshell="exec $SHELL -l"
+alias reshell="exec \${SHELL} -l"
 
 # Directory syncing aliases:
 alias rsa="rsync -a"
