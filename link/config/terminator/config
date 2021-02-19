@@ -2,6 +2,7 @@
   always_split_with_profile = True
   enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   hide_from_taskbar = True
+  title_font = FiraCode Nerd Font Mono Semi-Bold 11
   window_state = maximise
 [keybindings]
   close_term = <Primary><Shift>w
@@ -88,6 +89,7 @@
   [[default]]
     cursor_color = "#aaaaaa"
     font = Hasklug Nerd Font Semibold 10
+    use_system_font = False
   [[Material]]
     cursor_color = "#aaaaaa"
     font = Hasklug Nerd Font Semibold 10
@@ -140,6 +142,7 @@
   [[Tomorrow Night Eighties]]
     background_color = "#2d2d2d"
     cursor_color = "#cccccc"
-    font = Hasklug Nerd Font Semibold 10
+    font = FiraCode Nerd Font Mono Semi-Bold 11
     foreground_color = "#cccccc"
     palette = "#000000:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#ffffff:#000000:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#ffffff"
+    use_system_font = False
