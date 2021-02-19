@@ -1,15 +1,27 @@
+# User {{{
 [user]
+  email = tom.trabue@gmail.com
+  name = Tom Trabue
 
+[github]
+  user = tjtrabue
+# }}}
+
+# Core {{{
 [core]
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   excludesfile = /Users/tom/.gitignore_global
   editor = nvim
   pager = less
+# }}}
 
+# Apply {{{
 [apply]
   whitespace = fix
+# }}}
 
+# Aliases {{{
 [alias]
   br = branch
   ci = commit
@@ -22,14 +34,20 @@
   rv = review
   st = status
   ksdiff = difftool -y -t Kaleidoscope
+# }}}
 
+# Branch {{{
 [branch "master"]
   remote = origin
   merge = refs/heads/master
+# }}}
 
+# Pull {{{
 [pull]
   rebase = true
+# }}}
 
+# Color configuration {{{
 [color]
   ui = auto
   diff = auto
@@ -37,6 +55,13 @@
   branch = auto
   interactive = auto
   pager = true
+  transport = auto
+
+[color "interactive"]
+  prompt = green
+  header = yellow
+  help = blue
+  error = red
 
 [color "branch"]
   current = yellow reverse
@@ -45,25 +70,48 @@
 
 [color "diff"]
   meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
+  frag = magenta bold # line info
+  old = red bold # deletions
+  new = green bold # additions
 
 [color "status"]
+  header = yellow
   added = yellow
   changed = green
   untracked = cyan
   unmerged = magenta
+  branch = blue
+  nobranch = red reverse
+  localBranch = yellow reverse
+  remoteBranch = blue reverse
+# }}}
 
+# Merge {{{
 [merge]
   log = true
+# }}}
 
+# difftool {{{
 [difftool "Kaleidoscope"]
   cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
 
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
+# }}}
+
+# mergetool {{{
+[mergetool "sourcetree"]
+  cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+# }}}
+
+# rerere {{{
 [rerere]
   enabled = 1
+# }}}
 
+# URLs {{{
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
@@ -82,21 +130,13 @@
 
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
+# }}}
 
-[difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
-
-[mergetool "sourcetree"]
-  cmd = /opt/homebrew-cask/Caskroom/sourcetree/2.1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
-
+# Filter {{{
 [filter "lfs"]
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
-[user]
-  email = tom.trabue@gmail.com
-  name = Tom Trabue
-[github]
-  user = tjtrabue
+# }}}
+
+# vim:foldenable:foldmethod=marker:foldlevel=0
