@@ -87,13 +87,39 @@ no_log_to_file() {
 __get_line_number() {
   local currentShell="$(currentshell)"
 
-  # Get line numbers array based on shell.
   if [ "${currentShell}" = "bash" ]; then
     echo "${BASH_LINENO[3]}"
   elif [ "${currentShell}" = "zsh" ]; then
-    echo "${LINENO[3]}"
+    echo "${funcfiletrace[4]##*:}"
   else
-   echo "${LINENO}"
+    echo "${LINENO}"
+  fi
+}
+
+# Return the name of the calling function based on the shell currently in use.
+__get_function_name() {
+  local currentShell="$(currentshell)"
+
+  if [ "${currentShell}" = "bash" ]; then
+    echo "${FUNCNAME[4]}"
+  elif [ "${currentShell}" = "zsh" ]; then
+    echo "$funcstack[5]"
+  else
+    echo "${FUNCNAME[4]}"
+  fi
+}
+
+# Return the file name of the calling function based on the shell currently in
+# use.
+__get_file_name() {
+  local currentShell="$(currentshell)"
+
+  if [ "${currentShell}" = "bash" ]; then
+    echo "${BASH_SOURCE[4]}"
+  elif [ "${currentShell}" = "zsh" ]; then
+    echo "${funcfiletrace[4]}" | sed -r 's/.*\/([^/:]*):.*/\1/'
+  else
+    basename "$(test -L "$0" && readlink "$0" || echo "$0")"
   fi
 }
 
@@ -101,8 +127,8 @@ __get_log_message_info() {
   local outputInColor="${1:-''}"
   local info=""
   local sep="|"
-  local fileName="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
-  local funcName="${FUNCNAME[3]}"
+  local fileName="$(__get_file_name)"
+  local funcName="$(__get_function_name)"
   local lineNo="$(__get_line_number)"
 
   if [ -n "$fileName" ]; then
@@ -153,6 +179,14 @@ __get_log_type_with_color() {
     ;;
   esac
   echo "${color}${logType}${NC}"
+}
+
+# Test all logging functions
+__log_test() {
+  log_info "info"
+  warn "warning"
+  err "error"
+  succ "success"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
