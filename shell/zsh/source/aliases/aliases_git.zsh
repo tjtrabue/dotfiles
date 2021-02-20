@@ -7,8 +7,6 @@
 # git aliases programmatically in functions_completion.
 
 alias g="git"
-alias ga="git add"
-alias gaa="git add -A"
 alias gb="git branch"
 alias gc="git commit"
 alias gcl="git clone"

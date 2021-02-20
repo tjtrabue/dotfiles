@@ -594,7 +594,7 @@ lock file."
        ;; such as "lambda" -> "λ" in lisp-mode.
        (prettify-symbols-mode 1)
        ;; Show invisible characters.
-       (whitespace-mode)))
+       (whitespace-mode 1)))
 #+end_src
 
 ** shell-mode hooks
@@ -616,7 +616,19 @@ lock file."
        ;; Make hyperlinks clickable.
        (goto-address-mode 1)
        ;; Show invisible characters.
-       (whitespace-mode)))
+       (whitespace-mode 1)))
+#+end_src
+
+** conf-mode hooks
+  These commands run whenever Emacs finds a configuration file, such as =.ini=
+  or =.gitconfig= files.
+
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'conf-mode-hook #'(lambda ()
+       ;; Make hyperlinks clickable.
+       (goto-address-mode 1)
+       ;; Show invisible characters.
+       (whitespace-mode 1)))
 #+end_src
 
 ** after-save hooks

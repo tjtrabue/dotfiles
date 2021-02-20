@@ -11,7 +11,6 @@
 [core]
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
-  excludesfile = /Users/tom/.gitignore_global
   editor = nvim
   pager = less
   # Prevent showing files whose names contain non-ASCII symbols as unversioned.
@@ -115,16 +114,27 @@
   autocorrect = 1
 # }}}
 
+# Diff {{{
+[diff]
+  tool = meld
+
+[difftool]
+  prompt = true
+# }}}
+
 # Merge {{{
 [merge]
   log = true
   # Use meld as default mergetool
   tool = meld
-# }}}
 
-# Diff {{{
-[diff]
-  tool = vimdiff
+[mergetool]
+  prompt = true
+
+[mergetool "meld"]
+  # Automatically merge non-conflicting parts, highlight conflicting parts, and
+  # wait for user decision.
+  useAutoMerge = true
 # }}}
 
 # rerere {{{
