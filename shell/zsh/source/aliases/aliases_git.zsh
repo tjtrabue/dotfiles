@@ -6,6 +6,7 @@
 # Such is not the case with Bash. That is why we have to create all of Bash's
 # git aliases programmatically in functions_completion.
 
+alias g="git"
 alias ga="git add"
 alias gaa="git add -A"
 alias gb="git branch"

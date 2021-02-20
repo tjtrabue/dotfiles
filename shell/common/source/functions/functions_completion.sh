@@ -130,6 +130,7 @@ __add_docker_alias_completions() {
   __add_docker_command_alias_completions "login" "dlogin" "_docker_login"
   __add_docker_command_alias_completions "logout" "dlogout" "_docker_logout"
   __add_docker_command_alias_completions "logs" "dlo" "_docker_logs"
+  __add_docker_command_alias_completions "pause" "dpa" "_docker_pause"
   __add_docker_command_alias_completions "ps" "dps" "_docker_ps"
   __add_docker_command_alias_completions "pull" "dpl" "_docker_pull"
   __add_docker_command_alias_completions "restart" "dre" "_docker_restart"
