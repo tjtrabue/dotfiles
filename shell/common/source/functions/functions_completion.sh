@@ -26,6 +26,7 @@ add_bash_completions() {
   # Add extra completions to special command aliases
   __add_git_alias_completions
   __add_docker_alias_completions
+  __add_sdkman_completions
 }
 
 # Add any extra Zsh completions.
@@ -186,6 +187,13 @@ __add_completions_to_command_alias() {
   # for <cmd>. Thus, what we want to do is eval that command, but to do so
   # replacing the final term (the command) with an alias.
   eval "${completionCmdArr[*]::${#completionCmdArr[@]}-1} ${cmdAlias}"
+}
+
+# Add sdkman completions to shell.
+__add_sdkman_completions() {
+  if [ "$(command -v sdk)" != "" ]; then
+    . <(sdk env bash)
+  fi
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
