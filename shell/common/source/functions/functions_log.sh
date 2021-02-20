@@ -115,7 +115,7 @@ __get_file_name() {
   local currentShell="$(currentshell)"
 
   if [ "${currentShell}" = "bash" ]; then
-    echo "${BASH_SOURCE[4]}"
+    echo "${BASH_SOURCE[4]##*/}"
   elif [ "${currentShell}" = "zsh" ]; then
     echo "${funcfiletrace[4]}" | sed -r 's/.*\/([^/:]*):.*/\1/'
   else
