@@ -119,7 +119,7 @@
   tool = meld
 
 [difftool]
-  prompt = true
+  prompt = false
 # }}}
 
 # Merge {{{
