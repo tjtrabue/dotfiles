@@ -173,13 +173,6 @@ zstyle ':autocomplete:tab:*' fzf-completion yes
 # Initialize the shell's auto-complete functionality.
 # autoload -Uz compinit && compinit
 
-# Prompt {{{
-if [ -x "$(command -v starship)" ]; then
-  # Use the amazing, cross-shell starship prompt if available.
-  eval "$(starship init zsh)"
-fi
-# }}}
-
 # These icons are supplied by the icons-in-terminal project
 use_icons_in_terminal() {
   local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"

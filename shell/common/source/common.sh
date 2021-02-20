@@ -81,8 +81,8 @@ __src() {
     srcDir="${DOTFILES_BASH}/source"
     # Also load readline bindings if using Bash.
     # NOTE: We only bind the readline file if our shell is interactive.
-    [ -f "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" \
-      && bind -f "${HOME}/.inputrc"
+    [ -f "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" &&
+      bind -f "${HOME}/.inputrc"
   elif [ "${currentShell}" = "zsh" ]; then
     srcDir="${DOTFILES_ZSH}/source"
   fi
@@ -106,6 +106,7 @@ __src() {
 # overwritten.
 __src_extra_environment_profiles() {
   src_git_for_profile
+  src_prompt_for_profile
   src_java_for_profile
   src_node_for_profile
   src_python_for_profile

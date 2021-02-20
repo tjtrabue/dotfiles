@@ -33,25 +33,6 @@ fi
 unset dircolorsFile
 # }}}
 
-# Special Prompts {{{
-POWERLINE_BASH_BINDINGS="$(find "${HOME}/.local/lib/" -type f \
-  -regextype 'posix-extended' \
-  -regex '.*python3.[0-9]+.*bindings/bash/powerline.sh' |
-  sort -V |
-  tail -1)"
-
-if [ -x "$(command -v starship)" ]; then
-  # The starship prompt is a beautiful, informative, cross-shell prompt
-  eval "$(starship init bash)"
-elif [ -f "${POWERLINE_BASH_BINDINGS}" ]; then
-  # Default to powerline if no other prompt installed
-  powerline-daemon -q
-  export POWERLINE_BASH_CONTINUATION=1
-  export POWERLINE_BASH_SELECT=1
-  . "${POWERLINE_BASH_BINDINGS}"
-fi
-# }}}
-
 # Make sure to set prompt to something simple for Emacs TRAMP {{{
 if [ "$TERM" == "dumb" ]; then
   PS1="tramp $ "
