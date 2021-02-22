@@ -26,6 +26,8 @@ declare ARCHIVES="${APPS}/archives"
 
 # Force all actions that would otherwise involve answering a prompt
 declare FORCE_INSTALL=false
+
+# Logging control variables
 declare LOG_LEVEL=1
 declare LOG_TO_FILE=""
 # }}}
@@ -33,9 +35,16 @@ declare LOG_TO_FILE=""
 # Source all common aliases and functions {{{
 src() {
   local f
-  for f in "${COMMON_SOURCE}"/{aliases,functions}/*; do
+  local copyFile="${DOTFILES_COPY}/.vars"
+
+  for f in "${COMMON_SOURCE}"/{aliases,functions,other}/*; do
     . "${f}"
   done
+
+  # Also source all standard variable definitions
+  if [ -f "${copyFile}" ]; then
+    . "${copyFile}"
+  fi
 }
 # We need to run this immediately. Can't wait for main to load.
 src
@@ -106,6 +115,10 @@ USAGE:
 OPTIONS:
   -h | --help
     Print the help message (this message) and exit.
+
+  -v | --verbose
+    Increase the logging output level. This command may be specified multiple
+    times to further increase verbosity of output.
 
   -f | --force
     Force dotfiles to install, assuming "yes" for all prompts.
@@ -242,6 +255,7 @@ while true; do
     ;;
 
   -v | --verbose)
+    ((LOG_LEVEL += 1))
     shift
     ;;
 

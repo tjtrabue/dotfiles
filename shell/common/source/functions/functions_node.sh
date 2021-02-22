@@ -24,6 +24,10 @@ install_latest_node() {
 
   if ! __tool_installed "nvm" "${nvmDir}"; then
     install_nvm
+    . "${nvmDir}/nvm.sh"
+  elif [ "$(command -v nvm)" = "" ]; then
+    # If we have the nvm directory, just source the nvm script.
+    . "${nvmDir}/nvm.sh"
   fi
   # Install latest Node.js and set it as the currently used version.
 

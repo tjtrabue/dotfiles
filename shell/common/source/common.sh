@@ -30,17 +30,17 @@ __src_one_time_transfers() {
 }
 
 # Source all files in a given directory.
-__src_in_dir() {
+__src_dir() {
   local dir="$1"
   local file
 
-  if [ -z "$dir" ]; then
-    echo "ERROR: No directory provided to __src_in_dir" 1>&2
+  if [ -z "${dir}" ]; then
+    echo "ERROR: No directory provided to __src_dir" 1>&2
     return 1
   fi
 
-  if [ -d "$dir" ]; then
-    for file in $(find "$dir" -maxdepth 1 -mindepth 1 -type f); do
+  if [ -d "${dir}" ]; then
+    for file in $(find "${dir}" -maxdepth 1 -mindepth 1 -type f); do
       . "$file"
     done
   fi
@@ -57,8 +57,9 @@ __src_os() {
 
   case "${os}" in
   "Arch Linux")
-    __src_in_dir "${archSrcDir}/aliases"
-    __src_in_dir "${archSrcDir}/functions"
+    __src_dir "${archSrcDir}/aliases"
+    __src_dir "${archSrcDir}/functions"
+    __src_dir "${archSrcDir}/other"
     ;;
 
   *)
@@ -95,7 +96,7 @@ __src() {
   for d in $(find "${COMMON_SOURCE}" "${srcDir}" \
     -maxdepth 1 -mindepth 1 -type d \
     -name '*functions' -o -name '*aliases' -o -name '*other'); do
-    __src_in_dir "${d}"
+    __src_dir "${d}"
   done
 
   # Source OS-specific aliases and functions.
