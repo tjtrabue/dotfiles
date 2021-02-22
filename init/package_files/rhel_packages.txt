@@ -1,0 +1,5 @@
+libX11-devel
+libXext-devel
+meld
+ruby
+terminator

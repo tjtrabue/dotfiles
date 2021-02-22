@@ -11,7 +11,7 @@ install_nvm() {
       cd "${nvmDir}"
       git checkout "$(git describe --abbrev=0 --tags --match "v[0-9]*" \
         "$(git rev-list --tags --max-count=1)")"
-    ) && \. "${nvmDir}/nvm.sh"
+    ) && . "${nvmDir}/nvm.sh"
     log_info "Done!"
   else
     warn "${nvmDir} already exists"
