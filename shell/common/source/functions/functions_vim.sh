@@ -9,16 +9,16 @@ link_vim_config_dir() {
 
   if [ -d "${vimConfigDir}" ]; then
     log_info "Backing up old Vim config files to: ${vimConfigBackup}"
-    mv "${vimConfigDir}" "${vimConfigBackup}"
+    mv -f "${vimConfigDir}" "${vimConfigBackup}"
   fi
 
   log_info "Linking dotfiles Vim configuration directory"
   ln -sfb "${vimDotfilesConfigDir}" "${vimConfigDir}"
 
   if [ -d "${vimConfigBackup}" ]; then
-    log_info "Copying backed up Vim config files to: ${vimConfigDir}"
+    log_info "Restoring backed up Vim config files to: ${vimConfigDir}"
     # If we backed up old Vim config files, copy them back over after linking:
-    rsync -avh "${vimConfigBackup}/" "${vimConfigDir}"
+    rsync -ah "${vimConfigBackup}/" "${vimConfigDir}"
     # Finally, remove the backup directory:
     rm -rf "${vimConfigBackup}"
   fi

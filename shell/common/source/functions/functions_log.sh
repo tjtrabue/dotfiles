@@ -13,11 +13,19 @@ log() {
   local logTypeColor="$(__get_log_type_with_color "$logType")"
   local output="[${logType}${info}] $msg"
   local outputColor="[${logTypeColor}${infoColor}] $msg"
-  local LOG_TO_FILE="${LOG_TO_FILE:-""}"
+  local logLevel="${LOG_LEVEL:-3}"
+  local logToFile="${LOG_TO_FILE:-""}"
 
-  echoe "${outputColor}"
-  if [ -f "${LOG_TO_FILE}" ]; then
-    echoe "${output}" >>"${LOG_TO_FILE}"
+  # Only print the logging message if the establish logging level allows.
+  if ([ "${logType}" = "ERROR" ]   && [ "${logLevel}" -ge 1 ]) || \
+     ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) || \
+     ([ "${logType}" = "INFO" ]    && [ "${logLevel}" -ge 3 ]) || \
+     ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]); then
+
+    echoe "${outputColor}"
+    if [ -f "${logToFile}" ]; then
+      echoe "${output}" >>"${logToFile}"
+    fi
   fi
 }
 
