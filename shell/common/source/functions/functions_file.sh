@@ -1,6 +1,7 @@
 #!/bin/sh
 
-# Create
+### Create ###
+
 mksource() {
   local sourceDir="$DOTFILES_HOME/shell/common/source"
   local sourceFileName="$*"
@@ -64,6 +65,20 @@ mkinit() {
 
   cp "${initTemplate}" "${initFilePath}"
   chmod 755 "${initFilePath}"
+}
+
+### Remove ###
+
+# Remove all broken symlinks in a directory.
+rmbsyml() {
+  local dir="${1}"
+
+  if [ ! -d "${dir}" ]; then
+    err "${dir} is not a directory."
+    return 1
+  fi
+
+  find -L "${dir}" -maxdepth 1 -type l -delete
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

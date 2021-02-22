@@ -4,7 +4,6 @@
   hide_from_taskbar = True
   suppress_multiple_term_dialog = True
   title_font = FiraCode Nerd Font weight=453 11
-  title_use_system_font = False
   window_state = maximise
 [keybindings]
   close_term = <Primary><Shift>w
@@ -90,7 +89,8 @@
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
-    font = Hasklug Nerd Font Semibold 10
+    font = Hack Nerd Font Mono 11
+    rewrap_on_resize = False
     use_system_font = False
   [[Material]]
     cursor_color = "#aaaaaa"
@@ -144,7 +144,7 @@
   [[Tomorrow Night Eighties]]
     background_color = "#2d2d2d"
     cursor_color = "#cccccc"
-    font = FiraCode Nerd Font weight=453 11
+    font = Hack Nerd Font Mono 11
     foreground_color = "#cccccc"
     palette = "#000000:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#ffffff:#000000:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#ffffff"
     use_system_font = False
