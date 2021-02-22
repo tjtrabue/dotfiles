@@ -62,6 +62,9 @@ link/vim/swaps
 # History file for netrw
 link/vim/.netrwhist
 
+# caja
+link/config/caja
+
 # coc.nvim
 link/config/coc/commands
 link/config/coc/explorer-actions

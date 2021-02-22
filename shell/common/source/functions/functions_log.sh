@@ -5,6 +5,10 @@ echoe() {
   printf "%s\n" "$*" 1>&2
 }
 
+# The primary logging function entry point. This function takes care of adding
+# all of the proper logging prefixes to the message based on the log type, and
+# ensures that logging statements only show up if the established logging level
+# permits.
 log() {
   local logType="$1"
   local msg="$2"
