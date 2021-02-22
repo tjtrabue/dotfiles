@@ -90,9 +90,11 @@ __src() {
   # Source .vars and .dirs.
   __src_one_time_transfers
 
-  # Source all files in all directories under *source/
+  # Source all alias/function/other files, both in the common source directory
+  # and in current shell's source directory.
   for d in $(find "${COMMON_SOURCE}" "${srcDir}" \
-    -maxdepth 1 -mindepth 1 -type d); do
+    -maxdepth 1 -mindepth 1 -type d \
+    -name '*functions' -o -name '*aliases' -o -name '*other'); do
     __src_in_dir "${d}"
   done
 

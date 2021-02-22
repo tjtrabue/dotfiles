@@ -30,6 +30,17 @@ declare LOG_LEVEL=1
 declare LOG_TO_FILE=""
 # }}}
 
+# Source all common aliases and functions {{{
+src() {
+  local f
+  for f in "${COMMON_SOURCE}"/{aliases,functions}/*; do
+    . "${f}"
+  done
+}
+# We need to run this immediately. Can't wait for main to load.
+src
+# }}}
+
 # Setup/Cleanup {{{
 
 # Take care of backing up existing ~/.dotfiles directory
@@ -65,16 +76,6 @@ EOF
     log_info "No existing dotfiles installation found."
   fi
 }
-
-# Source all common aliases and functions.
-src() {
-  local f
-  for f in "${COMMON_SOURCE}"/{aliases,functions}/*; do
-    . "${f}"
-  done
-}
-# We need to run this immediately. Can't wait for main to load.
-src
 
 # Performs initial setup.
 setup() {
