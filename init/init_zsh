@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# Trap errors and print error message
-set -uo pipefail
-trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
-
 # Variables {{{
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"

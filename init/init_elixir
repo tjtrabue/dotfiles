@@ -19,8 +19,10 @@ declare ELIXIR_LS_REPO_DIR="${WORKSPACE}/elixir-ls";
 
 # }}}
 
+# Imports {{{
 # Pull in common aliases/functions
 . "${DOTFILES_REPO}/shell/common/source/common.sh"
+# }}}
 
 #  Setup / Cleanup {{{
 # Performs initial setup.

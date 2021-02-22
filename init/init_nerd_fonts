@@ -11,12 +11,14 @@ declare LOG_LEVEL=3
 . "${DOTFILES_HOME}/shell/common/source/common.sh"
 # }}}
 
+# Functions {{{
+
+# Setup logic for this script.
 setup() {
   # Set variables that could not be set before importing definitions.
   NERD_FONTS_DEST_DIR="$WS/nerd-fonts"
 }
 
-# Functions {{{
 clone_nerd_fonts_repo() {
   git clone --depth 1 "${NERD_FONTS_GIT_URL}" "${NERD_FONTS_DEST_DIR}"
 }
