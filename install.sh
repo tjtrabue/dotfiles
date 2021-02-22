@@ -143,16 +143,15 @@ print_vars() {
 # }}}
 
 # Primary Functions {{{
-# Link the ~/.config directory
-init_config() {
+
+# Link files/directories to the ~/.config directory.
+link_config() {
   local homeConfig="${HOME}/.config"
 
-  log_info "Initializing ${homeConfig} directory."
-  if [ -d "${homeConfig}" ]; then
-    warn "Backing up old ${homeConfig} directory."
-    mv "${homeConfig}"{,.bak}
-  fi
-  ln -sf "${LINK_CONFIG}" "${homeConfig}"
+  log_info "Linking config files/directories"
+  mkdir -p "${homeConfig}"
+  find "${LINK_CONFIG}" -maxdepth 1 -mindepth 1 \
+    -exec ln -sbf -t "${homeConfig}" '{}' \;
 
   succ "Done."
 }
@@ -224,7 +223,7 @@ main() {
   copy_dotfiles
   link_dotfiles
   ensure_dirs_present
-  init_config
+  link_config
   add_extra_os_vars
 }
 # }}}

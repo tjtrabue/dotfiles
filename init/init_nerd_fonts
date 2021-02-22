@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# Exit on error
-set -uo pipefail
-trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
-
 # Variables {{{
 declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare NERD_FONTS_GIT_URL="https://github.com/ryanoasis/nerd-fonts.git"

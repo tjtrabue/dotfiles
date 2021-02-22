@@ -2,6 +2,7 @@
   always_split_with_profile = True
   enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   hide_from_taskbar = True
+  suppress_multiple_term_dialog = True
   title_font = Hasklug Nerd Font Semi-Bold 11
   title_use_system_font = False
   window_state = maximise
