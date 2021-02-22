@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Print error message on failure.
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
 # Variable Definitions {{{
 # Directories
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
@@ -243,11 +247,6 @@ eval set -- "$args"
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-  -v | --verbose)
-    VERBOSE=true
-    shift
-    ;;
-
   -h | --help)
     _help
     shift
