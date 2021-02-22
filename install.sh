@@ -35,7 +35,7 @@ declare FORCE_INSTALL=false
 # }}}
 
 # Imports {{{
-source "${COMMON_SOURCE}/common.sh"
+. "${COMMON_SOURCE}/common.sh"
 # }}}
 
 # Setup and Cleanup Functions {{{
@@ -151,7 +151,7 @@ link_config() {
   log_info "Linking config files/directories"
   mkdir -p "${homeConfig}"
   find "${LINK_CONFIG}" -maxdepth 1 -mindepth 1 \
-    -exec ln -sbf -t "${homeConfig}" '{}' \;
+    -exec ln -sfn -b -t "${homeConfig}" '{}' \;
 
   succ "Done."
 }

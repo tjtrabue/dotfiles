@@ -5,6 +5,9 @@ dotsync() {
   local userConfigDir="${USER_CONF:-${HOME}/.config}"
   local dotfilesLink="${DOTFILES_LINK:-${DOTFILES_HOME}/link}"
 
+  # Make sure that ~/.config exists
+  mkdir -p "${userConfigDir}"
+
   # Re-link all basic dotfiles
   find "${dotfilesLink}/home" -maxdepth 1 -mindepth 1 -type f \
     -exec ln -sf -t "${HOME}" '{}' \;
