@@ -39,15 +39,15 @@ declare LOG_TO_FILE=""
 # Source all common aliases and functions {{{
 src() {
   local f
-  local copyFile="${DOTFILES_COPY}/.vars"
+  local varsFile="${DOTFILES_COPY}/.vars"
 
   for f in "${COMMON_SOURCE}"/{aliases,functions,other}/*; do
     . "${f}"
   done
 
   # Also source all standard variable definitions
-  if [ -f "${copyFile}" ]; then
-    . "${copyFile}"
+  if [ -f "${varsFile}" ]; then
+    . "${varsFile}"
   fi
 }
 # We need to run this immediately. Can't wait for main to load.
@@ -163,7 +163,16 @@ link_config() {
     rm -rf "${homeConfigBackup}"
   fi
 
-  succ "Done."
+  log_info "Done."
+}
+
+# Link the repository itself, if necessary.
+link_repo() {
+  log_info "Linking dotfiles repository"
+  if [ "${DOTFILES_REPO}" != "${DOTFILES_HOME}" ]; then
+    ln -sfn "${DOTFILES_REPO}" "${DOTFILES_HOME}"
+  fi
+  log_info "Done."
 }
 
 # Create dotfile symlinks from user's home dir to those managed by the dotfiles
@@ -172,9 +181,8 @@ link_config() {
 # installation.
 link_dotfiles() {
   log_info "Linking dotfiles"
-  ln -sfn "${DOTFILES_REPO}" "${DOTFILES_HOME}"
   find "${DOTFILES_LINK}/home" -type f -exec ln -sfb -t "${HOME}" '{}' \;
-  succ "Linking complete."
+  log_info "Done"
 }
 
 # Copy one-time transfer files.
@@ -182,9 +190,10 @@ copy_dotfiles() {
   log_info "Copying dotfiles"
   find "${DOTFILES_COPY}" -maxdepth 1 -mindepth 1 -type f \
     -exec cp -f '{}' "${HOME}/" \;
-  succ "Copying complete"
+  log_info "Copying complete"
 }
 
+# Inject extra environment variables into the ~/.vars file, if prudent.
 add_extra_os_vars() {
   local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
   local extraVarsDir="${DOTFILES_REPO}/copy/var_files"
@@ -210,9 +219,10 @@ add_extra_os_vars() {
 
   # Get rid of marker string in ~/.vars
   sed -i "/${markerString}/d" "${HOME}/.vars"
-  succ "Done injecting additional variables"
+  log_info "Done injecting additional variables"
 }
 
+# Create important directories.
 ensure_dirs_present() {
   log_info "Creating important directories"
 
@@ -233,6 +243,7 @@ ensure_dirs_present() {
 main() {
   setup
   copy_dotfiles
+  link_repo
   link_dotfiles
   ensure_dirs_present
   link_config
