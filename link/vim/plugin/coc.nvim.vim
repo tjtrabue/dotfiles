@@ -1,5 +1,8 @@
 " Config file for coc.nvim
 
+" Get rid of annoying coc.nvim warning on older Vim/Neovim installations.
+let g:coc_disable_startup_warning = 1
+
 " Make the popup menu not select the first completion item, but rather just insert the longest
 " common text of all matches, and make the menu come up even if there's only one match.
 set completeopt=longest,menuone
