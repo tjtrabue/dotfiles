@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # Alias function to list ls output in long-form.
+# First, make sure that ll is not an alias, as it commonly is by default on many
+# operating systems.
+unalias ll >>/dev/null 2>&1
 ll() {
   local flags="-lFh"
   local dir_to_list="${*:-.}"
@@ -8,6 +11,7 @@ ll() {
 }
 
 # Alias function to list almost all files and directories in long-form.
+unalias la >>/dev/null 2>&1
 la() {
   local flags="-lAFh"
   local dir_to_list="${*:-.}"
@@ -15,6 +19,7 @@ la() {
 }
 
 # Alias function to list all files and directories in long-form.
+unalias laa >>/dev/null 2>&1
 laa() {
   local flags="-laFh"
   local dir_to_list="${*:-.}"
