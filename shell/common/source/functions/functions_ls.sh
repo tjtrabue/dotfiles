@@ -1,27 +1,46 @@
 #!/bin/sh
 
 # Alias function to list ls output in long-form.
-# First, make sure that ll is not an alias, as it commonly is by default on many
-# operating systems.
+# First, make sure that `l` is not an alias, as it commonly is by default on
+# many operating systems.
+unalias l >>/dev/null 2>&1
+# List out files in long-form, using `exa` if available, or `ls`.
+l() {
+  local flags="-lFh"
+  local dir_to_list="${*:-.}"
+
+  if [ -x "$(command -v exa)" ]; then
+    __do_ls_exa "${flags}" "${dir_to_list}"
+  else
+    __do_ls_standard "${flags}" "${dir_to_list}"
+  fi
+}
+
 unalias ll >>/dev/null 2>&1
+# List out files in long-form, choosing the `ls` analog command automatically.
 ll() {
   local flags="-lFh"
   local dir_to_list="${*:-.}"
   __do_ls "$flags" "$dir_to_list"
 }
 
-# Alias function to list almost all files and directories in long-form.
 unalias la >>/dev/null 2>&1
+# List all files in long-form, using either `exa` or `ls`.
 la() {
   local flags="-lAFh"
   local dir_to_list="${*:-.}"
-  __do_ls "$flags" "$dir_to_list"
+
+  if [ -x "$(command -v exa)" ]; then
+    __do_ls_exa "${flags}" "${dir_to_list}"
+  else
+    __do_ls_standard "${flags}" "${dir_to_list}"
+  fi
 }
 
-# Alias function to list all files and directories in long-form.
 unalias laa >>/dev/null 2>&1
+# List all files in long-form, choosing the `ls` analog command automatically.
 laa() {
-  local flags="-laFh"
+  local flags="-lAFh"
   local dir_to_list="${*:-.}"
   __do_ls "$flags" "$dir_to_list"
 }
@@ -87,6 +106,13 @@ __do_ls_perl_script() {
   local dir_to_list="${2:-.}"
   local ls_color_script="${DOTFILES_HOME}/perl/ls-color.pl"
   eval "command ls ${flags} ${dir_to_list} | perl ${ls_color_script}"
+}
+
+# The regular, plain old `ls` command. No frills, no modifications.
+__do_ls_standard() {
+  local flags="$1"
+  local dir_to_list="${2:-.}"
+  eval "command \ls ${flags} ${dir_to_list}"
 }
 
 # Retrieve the output coloration flag for ls based on the installed ls version.

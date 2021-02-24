@@ -1,13 +1,13 @@
 #!/bin/sh
 
 install_rust_packages() {
-  local githubPackageFile="$DOTFILES_PACKAGES_DIR/rust_repo_urls.txt"
-  local url
+  local packageFile="${DOTFILES_PACKAGES_DIR}/rust_packages.txt"
+  local package
 
-  log_info "Installing Rust packages from GitHub"
-  while read -r url || [ -n "$url" ]; do
-    cargo install --git "$url"
-  done < "$githubPackageFile"
+  log_info "Installing Rust Packages"
+  while read -r package || [ -n "${package}" ]; do
+    cargo install "${package}"
+  done <"${packageFile}"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1

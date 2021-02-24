@@ -1,10 +1,7 @@
 #!/bin/sh
 
 # Printing / clearing aliases: {{{
-# NOTE: Most 'ls' aliases are now functions in functions_universal.bash.
-#       Please check that file for wrapper functions.
-
-alias l="ll"
+# NOTE: 'ls' aliases are now functions in functions_ls.sh
 
 alias cl="clear"
 # }}}
