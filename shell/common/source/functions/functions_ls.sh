@@ -8,11 +8,7 @@ l() {
   local flags="-lFh"
   local dir_to_list="${*:-.}"
 
-  if [ -x "$(command -v exa)" ]; then
-    __do_ls_exa "${flags}" "${dir_to_list}"
-  else
-    __do_ls_standard "${flags}" "${dir_to_list}"
-  fi
+  __do_ls "${flags}" "${dir_to_list}" "light"
 }
 
 unalias ll >>/dev/null 2>&1
@@ -26,16 +22,9 @@ ll() {
 unalias la >>/dev/null 2>&1
 # List all files in long-form, using either `exa` or `ls`.
 la() {
-  local flags="-lFh"
+  local flags="-lFhA"
   local dir_to_list="${*:-.}"
-
-  if [ -x "$(command -v exa)" ]; then
-    flags="${flags}a"
-    __do_ls_exa "${flags}" "${dir_to_list}"
-  else
-    flags="${flags}A"
-    __do_ls_standard "${flags}" "${dir_to_list}"
-  fi
+  __do_ls "${flags}" "${dir_to_list}" "light"
 }
 
 unalias lla >>/dev/null 2>&1
@@ -51,9 +40,31 @@ lla() {
 __do_ls() {
   local flags="$1"
   local dir_to_list="${2:-.}"
+  local lightweight="${3}"
 
   flags="${flags} $(__get_ls_colorflag)"
-  __do_ls_auto "${flags}" "${dir_to_list}"
+  if [ -n "${lightweight}" ]; then
+    __do_ls_light "${flags}" "${dir_to_list}"
+  else
+    __do_ls_auto "${flags}" "${dir_to_list}"
+  fi
+}
+
+# Run a lightweight `ls`-compatible command, which rules out the latency of
+# commands such as `colorls` or `ls-icons`.
+__do_ls_light() {
+  local flags="$1"
+  local dir_to_list="${2:-.}"
+
+  if [ -x "$(command -v "exa")" ]; then
+    # `exa` has no '-A' flag, so use '-a' instead.
+    flags="${flags/A/a}"
+    __do_ls_exa "${flags}" "${dir_to_list}"
+  elif [ -x "$(command -v perl)" ]; then
+    __do_ls_perl_script "${flags}" "${dir_to_list}"
+  else
+    __do_ls_standard "${flags}" "${dir_to_list}"
+  fi
 }
 
 # Figure out which ls command to run automatically based on a prioritized list.
@@ -70,8 +81,7 @@ __do_ls_auto() {
   elif [ -x "$(command -v perl)" ]; then
     __do_ls_perl_script "${flags}" "${dir_to_list}"
   else
-    # If all else fails, just run ls
-    eval "command ls ${flags} ${dir_to_list}"
+    __do_ls_standard "${flags}" "${dir_to_list}"
   fi
 }
 
