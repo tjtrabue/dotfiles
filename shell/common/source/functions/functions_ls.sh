@@ -27,19 +27,21 @@ ll() {
 unalias la >>/dev/null 2>&1
 # List all files in long-form, using either `exa` or `ls`.
 la() {
-  local flags="-lAFh"
+  local flags="-lFh"
   local dir_to_list="${*:-.}"
 
   if [ -x "$(command -v exa)" ]; then
+    flags="${flags}a"
     __do_ls_exa "${flags}" "${dir_to_list}"
   else
+    flags="${flags}A"
     __do_ls_standard "${flags}" "${dir_to_list}"
   fi
 }
 
 unalias laa >>/dev/null 2>&1
 # List all files in long-form, choosing the `ls` analog command automatically.
-laa() {
+lla() {
   local flags="-lAFh"
   local dir_to_list="${*:-.}"
   __do_ls "$flags" "$dir_to_list"
