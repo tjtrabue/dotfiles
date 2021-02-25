@@ -12,7 +12,7 @@
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
   editor = nvim
-  pager = less
+  pager = "less -XF"
   # Prevent showing files whose names contain non-ASCII symbols as unversioned.
   precomposeunicode = false
   # Speed up commands involving untracked files, such as `git status`.

@@ -50,7 +50,7 @@ __do_ls() {
   fi
 }
 
-# Run a lightweight `ls`-compatible command, which rules out the latency of
+# Run a lightweight `ls`-compatible command, which mitigates the latency of
 # commands such as `colorls` or `ls-icons`.
 __do_ls_light() {
   local flags="$1"
