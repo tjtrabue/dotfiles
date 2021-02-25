@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# Alias function to list ls output in long-form.
 # First, make sure that `l` is not an alias, as it commonly is by default on
 # many operating systems.
 unalias l >>/dev/null 2>&1
@@ -39,7 +38,7 @@ la() {
   fi
 }
 
-unalias laa >>/dev/null 2>&1
+unalias lla >>/dev/null 2>&1
 # List all files in long-form, choosing the `ls` analog command automatically.
 lla() {
   local flags="-lAFh"
