@@ -86,7 +86,7 @@ with straight.el.")
   (set-default-coding-systems 'utf-8)
 #+end_src
 
-* Load Path
+* Configure Load Path
   The load-path list is a collection of file paths that Emacs uses to locate
   Elisp modules at runtime.
 
@@ -97,6 +97,15 @@ with straight.el.")
   (add-to-list 'load-path my/emacs-lisp-dir)
   ;; Tell Emacs where to find plugin config files.
   (add-to-list 'load-path my/emacs-plugin-dir)
+#+end_src
+
+* Load Custom Libraries
+  Once we have configured the =load-path= we can add =require= statements for
+  custom Emacs Lisp libraries.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; My own font functions and definitions.
+  (require 'my-font)
 #+end_src
 
 * Configure Backup Dirs/Files
@@ -146,19 +155,6 @@ with straight.el.")
   (set-face-attribute 'Man-underline nil
     :inherit font-lock-keyword-face
     :underline t)
-#+end_src
-
-* Font Configuration
-  Set the default font used by Emacs in all frames.
-  Note that you may need to install the Nerd Fonts collection of programming
-  fonts to get this to work.
-
-#+begin_src emacs-lisp :tangle yes
-  (set-face-attribute 'default nil
-    :family "FiraCode Nerd Font" ;; The font's name
-    :height 105 ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
-    :weight 'semi-bold ;; Style
-    :width 'normal)
 #+end_src
 
 * Set Emacs Variables
@@ -328,6 +324,7 @@ with straight.el.")
   (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
   (global-set-key (kbd "S-C-j") 'enlarge-window)
   (global-set-key (kbd "S-C-k") 'shrink-window)
+
 #+end_src
 
 * Email
@@ -438,9 +435,9 @@ with straight.el.")
   regex."
     (require 'cl-lib)
     (cl-flet ((load-it (f)
-               (funcall load-fn (concat (file-name-as-directory dir) f))))
-     (if (file-directory-p dir)
-       (mapc #'load-it (directory-files dir nil pattern)))))
+                (funcall load-fn (concat (file-name-as-directory dir) f))))
+      (if (file-directory-p dir)
+        (mapc #'load-it (directory-files dir nil pattern)))))
 
   (defun download-elisp-lib (url &optional file-name)
     "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
@@ -638,6 +635,13 @@ lock file."
   (add-hook 'after-save-hook #'(lambda ()
     ;; Update any GTAGS files if necessary.
     (my/gtags-update-hook-fn)))
+#+end_src
+
+** window-size-change hooks
+   Hooks that run whenever the window size changes.
+
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
 #+end_src
 
 * TRAMP

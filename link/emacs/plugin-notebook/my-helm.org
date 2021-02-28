@@ -140,7 +140,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
 
-  (use-package helm-ghc)
+  ;; (use-package helm-ghc)
 #+end_src
 
 ** helm-swoop

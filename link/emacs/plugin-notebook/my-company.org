@@ -195,7 +195,7 @@ optionally for extra modes"
 
 ** company-ghc
 #+begin_src emacs-lisp :tangle yes
-(use-package company-ghc)
+;; (use-package company-ghc)
 #+end_src
 
 ** company-cabal
