@@ -35,12 +35,14 @@
 (defvar my-font-font-family "FiraCode Nerd Font"
   "The default font family used throughout Emacs.")
 
-;; Set the default font.
-(set-face-attribute 'default nil
-  :family my-font-font-family ;; The font's name
-  :height 105 ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
-  :weight 'semi-bold ;; Style
-  :width 'normal)
+;;;###autoload
+(defun my-font-set-default-font ()
+  "Set the default font for all of Emacs."
+  (set-face-attribute 'default nil
+    :family my-font-font-family ;; The font's name
+    :height 105 ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
+    :weight 'semi-bold ;; Style
+    :width 'normal))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)
@@ -52,22 +54,25 @@ be attached to the 'window-size-change-functions' hook.
 Adjust the font size of an Emacs frame whenever the frame's size changes."
   (let* ((attrs (frame-monitor-attributes))
           (width-px (cl-fourth (cl-third attrs))) ;; Width of current screen
-          (size 13)) ;; Default for standard screen
+          (font-point 12) ;; Font point size for standard screen
+          (font-height))
     (when (= width-px 3840) ;; Very Large display
-      (setq size 20))
+      (setq font-point 20))
     (when (= width-px 2560) ;; Large display
-      (setq size 16))
+      (setq font-point 16))
+    ;; The face :height attribute is 10 * the font point.
+    (setq font-height (* 10 font-point))
     ;; Adjust default font size.
     (set-face-attribute 'default nil
-      :height (* 10 size))
+      :height font-height)
     ;; Also adjust line number font size
-    (if (facep 'linum)
+    (when (facep 'linum)
       (set-face-attribute 'linum nil
-        :height (* 10 size)))
+        :height font-height))
     ;; Also adjust relative line number font size
-    (if (facep 'linum-relative-current-face)
+    (when (facep 'linum-relative-current-face)
       (set-face-attribute 'linum-relative-current-face nil
-        :height (* 10 size)))))
+        :height font-height))))
 
 (provide 'my-font)
 

@@ -228,6 +228,14 @@ with straight.el.")
   (setq evil-want-keybinding nil)
 #+end_src
 
+* Font Configuration
+  Set default font for Emacs.
+  *NOTE:* The main font configuration is in =my-font.el=.
+
+#+begin_src emacs-lisp :tangle yes
+  (my-font-set-default-font)
+#+end_src
+
 * Info
   =info= is Emacs' built in help system. You use =info= to browse various
   documentation pages. However, by default, Emacs only looks in a small number
