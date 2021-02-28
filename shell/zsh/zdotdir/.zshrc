@@ -64,15 +64,8 @@ setopt prompt_subst
 # }}}
 
 # Source aliases/functions {{{
-source "${COMMON_SHELL_SOURCE}/common.sh"
-# }}}
-
-# $PATH {{{
-# }}}
-
-# Setup VI line editing mode {{{
-# Currently unused in favor of zsh-vim-mode.
-# bindkey -v
+. "${COMMON_SHELL_SOURCE}/common.sh"
+src_all
 # }}}
 
 # Plugins {{{
@@ -83,20 +76,16 @@ fi
 
 if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # Ready zplug
-  source "${ZPLUG_HOME}/init.zsh"
+  . "${ZPLUG_HOME}/init.zsh"
 
   ## Register plugins
 
-  # autosuggestions {{{
   # Show completion suggestions as you type, like in fish.
   zplug "zsh-users/zsh-autosuggestions"
-  # }}}
 
-  # autocomplete {{{
   # real-time type-ahead autocompletion.
   # Fairly buggy. May want to wait before using.
   # zplug "marlonrichert/zsh-autocomplete"
-  # }}}
 
   # Use extra community completions.
   zplug "zsh-users/zsh-completions"
@@ -125,16 +114,16 @@ FZF_USER_SHELL="${HOME}/.fzf/shell"
 
 # Load fzf zsh keybindings
 if [ -f "${FZF_SYSTEM}/key-bindings.zsh" ]; then
-  source "${FZF_SYSTEM}/key-bindings.zsh"
+  . "${FZF_SYSTEM}/key-bindings.zsh"
 elif [ -f "${FZF_USER_SHELL}/key-bindings.zsh" ]; then
-  source "${FZF_USER_SHELL}/key-bindings.zsh"
+  . "${FZF_USER_SHELL}/key-bindings.zsh"
 fi
 
 # Load fzf zsh completions
 if [ -f "${FZF_SYSTEM}/completion.zsh" ]; then
-  source "${FZF_SYSTEM}/completion.zsh"
+  . "${FZF_SYSTEM}/completion.zsh"
 elif [ -f "${FZF_USER_SHELL}/completion.zsh" ]; then
-  source "${FZF_USER_SHELL}/completion.zsh"
+  . "${FZF_USER_SHELL}/completion.zsh"
 fi
 
 unset FZF_SYSTEM

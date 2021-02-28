@@ -143,7 +143,4 @@ src() {
   __src
 }
 
-# Source everything as soon as this file is sourced!
-src_all
-
 # vim:foldenable:foldmethod=marker:foldlevel=0

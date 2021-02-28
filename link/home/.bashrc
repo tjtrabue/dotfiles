@@ -19,6 +19,7 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 
 # Pull in common shell aliases/functions as soon as possible.
 . "${DOTFILES_COMMON}/source/common.sh"
+src_all
 
 # Shell completion {{{
 # Include extra CLI completions if available.
