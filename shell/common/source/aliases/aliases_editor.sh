@@ -20,19 +20,20 @@ alias vcolors="edit $DOTFILES_HOME/bash/source/colors.bash"
 # }}}
 
 # Home file editing aliases {{{
-alias vbpr="edit $HOME/.bash_profile"
-alias vbrc="edit $HOME/.bashrc"
-alias virc="edit $HOME/.inputrc"
-alias vvrc="edit $HOME/.vimrc"
-alias verc="edit $HOME/.emacs"
-alias vdirs="edit $HOME/.dirs"
-alias vvars="edit $HOME/.vars"
-alias vpath="edit $HOME/.path"
-alias vpr="edit $HOME/.profile"
-alias vxpr="edit $HOME/.xprofile"
-alias vxre="edit $HOME/.Xresources"
-alias vgconf="edit $HOME/.gitconfig"
-alias vtconf="edit $HOME/.tmux.conf"
+alias vbpr="edit ${HOME}/.bash_profile"
+alias vbrc="edit ${HOME}/.bashrc"
+alias virc="edit ${HOME}/.inputrc"
+alias vvrc="edit ${HOME}/.vimrc"
+alias verc="edit ${HOME}/.emacs"
+alias vdirs="edit ${HOME}/.dirs"
+alias vvars="edit ${HOME}/.vars"
+alias vpath="edit ${HOME}/.path"
+alias vpr="edit ${HOME}/.profile"
+alias vxpr="edit ${HOME}/.xprofile"
+alias vxre="edit ${HOME}/.Xresources"
+alias vgconf="edit ${HOME}/.gitconfig"
+alias vtconf="edit ${HOME}/.tmux.conf"
+alias vzrc="edit ${ZDOTDIR}/.zshrc"
 # }}}
 
 # ~/.config files editing aliases {{{
