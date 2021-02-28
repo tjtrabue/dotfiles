@@ -31,7 +31,12 @@ src_starship_prompt_for_profile() {
     install_starship
   fi
 
-  eval "$(starship init ${currentShell})"
+  # Only source starship once. Sourcing the prompt multiple times can cause
+  # odd side-effects in Zsh, especially in Zsh's vim-mode.
+  if [ -z "${STARSHIP_SOURCED}" ] || [ "${STARSHIP_SOURCED}" -le 0 ]; then
+    eval "$(starship init ${currentShell})"
+    export STARSHIP_SOURCED=1
+  fi
 }
 
 # Initialize the classic powerline shell prompt.
