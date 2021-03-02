@@ -116,6 +116,12 @@ __src_extra_environment_profiles() {
   src_python_for_profile
   src_ruby_for_profile
 }
+
+# Start SSH, GPG, and other agents, if necessary.
+__src_agents() {
+  sshagent
+  gpgagent
+}
 # }}}
 
 # Source entire shell environment. This function acts as a single point-of-entry
@@ -128,6 +134,8 @@ src_all() {
   spath
   # Make sure luarocks are available
   src_lua_path
+  # Start SSH and GPG agents
+  __src_agents
   # This should come last!!!
   __src_extra_environment_profiles
 }

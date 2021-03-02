@@ -161,11 +161,6 @@ zstyle ':autocomplete:tab:*' insert-unambiguous yes
 zstyle ':autocomplete:tab:*' fzf-completion yes
 # }}}
 
-# SSH agent configuration {{{
-# See functions_ssh.sh
-sshagent
-# }}}
-
 # Initialize the shell's auto-complete functionality.
 # autoload -Uz compinit && compinit
 

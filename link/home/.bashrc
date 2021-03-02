@@ -31,11 +31,6 @@ if [ "$TERM" == "dumb" ]; then
 fi
 # }}}
 
-# SSH agent config {{{
-# See functions_ssh.sh
-sshagent
-# }}}
-
 # Load fzf keybindings {{{
 if [ -f "${HOME}/.fzf.bash" ]; then
   . "${HOME}/.fzf.bash"

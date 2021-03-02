@@ -1,10 +1,24 @@
 #!/bin/sh
 
+# Logging Level Information {{{
+# The environment variable LOG_LEVEL controls the log output verbosity.
+# The table below details the possible values of LOG_LEVEL and their respective
+# output levels.
+# ------------------------------
+# | Level Number | Ouput Level |
+# ------------------------------
+# |            1 | error       |
+# |            2 | warning     |
+# |            3 | info        |
+# ------------------------------
+# }}}
+
 # General purpose printing function
 echoe() {
   printf "%s\n" "$*" 1>&2
 }
 
+# Primary log function {{{
 # The primary logging function entry point. This function takes care of adding
 # all of the proper logging prefixes to the message based on the log type, and
 # ensures that logging statements only show up if the established logging level
@@ -14,25 +28,15 @@ log() {
   local msg="$2"
   local info="$(__get_log_message_info)"
   local infoColor="$(__get_log_message_info "color")"
-  local logTypeColor="$(__get_log_type_with_color "$logType")"
-  local output="[${logType}${info}] $msg"
-  local outputColor="[${logTypeColor}${infoColor}] $msg"
-  local logLevel="${LOG_LEVEL:-3}"
-  local logToFile="${LOG_TO_FILE:-""}"
+  local logTypeColor="$(__get_log_type_with_color "${logType}")"
+  local output="[${logType}${info}] ${msg}"
+  local outputColor="[${logTypeColor}${infoColor}] ${msg}"
 
-  # Only print the logging message if the establish logging level allows.
-  if ([ "${logType}" = "ERROR" ]   && [ "${logLevel}" -ge 1 ]) || \
-     ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) || \
-     ([ "${logType}" = "INFO" ]    && [ "${logLevel}" -ge 3 ]) || \
-     ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]); then
-
-    echoe "${outputColor}"
-    if [ -f "${logToFile}" ]; then
-      echoe "${output}" >>"${logToFile}"
-    fi
-  fi
+  __log_if_level_acceptable "${logType}" "${output}" "${outputColor}"
 }
+# }}}
 
+# Semantic logging functions {{{
 # Print error message to log output.
 err() {
   log "ERROR" "$*"
@@ -52,7 +56,9 @@ succ() {
 log_info() {
   log "INFO" "$*"
 }
+# }}}
 
+# Heading printing {{{
 # Print a large, ornamented heading message to stderr.
 print_header() {
   local msg="$*"
@@ -78,11 +84,13 @@ print_header() {
   printf '#%.0s' $(seq -s ' ' 1 "$termwidth")
   printf '\n'
 }
+# }}}
 
+# Logging control functions {{{
 # Set the parent program's logging file to a given file
 log_to_file() {
   local logFile="$1"
-  if [[ -z "$logFile" ]]; then
+  if [ -z "$logFile" ]; then
     err "No file provided for logging!"
     return 1
   fi
@@ -93,7 +101,9 @@ log_to_file() {
 no_log_to_file() {
   unset LOG_TO_FILE
 }
+# }}}
 
+# Private functions {{{
 # Return the current line number, which is trickier than it sounds. This
 # operation is highly shell-dependent.
 __get_line_number() {
@@ -214,6 +224,26 @@ __get_log_type_with_color() {
   echo "${color}${logType}${NC}"
 }
 
+# Only print the logging message if the establish logging level allows.
+__log_if_level_acceptable() {
+  local logType="$1"
+  local output="$2"
+  local outputColor="$3"
+  local logLevel="${LOG_LEVEL:-3}"
+  local logToFile="${LOG_TO_FILE:-""}"
+
+  if ([ "${logType}" = "ERROR" ]   && [ "${logLevel}" -ge 1 ]) || \
+     ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) || \
+     ([ "${logType}" = "INFO" ]    && [ "${logLevel}" -ge 3 ]) || \
+     ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]); then
+
+    echoe "${outputColor}"
+    if [ -f "${logToFile}" ]; then
+      echoe "${output}" >>"${logToFile}"
+    fi
+  fi
+}
+
 # Test all logging functions
 __log_test() {
   log_info "info"
@@ -221,5 +251,6 @@ __log_test() {
   err "error"
   succ "success"
 }
+# }}}
 
-# vim:foldenable:foldmethod=indent:foldnestmax=1
+# vim:foldenable:foldmethod=marker:foldlevel=0
