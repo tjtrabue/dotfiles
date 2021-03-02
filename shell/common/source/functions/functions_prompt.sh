@@ -55,23 +55,28 @@ __activate_starship_for_shell() {
 }
 
 __activate_starship_for_bash() {
-  if [ -z "${STARHIP_ACTIVE_BASH}" ] || [ "${STARHIP_ACTIVE_BASH}" -le 0 ]; then
-    eval "$(starship init bash)"
-    export STARHIP_ACTIVE_BASH=1
-  fi
+  __activate_starship 'eval "$(starship init bash)"' 'STARSHIP_ACTIVE_BASH'
 }
 
 __activate_starship_for_zsh() {
-  if [ -z "${STARHIP_ACTIVE_ZSH}" ] || [ "${STARHIP_ACTIVE_ZSH}" -le 0 ]; then
-    eval "$(starship init zsh)"
-    export STARHIP_ACTIVE_ZSH=1
-  fi
+  __activate_starship 'eval "$(starship init zsh)"' 'STARSHIP_ACTIVE_ZSH'
 }
 
 __activate_starship_for_fish() {
-  if [ -z "${STARHIP_ACTIVE_FISH}" ] || [ "${STARHIP_ACTIVE_FISH}" -le 0 ]; then
-    starship init fish | source
-    export STARHIP_ACTIVE_FISH=1
+  __activate_starship 'starship init fish | source' 'STARSHIP_ACTIVE_FISH'
+}
+
+# Generic activation function for starship prompt in the current shell. We do
+# not want to re-activate starship after the first time because doing so can
+# incur some strange side-effects in the shell's prompt.
+__activate_starship() {
+  local starshipInitCmd="$1"
+  local shellControlEnvVar="$2"
+
+  if eval "[ -z \$${shellControlEnvVar} ] || [ \$${shellControlEnvVar} -le 0 ]";
+  then
+    eval "${starshipInitCmd}"
+    eval "export ${shellControlEnvVar}=1"
   fi
 }
 

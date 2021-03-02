@@ -26,14 +26,6 @@ src_all
 add_shell_completions
 # }}}
 
-# Change ls colors (dircolors) {{{
-dircolorsFile="$DIRCOLORS_DIR/tomorrow-night-eighties.dircolors"
-if [ -f "$dircolorsFile" ]; then
-  eval "$(dircolors "$dircolorsFile")"
-fi
-unset dircolorsFile
-# }}}
-
 # Make sure to set prompt to something simple for Emacs TRAMP {{{
 if [ "$TERM" == "dumb" ]; then
   PS1="tramp $ "

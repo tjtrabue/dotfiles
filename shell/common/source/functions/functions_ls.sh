@@ -140,4 +140,15 @@ __get_ls_colorflag() {
   echo "${colorflag}"
 }
 
+# Export LS_COLORS with the appropriate color settings for the current shell.
+src_dircolors_for_profile() {
+  local defaultDircolorsFile="tomorrow-night-eighties.dircolors"
+  local dircolorsDir="${DIRCOLORS_DIR:-${DOTFILES_HOME}/link/config/dircolors}"
+  local dircolorsFile="${DIRCOLORS_FILE:-${dircolorsDir}/${defaultDircolorsFile}}"
+
+  if [ -f "$dircolorsFile" ]; then
+    eval "$(dircolors "$dircolorsFile")"
+  fi
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

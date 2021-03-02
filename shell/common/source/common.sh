@@ -108,6 +108,7 @@ __src() {
 # AFTER we've constructed our custom $PATH, otherwise their work will be
 # overwritten.
 __src_extra_environment_profiles() {
+  src_dircolors_for_profile
   src_git_for_profile
   src_prompt_for_profile
   src_java_for_profile
