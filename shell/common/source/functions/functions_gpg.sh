@@ -5,6 +5,15 @@
 gpgagent() {
   local gpgAgentFile="${HOME}/.gpg-agent-info"
 
+  # NOTE: Following the same logic as for SSH agents, we do not want to create
+  #       new GPG agents if we log in over SSH. We want our locally running GPG
+  #       agent to do all of the heavy lifting, and we can leverage agent
+  #       forwarding over SSH to make use of a locally running agent.
+  if [ -n "${SSH_TTY}" ]; then
+    warn "Shell running in SSH terminal. Not loading GPG agent."
+    return 0
+  fi
+
   if [ -f "${gpgAgentFile}" ]; then
     __load_existing_gpg_agent_from_file
 

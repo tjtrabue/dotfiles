@@ -136,6 +136,8 @@ src_all() {
   src_lua_path
   # Start SSH and GPG agents
   __src_agents
+  # Take care of fixing the SSH authentication socket if logged in over SSH.
+  fix_ssh_auth_sock
   # This should come last!!!
   __src_extra_environment_profiles
 }

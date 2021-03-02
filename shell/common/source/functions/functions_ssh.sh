@@ -35,6 +35,24 @@ sshagent() {
   fi
 }
 
+# Fix SSH auth socket location so agent forwarding works with tmux.
+fix_ssh_auth_sock() {
+  local mySshAuthSock="${HOME}/.ssh/ssh_auth_sock"
+
+  # Only bother if we are logged in over SSH.
+  if [ -n "${SSH_TTY}" ]; then
+    # Delete old ssh_auth_sock symlink it if is out of date.
+    if [ -S "${SSH_AUTH_SOCK}" ] && [ -e "${mySshAuthSock}" ] && \
+       [ "${SSH_AUTH_SOCK}" != "${mySshAuthSock}" ]; then
+      rm -f "${mySshAuthSock}"
+    fi
+
+    if [ -S "${SSH_AUTH_SOCK}" ] && [ -e "${mySshAuthSock}" ]; then
+      ln -s "${SSH_AUTH_SOCK}" "${mySshAuthSock}"
+    fi
+  fi
+}
+
 # Attempt to load a running SSH agent into the current shell from its
 # environment file.
 __load_ssh_agent_from_file() {
