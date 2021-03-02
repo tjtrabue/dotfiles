@@ -18,8 +18,7 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 # }}}
 
 # Pull in common shell aliases/functions as soon as possible.
-. "${DOTFILES_COMMON}/source/common.sh"
-src_all
+. "${DOTFILES_COMMON}/source/common.sh" && src_all
 
 # Shell completion {{{
 # Include extra CLI completions if available.
@@ -29,12 +28,6 @@ add_shell_completions
 # Make sure to set prompt to something simple for Emacs TRAMP {{{
 if [ "$TERM" == "dumb" ]; then
   PS1="tramp $ "
-fi
-# }}}
-
-# Set transparency for xterm {{{
-if [ -n "$XTERM_VERSION" ] && [ "$(command -v transset-df)" != "" ]; then
-  transset-df --id "$WINDOWID" >/dev/null
 fi
 # }}}
 
