@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Make sure that file creation occurs with the normal permissions.
+umask 022
+
 # Set variables {{{
 # History
 # The history file that lists previously run commands.
