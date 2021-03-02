@@ -132,8 +132,8 @@ __get_ls_colorflag() {
 
   # Detect which `ls` flavor is in use
   if ls --color=auto >/dev/null 2>&1; then # GNU `ls`
-    colorflag="--color=auto"
-  else # OS X `ls`
+    colorflag="--color=always"
+  else # macOS `ls`
     colorflag="-G"
   fi
 
