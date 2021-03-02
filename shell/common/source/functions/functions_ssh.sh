@@ -5,7 +5,7 @@ sshagent() {
   #       remote host over SSH! Instead, we should take advantage of agent
   #       forwarding in such scenarios.
   if [ -n "${SSH_TTY}" ]; then
-    warn "Shell exists within an SSH session. Not starting an agent."
+    warn "Shell running in SSH terminal. Not starting an agent."
     return 0
   fi
 
