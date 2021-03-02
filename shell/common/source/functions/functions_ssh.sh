@@ -41,14 +41,19 @@ fix_ssh_auth_sock() {
 
   # Only bother if we are logged in over SSH.
   if [ -n "${SSH_TTY}" ]; then
+    log_info "Examining SSH auth socket for validity..."
+
     # Delete old ssh_auth_sock symlink it if is out of date.
-    if [ -S "${SSH_AUTH_SOCK}" ] && [ -e "${mySshAuthSock}" ] && \
+    if [ -S "${SSH_AUTH_SOCK}" ] && \
+       [ -e "${mySshAuthSock}" ] && \
        [ "${SSH_AUTH_SOCK}" != "${mySshAuthSock}" ]; then
+      log_info "Removing old SSH auth socket file ${mySshAuthSock}"
       rm -f "${mySshAuthSock}"
     fi
 
-    if [ -S "${SSH_AUTH_SOCK}" ] && [ -e "${mySshAuthSock}" ]; then
-      ln -s "${SSH_AUTH_SOCK}" "${mySshAuthSock}"
+    if [ -S "${SSH_AUTH_SOCK}" ] && [ ! -e "${mySshAuthSock}" ]; then
+      log_info "Linking real SSH auth sock ${SSH_AUTH_SOCK} to ${mySshAuthSock}"
+      ln -sf "${SSH_AUTH_SOCK}" "${mySshAuthSock}"
     fi
   fi
 }
