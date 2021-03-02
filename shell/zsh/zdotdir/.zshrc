@@ -147,6 +147,11 @@ bindkey -s '^P' 'ctrlp^M'
 bindkey '^L' autosuggest-accept
 # }}}
 
+# Defaults {{{
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+# }}}
+
 # zstyle {{{
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
