@@ -64,8 +64,7 @@ setopt prompt_subst
 # }}}
 
 # Source aliases/functions {{{
-. "${COMMON_SHELL_SOURCE}/common.sh"
-src_all
+. "${COMMON_SHELL_SOURCE}/common.sh" && src_all
 # }}}
 
 # Plugins {{{
@@ -147,11 +146,6 @@ bindkey -s '^P' 'ctrlp^M'
 bindkey '^L' autosuggest-accept
 # }}}
 
-# Defaults {{{
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
-# }}}
-
 # zstyle {{{
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
@@ -162,6 +156,11 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 
 zstyle ':autocomplete:tab:*' insert-unambiguous yes
 zstyle ':autocomplete:tab:*' fzf-completion yes
+# }}}
+
+# SSH agent configuration {{{
+# See functions_ssh.sh
+sshagent
 # }}}
 
 # Initialize the shell's auto-complete functionality.

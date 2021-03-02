@@ -14,7 +14,7 @@ declare XRANDR_DOT="${DOTFILES_REPO}/copy/xrandr"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

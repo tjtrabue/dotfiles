@@ -31,11 +31,47 @@ src_starship_prompt_for_profile() {
     install_starship
   fi
 
-  # Only source starship once. Sourcing the prompt multiple times can cause
-  # odd side-effects in Zsh, especially in Zsh's vim-mode.
-  if [ -z "${STARSHIP_SOURCED}" ] || [ "${STARSHIP_SOURCED}" -le 0 ]; then
-    eval "$(starship init ${currentShell})"
-    export STARSHIP_SOURCED=1
+  __activate_starship_for_shell
+}
+
+# Conditionally determine how to activate Starship prompt for the current shell.
+__activate_starship_for_shell() {
+  local currentShell="$(currentshell)"
+
+  case "${currentShell}" in
+    "bash")
+      __activate_starship_for_bash
+      ;;
+    "zsh")
+      __activate_starship_for_zsh
+      ;;
+    "fish")
+      __activate_starship_for_fish
+      ;;
+    *)
+      warn "Could not determine how to activate Starship for ${currentShell}"
+      ;;
+  esac
+}
+
+__activate_starship_for_bash() {
+  if [ -z "${STARHIP_ACTIVE_BASH}" ] || [ "${STARHIP_ACTIVE_BASH}" -le 0 ]; then
+    eval "$(starship init bash)"
+    export STARHIP_ACTIVE_BASH=1
+  fi
+}
+
+__activate_starship_for_zsh() {
+  if [ -z "${STARHIP_ACTIVE_ZSH}" ] || [ "${STARHIP_ACTIVE_ZSH}" -le 0 ]; then
+    eval "$(starship init zsh)"
+    export STARHIP_ACTIVE_ZSH=1
+  fi
+}
+
+__activate_starship_for_fish() {
+  if [ -z "${STARHIP_ACTIVE_FISH}" ] || [ "${STARHIP_ACTIVE_FISH}" -le 0 ]; then
+    starship init fish | source
+    export STARHIP_ACTIVE_FISH=1
   fi
 }
 

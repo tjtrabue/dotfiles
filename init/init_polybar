@@ -25,7 +25,7 @@ declare LOG_TO_FILE="$DOTFILES_HOME/dotfiles.log"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

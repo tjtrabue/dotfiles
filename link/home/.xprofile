@@ -46,7 +46,7 @@ start_program_if_available() {
 # }}}
 
 # Set X user preferences
-if [ "$(command -v xset)" != "" ]; then
+if [ -x "$(command -v xset)" ]; then
   # Set the keyboard typing rate/delay to increase input speed.
   # rate  = first number
   # delay = second number

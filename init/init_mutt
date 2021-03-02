@@ -15,7 +15,7 @@ declare MUTT_CONFIG_TARGET="${HOME}/.mutt"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

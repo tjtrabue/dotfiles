@@ -9,7 +9,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

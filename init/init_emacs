@@ -12,7 +12,7 @@ declare EMACS_CONF_ORG_HOME="${EMACS_CONF}/${ORG_CONFIG_FILE_NAME}"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

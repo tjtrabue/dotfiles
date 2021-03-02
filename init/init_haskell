@@ -14,7 +14,7 @@ declare GHC_VERSIONS=('8.8.3' '8.10.1')
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

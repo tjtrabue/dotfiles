@@ -12,7 +12,7 @@ declare USER_BASH_COMPLETION_DIR="${HOME}/.bash_completion.d"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

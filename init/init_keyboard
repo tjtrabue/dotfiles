@@ -14,7 +14,7 @@ declare WALLY_BIN_PATH="${HOME}/Downloads/wally"
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

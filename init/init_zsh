@@ -13,7 +13,7 @@ declare LOG_LEVEL=3
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{
@@ -21,7 +21,8 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Initialize Zsh for a new system. This script links a few directories and
+installs some Zsh plugins.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -33,8 +34,12 @@ EOF
 }
 
 link_zdotdir() {
-  log_info "Linking Zsh dotfiles directory"
-  ln -s "${DOTFILES_ZDOTDIR}" "${USER_ZDOTDIR}"
+  if [ ! -d "${USER_ZDOTDIR}" ]; then
+    log_info "Linking Zsh dotfiles directory"
+    ln -s "${DOTFILES_ZDOTDIR}" "${USER_ZDOTDIR}"
+  else
+    warn "${BLUE}${USER_ZDOTDIR}${NC} already exists!"
+  fi
 }
 
 main() {

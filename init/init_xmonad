@@ -7,7 +7,7 @@ declare XMONAD_CONF="${HOME}/.xmonad";
 # }}}
 
 # Imports {{{
-. "${DOTFILES_REPO}/shell/common/source/common.sh"
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{
