@@ -111,14 +111,19 @@ __get_line_number() {
 # Return the name of the calling function based on the shell currently in use.
 __get_function_name() {
   local currentShell="$(currentshell)"
+  local functionName
 
   if [ "${currentShell}" = "bash" ]; then
-    echo "${FUNCNAME[4]}"
+    functionName="${FUNCNAME[4]}"
   elif [ "${currentShell}" = "zsh" ]; then
-    echo "$funcstack[5]"
+    functionName="$funcstack[5]"
   else
-    echo "${FUNCNAME[4]}"
+    functionName="${FUNCNAME[4]}"
   fi
+
+  functionName="${functionName}()"
+
+  echo "${functionName}"
 }
 
 # Return the file name of the calling function based on the shell currently in
@@ -135,6 +140,12 @@ __get_file_name() {
   fi
 }
 
+# Get the timestamp for the instant the logging function runs. Very useful for
+# debugging purposes.
+__get_timestamp() {
+  date +'%Y-%m-%d %H:%M:%S'
+}
+
 __get_log_message_info() {
   local outputInColor="${1:-''}"
   local info=""
@@ -142,6 +153,7 @@ __get_log_message_info() {
   local fileName="$(__get_file_name)"
   local funcName="$(__get_function_name)"
   local lineNo="$(__get_line_number)"
+  local timestamp="$(__get_timestamp)"
 
   if [ -n "$fileName" ]; then
     if [ -n "$outputInColor" ]; then
@@ -166,6 +178,15 @@ __get_log_message_info() {
       info+="${sep}${lineNo}"
     fi
   fi
+
+  if [ -n "$timestamp" ]; then
+    if [ -n "$outputInColor" ]; then
+      info+="${sep}${YELLOW}${timestamp}${NC}"
+    else
+      info+="${sep}${timestamp}"
+    fi
+  fi
+
   echo "$info"
 }
 

@@ -46,6 +46,11 @@ if [ -n "$XTERM_VERSION" ] && [ "$(command -v transset-df)" != "" ]; then
 fi
 # }}}
 
+# SSH agent config {{{
+# See functions_ssh.sh
+sshagent
+# }}}
+
 # Load fzf keybindings {{{
 if [ -f "${HOME}/.fzf.bash" ]; then
   . "${HOME}/.fzf.bash"
