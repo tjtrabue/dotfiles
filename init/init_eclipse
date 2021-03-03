@@ -99,8 +99,13 @@ make_eclipse_ini_backup() {
 # optional argument for that option.
 __modify_or_add_option_to_eclipse_ini() {
   local option="$1"
-  local arg="$2"
+  local arg="${2:-''}"
   local eclipseIniFile="${ECLIPSE_DIR}/eclipse.ini"
+
+  if [ "${arg}" = "''" ]; then
+    # Have to do this to get around the "unbound variable" stricture in Bash.
+    arg=''
+  fi
 
   log_info "Changing option '${option}' to '${option}${arg}'"
 
