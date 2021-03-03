@@ -649,7 +649,10 @@ lock file."
    Hooks that run whenever the window size changes.
 
 #+begin_src emacs-lisp :tangle yes
-  (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
+  ;; NOTE: Most of the time, Emacs seems to take care of zooming the font size
+  ;;       by itself. Only uncomment this hook if you notice a very small font
+  ;;       size on large monitors.
+  ;; (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
 #+end_src
 
 * TRAMP
