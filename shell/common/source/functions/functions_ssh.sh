@@ -26,13 +26,14 @@ sshagent() {
     fi
   fi
 
-  if __check_ssh_agent_running; then
-    log_info "SSH agent running with PID: ${SSH_AGENT_PID}"
-    __add_ssh_identities
-  else
+  if ! __check_ssh_agent_running; then
     __print_error_message_could_not_start_ssh_agent
     return 1
   fi
+
+  log_info "SSH agent running with PID: ${SSH_AGENT_PID}"
+  __add_ssh_identities
+  __remove_other_ssh_agents
 }
 
 # Fix SSH auth socket location so agent forwarding works with tmux.
@@ -106,6 +107,15 @@ __add_ssh_identities() {
   if [ "$?" = 1 ]; then
     log_info "Adding SSH identities..."
     ssh-add
+  fi
+}
+
+# Kill all SSH agents except for the one listed as active in the agent file.
+__remove_other_ssh_agents() {
+  if [ -n "${SSH_AGENT_PID}" ] &&
+    pgrep "ssh-agent" | grep -v "${SSH_AGENT_PID}" >>/dev/null; then
+    log_info "Killing non-active SSH agents..."
+    pgrep "ssh-agent" | grep -v "${SSH_AGENT_PID}" | xargs kill >>/dev/null 2>&1
   fi
 }
 
