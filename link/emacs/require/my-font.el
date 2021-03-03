@@ -53,14 +53,17 @@ be attached to the 'window-size-change-functions' hook.
 
 Adjust the font size of an Emacs frame whenever the frame's size changes."
   (let ((width-px (cl-third (frame-monitor-geometry))) ;; Monitor width
-        (font-point 10) ;; Font point size for standard screen
+        (font-point 11) ;; Font point size for standard screen
         (font-height))
+    ;; Select the font point based on the monitor's resolution.
+    ;; NOTE: Sometimes Emacs seems to automatically adjust the font size on
+    ;;       its own. I'm not sure why.
     (when (= width-px 3840) ;; Very Large display
-      (setq font-point 16))
+      (setq font-point 11))
     (when (= width-px 2560) ;; Large display
-      (setq font-point 13))
+      (setq font-point 11))
     (when (= width-px 1920) ;; Standard display
-      (setq font-point 10))
+      (setq font-point 11))
     ;; The face ':height' attribute is 10 * the font point.
     (setq font-height (* 10 font-point))
     ;; Adjust default font size.
