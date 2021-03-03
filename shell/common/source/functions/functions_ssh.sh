@@ -5,25 +5,21 @@ sshagent() {
   #       remote host over SSH! Instead, we should take advantage of agent
   #       forwarding in such scenarios.
   if [ -n "${SSH_TTY}" ]; then
-    warn "Shell running in SSH terminal. Not starting an SSH agent."
+    warn "Shell running in SSH terminal. Not loading SSH agent."
     return 0
   fi
 
+  __load_ssh_agent_from_file
+
   __check_ssh_agent_loaded
   if [ "$?" = 2 ]; then
-    # Attempt to load the running agent's configuration from its file.
+    log_info "Could not communicate with agent."
+    log_info "Killing all running SSH agents..."
+    pkill "ssh-agent"
+    log_info "Starting new SSH agent..."
+    __create_new_ssh_agent
+    # Load the running agent into the current shell.
     __load_ssh_agent_from_file
-
-    __check_ssh_agent_loaded
-    if [ "$?" = 2 ]; then
-      log_info "Could not communicate with agent."
-      log_info "Killing all running SSH agents..."
-      pkill "ssh-agent"
-      log_info "Starting new SSH agent..."
-      __create_new_ssh_agent
-      # Load the running agent into the current shell.
-      __load_ssh_agent_from_file
-    fi
   fi
 
   if ! __check_ssh_agent_running; then
@@ -65,7 +61,7 @@ __load_ssh_agent_from_file() {
   # The file containing the SSH agent's PID and environment variables.
   local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
   if [ -r "${sshAgentFile}" ]; then
-    log_info "Attempting to communicate with agent from file ${sshAgentFile}..."
+    log_info "Attempting to load SSH agent from file: ${sshAgentFile}..."
     eval "$(<"${sshAgentFile}")" >/dev/null
   else
     log_info "No agent file located at ${sshAgentFile}"
@@ -74,12 +70,13 @@ __load_ssh_agent_from_file() {
 
 # Start a new SSH agent and write its information to the file system.
 __create_new_ssh_agent() {
+  local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
+
   if [ -n "${CREATING_SSH_AGENT}" ] && [ "${CREATING_SSH_AGENT}" -ne 0 ]; then
     # We want to treat this variable like a mutex for this function. If it is
     # set to 1, no other processes should attempt to create a new SSH agent.
     export CREATING_SSH_AGENT=1
-    local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
-    log_info "Starting new SSH agent..."
+    log_info "Creating new SSH agent..."
     (
       umask 066
       ssh-agent >"${sshAgentFile}"
