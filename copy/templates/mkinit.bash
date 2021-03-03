@@ -14,7 +14,7 @@ declare LOG_LEVEL=3
 # }}}
 
 # Imports {{{
-. "${DOTFILES_HOME}/shell/common/source/common.sh"
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
 # }}}
 
 # Functions {{{

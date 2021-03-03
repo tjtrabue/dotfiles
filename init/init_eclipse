@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+
+# Directories
+declare ECLIPSE_DIR="${APPS}/eclipse"
+
+# Options to be set in eclipse.ini
+declare MIN_HEAP_SIZE="2048m"
+declare MAX_HEAP_SIZE="4096m"
+declare EDEN_SIZE="512m"
+declare STACK_SIZE="2m"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  cat <<EOF
+${THIS_EXEC}
+
+<insert description here>
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+
+# Get the eclipse installation directory. Try to find it automatically first,
+# but if that fails, prompt the user for the path to eclipse.
+locate_eclipse() {
+  local evaluatedEclipseDir
+
+  while [ ! -d "${ECLIPSE_DIR}" ] || [ ! -f "${ECLIPSE_DIR}/eclipse.ini" ]; do
+    echoe "Enter your Eclipse installation directory:"
+    read -r ECLIPSE_DIR
+
+    # If the user entered environment variables as part of their Eclipse
+    # directory path, make sure to evaluate them.
+    evaluatedEclipseDir="$(eval "echo \"${ECLIPSE_DIR}\"")"
+    ECLIPSE_DIR="${evaluatedEclipseDir}"
+
+    if [ ! -f "${ECLIPSE_DIR}/eclipse.ini" ]; then
+      err "Directory ${ECLIPSE_DIR} does not appear to be valid."
+    fi
+  done
+}
+
+# Tweak Eclipse's startup options for performance.
+# Eclipse is quite slow and ponderous by default, making adjusting its startup
+# options a must for every new installation.
+modify_eclipse_ini_options() {
+  __modify_or_add_option_to_eclipse_ini "-Xms" "${MIN_HEAP_SIZE}"
+  __modify_or_add_option_to_eclipse_ini "-Xmx" "${MAX_HEAP_SIZE}"
+  __modify_or_add_option_to_eclipse_ini "-Xmn" "${EDEN_SIZE}"
+  __modify_or_add_option_to_eclipse_ini "-Xss" "${STACK_SIZE}"
+}
+
+# It's important to backup the eclipse.ini file before proceeding! Automated
+# scripts can go horribly wrong!
+make_eclipse_ini_backup() {
+  local eclipseIniFile="${ECLIPSE_DIR}/eclipse.ini"
+
+  log_info "Making backup of ${eclipseIniFile}"
+  cp -f "${eclipseIniFile}"{,.bak}
+}
+
+# Takes care of editing the eclipse.ini file with a supplied option and an
+# optional argument for that option.
+__modify_or_add_option_to_eclipse_ini() {
+  local option="$1"
+  local arg="$2"
+  local eclipseIniFile="${ECLIPSE_DIR}/eclipse.ini"
+
+  log_info "Changing option '${option}' to '${option}${arg}'"
+
+  # Replace the option with our version of the option.
+  sed -i -E "s/^${option}.*/${option}${arg}/" "${eclipseIniFile}"
+
+  # If the option didn't exist to begin with, simply add it along with its
+  # argument to the eclipse.ini file.
+  if ! grep -q "^${option}${arg}" "${eclipseIniFile}"; then
+    log_info "Option '${option}' didn't exist originally; adding it now"
+    echo "${option}${arg}" >>"${eclipseIniFile}"
+  fi
+}
+
+main() {
+  print_header "Initializing Eclipse"
+  locate_eclipse
+  make_eclipse_ini_backup
+  modify_eclipse_ini_options
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help-n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
