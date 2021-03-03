@@ -56,7 +56,7 @@ Adjust the font size of an Emacs frame whenever the frame's size changes."
         (font-point 10) ;; Font point size for standard screen
         (font-height))
     (when (= width-px 3840) ;; Very Large display
-      (setq font-point 20))
+      (setq font-point 16))
     (when (= width-px 2560) ;; Large display
       (setq font-point 13))
     (when (= width-px 1920) ;; Standard display

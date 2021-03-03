@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# NOTE: Many of the functions in this file are obsolete, and only remain for
+#       backwards compatibility with older versions of `gpg`. New versions of
+#       `gpg` start `gpg-agent` automatically and manage the agent's lifecycle
+#       for you, making the use of these functions unnecessary. Older versions
+#       did require you to start the agent manually, however, and it is with
+#       these older versions of `gpg` in mind that I have decided to keep these
+#       functions around. Because of the forward thinking people pitching in for
+#       `gpg` development, using these functions in newer versions of `gpg` does
+#       essentially nothing, and at the very least causes no harm. Thus, there
+#       is no reason to get rid of them.
+
 # Communicate with a running gpg-agent, or start a new instance if none are
 # currently running.
 gpgagent() {
@@ -52,7 +63,11 @@ __load_existing_gpg_agent_from_file() {
 __create_gpg_agent() {
   local gpgAgentFile="${HOME}/.gpg-agent-info"
 
-  log_info "Creating new GPG agent"
+  log_info "Starting GPG agent"
+  # NOTE: Newer versions of `gpg-agent` do not write the env file. There is no
+  #       reason to keep an env file since `gpg` manages the agent's lifecycle
+  #       for you nowadays. The '--write-env-file' option remains for
+  #       compatibility reasons only and is ignored on the command line.
   gpg-agent --daemon --enable-ssh-support \
     --write-env-file "${gpgAgentFile}" >>/dev/null 2>&1
 }

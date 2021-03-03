@@ -44,9 +44,9 @@ fix_ssh_auth_sock() {
     log_info "Examining SSH auth socket for validity..."
 
     # Delete old ssh_auth_sock symlink it if is out of date.
-    if [ -S "${SSH_AUTH_SOCK}" ] && \
-       [ -e "${mySshAuthSock}" ] && \
-       [ "${SSH_AUTH_SOCK}" != "${mySshAuthSock}" ]; then
+    if [ -S "${SSH_AUTH_SOCK}" ] &&
+      [ -e "${mySshAuthSock}" ] &&
+      [ "${SSH_AUTH_SOCK}" != "${mySshAuthSock}" ]; then
       log_info "Removing old SSH auth socket file ${mySshAuthSock}"
       rm -f "${mySshAuthSock}"
     fi
@@ -73,9 +73,20 @@ __load_ssh_agent_from_file() {
 
 # Start a new SSH agent and write its information to the file system.
 __create_new_ssh_agent() {
-  local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
-  log_info "Starting new SSH agent..."
-  (umask 066; ssh-agent >"${sshAgentFile}")
+  if [ -n "${CREATING_SSH_AGENT}" ] && [ "${CREATING_SSH_AGENT}" -ne 0 ]; then
+    # We want to treat this variable like a mutex for this function. If it is
+    # set to 1, no other processes should attempt to create a new SSH agent.
+    export CREATING_SSH_AGENT=1
+    local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
+    log_info "Starting new SSH agent..."
+    (
+      umask 066
+      ssh-agent >"${sshAgentFile}"
+    )
+    export CREATING_SSH_AGENT=0
+  else
+    log_info "Other process currently creating SSH agent."
+  fi
 }
 
 # Test if an SSH agent is registered in the current shell and running.
@@ -99,8 +110,8 @@ __add_ssh_identities() {
 }
 
 __print_error_message_could_not_start_ssh_agent() {
-    err "Could not start SSH agent."
-    cat <<EOF
+  err "Could not start SSH agent."
+  cat <<EOF
 Try manually starting the agent by running these commands:
   eval \$(ssh-agent)
   ssh-add
