@@ -61,10 +61,10 @@ __load_ssh_agent_from_file() {
   # The file containing the SSH agent's PID and environment variables.
   local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
   if [ -r "${sshAgentFile}" ]; then
-    log_info "Attempting to load SSH agent from file: ${sshAgentFile}..."
+    log_info "Loading SSH agent from file: ${BLUE}${sshAgentFile}${NC}..."
     eval "$(<"${sshAgentFile}")" >/dev/null
   else
-    log_info "No agent file located at ${sshAgentFile}"
+    log_info "No agent file found at ${sshAgentFile}"
   fi
 }
 
