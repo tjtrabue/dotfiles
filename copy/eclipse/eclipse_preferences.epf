@@ -1,24 +1,26 @@
-#Thu Feb 18 20:18:05 EST 2021
+#Wed Mar 03 16:25:47 EST 2021
 \!/=
 /configuration/com.genuitec.eclipse.codetogether.ui/check.profile.iu=true
 /configuration/com.genuitec.eclipse.codetogether.ui/codetogether.main.view.displayed=true
 /configuration/com.genuitec.eclipse.codetogether.ui/track.install.first.use=true
 /configuration/com.genuitec.eclipse.meexplorer/breadcrumb.show.default=true
-/configuration/com.genuitec.eclipse.monitor//webclipse/ideused/dayOfMonth=18
-/configuration/com.genuitec.eclipse.monitor//webclipse/ideused/month=1
-/configuration/com.genuitec.eclipse.monitor/ideused=12
-/configuration/com.genuitec.eclipse.startup/features=[{"launchCount"\:20,"id"\:"com.genuitec.eclipse.theming.designer.feature","version"\:"1.11.0.202012111554"},{"launchCount"\:20,"id"\:"com.genuitec.eclipse.theming.feature","version"\:"1.11.0.202012111554"}]
-/configuration/com.genuitec.eclipse.startup/launchCount=20
+/configuration/com.genuitec.eclipse.monitor//webclipse/ideused/dayOfMonth=3
+/configuration/com.genuitec.eclipse.monitor//webclipse/ideused/month=2
+/configuration/com.genuitec.eclipse.monitor/ideused=2
+/configuration/com.genuitec.eclipse.startup/features=[{"launchCount"\:24,"id"\:"com.genuitec.eclipse.theming.designer.feature","version"\:"1.11.0.202012111554"},{"launchCount"\:24,"id"\:"com.genuitec.eclipse.theming.feature","version"\:"1.11.0.202012111554"}]
+/configuration/com.genuitec.eclipse.startup/launchCount=24
 /configuration/com.genuitec.eclipse.startup/welcomeFlowVersionShown=3
 /configuration/com.genuitec.eclipse.theming.ui/PEFontSize=0
 /configuration/com.genuitec.eclipse.theming.ui/applyBackground=false
+/configuration/com.genuitec.eclipse.theming.ui/codemix.announce.notice.displayed=1613779365195
+/configuration/com.genuitec.eclipse.theming.ui/elearning.dont.show.until=1614816162951
 /configuration/com.genuitec.eclipse.theming.ui/iconcolormode=primary
 /configuration/com.genuitec.eclipse.theming.ui/iconreplacement=true
 /configuration/com.genuitec.eclipse.theming.ui/lastConfiguration=1611796998310
 /configuration/com.genuitec.eclipse.theming.ui/overridePEFontSize=false
 /configuration/com.genuitec.eclipse.theming.ui/showWelcomeDialog=false
 /configuration/com.genuitec.eclipse.theming.ui/workbench.theme=Dark Gray
-/configuration/com.genuitec.eclipse.webclipse.evergreen/devstyle.manifest.check.timestamp=1613693784602
+/configuration/com.genuitec.eclipse.webclipse.evergreen/devstyle.manifest.check.timestamp=1614801501532
 /configuration/com.genuitec.eclipse.webclipse.evergreen/manifest.devstyle.download.cache={"updates"\:{"release-version"\:"1.11.0.202012111554","eclipse-version"\:"[4.5.0,5.0.0)","release-notes"\:{"id"\:"ci20201211","delivery-log-url"\:"https\:\\/\\/www.genuitec.com\\/products\\/devstyle\\/deliverylog\\/","release-label"\:"CI 2020.12.11","updates"\:[{"heading"\:"General Fixes and Eclipse 2020-12","message"\:"This release picks up additional fixes for stability and compatibility with Eclipse 2020-12.","bullet"\:{"padding"\:"tiny","overlayicon"\:"ionicons\:ios-moon","color"\:"blue","overlayscale"\:"xlarge","icon"\:"fontawesome\:square","scale"\:"full","type"\:"overlayed","overlaycolor"\:"black","size"\:"32x32","position"\:"center"},"show-if"\:{"bundles"\:["com.genuitec.eclipse.theming.ui"]}}]},"eclipse-roots"\:[{"id"\:"com.genuitec.eclipse.theming.core.feature.feature.group","version"\:"1.11.0.202012111554"},{"id"\:"com.genuitec.eclipse.theming.feature.feature.group","version"\:"1.11.0.202012111554"},{"id"\:"com.genuitec.eclipse.theming.designer.feature.feature.group","version"\:"1.11.0.202012111554"}],"binary-roots"\:[],"repository-url"\:"http\:\\/\\/downloads.genuitec.com\\/downloads\\/products\\/devstyle\\/updates\\/ds20201211","check-interval"\:28800000,"notify-updated"\:14400000},"notifications"\:[],"notifications2"\:[]}
 /configuration/com.genuitec.eclipse.webclipse.evergreen/manifest.devstyle.download.etag="5fd3af2f-4b2"
 /configuration/com.genuitec.eclipse.webclipse.evergreen/manifest.devstyle.download.modified.date=Fri, 11 Dec 2020 17\:41\:03 GMT
@@ -368,7 +370,7 @@
 /instance/com.dubture.twig.ui/editorStmtColorBoundarymaker=\#E2E2E2 | null | null | null | null | null
 /instance/com.dubture.twig.ui/overriddenByCSS=,editorBlocknameColor,editorColorKeyword,editorColorHeredoc,editorColorPhpdoc,codeStyleNormal,editorColorComment,editorColorTask,editorColorVariable,editorColorBoundarymaker,editorColorPHPDocComment,editorColorString,editorStmtColorBoundarymaker,editorColorLineComment,editorColorNumber,
 /instance/com.genuitec.eclipse.codetogether.ui/codetogether.main.view.displayed=true
-/instance/com.genuitec.eclipse.monitor/last.upload.time=1613693785741
+/instance/com.genuitec.eclipse.monitor/last.upload.time=1614745356844
 /instance/com.genuitec.eclipse.sqlexplorer/overriddenByCSS=,sql_columns,sql_default,sql_keyword,sql_multi_line_comment,sql_single_line_comment,sql_string,sql_table,
 /instance/com.genuitec.eclipse.sqlexplorer/sql_columns=171,115,255
 /instance/com.genuitec.eclipse.sqlexplorer/sql_default=210,215,218
@@ -381,10 +383,11 @@
 /instance/com.genuitec.eclipse.theming.ui/approved.defs.file.last.changed.time=1607625304000
 /instance/com.genuitec.eclipse.theming.ui/codemix.dont.show.upsell.until=1613697802134
 /instance/com.genuitec.eclipse.theming.ui/configurationInstallLocation=/home/tjtrabu/applications/eclipse/
+/instance/com.genuitec.eclipse.theming.ui/elearning.dont.show.until=1614816162951
 /instance/com.genuitec.eclipse.theming.ui/iconcolormode=pastel
 /instance/com.genuitec.eclipse.theming.ui/includeThemingInOomph=false
-/instance/com.genuitec.eclipse.theming.ui/last.download.attempt.time=1613693946415
-/instance/com.genuitec.eclipse.theming.ui/lastConfiguration=1613693939229
+/instance/com.genuitec.eclipse.theming.ui/last.download.attempt.time=1614745294945
+/instance/com.genuitec.eclipse.theming.ui/lastConfiguration=1614745286789
 /instance/com.genuitec.eclipse.theming.ui/newinstall=false
 /instance/com.genuitec.eclipse.theming.ui/showWelcomeDialog=false
 /instance/com.genuitec.eclipse.theming.ui/workbench.theme=Dark Gray
@@ -1687,9 +1690,11 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_relational_operator=16
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_shift_operator=16
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.indentation.size=2
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_new_line_at_end_of_file_if_missing=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.lineSplit=80
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.tabulation.char=space
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.tabulation.size=2
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.timeoutForParameterNameFromAttachedJavadoc=50
 /instance/org.eclipse.jdt.debug.ui/org.eclipse.jdt.debug.ui.active_filters=org.eclipse.jdt.launching.internal.*,java.lang.ClassLoader
 /instance/org.eclipse.jdt.debug.ui/org.eclipse.jdt.debug.ui.prompt_unable_to_install_breakpoint=false
 /instance/org.eclipse.jdt.debug/org.eclipse.jdt.debug.PREF_HCR_WITH_COMPILATION_ERRORS=true
@@ -1708,12 +1713,13 @@
 /instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_CONNECT_TIMEOUT=20000
 /instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1611801751930" defaultVMConnector\="">\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\n        <vm id\="1611798297778" name\="jre" path\="/home/tjtrabu/applications/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_15.0.1.v20201027-0507/jre"/>\n        <vm id\="1611801684804" name\="8.0.282.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/8.0.282.hs-adpt"/>\n        <vm id\="1611801751930" name\="11.0.10.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/11.0.10.hs-adpt"/>\n        <vm id\="1611801807849" name\="15.0.2.hs-adpt" path\="/home/tjtrabu/.sdkman/candidates/java/15.0.2.hs-adpt"/>\n    </vmType>\n</vmSettings>\n
 /instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.only_include_exported_classpath_entries=false
-/instance/org.eclipse.jdt.ui/content_assist_autoactivation_delay=0
+/instance/org.eclipse.jdt.ui/content_assist_autoactivation_delay=1
 /instance/org.eclipse.jdt.ui/content_assist_autoactivation_triggers_java=.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@
+/instance/org.eclipse.jdt.ui/content_assist_category_order=org.eclipse.jdt.ui.templateProposalCategory\:0\u0000org.eclipse.jdt.ui.swtProposalCategory\:1\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\:65537\u0000org.eclipse.jdt.ui.javaChainProposalCategory\:3\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\:65539\u0000org.eclipse.jdt.ui.textProposalCategory\:65540\u0000org.eclipse.jdt.ui.javaAllProposalCategory\:65541\u0000org.eclipse.jdt.ui.javaPostfixProposalCategory\:65542\u0000org.eclipse.jpt.jaxb.ui.jaxbCompletionProposals\:8\u0000org.eclipse.jpt.jpa.ui.jpaProposalCategory\:9\u0000org.eclipse.jst.ws.jaxws.ui.jaxwsProposalComputer\:65545\u0000org.eclipse.mylyn.java.ui.javaAllProposalCategory\:11\u0000org.eclipse.pde.api.tools.ui.apitools_proposal_category\:12\u0000org.eclipse.lsp4e.jdt.ls-based-java-completion-computer\:13\u0000
 /instance/org.eclipse.jdt.ui/content_assist_completion_replacement_background=200,200,0
 /instance/org.eclipse.jdt.ui/content_assist_completion_replacement_foreground=194,0,0
 /instance/org.eclipse.jdt.ui/content_assist_disable_completion_trigger_chars=true
-/instance/org.eclipse.jdt.ui/content_assist_disabled_computers=org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaPostfixProposalCategory\u0000org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.jdt.ui.javaChainProposalCategory\u0000
+/instance/org.eclipse.jdt.ui/content_assist_disabled_computers=org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.jdt.ui.javaChainProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaPostfixProposalCategory\u0000org.eclipse.jst.ws.jaxws.ui.jaxwsProposalComputer\u0000
 /instance/org.eclipse.jdt.ui/content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="guru.springframework.sfgdi.controllers.PropertyInjectedController"><rhs name\="guru.springframework.sfgdi.controllers.PropertyInjectedController"/></lhs><lhs name\="guru.springframework.sfgdi.services.GreetingService"><rhs name\="guru.springframework.sfgdi.services.GreetingServiceImpl"/></lhs><lhs name\="guru.springframework.sfgdi.controllers.SetterInjectedController"><rhs name\="guru.springframework.sfgdi.controllers.SetterInjectedController"/></lhs><lhs name\="guru.springframework.sfgdi.controllers.ConstructorInjectedController"><rhs name\="guru.springframework.sfgdi.controllers.ConstructorInjectedController"/></lhs></history>
 /instance/org.eclipse.jdt.ui/content_assist_number_of_computers=23
 /instance/org.eclipse.jdt.ui/content_assist_parameters_background=48,54,59
@@ -1838,7 +1844,7 @@
 /instance/org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.italic=false
 /instance/org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.strikethrough=false
 /instance/org.eclipse.jdt.ui/semanticHighlighting.staticMethodInvocation.underline=false
-/instance/org.eclipse.jdt.ui/sourceHoverBackgroundColor=161,152,121
+/instance/org.eclipse.jdt.ui/sourceHoverBackgroundColor=44,49,53
 /instance/org.eclipse.jdt.ui/sp_cleanup.add_all=false
 /instance/org.eclipse.jdt.ui/sp_cleanup.add_default_serial_version_id=true
 /instance/org.eclipse.jdt.ui/sp_cleanup.add_generated_serial_version_id=false
@@ -2157,8 +2163,7 @@
 /instance/org.eclipse.ui.editors/writeOccurrenceIndicationColor=65,65,4
 /instance/org.eclipse.ui.genericeditor/matchingBracketsColor=244,245,246
 /instance/org.eclipse.ui.genericeditor/overriddenByCSS=,matchingBracketsColor,
-/instance/org.eclipse.ui.ide/SAVE_ALL_BEFORE_BUILD=true
-/instance/org.eclipse.ui.ide/platformState=1611796666711
+/instance/org.eclipse.ui.ide/platformState=1611796666745
 /instance/org.eclipse.ui.ide/quickStart=false
 /instance/org.eclipse.ui.ide/tipsAndTricks=true
 /instance/org.eclipse.ui.navigator/org.eclipse.ui.navigator.ProjectExplorer.filterActivation=\:org.eclipse.ui.navigator.resources.filters.startsWithDot\:org.eclipse.ui.navigator.resources.nested.HideTopLevelProjectIfNested\:org.eclipse.ui.navigator.resources.nested.HideFolderWhenProjectIsShownAsNested\:
@@ -2991,10 +2996,10 @@
 /instance/winterwell.markdown/Pref_Header=172,193,172
 /instance/winterwell.markdown/Pref_Link=168,147,204
 /instance/winterwell.markdown/overriddenByCSS=,Pref_Default,Pref_Header,Pref_Comment,Pref_Link,
-@com.genuitec.eclipse.codetogether.ui=3.1.0.202012081703
+@com.genuitec.eclipse.codetogether.ui=3.2.0.202101272043
 @com.genuitec.eclipse.monitor=13.0.0.202012111554
 @com.genuitec.eclipse.theming.ui=1.11.0.202012111554
-@de.jcup.yamleditor=1.6.2
+@de.jcup.yamleditor=1.7.0
 @io.emmet.eclipse=1.0.0.201401132323
 @net.mihai-nita.ansicon.plugin=1.4.4.202102040736
 @net.sourceforge.vrapper.eclipse=0.74.0
