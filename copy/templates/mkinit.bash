@@ -39,7 +39,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help-n 'init_<name_here>' -- "$@")
+args=$(getopt -o h --long help -n 'init_<name_here>' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.

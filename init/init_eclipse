@@ -20,6 +20,10 @@ declare MIN_HEAP_SIZE="2048m"
 declare MAX_HEAP_SIZE="4096m"
 declare EDEN_SIZE="512m"
 declare STACK_SIZE="2m"
+
+# Flags
+# Delete backup files when this script exits.
+declare RM_BACKUPS=false
 # }}}
 
 # Imports {{{
@@ -42,6 +46,14 @@ OPTIONS:
 EOF
 }
 
+# Cleanup function for init_eclipse.
+cleanup() {
+  if ${RM_BACKUPS}; then
+    rm -f "${ECLIPSE_DIR}/eclipse.ini.bak"
+  fi
+}
+trap cleanup EXIT
+
 # Get the eclipse installation directory. Try to find it automatically first,
 # but if that fails, prompt the user for the path to eclipse.
 locate_eclipse() {
@@ -60,6 +72,8 @@ locate_eclipse() {
       err "Directory ${ECLIPSE_DIR} does not appear to be valid."
     fi
   done
+
+  log_info "Using Eclipse directory: ${BLUE}${ECLIPSE_DIR}${NC}"
 }
 
 # Tweak Eclipse's startup options for performance.
@@ -110,7 +124,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help-n 'init_<name_here>' -- "$@")
+args=$(getopt -o hx --long help,rm-backups -n 'init_eclipse' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -119,6 +133,11 @@ while true; do
   -h | --help)
     _help
     exit 0
+    ;;
+
+  -x | --rm-backups)
+    RM_BACKUPS=true
+    shift
     ;;
 
   --)
