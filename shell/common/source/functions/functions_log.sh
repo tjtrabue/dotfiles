@@ -56,6 +56,11 @@ succ() {
 log_info() {
   log "INFO" "$*"
 }
+
+# Print lower level debugging information to log output.
+log_debug() {
+  log "DEBUG" "$*"
+}
 # }}}
 
 # Heading printing {{{
@@ -204,6 +209,9 @@ __get_log_type_with_color() {
   local logType="$1"
   local color=""
   case "$logType" in
+  "DEBUG")
+    color="${MAGENTA}"
+    ;;
   "INFO")
     color="${GREEN}"
     ;;
@@ -232,11 +240,11 @@ __log_if_level_acceptable() {
   local logLevel="${LOG_LEVEL:-3}"
   local logToFile="${LOG_TO_FILE:-""}"
 
-  if ([ "${logType}" = "ERROR" ]   && [ "${logLevel}" -ge 1 ]) || \
-     ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) || \
-     ([ "${logType}" = "INFO" ]    && [ "${logLevel}" -ge 3 ]) || \
-     ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]); then
-
+  if ([ "${logType}" = "ERROR" ] && [ "${logLevel}" -ge 1 ]) ||
+    ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) ||
+    ([ "${logType}" = "INFO" ] && [ "${logLevel}" -ge 3 ]) ||
+    ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]) ||
+    ([ "${logType}" = "DEBUG" ] && [ "${logLevel}" -ge 4 ]); then
     echoe "${outputColor}"
     if [ -f "${logToFile}" ]; then
       echoe "${output}" >>"${logToFile}"
