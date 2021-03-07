@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # This file is a shell script that the X server runs before the Window Manager
 # starts, and thus acts as a place to configure services and start other one-
@@ -13,11 +13,15 @@
 DOTFILES_HOME="${HOME}/.dotfiles"
 # }}}
 
-# Imports {{{
-# Pull in functions:
+# Set PATH {{{
+# PATH="/sbin:${PATH}"
+# PATH="/usr/sbin:${PATH}"
+# PATH="/usr/local/bin:${PATH}"
+# PATH="${HOME}/bin:${PATH}"
+# PATH="${HOME}/.local/bin:${PATH}"
+# export PATH
 . "${DOTFILES_HOME}/shell/common/source/functions/functions_path.sh"
-# Add extra binary paths to $PATH
-spath
+src
 # }}}
 
 # Functions {{{
@@ -31,7 +35,7 @@ start_program_if_available() {
   local cmdString="${cmd}"
 
   if [ -n "${opts}" ]; then
-    cmdString+=" ${opts}"
+    cmdString="${cmdString} ${opts}"
   else
     warn "No options given for program ${cmd} in .xprofile"
   fi

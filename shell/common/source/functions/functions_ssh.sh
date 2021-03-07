@@ -72,7 +72,7 @@ __load_ssh_agent_from_file() {
 __create_new_ssh_agent() {
   local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
 
-  if [ -n "${CREATING_SSH_AGENT}" ] && [ "${CREATING_SSH_AGENT}" -ne 0 ]; then
+  if [ -z "${CREATING_SSH_AGENT}" ] || [ "${CREATING_SSH_AGENT}" -eq 0 ]; then
     # We want to treat this variable like a mutex for this function. If it is
     # set to 1, no other processes should attempt to create a new SSH agent.
     export CREATING_SSH_AGENT=1

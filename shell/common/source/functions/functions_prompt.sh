@@ -3,6 +3,7 @@
 # Make ready the shell's prompt.
 # This function should work for any shell, not just bash.
 src_prompt_for_profile() {
+  log_info "Initializing user prompt"
   src_starship_prompt_for_profile
 }
 
@@ -38,6 +39,7 @@ src_starship_prompt_for_profile() {
 __activate_starship_for_shell() {
   local currentShell="$(currentshell)"
 
+  log_info "Activating starship prompt for ${currentShell}"
   case "${currentShell}" in
     "bash")
       __activate_starship_for_bash
@@ -73,11 +75,8 @@ __activate_starship() {
   local starshipInitCmd="$1"
   local shellControlEnvVar="$2"
 
-  if eval "[ -z \$${shellControlEnvVar} ] || [ \$${shellControlEnvVar} -le 0 ]";
-  then
-    eval "${starshipInitCmd}"
-    eval "export ${shellControlEnvVar}=1"
-  fi
+  eval "${starshipInitCmd}"
+  eval "export ${shellControlEnvVar}=1"
 }
 
 # Initialize the classic powerline shell prompt.
