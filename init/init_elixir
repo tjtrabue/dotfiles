@@ -15,9 +15,20 @@ declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
 
 # Primary Functions {{{
 
+exit_if_elixir_not_installed() {
+  if [ ! -x "$(command -v iex)" ]; then
+    err "No Elixir installation detected."
+    cat <<EOF
+Please see the installation instructions for your platform in the Elixir
+documentation.
+EOF
+    exit 1
+  fi
+}
+
 # Install hex, Elixir's package manager.
 install_hex() {
-  mix local.hex
+  mix local.hex --force
 }
 
 # rebar is the Erlang build tool, which is often necessary when you need to
@@ -27,6 +38,8 @@ install_rebar() {
 }
 
 main() {
+  print_header "Initializing Elixir Programming Platform"
+  exit_if_elixir_not_installed
   install_hex
   install_rebar
 }
