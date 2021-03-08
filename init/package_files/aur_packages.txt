@@ -1,3 +1,4 @@
+brave
 drive-git
 elixir-ls-git
 emacs-native-comp-git

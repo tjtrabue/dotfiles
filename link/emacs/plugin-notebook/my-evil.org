@@ -232,11 +232,6 @@ Needed for performance:
     (evil-org-agenda-set-keys))
 #+end_src
 
-** vertigo
-#+begin_src emacs-lisp :tangle yes
-  (use-package vertigo)
-#+end_src
-
 ** sentence-navigation
 #+begin_src emacs-lisp :tangle yes
   (use-package sentence-navigation

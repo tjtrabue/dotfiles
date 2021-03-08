@@ -1,0 +1,30 @@
+#+title:    Vertical Highlights for Indentation Levels
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:03:08
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+
+Provides vertical lines highlighting which character begins an indentation
+level similar to the behavior of other modern text editors.
+
+An alternative to this plugin is =highlight-indentaton.el=, which is very
+popular but much more limited in terms of configuration.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+
+* use-package specification
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package highlight-indent-guides
+    :custom
+    ;; Only highlight the first character of each indent level instead of the
+    ;; entire column.
+    (highlight-indent-guides-method 'character)
+    :hook
+    (prog-mode . highlight-indent-guides-mode))
+#+end_src

@@ -135,14 +135,6 @@ Needed for performance:
           ([remap projectile-ag] . helm-projectile-ag)))
 #+end_src
 
-** helm-ghc
-  Haskell GHC integration with Helm.
-
-#+begin_src emacs-lisp :tangle yes
-
-  ;; (use-package helm-ghc)
-#+end_src
-
 ** helm-swoop
   Creates a narrowing find buffer for locating and manipulating text within
   open buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you

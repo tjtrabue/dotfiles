@@ -22,7 +22,6 @@ crypto++
 ctags
 cups
 cups-pdf
-dart
 dejagnu
 dhclient
 dialog
@@ -51,6 +50,7 @@ go
 gpicview
 grub
 hacksaw
+haskell-ghc-check
 haskell-haddock-library
 htop
 hunspell
