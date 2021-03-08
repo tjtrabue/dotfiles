@@ -113,6 +113,9 @@ cedet-rc.el
 # Other auto-generated Elisp files from Org files
 **/plugin-notebook/*.el
 
+# Brave browser metadata
+link/config/BraveSoftware
+
 # Mutt/Neomutt
 link/config/mutt/cache
 # Do not store mutt aliases
