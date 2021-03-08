@@ -57,8 +57,6 @@ __do_ls_light() {
   local dir_to_list="${2:-.}"
 
   if [ -x "$(command -v "exa")" ]; then
-    # `exa` has no '-A' flag, so use '-a' instead.
-    flags="${flags/A/a}"
     __do_ls_exa "${flags}" "${dir_to_list}"
   elif [ -x "$(command -v perl)" ]; then
     __do_ls_perl_script "${flags}" "${dir_to_list}"
@@ -101,6 +99,11 @@ __do_ls_colorls() {
 __do_ls_exa() {
   local flags="$1"
   local dir_to_list="${2:-.}"
+
+  # `exa` has no '-A' flag, so use '-a' instead.
+  flags="${flags/A/a}"
+  # Add extra exa-specific flags.
+  flags="${flags} -@"
   eval "command exa ${flags} ${dir_to_list}"
 }
 
