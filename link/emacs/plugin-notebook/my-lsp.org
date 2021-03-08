@@ -201,6 +201,8 @@ debugging."
                                   "--header-insertion-decorators"
                                   "--suggest-missing-includes"))
     (lsp-clients-clangd-executable (executable-find "clangd"))
+    ;;; elixir-ls
+    (lsp-clients-elixir-server-executable (executable-find "elixir-ls"))
     :bind-keymap
     ;; Redefine lsp command prefix (default is "s-l" which messes with
     ;; most window managers).

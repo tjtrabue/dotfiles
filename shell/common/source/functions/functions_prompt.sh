@@ -39,20 +39,20 @@ src_starship_prompt_for_profile() {
 __activate_starship_for_shell() {
   local currentShell="$(currentshell)"
 
-  log_info "Activating starship prompt for ${currentShell}"
+  log_debug "Activating starship prompt for ${currentShell}"
   case "${currentShell}" in
-    "bash")
-      __activate_starship_for_bash
-      ;;
-    "zsh")
-      __activate_starship_for_zsh
-      ;;
-    "fish")
-      __activate_starship_for_fish
-      ;;
-    *)
-      warn "Could not determine how to activate Starship for ${currentShell}"
-      ;;
+  "bash")
+    __activate_starship_for_bash
+    ;;
+  "zsh")
+    __activate_starship_for_zsh
+    ;;
+  "fish")
+    __activate_starship_for_fish
+    ;;
+  *)
+    warn "Could not determine how to activate Starship for ${currentShell}"
+    ;;
   esac
 }
 
@@ -75,6 +75,8 @@ __activate_starship() {
   local starshipInitCmd="$1"
   local shellControlEnvVar="$2"
 
+  log_debug "Starhship activation command: ${starshipInitCmd}"
+  log_debug "Starship control environment variable: ${shellControlEnvVar}"
   eval "${starshipInitCmd}"
   eval "export ${shellControlEnvVar}=1"
 }
