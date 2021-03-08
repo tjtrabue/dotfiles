@@ -57,6 +57,7 @@ hunspell
 hunspell-en_US
 imagemagick
 inkscape
+inotify-tools
 iotop
 iproute2
 isync
@@ -109,6 +110,7 @@ pass
 pdfjam
 perl-image-exiftool
 picom
+postgresql
 pulseaudio
 pulseaudio-alsa
 pulsemixer
