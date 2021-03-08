@@ -39,6 +39,15 @@ perform_initial_configuration() {
   sudo -iu postgres initdb -D "${databaseClusterLocation}"
 }
 
+# Set the postgres user's password to the default.
+change_postgres_user_password() {
+  local defaultPostgresPassword="postgres"
+
+  log_info "Setting postgres user's password to: ${defaultPostgresPassword}"
+  printf "%s\n%s\n" "${defaultPostgresPassword}" "${defaultPostgresPassword}" \
+    | sudo passwd postgres
+}
+
 # Enable and start the PostgreSQL SystemD service.
 start_postgres_server() {
   log_info "Starting PostgreSQL SystemD service"
@@ -49,6 +58,7 @@ start_postgres_server() {
 main() {
   print_header "Initializing PostgreSQL"
   perform_initial_configuration
+  change_postgres_user_password
   start_postgres_server
 }
 # }}}
