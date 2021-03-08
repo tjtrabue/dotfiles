@@ -170,4 +170,10 @@
   required = true
 # }}}
 
+# Init {{{
+[init]
+  # Always name the default branch "master" when creating a new git repo.
+  defaultBranch = master
+# }}}
+
 # vim:foldenable:foldmethod=marker:foldlevel=0
