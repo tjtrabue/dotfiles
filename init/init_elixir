@@ -37,11 +37,18 @@ install_rebar() {
   mix local.rebar --force
 }
 
+# The phoenix framework app generator allows you to create starter Phoenix
+# framework applications.
+install_phoenix_app_generator() {
+  mix archive.install --force hex phx_new
+}
+
 main() {
   print_header "Initializing Elixir Programming Platform"
   exit_if_elixir_not_installed
   install_hex
   install_rebar
+  install_phoenix_app_generator
 }
 # }}}
 
