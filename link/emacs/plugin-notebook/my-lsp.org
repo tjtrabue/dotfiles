@@ -203,6 +203,12 @@ debugging."
     (lsp-clients-clangd-executable (executable-find "clangd"))
     ;;; elixir-ls
     (lsp-clients-elixir-server-executable (executable-find "elixir-ls"))
+    ;;; lua-language-server
+    ;; lsp-mode can try to install lua-language-server ;; automatically, but
+    ;; I've noticed that version tends to be really slow.
+    ;; It's best to install it yourself.
+    (lsp-clients-lua-language-server-bin
+      (executable-find "lua-language-server"))
     :bind-keymap
     ;; Redefine lsp command prefix (default is "s-l" which messes with
     ;; most window managers).

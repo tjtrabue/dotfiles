@@ -35,6 +35,17 @@ alias rsa="rsync -a"
 alias ag="ag --hidden"
 # }}}
 
+# readline aliases {{{
+# These aliases require the rlwrap command, which intercepts key strokes sent to
+# the commands and runs them through readline.
+# NOTE: not currently using rlwrap aliases since doing so breaks tab completion.
+# if [ -x "$(command -v rlwrap)" ]; then
+#   # Use readline configuration for Elixir shell, since iex does not have
+#   # native support for readline.
+#   alias iex="rlwrap -a -A -t dumb iex"
+# fi
+# }}}
+
 ###########################################################################
 ##                          Aliases taken from                           ##
 ##                        mathiasbynens/dotfiles                         ##

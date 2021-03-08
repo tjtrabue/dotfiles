@@ -119,6 +119,7 @@ python2-pip
 ranger
 read-edid
 ripgrep
+rlwrap
 rofi
 rsync
 ruby
