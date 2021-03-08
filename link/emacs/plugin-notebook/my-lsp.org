@@ -22,7 +22,7 @@ Needed for performance:
   - *EmmyLua LanguageServer*: Available as an AUR packge on Arch Linux.
     Make sure to rename EmmyLua's =.jar= file to =EmmyLua-LS-all.jar= and put it
     in the =~/.emacs.d/= directory.
-  - *haskell-ide-engine*: Available as an AUR packge on Arch Linux.
+  - *haskell-language-server*: Install with =ghcup=.
 
 * Variable
   Define special =lsp-mode= variables here.
@@ -280,15 +280,12 @@ debugging."
 ** lsp-haskell
 
 #+begin_src emacs-lisp :tangle yes
-  ;; NOTE: This plugin requires that the haskell-ide-engine package be
-  ;;       installed on your system.
+  ;; NOTE: This plugin requires haskell-language-server to be installed on your
+  ;;       system.
   (use-package lsp-haskell
-    :after (lsp-mode)
+    :after lsp-mode
     :hook
-    ((haskell-mode literate-haskell-mode) . (lambda ()
-          (haskell-indentation-mode)
-          ;; Autoeomplete snippets
-          (lsp-haskell-set-completion-snippets-on))))
+    ((haskell-mode haskell-literate-mode) . lsp))
 #+end_src
 
 ** lsp-java
