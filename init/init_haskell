@@ -10,7 +10,6 @@ declare VERBOSE=false;
 
 declare GHCUP_HOME="$HOME/.ghcup"
 declare GHCUP_ENV="$GHCUP_HOME/env"
-declare GHC_VERSIONS=('8.8.3' '8.10.1')
 # }}}
 
 # Imports {{{
@@ -48,21 +47,8 @@ install_ghcup() {
   [ -f "$GHCUP_ENV" ] && source "$GHCUP_ENV"
 }
 
-install_ghc_versions() {
-  log_info "Installing ghc versions and cabal-install"
-  local version
-
-  # Install requested ghc versions and cabal-install
-  for version in "${GHC_VERSIONS[@]}"; do
-    ghcup install "$version"
-  done
-
-  ghcup install-cabal
-}
-
 main() {
   install_ghcup
-  install_ghc_versions
 }
 # }}}
 
