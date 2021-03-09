@@ -60,6 +60,7 @@ Needed for performance:
       json-mode
       less-css-mode
       lua-mode
+      mhtml-mode
       objc-mode
       ;; perl-mode
       php-mode

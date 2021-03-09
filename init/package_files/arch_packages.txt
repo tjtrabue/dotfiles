@@ -134,6 +134,7 @@ texinfo
 texlive-most
 texworks
 the_silver_searcher
+tidy
 tree
 ttf-croscore
 ttf-fira-code
