@@ -53,6 +53,7 @@ Needed for performance:
       elixir-mode
       go-mode
       haskell-mode
+      haskell-literate-mode
       html-mode
       java-mode
       javascript-mode
