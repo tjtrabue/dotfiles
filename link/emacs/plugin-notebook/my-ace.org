@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 Configuration for the fantastic ace modes, such as =ace-jump-mode= used to
 quickly move around a buffer, or ace-window used as a replacement for =C-o=.

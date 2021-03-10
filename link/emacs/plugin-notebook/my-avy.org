@@ -4,6 +4,7 @@
 #+date:     2021:02:02
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 =avy= is a similar plugin to =ace-jump-mode=, or =vim-easymotion= for
 Vim-derived editors. It is newer and more maintained than =ace-jump-mode=,

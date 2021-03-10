@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
@@ -15,7 +16,9 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package org
     :custom
-    (org-hide-leading-stars 1))
+    (org-hide-leading-stars 1)
+    ;; Only show headings when visiting a new Org file.
+    (org-startup-folded 'fold))
 #+end_src
 
 * Plugins

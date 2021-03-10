@@ -8,6 +8,7 @@
 #+date:     ${2:`(shell-command-to-string "echo -n $(date +%Y:%m:%d)")`}
 #+property: header-args:emacs-lisp :lexical t
 #+tags:     $3
+#+STARTUP: fold
 
 $0
 

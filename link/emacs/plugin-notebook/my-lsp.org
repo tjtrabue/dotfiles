@@ -70,6 +70,7 @@ Needed for performance:
       scss-mode
       sh-mode
       tex-mode
+      web-mode
       xml-mode
       yaml-mode)
     "List of all major modes allowing `lsp-mode' to run as a minor mode.")

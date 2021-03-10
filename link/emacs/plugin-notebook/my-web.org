@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
@@ -12,6 +13,9 @@ Needed for performance:
 * web-mode
   =web-mode= is the godfather of all website code editing modes in Emacs.
   It is mainly for editing web templates, such as =.jsp= or =.php= files.
+  I recommend using =web-mode= instead of =html-mode= or =mhtml-mode=.
+  There is a bug in =mhtml-mode= where typing a comment causes Emacs to hang.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package web-mode
     :config
@@ -32,6 +36,8 @@ Needed for performance:
     (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
     ;; Django template
     (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+    ;; Embedded Elixir template.
+    (add-to-list 'auto-mode-alist '("\.html\\.eex\\'" . web-mode))
 
     ;; Hooks for web-mode
     (add-hook 'web-mode-hook #'(lambda ()
