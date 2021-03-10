@@ -9,7 +9,7 @@ sshagent() {
     return 0
   fi
 
-  __load_ssh_agent_from_file
+  __load_ssh_agent_config_from_file
 
   __check_ssh_agent_loaded
   if [ "$?" = 2 ]; then
@@ -19,7 +19,7 @@ sshagent() {
     log_info "Starting new SSH agent..."
     __create_new_ssh_agent
     # Load the running agent into the current shell.
-    __load_ssh_agent_from_file
+    __load_ssh_agent_config_from_file
   fi
 
   if ! __check_ssh_agent_running; then
@@ -27,7 +27,7 @@ sshagent() {
     return 1
   fi
 
-  log_info "SSH agent running with PID: ${SSH_AGENT_PID}"
+  log_info "SSH agent running with PID: ${GREEN}${SSH_AGENT_PID}${NC}"
   __add_ssh_identities
   __remove_other_ssh_agents
 }
@@ -49,41 +49,54 @@ fix_ssh_auth_sock() {
     fi
 
     if [ -S "${SSH_AUTH_SOCK}" ] && [ ! -e "${mySshAuthSock}" ]; then
-      log_info "Linking real SSH auth sock ${SSH_AUTH_SOCK} to ${mySshAuthSock}"
+      log_info "Linking real SSH auth sock ${YELLOW}${SSH_AUTH_SOCK}${NC} to" \
+        "${CYAN}${mySshAuthSock}${NC}"
       ln -sf "${SSH_AUTH_SOCK}" "${mySshAuthSock}"
     fi
   fi
 }
 
-# Attempt to load a running SSH agent into the current shell from its
-# environment file.
-__load_ssh_agent_from_file() {
+# Attempt to communicate with a running SSH agent into the current shell from
+# its environment file.
+__load_ssh_agent_config_from_file() {
   # The file containing the SSH agent's PID and environment variables.
   local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
+
   if [ -r "${sshAgentFile}" ]; then
-    log_info "Loading SSH agent from file: ${BLUE}${sshAgentFile}${NC}..."
+    log_info "Attempting to communicate with SSH agent from file:" \
+      "${BLUE}${sshAgentFile}${NC}"
     eval "$(<"${sshAgentFile}")" >/dev/null
   else
-    log_info "No agent file found at ${sshAgentFile}"
+    log_info "No agent file found at: ${sshAgentFile}"
   fi
 }
 
 # Start a new SSH agent and write its information to the file system.
 __create_new_ssh_agent() {
   local sshAgentFile="${SSH_AGENT_FILE:-${HOME}/.ssh-agent}"
+  local createSshAgentLockFile="/tmp/create_ssh_agent.lock"
 
-  if [ -z "${CREATING_SSH_AGENT}" ] || [ "${CREATING_SSH_AGENT}" -eq 0 ]; then
-    # We want to treat this variable like a mutex for this function. If it is
-    # set to 1, no other processes should attempt to create a new SSH agent.
-    export CREATING_SSH_AGENT=1
+  log_info "Attempting to instantiate a new SSH agent..."
+  if [ ! -f "${createSshAgentLockFile}" ]; then
+    log_debug "Creating SSH agent lock file:" \
+      "${MAGENTA}${createSshAgentLockFile}${NC}"
+    cat <<EOF >"${createSshAgentLockFile}"
+Delete this file! Its presence precludes the sshagent function from
+creating new SSH agents automatically! This file only exists to preclude
+multiple processes from creating SSH agents at the same time.
+EOF
     log_info "Creating new SSH agent..."
     (
       umask 066
       ssh-agent >"${sshAgentFile}"
     )
-    export CREATING_SSH_AGENT=0
+    log_debug "Removing SSH agent lock file:" \
+      "${MAGENTA}${createSshAgentLockFile}${NC}"
+    rm -f "${createSshAgentLockFile}"
   else
-    log_info "Other process currently creating SSH agent."
+    log_info "SSH agent lock file exists:" \
+      "${MAGENTA}${createSshAgentLockFile}${NC}"
+    log_info "Not creating a new SSH agent."
   fi
 }
 
