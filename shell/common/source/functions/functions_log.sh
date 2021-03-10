@@ -159,7 +159,7 @@ __get_file_name() {
 # Get the timestamp for the instant the logging function runs. Very useful for
 # debugging purposes.
 __get_timestamp() {
-  date +'%Y-%m-%d %H:%M:%S'
+  date +'%Y-%m-%dT%H:%M:%S'
 }
 
 __get_log_message_info() {
