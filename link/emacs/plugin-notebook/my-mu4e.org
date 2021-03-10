@@ -4,6 +4,7 @@
 #+date:     2021:01:28
 #+property: header-args:emacs-lisp :lexical t
 #+tags:     email mail mu
+#+STARTUP: fold
 
 =mu4e= is a maildir-based email client for Emacs. Quite different from programs
 like =gnus=, which get their information from a remote server, =mu4e= relies on

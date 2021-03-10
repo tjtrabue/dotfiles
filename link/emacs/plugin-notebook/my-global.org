@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:06:08
 #+tags:   gnu-global ggtags
+#+STARTUP: fold
 
 GNU Global is a source code tagging system like C-tags, but is designed to be
 cross-platform.

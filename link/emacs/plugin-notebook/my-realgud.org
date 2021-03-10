@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:06:20
 #+tags:   debugger debug debugging
+#+STARTUP: fold
 
 =realgud= is a smooth, modular Emacs front end for interacting with external
 debuggers. It is quite feature-rich, and I recommend you take a look at its

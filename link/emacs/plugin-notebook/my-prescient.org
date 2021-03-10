@@ -4,6 +4,7 @@
 #+date:     2021:01:21
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 =prescient= provides more intelligent sorting and filtering functions for Emacs.
 

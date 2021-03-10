@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 =flycheck= is a phenomenal general-purpose syntax checker based on a number of
 plugins.  =flycheck= comes pre-packaged with a huge number of language syntax

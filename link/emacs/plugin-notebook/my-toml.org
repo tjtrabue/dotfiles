@@ -4,6 +4,7 @@
 #+date:     2020:12:23
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 Plugins and configuration for TOML support in Emacs.
 

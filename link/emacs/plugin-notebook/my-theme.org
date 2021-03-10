@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
 #+tags:   color colors theme
+#+STARTUP: fold
 
 This is where we set Emacs' primary color theme.
 

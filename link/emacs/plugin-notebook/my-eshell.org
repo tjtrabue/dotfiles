@@ -2,6 +2,7 @@
 #+author: Thomas Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:5:25
+#+STARTUP: fold
 
 =eshell= is a fantastic UNIX shell built into Emacs. Whereas most such shells
 are written in C and interpret a scripting language, such as Bash, =eshell= is

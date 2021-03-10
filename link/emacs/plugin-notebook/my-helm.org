@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 Configuration for all things helm-related, including helm-projectile integration.
 

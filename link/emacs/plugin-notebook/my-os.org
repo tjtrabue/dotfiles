@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:06:25
 #+tags:   os operating-system
+#+STARTUP: fold
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes

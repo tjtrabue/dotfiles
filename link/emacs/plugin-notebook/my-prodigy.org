@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:27
+#+STARTUP: fold
 
 =prodigy= is a tool for managing external system services from within
 Emacs. With =prodigy= you can start, list, stop, and restart various services

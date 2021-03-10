@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 Draws a Vim-like vertical ruler at the number indicated by the =fill-column=
 variable.

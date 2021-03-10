@@ -4,6 +4,7 @@
 #+date:     2020:09:19
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 =rebox2= is a plugin for seamlessly editing boxed comments in Emacs.
 

@@ -4,6 +4,7 @@
 #+date:     2020:08:18
 #+property: header-args:emacs-lisp :lexical t
 #+tags:     perl cperl raku plsense pde perly-sense
+#+STARTUP: fold
 
 Here's my Perl configuration for Emacs. If there's one thing I've discovered in
 my exploration of Emacs/Perl integration, it's that all the Perl plugins are old

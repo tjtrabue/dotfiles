@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 Language Server Protocol client (=lsp-mode=) configuration.  It is highly advised
 that you run Emacs version 27+ in order to get the best performance out of LSP

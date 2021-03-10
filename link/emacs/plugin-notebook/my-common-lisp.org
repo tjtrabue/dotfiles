@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 Contains configuration for the SLIME (Superior Lisp Interaction
 Mode for Emacs) package used to integrate Emacs with Common Lisp.

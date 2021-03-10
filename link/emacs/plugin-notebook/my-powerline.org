@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 Powerline is perhaps the most popular statusline theme for UNIX programs.
 It started as a plugin for customizing Vim's modeline, and due to its popularity

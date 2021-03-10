@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 These three plugins are a great alternative to =helm=. =ivy= is the primary
 plugin in this tool suite, and =swiper= and =counsel= sit on top of =ivy=,

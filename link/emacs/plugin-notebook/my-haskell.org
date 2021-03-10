@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 =haskell= may very well be the most beautiful programming language ever
 created. It's not often that I look at a piece of code and go "Wow! How can

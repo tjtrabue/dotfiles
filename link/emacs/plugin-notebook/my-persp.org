@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 =persp-mode= is a window configuration management plugin that allows you to save
 and restore window layouts from one Emacs session to another.

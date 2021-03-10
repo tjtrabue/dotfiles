@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 =dap= is a generic API for designing and interfacing with programming language
 debuggers. It builds on the LanguageServerProtocol to perform its duties. In

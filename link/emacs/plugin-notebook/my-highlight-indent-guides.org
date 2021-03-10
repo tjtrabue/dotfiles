@@ -4,6 +4,7 @@
 #+date:     2021:03:08
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 Provides vertical lines highlighting which character begins an indentation
 level similar to the behavior of other modern text editors.

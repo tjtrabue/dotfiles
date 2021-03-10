@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 The Extensible VI Layer (AKA evil.  AKA the only way to use Emacs).
 =evil-mode= is a fully featured VI emulator for Emacs, even improving upon the

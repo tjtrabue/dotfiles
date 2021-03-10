@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 =which-key= is a plugin that displays key completions after you type an
 incomplete key command (a prefix) in a popup.

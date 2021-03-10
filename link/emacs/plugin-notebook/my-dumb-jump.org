@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:08:03
 #+tags:
+#+STARTUP: fold
 
 =dumb-jump= is a jump-to-definition package that uses =grep=, =ag=, and =rg= to
 figure out how to jump to the chosen definition. It require essentially no

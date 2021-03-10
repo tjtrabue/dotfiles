@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
 #+tags:   company completion autocomplete lsp
+#+STARTUP: fold
 
 =company= is a fantastic alternative to =auto-complete= for as-you-type text
 completion.

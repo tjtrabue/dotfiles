@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 It is difficult in Emacs to map a series of keystrokes to a particular function,
 which is a common task in Vim. Emacs tends to favor mapping a large combination

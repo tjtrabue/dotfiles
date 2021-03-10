@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:06:22
 #+tags:   ecb code browser
+#+STARTUP: fold
 
 =ECB= is another old Emacs package similar and complementary to =CEDET= used to
 explore the source code of software projects through graphical windows and tree

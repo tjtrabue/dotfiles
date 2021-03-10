@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:08:03
 #+tags:   pdf tools
+#+STARTUP: fold
 
 This file contains plugin specifications for integrating various PDF tools with
 Emacs.

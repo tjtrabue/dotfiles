@@ -4,6 +4,7 @@
 #+date:     2021:01:21
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 =selectrum= is a great replacement for =helm=, =ivy=, and =ido=. It's a newer,
 fancier, more configurable plugin that builds on the lessons learned from the

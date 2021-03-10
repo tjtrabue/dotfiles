@@ -4,6 +4,7 @@
 #+date:     2021:01:21
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
+#+STARTUP: fold
 
 =orderless= is a smart completion backend for Emacs.
 

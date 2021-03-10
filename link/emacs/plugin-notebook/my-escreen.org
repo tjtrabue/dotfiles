@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:06:23
 #+tags:   escreen window manager management
+#+STARTUP: fold
 
 =escreen= is essentially an Emacs version of GNU Screen (which has been
 superseded by =tmux=).

@@ -3,6 +3,7 @@
 #+email:  tom.trabue@gmail.com
 #+date:   2020:07:28
 #+tags:   font ligature
+#+STARTUP: fold
 
 Any extra font configuration goes here.
 

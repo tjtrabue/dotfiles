@@ -4,6 +4,7 @@
 #+date:     2020:11:29
 #+property: header-args:emacs-lisp :lexical t
 #+tags: c cpp c++
+#+STARTUP: fold
 
 C and C++ extensions and configuration for Emacs.
 

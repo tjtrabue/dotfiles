@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:27
+#+STARTUP: fold
 
 =expand-region= operates by incrementally expanding the currently selected
 textual region to broader and broader scopes as you continue to press the

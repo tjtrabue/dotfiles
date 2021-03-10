@@ -4,6 +4,7 @@
 #+date:     2021:01:22
 #+property: header-args:emacs-lisp :lexical t
 #+tags: modeline theme doom
+#+STARTUP: fold
 
 =doom-modeline= allows any Emacs configuration to use the fancy, modular
 modeline from Doom Emacs.

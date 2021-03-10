@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
+#+STARTUP: fold
 
 Plugins and configuration for Emacs' help features.
 See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][EmacsWiki]] for more information.

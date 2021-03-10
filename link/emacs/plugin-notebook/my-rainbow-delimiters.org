@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 Adds cool colors to delimiters such as parentheses, braces, brackets, etc.
 in order to highlight their depth relative to one another.  Super handy for

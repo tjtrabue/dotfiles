@@ -2,6 +2,7 @@
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
+#+STARTUP: fold
 
 =yasnippet= is the snippet engine for Emacs. It behaves in a similar fashion to
 UltiSnips for Vim, or TextMate's snippet system. You use =yasnippet= by typing a

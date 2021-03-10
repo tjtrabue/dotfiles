@@ -4,6 +4,7 @@
 #+date:     2020:05:26
 #+property: header-args:emacs-lisp :lexical t
 #+tags:     spaceline modeline theme colors
+#+STARTUP: fold
 
 Use Spacemacs' pretty modeline without using Spacemacs itself.  This is one of
 the prettier features available for Emacs. One area where Emacs absolutely lags
