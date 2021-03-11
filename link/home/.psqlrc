@@ -1,0 +1,4 @@
+\pset pager on
+\setenv PAGER 'less -X'
+\set PROMPT1 '%M:%> %n@%/%R%#%x '
+\set PROMPT2 '%M %n@%/%R %# '
