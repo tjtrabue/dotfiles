@@ -1,4 +1,14 @@
+\set QUIET 1
+\pset null '[null]'
 \pset pager on
-\setenv PAGER 'less -X'
-\set PROMPT1 '%M:%> %n@%/%R%#%x '
+\set PROMPT1 '%M:%[%033[1;31m%]%>%[%033[0m%] %[%033[1;34m%]%n%[%033[0m%]@%[%033[1;32m%]%/%[%033[0m%]%R%#%x '
 \set PROMPT2 '%M %n@%/%R %# '
+\set COMP_KEYWORD_CASE upper
+\set HISTSIZE 3000
+\set VERBOSITY verbose
+\set version 'SELECT version();'
+\set extensions 'SELECT * FROM pg_available_extensions;'
+\setenv PAGER 'less -X'
+\timing
+\x auto
+\set QUIET 0
