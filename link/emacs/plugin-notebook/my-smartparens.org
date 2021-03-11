@@ -1,0 +1,32 @@
+#+title:    Smartparens: Automatic Delimiter Insertion
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:03:10
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=smartparens= is a very popular Emacs plugin that automatically inserts closing
+delimiters based on the syntax of the programming language currently in use. It
+is similar to =vim-endwise=.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* Notes on smartparens-mode and smartparens-strict-mode
+This package contains two minor modes for managing delimiters:
+=smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not
+enforce balanced delimiters, whereas =smartparens-strict-mode= does.
+
+* use-package specification
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package smartparens
+    :hook
+    (prog-mode . smartparens-strict-mode)
+    :config
+    ;; Load the default configuration for smartparens after the plugin loads.
+    (require 'smartparens-config))
+#+end_src
