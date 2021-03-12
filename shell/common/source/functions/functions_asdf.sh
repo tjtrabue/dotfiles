@@ -30,6 +30,7 @@ clone_asdf() {
 add_asdf_plugins() {
   local plugin
 
+  echoe "${ASDF_PLUGINS_FILE}"
   if [ ! -f "${ASDF_PLUGINS_FILE}" ]; then
     err "No asdf plugins file defined"
     return 1
