@@ -115,6 +115,7 @@ __src_extra_environment_profiles() {
   src_node_for_profile
   src_python_for_profile
   src_ruby_for_profile
+  src_asdf_for_profile
 }
 
 # Start SSH, GPG, and other agents, if necessary.

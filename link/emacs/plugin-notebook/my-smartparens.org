@@ -25,7 +25,7 @@ enforce balanced delimiters, whereas =smartparens-strict-mode= does.
 #+begin_src emacs-lisp :tangle yes
   (use-package smartparens
     :hook
-    (prog-mode . smartparens-strict-mode)
+    (prog-mode . smartparens-mode)
     :config
     ;; Load the default configuration for smartparens after the plugin loads.
     (require 'smartparens-config))

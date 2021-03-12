@@ -8,6 +8,8 @@ add_shell_completions() {
     add_bash_completions
   elif [ "${currentShell}" = "zsh" ]; then
     add_zsh_completions
+  elif [ "${currentShell}" = "fish" ]; then
+    add_fish_completions
   fi
 }
 
@@ -27,13 +29,21 @@ add_bash_completions() {
   __add_git_alias_completions
   __add_docker_alias_completions
   __add_sdkman_completions
+  __add_asdf_completions_for_bash_zsh
 }
 
 # Add any extra Zsh completions.
 # NOTE ABOUT ZSH: Install and activate Zsh completions with a plugin manager,
 #                 such as zplug.
 add_zsh_completions() {
-  __add_zsh_git_completions
+  # Zsh has built-in support for git completions.
+  # __add_zsh_git_completions
+  __add_asdf_completions_for_bash_zsh
+}
+
+# Add extra Fish shell completions.
+add_fish_completions() {
+  __add_asdf_completions_for_fish
 }
 
 # Download extra Zsh completions for git.
@@ -194,6 +204,26 @@ __add_completions_to_command_alias() {
 __add_sdkman_completions() {
   if [ "$(command -v sdk)" != "" ]; then
     . <(sdk env bash)
+  fi
+}
+
+# Add asdf version manager completions for Bash and Zsh.
+__add_asdf_completions_for_bash_zsh() {
+  local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
+  local asdfCompletionFile="${asdfDir}/completions/asdf.bash"
+
+  if [ -d "${asdfDir}" ]; then
+    . "${asdfCompletionFile}"
+  fi
+}
+
+# Add asdf version manager completions for Fish.
+__add_asdf_completions_for_fish() {
+  local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
+  local asdfCompletionFile="${asdfDir}/completions/asdf.fish"
+
+  if [ -d "${asdfDir}" ]; then
+    . "${asdfCompletionFile}"
   fi
 }
 

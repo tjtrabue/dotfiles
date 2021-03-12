@@ -133,9 +133,9 @@ unset FZF_USER_SHELL
 # }}}
 
 # Completions {{{
-# No need for this. All completions are included, or in the
-# zsh-completions plugin.
-# add_shell_completions
+# Zsh has fantastic completion support by default, but we do have a few extra
+# plugins we'd like to support. See functions_completion.sh for more details.
+add_shell_completions
 # }}}
 
 # Keybindings {{{
