@@ -103,7 +103,7 @@ __do_ls_exa() {
   # `exa` has no '-A' flag, so use '-a' instead.
   flags="${flags/A/a}"
   # Add extra exa-specific flags.
-  flags="${flags} -@"
+  flags="${flags} -@ --group-directories-first --git"
   eval "command exa ${flags} ${dir_to_list}"
 }
 
