@@ -103,6 +103,12 @@ __src() {
   __src_os
 }
 
+# Start SSH, GPG, and other agents, if necessary.
+__src_agents() {
+  sshagent
+  gpgagent
+}
+
 # This function takes care of sourcing rvm, jenv, nvm, etc.
 # These version/environment managers all manipulate $PATH, so we MUST call them
 # AFTER we've constructed our custom $PATH, otherwise their work will be
@@ -116,12 +122,6 @@ __src_extra_environment_profiles() {
   src_python_for_profile
   src_ruby_for_profile
   src_asdf_for_profile
-}
-
-# Start SSH, GPG, and other agents, if necessary.
-__src_agents() {
-  sshagent
-  gpgagent
 }
 # }}}
 

@@ -53,6 +53,11 @@ spath() {
   export "${pathVar?}"
 }
 
+# echo the $PATH environment variable to the terminal.
+epath() {
+  printf "%s\n" "${PATH}"
+}
+
 # Source the LuaRocks module path.
 src_lua_path() {
   if [ "$(command -v luarocks)" != "" ]; then
@@ -70,4 +75,4 @@ __evaluate_paths() {
   eval echo "$(xargs -a "${pathFile}")" | tr ' ' '\n' | tac | awk '!x[$0]++'
 }
 
-# vim:foldenable:foldmethod=marker:foldlevel=0
+# vim:foldenable:foldmethod=indent:foldnestmax=1
