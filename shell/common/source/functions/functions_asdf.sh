@@ -42,6 +42,11 @@ add_asdf_plugins() {
   done <"${ASDF_PLUGINS_FILE}"
 }
 
+# Wrapper function for updating all installed asdf plugins.
+update_asdf_plugins() {
+  asdf plugin update --all
+}
+
 # Takes care of the nitty gritty sourcing logic for asdf.
 __src_asdf() {
   local currentShell="$(currentshell)"
