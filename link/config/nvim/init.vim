@@ -26,10 +26,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 " }}}
 " Colors and Themes {{{
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'hzchirs/vim-material'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
-Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim' }
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 " Icons
 Plug 'ryanoasis/vim-devicons'
 " }}}
