@@ -85,10 +85,12 @@ __do_cd_to_dir_or_alias() {
   if [ -n "${dirArg}" ] && [ ! -d "${dirArg}" ]; then
     err "${BLUE}${dirArg}${NC} is neither a directory nor a directory alias."
     return 1
-  elif [ -z "${dirArg}" ]; then
-    # For some reason we have to add this back in.
-    dirArg="${HOME}"
   fi
+
+  # For some reason using `builtin cd ` with an empty argument doesn't cd back
+  # to the user's $HOME directory, so we have to explicitly set an empty dirArg
+  # to $HOME.
+  dirArg="${dirArg:-${HOME}}"
 
   builtin cd "${dirArg}"
 }
