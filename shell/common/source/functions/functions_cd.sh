@@ -72,6 +72,7 @@ __do_cd() {
   if echo "${dirArg}" | grep -E -q -- "-[1-9][0-9]*"; then
     __do_cd_history "${dirArg}"
   elif echo "${dirArg}" | grep -E -q -- "^\^$"; then
+    # Use '^' to cd to the root of the current git repository.
     __do_cd_to_git_root
   else
     __do_cd_to_dir_or_alias "${dirArg}"
@@ -86,9 +87,12 @@ __do_cd_to_dir_or_alias() {
   # Replace dirArg with aliasedDir if it is defined.
   dirArg="${aliasedDir:-${dirArg}}"
 
-  if [ ! -d "${dirArg}" ]; then
+  if [ -n "${dirArg}" ] && [ ! -d "${dirArg}" ]; then
     err "${BLUE}${dirArg}${NC} is neither a directory nor a directory alias."
     return 1
+  elif [ -z "${dirArg}" ]; then
+    # For some reason we have to add this back in.
+    dirArg="${HOME}"
   fi
 
   builtin cd "${dirArg}"
@@ -115,11 +119,13 @@ __do_cd_to_git_root() {
   builtin cd "$(dirname "$(git rev-parse --git-dir)")"
 }
 
+# Write the current directory to the history file.
 __write_to_dir_hist() {
   local dirToWrite="${1}"
   local dirHistFile="${DIR_HIST_FILE:-${HOME}/.dir_history}"
   local dirHistLimit="${DIR_HIST_LIMIT:-10}"
   local numLinesInHistory="$(__get_num_dir_hist_lines)"
+  local latestDirFromHist="$(__get_dir_from_hist 1)"
 
   # If we've hit the limit on our directory history, remove the first
   # (i.e., oldest ) line from the file.
@@ -129,8 +135,12 @@ __write_to_dir_hist() {
     rm -f "${dirHistFile}.bak"
   fi
 
-  # Write the new directory to the history file.
-  printf "%s\n" "${dirToWrite}" >>"${dirHistFile}"
+  if
+    [ "$(eval "echo ${dirToWrite}")" != "$(eval "echo ${latestDirFromHist}")" ]
+  then
+    # Write the new directory to the history file.
+    printf "%s\n" "${dirToWrite}" >>"${dirHistFile}"
+  fi
 }
 
 # Return the number of lines in the DIR_HIST_FILE.
