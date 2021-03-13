@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Wrap the standard `cd` utility with custom logic to handle arguments like '-1'
+# to return to the previous directory, or '@' to return to the root of a Git
+# repository.
+cd() {
+  __cd "${@}"
+}
+
 # Create an alias for a directory so that a user may easily navigate into it.
 #
 # USAGE:
@@ -42,11 +49,6 @@ diralias() {
   printf "\n%s\n" "${stringToWrite}" >>"${dirAliasFile}"
 }
 
-# Wrap the standard `cd` utility with out custom logic.
-cd() {
-  __cd "${@}"
-}
-
 # Wrapper function for the `cd` builtin that tracks directory history, and
 # understands a few new sigils.
 __cd() {
@@ -66,8 +68,8 @@ __do_cd() {
 
   if echo "${dirArg}" | grep -E -q -- "-[1-9][0-9]*"; then
     __do_cd_history "${dirArg}"
-  elif echo "${dirArg}" | grep -E -q -- "^\^$"; then
-    # Use '^' to cd to the root of the current git repository.
+  elif echo "${dirArg}" | grep -E -q -- "^@$"; then
+    # Use '@' to cd to the root of the current git repository.
     __do_cd_to_git_root
   else
     __do_cd_to_dir_or_alias "${dirArg}"
@@ -108,7 +110,7 @@ __do_cd_history() {
 
 # Return to the root of the current git repository.
 __do_cd_to_git_root() {
-  if ! git rev-parse --is-inside-work-tree; then
+  if ! git rev-parse --is-inside-work-tree >>/dev/null 2>&1; then
     err "Not inside a git repository."
     return 1
   fi
