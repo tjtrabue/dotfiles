@@ -4,6 +4,19 @@
 # to return to the previous directory, or '@' to return to the root of a Git
 # repository.
 cd() {
+  local OPTIND
+  local opt
+
+  while getopts ":h" opt; do
+    case "${opt}" in
+    h)
+      __cd_help
+      return 0
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
   __cd "${@}"
 }
 
@@ -59,6 +72,36 @@ __cd() {
 
   # Finally, write the new current directory to our directory history file.
   __write_to_dir_hist "$(pwd)"
+}
+
+__cd_help() {
+  cat <<EOF
+cd - Special 'cd' wrapper function defined in ${DOTFILES_HOME}
+
+USAGE:
+  cd DIRECTORY
+  cd DIRALIAS
+  cd @
+  cd -N
+
+DESCRIPTION OF ARGUMENTS
+
+  DIRECTORY:
+  This cd wrapper function can, of course, handle any standard directory
+  argument that the builtin cd accepts.
+
+  DIRALIAS:
+  If the argument to cd is a directory alias defined in ${DIR_ALIAS_FILE},
+  change into the directory pointed at by DIRALIAS.
+
+  @:
+  If the argument to cd is '@', and the user is in a Git repository, change into
+  the root directory of the repository.
+
+  -N:
+  If the argument to cd is '-N', where N is a positive integer, return to the
+  Nth directory visited in the history file.
+EOF
 }
 
 # Perform the tricky argument analysis to figure out where we need to go, and
