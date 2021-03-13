@@ -147,6 +147,9 @@ bindkey -s '^P' 'ctrlp^M'
 
 # Ctrl-L to move cursor to end of autosuggestion.
 bindkey '^L' autosuggest-accept
+
+# Ctrl-O to open Ranger as a means of changing directories.
+bindkey -s '^O' 'ranger-cd^M'
 # }}}
 
 # zstyle {{{

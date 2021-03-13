@@ -395,21 +395,23 @@ v() {
 # `tre` is a shorthand for `tree` with hidden files and color enabled.
 tre() {
   local ignorePatterns=".git|node_modules|bower_components"
+  local treeCmd
 
   if [ -x "$(command -v colorls)" ]; then
     # Use fancy colorls tree command to show file tree, if we have colorls
     # installed.
-    colorls --tree --color=always | less -Fr
+    treeCmd="colorls --tree --color=always ${*}"
   elif [ -x "$(command -v exa)" ]; then
-    exa --tree -a --color=always --git-ignore -I "${ignorePatterns}" \
-      | less -Fr
+    treeCmd="exa --tree -a --color=always --git-ignore -I ${ignorePatterns} ${*}"
   elif [ -x "$(command -v tree)" ]; then
     # Use standard tree command
-    tree -aC -I "${ignorePatterns}" --dirsfirst "$@" | less -Fr
+    treeCmd="tree -aC -I ${ignorePatterns} --dirsfirst ${*}"
   else
     err "No tree command available."
     return 1
   fi
+
+  eval "${treeCmd} | less -Fr"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
