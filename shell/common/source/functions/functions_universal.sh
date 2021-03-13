@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# General {{{
 # Returns the block of sourced code for the function or alias given as an argument:
 func() {
   local CODE="$(declare -f $*)"
@@ -52,9 +51,7 @@ syml() {
 
   ls -la "$directory" | grep '\->' | awk {'print $9 " " $10 " " $11'}
 }
-# }}}
 
-# File Manipulation {{{
 # Traverse the file tree recursively and delete all backup files:
 # Syntax: rmbaks [-a | --all]
 # adding the -a or --all argument removes all tmp files as well.
@@ -90,7 +87,6 @@ mkbin() {
   cp "$bashTemplate" "$executableName"
   chmod 755 "$executableName"
 }
-# }}}
 
 # Create a new dotfile, link it to your home directory, and open it for editing
 # in your configured editor.
@@ -116,7 +112,89 @@ newdot() {
 
   edit "${newDotfileInHome}"
 }
-# }}}
+
+# Return the user's current shell name, such as "bash" or "zsh".
+currentshell() {
+  ps -p $$ | awk '{print $NF}' | tail -1
+}
+
+# Run a command over multiple lines of input from stdin or from a file
+# in the fastest way possible.
+do_multiple() {
+  local cmd="$1"
+  local inputSource="${2:-/dev/stdin}"
+  local allInput="$(cat "$inputSource")"
+  local sequenceCmd="xargs"
+
+  if [ -z "$cmd" ]; then
+    err "No command provided"
+    return 1
+  fi
+  if [ -z "$allInput" ]; then
+    err "Input source empty"
+    return 2
+  fi
+  if [ "$(command -v parallel)" != "" ]; then
+    # Use GNU Parallel if possible.
+    sequenceCmd="parallel"
+  fi
+  eval "${sequenceCmd} ${cmd} <<< \"${allInput}\""
+}
+
+# Remove all swap files
+rmswap() {
+  rm -f "${VIM_CONFIG_HOME}/swaps/*"
+}
+
+# Run one or more initialization scripts based on input topics.
+#
+# Usage:
+#   runinit test      -> ~/.dotfiles/init/init_test
+#   runinit test java -> ~/.dotfiles/init/init_test; ~/.dotfiles/init/init_java
+runinit() {
+  local initTopics=("${@}")
+  local funcName="${FUNCNAME[0]}"
+  local initFile
+  local fullPath
+  local initTopic
+
+  runinit_usage() {
+    cat <<EOF
+USAGE:
+  ${funcName} TOPIC [...]
+
+DESCRIPTION:
+  Run one or more initialization scripts based on input topics.
+
+EXAMPLES:
+  # Run one init script and exit.
+  ${funcName} java
+
+  # Run two init scripts in sequence.
+  ${funcName} java docker
+EOF
+  }
+
+  if [ "${#initTopics[@]}" -eq 0 ]; then
+    err "No initialization topic(s) provided."
+    runinit_usage
+    return 1
+  elif echo "${initTopics[0]}" | grep -E -q "(-h)|(--help)"; then
+    runinit_usage
+    return 0
+  fi
+
+  for initTopic in "${initTopics[@]}"; do
+    initFile="init_${initTopic}"
+    fullPath="${DOTFILES_INIT}/${initFile}"
+    if [ -x "${fullPath}" ]; then
+      "${fullPath}"
+    else
+      err "init file non-executable or does not exist: ${fullPath} "
+      return 2
+    fi
+  done
+}
 
 ################################################################################
 ##                             Functions taken from                           ##
@@ -124,7 +202,6 @@ newdot() {
 ##                   https://github.com/mathiasbynens/dotfiles                ##
 ################################################################################
 
-# {{{
 # Create a new directory and enter it
 mkd() {
   mkdir -p "$@" && cd "$_"
@@ -178,8 +255,7 @@ fs() {
 }
 
 # Use Git’s colored diff when available
-hash git &>/dev/null
-if [ $? -eq 0 ]; then
+if hash git >>/dev/null 2>&1; then
   diff() {
     git diff --no-index --color-words "$@"
   }
@@ -318,111 +394,22 @@ v() {
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled.
 tre() {
+  local ignorePatterns=".git|node_modules|bower_components"
+
   if [ -x "$(command -v colorls)" ]; then
     # Use fancy colorls tree command to show file tree, if we have colorls
     # installed.
     colorls --tree --color=always | less -Fr
+  elif [ -x "$(command -v exa)" ]; then
+    exa --tree -a --color=always --git-ignore -I "${ignorePatterns}" \
+      | less -Fr
   elif [ -x "$(command -v tree)" ]; then
     # Use standard tree command
-    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -Fr
+    tree -aC -I "${ignorePatterns}" --dirsfirst "$@" | less -Fr
   else
     err "No tree command available."
     return 1
   fi
 }
-# }}}
-
-# Shell {{{
-# Return the user's current shell name, such as "bash" or "zsh".
-currentshell() {
-  ps -p $$ | awk '{print $NF}' | tail -1
-}
-# }}}
-
-# Sequence {{{
-
-# Run a command over multiple lines of input from stdin or from a file
-# in the fastest way possible.
-do_multiple() {
-  local cmd="$1"
-  local inputSource="${2:-/dev/stdin}"
-  local allInput="$(cat "$inputSource")"
-  local sequenceCmd="xargs"
-
-  if [ -z "$cmd" ]; then
-    err "No command provided"
-    return 1
-  fi
-  if [ -z "$allInput" ]; then
-    err "Input source empty"
-    return 2
-  fi
-  if [ "$(command -v parallel)" != "" ]; then
-    # Use GNU Parallel if possible.
-    sequenceCmd="parallel"
-  fi
-  eval "${sequenceCmd} ${cmd} <<< \"${allInput}\""
-}
-# }}}
-
-# Vim {{{
-# Remove all swap files
-rmswap() {
-  rm -f "${VIM_CONFIG_HOME}/swaps/*"
-}
-# }}}
-
-# Init scripts {{{
-
-# Run one or more initialization scripts based on input topics.
-#
-# Usage:
-#   runinit test      -> ~/.dotfiles/init/init_test
-#   runinit test java -> ~/.dotfiles/init/init_test; ~/.dotfiles/init/init_java
-runinit() {
-  local initTopics=("${@}")
-  local funcName="${FUNCNAME[0]}"
-  local initFile
-  local fullPath
-  local initTopic
-
-  runinit_usage() {
-    cat <<EOF
-USAGE:
-  ${funcName} TOPIC [...]
-
-DESCRIPTION:
-  Run one or more initialization scripts based on input topics.
-
-EXAMPLES:
-  # Run one init script and exit.
-  ${funcName} java
-
-  # Run two init scripts in sequence.
-  ${funcName} java docker
-EOF
-  }
-
-  if [ "${#initTopics[@]}" -eq 0 ]; then
-    err "No initialization topic(s) provided."
-    runinit_usage
-    return 1
-  elif echo "${initTopics[0]}" | grep -E -q "(-h)|(--help)"; then
-    runinit_usage
-    return 0
-  fi
-
-  for initTopic in "${initTopics[@]}"; do
-    initFile="init_${initTopic}"
-    fullPath="${DOTFILES_INIT}/${initFile}"
-    if [ -x "${fullPath}" ]; then
-      "${fullPath}"
-    else
-      err "init file non-executable or does not exist: ${fullPath} "
-      return 2
-    fi
-  done
-}
-# }}}
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
