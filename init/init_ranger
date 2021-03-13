@@ -11,8 +11,6 @@ declare RANGER_PLUGINS="${RANGER_CONFIG_HOME}/plugins"
 
 # The user's Ranger configuration file
 declare RANGER_USER_CONFIG="${RANGER_CONFIG_HOME}/rc.conf"
-
-declare VERBOSE=false
 # }}}
 
 # Imports {{{
@@ -41,23 +39,24 @@ EOF
 }
 
 make_directories() {
-  mkdir -p "$RANGER_CONFIG_HOME"
+  mkdir -p "${RANGER_CONFIG_HOME}"
 }
 
 # Clone ranger_devicons into the ranger plugins directory
 clone_ranger_devicons() {
   local deviconsBasename="ranger_devicons"
   local rangerDeviconsGitUrl="git@github.com:alexanderjeurissen/${deviconsBasename}.git"
+
   if [ ! -d "${RANGER_PLUGINS}/ranger_devicons" ]; then
     log_info "Cloning Ranger Dev Icons"
-    git clone "$rangerDeviconsGitUrl" "${RANGER_PLUGINS}/${deviconsBasename}"
+    git clone "${rangerDeviconsGitUrl}" "${RANGER_PLUGINS}/${deviconsBasename}"
   fi
 }
 
 ensure_ranger_configured_for_devicons() {
-  if ! grep "default_linemode devicons" "$RANGER_USER_CONFIG" &>/dev/null; then
-    log_info "Adding option to $RANGER_USER_CONFIG to enable devicons"
-    echo "default_linemode devicons" >>"$RANGER_USER_CONFIG"
+  if ! grep -q "default_linemode devicons" "${RANGER_USER_CONFIG}"; then
+    log_info "Adding option to ${RANGER_USER_CONFIG} to enable devicons"
+    printf "%s\n" "default_linemode devicons" >>"${RANGER_USER_CONFIG}"
   fi
 }
 
@@ -70,17 +69,12 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
+args=$(getopt -o h --long help -n 'init_arch' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-  -v | --verbose)
-    VERBOSE=true
-    shift
-    ;;
-
   -h | --help)
     _help
     shift
