@@ -131,6 +131,8 @@ link/config/awesome/wallpaper/
 
 # Do not track Ranger plugins
 link/config/ranger/plugins
+# Do not track Ranger colorshemes since we clone this repository
+link/config/ranger/colorschemes
 
 # Ignore libreoffice config
 link/config/libreoffice

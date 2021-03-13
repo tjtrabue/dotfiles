@@ -45,7 +45,7 @@ make_directories() {
 # Clone ranger_devicons into the ranger plugins directory
 clone_ranger_devicons() {
   local deviconsBasename="ranger_devicons"
-  local rangerDeviconsGitUrl="git@github.com:alexanderjeurissen/${deviconsBasename}.git"
+  local rangerDeviconsGitUrl="https://github.com/alexanderjeurissen/${deviconsBasename}.git"
 
   if [ ! -d "${RANGER_PLUGINS}/ranger_devicons" ]; then
     log_info "Cloning Ranger Dev Icons"
@@ -53,7 +53,18 @@ clone_ranger_devicons() {
   fi
 }
 
-ensure_ranger_configured_for_devicons() {
+clone_ranger_colorschemes() {
+  local colorschemesBasename="colorschemes"
+  local rangerColorschemesGitUrl="https://github.com/ranger/${deviconsBasename}.git"
+  local colorschemesDir="${RANGER_CONFIG_HOME}/${colorschemesBasename}"
+
+  if [ ! -d "${colorschemesDir}" ]; then
+    log_info "Cloning Ranger Colorschemes"
+    git clone "${rangerColorschemesGitUrl}" "${colorschemesDir}"
+  fi
+}
+
+ensure_ranger_configured() {
   if ! grep -q "default_linemode devicons" "${RANGER_USER_CONFIG}"; then
     log_info "Adding option to ${RANGER_USER_CONFIG} to enable devicons"
     printf "%s\n" "default_linemode devicons" >>"${RANGER_USER_CONFIG}"
@@ -63,7 +74,8 @@ ensure_ranger_configured_for_devicons() {
 main() {
   make_directories
   clone_ranger_devicons
-  ensure_ranger_configured_for_devicons
+  clone_ranger_colorschemes
+  ensure_ranger_configured
   succ "Done!"
 }
 # }}}
