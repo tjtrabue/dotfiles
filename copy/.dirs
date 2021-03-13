@@ -2,10 +2,10 @@
 
 # Directory alias file.
 # Aliases are added to this file via the "diralias" command.
-export dot="${HOME}/.dotfiles";
-export emd="${HOME}/.emacs.d";
-export ws="${HOME}/workspace";
-export prac="${ws}/practice";
-export apps="${HOME}/applications";
-export arch="${apps}/archives";
-export dl="${HOME}/Downloads";
+dot="${HOME}/.dotfiles"
+emd="${HOME}/.emacs.d"
+ws="${HOME}/workspace"
+prac="${ws}/practice"
+apps="${HOME}/applications"
+arch="${apps}/archives"
+dl="${HOME}/Downloads"

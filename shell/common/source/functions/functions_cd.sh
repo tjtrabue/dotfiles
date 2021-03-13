@@ -1,12 +1,17 @@
 #!/bin/sh
 
 # Create an alias for a directory so that a user may easily navigate into it.
-#   Usage: diralias <alias name> [<target directory>]
+#
+# USAGE:
+#   diralias <alias name> [<target directory>]
 diralias() {
   local dirAlias="$1"
   shift
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
-  local existingAliasValue lastByteOfFile exportString targetDir
+  local existingAliasValue
+  local lastByteOfFile
+  local stringToWrite
+  local targetDir
 
   if [ -z "$dirAlias" ]; then
     err "No alias name given to ${FUNCNAME[0]}"
@@ -14,14 +19,9 @@ diralias() {
   fi
 
   targetDir="${1:-$(pwd)}"
-  shift
-
-  if [ ! -f "$dirAliasFile" ]; then
-    dirAliasFile="$HOME/.dirs"
-  fi
 
   existingAliasValue="$(
-    grep "export\s*${dirAlias}=" <"$dirAliasFile" |
+    grep "${dirAlias}=" <"$dirAliasFile" |
       sed 's/^export\s*//' |
       sed 's/^.*=//' |
       sed 's/"//g'
@@ -29,22 +29,17 @@ diralias() {
 
   # If the alias already exists, get rid of the old one before adding the new
   #one.
-  if [ -n "$existingAliasValue" ]; then
-    sed -i "/^export\s*${dirAlias}=/d" "$dirAliasFile"
+  if [ -n "${existingAliasValue}" ]; then
+    sed -i "/^${dirAlias}=/d" "${dirAliasFile}"
   fi
 
-  exportString="export ${dirAlias}=\"${targetDir}\";"
+  # The diralias line to write to the DIR_ALIAS_FILE.
+  stringToWrite="${dirAlias}=\"${targetDir}\""
 
-  # If diralias file has no final newline character, make sure to put alias on
-  # new line.
-  lastByteOfFile="$(tail -c 1 "$dirAliasFile")"
-  if [ "$lastByteOfFile" != "" ]; then
-    echo -e "\n${exportString}" >>"$dirAliasFile"
-  else
-    echo "${exportString}" >>"$dirAliasFile"
-  fi
+  # Remove trailing newline from diralias file if it has one.
+  perl -pi -e 'chomp if eof' "${dirAliasFile}"
 
-  src
+  printf "\n%s\n" "${stringToWrite}" >>"${dirAliasFile}"
 }
 
 # Wrap the standard `cd` utility with out custom logic.
