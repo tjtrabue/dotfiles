@@ -3,7 +3,7 @@
 let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
 " Variable controlling which theme we want to use.
-let s:selected_theme = 'material'
+let s:selected_theme = 'sonokai'
 
 " For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
 " Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
@@ -75,6 +75,16 @@ if s:selected_theme == 'purify'
   " Change color of the colorcolumn to match the current line highlight
   hi ColorColumn guifg=NONE guibg=#3E4452 ctermbg=237
         \ gui=NONE term=NONE cterm=NONE
+endif
+" }}}
+"
+" Sonokai {{{
+if s:selected_theme == 'sonokai'
+  " Can be 'default', 'andromeda', 'atlantis', 'maia', or 'shusia'.
+  let g:sonokai_style = 'default'
+  " Must manually enable italic support.
+  let g:sonokai_enable_italic = 1
+  colorscheme sonokai
 endif
 " }}}
 
