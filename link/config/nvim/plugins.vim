@@ -40,8 +40,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-commentary'
-Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-surround'
@@ -50,6 +48,9 @@ Plug 'Shougo/unite.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-eunuch'
+
+" Visualizer for undoing changes.
+Plug 'mbbill/undotree'
 
 " Neovim completion
 Plug 'hrsh7th/nvim-compe'
@@ -145,6 +146,12 @@ Plug 'voldikss/vim-floaterm'
 
 " neovim-tree explorer.
 Plug 'kyazdani42/nvim-tree.lua'
+
+" A modern vim-commentary alternative for Neovim written in Lua.
+Plug 'b3nj5m1n/kommentary'
+
+" Magit clone for Neovim.
+Plug 'TimUntersberger/neogit'
 
 " File tree explorer
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}

@@ -33,7 +33,7 @@ nnoremap <leader>fLs <cmd>lua require('telescope.builtin').symbols()<cr>
 " }}}
 
 " Themes {{{
-nnoremap <Leader>fT :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fT :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({}))<cr>
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
