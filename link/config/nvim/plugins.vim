@@ -175,6 +175,9 @@ Plug 'majutsushi/tagbar'
 Plug 'neovim/nvim-lspconfig'
 " }}}
 
+" which-key
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
 " Initialize plugin system
 call plug#end()
 
