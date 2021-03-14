@@ -1,6 +1,9 @@
 " Neovim Plugins
 " Plugins MUST be specified in this file in order to load properly!
 
+" The directory containing all downloaded plugins.
+let g:vim_plugged_dir = stdpath('data') . '/plugged'
+
 " Install vim-plug if not already done
 if !filereadable(stdpath('data') . '/site/autoload/plug.vim')
   silent !sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -8,7 +11,7 @@ if !filereadable(stdpath('data') . '/site/autoload/plug.vim')
 endif
 
 " Specify a directory for plugins and begin installation
-call plug#begin(stdpath('data') . '/plugged')
+call plug#begin(g:vim_plugged_dir)
 
 " Specify plugins {{{
 " APIs
@@ -163,6 +166,8 @@ Plug 'TimUntersberger/neogit'
 
 " Show git-blame info on each line.
 Plug 'f-person/git-blame.nvim'
+
+Plug 'kevinhwang91/nvim-hlslens'
 
 " File tree explorer
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}

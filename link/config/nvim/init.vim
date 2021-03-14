@@ -39,7 +39,6 @@ call s:SourcePluginConfigFile('airline.vim')
 call s:SourcePluginConfigFile('awesome_terminal_fonts.vim')
 call s:SourcePluginConfigFile('ctrlp.vim')
 call s:SourcePluginConfigFile('emmet.vim')
-call s:SourcePluginConfigFile('fugitive.vim')
 call s:SourcePluginConfigFile('gitgutter.vim')
 call s:SourcePluginConfigFile('gundo.vim')
 call s:SourcePluginConfigFile('incsearch-easymotion.vim')
@@ -56,6 +55,7 @@ call s:SourcePluginConfigFile('neogit.vim')
 call s:SourcePluginConfigFile('git-blame.nvim.vim')
 call s:SourcePluginConfigFile('glow.nvim.vim')
 call s:SourcePluginConfigFile('barbar.nvim.vim')
+call s:SourcePluginConfigFile('nvim-hlslens.vim')
 
 call s:SourcePluginConfigFile('nvim-tree.vim')
 " call s:SourcePluginConfigFile('chadtree.vim')
@@ -72,9 +72,11 @@ call s:SourcePluginConfigFile('nvim-compe.lua')
 " Load the LSP configuration file.
 call s:SourcePluginConfigFile('lsp.lua')
 
-" Make sure to laod this config AFTER airline's config. I like to use both
-" airline for tabline and galaxyline for status.
-call s:SourcePluginConfigFile('galaxyline.lua')
+" The .lua file contains a cutomized galaxyline status line.
+" call s:SourcePluginConfigFile('galaxyline.lua')
+" The .vim file just has a directive that sources the example galaxyline status
+" line from the repository.
+call s:SourcePluginConfigFile('galaxyline.vim')
 
 " These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')
