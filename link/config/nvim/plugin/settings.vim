@@ -1,3 +1,5 @@
+" All Neovim settings.
+
 " General {{{
 " Make Vim more useful
 set nocompatible
@@ -67,29 +69,14 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 \| exe "normal! g'\"" | endif
 " }}}
 
-" Tabs and Spaces {{{
-" Translate tabs to spaces
-set expandtab
+" Buffers {{{
+" Hide old buffers instead of close them when editing a new one. That is, allow
+" the user to have unsaved changes in a buffer and still be able to open a new
+" one.
+set hidden
 
-" Set tab size to 4 spaces
-set tabstop=2
-
-" Don't use soft tabs, so as to avoid compatibility errors with other editors
-set softtabstop=2
-set shiftwidth=2
-
-" Use multiples of shiftwidth when indenting with '<' and '>'
-set shiftround
-
-" Insert tabs on the start of a line according to shiftwidth, not tabstop
-set smarttab
-" }}}
-
-" Indentation {{{
-" Use auto-indent
-set autoindent
-filetype indent plugin on
-set smartindent
+" Remember info about open buffers on close
+set viminfo^=%
 " }}}
 
 " Code Folding {{{
@@ -108,6 +95,49 @@ set foldnestmax=10
 
 " Fold based on language syntax by default
 set foldmethod=syntax
+" }}}
+
+" Indentation {{{
+" Use auto-indent
+set autoindent
+filetype indent plugin on
+set smartindent
+" }}}
+"
+" Searching {{{
+" Use normal regular expression syntax and character meaning
+" (should be on by default anyway)
+set magic
+
+" Highlight searches
+set hlsearch
+
+" Highlight dynamically as pattern is typed
+set incsearch
+
+" Ignore case when searching
+set ignorecase
+
+" Turn on case-sensitivity if user types an upper-case letter
+set smartcase
+" }}}
+"
+" Tabs and Spaces {{{
+" Translate tabs to spaces
+set expandtab
+
+" Set tab size to 4 spaces
+set tabstop=2
+
+" Don't use soft tabs, so as to avoid compatibility errors with other editors
+set softtabstop=2
+set shiftwidth=2
+
+" Use multiples of shiftwidth when indenting with '<' and '>'
+set shiftround
+
+" Insert tabs on the start of a line according to shiftwidth, not tabstop
+set smarttab
 " }}}
 
 " UI Config {{{

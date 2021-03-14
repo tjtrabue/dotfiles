@@ -69,6 +69,7 @@ link/config/caja
 link/config/nvim/backups
 link/config/nvim/swaps
 link/config/nvim/undo
+link/config/nvim/.netrwhist
 
 # coc.nvim
 link/config/coc/commands
