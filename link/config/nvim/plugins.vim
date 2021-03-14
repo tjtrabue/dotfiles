@@ -174,6 +174,10 @@ Plug 'majutsushi/tagbar'
 Plug 'neovim/nvim-lspconfig'
 " }}}
 
+" treesitter.
+" After installing treesitter, run `:TSInstall all`
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+
 " which-key
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
