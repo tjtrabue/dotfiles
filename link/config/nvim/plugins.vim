@@ -14,10 +14,14 @@ call plug#begin(stdpath('data') . '/plugged')
 " APIs
 Plug 'jparise/vim-graphql'
 
-" Status
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Statusline integration with tmux.
 Plug 'edkolev/tmuxline.vim'
+
+" Modular statusline for Neovim
+Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
+
+" Super awesome tabline for Neovim.
+Plug 'romgrk/barbar.nvim'
 
 " Colors and Themes
 Plug 'rafi/awesome-vim-colorschemes'
@@ -65,6 +69,10 @@ Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 Plug 'mattn/emmet-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'shime/vim-livedown'
+
+" Markdown preview in Neovim window using glow.
+" Requires a `glow` installation in order to work.
+Plug 'npxbr/glow.nvim', {'do': 'GlowInstall'}
 
 " TOML
 Plug 'cespare/vim-toml'
@@ -152,6 +160,9 @@ Plug 'b3nj5m1n/kommentary'
 
 " Magit clone for Neovim.
 Plug 'TimUntersberger/neogit'
+
+" Show git-blame info on each line.
+Plug 'f-person/git-blame.nvim'
 
 " File tree explorer
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}

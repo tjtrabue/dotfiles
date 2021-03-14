@@ -3,6 +3,7 @@ drive-git
 elixir-ls-git
 emacs-native-comp-git
 flat-remix
+glow
 icons-in-terminal
 jdtls
 lazygit-git

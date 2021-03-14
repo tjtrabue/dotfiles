@@ -53,6 +53,9 @@ call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
 call s:SourcePluginConfigFile('lazygit.nvim.vim')
 call s:SourcePluginConfigFile('undotree.vim')
 call s:SourcePluginConfigFile('neogit.vim')
+call s:SourcePluginConfigFile('git-blame.nvim.vim')
+call s:SourcePluginConfigFile('glow.nvim.vim')
+call s:SourcePluginConfigFile('barbar.nvim.vim')
 
 call s:SourcePluginConfigFile('nvim-tree.vim')
 " call s:SourcePluginConfigFile('chadtree.vim')
@@ -68,6 +71,10 @@ call s:SourcePluginConfigFile('nvim-compe.lua')
 
 " Load the LSP configuration file.
 call s:SourcePluginConfigFile('lsp.lua')
+
+" Make sure to laod this config AFTER airline's config. I like to use both
+" airline for tabline and galaxyline for status.
+call s:SourcePluginConfigFile('galaxyline.lua')
 
 " These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')
