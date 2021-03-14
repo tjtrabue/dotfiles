@@ -3,6 +3,11 @@
 " Redefine the user's vimrc' file to mean this file (~/.config/nvim/init.vim).
 let $MYVIMRC = stdpath('config') . '/init.vim'
 
+" Directory containing extra configuration files for plugins installed with
+" vim-plug. We decide when and how to load these files. Neovim does not load
+" them automatically.
+let g:plugin_config_dir = stdpath('config') . '/plug-config'
+
 " Install and activate plugins.
 exec 'source ' . stdpath('config') . '/plugins.vim'
 
@@ -10,15 +15,11 @@ exec 'source ' . stdpath('config') . '/plugins.vim'
 
 " Source a file in the plugin-config dir.
 function! s:SourcePluginConfigFile(file)
-  " Directory containing extra configuration files for plugins installed with
-  " vim-plug. We decide when and how to load these files. Neovim does not load
-  " them automatically.
-  let l:plugin_config_dir = stdpath('config') . '/plug-config'
 
   if a:file =~ '\.vim$'
-    silent execute 'source ' . l:plugin_config_dir . '/' . a:file
+    silent execute 'source ' . g:plugin_config_dir . '/' . a:file
   elseif a:file =~ '\.lua$'
-    silent execute 'luafile ' . l:plugin_config_dir . '/' . a:file
+    silent execute 'luafile ' . g:plugin_config_dir . '/' . a:file
   endif
 endfunction
 " }}}
@@ -72,10 +73,10 @@ call s:SourcePluginConfigFile('nvim-compe.lua')
 " Load the LSP configuration file.
 call s:SourcePluginConfigFile('lsp.lua')
 
-" The .lua file contains a cutomized galaxyline status line.
-" call s:SourcePluginConfigFile('galaxyline.lua')
-" The .vim file just has a directive that sources the example galaxyline status
-" line from the repository.
+" Activate the awesome galaxyline statusbar. This status line must be entirely
+" self-configured. That is, there is no 'default' status line that comes with
+" galaxyline. However, the repo does contain a few example files that you can
+" use as a starting point for your own custom status lines.
 call s:SourcePluginConfigFile('galaxyline.vim')
 
 " These should always come last!!!
