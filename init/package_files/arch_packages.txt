@@ -131,6 +131,7 @@ shellcheck
 shotgun
 stack
 texinfo
+texlab
 texlive-most
 texworks
 the_silver_searcher

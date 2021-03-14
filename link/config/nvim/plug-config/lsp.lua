@@ -155,8 +155,36 @@ require'lspconfig'.sumneko_lua.setup {
 require'lspconfig'.perlls.setup{}
 -- }}}
 
+-- python-language-server {{{
+require'lspconfig'.pyls.setup{}
+-- }}}
+
+-- rls (Rust) {{{
+require'lspconfig'.rls.setup{
+    -- Use nightly build
+    cmd = {"rustup", "run", "nightly", "rls"}
+}
+-- }}}
+
+-- sqlls (SQL) {{{
+--
+local sql_ls_bin = os_cmd_to_string("command -v sql-language-server")
+
+require'lspconfig'.sqlls.setup{
+    cmd = {sql_ls_bin}
+}
+-- }}}
+
+-- texlab (LaTeX) {{{
+require'lspconfig'.texlab.setup{}
+-- }}}
+
 -- vim-language-server {{{
 require'lspconfig'.vimls.setup{}
+-- }}}
+
+-- yaml-language-server {{{
+require'lspconfig'.yamlls.setup{}
 -- }}}
 
 -- vim:foldenable:foldmethod=marker:foldlevel=0
