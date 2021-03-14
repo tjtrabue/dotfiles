@@ -10,35 +10,30 @@ endif
 " Specify a directory for plugins and begin installation
 call plug#begin(stdpath('data') . '/plugged')
 
-" Specify plugins
-" APIs {{{
+" Specify plugins {{{
+" APIs
 Plug 'jparise/vim-graphql'
-" }}}
-" Linting {{{
-" NOTE: Currently disabled in favor of using coc.nvim
-" Plug 'w0rp/ale'
-" }}}
-" Status {{{
+
+" Status
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
-" }}}
-" Colors and Themes {{{
+
+" Colors and Themes
 Plug 'rafi/awesome-vim-colorschemes'
+
 " Icons
 Plug 'ryanoasis/vim-devicons'
-" }}}
-" Searching {{{
-" NOTE: fzf not needed anymore thanks to coc.nvim's file list feature
+
+" Searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'shougo/neomru.vim'
-" }}}
-" Version Control {{{
-Plug 'lambdalisue/gina.vim'
+
+" Version Control
 Plug 'airblade/vim-gitgutter'
-" }}}
-" Utilities {{{
+
+" Utilities
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'easymotion/vim-easymotion'
@@ -46,16 +41,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-commentary'
-
-" Fancy new file explorer plugin
-if has('nvim')
-  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/defx.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
 Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-bundler'
@@ -64,88 +49,62 @@ Plug 'godlygeek/tabular'
 Plug 'Shougo/unite.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-" }}}
-" Debugging {{{
-if has('nvim')
-  " Neovim frontend to GDB
-  Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-endif
-" }}}
-" Markup {{{
+Plug 'tpope/vim-eunuch'
+
+" Neovim completion
+Plug 'hrsh7th/nvim-compe'
+
+" Debugging
+" Neovim frontend to GDB
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+" Markup
 Plug 'mattn/emmet-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'shime/vim-livedown'
-" }}}
-" TOML {{{
+
+" TOML
 Plug 'cespare/vim-toml'
-" }}}
-" Autocompletion / IDE Integration {{{
-" deoplete and deoplete plugins (DISABLED in favor of coc.nvim) {{{
-" if has('nvim')
-"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-"   Plug 'Shougo/deoplete.nvim'
-"   " Plug 'roxma/nvim-yarp'
-"   Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-" Plug 'autozimu/LanguageClient-neovim', {
-"       \ 'branch': 'next',
-"       \ 'do': 'bash install.sh'
-"       \}
-" Plug 'carlitux/deoplete-ternjs'
-" Plug 'zchee/deoplete-clang'
-" Plug 'zchee/deoplete-jedi'
-" Plug 'poppyschmo/deoplete-latex'
-" Plug 'zchee/deoplete-zsh'
-" }}}
-" Neovim completion
-Plug 'hrsh7th/nvim-compe'
-" }}}
-" C/C++ {{{
+
+" C/C++
 Plug 'vim-scripts/c.vim', {'for': ['c', 'c++']}
-" }}}
-" CSS/LESS/SCSS {{{
+
+" CSS/LESS/SCSS
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
 Plug 'groenewege/vim-less'
 Plug 'cakebaker/scss-syntax.vim'
-" }}}
-" Go {{{
-" WARNING: This plugin is real heavy! It updates very slowly. It also may not be
-"          necessary now that coc.nvim exists.
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" }}}
-" Dart {{{
+
+" Dart
 Plug 'dart-lang/dart-vim-plugin'
-" }}}
-" Javascript {{{
+
+" Javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript',  'javascript.jsx' ]}
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx']}
 Plug 'burnettk/vim-angular', { 'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx']}
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx']}
-" NodeJS
+"" NodeJS
 Plug 'moll/vim-node'
-" }}}
-" Ruby {{{
+
+" Ruby
 Plug 'tpope/vim-rails', {'for': 'ruby'}
-" }}}
-" Perl {{{
+
+" Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
-" }}}
-" Haskell {{{
+
+" Haskell
 Plug 'neovimhaskell/haskell-vim', {'for': 'haskell'}
-" }}}
-" Elixir {{{
+
+" Elixir
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'mhinz/vim-mix-format', {'for': 'elixir'}
-" }}}
-" LaTeX {{{
+
+" LaTeX
 Plug 'vim-latex/vim-latex', {'for': 'tex'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'xuhdev/vim-latex-live-preview', {'for': 'tex'}
-" }}}
-" Editor {{{
+
+" Editor
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'vim-syntastic/syntastic'
@@ -154,25 +113,18 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'mhinz/vim-startify'
-" }}}
-" Filesystem {{{
-Plug 'tpope/vim-eunuch'
-" }}}
-" Tags {{{
+
+" Adds more text objects to Vim on which to operate.
+Plug 'wellle/targets.vim'
+"
 Plug 'majutsushi/tagbar'
-" }}}
-" LSP: Language Server Protocol {{{
-" coc.nvim {{{
-" NOTE: Deprecated since Neovim includes native LSP support.
-" This command installs the latest release version
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" This command installs directly from master (unstable)
-" Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-neco'
-" Plug 'jackguo380/vim-lsp-cxx-highlight'
-" }}}
+
+" LSP: Language Server Protocol
 Plug 'neovim/nvim-lspconfig'
-" }}}
+
+" neovim-tree explorer.
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 
 " treesitter.
 " After installing treesitter, run `:TSInstall all`
@@ -186,6 +138,7 @@ Plug 'kdheepak/lazygit.nvim'
 
 " A floating terminal window for Neovim.
 Plug 'voldikss/vim-floaterm'
+" }}}
 
 " Initialize plugin system
 call plug#end()

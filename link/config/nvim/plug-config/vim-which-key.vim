@@ -32,6 +32,15 @@ let g:which_key_map.l = {
       \ 'name': '+lsp'
       \ }
 " }}}
+
+" NvimTree {{{
+let g:which_key_map.n = {
+      \ 'name': '+nvim-tree',
+      \ 't': ['NvimTreeToggle', 'nvim-tree-toggle'],
+      \ 'r': ['NvimTreeRefresh', 'nvim-tree-refresh'],
+      \ 'f': ['NvimTreeFindFile', 'nvim-tree-find-file'],
+      \ }
+" }}}
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
