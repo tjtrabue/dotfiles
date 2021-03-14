@@ -54,6 +54,9 @@ Plug 'tpope/vim-eunuch'
 " Neovim completion
 Plug 'hrsh7th/nvim-compe'
 
+" A huge language pack for Vim/Neovim.
+Plug 'sheerun/vim-polyglot'
+
 " Debugging
 " Neovim frontend to GDB
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
@@ -72,7 +75,6 @@ Plug 'vim-scripts/c.vim', {'for': ['c', 'c++']}
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
 Plug 'groenewege/vim-less'
-Plug 'cakebaker/scss-syntax.vim'
 
 " Dart
 Plug 'dart-lang/dart-vim-plugin'
@@ -107,7 +109,6 @@ Plug 'xuhdev/vim-latex-live-preview', {'for': 'tex'}
 " Editor
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/goyo.vim'
-Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
