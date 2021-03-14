@@ -15,7 +15,11 @@ function! s:SourcePluginConfigFile(file)
   " them automatically.
   let l:plugin_config_dir = stdpath('config') . '/plug-config'
 
-  silent execute 'source ' . l:plugin_config_dir . '/' . a:file
+  if a:file =~ '\.vim$'
+    silent execute 'source ' . l:plugin_config_dir . '/' . a:file
+  elseif a:file =~ '\.lua$'
+    silent execute 'luafile ' . l:plugin_config_dir . '/' . a:file
+  endif
 endfunction
 " }}}
 
@@ -47,6 +51,12 @@ call s:SourcePluginConfigFile('tmuxline.vim')
 call s:SourcePluginConfigFile('ultisnips.vim')
 call s:SourcePluginConfigFile('vim-easymotion.vim')
 call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
+
+" Load the autocompletion engine
+call s:SourcePluginConfigFile('nvim-compe.lua')
+
+" Load the LSP configuration file.
+call s:SourcePluginConfigFile('lsp.lua')
 
 " This one should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')

@@ -99,6 +99,8 @@ Plug 'cespare/vim-toml'
 " Plug 'poppyschmo/deoplete-latex'
 " Plug 'zchee/deoplete-zsh'
 " }}}
+" Neovim completion
+Plug 'hrsh7th/nvim-compe'
 " }}}
 " C/C++ {{{
 Plug 'vim-scripts/c.vim', {'for': ['c', 'c++']}

@@ -43,6 +43,10 @@ autocmd BufRead,BufNewFile *.tex,*.html,*.txt,*.md
     \ set spelllang=en_us spell
 " }}}
 
+" Autocompletion {{{
+set completeopt=menuone,noselect
+" }}}
+"
 " Backups {{{
 " Create backup dirs if they do not already exist
 silent !mkdir -p $XDG_CONFIG_HOME/nvim/backups >>/dev/null 2>&1
