@@ -2,6 +2,9 @@
 " For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
 let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
+" Variable controlling which theme we want to use.
+let s:selected_theme = 'onehalf'
+
 " For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
 " Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
 " https://github.com/neovim/neovim/wiki/Following-HEAD#20160511
@@ -13,9 +16,6 @@ if (has('termguicolors'))
   " let &t_ZH = "\e[3m"
   " let &t_ZR = "\e[23m"
 endif
-
-" Variable controlling which theme we want to use.
-let s:selected_theme = 'onehalf'
 
 " Material {{{
 " Can be one of: 'default', 'palenight', 'ocean', 'lighter', 'darker',
@@ -36,9 +36,6 @@ if s:selected_theme == 'tne'
   syntax on
   colorscheme Tomorrow-Night-Eighties
 
-  " Needed to highlight the cursor's line
-  set cursorline
-
   " Make sure background is transparent if terminal is transparent.
   " You can turn this on if you want, but I prefer a solid background for my
   " editor.
@@ -50,9 +47,6 @@ endif
 if s:selected_theme == 'purify'
   syntax on
   colorscheme purify
-
-  " Needed to highlight the cursor's line
-  set cursorline
 
   " Turn off cursor underline
   " (must specify all other options on for this to work)
