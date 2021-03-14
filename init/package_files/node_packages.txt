@@ -24,6 +24,7 @@ eslint-plugin-prettier
 eslint-plugin-promise
 eslint-plugin-react
 eslint-plugin-react-hooks
+graphql-language-server-cli
 intelephense
 lua-fmt
 markdownlint

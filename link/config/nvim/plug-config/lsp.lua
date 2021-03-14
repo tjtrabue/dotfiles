@@ -5,17 +5,105 @@
 
 --- Execute the OS command `cmd` and return the result as a string.
 local function os_cmd_to_string(cmd)
-    local handle = io.popen(cmd)
-    local result = handle:read("*a")
-    handle:close()
+    -- The output string to return
+    local str = ""
+    -- get a temporary file name
+    local tmp = os.tmpname()
 
-    return result
+    -- execute a command
+    os.execute(cmd .. " > " .. tmp)
+
+    -- display output
+    for line in io.lines(tmp) do
+        if str ~= "" then
+            str = str .. "\n"
+        end
+        str = str .. line
+    end
+
+    -- remove temporary file
+    os.remove(tmp)
+
+    return str
 end
 -- }}}
 
+-- bash-language-server {{{
+require'lspconfig'.bashls.setup{}
+-- }}}
+
+-- clangd {{{
+-- NOTE: Clang >= 9 is recommended! See this issue for more.
+--
+-- clangd relies on a JSON compilation database specified as
+-- compile_commands.json or, for simpler projects, a compile_flags.txt.
+-- For details on how to automatically generate one using CMake look here.
+
+require'lspconfig'.clangd.setup{}
+--- }}}
+
+-- cmake-ls {{{
+require'lspconfig'.cmake.setup{}
+-- }}}
+
+-- vscode-css-languageserver {{{
+require'lspconfig'.cssls.setup{}
+-- }}}
+
+-- dockerfile-ls {{{
+require'lspconfig'.dockerls.setup{}
+-- }}}
+
+-- efm-language-server {{{
+require'lspconfig'.efm.setup{}
+-- }}}
+
 -- elixir-ls {{{
+local elixir_ls_bin = os_cmd_to_string("command -v elixir-ls")
+
 require'lspconfig'.elixirls.setup{
-    cmd = { os_cmd_to_string("command -v elixir-ls") };
+    cmd = { elixir_ls_bin }
+}
+-- }}}
+--
+-- erlang-ls {{{
+require'lspconfig'.erlangls.setup{}
+-- }}}
+
+-- graphql-language-server {{{
+require'lspconfig'.graphql.setup{}
+-- }}}
+
+-- haskell-language-server {{{
+require'lspconfig'.hls.setup{}
+-- }}}
+
+-- vscode-html-language-server {{{
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
+-- }}}
+
+-- intelephense {{{
+require'lspconfig'.intelephense.setup{}
+-- }}}
+
+-- vscode-json-language-server {{{
+
+-- vscode-json-languageserver only provides range formatting. You can map a
+-- command that applies range formatting to the entire document:
+require'lspconfig'.jsonls.setup {
+    commands = {
+      Format = {
+        function()
+          vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+        end
+      }
+    }
 }
 -- }}}
 
@@ -58,6 +146,13 @@ require'lspconfig'.sumneko_lua.setup {
     },
   },
 }
+-- }}}
+
+-- Perl-Language-Server {{{
+
+-- To use the language server, ensure that you have Perl::LanguageServer
+-- installed and perl command is on your path.
+require'lspconfig'.perlls.setup{}
 -- }}}
 
 -- vim-language-server {{{
