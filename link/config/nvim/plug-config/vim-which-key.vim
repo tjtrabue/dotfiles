@@ -40,6 +40,11 @@ let g:which_key_map.n = {
       \ 'r': ['NvimTreeRefresh', 'nvim-tree-refresh'],
       \ 'f': ['NvimTreeFindFile', 'nvim-tree-find-file'],
       \ }
+
+" Telescope {{{
+let g:which_key_map.f = {
+      \ 'name': '+telescope',
+      \ }
 " }}}
 " }}}
 

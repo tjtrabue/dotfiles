@@ -19,9 +19,6 @@ map <leader>. $
 " Use ',m' to go to beginning of current line
 map <leader>m ^
 
-" Use ',f' in normal mode to open / close folds
-map <leader>f za
-
 " Pasting from clipboard into vim is formatted correctly (,p)
 map <silent> <leader>p :set paste<CR>"*p:set nopaste<CR>
 

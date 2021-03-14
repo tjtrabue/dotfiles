@@ -40,7 +40,6 @@ call s:SourcePluginConfigFile('awesome_terminal_fonts.vim')
 call s:SourcePluginConfigFile('ctrlp.vim')
 call s:SourcePluginConfigFile('emmet.vim')
 call s:SourcePluginConfigFile('fugitive.vim')
-call s:SourcePluginConfigFile('fzf.vim')
 call s:SourcePluginConfigFile('gitgutter.vim')
 call s:SourcePluginConfigFile('gundo.vim')
 call s:SourcePluginConfigFile('incsearch-easymotion.vim')
@@ -55,6 +54,10 @@ call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
 call s:SourcePluginConfigFile('lazygit.nvim.vim')
 call s:SourcePluginConfigFile('nvim-tree.vim')
 call s:SourcePluginConfigFile('indent-guides.nvim.lua')
+" Currently not using fzf. Using telescope.nvim instead.
+" call s:SourcePluginConfigFile('fzf.vim')
+call s:SourcePluginConfigFile('telescope.nvim.lua')
+call s:SourcePluginConfigFile('telescope.nvim.vim')
 
 " Load the autocompletion engine
 call s:SourcePluginConfigFile('nvim-compe.lua')
