@@ -52,7 +52,10 @@ call s:SourcePluginConfigFile('ultisnips.vim')
 call s:SourcePluginConfigFile('vim-easymotion.vim')
 call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
 call s:SourcePluginConfigFile('lazygit.nvim.vim')
+
 call s:SourcePluginConfigFile('nvim-tree.vim')
+" call s:SourcePluginConfigFile('chadtree.vim')
+
 call s:SourcePluginConfigFile('indent-guides.nvim.lua')
 " Currently not using fzf. Using telescope.nvim instead.
 " call s:SourcePluginConfigFile('fzf.vim')
@@ -65,8 +68,9 @@ call s:SourcePluginConfigFile('nvim-compe.lua')
 " Load the LSP configuration file.
 call s:SourcePluginConfigFile('lsp.lua')
 
-" This one should always come last!!!
+" These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')
+call s:SourcePluginConfigFile('nvim-web-devicons.lua')
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0

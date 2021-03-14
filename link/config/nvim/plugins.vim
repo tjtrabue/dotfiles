@@ -23,7 +23,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'rafi/awesome-vim-colorschemes'
 
 " Icons
-Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " Searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
@@ -130,10 +130,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-" neovim-tree explorer.
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
-Plug 'kyazdani42/nvim-tree.lua'
-
 " treesitter.
 " After installing treesitter, run `:TSInstall all`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
@@ -146,6 +142,12 @@ Plug 'kdheepak/lazygit.nvim'
 
 " A floating terminal window for Neovim.
 Plug 'voldikss/vim-floaterm'
+
+" neovim-tree explorer.
+Plug 'kyazdani42/nvim-tree.lua'
+
+" File tree explorer
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 " }}}
 
 " Initialize plugin system
