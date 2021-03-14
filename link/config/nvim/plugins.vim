@@ -179,7 +179,13 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 " which-key
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+Plug 'liuchengxu/vim-which-key'
+
+" Lazygit is a great interface for Git.
+Plug 'kdheepak/lazygit.nvim'
+
+" A floating terminal window for Neovim.
+Plug 'voldikss/vim-floaterm'
 
 " Initialize plugin system
 call plug#end()

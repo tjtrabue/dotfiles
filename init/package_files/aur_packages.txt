@@ -5,6 +5,7 @@ emacs-native-comp-git
 flat-remix
 icons-in-terminal
 jdtls
+lazygit-git
 libgccjit
 lightdm-webkit-theme-aether
 ls-icons

@@ -31,6 +31,10 @@ endfunction
 " configuration files so that we don't encounter strange errors when Neovim
 " first loads.
 
+" This should be first, since which key ought to be registered before we make
+" ane leader mappings.
+call s:SourcePluginConfigFile('vim-which-key.vim')
+
 call s:SourcePluginConfigFile('airline.vim')
 call s:SourcePluginConfigFile('awesome_terminal_fonts.vim')
 call s:SourcePluginConfigFile('ctrlp.vim')
@@ -51,6 +55,7 @@ call s:SourcePluginConfigFile('tmuxline.vim')
 call s:SourcePluginConfigFile('ultisnips.vim')
 call s:SourcePluginConfigFile('vim-easymotion.vim')
 call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
+call s:SourcePluginConfigFile('lazygit.nvim.vim')
 
 " Load the autocompletion engine
 call s:SourcePluginConfigFile('nvim-compe.lua')

@@ -1,15 +1,15 @@
 " Basic mappings {{{
-nnoremap <leader>ga :Gina! add --all<CR>
-nnoremap <leader>gb :Gina branch -vv<CR>
-nnoremap <leader>gB :Gina blame<CR>
-nnoremap <leader>gc :Gina commit<CR>
-nnoremap <leader>gC :Gina chaperon<CR>
-nnoremap <leader>gd :Gina diff<CR>
-nnoremap <leader>gl :Gina log<CR>
-nnoremap <leader>gp :Gina push origin HEAD<CR>
-nnoremap <leader>gP :Gina pull<CR>
-nnoremap <leader>gs :Gina status -s<CR>
-nnoremap <leader>gt :Gina tag<CR>
+" nnoremap <leader>ga :Gina! add --all<CR>
+" nnoremap <leader>gb :Gina branch -vv<CR>
+" nnoremap <leader>gB :Gina blame<CR>
+" nnoremap <leader>gc :Gina commit<CR>
+" nnoremap <leader>gC :Gina chaperon<CR>
+" nnoremap <leader>gd :Gina diff<CR>
+" nnoremap <leader>gl :Gina log<CR>
+" nnoremap <leader>gp :Gina push origin HEAD<CR>
+" nnoremap <leader>gP :Gina pull<CR>
+" nnoremap <leader>gs :Gina status -s<CR>
+" nnoremap <leader>gt :Gina tag<CR>
 " }}}
 
 " From sample config in help docs {{{
