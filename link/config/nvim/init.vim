@@ -3,13 +3,21 @@
 " Redefine the user's vimrc' file to mean this file (~/.config/nvim/init.vim).
 let $MYVIMRC = stdpath('config') . '/init.vim'
 
-" Directory containing extra configuration files for plugins installed with
-" vim-plug. We decide when and how to load these files. Neovim does not load
-" them automatically.
-let s:plugin_config_dir = stdpath('config') . '/plug-config'
-
 " Install and activate plugins.
 exec 'source ' . stdpath('config') . '/plugins.vim'
+
+" Private functions {{{
+
+" Source a file in the plugin-config dir.
+function! s:SourcePluginConfigFile(file)
+  " Directory containing extra configuration files for plugins installed with
+  " vim-plug. We decide when and how to load these files. Neovim does not load
+  " them automatically.
+  let l:plugin_config_dir = stdpath('config') . '/plug-config'
+
+  silent execute 'source ' . l:plugin_config_dir . '/' . a:file
+endfunction
+" }}}
 
 " Source plugin configuration files. {{{
 "
@@ -19,29 +27,29 @@ exec 'source ' . stdpath('config') . '/plugins.vim'
 " configuration files so that we don't encounter strange errors when Neovim
 " first loads.
 
-exec 'source ' . s:plugin_config_dir . '/airline.vim'
-exec 'source ' . s:plugin_config_dir . '/awesome_terminal_fonts.vim'
-exec 'source ' . s:plugin_config_dir . '/ctrlp.vim'
-exec 'source ' . s:plugin_config_dir . '/emmet.vim'
-exec 'source ' . s:plugin_config_dir . '/fugitive.vim'
-exec 'source ' . s:plugin_config_dir . '/fzf.vim'
-exec 'source ' . s:plugin_config_dir . '/gina.vim'
-exec 'source ' . s:plugin_config_dir . '/gitgutter.vim'
-exec 'source ' . s:plugin_config_dir . '/gundo.vim'
-exec 'source ' . s:plugin_config_dir . '/incsearch-easymotion.vim'
-exec 'source ' . s:plugin_config_dir . '/incsearch.vim'
-exec 'source ' . s:plugin_config_dir . '/indent_guides.vim'
-exec 'source ' . s:plugin_config_dir . '/latex.vim'
-exec 'source ' . s:plugin_config_dir . '/nerdcommenter.vim'
-exec 'source ' . s:plugin_config_dir . '/nerdtree.vim'
-exec 'source ' . s:plugin_config_dir . '/tagbar.vim'
-exec 'source ' . s:plugin_config_dir . '/tmuxline.vim'
-exec 'source ' . s:plugin_config_dir . '/ultisnips.vim'
-exec 'source ' . s:plugin_config_dir . '/vim-easymotion.vim'
-exec 'source ' . s:plugin_config_dir . '/vim_latex_live_preview.vim'
+call s:SourcePluginConfigFile('airline.vim')
+call s:SourcePluginConfigFile('awesome_terminal_fonts.vim')
+call s:SourcePluginConfigFile('ctrlp.vim')
+call s:SourcePluginConfigFile('emmet.vim')
+call s:SourcePluginConfigFile('fugitive.vim')
+call s:SourcePluginConfigFile('fzf.vim')
+call s:SourcePluginConfigFile('gina.vim')
+call s:SourcePluginConfigFile('gitgutter.vim')
+call s:SourcePluginConfigFile('gundo.vim')
+call s:SourcePluginConfigFile('incsearch-easymotion.vim')
+call s:SourcePluginConfigFile('incsearch.vim')
+call s:SourcePluginConfigFile('indent_guides.vim')
+call s:SourcePluginConfigFile('latex.vim')
+call s:SourcePluginConfigFile('nerdcommenter.vim')
+call s:SourcePluginConfigFile('nerdtree.vim')
+call s:SourcePluginConfigFile('tagbar.vim')
+call s:SourcePluginConfigFile('tmuxline.vim')
+call s:SourcePluginConfigFile('ultisnips.vim')
+call s:SourcePluginConfigFile('vim-easymotion.vim')
+call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
 
 " This one should always come last!!!
-exec 'source ' . s:plugin_config_dir . '/colorscheme.vim'
+call s:SourcePluginConfigFile('colorscheme.vim')
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
