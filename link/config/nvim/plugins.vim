@@ -24,7 +24,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 " }}}
 " Colors and Themes {{{
-" Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Icons
 Plug 'ryanoasis/vim-devicons'

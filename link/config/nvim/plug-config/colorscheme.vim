@@ -3,7 +3,7 @@
 let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
 " Variable controlling which theme we want to use.
-let s:selected_theme = 'onehalf'
+let s:selected_theme = 'material'
 
 " For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
 " Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
@@ -18,19 +18,23 @@ if (has('termguicolors'))
 endif
 
 " Material {{{
-" Can be one of: 'default', 'palenight', 'ocean', 'lighter', 'darker',
-" 'default-community', 'palenight-community', 'ocean-community',
-" 'lighter-community', 'darker-community'
-" let g:material_theme_style = 'darker'
+if s:selected_theme == 'material'
+  " Can be one of: 'default', 'palenight', 'ocean', 'lighter', 'darker',
+  " 'default-community', 'palenight-community', 'ocean-community',
+  " 'lighter-community', 'darker-community'
+  let g:material_theme_style = 'darker'
 
-" colorscheme material
+  colorscheme material
+endif
 " }}}
 
 " onehalf {{{
-colorscheme onehalfdark
-let g:airline_theme='onehalfdark'
+if s:selected_theme == 'onehalf'
+  colorscheme onehalfdark
+  let g:airline_theme='onehalfdark'
+endif
 " }}}
-"
+
 " Tomorrow Night Eighties {{{
 if s:selected_theme == 'tne'
   syntax on
