@@ -111,7 +111,8 @@ Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
+Plug 'glepnir/indent-guides.nvim'
 Plug 'mhinz/vim-startify'
 
 " Adds more text objects to Vim on which to operate.
