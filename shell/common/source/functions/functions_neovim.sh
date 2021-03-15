@@ -1,13 +1,13 @@
 #!/bin/sh
 
+# Installs the latest, greatest Neovim from the official site as an
+# appimage, and links the included executable to /usr/local/bin.
 install_neovim_nightly_appimage() {
   local neovimReleasesDir="${NVIM_HOME:-${HOME}/.config/nvim}/.releases"
   local neovimAppimagesDir="${neovimReleasesDir}/appimages"
   local latestAppimageDir="${neovimAppimagesDir}/latest"
-  local downloadUrl="https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage"
-  local appimageName="$(basename "${downloadUrl}")"
-  local latestAppimage="${latestAppimageDir}/${appimageName}"
   local appimageRunnable="${latestAppimageDir}/squashfs-root/usr/bin/nvim"
+  local appimageName="nvim.appimage"
   local nvimSymlinkDest="/usr/local/bin"
 
   __download_neovim_nightly_appimage
@@ -18,7 +18,16 @@ install_neovim_nightly_appimage() {
     ./"${appimageName}" --appimage-extract
   )
 
-  log_info "Linking new neovim executable to: ${nvimSymlinkDest}"
+  # Ask user before overwriting an existing /usr/local/bin/nvim executable.
+  if [ -x "${nvimSymlinkDest}/nvim" ] && \
+      ! __check_nvim_appimage_link_exists; then
+    if ! __prompt_user_before_overwriting_nvim_link; then
+      echoe "Exiting due to user request"
+      return 1
+    fi
+  fi
+
+  log_info "Linking new neovim executable to: ${nvimSymlinkDest}/nvim"
   sudo ln -sf -t "${nvimSymlinkDest}" "${appimageRunnable}" >>/dev/null 2>&1
 }
 
@@ -42,6 +51,23 @@ __download_neovim_nightly_appimage() {
   curl -L -o "${latestAppimage}" "${downloadUrl}"
 }
 
+# Ask user before overwriting an existing /usr/local/bin/nvim executable.
+__prompt_user_before_overwriting_nvim_link() {
+  local response
+  local usrLocalNvim="/usr/local/bin/nvim"
+
+  while ! echo "$response" | grep -q '[YyNn'; do
+    echoe "Neovim executable exists at ${usrLocalNvim}. Overwrite this" \
+      "executable? [yN]"
+    read -r response
+  done
+
+  if echo "${response}" | grep -q '[Nn]'; then
+    return 1
+  fi
+}
+
+# Check if we already have a linked nvim executable in /usr/local/bin
 __check_nvim_appimage_link_exists() {
   local neovimReleasesDir="${NVIM_HOME:-${HOME}/.config/nvim}/.releases"
 
