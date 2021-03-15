@@ -40,26 +40,37 @@ set path=.,,**
 
 " Turn on spell checking for many document types
 autocmd BufRead,BufNewFile *.tex,*.html,*.txt,*.md
-    \ set spelllang=en_us spell
+      \ set spelllang=en_us spell
 " }}}
 
 " Autocompletion {{{
 set completeopt=menuone,noselect
 " }}}
-"
+
 " Backups {{{
 " Create backup dirs if they do not already exist
-silent !mkdir -p $XDG_CONFIG_HOME/nvim/backups >>/dev/null 2>&1
-silent !mkdir -p $XDG_CONFIG_HOME/nvim/swaps >>/dev/null 2>&1
-silent !mkdir -p $XDG_CONFIG_HOME/nvim/undo >>/dev/null 2>&1
+silent !sh -c 'mkdir -p ${XDG_CONFIG_HOME:-${HOME}/.config}/nvim/backups >>/dev/null 2>&1'
+silent !sh -c 'mkdir -p ${XDG_CONFIG_HOME:-${HOME}/.config}/nvim/swaps >>/dev/null 2>&1'
+silent !sh -c 'mkdir -p ${XDG_CONFIG_HOME:-${HOME}/.config}/nvim/undo >>/dev/null 2>&1'
+
+" Make variables for backup, swap, and undo files.
+let s:user_config_dir = $XDG_CONFIG_HOME
+if ! isdirectory(s:user_config_dir)
+  let s:user_config_dir = $HOME . '/.config'
+endif
+let s:user_nvim_backups_dir = s:user_config_dir . '/nvim/backups'
+let s:user_nvim_swaps_dir = s:user_config_dir . '/nvim/swaps'
+let s:user_nvim_undo_dir = s:user_config_dir . '/nvim/undo'
 
 " Centralize backups, swapfiles and undo history
 set backup
 set writebackup
-set backupdir=$XDG_CONFIG_HOME/nvim/backups
-set directory=$XDG_CONFIG_HOME/nvim/swaps
+" Notice the use of 'let &...' instead of 'set ...'. Using 'let' allows us to
+" use variables on the right side of option assignments.
+let &backupdir=s:user_nvim_backups_dir
+let &directory=s:user_nvim_swaps_dir
 if exists('&undodir')
-    set undodir=$XDG_CONFIG_HOME/nvim/undo
+  let &undodir=s:user_nvim_undo_dir
 endif
 
 " Don’t create backups when editing files in certain directories
@@ -70,7 +81,7 @@ set history=700
 
 " Open files with cursor at last edited position
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-\| exe "normal! g'\"" | endif
+      \| exe "normal! g'\"" | endif
 " }}}
 
 " Buffers {{{
@@ -172,7 +183,7 @@ set lazyredraw
 set showmatch
 
 " Show partial commands in the last line of the screen
- set showcmd
+set showcmd
 
 " Enable syntax highlighting
 syntax enable
@@ -234,8 +245,8 @@ set cmdheight=2
 
 " Use hybrid line numbers (found by setting both number and relativenumber)
 if exists("&relativenumber")
-    set number relativenumber
-    au BufReadPost * set number relativenumber
+  set number relativenumber
+  au BufReadPost * set number relativenumber
 endif
 
 " Switch to absolute line numbers if Vim loses focus

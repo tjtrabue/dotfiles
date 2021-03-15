@@ -70,6 +70,10 @@ link/config/nvim/backups
 link/config/nvim/swaps
 link/config/nvim/undo
 link/config/nvim/.netrwhist
+# The compiled package manifest for Neovim.
+link/config/nvim/plugin/packer_compiled.vim
+# Ignore downloded Neovim releases.
+link/config/nvim/.releases
 
 # coc.nvim
 link/config/coc/commands
