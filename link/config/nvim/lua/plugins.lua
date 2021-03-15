@@ -88,7 +88,11 @@ return require('packer').startup(function()
     use {'nvim-lua/plenary.nvim'}
     use {'nvim-telescope/telescope.nvim'}
     use {'nvim-telescope/telescope-fzy-native.nvim'}
-    use {'nvim-treesitter/nvim-treesitter'}  -- We recommend updating the parsers on update}
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        -- We recommend updating the parsers on update}
+        run = ':TSUpdate'
+    }
     use {'liuchengxu/vim-which-key'}
     use {'kdheepak/lazygit.nvim'}
     use {'voldikss/vim-floaterm'}
