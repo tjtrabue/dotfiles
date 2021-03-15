@@ -33,6 +33,12 @@ let g:which_key_map.l = {
       \ }
 " }}}
 
+" Formatter {{{
+let g:which_key_map.F = {
+      \ 'name': '+formatter',
+      \ }
+" }}}
+
 " NvimTree {{{
 let g:which_key_map.n = {
       \ 'name': '+nvim-tree',
@@ -40,12 +46,12 @@ let g:which_key_map.n = {
       \ 'r': ['NvimTreeRefresh', 'nvim-tree-refresh'],
       \ 'f': ['NvimTreeFindFile', 'nvim-tree-find-file'],
       \ }
+" }}}
 
 " Telescope {{{
 let g:which_key_map.f = {
       \ 'name': '+telescope',
       \ }
-" }}}
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
