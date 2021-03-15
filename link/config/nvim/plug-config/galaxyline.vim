@@ -1,7 +1,7 @@
 
 " A sample galaxyline status file written in lua that comes with the galaxyline
 " repository.
-let s:example_galaxyline_file = g:vim_plugged_dir .
+let s:example_galaxyline_file = g:plugin_install_dir .
       \ '/galaxyline.nvim/example/eviline.lua'
 
 " Figure out how to activate the galaxyline statusbar.
