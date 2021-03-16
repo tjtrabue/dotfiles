@@ -22,4 +22,25 @@ if [ -x "$(command -v bat)" ]; then
   }
 fi
 
+# Install the bat-extras tools, which allow bat to integrate nicely with
+# existing tools.
+install_bat_extras() {
+  local batExtrasUrl="https://github.com/eth-p/bat-extras.git"
+  local batExtrasDest="${WS:-${HOME}/workspace}"
+  local batExtrasDir="${batExtrasDest}/bat-extras"
+  local batExtrasBinDest="${HOME}/.local/bin"
+
+  mkdir -p "${batExtrasDest}" "${batExtrasBinDest}"
+
+  if [ ! -d "${batExtrasDir}" ]; then
+    log_info "Cloning bat extras..."
+    git clone "${batExtrasUrl}" "${batExtrasDir}"
+  else
+    git -C "${batExtrasDir}" pull
+  fi
+
+  log_info "Installing bat-extras scripts to: ${batExtrasBinDest}/"
+  install -m 755 -t "${batExtrasBinDest}" "${batExtrasDir}/src"/*.sh
+}
+
 # vim:foldenable:foldmethod=indent:foldlevel=1:foldnestmax=1
