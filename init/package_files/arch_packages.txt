@@ -12,6 +12,7 @@ aspell-en
 autorandr
 awesome
 bash-completion
+bat
 biber
 cabal-install
 chromium

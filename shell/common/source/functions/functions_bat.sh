@@ -29,6 +29,7 @@ install_bat_extras() {
   local batExtrasDest="${WS:-${HOME}/workspace}"
   local batExtrasDir="${batExtrasDest}/bat-extras"
   local batExtrasBinDest="${HOME}/.local/bin"
+  local script
 
   mkdir -p "${batExtrasDest}" "${batExtrasBinDest}"
 
@@ -40,7 +41,11 @@ install_bat_extras() {
   fi
 
   log_info "Installing bat-extras scripts to: ${batExtrasBinDest}/"
-  install -m 755 -t "${batExtrasBinDest}" "${batExtrasDir}/src"/*.sh
+  for script in "${batExtrasDir}/src"/*.sh; do
+    # Remove the ".sh" extension from the bat scripts as we install them.
+    install -m 755 -T "${script}" \
+      "${batExtrasBinDest}"/$(basename -s '.sh' "${script}")
+  done
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=1:foldnestmax=1
