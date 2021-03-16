@@ -68,7 +68,7 @@ call s:SourcePluginConfigFile('glow.nvim.vim')
 call s:SourcePluginConfigFile('barbar.nvim.vim')
 call s:SourcePluginConfigFile('nvim-hlslens.vim')
 call s:SourcePluginConfigFile('formatter.nvim.lua')
-call s:SourcePluginConfigFile('formatter.nvim.vim')
+call s:SourcePluginConfigFile('ranger.vim.vim')
 
 call s:SourcePluginConfigFile('nvim-tree.vim')
 " call s:SourcePluginConfigFile('chadtree.vim')

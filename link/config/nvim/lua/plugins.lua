@@ -220,6 +220,11 @@ packer.startup(
       cmd = {"NvimTreeOpen", "NvimTreeToggle"}
     }
 
+    use {
+      "francoiscabrol/ranger.vim",
+      requires = {{"rbgrouleff/bclose.vim"}}
+    }
+
     -- Commenting code {{{
     use {"b3nj5m1n/kommentary"}
     -- }}}
