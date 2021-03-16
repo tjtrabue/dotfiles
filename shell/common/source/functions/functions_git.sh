@@ -175,6 +175,8 @@ gcm() {
 }
 # }}}
 
+# Diff {{{
+
 # Show last diff for a given file
 lastchange() {
   local file="$1"
@@ -191,6 +193,9 @@ lastchange() {
 
   git log -p -1 "${file}"
 }
+# }}}
+
+# Git environment for shell {{{
 
 # Prepare any extra Git-related shell functions for the current shell.
 src_git_for_profile() {
@@ -199,5 +204,6 @@ src_git_for_profile() {
     . "${WS}/forgit/forgit.plugin.sh"
   fi
 }
+# }}}
 
-# vim:foldenable:foldmethod=syntax
+# vim:foldenable:foldmethod=marker:foldlevel=0

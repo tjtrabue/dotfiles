@@ -257,14 +257,20 @@ fs() {
 # Use Git’s colored diff when available
 if hash git >>/dev/null 2>&1; then
   diff() {
-    git diff --no-index --color-words "$@"
+    if [ -x "$(command -v bat)" ]; then
+      # Use `bat` to colorize output, if available.
+      git diff --no-index --name-only --diff-filter=d -- "$@" | xargs bat --diff
+    else
+      # Default to using git's own colorization capabilities.
+      git diff --no-index --color-words "$@"
+    fi
   }
 fi
 
 # Create a data URL from a file
 dataurl() {
   local mimeType=$(file -b --mime-type "$1")
-  if [[ $mimeType == text/* ]]; then
+  if echo "${mimeType}" | grep -q "^text/.*" ; then
     mimeType="${mimeType};charset=utf-8"
   fi
   echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
