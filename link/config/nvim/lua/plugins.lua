@@ -41,7 +41,7 @@ packer.init(
 -- }}}
 --
 -- Specify plugins {{{
-return packer.startup(
+packer.startup(
   function()
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim"}
@@ -52,28 +52,31 @@ return packer.startup(
 
     use {"glepnir/galaxyline.nvim"}
 
+    -- Tab bar {{{
     use {"romgrk/barbar.nvim"}
+    -- }}}
 
+    -- Colorschemes {{{
     use {"rafi/awesome-vim-colorschemes"}
+    -- }}}
 
+    -- Fonts/icons {{{
     use {"kyazdani42/nvim-web-devicons"}
-
-    use {
-      "junegunn/fzf",
-      run = "cd ~/.fzf && ./install --all"
-    }
-
-    use {"junegunn/fzf.vim"}
+    -- }}}
 
     use {"shougo/neomru.vim"}
 
+    -- Git (((
     use {"airblade/vim-gitgutter"}
+    use {"kdheepak/lazygit.nvim"}
+    use {"TimUntersberger/neogit"}
+    use {"f-person/git-blame.nvim"}
+    -- )))
 
+    -- Snippets {{{
     use {"SirVer/ultisnips"}
-
     use {"honza/vim-snippets"}
-
-    use {"easymotion/vim-easymotion"}
+    -- }}}
 
     use {"haya14busa/incsearch.vim"}
 
@@ -105,67 +108,66 @@ return packer.startup(
 
     use {"hrsh7th/nvim-compe"}
 
-    use {"sheerun/vim-polyglot"}
-
     use {"sakhnik/nvim-gdb"}
 
-    use {"mattn/emmet-vim"}
-
+    -- Markdown {{{
     use {"plasticboy/vim-markdown"}
-
     use {"shime/vim-livedown"}
-
     use {"npxbr/glow.nvim", run = ":GlowInstall"}
+    -- }}}
 
+    -- TOML {{{
     use {"cespare/vim-toml"}
+    -- }}}
 
     use {"vim-scripts/c.vim"}
 
+    -- WWWW technologies {{{
     use {"hail2u/vim-css3-syntax"}
-
     use {"ap/vim-css-color"}
-
     use {"groenewege/vim-less"}
-
     use {"dart-lang/dart-vim-plugin"}
-
-    use {"pangloss/vim-javascript"}
-
-    use {"othree/javascript-libraries-syntax.vim"}
-
-    use {"burnettk/vim-angular"}
-
     use {"mxw/vim-jsx"}
+    use {"mattn/emmet-vim"}
+    -- }}}
 
-    use {"ternjs/tern_for_vim"}
-
-    use {"moll/vim-node"}
-
+    -- Ruby {{{
     use {"tpope/vim-rails"}
+    -- }}}
 
+    -- Perl {{{
     use {"vim-perl/vim-perl"}
+    -- }}}
 
+    -- Haskell {{{
     use {"neovimhaskell/haskell-vim"}
+    -- }}}
 
+    -- LaTeX {{{
     use {"lervag/vimtex"}
-
     use {"xuhdev/vim-latex-live-preview"}
+    -- }}}
 
-    use {"editorconfig/editorconfig-vim"}
-
-    use {"junegunn/goyo.vim"}
-
+    -- Editing {{{
     use {"tpope/vim-repeat"}
+    use {"wellle/targets.vim"}
+    use {"easymotion/vim-easymotion"}
+    use {"editorconfig/editorconfig-vim"}
+    -- }}}
 
+    -- Delimiter plugins {{{
     use {"jiangmiao/auto-pairs"}
-
     use {"tpope/vim-endwise"}
+    -- }}}
 
+    -- UI {{{
     use {"glepnir/indent-guides.nvim"}
+    use {"nvim-lua/popup.nvim"}
+    use {"kevinhwang91/nvim-hlslens"}
+    use {"liuchengxu/vim-which-key"}
+    -- }}}
 
     use {"mhinz/vim-startify"}
-
-    use {"wellle/targets.vim"}
 
     use {"majutsushi/tagbar"}
 
@@ -176,33 +178,40 @@ return packer.startup(
     use {"mfussenegger/nvim-dap"}
     use {"puremourning/vimspector"}
 
-    -- Movement
+    -- Movement {{{
     use {"chaoren/vim-wordmotion"}
     use {"justinmk/vim-sneak", config = [[require('config.sneak')]]}
+    -- }}}
 
-    -- Prettification
+    -- Prettification {{{
     use {"junegunn/vim-easy-align", config = [[require('config.easy_align')]]}
     use {"mhartington/formatter.nvim", config = [[require('config.format')]]}
-
-    use {"nvim-lua/popup.nvim"}
+    -- }}}
 
     use {"nvim-lua/plenary.nvim"}
 
+    -- Fuzzy searching {{{
+    use {
+      "junegunn/fzf",
+      run = "cd ~/.fzf && ./install --all"
+    }
+    use {"junegunn/fzf.vim"}
     use {"nvim-telescope/telescope.nvim"}
-
     use {"nvim-telescope/telescope-fzy-native.nvim"}
+    -- }}}
 
+    -- Syntax parsing {{{
+    use {"sheerun/vim-polyglot"}
     use {
       "nvim-treesitter/nvim-treesitter",
       -- We recommend updating the parsers on update}
       run = ":TSUpdate"
     }
+    -- }}}
 
-    use {"liuchengxu/vim-which-key"}
-
-    use {"kdheepak/lazygit.nvim"}
-
+    -- Terminal {{{
     use {"voldikss/vim-floaterm"}
+    -- }}}
 
     -- File tree explorer
     use {
@@ -211,15 +220,24 @@ return packer.startup(
       cmd = {"NvimTreeOpen", "NvimTreeToggle"}
     }
 
+    -- Commenting code {{{
     use {"b3nj5m1n/kommentary"}
-
-    use {"TimUntersberger/neogit"}
-
-    use {"f-person/git-blame.nvim"}
-
-    use {"kevinhwang91/nvim-hlslens"}
+    -- }}}
   end
 )
 -- }}}
+
+-- Install new plugins on startup.
+local packer_plugins_dir = os.getenv("HOME") .. "/.local/share/nvim/site/pack/packer"
+local start_dir = packer_plugins_dir .. "/start"
+local opt_dir = packer_plugins_dir .. "/opt"
+
+--[[ for key, value in pairs(packer.plugins) do
+  print("Plugin key:" .. key)
+  print("Plugin value:" .. value)
+end ]]
+-- packer.install()
+
+return packer
 
 -- vim:foldenable:foldmethod=marker:foldlevel=0
