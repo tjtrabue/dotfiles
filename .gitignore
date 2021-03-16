@@ -144,6 +144,10 @@ link/config/ranger/plugins
 # Do not track Ranger colorshemes since we clone this repository
 link/config/ranger/colorschemes
 
+# Ignore installed nnn plugins
+link/config/nnn/plugins*.tar.gz
+link/config/nnn/plugins/
+
 # Ignore libreoffice config
 link/config/libreoffice
 
