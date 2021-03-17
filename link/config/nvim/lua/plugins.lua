@@ -35,7 +35,7 @@ packer.init(
     -- For some reason the author didn't provide a default thread limit for
     -- asynchronous jobs. If you omit this limit, Packer can fail to
     -- install/update plugins on some high-performance computers.
-    max_jobs = 16
+    max_jobs = 8
   }
 )
 -- }}}
@@ -43,7 +43,7 @@ packer.init(
 -- Specify plugins {{{
 packer.startup(
   function()
-    -- Packer can manage itself as an optional plugin
+    -- Packer can manage itself
     use {"wbthomason/packer.nvim"}
 
     use {"jparise/vim-graphql"}
@@ -101,8 +101,6 @@ packer.startup(
 
     use {
       "mbbill/undotree",
-      opt = true,
-      cmd = {"UndotreeToggle"},
       config = [[vim.g.undotree_SetFocusWhenToggle = 1]]
     }
 
@@ -180,12 +178,12 @@ packer.startup(
 
     -- Movement {{{
     use {"chaoren/vim-wordmotion"}
-    use {"justinmk/vim-sneak", config = [[require('config.sneak')]]}
+    use {"justinmk/vim-sneak"}
     -- }}}
 
     -- Prettification {{{
-    use {"junegunn/vim-easy-align", config = [[require('config.easy_align')]]}
-    use {"mhartington/formatter.nvim", config = [[require('config.format')]]}
+    use {"junegunn/vim-easy-align"}
+    use {"mhartington/formatter.nvim"}
     -- }}}
 
     use {"nvim-lua/plenary.nvim"}
@@ -216,7 +214,6 @@ packer.startup(
     -- File tree explorer
     use {
       "kyazdani42/nvim-tree.lua",
-      opt = true,
       cmd = {"NvimTreeOpen", "NvimTreeToggle"}
     }
 
