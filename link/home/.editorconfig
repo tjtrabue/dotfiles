@@ -24,10 +24,6 @@ indent_size = 4
 [*.{pl,plx}]
 indent_size = 4
 
-# 4 spaces per indent in Lua code
-[*.lua]
-indent_size = 4
-
 # Indent UltiSnips snippet files with tabs
 [*.snippets]
 indent_style = tab
