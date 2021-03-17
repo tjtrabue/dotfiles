@@ -19,12 +19,36 @@ end
 -- Only if your version of Neovim doesn't have https://github.com/neovim/neovim/pull/12632 merged
 -- vim._update_package_paths()
 
--- Optional settings for plugins {{{
---   cmd    -> Only load plugin after command(s) are run; used for lazy-loading.
---   config -> Run lua code after plugin loads.
---   opt    -> Mark plugin as optional, instead of required.
---   run    -> Run lua function, Vim commands, or Shell commands after plugin
---             installs/updates.
+-- Explanation of plugin options {{{
+--[[ use {
+  'myusername/example',        -- The plugin location string
+  -- The following keys are all optional
+  disable = boolean,           -- Mark a plugin as inactive
+  as = string,                 -- Specifies an alias under which to install the plugin
+  installer = function,        -- Specifies custom installer. See "custom installers" below.
+  updater = function,          -- Specifies custom updater. See "custom installers" below.
+  after = string or list,      -- Specifies plugins to load before this plugin. See "sequencing" below
+  rtp = string,                -- Specifies a subdirectory of the plugin to add to runtimepath.
+  opt = boolean,               -- Manually marks a plugin as optional.
+  branch = string,             -- Specifies a git branch to use
+  tag = string,                -- Specifies a git tag to use
+  commit = string,             -- Specifies a git commit to use
+  lock = boolean,              -- Skip this plugin in updates/syncs
+  run = string or function,    -- Post-update/install hook. See "update/install hooks".
+  requires = string or list,   -- Specifies plugin dependencies. See "dependencies".
+  rocks = string or list,      -- Specifies Luarocks dependencies for the plugin
+  config = string or function, -- Specifies code to run after this plugin is loaded.
+  -- The setup key implies opt = true
+  setup = string or function,  -- Specifies code to run before this plugin is loaded.
+  -- The following keys all imply lazy-loading and imply opt = true
+  cmd = string or list,        -- Specifies commands which load this plugin.
+  ft = string or list,         -- Specifies filetypes which load this plugin.
+  keys = string or list,       -- Specifies maps which load this plugin. See "Keybindings".
+  event = string or list,      -- Specifies autocommand events which load this plugin.
+  fn = string or list          -- Specifies functions which load this plugin.
+  cond = string, function, or list of strings/functions,   -- Specifies a conditional test to load this plugin
+  module = string or list      -- Specifies patterns (e.g. for string.match) of Lua module names which, when required, load this plugin
+} ]]
 -- }}}
 
 local packer = require("packer")
@@ -229,16 +253,8 @@ packer.startup(
 )
 -- }}}
 
--- Install new plugins on startup.
-local packer_plugins_dir = os.getenv("HOME") .. "/.local/share/nvim/site/pack/packer"
-local start_dir = packer_plugins_dir .. "/start"
-local opt_dir = packer_plugins_dir .. "/opt"
-
---[[ for key, value in pairs(packer.plugins) do
-  print("Plugin key:" .. key)
-  print("Plugin value:" .. value)
-end ]]
--- packer.install()
+-- Install any uninstalled plugins.
+packer.install()
 
 return packer
 
