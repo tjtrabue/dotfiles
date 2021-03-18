@@ -56,5 +56,3 @@ if [ -x "$(command -v neofetch)" ]; then
 fi
 
 # vim:foldenable:foldmethod=marker:foldlevel=0
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
