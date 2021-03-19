@@ -195,6 +195,60 @@ lastchange() {
 }
 # }}}
 
+# Rebasing/squashing {{{
+
+# Squash all commits on the current feature branch down to a single commit, and
+# rebase onto a given base branch.
+#
+# Note that in Git branches are simply pointers to commits, so there is no such
+# thing as a "parent" branch of another branch. When one desires to squash all
+# commits on a branch, the squashing is done relative to a specified "ancestor"
+# branch. This ancestor is not truly a parent of the current branch, only
+# nominally so. Thus, one could specify another feature branch as the base
+# branch, and the current branch would rebase on top of the other feature
+# branch. Please be careful before using this function.
+squashfor() {
+  local baseBranch="${1:-develop}"
+  local currentBranch
+  local commitMsg
+  local response
+
+  currentBranch="$(git rev-parse --abbrev-ref HEAD)"
+
+  if [ "${currentBranch}" = "master" ] || \
+     [ "${currentBranch}" = "develop" ]; then
+    err "Not squashing commits on protected branch: ${currentBranch}"
+    return 1
+  fi
+
+  log_info "Using base branch: ${baseBranch}"
+  log_info "Branch to squash: ${currentBranch}"
+
+  while [ -z "${commitMsg}" ]; do
+    echoe "Please enter a commit message for the squashed commits:"
+    read -r commitMsg
+  done
+
+  while ! echo "${response}" | grep -q "[YyNn]"; do
+    cat <<EOF
+Do you wish to squash all commits on ${curentBranch} with message:
+'${commitMsg}'? [y/n]
+EOF
+    read -r response
+  done
+
+  if echo "${response}" | grep -q "[Nn]"; then
+    echoe "Aborting"
+    return 2
+  fi
+
+  git reset "$(git merge-base "${baseBranch}" "${currentBranch}")"
+  git add -A
+  git commit -m "${commitMsg}"
+}
+
+# }}}
+
 # Git environment for shell {{{
 
 # Prepare any extra Git-related shell functions for the current shell.
