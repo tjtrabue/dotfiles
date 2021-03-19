@@ -119,11 +119,11 @@ gcm() {
 #   `git add -A`
 #   `git commit -m <msg>`
 #   `git push origin HEAD`
-dwimgit() {
-  local commitMsg="${*:?'No commit message'}"
+ggg() {
+  local commitMsg="${*}"
 
   git add -A
-  git commit -m "${commitMsg}"
+  gcm "${commitMsg}"
   git push origin HEAD
 }
 # }}}
