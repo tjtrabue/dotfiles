@@ -114,6 +114,18 @@ gcm() {
 
   git commit -m "${message}"
 }
+
+# Run my favorite Git command sequence:
+#   `git add -A`
+#   `git commit -m <msg>`
+#   `git push origin HEAD`
+dwimgit() {
+  local commitMsg="${*:?'No commit message'}"
+
+  git add -A
+  git commit -m "${commitMsg}"
+  git push origin HEAD
+}
 # }}}
 
 # Diff {{{
