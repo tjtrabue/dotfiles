@@ -107,6 +107,11 @@ ucreset() {
 gcm() {
   local message="${*}"
 
+  if [ "$(git diff --cached --name-only 2>&1)" = "" ]; then
+    err "No files added to the index. Use 'git add' to add them."
+    return 1
+  fi
+
   while [ -z "${message}" ]; do
     echoe "Enter commit message:"
     read -r message
