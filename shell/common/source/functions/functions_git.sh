@@ -107,7 +107,7 @@ ucreset() {
 gcm() {
   local message="${*}"
 
-  if [ "$(git diff --cached --name-only 2>&1)" = "" ]; then
+  if git diff --cached --exit-code --quiet; then
     err "No files added to the index. Use 'git add' to add them."
     return 1
   fi
