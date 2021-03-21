@@ -8,41 +8,57 @@
 # I only have to look in one place if I want to change both the alias and its
 # completion function.
 
-# Branch alaises:
+# Branch alaises {{{
 alias newb="git checkout -b"
 alias delb="git branch -D"
 alias currb="git rev-parse --abbrev-ref HEAD"
+# }}}
 
-# Info aliases:
+# Info aliases {{{
 alias groot="git rev-parse --show-toplevel"
 alias gtracked="git for-each-ref --format='%(upstream:short)' \"\$(git symbolic-ref -q HEAD)\""
+# }}}
 
-# Diff aliases
+# Diff aliases {{{
 alias gdc="git diff --cached"
+# Return 0 if no tracked files have been changed.
+alias nochanges="git diff --exit-code --quiet"
+# Return 0 if no changed files have been added to the index.
+alias noadded="git diff --cached --exit-code --quiet"
+# }}}
 
-# Difftool
+# Difftool {{{
 alias gdt="git difftool --dir-diff"
+# }}}
 
-# Return number of modified files:
+# Return number of modified files {{{
 alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
+# }}}
 
-# Staging/pushing/pulling aliases:
+# Staging/pushing/pulling aliases {{{
 alias gaa="git add -A"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
 alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
 alias gpoh="git push origin HEAD"
+# }}}
 
-# Commit log aliases
+# Commit log aliases {{{
 alias gl='git log --graph --color=always --format="%C(auto)%h%d %s %C(blue)%C(bold)%cr"'
 alias gll='git log --graph --color=always --format=full'
+# }}}
 
-# Mergetool
+# Mergetool {{{
 alias gmt="git mergetool"
+# }}}
 
-# Rebasing aliases:
+# Rebasing aliases {{{
 alias grba="git rebase --abort"
 alias grbc="git rebase --continue"
+# }}}
 
-# Resetting aliases:
+# Resetting aliases {{{
 alias greh="git reset HEAD"
+# }}}
+
+# vim:foldenable:foldmethod=marker:foldlevel=0
