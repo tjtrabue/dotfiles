@@ -119,24 +119,6 @@ gcm() {
 
   git commit -m "${message}"
 }
-
-# Run my favorite Git command sequence:
-#   `git add -A`
-#   `git commit -m <msg>`
-#   `git push origin HEAD`
-ggg() {
-  local commitMsg="${*}"
-
-  git add -A
-
-  # Try to commit changes, and return an error if changes could not be
-  # committed.
-  if ! gcm "${commitMsg}"; then
-    return 1
-  fi
-
-  git push origin HEAD
-}
 # }}}
 
 # Diff {{{
@@ -211,6 +193,30 @@ EOF
   git commit -m "${commitMsg}"
 }
 
+# }}}
+
+# Macro functions {{{
+
+# These functions run sequences of Git commands in order to make the developer's
+# life easer.
+
+# Run my favorite Git command sequence:
+#   `git add -A`
+#   `git commit -m <msg>`
+#   `git push origin HEAD`
+ggg() {
+  local commitMsg="${*}"
+
+  git add -A
+
+  # Try to commit changes, and return an error if changes could not be
+  # committed.
+  if ! gcm "${commitMsg}"; then
+    return 1
+  fi
+
+  git push origin HEAD
+}
 # }}}
 
 # Git environment for shell {{{
