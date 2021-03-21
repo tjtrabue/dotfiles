@@ -128,7 +128,13 @@ ggg() {
   local commitMsg="${*}"
 
   git add -A
-  gcm "${commitMsg}"
+
+  # Try to commit changes, and return an error if changes could not be
+  # committed.
+  if ! gcm "${commitMsg}"; then
+    return 1
+  fi
+
   git push origin HEAD
 }
 # }}}
@@ -173,8 +179,8 @@ squashfor() {
 
   currentBranch="$(git rev-parse --abbrev-ref HEAD)"
 
-  if [ "${currentBranch}" = "master" ] || \
-     [ "${currentBranch}" = "develop" ]; then
+  if [ "${currentBranch}" = "master" ] ||
+    [ "${currentBranch}" = "develop" ]; then
     err "Not squashing commits on protected branch: ${currentBranch}"
     return 1
   fi
