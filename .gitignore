@@ -38,6 +38,9 @@ tags.temp
 *.so
 *.a
 
+# Language Server Protocol / Visual Studio Code metadata.
+.vscode
+
 # Eclipse config cache
 link/config/mimeapps.list
 link/config/jgit/
