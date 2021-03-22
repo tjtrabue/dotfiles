@@ -47,3 +47,5 @@ augroup END
 ]],
   true
 )
+
+-- vim:foldenable:foldmethod=indent:foldnestmax=1
