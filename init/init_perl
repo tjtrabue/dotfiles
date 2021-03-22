@@ -19,7 +19,7 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-Get Perl ready to rock on the system.
+Get Perl ready to rock on a new system.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -32,11 +32,6 @@ OPTIONS:
     Run with extra logging output.
 EOF
   exit 0
-}
-
-bootstrap_cpanm() {
-  log_info "Bootstrapping cpanm"
-  curl -L https://cpanmin.us | perl - App::cpanminus
 }
 
 main() {

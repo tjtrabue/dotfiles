@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Install cpanm (CpanMinus) for the current user.
+bootstrap_cpanm() {
+  local cpanMinusUrl="https://cpanmin.us"
+
+  log_info "Bootstrapping cpanm for user: ${GREEN}${USER}${NC}"
+  curl -sL "${cpanMinusUrl}" | perl - "App::cpanminus"
+}
+
 # Install plsense intellisense engine for Perl.
 # As of now it is not on CPAN.
 install_plsense() {
@@ -15,12 +23,18 @@ install_plsense() {
   fi
 }
 
+# Install all global Perl packages.
 install_perl_packages() {
   local package
 
-  while read -r package || [ -n "$package" ]; do
-    cpanm -i --force "$package"
-  done <"$PERL_PACKAGES_FILE"
+  if [ ! -f "${PERL_PACKAGES_FILE}" ]; then
+    err "No perl packages file found."
+    return 1
+  fi
+
+  while read -r package || [ -n "${package}" ]; do
+    cpanm -i --force "${package}"
+  done <"${PERL_PACKAGES_FILE}"
 
   install_plsense
 }
