@@ -29,13 +29,12 @@ sub determine_show_group {
 
     # Make sure to stip off all non-numeric characters from the groups field.
     $group_field =~ s/[^0-9]+//g;
-    if ( Scalar::Util::looks_like_number($group_field) ) {
 
+    if ( Scalar::Util::looks_like_number($group_field) ) {
         # If numbers are still there, there's no group.
         $SHOW_GROUP = 0;
     }
 }
-determine_show_group( $stdin[1] );
 
 sub construct_segment_struct {
     my ( $segment, $index ) = @_;
@@ -459,8 +458,12 @@ sub print_colorized_record {
 sub main {
     my %colorized_segments_map;
 
+    if ( @stdin > 1 ) {
+        # If we actually have results, figure out if we should show the group.
+        determine_show_group( $stdin[1] );
+    }
     foreach my $line (@stdin) {
-        if ( $line =~ /^total/ ) {
+        if ( defined $line && $line =~ /^total/ ) {
             print_total_record($line);
             next;
         }
