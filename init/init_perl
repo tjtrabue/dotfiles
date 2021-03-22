@@ -35,6 +35,7 @@ EOF
 }
 
 main() {
+  print_header "Initializing Perl Environment"
   bootstrap_cpanm
   install_perl_packages
 }

@@ -28,10 +28,11 @@ install_perl_packages() {
   local package
 
   if [ ! -f "${PERL_PACKAGES_FILE}" ]; then
-    err "No perl packages file found."
+    err "No Perl packages file found."
     return 1
   fi
 
+  log_info "Installing Perl global packages"
   while read -r package || [ -n "${package}" ]; do
     cpanm -i --force "${package}"
   done <"${PERL_PACKAGES_FILE}"
