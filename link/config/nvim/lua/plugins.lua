@@ -63,7 +63,7 @@ packer.init(
   }
 )
 -- }}}
---
+
 -- Specify plugins {{{
 packer.startup(
   function()

@@ -25,7 +25,6 @@ lua require('plugins')
 
 " Source a file in the plugin-config dir.
 function! s:SourcePluginConfigFile(file)
-
   if a:file =~ '\.vim$'
     silent execute 'source ' . g:plugin_config_dir . '/' . a:file
   elseif a:file =~ '\.lua$'

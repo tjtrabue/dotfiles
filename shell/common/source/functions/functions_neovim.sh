@@ -31,6 +31,19 @@ install_neovim_nightly_appimage() {
   sudo ln -sf -t "${nvimSymlinkDest}" "${appimageRunnable}" >>/dev/null 2>&1
 }
 
+# Clean up all swap/backup/undo files for Neovim.
+clean_nvim() {
+  local nvimHome="${NVIM_HOME:-${HOME}/.config/nvim}"
+  local d
+
+  for d in "${nvimHome}"/{backups,swaps,undo}; do
+    if [ -d "${d}" ]; then
+      log_info "Cleaning up directory: ${BLUE}${d}${NC}"
+      rm -f "${d}"/*
+    fi
+  done
+}
+
 __download_neovim_nightly_appimage() {
   local neovimReleasesDir="${NVIM_HOME:-${HOME}/.config/nvim}/.releases"
   local neovimAppimagesDir="${neovimReleasesDir}/appimages"
