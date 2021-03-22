@@ -31,6 +31,7 @@ sub determine_show_group {
     $group_field =~ s/[^0-9]+//g;
 
     if ( Scalar::Util::looks_like_number($group_field) ) {
+
         # If numbers are still there, there's no group.
         $SHOW_GROUP = 0;
     }
@@ -459,6 +460,7 @@ sub main {
     my %colorized_segments_map;
 
     if ( @stdin > 1 ) {
+
         # If we actually have results, figure out if we should show the group.
         determine_show_group( $stdin[1] );
     }

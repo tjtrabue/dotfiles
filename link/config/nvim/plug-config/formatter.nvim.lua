@@ -13,22 +13,32 @@ require("formatter").setup(
           }
         end
       },
-      rust = {
-        -- Rustfmt
-        function()
-          return {
-            exe = "rustfmt",
-            args = {"--emit=stdout"},
-            stdin = true
-          }
-        end
-      },
       lua = {
         -- luafmt
         function()
           return {
             exe = "luafmt",
             args = {"--indent-count", 2, "--stdin"},
+            stdin = true
+          }
+        end
+      },
+      perl = {
+        -- perltidy
+        function()
+          return {
+            exe = "perltidy",
+            args = {"--standard-output"},
+            stdin = true
+          }
+        end
+      },
+      rust = {
+        -- Rustfmt
+        function()
+          return {
+            exe = "rustfmt",
+            args = {"--emit=stdout"},
             stdin = true
           }
         end
@@ -42,7 +52,7 @@ vim.api.nvim_exec(
   [[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.rs,*.lua FormatWrite
+  autocmd BufWritePost *.js,*.lua,*.pl,*.plx,*.rs FormatWrite
 augroup END
 ]],
   true
