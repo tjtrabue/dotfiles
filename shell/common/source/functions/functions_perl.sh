@@ -30,9 +30,11 @@ install_perl_packages() {
   if [ ! -f "${PERL_PACKAGES_FILE}" ]; then
     err "No Perl packages file found."
     return 1
-  elif [ ! -x "$(command -v cpanm)" ]; then
-    err "cpanm not found."
-    return 1
+  fi
+
+  # Make sure cpanm is installed
+  if [ ! -x "$(command -v cpanm)" ]; then
+    bootstrap_cpanm
   fi
 
   log_info "Installing Perl global packages"
