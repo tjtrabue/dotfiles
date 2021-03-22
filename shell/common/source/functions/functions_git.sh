@@ -117,6 +117,11 @@ gcm() {
     read -r message
   done
 
+  if [ -z "${message}" ]; then
+    err "No commit message provided."
+    return 2
+  fi
+
   git commit -m "${message}"
 }
 # }}}
