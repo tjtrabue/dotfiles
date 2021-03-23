@@ -204,13 +204,13 @@ add_extra_os_vars() {
   log_info "Injecting additional OS variables into ${HOME}/.vars"
 
   case "${os}" in
-  "Arch Linux")
-    extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
-    ;;
+    "Arch Linux")
+      extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
+      ;;
 
-  *)
-    log_info "No extra vars to add for OS: ${os}"
-    ;;
+    *)
+      log_info "No extra vars to add for OS: ${os}"
+      ;;
   esac
 
   if [ -f "${extraVarsFile}" ]; then
@@ -258,31 +258,31 @@ eval set -- "$args"
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-  -h | --help)
-    _help
-    shift
-    exit 0
-    ;;
+    -h | --help)
+      _help
+      shift
+      exit 0
+      ;;
 
-  -v | --verbose)
-    ((LOG_LEVEL += 1))
-    shift
-    ;;
+    -v | --verbose)
+      ((LOG_LEVEL += 1))
+      shift
+      ;;
 
-  -f | --force)
-    FORCE_INSTALL=true
-    shift
-    ;;
+    -f | --force)
+      FORCE_INSTALL=true
+      shift
+      ;;
 
-  --)
-    shift
-    break
-    ;;
+    --)
+      shift
+      break
+      ;;
 
-  *)
-    err "Unknown option $1 to ${THIS_EXEC}"
-    exit 2
-    ;;
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
   esac
 done
 # }}}

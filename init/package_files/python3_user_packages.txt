@@ -1,4 +1,5 @@
 autopep8
+beautysh
 black
 cmake-language-server
 django

@@ -3,6 +3,24 @@ require("formatter").setup(
   {
     logging = false,
     filetype = {
+      bash = {
+        -- shfmt
+        function()
+          return {
+            exe = "shfmt",
+            -- args = {},
+            stdin = true
+          }
+        end,
+        -- beautysh
+        function()
+          return {
+            exe = "beautysh",
+            args = {"--indent-size", "2", "-"},
+            stdin = true
+          }
+        end
+      },
       c = {
         -- clang-format
         function()
@@ -70,6 +88,24 @@ require("formatter").setup(
             stdin = true
           }
         end
+      },
+      sh = {
+        -- shfmt
+        function()
+          return {
+            exe = "shfmt",
+            -- args = {},
+            stdin = true
+          }
+        end,
+        -- beautysh
+        function()
+          return {
+            exe = "beautysh",
+            args = {"--indent-size", "2", "-"},
+            stdin = true
+          }
+        end
       }
     }
   }
@@ -80,7 +116,13 @@ vim.api.nvim_exec(
   [[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.lua,*.md,*.mkd,*.pl,*.plx,*.rs FormatWrite
+  autocmd FileType bash autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType javascript autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType lua autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType markdown autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType perl autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType rust autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType sh autocmd BufWritePre <buffer> FormatWrite
 augroup END
 ]],
   true
