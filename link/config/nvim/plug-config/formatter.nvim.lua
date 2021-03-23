@@ -79,6 +79,16 @@ require("formatter").setup(
           }
         end
       },
+      python = {
+        -- yapf
+        function()
+          return {
+            exe = "yapf",
+            args = {"--parallel"},
+            stdin = true
+          }
+        end
+      },
       rust = {
         -- Rustfmt
         function()
@@ -117,10 +127,13 @@ vim.api.nvim_exec(
 augroup FormatAutogroup
   autocmd!
   autocmd FileType bash autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType c autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType cpp autocmd BufWritePre <buffer> FormatWrite
   autocmd FileType javascript autocmd BufWritePre <buffer> FormatWrite
   autocmd FileType lua autocmd BufWritePre <buffer> FormatWrite
   autocmd FileType markdown autocmd BufWritePre <buffer> FormatWrite
   autocmd FileType perl autocmd BufWritePre <buffer> FormatWrite
+  autocmd FileType python autocmd BufWritePre <buffer> FormatWrite
   autocmd FileType rust autocmd BufWritePre <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePre <buffer> FormatWrite
 augroup END

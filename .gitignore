@@ -39,7 +39,7 @@ tags.temp
 *.a
 
 # Language Server Protocol / Visual Studio Code metadata.
-.vscode
+.vscode/
 
 # Eclipse config cache
 link/config/mimeapps.list
