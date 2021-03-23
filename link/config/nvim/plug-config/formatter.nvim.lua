@@ -8,7 +8,7 @@ require("formatter").setup(
         function()
           return {
             exe = "prettier",
-            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote"},
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
             stdin = true
           }
         end
@@ -19,6 +19,16 @@ require("formatter").setup(
           return {
             exe = "luafmt",
             args = {"--indent-count", 2, "--stdin"},
+            stdin = true
+          }
+        end
+      },
+      markdown = {
+        -- prettier
+        function()
+          return {
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
             stdin = true
           }
         end
@@ -52,7 +62,7 @@ vim.api.nvim_exec(
   [[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.lua,*.pl,*.plx,*.rs FormatWrite
+  autocmd BufWritePost *.js,*.lua,*.md,*.mkd,*.pl,*.plx,*.rs FormatWrite
 augroup END
 ]],
   true

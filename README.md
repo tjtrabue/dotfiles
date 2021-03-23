@@ -1,34 +1,53 @@
 # dotfiles
 
-What started out as my own personal repo for my zsh dotfiles (used in conjunction with oh-my-zsh)
-is continually growing into an entire automation project of its own. It now has scripts/aliases for
-bash as well as zsh, and I plan on adding Microsoft PowerShell support in the future as well. I
-borrowed heavily from mathiasbynens/dotfiles when structuring this project, and used many of his
-scripts (which I edited to suit my needs).
+What began as a simple repository for my personal Bash/Zsh dotfiles has become a
+full-on development environment installation project. The name "dotfiles" is a
+bit deceptive, as this repository contains far more than a few configuration
+files. "Pluggable UNIX development environment" may be more fitting to the soul
+of this project. Central profile configuration files such as `.bashrc` and
+`.zshrc` act as entry-points to the (mostly) shell-agnostic configuration buried
+within this repository's folders. What emerges from sourcing `.bashrc` or
+`.zshrc` is a set of aliases, functions, and wrappers that allow me to act as I
+please on any UNIX-based operating system.
 
-## IMPORTANT NOTE
+## IMPORTANT NOTE (PLEASE READ)
 
-This project is NOT ready for prime time yet, and I do not recommend you run the install script.
-This whole thing is still under active development and I have not created a release branch yet. In
-the future, `master` will contain only stable commits tagged for release, and `develop` will be
-the branch for active development.
+This project is highly opinionated -- once installed, the user's development
+environment is replaced entirely by my own custom environment. As such, I doubt
+this project's configuration is suited for most users, and I urge anyone
+interested in my setup to comb through my files and take only what they find
+useful since running the `install.sh` script will hijack their environment.
+**Use `install.sh` at your own risk.** In fact, don't use it at all.
 
-## Configuration Instructions
+## Background
 
-### Use Awesome Terminal Fonts in oh-my-zsh Powerlevel9k prompt
+I view my dotfiles repository as an extension of my keyboard. I've grown and
+adapted my configuration for many years, and it has gotten to the point where
+doing without these files would be very difficult for me. It is a bit like my
+interactive programming notebook. I began compiling dotfiles in 2015 when I
+worked for IBM. At the time, I had a good friend and mentor who taught me all
+about Bash and using the UNIX command line. My friend maintained a large,
+customized dotfiles repository. I had never heard of dotfiles before, nor of the
+convention whereby developers collected and shared them. The fact that my friend
+could open a terminal on a brand new computer, run a few lines of POSIX, and
+have his established programming environment fully functional in no time flat
+was simply astounding to me. Needless to say, I was enthralled by the notion of
+a dotfiles repository. It was then that I started putting together my own
+dotfiles project, and growing it has been one of the happiest hobbies of my
+adult life.
 
-#### OS X with iTerm2
+## Usage
 
-Installing gabrielelana's Awesome Terminal Fonts is not exactly a walk in the park, and could do
-with some more detailed instructions on the project's README. To get one of these fonts working
-in your oh-my-zsh theme, do the following:
+1. Read through my files,
+1. Find my many strange and terrifying shell functions,
+1. Grab your chin with your thumb and forefinger and say "Hmm, that really makes
+   you think!",
+1. Copy whatever you want for whatever reason,
+1. Do not, under any circumstances, run `install.sh`,
+1. Enjoy!
 
-1. Navigate to the `awesome-terminal-fonts` project,
-2. Switch to the `patching-strategy` branch by running `git checkout patching-strategy`,
-3. In a Finder window, open the `patched` subdirectory and install any fonts you would like by
-double-clicking on them.
-4. In iTerm, navigate to ***Preferrences... > Profiles > [your profile] > Text > Change Font***
-5. Find one of the patched fonts that you just installed, and select that font for BOTH the
-***Font*** and ***Non-ASCII Font*** options.
-6. In your `~/.zshrc`, find the line that specifies `ZSH_THEME`, and right ***above*** that line
-paste the following: `POWERLEVEL9K_MODE='awesome-fontconfig'`
+Seriously, I designed this project for my own needs, so I have to advise others
+not to install this project on their computers. It will bamboozle and bewilder
+you, and may permanently destroy your existing configuration. If you have
+questions about anything in this project, please don't hesitate to open a
+ticket. I always value other developers' feedback.
