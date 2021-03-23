@@ -3,6 +3,24 @@ require("formatter").setup(
   {
     logging = false,
     filetype = {
+      c = {
+        -- clang-format
+        function()
+          return {
+            exe = "clang-format",
+            stdin = true
+          }
+        end
+      },
+      cpp = {
+        -- clang-format
+        function()
+          return {
+            exe = "clang-format",
+            stdin = true
+          }
+        end
+      },
       javascript = {
         -- prettier
         function()

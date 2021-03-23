@@ -128,9 +128,11 @@ require "lspconfig".dockerls.setup {
 -- }}}
 
 -- efm-language-server {{{
-require "lspconfig".efm.setup {
+-- Not currently used because EFM requires a lot of setup, and is not terribly
+-- useful.
+--[[ require "lspconfig".efm.setup {
   on_attach = on_attach
-}
+} ]]
 -- }}}
 
 -- elixir-ls {{{
