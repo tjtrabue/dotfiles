@@ -213,11 +213,6 @@ packer.startup(
     use {"nvim-lua/plenary.nvim"}
 
     -- Fuzzy searching {{{
-    use {
-      "junegunn/fzf",
-      run = "cd ~/.fzf && ./install --all"
-    }
-    use {"junegunn/fzf.vim"}
     use {"nvim-telescope/telescope.nvim"}
     use {"nvim-telescope/telescope-fzy-native.nvim"}
     -- }}}
