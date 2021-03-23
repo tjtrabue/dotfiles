@@ -84,18 +84,31 @@ packer.startup(
     use {"rafi/awesome-vim-colorschemes"}
     -- }}}
 
+    -- Color support {{{
+    -- Highlight hex colorcodes and names in their respective colors.
+    use {
+      "norcalli/nvim-colorizer.lua",
+      config = [[require'colorizer'.setup()]]
+    }
+    -- }}}
+
+    -- Quickfix {{{
+    -- Adds fuzzy searching and other fun stuff to quickfix buffer.
+    use {"kevinhwang91/nvim-bqf"}
+    -- }}}
+
     -- Fonts/icons {{{
     use {"kyazdani42/nvim-web-devicons"}
     -- }}}
 
     use {"shougo/neomru.vim"}
 
-    -- Git (((
+    -- Git  {{{
     use {"airblade/vim-gitgutter"}
     use {"kdheepak/lazygit.nvim"}
     use {"TimUntersberger/neogit"}
     use {"f-person/git-blame.nvim"}
-    -- )))
+    -- }}}
 
     -- Snippets {{{
     use {"SirVer/ultisnips"}
@@ -193,8 +206,37 @@ packer.startup(
 
     use {"majutsushi/tagbar"}
 
-    -- Language Server Protocol
-    use {"neovim/nvim-lspconfig"}
+    -- Language Server Protocol {{{
+    -- Base LSP configuration.
+    use {
+      "neovim/nvim-lspconfig",
+      -- Better autocomplete backend for Neovim.
+      requires = {{"nvim-lua/completion-nvim"}}
+    }
+    -- Extra LSP configuration.
+    use {"nvim-lua/lsp_extensions.nvim"}
+    -- Integrates LSP features with statusline.
+    use {"nvim-lua/lsp-status.nvim"}
+    -- Show lightbulb icon in gutter when a code action is available.
+    use {
+      "kosayoda/nvim-lightbulb",
+      config = [[
+vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()"
+    ]]
+    }
+    -- Make LSP client use FZF to navigate code
+    use {
+      "ojroques/nvim-lspfuzzy",
+      requires = {
+        {"junegunn/fzf"},
+        {"junegunn/fzf.vim"} -- to enable preview (optional)
+      }
+    }
+    -- Support signatures in auto-completion.
+    use {"ray-x/lsp_signature.nvim", config = [[require'lsp_signature'.on_attach()]]}
+    -- Use VSCode-like pictograms in auto-completion.
+    use {"onsails/lspkind-nvim", config = [[require'lspkind'.init({})]]}
+    -- }}}
 
     -- Debugging
     use {"mfussenegger/nvim-dap"}
