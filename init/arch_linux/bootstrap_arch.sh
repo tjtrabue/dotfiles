@@ -347,19 +347,17 @@ cat <<EOF >"${mountRoot}/etc/asound.conf"
 #   defaults.pcm.!card "PCH";
 #   defaults.ctl.!card "PCH";
 
-defaults.pcm.!card 0;
-defaults.ctl.!card 0;
+defaults.pcm.!card "PCH";
+defaults.ctl.!card "PCH";
 EOF
 
-cardNumber="$(aplay -l | grep "PCH" | awk '{print $2}' | tr -d ':')"
-
 # Unmute sounds channels
-arch-chroot "$mountRoot" amixer -c "${cardNumber}" sset Master unmute
-arch-chroot "$mountRoot" amixer -c "${cardNumber}" sset Speaker unmute
-arch-chroot "$mountRoot" amixer -c "${cardNumber}" sset Headphone unmute
+arch-chroot "$mountRoot" amixer sset Master unmute
+arch-chroot "$mountRoot" amixer sset Speaker unmute
+arch-chroot "$mountRoot" amixer sset Headphone unmute
 
 # Turn volume all the way up
-arch-chroot "$mountRoot" amixer -c "${cardNumber}" sset Master 100%
+arch-chroot "$mountRoot" amixer sset Master 100%
 # }}}
 
 # WiFi {{{
