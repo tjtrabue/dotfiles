@@ -328,7 +328,7 @@ EOF
 # Install additional packages {{{
 info_log "Installing additional packages"
 # Grab packages file from github repo
-arch-chroot "${mountRoot}" pacman -S --needed \
+arch-chroot "${mountRoot}" pacman -Sy --needed \
   --noconfirm - <<<"$(curl -sL "${packageUrl}")"
 # }}}
 
