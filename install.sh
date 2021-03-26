@@ -164,7 +164,7 @@ link_zdotdir() {
   local targetZdotdir="${HOME}/.zsh"
   log_info "Linking Zsh dotfiles directory"
 
-  if [ -h "${targetZdotdirj}" ]; then
+  if [ -h "${targetZdotdir}" ]; then
     rm -f "${targetZdotdir}"
   elif [ -d "${targetZdotdir}" ]; then
     rm -rf "${targetZdotdir}"
