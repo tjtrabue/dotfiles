@@ -109,7 +109,7 @@ setup() {
 
 cleanup() {
   info_log "Cleaning up"
-  umount -R "$mountRoot"
+  umount -R "$MOUNT_ROOT"
 }
 trap cleanup EXIT
 # }}}
@@ -266,7 +266,7 @@ info_log "Mounting partitions"
 swapon "${PART_SWAP}"
 
 # Mount root
-mount "${PART_ROOT}" "${mountRoot}"
+mount "${PART_ROOT}" "${MOUNT_ROOT}"
 
 # Mount boot
 mkdir -p "${MOUNT_BOOT}"
@@ -279,46 +279,46 @@ mount "${PART_HOME}" "${MOUNT_HOME}"
 
 # Install base packages {{{
 info_log "Installing base packages"
-pacstrap "${mountRoot}" base linux linux-firmware base-devel
+pacstrap "${MOUNT_ROOT}" base linux linux-firmware base-devel
 # }}}
 
 # Host/locale information {{{
 info_log "Configuring host/locale information"
 
-genfstab -U "${mountRoot}" >>"${mountRoot}/etc/fstab"
-echo "${USER_HOSTNAME}" >"${mountRoot}/etc/hostname"
+genfstab -U "${MOUNT_ROOT}" >>"${MOUNT_ROOT}/etc/fstab"
+echo "${USER_HOSTNAME}" >"${MOUNT_ROOT}/etc/hostname"
 
-arch-chroot "${mountRoot}" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
-arch-chroot "${mountRoot}" hwclock --systohc
-arch-chroot "${mountRoot}" sed -i -r 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
-arch-chroot "${mountRoot}" locale-gen
+arch-chroot "${MOUNT_ROOT}" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
+arch-chroot "${MOUNT_ROOT}" hwclock --systohc
+arch-chroot "${MOUNT_ROOT}" sed -i -r 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
+arch-chroot "${MOUNT_ROOT}" locale-gen
 
-echo "LANG=en_US.UTF-8" >"${mountRoot}/etc/locale.conf"
+echo "LANG=en_US.UTF-8" >"${MOUNT_ROOT}/etc/locale.conf"
 # }}}
 
 # Add admin user and set password {{{
 info_log "Configuring users and groups"
 info_log "Adding user ${USERNAME}"
-arch-chroot "${mountRoot}" useradd -mU -G \
+arch-chroot "${MOUNT_ROOT}" useradd -mU -G \
   wheel,uucp,video,audio,storage,games,input "${USERNAME}"
 
 info_log "Changing pasword for ${USERNAME}"
-arch-chroot "${mountRoot}" chpasswd <<<"${USERNAME}:${PASSWORD}"
-arch-chroot "${mountRoot}" chpasswd <<<"root:${PASSWORD}"
+arch-chroot "${MOUNT_ROOT}" chpasswd <<<"${USERNAME}:${PASSWORD}"
+arch-chroot "${MOUNT_ROOT}" chpasswd <<<"root:${PASSWORD}"
 # }}}
 
 # Configure the sudoers file {{{
 info_log "Configuring sudoers file"
-arch-chroot "${mountRoot}" sed -i \
+arch-chroot "${MOUNT_ROOT}" sed -i \
   's/^#\s*%wheel\s*ALL=(ALL)\s*NOPASSWD:\s*ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' \
   /etc/sudoers
 
 # Make sure the user's sudo password propogates to all open terminals
-arch-chroot "${mountRoot}" echo "Defaults !tty_tickets" >>/etc/sudoers
+arch-chroot "${MOUNT_ROOT}" echo "Defaults !tty_tickets" >>/etc/sudoers
 # }}}
 
 # Configure pacman.conf file {{{
-cat <<EOF >>"${mountRoot}/etc/pacman.conf"
+cat <<EOF >>"${MOUNT_ROOT}/etc/pacman.conf"
 
 # Enable 32-bit applications on your x86_64 system:
 [multilib]
@@ -329,13 +329,13 @@ EOF
 # Install additional packages {{{
 info_log "Installing additional packages"
 # Grab packages file from github repo
-arch-chroot "${mountRoot}" pacman -Sy --needed \
+arch-chroot "${MOUNT_ROOT}" pacman -Sy --needed \
   --noconfirm - <<<"$(curl -sL "${PACKAGE_URL}")"
 # }}}
 
 # Sound configuration {{{
 # Create ALSA global configuration file
-cat <<EOF >"${mountRoot}/etc/asound.conf"
+cat <<EOF >"${MOUNT_ROOT}/etc/asound.conf"
 # You may need to replace the card index value to a string value to improve
 # consistency from one boot to another. The strings are the name of the card to
 # use, like "PCH". You can list the names of your sound devices by issuing the
@@ -353,102 +353,102 @@ defaults.ctl.!card "PCH";
 EOF
 
 # Unmute sounds channels
-arch-chroot "$mountRoot" amixer sset Master unmute
-arch-chroot "$mountRoot" amixer sset Speaker unmute
-arch-chroot "$mountRoot" amixer sset Headphone unmute
+arch-chroot "$MOUNT_ROOT" amixer sset Master unmute
+arch-chroot "$MOUNT_ROOT" amixer sset Speaker unmute
+arch-chroot "$MOUNT_ROOT" amixer sset Headphone unmute
 
 # Turn volume all the way up
-arch-chroot "$mountRoot" amixer sset Master 100%
+arch-chroot "$MOUNT_ROOT" amixer sset Master 100%
 # }}}
 
 # WiFi {{{
 # wpa_supplicant
 info_log "Configuring wpa_supplicant"
-cat <<EOF >"${mountRoot}/etc/wpa_supplicant/wpa_supplicant.conf"
+cat <<EOF >"${MOUNT_ROOT}/etc/wpa_supplicant/wpa_supplicant.conf"
 ctrl_interface=/run/wpa_supplicant
 update_config=1
 EOF
 
 # Network manager
 info_log "Configuring NetworkManager"
-cat <<EOF >"${mountRoot}/etc/NetworkManager/conf.d/dhcp-client.conf"
+cat <<EOF >"${MOUNT_ROOT}/etc/NetworkManager/conf.d/dhcp-client.conf"
 [main]
 dhcp=dhclient
 EOF
 
 # Activate WiFi services
-arch-chroot "$mountRoot" systemctl enable wpa_supplicant
-arch-chroot "$mountRoot" systemctl enable NetworkManager
+arch-chroot "$MOUNT_ROOT" systemctl enable wpa_supplicant
+arch-chroot "$MOUNT_ROOT" systemctl enable NetworkManager
 # }}}
 
 # Configure bootloader {{{
 # Install GRUB
 info_log "Installing GRUB"
 if ${UEFI_ENABLED}; then
-  arch-chroot "${mountRoot}" grub-install \
+  arch-chroot "${MOUNT_ROOT}" grub-install \
     --target=x86_64-efi \
     --efi-directory="/$(basename "${MOUNT_BOOT}")" \
     --bootloader-id=GRUB
 else
-  arch-chroot "${mountRoot}" grub-install --target=i386-pc "${DEVICE}"
+  arch-chroot "${MOUNT_ROOT}" grub-install --target=i386-pc "${DEVICE}"
 fi
 
 # Generate GRUB config file
 info_log "Configuring GRUB"
-arch-chroot "$mountRoot" grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot "$MOUNT_ROOT" grub-mkconfig -o /boot/grub/grub.cfg
 # }}}
 
 # Enable other services {{{
 # CUPS for printer integration
-arch-chroot "${mountRoot}" systemctl enable cups
+arch-chroot "${MOUNT_ROOT}" systemctl enable cups
 # }}}
 
 # Enable magic SysRq shorcuts {{{
 info_log "Enabling magic SysRq key for maintenance"
-cat <<EOF >"${mountRoot}/etc/sysctl.d/99-default.conf"
+cat <<EOF >"${MOUNT_ROOT}/etc/sysctl.d/99-default.conf"
 kernel.sysrq = 1
 EOF
 # }}}
 
 # Create .xinitrc file {{{
 info_log "Configuring xinit"
-cat <<EOF >"${mountRoot}${XINIT_FILE}"
+cat <<EOF >"${MOUNT_ROOT}${XINIT_FILE}"
 exec awesome
 EOF
-arch-chroot "${mountRoot}" chown "${USERNAME}:${USERNAME}" "${XINIT_FILE}"
-arch-chroot "${mountRoot}" chmod 644 "${XINIT_FILE}"
+arch-chroot "${MOUNT_ROOT}" chown "${USERNAME}:${USERNAME}" "${XINIT_FILE}"
+arch-chroot "${MOUNT_ROOT}" chmod 644 "${XINIT_FILE}"
 # }}}
 
 # Clone dotfiles {{{
 info_log "Cloning dotfiles"
-arch-chroot "${mountRoot}" mkdir -p "${WORKSPACE}"
-arch-chroot "${mountRoot}" git clone "${DOTFILES_REPO_URL}" "${DOTFILES_HOME}"
-arch-chroot "${mountRoot}" chown -R "${USERNAME}:${USERNAME}" "${WORKSPACE}"
-arch-chroot "${mountRoot}" chmod -R a+rX "${WORKSPACE}"
+arch-chroot "${MOUNT_ROOT}" mkdir -p "${WORKSPACE}"
+arch-chroot "${MOUNT_ROOT}" git clone "${DOTFILES_REPO_URL}" "${DOTFILES_HOME}"
+arch-chroot "${MOUNT_ROOT}" chown -R "${USERNAME}:${USERNAME}" "${WORKSPACE}"
+arch-chroot "${MOUNT_ROOT}" chmod -R a+rX "${WORKSPACE}"
 
 # Change the dotfiles URL to the SSH version so that we may push commits to the
 # repository later on.
 # NOTE: 'git -C /path/to/repo' is how you run a git command for a repo without
 #       actually being in the repo.
-arch-chroot "${mountRoot}" runuser "${USERNAME}" -c \
+arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
   "git -C ${DOTFILES_HOME} remote set-url origin ${DOTFILES_GIT_URL}"
 # }}}
 
 # Run installers {{{
 info_log "Running install scripts"
-arch-chroot "${mountRoot}" runuser "${USERNAME}" -c \
+arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
   "bash ${DOTFILES_HOME}/install.sh --force"
 # }}}
 
 # Run init scripts {{{
 info_log "Running initialization scripts for important topics"
-arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
+arch-chroot "${MOUNT_ROOT}" runuser -l "${USERNAME}" -c \
   "runinit arch lightdm emacs neovim nerd_fonts awesome shell zsh docker asdf"
 # }}}
 
 # Run language-specific package install scripts {{{
 info_log "Running language-specific package installations"
-arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
+arch-chroot "${MOUNT_ROOT}" runuser -l "${USERNAME}" -c \
   "install_python_packages
   install_node_packages
   install_ruby_packages
@@ -458,13 +458,13 @@ arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
 
 # Change shell {{{
 # Change user's shell to Zsh.
-arch-chroot "${mountRoot}" chsh -s "/bin/zsh" "${USERNAME}"
+arch-chroot "${MOUNT_ROOT}" chsh -s "/bin/zsh" "${USERNAME}"
 # }}}
 
 # Laptop configuration (if computer is a laptop) {{{
 if [ "$IS_LAPTOP" -eq 0 ]; then
   info_log "Performing laptop configuration"
-  arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
+  arch-chroot "${MOUNT_ROOT}" runuser -l "${USERNAME}" -c \
     "bash ${DOTFILES_INIT}/bootstrap/configure_arch_laptop.sh"
 fi
 # }}}
@@ -478,9 +478,9 @@ configurations are correct. Don't forget to reboot the system after you're
 satisfied with your new Arch Linux installation.
 
 To test your installation as your newly configured user, run the following:
-  mount ${PART_ROOT} ${mountRoot}
+  mount ${PART_ROOT} ${MOUNT_ROOT}
   mount ${PART_HOME} ${MOUNT_HOME}
-  arch-chroot ${mountRoot}
+  arch-chroot ${MOUNT_ROOT}
   su --login - ${USERNAME}
 EOF
 # }}}
