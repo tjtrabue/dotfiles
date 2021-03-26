@@ -14,55 +14,55 @@ exec 2> >(tee "stderr.log")
 
 # Variable declarations {{{
 # URLs {{{
-declare dotfilesRepoUrl="https://github.com/tjtrabue/dotfiles.git"
-declare dotfilesRawUrl="https://raw.github.com/tjtrabue/dotfiles"
-declare dotfilesGitUrl="git@github.com:tjtrabue/dotfiles.git"
-declare packageUrl="${dotfilesRawUrl}/develop/init/package_files/arch_packages.txt"
+declare DOTFILES_REPO_URL="https://github.com/tjtrabue/dotfiles.git"
+declare DOTFILES_RAW_URL="https://raw.github.com/tjtrabue/dotfiles"
+declare DOTFILES_GIT_URL="git@github.com:tjtrabue/dotfiles.git"
+declare PACKAGE_URL="${DOTFILES_RAW_URL}/develop/init/package_files/arch_packages.txt"
 # }}}
 
 # Input variables: {{{
-declare isLaptop=1
-declare hostname=""
-declare user=""
-declare password=-1
-declare password2=-2
-declare -a devicelist=($(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac))
-declare device=""
+declare IS_LAPTOP=1
+declare USER_HOSTNAME=""
+declare USERNAME=""
+declare PASSWORD=-1
+declare PASSWORD2=-2
+declare -a DEVICE_LIST=($(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac))
+declare DEVICE=""
 # }}}
 
 # Filesystem variables: {{{
-declare bootSize=0
-declare bootEnd=0
-declare swapSize=0
-declare swapEnd=0
-declare rootSize=0
-declare rootEnd=0
-declare partBoot=""
-declare partSwap=""
-declare partRoot=""
-declare partHome=""
+declare BOOT_SIZE=0
+declare BOOT_END=0
+declare SWAP_SIZE=0
+declare SWAP_END=0
+declare ROOT_SIZE=0
+declare ROOT_END=0
+declare PART_BOOT=""
+declare PART_SWAP=""
+declare PART_ROOT=""
+declare PART_HOME=""
 # }}}
 
 # Mount point variables: {{{
-declare mountRoot="/mnt"
-declare mountBoot="${mountRoot}/efi"
-declare mountHome="${mountRoot}/home"
+declare MOUNT_ROOT="/mnt"
+declare MOUNT_BOOT="${MOUNT_ROOT}/efi"
+declare MOUNT_HOME="${MOUNT_ROOT}/home"
 # }}}
 
 # Directory variables {{{
-declare userHome=""
-declare workspace=""
-declare dotfilesHome=""
-declare dotfilesInit=""
-declare efiDir="/sys/firmware/efi/efivars"
+declare USER_HOME=""
+declare WORKSPACE=""
+declare DOTFILES_HOME=""
+declare DOTFILES_INIT=""
+declare EFI_DIR="/sys/firmware/efi/efivars"
 # }}}
 
 # File variables {{{
-declare xinitFile=""
+declare XINIT_FILE=""
 # }}}
 
 # UEFI/BIOS {{{
-declare uefiEnabled=""
+declare UEFI_ENABLED=""
 # }}}
 # }}}
 
@@ -117,15 +117,15 @@ trap cleanup EXIT
 # Input functions {{{
 get_computer_type() {
   dialog --stdout --yesno "Is this computer a laptop?" 0 0
-  isLaptop=$?
+  IS_LAPTOP=$?
   clear
 }
 
 get_hostname() {
   local response=1
   while [ $response -ne 0 ]; do
-    hostname="$(dialog --stdout --inputbox "Enter hostname" 0 0)"
-    dialog --stdout --yesno "You entered ${hostname}. Is that correct?" 0 0
+    USER_HOSTNAME="$(dialog --stdout --inputbox "Enter hostname" 0 0)"
+    dialog --stdout --yesno "You entered ${USER_HOSTNAME}. Is that correct?" 0 0
     response=$?
   done
   clear
@@ -134,8 +134,8 @@ get_hostname() {
 get_username() {
   local response=1
   while [ $response -ne 0 ]; do
-    user="$(dialog --stdout --inputbox "Enter admin username" 0 0)"
-    dialog --stdout --yesno "You entered ${user}. Is that correct?" 0 0
+    USERNAME="$(dialog --stdout --inputbox "Enter admin username" 0 0)"
+    dialog --stdout --yesno "You entered ${USERNAME}. Is that correct?" 0 0
     response=$?
   done
   clear
@@ -143,21 +143,21 @@ get_username() {
 
 get_password() {
   local match=true
-  while [ "$password" != "$password2" ]; do
+  while [ "$PASSWORD" != "$PASSWORD2" ]; do
     if ! $match; then
-      password="$(dialog --stdout --passwordbox "Passwords do not match! Enter admin password" 0 0)"
+      PASSWORD="$(dialog --stdout --passwordbox "Passwords do not match! Enter admin password" 0 0)"
     else
-      password="$(dialog --stdout --passwordbox "Enter admin password" 0 0)"
+      PASSWORD="$(dialog --stdout --passwordbox "Enter admin password" 0 0)"
     fi
 
-    if [ -z "$password" ]; then
+    if [ -z "$PASSWORD" ]; then
       clear
       echo "ERROR: Password cannot be empty" 2>&1
       continue
     fi
 
-    password2="$(dialog --stdout --passwordbox "Re-enter admin password" 0 0)"
-    [ "$password" != "$password2" ] && match=false
+    PASSWORD2="$(dialog --stdout --passwordbox "Re-enter admin password" 0 0)"
+    [ "$PASSWORD" != "$PASSWORD2" ] && match=false
   done
   clear
 }
@@ -165,8 +165,8 @@ get_password() {
 get_device() {
   local response=1
   while [ $response -ne 0 ]; do
-    device="$(dialog --stdout --menu "Select installation disk" 0 0 0 "${devicelist[@]}")"
-    dialog --stdout --yesno "You selected ${device}. Is that correct?" 0 0
+    DEVICE="$(dialog --stdout --menu "Select installation disk" 0 0 0 "${DEVICE_LIST[@]}")"
+    dialog --stdout --yesno "You selected ${DEVICE}. Is that correct?" 0 0
     response=$?
   done
   clear
@@ -188,22 +188,22 @@ get_device
 
 # Set directory and file variables {{{
 # Directories
-userHome="/home/${user}"
-workspace="${userHome}/workspace"
-dotfilesHome="${workspace}/dotfiles"
-dotfilesInit="${dotfilesHome}/init"
+USER_HOME="/home/${USERNAME}"
+WORKSPACE="${USER_HOME}/workspace"
+DOTFILES_HOME="${WORKSPACE}/dotfiles"
+DOTFILES_INIT="${DOTFILES_HOME}/init"
 
 # Files
-xinitFile="${userHome}/.xinitrc"
+XINIT_FILE="${USER_HOME}/.xinitrc"
 # }}}
 
 # Determine if motherboard uses UEFI or BIOS {{{
-if [ -d "${efiDir}" ]; then
+if [ -d "${EFI_DIR}" ]; then
   info_log "UEFI mode enabled! Running in UEFI mode"
-  uefiEnabled=true
+  UEFI_ENABLED=true
 else
   info_log "Running in BIOS mode"
-  uefiEnabled=false
+  UEFI_ENABLED=false
 fi
 # }}}
 
@@ -212,69 +212,69 @@ timedatectl set-ntp true
 
 # Setup the disk and partitions {{{
 # Start by clearing all existing signatures and data on the device
-wipefs -af "${device}"
+wipefs -af "${DEVICE}"
 
 # Boot size in MiB
-bootSize=260
-bootEnd=$((bootSize + 1))
+BOOT_SIZE=260
+BOOT_END=$((BOOT_SIZE + 1))
 # Swap size in GiB
-swapSize=$(free --gibi | awk '/Mem:/ {print $2}')
-swapEnd=$((swapSize))
+SWAP_SIZE=$(free --gibi | awk '/Mem:/ {print $2}')
+SWAP_END=$((SWAP_SIZE))
 # Root size given in GiB
-rootSize=120
-rootEnd=$((swapEnd + rootSize + 1))
+ROOT_SIZE=120
+ROOT_END=$((SWAP_END + ROOT_SIZE + 1))
 
 # The label for the storage device. This depends on whether or not UEFI mode is
 # enabled.
 diskLabel="msdos"
 bootPartType="primary"
 bootPartFs="ext4"
-if ${uefiEnabled}; then
+if ${UEFI_ENABLED}; then
   diskLabel="gpt"
   bootPartType="ESP"
   bootPartFs="fat32"
 fi
 
-parted --script "${device}" -- \
+parted --script "${DEVICE}" -- \
   mklabel "${diskLabel}" \
-  mkpart "${bootPartType}" "${bootPartFs}" 1MiB ${bootEnd} \
+  mkpart "${bootPartType}" "${bootPartFs}" 1MiB ${BOOT_END} \
   set 1 boot on \
-  mkpart primary linux-swap ${bootEnd}MiB ${swapEnd}GiB \
-  mkpart primary ext4 ${swapEnd}GiB ${rootEnd}GiB \
-  mkpart primary ext4 ${rootEnd}GiB 100%
+  mkpart primary linux-swap ${BOOT_END}MiB ${SWAP_END}GiB \
+  mkpart primary ext4 ${SWAP_END}GiB ${ROOT_END}GiB \
+  mkpart primary ext4 ${ROOT_END}GiB 100%
 
-partBoot="$(find "$(dirname "${device}")" -type b -regex "${device}p?1")"
-partSwap="$(find "$(dirname "${device}")" -type b -regex "${device}p?2")"
-partRoot="$(find "$(dirname "${device}")" -type b -regex "${device}p?3")"
-partHome="$(find "$(dirname "${device}")" -type b -regex "${device}p?4")"
+PART_BOOT="$(find "$(dirname "${DEVICE}")" -type b -regex "${DEVICE}p?1")"
+PART_SWAP="$(find "$(dirname "${DEVICE}")" -type b -regex "${DEVICE}p?2")"
+PART_ROOT="$(find "$(dirname "${DEVICE}")" -type b -regex "${DEVICE}p?3")"
+PART_HOME="$(find "$(dirname "${DEVICE}")" -type b -regex "${DEVICE}p?4")"
 
 # Create file systems on each partition.
-if $uefiEnabled; then
-  mkfs.vfat -F32 "${partBoot}"
+if $UEFI_ENABLED; then
+  mkfs.vfat -F32 "${PART_BOOT}"
 else
-  mkfs.ext4 "${partBoot}"
+  mkfs.ext4 "${PART_BOOT}"
 fi
-mkswap "${partSwap}"
-mkfs.ext4 "${partRoot}"
-mkfs.ext4 "${partHome}"
+mkswap "${PART_SWAP}"
+mkfs.ext4 "${PART_ROOT}"
+mkfs.ext4 "${PART_HOME}"
 # }}}
 
 # Mount partitions {{{
 info_log "Mounting partitions"
 
 # Swap on the designated partition
-swapon "${partSwap}"
+swapon "${PART_SWAP}"
 
 # Mount root
-mount "${partRoot}" "${mountRoot}"
+mount "${PART_ROOT}" "${mountRoot}"
 
 # Mount boot
-mkdir -p "${mountBoot}"
-mount "${partBoot}" "${mountBoot}"
+mkdir -p "${MOUNT_BOOT}"
+mount "${PART_BOOT}" "${MOUNT_BOOT}"
 
 # Mount home
-mkdir -p "${mountHome}"
-mount "${partHome}" "${mountHome}"
+mkdir -p "${MOUNT_HOME}"
+mount "${PART_HOME}" "${MOUNT_HOME}"
 # }}}
 
 # Install base packages {{{
@@ -286,7 +286,7 @@ pacstrap "${mountRoot}" base linux linux-firmware base-devel
 info_log "Configuring host/locale information"
 
 genfstab -U "${mountRoot}" >>"${mountRoot}/etc/fstab"
-echo "${hostname}" >"${mountRoot}/etc/hostname"
+echo "${USER_HOSTNAME}" >"${mountRoot}/etc/hostname"
 
 arch-chroot "${mountRoot}" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 arch-chroot "${mountRoot}" hwclock --systohc
@@ -298,12 +298,13 @@ echo "LANG=en_US.UTF-8" >"${mountRoot}/etc/locale.conf"
 
 # Add admin user and set password {{{
 info_log "Configuring users and groups"
-info_log "Adding user ${user}"
-arch-chroot "${mountRoot}" useradd -mU -G wheel,uucp,video,audio,storage,games,input "${user}"
+info_log "Adding user ${USERNAME}"
+arch-chroot "${mountRoot}" useradd -mU -G \
+  wheel,uucp,video,audio,storage,games,input "${USERNAME}"
 
-info_log "Changing pasword for ${user}"
-arch-chroot "${mountRoot}" chpasswd <<<"${user}:${password}"
-arch-chroot "${mountRoot}" chpasswd <<<"root:${password}"
+info_log "Changing pasword for ${USERNAME}"
+arch-chroot "${mountRoot}" chpasswd <<<"${USERNAME}:${PASSWORD}"
+arch-chroot "${mountRoot}" chpasswd <<<"root:${PASSWORD}"
 # }}}
 
 # Configure the sudoers file {{{
@@ -329,7 +330,7 @@ EOF
 info_log "Installing additional packages"
 # Grab packages file from github repo
 arch-chroot "${mountRoot}" pacman -Sy --needed \
-  --noconfirm - <<<"$(curl -sL "${packageUrl}")"
+  --noconfirm - <<<"$(curl -sL "${PACKAGE_URL}")"
 # }}}
 
 # Sound configuration {{{
@@ -383,13 +384,13 @@ arch-chroot "$mountRoot" systemctl enable NetworkManager
 # Configure bootloader {{{
 # Install GRUB
 info_log "Installing GRUB"
-if ${uefiEnabled}; then
+if ${UEFI_ENABLED}; then
   arch-chroot "${mountRoot}" grub-install \
     --target=x86_64-efi \
-    --efi-directory="/$(basename "${mountBoot}")" \
+    --efi-directory="/$(basename "${MOUNT_BOOT}")" \
     --bootloader-id=GRUB
 else
-  arch-chroot "${mountRoot}" grub-install --target=i386-pc "${device}"
+  arch-chroot "${mountRoot}" grub-install --target=i386-pc "${DEVICE}"
 fi
 
 # Generate GRUB config file
@@ -411,43 +412,43 @@ EOF
 
 # Create .xinitrc file {{{
 info_log "Configuring xinit"
-cat <<EOF >"${mountRoot}${xinitFile}"
+cat <<EOF >"${mountRoot}${XINIT_FILE}"
 exec awesome
 EOF
-arch-chroot "${mountRoot}" chown "${user}:${user}" "${xinitFile}"
-arch-chroot "${mountRoot}" chmod 644 "${xinitFile}"
+arch-chroot "${mountRoot}" chown "${USERNAME}:${USERNAME}" "${XINIT_FILE}"
+arch-chroot "${mountRoot}" chmod 644 "${XINIT_FILE}"
 # }}}
 
 # Clone dotfiles {{{
 info_log "Cloning dotfiles"
-arch-chroot "${mountRoot}" mkdir -p "${workspace}"
-arch-chroot "${mountRoot}" git clone "${dotfilesRepoUrl}" "${dotfilesHome}"
-arch-chroot "${mountRoot}" chown -R "${user}:${user}" "${workspace}"
-arch-chroot "${mountRoot}" chmod -R a+rX "${workspace}"
+arch-chroot "${mountRoot}" mkdir -p "${WORKSPACE}"
+arch-chroot "${mountRoot}" git clone "${DOTFILES_REPO_URL}" "${DOTFILES_HOME}"
+arch-chroot "${mountRoot}" chown -R "${USERNAME}:${USERNAME}" "${WORKSPACE}"
+arch-chroot "${mountRoot}" chmod -R a+rX "${WORKSPACE}"
 
 # Change the dotfiles URL to the SSH version so that we may push commits to the
 # repository later on.
 # NOTE: 'git -C /path/to/repo' is how you run a git command for a repo without
 #       actually being in the repo.
-arch-chroot "${mountRoot}" runuser "${user}" -c \
-  "git -C ${dotfilesHome} remote set-url origin ${dotfilesGitUrl}"
+arch-chroot "${mountRoot}" runuser "${USERNAME}" -c \
+  "git -C ${DOTFILES_HOME} remote set-url origin ${DOTFILES_GIT_URL}"
 # }}}
 
 # Run installers {{{
 info_log "Running install scripts"
-arch-chroot "${mountRoot}" runuser "${user}" -c \
-  "bash ${dotfilesHome}/install.sh --force"
+arch-chroot "${mountRoot}" runuser "${USERNAME}" -c \
+  "bash ${DOTFILES_HOME}/install.sh --force"
 # }}}
 
 # Run init scripts {{{
 info_log "Running initialization scripts for important topics"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
+arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
   "runinit arch lightdm emacs neovim nerd_fonts awesome shell zsh docker asdf"
 # }}}
 
 # Run language-specific package install scripts {{{
 info_log "Running language-specific package installations"
-arch-chroot "${mountRoot}" runuser -l "${user}" -c \
+arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
   "install_python_packages
   install_node_packages
   install_ruby_packages
@@ -457,14 +458,14 @@ arch-chroot "${mountRoot}" runuser -l "${user}" -c \
 
 # Change shell {{{
 # Change user's shell to Zsh.
-arch-chroot "${mountRoot}" chsh -s "/bin/zsh" "${user}"
+arch-chroot "${mountRoot}" chsh -s "/bin/zsh" "${USERNAME}"
 # }}}
 
 # Laptop configuration (if computer is a laptop) {{{
-if [ "$isLaptop" -eq 0 ]; then
+if [ "$IS_LAPTOP" -eq 0 ]; then
   info_log "Performing laptop configuration"
-  arch-chroot "${mountRoot}" runuser -l "${user}" -c \
-    "bash ${dotfilesInit}/bootstrap/configure_arch_laptop.sh"
+  arch-chroot "${mountRoot}" runuser -l "${USERNAME}" -c \
+    "bash ${DOTFILES_INIT}/bootstrap/configure_arch_laptop.sh"
 fi
 # }}}
 
@@ -477,10 +478,10 @@ configurations are correct. Don't forget to reboot the system after you're
 satisfied with your new Arch Linux installation.
 
 To test your installation as your newly configured user, run the following:
-  mount ${partRoot} ${mountRoot}
-  mount ${partHome} ${mountHome}
+  mount ${PART_ROOT} ${mountRoot}
+  mount ${PART_HOME} ${MOUNT_HOME}
   arch-chroot ${mountRoot}
-  su --login - ${user}
+  su --login - ${USERNAME}
 EOF
 # }}}
 
