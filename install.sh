@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -uo pipefail
+set -Eeuo pipefail
 
 # Variable Definitions {{{
 # The name of the current executable
@@ -342,4 +342,4 @@ done
 main
 
 # Modeline for this file (KEEP IT COMMENTED!)
-# vim:foldenable:foldmethod=marker
+# vim:foldenable:foldmethod=marker:foldlevel=0

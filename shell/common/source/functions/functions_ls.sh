@@ -2,7 +2,7 @@
 
 # First, make sure that `l` is not an alias, as it commonly is by default on
 # many operating systems.
-unalias l >>/dev/null 2>&1
+alias l >>/dev/null 2>&1 && unalias l >>/dev/null 2>&1
 # List out files in long-form, using `exa` if available, or `ls`.
 l() {
   local flags="-lFh"
@@ -11,7 +11,7 @@ l() {
   __do_ls "${flags}" "${dir_to_list}" "light"
 }
 
-unalias ll >>/dev/null 2>&1
+alias ll >>/dev/null 2>&1 && unalias ll >>/dev/null 2>&1
 # List out files in long-form, choosing the `ls` analog command automatically.
 ll() {
   local flags="-lFh"
@@ -19,7 +19,7 @@ ll() {
   __do_ls "$flags" "$dir_to_list"
 }
 
-unalias la >>/dev/null 2>&1
+alias la >>/dev/null 2>&1 && unalias la >>/dev/null 2>&1
 # List all files in long-form, using either `exa` or `ls`.
 la() {
   local flags="-lFhA"
@@ -27,7 +27,7 @@ la() {
   __do_ls "${flags}" "${dir_to_list}" "light"
 }
 
-unalias lla >>/dev/null 2>&1
+alias lla >>/dev/null 2>&1 && unalias lla >>/dev/null 2>&1
 # List all files in long-form, choosing the `ls` analog command automatically.
 lla() {
   local flags="-lAFh"
