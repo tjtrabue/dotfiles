@@ -181,7 +181,7 @@ link_config() {
 
 # Link the repository itself, if necessary.
 link_repo() {
-  log_info "Linking dotfiles repository"
+  log_info "Linking dotfiles repository to: ${DOTFILES_HOME}"
   if [ "${DOTFILES_REPO}" != "${DOTFILES_HOME}" ]; then
     ln -sf "${DOTFILES_REPO}" "${DOTFILES_HOME}"
   fi
@@ -200,7 +200,7 @@ link_dotfiles() {
 
 # Link the Zsh dotfiles directory to ~/.zsh
 link_zdotdir() {
-  local targetZdotdir="${HOME}/.zsh"
+  local targetZdotdir="${TARGET_HOME}/.zsh"
 
   log_info "Linking Zsh directory ${DOTFILES_ZDOTDIR} to ${targetZdotdir}"
   if [ -h "${targetZdotdir}" ]; then
