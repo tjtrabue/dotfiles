@@ -10,6 +10,7 @@ declare COMMON_SHELL="${DOTFILES_SHELL}/common"
 declare COMMON_SOURCE="${COMMON_SHELL}/source"
 declare DOTFILES_LINK="${DOTFILES_REPO}/link"
 declare DOTFILES_COPY="${DOTFILES_REPO}/copy"
+declare DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
 
 # Filesystem directories to create
 
@@ -111,13 +112,6 @@ EOF
 
 # }}}
 
-# Test Functions {{{
-print_vars() {
-  echoe "DOTFILES_REPO: ${DOTFILES_REPO}"
-  echoe "DOTFILES_HOME: ${DOTFILES_HOME}"
-}
-# }}}
-
 # Primary Functions {{{
 
 # Link files/directories to the ~/.config directory.
@@ -161,6 +155,20 @@ link_dotfiles() {
   log_info "Linking dotfiles"
   find "${DOTFILES_LINK}/home" -type f -exec ln -sfb -t "${HOME}" '{}' \;
   log_info "Done"
+}
+
+# Link the Zsh dotfiles directory to ~/.zsh
+link_zdotdir() {
+  local targetZdotdir="${HOME}/.zsh"
+  log_info "Linking Zsh dotfiles directory"
+
+  if [ -h "${targetZdotdirj}" ]; then
+    rm -f "${targetZdotdir}"
+  elif [ -d "${targetZdotdir}" ]; then
+    rm -rf "${targetZdotdir}"
+  fi
+
+  ln -sf "${DOTFILES_ZDOTDIR}" "${targetZdotdir}"
 }
 
 # Copy one-time transfer files.
@@ -234,6 +242,7 @@ main() {
   copy_dotfiles
   link_repo
   link_dotfiles
+  link_zdotdir
   ensure_dirs_present
   link_config
   add_extra_os_vars
