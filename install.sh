@@ -3,7 +3,7 @@
 # Variable Definitions {{{
 # Directories
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
-declare DOTFILES_HOME="$HOME/.dotfiles"
+declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 declare DOTFILES_SHELL="${DOTFILES_REPO}/shell"
 declare COMMON_SHELL="${DOTFILES_SHELL}/common"
@@ -30,13 +30,6 @@ declare FORCE_INSTALL=false
 # Logging control variables
 declare LOG_LEVEL=1
 declare LOG_TO_FILE=""
-# }}}
-
-# Source all common aliases and functions {{{
-. "${COMMON_SOURCE}/common.sh"
-
-# We need to run this immediately. Can't wait for main to load.
-src
 # }}}
 
 # Setup/Cleanup {{{
@@ -224,8 +217,19 @@ ensure_dirs_present() {
   done
 }
 
+# Import common aliases and functions for use within this script.
+source_common_defs() {
+  local f
+  for f in "${COMMON_SOURCE}"/{aliases,functions,other}/*; do
+    . "${f}"
+  done
+  # Also source the variables file
+  . "${DOTFILES_COPY}/.vars"
+}
+
 # Main that calls all subroutines
 main() {
+  source_common_defs
   setup
   copy_dotfiles
   link_repo
