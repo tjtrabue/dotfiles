@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -uo pipefail
+
 # Variable Definitions {{{
 # Directories
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"

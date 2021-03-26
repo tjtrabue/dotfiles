@@ -88,31 +88,6 @@ mkbin() {
   chmod 755 "$executableName"
 }
 
-# Create a new dotfile, link it to your home directory, and open it for editing
-# in your configured editor.
-# The input filename may have the '.' prefix or may omit the '.'. Any leading
-# '.' characters will be stripped from the filename and replaced with a single
-# '.' during file creation.
-newdot() {
-  # Pull in new file and strip leading dot, if present.
-  local newFile="$(echo "${1}" | sed -r 's/^\.+//')"
-  local newDotfileInRepo="${DOTFILES_HOME}/link/home/.${newFile}"
-  local newDotfileInHome="${HOME}/.${newFile}"
-
-  if [ -z "${newFile}" ]; then
-    err "No filename given."
-    return 1
-  elif [ -f "${newDotfileInRepo}" ] || [ -h "${newDotfileInHome}" ]; then
-    err "Dotfile .${newFile} already exists."
-    return 2
-  fi
-
-  touch "${newDotfileInRepo}"
-  ln -sf "${newDotfileInRepo}" "${newDotfileInHome}"
-
-  edit "${newDotfileInHome}"
-}
-
 # Return the user's current shell name, such as "bash" or "zsh".
 currentshell() {
   ps -p $$ | awk '{print $NF}' | tail -1
@@ -154,6 +129,7 @@ rmswap() {
 runinit() {
   local initTopics=("${@}")
   local funcName="${FUNCNAME[0]}"
+  local dotfilesInit="${DOTFILES_INIT:-${DOTFILES_HOME}/init}"
   local initFile
   local fullPath
   local initTopic
@@ -186,7 +162,7 @@ EOF
 
   for initTopic in "${initTopics[@]}"; do
     initFile="init_${initTopic}"
-    fullPath="${DOTFILES_INIT}/${initFile}"
+    fullPath="${dotfilesInit}/${initFile}"
     if [ -x "${fullPath}" ]; then
       "${fullPath}"
     else
