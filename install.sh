@@ -8,15 +8,18 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 # Where dotfiles will be installed (useful for testing the installation on a
 # fake home directory).
 declare TARGET_HOME="${HOME}"
-# Dotfiles directories:
-declare DOTFILES_HOME="${TARGET_HOME}/.dotfiles"
+
+# This repository's root directory.
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-declare DOTFILES_SHELL="${DOTFILES_REPO}/shell"
-declare COMMON_SHELL="${DOTFILES_SHELL}/common"
-declare COMMON_SOURCE="${COMMON_SHELL}/source"
-declare DOTFILES_LINK="${DOTFILES_REPO}/link"
-declare DOTFILES_COPY="${DOTFILES_REPO}/copy"
-declare DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
+
+# Dotfiles directories (will be set after we've established TARGET_HOME)
+declare DOTFILES_HOME
+declare DOTFILES_SHELL
+declare COMMON_SHELL
+declare COMMON_SOURCE
+declare DOTFILES_LINK
+declare DOTFILES_COPY
+declare DOTFILES_ZDOTDIR
 
 # Filesystem directories to create
 
@@ -40,6 +43,18 @@ declare LOG_TO_FILE=""
 # }}}
 
 # Setup/Cleanup {{{
+
+# Set all dotfiles-related variables after all arguments have been parsed and
+# key variables have been set.
+set_dotfiles_variables() {
+  DOTFILES_HOME="${TARGET_HOME}/.dotfiles"
+  DOTFILES_SHELL="${DOTFILES_REPO}/shell"
+  COMMON_SHELL="${DOTFILES_SHELL}/common"
+  COMMON_SOURCE="${COMMON_SHELL}/source"
+  DOTFILES_LINK="${DOTFILES_REPO}/link"
+  DOTFILES_COPY="${DOTFILES_REPO}/copy"
+  DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
+}
 
 # Take care of backing up existing ~/.dotfiles directory
 backup_existing_installation() {
@@ -77,11 +92,14 @@ EOF
 
 # Performs initial setup.
 setup() {
-  log_info "Setting up..."
+  printf "%s\n" "Setting up..." 1>&2
+  set_dotfiles_variables
+  source_common_defs
   if ! ${FORCE_INSTALL}; then
     check_existing_installation
   fi
   backup_existing_installation
+  ensure_dirs_present
 }
 # }}}
 
@@ -120,6 +138,16 @@ OPTIONS:
     behavior, telling the install script to instead install everything to a
     different directory. This only real use for this option is to test the
     install script.
+
+EXAMPLES:
+  Install dotfiles with INFO logging output:
+    ./install.sh -vv
+
+  Force a new dotfiles installation, wihtout prompting for confirmation:
+    ./install.sh --force
+
+  Test the install script by installing dotfiles to a fake home directory:
+    ./install.sh -vv --fake-home ./test
 EOF
 }
 
@@ -133,7 +161,7 @@ link_config() {
   local homeConfig="${TARGET_HOME}/.config"
   local homeConfigBackup="${homeConfig}.bak"
 
-  log_info "Linking ${dotfilesConfig} to \~/.config"
+  log_info "Linking ${dotfilesConfig} to ${homeConfig}"
 
   if [ -d "${homeConfig}" ]; then
     log_info "Backing up files in ${homeConfig} to ${homeConfigBackup}"
@@ -173,8 +201,8 @@ link_dotfiles() {
 # Link the Zsh dotfiles directory to ~/.zsh
 link_zdotdir() {
   local targetZdotdir="${HOME}/.zsh"
-  log_info "Linking Zsh dotfiles directory"
 
+  log_info "Linking Zsh directory ${DOTFILES_ZDOTDIR} to ${targetZdotdir}"
   if [ -h "${targetZdotdir}" ]; then
     rm -f "${targetZdotdir}"
   elif [ -d "${targetZdotdir}" ]; then
@@ -198,7 +226,7 @@ add_extra_os_vars() {
   local extraVarsDir="${DOTFILES_REPO}/copy/var_files"
   local extraVarsLinuxDir="${extraVarsDir}/linux"
   local markerString="#<additional-vars-insert>"
-  local extraVarsFile
+  local extraVarsFile="NONE"
 
   log_info "Injecting additional OS variables into ${TARGET_HOME}/.vars"
 
@@ -226,6 +254,7 @@ ensure_dirs_present() {
   log_info "Creating important directories"
 
   local dirs=(
+    "${TARGET_HOME}"
     "${WS}"
     "${PRAC}"
     "${APPS}"
@@ -244,19 +273,15 @@ source_common_defs() {
   for f in "${COMMON_SOURCE}"/{aliases,functions,other}/*; do
     . "${f}"
   done
-  # Also source the variables file
-  . "${DOTFILES_COPY}/.vars"
 }
 
 # Main that calls all subroutines
 main() {
-  source_common_defs
   setup
   copy_dotfiles
   link_repo
   link_dotfiles
   link_zdotdir
-  ensure_dirs_present
   link_config
   add_extra_os_vars
 }
