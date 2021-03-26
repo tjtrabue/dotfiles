@@ -132,7 +132,7 @@ shellcheck
 shotgun
 stack
 texinfo
-texlive-bibextra
+texlive-bibtexextra
 texlive-core
 texlive-fontsextra
 texlive-formatsextra
