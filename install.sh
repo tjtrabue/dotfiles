@@ -3,9 +3,13 @@
 set -uo pipefail
 
 # Variable Definitions {{{
-# Directories
+# The name of the current executable
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
-declare DOTFILES_HOME="${HOME}/.dotfiles"
+# Where dotfiles will be installed (useful for testing the installation on a
+# fake home directory).
+declare TARGET_HOME="${HOME}"
+# Dotfiles directories:
+declare DOTFILES_HOME="${TARGET_HOME}/.dotfiles"
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 declare DOTFILES_SHELL="${DOTFILES_REPO}/shell"
 declare COMMON_SHELL="${DOTFILES_SHELL}/common"
@@ -109,6 +113,13 @@ OPTIONS:
     Force dotfiles to install, assuming "yes" for all prompts.
     This option should be used with caution, as it may overwrite some of your
     files, even though this script tries hard not to do that.
+
+  -k | --fake-home <target_directory>
+    Install dotfiles to a different directory. The default is to install
+    dotfiles to the user's \$HOME directory. This option changes the default
+    behavior, telling the install script to instead install everything to a
+    different directory. This only real use for this option is to test the
+    install script.
 EOF
 }
 
@@ -119,7 +130,7 @@ EOF
 # Link files/directories to the ~/.config directory.
 link_config() {
   local dotfilesConfig="${DOTFILES_LINK}/config"
-  local homeConfig="${HOME}/.config"
+  local homeConfig="${TARGET_HOME}/.config"
   local homeConfigBackup="${homeConfig}.bak"
 
   log_info "Linking ${dotfilesConfig} to \~/.config"
@@ -155,7 +166,7 @@ link_repo() {
 # installation.
 link_dotfiles() {
   log_info "Linking dotfiles"
-  find "${DOTFILES_LINK}/home" -type f -exec ln -sfb -t "${HOME}" '{}' \;
+  find "${DOTFILES_LINK}/home" -type f -exec ln -sfb -t "${TARGET_HOME}" '{}' \;
   log_info "Done"
 }
 
@@ -177,7 +188,7 @@ link_zdotdir() {
 copy_dotfiles() {
   log_info "Copying dotfiles"
   find "${DOTFILES_COPY}" -maxdepth 1 -mindepth 1 -type f \
-    -exec cp -f '{}' "${HOME}/" \;
+    -exec cp -f '{}' "${TARGET_HOME}/" \;
   log_info "Copying complete"
 }
 
@@ -189,7 +200,7 @@ add_extra_os_vars() {
   local markerString="#<additional-vars-insert>"
   local extraVarsFile
 
-  log_info "Injecting additional OS variables into ${HOME}/.vars"
+  log_info "Injecting additional OS variables into ${TARGET_HOME}/.vars"
 
   case "${os}" in
     "Arch Linux")
@@ -202,11 +213,11 @@ add_extra_os_vars() {
   esac
 
   if [ -f "${extraVarsFile}" ]; then
-    sed -i -e "/${markerString}/r ${extraVarsFile}" "${HOME}/.vars"
+    sed -i -e "/${markerString}/r ${extraVarsFile}" "${TARGET_HOME}/.vars"
   fi
 
   # Get rid of marker string in ~/.vars
-  sed -i "/${markerString}/d" "${HOME}/.vars"
+  sed -i "/${markerString}/d" "${TARGET_HOME}/.vars"
   log_info "Done injecting additional variables"
 }
 
@@ -252,7 +263,10 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hvf --long help,verbose,force -n 'init_arch' -- "$@")
+args=$(getopt -o hvfk: \
+       --long help,verbose,force,fake-home: \
+       -n 'install.sh' \
+       -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -272,6 +286,18 @@ while true; do
     -f | --force)
       FORCE_INSTALL=true
       shift
+      ;;
+
+    -k | --fake-home)
+      case "$2" in
+        "")
+          shift 2
+          ;;
+        *)
+          TARGET_HOME="${2}"
+          shift 2
+          ;;
+      esac
       ;;
 
     --)
