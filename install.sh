@@ -148,7 +148,7 @@ link_config() {
 link_repo() {
   log_info "Linking dotfiles repository"
   if [ "${DOTFILES_REPO}" != "${DOTFILES_HOME}" ]; then
-    ln -sfn "${DOTFILES_REPO}" "${DOTFILES_HOME}"
+    ln -sf "${DOTFILES_REPO}" "${DOTFILES_HOME}"
   fi
   log_info "Done."
 }
