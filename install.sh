@@ -2,6 +2,13 @@
 
 set -Eeuo pipefail
 
+### IMPORTANT DEVELOPER NOTE ###
+# You should ALWAYS test any changes you make to this script by running:
+#  ./install.sh -vv --fake-home "test"
+# The error flags set above are very, very picky about bad coding practices, and
+# you'd be amazed at what they preclude. Never assume your changes are safe
+# before you test!
+
 # Variable Definitions {{{
 # The name of the current executable
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
