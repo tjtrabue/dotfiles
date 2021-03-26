@@ -133,7 +133,7 @@ shotgun
 stack
 texinfo
 texlab
-texlive-most
+texlive-core
 texworks
 the_silver_searcher
 tidy
