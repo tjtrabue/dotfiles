@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# Print error message on failure.
-set -uo pipefail
-trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
-
 # Variable Definitions {{{
 # Directories
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
@@ -37,19 +33,8 @@ declare LOG_TO_FILE=""
 # }}}
 
 # Source all common aliases and functions {{{
-src() {
-  local f
-  local varsFile="${DOTFILES_COPY}/.vars"
+. "${COMMON_SOURCE}/common.sh"
 
-  for f in "${COMMON_SOURCE}"/{aliases,functions,other}/*; do
-    . "${f}"
-  done
-
-  # Also source all standard variable definitions
-  if [ -f "${varsFile}" ]; then
-    . "${varsFile}"
-  fi
-}
 # We need to run this immediately. Can't wait for main to load.
 src
 # }}}
