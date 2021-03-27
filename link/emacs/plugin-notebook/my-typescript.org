@@ -1,0 +1,17 @@
+#+title:  Typescript configuration/plugins
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:26
+#+STARTUP: fold
+
+#+begin_src emacs-lisp :tangle yes
+;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* typescript-mode
+  Major mode editing Typescript files.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package typescript-mode)
+#+end_src

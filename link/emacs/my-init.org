@@ -728,7 +728,35 @@ lock file."
   list before making the function call.
 
 #+begin_src emacs-lisp :tangle yes
-(define-advice define-obsolete-function-alias (:filter-args (ll) fix-obsolete)
+;; Advice to add `when' field to `define-obsolete-function-alias'
+(define-advice define-obsolete-function-alias
+    (:filter-args (ll) fix-define-obsolete-function-alias)
+  (let ((obsolete-name (pop ll))
+        (current-name (pop ll))
+        (when (if ll (pop ll) "1"))
+        (docstring (if ll (pop ll) nil)))
+    (list obsolete-name current-name when docstring)))
+
+;; Advice to add `when' field to `define-obsolete-variable-alias'
+(define-advice define-obsolete-variable-alias
+    (:filter-args (ll) fix-define-obsolete-variable-alias)
+  (let ((obsolete-name (pop ll))
+        (current-name (pop ll))
+        (when (if ll (pop ll) "1"))
+        (docstring (if ll (pop ll) nil)))
+    (list obsolete-name current-name when docstring)))
+
+;; Advice to add `when' field to `make-obsolete'
+(define-advice make-obsolete
+    (:filter-args (ll) fix-make-obsolete)
+  (let ((obsolete-name (pop ll))
+        (current-name (pop ll))
+        (when (if ll (pop ll) "1")))
+    (list obsolete-name current-name when)))
+
+;; Advice to add `when' field to `make-obsolete-variable'
+(define-advice make-obsolete-variable
+    (:filter-args (ll) fix-make-obsolete-variable)
   (let ((obsolete-name (pop ll))
         (current-name (pop ll))
         (when (if ll (pop ll) "1"))
