@@ -59,10 +59,10 @@ awful.screen.connect_for_each_screen(screen_util.connect_screen)
 root.buttons(mouse_buttons)
 
 -- Key bindings
-local global_keys = require("my-awm.global.global-keys")
+-- local global_keys = require("my-awm.global.global-keys")
 
--- Set taglist keybindings.
-require("my-awm.taglist.taglist-keys")
+-- Set global and taglist keybindings.
+local global_keys = require("my-awm.taglist.taglist-keys")
 
 -- Set keys
 root.keys(global_keys)
@@ -75,34 +75,34 @@ require("my-awm.client.client-signals")
 
 -- List of apps to run on startup.
 local apps_to_autorun = {
-    -- Terminals
-    {
-        name = default_progs.terminal,
-        opts = "",
-        tag = "main"
-    },
-    {
-        name = default_progs.terminal,
-        opts = "",
-        tag = "main"
-    },
-    {
-        name = default_progs.terminal,
-        opts = "",
-        tag = "main"
-    },
-    -- Emacs
-    {
-        name = "emacs",
-        opts = "",
-        tag = "edit"
-    },
-    -- Web browser
-    {
-        name = default_progs.browser,
-        opts = "",
-        tag = "www"
-    }
+  -- Terminals
+  {
+    name = default_progs.terminal,
+    opts = "",
+    tag = "main"
+  },
+  {
+    name = default_progs.terminal,
+    opts = "",
+    tag = "main"
+  },
+  {
+    name = default_progs.terminal,
+    opts = "",
+    tag = "main"
+  },
+  -- Emacs
+  {
+    name = "emacs",
+    opts = "",
+    tag = "edit"
+  },
+  -- Web browser
+  {
+    name = default_progs.browser,
+    opts = "",
+    tag = "www"
+  }
 }
 
 -- Automatically start programs when Awesome kicks off.
