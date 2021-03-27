@@ -58,13 +58,10 @@ awful.screen.connect_for_each_screen(screen_util.connect_screen)
 -- Mouse bindings
 root.buttons(mouse_buttons)
 
--- Key bindings
--- local global_keys = require("my-awm.global.global-keys")
-
--- Set global and taglist keybindings.
+-- Retrieve global keybindings table
 local global_keys = require("my-awm.taglist.taglist-keys")
 
--- Set keys
+-- Set global keybindings
 root.keys(global_keys)
 
 -- Apply rules to new clients as they appear

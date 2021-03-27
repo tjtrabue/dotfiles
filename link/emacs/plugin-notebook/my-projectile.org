@@ -47,6 +47,13 @@ ECB.")
     (projectile-project-root-files-top-down-recurring
       (append '("compile_commands.json")
         projectile-project-root-files-top-down-recurring))
+    ;; Use Ivy for projectile completion
+    ;; (can also use helm or ido).
+    (projectile-completion-system 'ivy)
+    ;; Make projects in workspace discovered automatically.
+    ;; The list is a space-separated collection of directory paths
+    ;; that projectile should use when searching for projects.
+    (projectile-project-search-path '("~/workspace/"))
     :bind
     (:map evil-normal-state-map
      ([remap evil-paste-pop] . projectile-find-file)
@@ -56,16 +63,7 @@ ECB.")
     ;; Keep ECB in sync with the current Projectile project
     (ecb-basic-buffer-sync . my/sync-ecb-with-projectile)
     :config
-    ;; Use Ivy for projectile completion
-    ;; (can also use helm or ido).
-    (setq projectile-completion-system 'ivy)
-
-    ;; Make projects in workspace discovered automatically.
-    ;; The list is a space-separated collection of directory paths
-    ;; that projectile should use when searching for projects.
-    (setq projectile-project-search-path '("~/workspace/"))
-
     ;; Add extra ignored directories here.
     (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d/straight")
-    (projectile-mode t))
+    (projectile-mode 1))
 #+end_src

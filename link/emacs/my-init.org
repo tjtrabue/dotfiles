@@ -716,6 +716,26 @@ lock file."
           (key-chord-mode 1)))))
 #+end_src
 
+* TEMP FIX
+  This section houses temporary fixes that should be removed once true solutions
+  are added to the main Emacs project.
+
+** Problem: define-obsolete-function-alias causes backwards compatibility issues
+  The =define-obsolete-function-alias= function was updated in Emacs 28 to
+  use a larger number of arguments, causing a huge amount of backwards
+  compatibility problems for various plugins. This piece of function advice
+  intercepts calls to =define-obsolete-function-alias= and pads the argument
+  list before making the function call.
+
+#+begin_src emacs-lisp :tangle yes
+(define-advice define-obsolete-function-alias (:filter-args (ll) fix-obsolete)
+  (let ((obsolete-name (pop ll))
+        (current-name (pop ll))
+        (when (if ll (pop ll) "1"))
+        (docstring (if ll (pop ll) nil)))
+    (list obsolete-name current-name when docstring)))
+#+end_src
+
 * Load External Configuration Files
   Load additional Emacs configuration files from my custom plugins directories.
   Most of these files correspond directly to third-party dependencies from

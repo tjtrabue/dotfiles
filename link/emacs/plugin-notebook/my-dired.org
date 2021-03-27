@@ -29,7 +29,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package peep-dired
-    :after (dired dired+)
+    :after (dired)
     :bind (:map dired-mode-map
            ("P" . peep-dired)))
 #+end_src

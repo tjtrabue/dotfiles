@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 _prepare_aur_environment() {
   if [ -z "$AUR_HOME" ]; then
@@ -38,9 +38,9 @@ _prepare_and_build_package() {
 
   {
     makepkg -sic --noconfirm &&
-      [ $hasStashedChanges ] &&
-      git stash pop || :
-  } || {
+    [ $hasStashedChanges ] &&
+    git stash pop || :
+    } || {
     err "Problem building package $(basename "$(pwd)")"
     return 1
   }
@@ -55,16 +55,6 @@ _print_final_effect_msg() {
     echoe ""
     succ "${effect}: ${packages[*]}"
   fi
-}
-
-_check_private_aur_func_called_by_aur() {
-  if [ "${FUNCNAME[2]}" = "aur" ]; then
-    return 0
-  fi
-
-  err "Cannot call '${FUNCNAME[1]}' directly. Use 'aur' command instead." \
-    "See 'aur --help' for more info."
-  return 1
 }
 
 # Filters a list of requested packages based on whether or not they are already
@@ -97,7 +87,6 @@ aur-get() {
   local newPackageCount
 
   _check_aur_provided "$@" || return 1
-  _check_private_aur_func_called_by_aur || return 1
 
   [ ! -d "$AUR_HOME" ] && mkdir -p "$AUR_HOME"
 
@@ -133,7 +122,6 @@ aur-install() {
   local -a aurPackages=("$@")
   local package
 
-  _check_private_aur_func_called_by_aur || return 1
   _check_aur_provided "${aurPackages[@]}" || return 1
 
   # Build packages one at a time, since pacman can only handle one build at once.
@@ -160,7 +148,6 @@ aur-remove() {
   local -a removedPackages=()
   local package
 
-  _check_private_aur_func_called_by_aur || return 1
   _check_aur_provided "${aurPackages[@]}" || return 1
 
   for package in "${aurPackages[@]}"; do
@@ -187,7 +174,6 @@ aur-update-packages() {
   local -a updatedPackages=()
   local package
 
-  _check_private_aur_func_called_by_aur || return 1
   _check_aur_provided "${aurPackages[@]}" || return 1
 
   [ -z "$AUR_HOME" ] && AUR_HOME="$HOME/.aur"
@@ -205,16 +191,14 @@ aur-update-packages() {
 }
 
 aur-update-all() {
-  _check_private_aur_func_called_by_aur || return 1
 
   log_info "Updating all installed AUR packages"
   aur-update-packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
-    sed 's|.*/||' | tr '\n' ' ')
+  sed 's|.*/||' | tr '\n' ' ')
 }
 
 aur-update() {
   local packageName="$*"
-  _check_private_aur_func_called_by_aur || return 1
 
   if [ "$(echo "$packageName" | tr '[:upper:]' '[:lower:]')" == "all" ]; then
     aur-update-all
@@ -259,20 +243,20 @@ EOF
   eval set -- "$options"
   while true; do
     case "$1" in
-    -h | --help)
-      _aur_help
-      return 0
-      ;;
+      -h | --help)
+        _aur_help
+        return 0
+        ;;
 
-    --)
-      shift
-      break
-      ;;
+      --)
+        shift
+        break
+        ;;
 
-    *)
-      err "Unknown argument $1 to ${FUNCNAME[0]}"
-      return 2
-      ;;
+      *)
+        err "Unknown argument $1 to ${FUNCNAME[0]}"
+        return 2
+        ;;
     esac
   done
 
@@ -280,23 +264,23 @@ EOF
   aurCommand="$1"
   shift
   case "$aurCommand" in
-  "get")
-    aur-get "$@"
-    ;;
-  "install")
-    aur-get "$@" &&
+    "get")
+      aur-get "$@"
+      ;;
+    "install")
+      aur-get "$@" &&
       aur-install "$@"
-    ;;
-  "update")
-    aur-update "$@"
-    ;;
-  "remove" | "uninstall")
-    aur-remove "$@"
-    ;;
-  *)
-    err "Unknown AUR command $aurCommand. Should be one of: install, update, remove."
-    return 1
-    ;;
+      ;;
+    "update")
+      aur-update "$@"
+      ;;
+    "remove" | "uninstall")
+      aur-remove "$@"
+      ;;
+    *)
+      err "Unknown AUR command $aurCommand. Should be one of: install, update, remove."
+      return 1
+      ;;
   esac
 }
 
@@ -341,7 +325,7 @@ set_mirrorlist() {
   fi
 
   grep -A 1 "## United States" <"$mirrorlist" |
-    sed '/^## United States/d;/--/d' >"$tempfile"
+  sed '/^## United States/d;/--/d' >"$tempfile"
 
   sudo mv "$mirrorlist"{,.bak}
   sudo cp "$tempfile" "$mirrorlist"

@@ -9,10 +9,10 @@ world needed another Lisp.
 
 * clojure-mode
 #+begin_src emacs-lisp :tangle yes
-(use-package clojure-mode)
+  (use-package clojure-mode)
 #+end_src
 
 * cider
 #+begin_src emacs-lisp :tangle yes
-(use-package cider)
+  (use-package cider)
 #+end_src

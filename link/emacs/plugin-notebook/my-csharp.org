@@ -19,8 +19,8 @@ Needed for performance:
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package csharp-mode
-    :after (tree-sitter tree-sitter-langs)
-    :config
-    (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode)))
+  ;; (use-package csharp-mode
+  ;;   :after (tree-sitter tree-sitter-langs)
+  ;;   :config
+  ;;   (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode)))
 #+end_src
