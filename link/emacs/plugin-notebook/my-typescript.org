@@ -4,6 +4,10 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
+Typescript is a statically-typed programming language that transpiles to
+Javascript. I don't like it very much, but it is sometimes important to have the
+capability to edit Typescript files.
+
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
