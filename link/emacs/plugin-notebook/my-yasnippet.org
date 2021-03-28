@@ -28,7 +28,7 @@ Needed for performance:
     (:map yas-minor-mode-map
       ;; Use conditional expansion, falling back on helm-yas-complete if there
       ;; is no precise snippet name before point.
-     ("C-c y" . yas-maybe-expand)
+     ("C-c y" . yas-expand)
      ("<tab>" . nil)
      ("TAB" . nil))
     :config

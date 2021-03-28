@@ -6,7 +6,7 @@
 
 These three plugins are a great alternative to =helm=. =ivy= is the primary
 plugin in this tool suite, and =swiper= and =counsel= sit on top of =ivy=,
-depending on it for their operations.
+depending on =ivy= for their operations.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
@@ -80,6 +80,25 @@ Needed for performance:
   (use-package ivy-prescient
     :config
     (ivy-prescient-mode 1))
+#+end_src
+
+*** ivy-yasnippet
+    Use =ivy= to preview =yasnippet= snippets. The main function for this suite
+    is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
+    =ivy-yasnippet=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ivy-yasnippet
+    :after (ivy yasnippet)
+    :custom
+    ;; How ivy-yasnippet should expand keywords before point. "smart" means that
+    ;; ivy-yasnippet should expand when a matching candidate is selected for the
+    ;; first time. Once a candidate whose key doesn’t match whatever is before
+    ;; point is selected, behave like nil until the minibuffer exits.
+    (ivy-yasnippet-expand-keys 'smart)
+    :bind
+    (:map yas-minor-mode-map
+     ([remap yas-expand] . ivy-yasnippet)))
 #+end_src
 
 * Counsel
