@@ -36,8 +36,8 @@
 
 ;;; Code:
 
-(define-advice em28-obsolete-functions-fix-function-alias
-    (:filter-args (ll) define-obsolete-function-alias)
+(define-advice define-obsolete-function-alias
+    (:filter-args (ll) em28-fix-define-obsolete-function-alias)
   "Advice to add `when' field to `define-obsolete-function-alias'."
   (let ((obsolete-name (pop ll))
         (current-name (pop ll))
@@ -45,8 +45,8 @@
         (docstring (if ll (pop ll) nil)))
     (list obsolete-name current-name when docstring)))
 
-(define-advice em28-obsolete-functions-fix-variable-alias
-    (:filter-args (ll) define-obsolete-variable-alias)
+(define-advice define-obsolete-variable-alias
+    (:filter-args (ll) em28-fix-define-obsolete-variable-alias)
   "Advice to add `when' field to `define-obsolete-variable-alias'."
   (let ((obsolete-name (pop ll))
         (current-name (pop ll))
@@ -54,16 +54,16 @@
         (docstring (if ll (pop ll) nil)))
     (list obsolete-name current-name when docstring)))
 
-(define-advice em28-obsolete-functions-fix-make-obsolete
-    (:filter-args (ll) make-obsolete)
+(define-advice make-obsolete
+    (:filter-args (ll) em28-fix-make-obsolete)
   "Advice to add `when' field to `make-obsolete'."
   (let ((obsolete-name (pop ll))
         (current-name (pop ll))
         (when (if ll (pop ll) "1")))
     (list obsolete-name current-name when)))
 
-(define-advice em28-obsolete-functions-fix-make-obsolete-variable
-    (:filter-args (ll) make-obsolete-variable)
+(define-advice make-obsolete-variable
+    (:filter-args (ll) em28-fix-make-obsolete-variable)
   "Advice to add `when' field to `make-obsolete-variable'."
   (let ((obsolete-name (pop ll))
         (current-name (pop ll))
