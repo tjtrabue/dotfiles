@@ -1,7 +1,7 @@
 brave-bin
 drive-git
 elixir-ls-git
-emacs-native-comp-git
+emacs-native-comp-git-enhanced
 flat-remix
 glow
 icons-in-terminal

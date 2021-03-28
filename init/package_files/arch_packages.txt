@@ -148,6 +148,7 @@ texworks
 the_silver_searcher
 tidy
 tree
+tree-sitter
 ttf-croscore
 ttf-fira-code
 ttf-fira-mono

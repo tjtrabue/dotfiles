@@ -21,6 +21,9 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet
+    :commands (yas-minor-mode)
+    :hook
+    ((conf-mode prog-mode text-mode) . yas-minor-mode)
     :bind
     (:map yas-minor-mode-map
       ;; Use conditional expansion, falling back on helm-yas-complete if there
@@ -29,7 +32,7 @@ Needed for performance:
      ("<tab>" . nil)
      ("TAB" . nil))
     :config
-    (yas-global-mode 1))
+    (yas-reload-all))
 #+end_src
 
 * yasnippet-snippets

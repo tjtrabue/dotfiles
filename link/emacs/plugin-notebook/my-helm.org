@@ -28,6 +28,8 @@ Needed for performance:
     :straight
     (helm :type git :host github :repo "emacs-helm/helm" :branch "devel")
     :after evil
+    ;; Define dummy variables to satisfy the byte-compiler.
+    :defines minibuffer-local-must-match-filename-map
     :custom
     ;; Set all customizable variables here
     (helm-command-prefix-key (kbd "C-c h"))
