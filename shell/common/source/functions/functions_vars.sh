@@ -36,13 +36,15 @@ __add_extra_os_vars() {
   local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
   local dotCopy="${DOTFILES_COPY:-${DOTFILES_HOME}/copy}"
   local extraVarsLinuxDir="${dotCopy}/var_files/linux"
+  local userVars="${HOME}/.vars"
   local markerString="#<additional-vars-insert>"
   local extraVarsFile="NONE"
 
-  log_info "Injecting additional OS variables into ${TARGET_HOME}/.vars"
+  log_info "Injecting additional OS variables into ${userVars}"
 
   case "${os}" in
     "Arch Linux")
+      log_info "Injecting Arch Linux vars into ${userVars}"
       extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
       ;;
 
@@ -52,10 +54,10 @@ __add_extra_os_vars() {
   esac
 
   if [ -f "${extraVarsFile}" ]; then
-    sed -i -e "/${markerString}/r ${extraVarsFile}" "${TARGET_HOME}/.vars"
+    sed -i -e "/${markerString}/r ${extraVarsFile}" "${userVars}"
   fi
 
   # Get rid of marker string in ~/.vars
-  sed -i "/${markerString}/d" "${TARGET_HOME}/.vars"
+  sed -i "/${markerString}/d" "${userVars}"
   log_info "Done injecting additional variables"
 }
