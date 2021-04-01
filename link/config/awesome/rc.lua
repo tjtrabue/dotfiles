@@ -76,17 +76,20 @@ local apps_to_autorun = {
   {
     name = default_progs.terminal,
     opts = "",
-    tag = "main"
+    tag = "main",
+    id = "123"
   },
   {
     name = default_progs.terminal,
     opts = "",
-    tag = "main"
+    tag = "main",
+    id = "234"
   },
   {
     name = default_progs.terminal,
     opts = "",
-    tag = "main"
+    tag = "main",
+    id = "345"
   },
   -- Emacs
   {

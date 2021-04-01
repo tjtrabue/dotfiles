@@ -29,6 +29,8 @@ local function autorun(autorun_apps)
         app_string,
         rules,
         function(c)
+          print("Id")
+          print(id)
           return c.startup_id == id
         end,
         id
