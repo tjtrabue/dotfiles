@@ -8,13 +8,27 @@ sync_vars() {
   local userVars="${HOME}/.vars"
 
   if [ ! -f "${dotVars}" ]; then
-    err "No .vars file found in: ${dotCopy}"
+    err "No ${GREEN}.vars${NC} file found in: ${BLUE}${dotCopy}${NC}"
     return 1
   fi
 
-  log_info "Copying dotfiles vars file ${dotVars} to ${userVars}"
+  __backup_user_vars_file
+
+  log_info "Copying ${GREEN}${dotVars}${NC} to ${GREEN}${userVars}${NC}"
   cp -f "${dotVars}" "${userVars}"
+
   __add_extra_os_vars
+}
+
+# Make a backup of the ~/.vars file before re-copying the dotfiles .vars file
+# to ~/.vars
+__backup_user_vars_file() {
+  local userVars="${HOME}/.vars"
+
+  if [ -f "${userVars}" ]; then
+    log_info "Backing up user's ${userVars} file"
+    mv -f "${userVars}"{,.bak}
+  fi
 }
 
 # Inject extra environment variables into the ~/.vars file, if prudent.
