@@ -1,6 +1,8 @@
 local awful = require("awful")
 
 --- Start applications automatically when Awesome initializes.
+--- Apps started with autorun will only run once. They will not be run if
+--- awesome restarts.
 -- @param autorun_apps Table of GUI applications to run on startup.
 -- Each element of the table is itself a table with the following structure:
 --   name - String; the client application's name.
@@ -16,7 +18,7 @@ local function autorun(autorun_apps)
             app_string = app_string .. " " .. opts
         end
 
-        awful.spawn(
+        awful.spawn.once(
             app_string,
             {
                 tag = app["tag"]
