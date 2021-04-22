@@ -1,8 +1,10 @@
 # Custom branch history file added by some of the git binaries
 .branch_hist
 
+######################
 # OS generated files #
 ######################
+
 .DS_Store
 .DS_Store?
 ._*
@@ -21,14 +23,30 @@ Desktop.ini
 *.bak
 *.backup
 
-# Emacs backup files
-*~
-*#
-*.#*
+##############
+## Archives ##
+##############
+
+# System library archive
+*.a
+
+# Java archives
+*.jar
+*.ear
+*.war
+
+# TAR
+*.tar
+*.tar.gz
+*.tgz
+
+# Zip
+*.zip
 
 ##############################
 ## C/C++ project files/dirs ##
 ##############################
+
 # Object files
 *.o
 # Generated dependency files
@@ -40,15 +58,25 @@ Desktop.ini
 ################################
 ## Node.js project files/dirs ##
 ################################
+
 node_modules/
 
 ###############################
 ## Python project files/dirs ##
 ###############################
+
 env/
 *.pyc
 
-##############################A#
+################################
 ## Haskell project files/dirs ##
 ##############################A#
+
 .stack-work/
+
+########################
+## Emacs backup files ##
+########################
+
+\#*#
+*~
