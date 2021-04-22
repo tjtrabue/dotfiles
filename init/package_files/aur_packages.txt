@@ -2,6 +2,7 @@ brave-bin
 drive-git
 elixir-ls-git
 emacs-native-comp-git-enhanced
+findimagedupes
 flat-remix
 glow
 icons-in-terminal

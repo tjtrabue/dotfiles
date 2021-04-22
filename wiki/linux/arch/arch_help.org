@@ -25,3 +25,21 @@ Section "Device"
   Option         "AllowIndirectGLXProtocol" "off"
 EndSection
 #+end_src
+
+** Monitors not detected by xrandr or nvidia-settings
+   If your monitors are not detected by running =xrandr -q= even though they are
+   plugged in and powered on, then you can usually solve this problem by
+   doing the following:
+
+   - Make sure all monitors are plugged in and powered on,
+   - If using a laptop with an NVIDIA graphics card, install and enable the
+     =optimus-manager= service,
+   - Restart your computer and check =xrandr= and =nvidia-settings=,
+   - If monitors are still not detected, put computer to sleep, let sit for
+     about 10 minutes, and then wake back up and check =xrandr= and
+     =nvidia-settings=.
+
+   Unfortunately, there are no surefire ways to force Linux to detect
+   monitors. All I can do is tell you what has worked for me in the past. This
+   issue is typically a sporadic and annoying one that thankfully tends to
+   resolve itself.
