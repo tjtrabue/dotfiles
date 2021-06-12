@@ -65,5 +65,5 @@ __add_extra_os_vars() {
 
   # Get rid of marker string in ~/.vars
   sed -i "/${markerString}/d" "${userVars}"
-  log_info "Done injecting additional variables"
+  log_info "Done injecting additional OS variables"
 }
