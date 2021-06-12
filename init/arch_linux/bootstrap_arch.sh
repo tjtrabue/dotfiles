@@ -66,6 +66,7 @@ declare UEFI_ENABLED=""
 # }}}
 # }}}
 
+
 # Helper functions {{{
 # Logging functions {{{
 log() {
@@ -290,7 +291,7 @@ echo "${USER_HOSTNAME}" >"${MOUNT_ROOT}/etc/hostname"
 
 arch-chroot "${MOUNT_ROOT}" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 arch-chroot "${MOUNT_ROOT}" hwclock --systohc
-arch-chroot "${MOUNT_ROOT}" sed -i -r 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
+arch-chroot "${MOUNT_ROOT}" sed -i -E 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
 arch-chroot "${MOUNT_ROOT}" locale-gen
 
 echo "LANG=en_US.UTF-8" >"${MOUNT_ROOT}/etc/locale.conf"
@@ -318,6 +319,10 @@ arch-chroot "${MOUNT_ROOT}" echo "Defaults !tty_tickets" >>/etc/sudoers
 # }}}
 
 # Configure pacman.conf file {{{
+# Turn on pacman coloring
+arch-chroot "${MOUNT_ROOT}" sed -i -E 's/#(Color)/\1/' \
+  /etc/pacman.conf
+
 cat <<EOF >>"${MOUNT_ROOT}/etc/pacman.conf"
 
 # Enable 32-bit applications on your x86_64 system:
