@@ -34,6 +34,8 @@ alias aurhg="\${AUR_HELPER} \${AUR_HELPER_GET_CMD}"
 alias aurhi="\${AUR_HELPER} \${AUR_HELPER_INSTALL_CMD}"
 alias aurhinc="\${AUR_HELPER} \${AUR_HELPER_INSTALL_CMD} \
   \${AUR_HELPER_NO_CONFIRM_FLAG}"
+# AUR Info
+alias aurhinfo="\${AUR_HELPER} \${AUR_HELPER_INFO_CMD}"
 # AUR Query
 alias aurhq="\${AUR_HELPER} \${AUR_HELPER_QUERY_CMD}"
 # AUR Remove
