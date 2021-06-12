@@ -1,0 +1,48 @@
+#+title:   Editor Tabs for the Emacs UI
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:06:12
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+This file contains plugins and configuration for editor tabs similar to those
+found in other modern editors, such as Notepad++ and VisualStudio Code.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* centaur-tabs
+  =centaur-tabs= is a stylish, highly configurable tabs plugin for Emacs. It
+  includes support for themed icons, modified indicators, adjustable fonts, and
+  more.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package centaur-tabs
+     :after (evil-collection)
+     :bind
+     (:map evil-normal-state-map
+        ("g t" . centaur-tabs-forward)
+        ("g T" . centaur-tabs-backward)
+      :map evil-collection-unimpaired-mode-map
+        ([remap evil-next-buffer] . centaur-tabs-forward)
+        ([remap evil-prev-buffer] . centaur-tabs-backward))
+     :custom
+     ;; Use themed icons for tabs.
+     (centaur-tabs-set-icons t)
+     ;; Add colored bar to selected tab.
+     (centaur-tabs-set-bar 'left)
+     ;; Show marker icon on tabs for modified files.
+     (centaur-tabs-set-modified-marker t)
+     ;; Only cycle through visible tabs, do not advance to new tab groups.
+     (centaur-tabs-cycle-scope 'tabs)
+     :config
+     ;; Set the font family and font height for tabs.
+     (centaur-tabs-change-fonts my-font-font-family 160)
+     ;; Automatically group tabs by Projectile project.
+     (centaur-tabs-group-by-projectile-project)
+     ;; Enable centaur-tabs-mode universally.
+     (centaur-tabs-mode 1))
+#+end_src
