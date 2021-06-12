@@ -1,3 +1,4 @@
+authy
 brave-bin
 drive-git
 elixir-ls-git

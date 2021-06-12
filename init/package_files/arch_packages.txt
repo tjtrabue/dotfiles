@@ -11,6 +11,7 @@ asciidoc
 aspell-en
 autorandr
 awesome
+aws-cli
 bash-completion
 bat
 biber
@@ -19,6 +20,8 @@ chromium
 clang
 cmake
 cmus
+crictl
+critest
 crypto++
 ctags
 cups
@@ -71,6 +74,8 @@ jdk8-openjdk
 jq
 khal
 kitty
+kubeadm
+kubectl
 libreoffice-fresh
 libxcrypt
 light-locker
