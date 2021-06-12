@@ -163,6 +163,9 @@ link/config/cmus/lib.pl
 # Ignore chromium config by defaul
 link/config/chromium
 
+# Authy local configuration files
+link/config/Authy\ Desktop
+
 # zsh files
 # Completion database files.
 shell/zsh/zdotdir/.zcomp*
