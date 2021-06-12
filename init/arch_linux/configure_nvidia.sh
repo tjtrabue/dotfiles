@@ -63,10 +63,10 @@ install_optimus_manager() {
   log_info "Installing optimus-manager"
   local optimusManagerPackage="optimus-manager"
 
-  if [ -x "$(command -v aura)" ]; then
-    aura -Aax --noconfirm "${optimusManagerPackage}"
+  if [ -x "$(command -v "${AUR_HELPER}")" ]; then
+    aurhinc "${optimusManagerPackage}"
   else
-    warn "aura not installed. Falling back on 'aur' function"
+    warn "AUR helper not installed. Falling back on 'aur' function"
     aur install "${optimusManagerPackage}"
   fi
   configure_optimus_manager

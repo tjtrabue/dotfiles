@@ -19,14 +19,16 @@ alias pacq="sudo pacman -Q"
 alias pacup="sudo pacman -Syyu"
 # }}}
 
-# Aura AUR package manager {{{
-# Install an AUR package
-alias aurai="sudo aura -Aax"
-# Install an AUR package, allowing the PKGBUILD file to be edited before
-# installing.
-alias aurah="sudo aura -Aax --hotedit"
-# Upgrade all install AUR packages
-alias aurau="sudo aura -Aaxu --noconfirm"
+# AUR helper {{{
+# 'aurh' is the alias for the user's selected AUR helper program
+alias aurh="${AUR_HELPER:-paru}"
+alias aurhi="\${AUR_HELPER} \${AUR_HELPER_INSTALL_CMD}"
+alias aurhinc="\${AUR_HELPER} \${AUR_HELPER_INSTALL_CMD} \
+  \${AUR_HELPER_NO_CONFIRM_FLAG}"
+alias aurhu="\${AUR_HELPER} \${AUR_HELPER_UPDATE_CMD}"
+alias aurhr="\${AUR_HELPER} \${AUR_HELPER_REMOVE_CMD}"
+alias aurhsearch="\${AUR_HELPER} \${AUR_HELPER_SEARCH_CMD}"
+alias aurhclean="\${AUR_HELPER} \${AUR_HELPER_CLEAN_CMD}"
 # }}}
 
 # vim:foldenable:foldmethod=marker:

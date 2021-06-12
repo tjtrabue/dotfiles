@@ -47,8 +47,8 @@ edit_makepkg_file() {
 main() {
   print_header "Initializing Arch Linux"
   edit_makepkg_file
-  # Make sure that aura is available to the user
-  install_aura
+  # Make sure that an AUR helper program is available to the user
+  install_aur_helper
   succ "Done initializing Arch Linux!"
 }
 # }}}
@@ -60,25 +60,25 @@ eval set -- "$args"
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-  -v | --verbose)
-    VERBOSE=true
-    shift
-    ;;
+    -v | --verbose)
+      VERBOSE=true
+      shift
+      ;;
 
-  -h | --help)
-    _help
-    exit 0
-    ;;
+    -h | --help)
+      _help
+      exit 0
+      ;;
 
-  --)
-    shift
-    break
-    ;;
+    --)
+      shift
+      break
+      ;;
 
-  *)
-    err "Unknown option $1 to ${THIS_EXEC}"
-    exit 2
-    ;;
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
   esac
 done
 # }}}

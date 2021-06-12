@@ -7,9 +7,7 @@ _prepare_aur_environment() {
 }
 
 _check_aur_provided() {
-  local -a aurPackages=("$@")
-
-  if [ "${#aurPackages[@]}" -lt 1 ]; then
+  if [ "$#" -lt 1 ]; then
     err "No AUR package(s) provided."
     return 1
   fi
@@ -19,7 +17,7 @@ _check_aur_installed() {
   local package="$1"
 
   if [ ! -d "${AUR_HOME}/${package}" ]; then
-    warn "Package $package not found; skipping"
+    warn "Package ${package} not found; skipping"
     return 1
   fi
 }
@@ -127,13 +125,12 @@ aur-install() {
   # Build packages one at a time, since pacman can only handle one build at once.
   log_info "Building packages..."
   for package in "${aurPackages[@]}"; do
-    pushd "${AUR_HOME}/$package" &>/dev/null || return 2
-    if _prepare_and_build_package; then
-      popd &>/dev/null || return 3
-    else
-      popd &>/dev/null || return 3
-      rm -rf "${AUR_HOME:?}/$package"
-    fi
+    (
+      cd "${AUR_HOME}/$package"
+      if _prepare_and_build_package; then
+        rm -rf "${AUR_HOME:?}/$package"
+      fi
+    )
   done
 
   _print_final_effect_msg "Installed" "${aurPackages[@]}"
@@ -182,9 +179,10 @@ aur-update-packages() {
     [ "$(_check_aur_installed "$package")" == true ] || continue
 
     log_info "Updating AUR: $package"
-    pushd "${AUR_HOME}/${package}" &>/dev/null || return 2
-    _prepare_and_build_package && updatedPackages+=("$package")
-    popd &>/dev/null || return 2
+    (
+      cd "${AUR_HOME}/${package}"
+      _prepare_and_build_package && updatedPackages+=("$package")
+    )
   done
 
   _print_final_effect_msg "Updated" "${updatedPackages[@]}"
@@ -364,33 +362,32 @@ repicom() {
   pkill picom && sleep 1 && picom -b
 }
 
-# Install the Aura package manager for the Arch Linux AUR.
-install_aura() {
-  aur install aura
-}
-
-# Install all AUR packages with Aura
-install_aur_packages() {
-  if [ "$(command -v "aura")" == "" ]; then
-    install_aura
+# Install an AUR package manager for the Arch Linux User Repository.
+install_aur_helper() {
+  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
+    aur install "${AUR_HELPER}"
+  else
+    warn "AUR helper ${BLUE}${AUR_HELPER}${NC} already installed."
   fi
-  sudo aura --noconfirm -Aax $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
 }
 
-# Update all AUR packages installed with Aura.
-update_aur_packages() {
-  sudo aura -Auax
+# Install all AUR packages
+install_aur_packages() {
+  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
+    install_aur_helper
+  fi
+  aurhinc $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
 }
 
 # Update all Arch Linux packages, from both the standard and AUR repos.
 uparch() {
+  aurhu
   sudo pacman -Syyu
-  sudo aura -Auax
 }
 
 # NOTE: You will need to reboot after installing optimus-manager
 install_optimus_manager() {
-  aurai "optimus-manager"
+  aurhinc "optimus-manager"
   # Copy the config file for editing later
   sudo cp "/usr/share/optimus-manager.conf" "/etc/optimus-manager/"
   # Enable the service
