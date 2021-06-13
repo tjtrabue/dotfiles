@@ -79,6 +79,8 @@ Needed for performance:
      :map helm-buffer-map
      ;; Kill marked buffers in helm-buffer mode
      ("C-d" . helm-buffer-run-kill-buffers))
+    :preface
+    (setq minibuffer-local-must-match-filename-map '())
     :init
     ;; This is the new way to enable fuzzy matching globally for helm.
     (add-to-list 'completion-styles 'flex)
