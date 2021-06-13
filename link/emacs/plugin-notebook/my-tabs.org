@@ -22,6 +22,11 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
 #+begin_src emacs-lisp :tangle yes
   (use-package centaur-tabs
      :after (evil-collection)
+     ;; Forces automatic loading of this plugin as soon as use-package encounters
+     ;; this specification. If :demand is not present, use-package waits for an
+     ;; autoloaded function from this package to be used before it loads
+     ;; everything. This can lead to the tab bar not loading automatically.
+     :demand
      :bind
      (:map evil-normal-state-map
         ("g t" . centaur-tabs-forward)
@@ -39,10 +44,10 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
      ;; Only cycle through visible tabs, do not advance to new tab groups.
      (centaur-tabs-cycle-scope 'tabs)
      :config
+     ;; Enable centaur-tabs-mode universally.
+     (centaur-tabs-mode 1)
      ;; Set the font family and font height for tabs.
      (centaur-tabs-change-fonts my-font-font-family 160)
      ;; Automatically group tabs by Projectile project.
-     (centaur-tabs-group-by-projectile-project)
-     ;; Enable centaur-tabs-mode universally.
-     (centaur-tabs-mode 1))
+     (centaur-tabs-group-by-projectile-project))
 #+end_src
