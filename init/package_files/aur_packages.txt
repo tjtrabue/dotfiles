@@ -15,7 +15,7 @@ ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
 mu
-neovim-git
+neovim-nightly-bin
 optimus-manager
 polybar-git
 roswell-git

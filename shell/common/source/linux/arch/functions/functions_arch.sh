@@ -285,9 +285,26 @@ EOF
 # Install all packages listed in the packages file for Arch Linux.
 # This makes bootstrapping new installations much easier.
 install_arch_packages() {
-  local archPackagesFile="$DOTFILES_HOME/init/package_files/arch_packages.txt"
+  local archPackagesFile="${DOTFILES_HOME}/init/package_files/arch_packages.txt"
 
-  grep -v "^#.*" <"$archPackagesFile" | sudo pacman -S --needed -
+  grep -E -v "^\s*#" "${archPackagesFile}" | sudo pacman -S --needed -
+}
+
+# Install an AUR package manager for the Arch Linux User Repository.
+install_aur_helper() {
+  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
+    aur install "${AUR_HELPER}"
+  else
+    warn "AUR helper ${BLUE}${AUR_HELPER}${NC} already installed."
+  fi
+}
+
+# Install all AUR packages
+install_aur_packages() {
+  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
+    install_aur_helper
+  fi
+  aurhinc $(grep -E -v "^\s*#" "${AUR_PACKAGES_FILE}" | tr '\n' ' ')
 }
 
 get_aur_packages() {
@@ -362,25 +379,9 @@ repicom() {
   pkill picom && sleep 1 && picom -b
 }
 
-# Install an AUR package manager for the Arch Linux User Repository.
-install_aur_helper() {
-  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
-    aur install "${AUR_HELPER}"
-  else
-    warn "AUR helper ${BLUE}${AUR_HELPER}${NC} already installed."
-  fi
-}
-
-# Install all AUR packages
-install_aur_packages() {
-  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
-    install_aur_helper
-  fi
-  aurhinc $(tr '\n' ' ' <"$AUR_PACKAGES_FILE")
-}
-
 # Update all Arch Linux packages, from both the standard and AUR repos.
 uparch() {
+  sudo pacman-key --refresh-keys
   aurhu
   sudo pacman -Syyu
 }
