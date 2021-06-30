@@ -190,6 +190,8 @@ shell/zsh/zdotdir/.zcomp*
 # Extra completion files that should not be tracked.
 shell/zsh/zdotdir/git-completion.bash
 shell/zsh/zdotdir/_git
+# History file
+shell/zsh/zdotdir/.zsh_history
 # }}}
 
 # OS X / macOS {{{
