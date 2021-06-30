@@ -32,7 +32,12 @@ src_starship_prompt_for_profile() {
     install_starship
   fi
 
-  __activate_starship_for_shell
+  # Only activate starship once for any given shell. If we try to activate it
+  # more than once, we can experience some strange side-effects.
+  if [ "${STARSHIP_PROMPT_ACTIVE}" != 1 ]; then
+    __activate_starship_for_shell
+    export STARSHIP_PROMPT_ACTIVE=1
+  fi
 }
 
 # Conditionally determine how to activate Starship prompt for the current shell.
