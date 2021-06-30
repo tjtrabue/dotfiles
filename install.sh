@@ -49,6 +49,44 @@ declare LOG_LEVEL=1
 declare LOG_TO_FILE=""
 # }}}
 
+# OS Preparation {{{
+
+# Perform other preparation steps depending on the current operating system.
+# This function runs BEFORE the `setup()` function.
+prepare_for_os() {
+  set_dotfiles_variables
+  source_common_defs
+
+  log_info "Checking for additional preparation steps for OS..."
+  local osName="$(uname -s)"
+
+  case "${osName}" in
+    "Darwin")
+      prepare_for_macos
+      ;;
+    *)
+      log_info "No preparation function found for OS type: ${osName}"
+      ;;
+  esac
+}
+
+# macOS specific preparation.
+prepare_for_macos() {
+  log_info "Preparing for macOS installation"
+  source "${COMMON_SOURCE}/mac/functions_mac.sh"
+  # Make sure developer tools are installed
+  install_mac_developer_tools
+  # Make sure homebrew is installed.
+  install_homebrew
+  # Install all the regular GNU CLI tools.
+  install_gnu_cli_tools 
+  # Make sure the CLI tools we reference throughout this install script are the
+  # GNU versions, not the BSD versions which come standard on macOS.
+  create_gnu_cli_tool_aliases_for_mac
+}
+
+# }}}
+
 # Setup/Cleanup {{{
 
 # Set all dotfiles-related variables after all arguments have been parsed and
@@ -99,9 +137,7 @@ EOF
 
 # Performs initial setup.
 setup() {
-  printf "%s\n" "Setting up..." 1>&2
-  set_dotfiles_variables
-  source_common_defs
+  log_info "Setting up..."
   if ! ${FORCE_INSTALL}; then
     check_existing_installation
   fi
@@ -293,6 +329,10 @@ main() {
   add_extra_os_vars
 }
 # }}}
+
+# Need to prepare OS before CLI option parsing because we may not even have
+# access to GNU getopt yet.
+prepare_for_os
 
 # Parse CLI Options {{{
 args=$(getopt -o hvfk: \

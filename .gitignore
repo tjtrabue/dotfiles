@@ -15,14 +15,6 @@ test/
 .DS_Store
 Desktop.ini
 
-# Thumbnail cache files
-._*
-Thumbs.db
-
-# Files that might appear on external disks
-.Spotlight-V100
-.Trashes
-
 # Ctags
 tags
 tags.lock
@@ -38,12 +30,15 @@ tags.temp
 *.so
 *.a
 
-# Language Server Protocol / Visual Studio Code metadata.
+# LSP / Visual Studio Code metadata {{{
 .vscode/
+# }}}
 
+# Eclipse {{{
 # Eclipse config cache
 link/config/mimeapps.list
 link/config/jgit/
+# }}}
 
 # Extra config directories to ignore
 link/config/dconf/
@@ -53,7 +48,7 @@ link/config/configstore/
 # Ignore local desktop menu config
 link/config/menus
 
-# Vim
+# Vim {{{
 link/vim/backups
 # Ignore all vim-plug managed plugins.
 link/vim/plugged
@@ -64,11 +59,12 @@ link/vim/sessions
 link/vim/swaps
 # History file for netrw
 link/vim/.netrwhist
+# }}}
 
 # caja
 link/config/caja
 
-# Neovim
+# Neovim {{{
 link/config/nvim/backups
 link/config/nvim/swaps
 link/config/nvim/undo
@@ -78,7 +74,7 @@ link/config/nvim/plugin/packer_compiled.vim
 # Ignore downloded Neovim releases.
 link/config/nvim/.releases
 
-# coc.nvim
+# coc.nvim {{{
 link/config/coc/commands
 link/config/coc/explorer-actions
 link/config/coc/history.json
@@ -92,20 +88,43 @@ link/config/coc/snippets-mru
 link/config/coc/list-links-history.json
 link/config/coc/extensions/*
 !/link/config/coc/extensions/package.json
+# }}}
+
+# }}}
 
 link/config/configstore/update-notifier-npm.json
 
 # Ignore saved autorandr profiles since they are largely hardware-dependent
 link/config/autorandr
 
-# Ignore TabNine cache and lock files
+# TabNine {{{
 link/config/TabNine/*
 !link/config/TabNine/tabnine_config.json
+# }}}
+
+# Emacs {{{
+# Emacs backup files
+*~
+*#*
+
+# Compiled Emacs lisp files
+*.elc
+
+# .emacs backup file(s) created by ECB
+.emacs.before*
+
+# Auto-generated Emacs config files based on org-mode source files
+my-init.el
+cedet-rc.el
+
+# Other auto-generated Elisp files from Org files
+**/plugin-notebook/*.el
 
 # Emacs straight package manager
 link/emacs/straight/build*
 link/emacs/straight/modified
 link/emacs/straight/repos
+# }}}
 
 # ccls
 .ccls-cache
@@ -113,62 +132,75 @@ link/emacs/straight/repos
 # Do not track files in the 'secure' folder
 secure/
 
-# Emacs backup files
-*~
-*#*
-# Compiled Emacs lisp files
-*.elc
-# .emacs backup file(s) created by ECB
-.emacs.before*
-# Auto-generated Emacs config files based on org-mode source files
-my-init.el
-cedet-rc.el
-# Other auto-generated Elisp files from Org files
-**/plugin-notebook/*.el
-
 # Brave browser metadata
 link/config/BraveSoftware
 
-# Mutt/Neomutt
+# Mutt/Neomutt {{{
 link/config/mutt/cache
 # Do not store mutt aliases
 link/config/mutt/aliases
 # Do not track Mutt themes (it's a separate repo now)
 link/config/mutt/themes
 link/config/mutt/mutt-themes
+# }}}
+
+# Awesome WM {{{
 
 # Do not track vendor features repos for Awesome WM
 link/config/awesome/awesome-*
 # Ignore custom set wallpaper
 link/config/awesome/wallpaper/
+# }}}
+
+# Ranger {{{
 
 # Do not track Ranger plugins
 link/config/ranger/plugins
 # Do not track Ranger colorshemes since we clone this repository
 link/config/ranger/colorschemes
+# }}}
 
+# nnn {{{
 # Ignore installed nnn plugins
 link/config/nnn/plugins*.tar.gz
 link/config/nnn/plugins/
+# }}}
 
 # Ignore libreoffice config
 link/config/libreoffice
 
-# cmus files
+# cmus {{{
 link/config/cmus/autosave
 link/config/cmus/cache
 link/config/cmus/command-history
 link/config/cmus/lib.pl
+# }}}
 
 # Ignore chromium config by defaul
 link/config/chromium
 
+# Authy {{{
 # Authy local configuration files
 link/config/Authy\ Desktop
+# }}}
 
-# zsh files
+# ZSH {{{
 # Completion database files.
 shell/zsh/zdotdir/.zcomp*
 # Extra completion files that should not be tracked.
 shell/zsh/zdotdir/git-completion.bash
 shell/zsh/zdotdir/_git
+# }}}
+
+# OS X / macOS {{{
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+link/config/iterm2
+# }}}
+
+# vim:foldenable:foldmethod=marker
