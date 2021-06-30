@@ -15,6 +15,20 @@ COMMON_SOURCE="${COMMON_SHELL}/source"
 LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 # }}}
 
+# Make sure preparatory steps are taken before running the main profile sourcing
+# functions. This should be run before the src() or src_all() functions since it
+# takes care of things like setting $PATH correctly on some systems that do not
+# automatically have access to required basic resources like the GNU CLI tools.
+prepare_shell_for_os() {
+  local os="$(uname -s)"
+  case "${os}" in
+    "Darwin")
+      . "${COMMON_SHELL_SOURCE}/mac/functions_mac.sh"
+      prepare_mac
+      ;;
+  esac
+}
+
 # Source additional files {{{
 
 # Source files that were transferred from the dotfiles repo, but not linked
@@ -155,4 +169,4 @@ src() {
   __src
 }
 
-# vim:foldenable:foldmethod=marker:foldlevel=0
+# vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

@@ -79,7 +79,7 @@ prepare_for_macos() {
   # Make sure homebrew is installed.
   install_homebrew
   # Install all the regular GNU CLI tools.
-  install_gnu_cli_tools 
+  install_gnu_cli_tools
   # Make sure the CLI tools we reference throughout this install script are the
   # GNU versions, not the BSD versions which come standard on macOS.
   create_gnu_cli_tool_aliases_for_mac
@@ -327,6 +327,7 @@ main() {
   link_zdotdir
   link_config
   add_extra_os_vars
+  add_extra_paths_to_path_file
 }
 # }}}
 

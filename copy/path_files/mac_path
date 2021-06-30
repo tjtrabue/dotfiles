@@ -1,0 +1,10 @@
+$(brew --prefix)/opt/binutils/bin
+$(brew --prefix)/opt/gnu-getopt/bin
+$(brew --prefix)/opt/coreutils/libexec/gnubin
+$(brew --prefix)/opt/findutils/libexec/gnubin
+$(brew --prefix)/opt/gawk/libexec/gnubin
+$(brew --prefix)/opt/gnu-sed/libexec/gnubin
+$(brew --prefix)/opt/gnu-indent/libexec/gnubin
+$(brew --prefix)/opt/gnu-tar/libexec/gnubin
+$(brew --prefix)/opt/gnu-which/libexec/gnubin
+$(brew --prefix)/opt/grep/libexec/gnubin

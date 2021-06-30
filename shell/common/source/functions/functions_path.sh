@@ -75,4 +75,22 @@ __evaluate_paths() {
   eval echo "$(xargs -a "${pathFile}")" | tr ' ' '\n' | tac | awk '!x[$0]++'
 }
 
+# Write additional paths to the ~/.path file depending on the operating system.
+add_extra_paths_to_path_file() {
+  local os="$(uname -s)"
+  local extraPathsFile
+
+  log_info "Looking for extra executable paths to add to \$PATH..."
+  case "${os}" in
+    "Darwin")
+      log_info "Adding extra executable paths for macOS."
+      extraPathsFile="${DOTFILES_COPY}/path_files/mac_path"
+      ;;
+  esac
+
+  if [ -f "${extraPathsFile}" ]; then
+    cat "${extraPathsFile}" >>"${PATH_FILE}"
+  fi
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

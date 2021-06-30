@@ -1,8 +1,17 @@
+#!/bin/sh
+
+# Prepare a mac computer for development.
+prepare_mac() {
+  install_mac_developer_tools
+  install_homebrew
+  create_gnu_cli_tool_aliases_for_mac
+}
+
 # Mac operating systems need the user to install a suite of developer tools
 # before any useful software development can be performed.
 install_mac_developer_tools() {
   # Make sure developer tools are installed
-  xcode-select --install || :
+  xcode-select --install >>/dev/null || :
 }
 
 # Install the homebrew package manager for macOS.
@@ -44,7 +53,10 @@ create_gnu_cli_tool_aliases_for_mac() {
   local brewPrefix="$(brew --prefix)/opt"
   local pathToGnubin="libexec/gnubin"
 
+  __add_tool_to_path "${brewPrefix}/binutils/bin"
   __add_tool_to_path "${brewPrefix}/coreutils/${pathToGnubin}"
+  __add_tool_to_path "${brewPrefix}/findutils/${pathToGnubin}"
+  __add_tool_to_path "${brewPrefix}/gawk/${pathToGnubin}"
   __add_tool_to_path "${brewPrefix}/gnu-sed/${pathToGnubin}"
   __add_tool_to_path "${brewPrefix}/gnu-getopt/bin"
   __add_tool_to_path "${brewPrefix}/gnu-indent/${pathToGnubin}"
@@ -62,3 +74,5 @@ __add_tool_to_path() {
     export PATH
   fi
 }
+
+# vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

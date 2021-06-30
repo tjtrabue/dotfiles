@@ -67,8 +67,14 @@ setopt prompt_subst
 # }}}
 
 # Source aliases/functions {{{
-. "${COMMON_SHELL_SOURCE}/common.sh" && src_all
+. "${COMMON_SHELL_SOURCE}/common.sh"
 # }}}
+
+# Prepare for various operating systems
+prepare_shell_for_os
+
+# Activate custom profile
+src_all
 
 # Plugins {{{
 # Install zplug if it does not already exist
@@ -187,3 +193,6 @@ fi
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
