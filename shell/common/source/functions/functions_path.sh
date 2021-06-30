@@ -77,6 +77,7 @@ __evaluate_paths() {
 
 # Write additional paths to the ~/.path file depending on the operating system.
 add_extra_paths_to_path_file() {
+  local extraPathFilesDir="${DOTFILES_COPY}/path_files"
   local os="$(uname -s)"
   local extraPathsFile
 
@@ -84,12 +85,13 @@ add_extra_paths_to_path_file() {
   case "${os}" in
     "Darwin")
       log_info "Adding extra executable paths for macOS."
-      extraPathsFile="${DOTFILES_COPY}/path_files/mac_path"
+      extraPathsFile="${extraPathFilesDir}/mac_path"
       ;;
   esac
 
   if [ -f "${extraPathsFile}" ]; then
     cat "${extraPathsFile}" >>"${PATH_FILE}"
+    rmduplines "${PATH_FILE}"
   fi
 }
 

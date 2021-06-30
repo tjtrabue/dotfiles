@@ -81,4 +81,18 @@ rmbsyml() {
   find -L "${dir}" -maxdepth 1 -type l -delete
 }
 
+# Remove duplicate lines from a given file.
+rmduplines() {
+  local fileToStripDuplicateLinesFrom="${1}"
+  local tempFile="$(mktemp -u ${fileToStripDuplicateLinesFrom}.XXXXXXXXXX)"
+
+  if [ ! -f "${fileToStripDuplicateLinesFrom}" ]; then
+    err "${fileToStripDuplicateLinesFrom} is not a file."
+    return 1
+  fi
+
+  awk '!x[$0]++' "${fileToStripDuplicateLinesFrom}" >"${tempFile}"
+  mv "${tempFile}" "${fileToStripDuplicateLinesFrom}"
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
