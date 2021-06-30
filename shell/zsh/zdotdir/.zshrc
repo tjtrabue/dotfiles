@@ -70,10 +70,11 @@ setopt prompt_subst
 . "${COMMON_SHELL_SOURCE}/common.sh"
 # }}}
 
-# Prepare for various operating systems
+# Prepare system for various operating systems, such as macOS, which does not
+# have access to GNU CLI utilities by default.
 prepare_shell_for_os
 
-# Activate custom profile
+# Activate custom aliases/functions
 src_all
 
 # Plugins {{{
@@ -193,6 +194,3 @@ fi
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"

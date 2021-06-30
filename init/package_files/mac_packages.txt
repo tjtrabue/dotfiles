@@ -13,6 +13,7 @@ gnu-which
 gnutls
 grep
 gzip
+lazygit
 openssh
 parallel
 ripgrep

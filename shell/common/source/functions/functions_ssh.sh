@@ -21,7 +21,7 @@ sshagent() {
 # starting a new agent, if need be.
 __ssh_agent_mac() {
   log_info "Adding identities to macOS SSH agent"
-  ssh-add
+  ssh-add >>/dev/null 2>&1
 }
 
 # Linux requires a little more sophistication when managing SSH agents.

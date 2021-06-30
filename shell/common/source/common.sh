@@ -72,13 +72,11 @@ __src_os() {
 
   case "${os}" in
   "Arch Linux")
-    __src_dir "${archSrcDir}/aliases"
-    __src_dir "${archSrcDir}/functions"
-    __src_dir "${archSrcDir}/other"
+    __src_standard_subdirs_under_dir "${archSrcDir}"
     ;;
 
   "Darwin")
-    __src_dir "${macSrcDir}/functions"
+    __src_standard_subdirs_under_dir "${macSrcDir}"
     ;;
 
   *)
@@ -88,9 +86,22 @@ __src_os() {
   esac
 }
 
+# Source the aliases, functions, and other directory located under a provided
+# directory.
+__src_standard_subdirs_under_dir() {
+  local baseDir="${1}"
+  local d
+
+  for d in "${baseDir}/"{aliases,functions,other}; do
+    if [ -d "${d}" ]; then
+      __src_dir "${d}"
+    fi
+  done
+}
+
 # Source all functions and alias files for any POSIX-compliant shell.
 __src() {
-  local currentShell="$(ps -p $$ | awk '{print $NF}' | tail -1)"
+  local currentShell="$(basename "${SHELL}")"
   local srcDir
   local f
   local d

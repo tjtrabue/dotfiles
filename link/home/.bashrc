@@ -18,7 +18,14 @@ export PATH="$DOTFILES_HOME/bash/bin:$PATH"
 # }}}
 
 # Pull in common shell aliases/functions as soon as possible.
-. "${DOTFILES_COMMON}/source/common.sh" && src_all
+. "${DOTFILES_COMMON}/source/common.sh"
+
+# Prepare system for various operating systems, such as macOS, which does not
+# have access to GNU CLI utilities by default.
+prepare_shell_for_os
+
+# Activate custom aliases/functions
+src_all
 
 # Shell completion {{{
 # Include extra CLI completions if available.
