@@ -9,6 +9,23 @@ sshagent() {
     return 0
   fi
 
+  if [ "$(getdistro)" = "Darwin" ]; then
+    __ssh_agent_mac
+  else
+    __ssh_agent_linux
+  fi
+}
+
+# Using ssh-agent from a Mac is a lot simpler than using it from a Linux
+# computer. All you have to do is run `ssh-add`, that's it. macOS takes care of
+# starting a new agent, if need be.
+__ssh_agent_mac() {
+  log_info "Adding identities to macOS SSH agent"
+  ssh-add
+}
+
+# Linux requires a little more sophistication when managing SSH agents.
+__ssh_agent_linux() {
   __load_ssh_agent_config_from_file
 
   __check_ssh_agent_loaded
@@ -20,6 +37,8 @@ sshagent() {
     __create_new_ssh_agent
     # Load the running agent into the current shell.
     __load_ssh_agent_config_from_file
+  elif [ "$?" = 1 ]; then
+    __add_ssh_identities
   fi
 
   if ! __check_ssh_agent_running; then

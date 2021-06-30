@@ -23,7 +23,7 @@ prepare_shell_for_os() {
   local os="$(uname -s)"
   case "${os}" in
     "Darwin")
-      . "${COMMON_SHELL_SOURCE}/mac/functions_mac.sh"
+      . "${COMMON_SOURCE}/mac/functions/functions_mac.sh"
       prepare_mac
       ;;
   esac
@@ -63,17 +63,22 @@ __src_dir() {
 # Source additional OS-specific files
 __src_os() {
   local archSrcDir="${LINUX_SOURCE_DIR}/arch"
+  local macSrcDir="${COMMON_SOURCE}/mac"
   local os
 
   # Make sure to get reference to "getosinfo" function
   . "${COMMON_SOURCE}/functions/functions_os.sh"
-  os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
+  os="$(getdistro)"
 
   case "${os}" in
   "Arch Linux")
     __src_dir "${archSrcDir}/aliases"
     __src_dir "${archSrcDir}/functions"
     __src_dir "${archSrcDir}/other"
+    ;;
+
+  "Darwin")
+    __src_dir "${macSrcDir}/functions"
     ;;
 
   *)
@@ -130,12 +135,12 @@ __src_agents() {
 __src_extra_environment_profiles() {
   src_dircolors_for_profile
   src_git_for_profile
-  src_prompt_for_profile
   src_java_for_profile
   src_node_for_profile
   src_python_for_profile
   src_ruby_for_profile
   src_asdf_for_profile
+  src_prompt_for_profile
 }
 # }}}
 

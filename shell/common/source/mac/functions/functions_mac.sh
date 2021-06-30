@@ -22,28 +22,12 @@ install_homebrew() {
   fi
 }
 
-# Install all GNU command line tools for macOS so that we're not stuck using the
-# awful BSD versions.
-install_gnu_cli_tools() {
-  brew install binutils
-  brew install coreutils
-  brew install diffutils
-  brew install ed
-  brew install findutils
-  brew install gawk
-  brew install gnu-getopt
-  brew install gnu-indent
-  brew install gnu-sed
-  brew install gnu-tar
-  brew install gnu-which
-  brew install gnutls
-  brew install grep
-  brew install gzip
-  brew install screen
-  brew install tmux
-  brew install watch
-  brew install wdiff
-  brew install wget
+# Install all homebrew packages
+install_mac_packages() {
+  local package
+  while read -r package || [ -n "${package}" ]; do
+    brew install "${package}"
+  done <"${BREW_PACKAGES_FILE}"
 }
 
 # macOS uses BSD versions of UNIX command line tools by default. The GNU

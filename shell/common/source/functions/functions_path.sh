@@ -95,4 +95,12 @@ add_extra_paths_to_path_file() {
   fi
 }
 
+# Make sure ~/.path is up-to-date with default paths from the dotfiles
+# repository.
+pathsync() {
+  cat "${DOTFILES_COPY}/.path" >>"${PATH_FILE}"
+  add_extra_paths_to_path_file
+  rmduplines "${PATH_FILE}"
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

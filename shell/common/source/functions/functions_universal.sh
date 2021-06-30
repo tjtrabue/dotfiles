@@ -90,7 +90,7 @@ mkbin() {
 
 # Return the user's current shell name, such as "bash" or "zsh".
 currentshell() {
-  ps -p $$ | awk '{print $NF}' | tail -1
+  basename "${SHELL}"
 }
 
 # Run a command over multiple lines of input from stdin or from a file

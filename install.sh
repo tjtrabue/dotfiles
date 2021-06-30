@@ -73,13 +73,13 @@ prepare_for_os() {
 # macOS specific preparation.
 prepare_for_macos() {
   log_info "Preparing for macOS installation"
-  source "${COMMON_SOURCE}/mac/functions_mac.sh"
+  source "${COMMON_SOURCE}/mac/functions/functions_mac.sh"
   # Make sure developer tools are installed
   install_mac_developer_tools
   # Make sure homebrew is installed.
   install_homebrew
   # Install all the regular GNU CLI tools.
-  install_gnu_cli_tools
+  install_gnu_cli_tools_for_mac
   # Make sure the CLI tools we reference throughout this install script are the
   # GNU versions, not the BSD versions which come standard on macOS.
   create_gnu_cli_tool_aliases_for_mac

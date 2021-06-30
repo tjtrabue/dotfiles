@@ -57,28 +57,15 @@ __activate_starship_for_shell() {
 }
 
 __activate_starship_for_bash() {
-  __activate_starship 'eval "$(starship init bash)"' 'STARSHIP_ACTIVE_BASH'
+  eval "$(starship init bash)"
 }
 
 __activate_starship_for_zsh() {
-  __activate_starship 'eval "$(starship init zsh)"' 'STARSHIP_ACTIVE_ZSH'
+  eval "$(starship init zsh)"
 }
 
 __activate_starship_for_fish() {
-  __activate_starship 'starship init fish | source' 'STARSHIP_ACTIVE_FISH'
-}
-
-# Generic activation function for starship prompt in the current shell. We do
-# not want to re-activate starship after the first time because doing so can
-# incur some strange side-effects in the shell's prompt.
-__activate_starship() {
-  local starshipInitCmd="$1"
-  local shellControlEnvVar="$2"
-
-  log_debug "Starhship activation command: ${starshipInitCmd}"
-  log_debug "Starship control environment variable: ${shellControlEnvVar}"
-  eval "${starshipInitCmd}"
-  eval "export ${shellControlEnvVar}=1"
+  starship init fish | source
 }
 
 # Initialize the classic powerline shell prompt.

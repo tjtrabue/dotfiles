@@ -1,0 +1,25 @@
+binutils
+coreutils
+diffutils
+ed
+emacs-plus@28 --with-xwidgets --with-mailutils --with-dbus --with-native-comp --with-debug --with-elrumo2-icon
+findutils
+gawk
+gnu-getopt
+gnu-indent
+gnu-sed
+gnu-tar
+gnu-which
+gnutls
+grep
+gzip
+openssh
+parallel
+ripgrep
+screen
+the_silver_searcher
+tmux
+watch
+wdiff
+wget
+zsh

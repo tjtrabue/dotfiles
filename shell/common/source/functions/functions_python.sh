@@ -57,18 +57,28 @@ smartpip() {
 
 # Installs all packages listed in the pyhon2 and python3 package lists
 install_python_packages() {
-  if [ -f "${PYTHON2_PACKAGES_FILE}" ]; then
-    python2 -m pip install --user --upgrade -r "${PYTHON2_PACKAGES_FILE}";
-  else
-    err "Could not file Python 2 package file";
-    return 1;
-  fi
+  # NOTE: Python 2.x has reached its end-of-life, and is no longer supported.
+  # install_python2_packages
+  install_python3_packages
+}
 
-  if [ -f "${PYTHON3_PACKAGES_FILE}" ]; then
-    python3 -m pip install --user --upgrade -r "${PYTHON3_PACKAGES_FILE}";
+install_python2_packages() {
+  log_info "Installing Python 2.x packages"
+  if [ -f "${PYTHON2_PACKAGES_FILE}" ]; then
+    python2 -m pip install --user --upgrade -r "${PYTHON2_PACKAGES_FILE}"
   else
-    err "Could not file Python 3 package file";
-    return 2;
+    err "Could not file Python 2 package file"
+    return 1
+  fi
+}
+
+install_python3_packages() {
+  log_info "Installing Python 3.x packages"
+  if [ -f "${PYTHON3_PACKAGES_FILE}" ]; then
+    python3 -m pip install --user --upgrade -r "${PYTHON3_PACKAGES_FILE}"
+  else
+    err "Could not file Python 3 package file"
+    return 1
   fi
 }
 
