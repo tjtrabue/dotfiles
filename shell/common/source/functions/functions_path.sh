@@ -103,4 +103,16 @@ pathsync() {
   rmduplines "${PATH_FILE}"
 }
 
+# Write the dynamically constructred $PATH variable to ~/.profile,
+# ~/.bash_profile, and ~/.zshenv. This helps speed up profile loading.
+export_path() {
+  local f
+
+  spath
+  for f in "${HOME}"/.{profile,bash_profile,zshenv}; do
+    sed -E -i --follow-symlinks \
+      's,^\s*export\sPATH.*,export PATH="'"$PATH"'",' "${f}"
+  done
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

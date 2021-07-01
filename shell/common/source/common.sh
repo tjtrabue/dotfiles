@@ -161,8 +161,12 @@ __src_extra_environment_profiles() {
 src_all() {
   # Immediately source all function/alias files.
   __src
+
   # Add extra binary paths to $PATH
-  spath
+  # NOTE: Currently disabled in favor of more predictable options, such as
+  # hardcoding PATH in all relevant profile files.
+  # spath
+
   # Make sure luarocks are available
   src_lua_path
   # Start SSH and GPG agents

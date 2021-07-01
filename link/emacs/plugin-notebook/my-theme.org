@@ -1,4 +1,4 @@
-#+title:  Emacs Theme Customization
+#+title:  Emacs Color Theme
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:26
@@ -80,44 +80,6 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
   These are some great themes from Emacs contributors. I marked the theme I
   currently use by appending "(active)" to the end of its =org-mode= heading.
 
-** color-theme-sanityinc-tomorrow
-   The predecessor to the =base-16= color theme system.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package color-theme-sanityinc-tomorrow
-    ;; :init
-    ;; (load-theme 'sanityinc-tomorrow-eighties t)
-    :config
-    (my/set-color-theme-alist color-theme-sanityinc-tomorrow-colors 'eighties))
-#+end_src
-
-** moe-theme
-
-#+begin_src emacs-lisp :tangle yes
-  ;; (use-package moe-theme
-  ;;   :defer t
-  ;;   :init (load-theme 'moe-dark t)
-  ;;   )
-#+end_src
-
-** spacemacs-theme
-
-#+begin_src emacs-lisp :tangle yes
-  ;; (use-package spacemacs-theme
-  ;;   :defer t
-  ;;   :init (load-theme 'spacemacs-dark t)
-  ;;   )
-#+end_src
-
-** zenburn-theme
-
-#+begin_src emacs-lisp :tangle yes
-  ;; (use-package zenburn-theme
-  ;;   :defer t
-  ;;   :init (load-theme 'zenburn t)
-  ;;   )
-#+end_src
-
 ** doom-themes
    This is a /huge/ collection of Emacs themes contributed by the very gracious
    creator of Doom Emacs.
@@ -143,6 +105,7 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
     (doom-themes-org-config)
     (run-hooks 'my-theme-after-load-hook))
 #+end_src
+
 * theme-magic
   This package applies your Emacs theme to the rest of Linux. It. Is. Awesome.
 
