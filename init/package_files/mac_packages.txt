@@ -5,6 +5,7 @@ ed
 emacs-plus@28 --with-xwidgets --with-mailutils --with-dbus --with-native-comp --with-debug --with-elrumo2-icon
 findutils
 gawk
+global
 gnu-getopt
 gnu-indent
 gnu-sed
@@ -14,6 +15,7 @@ gnutls
 grep
 gzip
 lazygit
+meld
 openssh
 parallel
 ripgrep

@@ -178,7 +178,7 @@ with straight.el.")
   ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
   ;; screen with debugging output seems to mess with evil-mode, so I find it
   ;; prudent to turn this variable off until I have a reason to turn it on.
-  (setq debug-on-error t)
+  (setq debug-on-error nil)
   ;; Always follow symlinks
   (setq vc-follow-symlinks t)
   ;; Reduce risk of loading outdated bytecode
@@ -542,6 +542,13 @@ lock file."
     (straight-pull-all)
     (straight-rebuild-all)
     (straight-freeze-versions t))
+
+  (defun straight-pull-recipe-repositories ()
+    "Update all straight.el recipe repositories. This is a custom function that
+    I defined in order to make my life easier. --tjtrabue"
+    (interactive)
+    (dolist (repo straight-recipe-repositories)
+      (straight-pull-package repo)))
 #+end_src
 
 * Environment Variables
@@ -716,7 +723,7 @@ lock file."
         (with-no-warnings
           (load bootstrap-file nil 'nomessage))
         ;; Refresh package repositories
-        (straight-pull-package "melpa")
+        (straight-pull-recipe-repositories)
         ;; Install use-package via straight.
         ;; After this function runs, use-package will automatically use straight
         ;; to install packages if you specify ':stright t' instead of ':ensure t'.
