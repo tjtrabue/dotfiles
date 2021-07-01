@@ -15,7 +15,10 @@ loads:
 #+end_src
 
 * Require statements
-  These are 'require directives used to import elisp modules.
+  These are =require= directives used to import Elisp modules used heavily by
+  plugins and my custom code. Please only list the most important modules
+  here. Wait to load modules only used by an individual plugin in its =init=
+  block.
 
 #+begin_src emacs-lisp :tangle yes
    ;; Man pager library
