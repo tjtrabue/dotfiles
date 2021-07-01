@@ -3,12 +3,12 @@
 # Gets the Linux OS's name and version.
 getosinfo() {
   # Figure out the distro based on one of a few things.
-  if [ -f /etc/os-release ]; then
+  if [ -f :/etc/os-release ]; then
     # freedesktop.org and systemd
-    source /etc/os-release
+    source "/etc/os-release"
     OS="$NAME"
     VER="${VERSION_ID:-${BUILD_ID}}"
-  elif type lsb_release 2 >/dev/null &>1; then
+  elif type lsb_release >>/dev/null 2>&1; then
     # linuxbase.org
     OS="$(lsb_release -si)"
     VER="$(lsb_release -sr)"

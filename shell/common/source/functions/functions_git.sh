@@ -150,6 +150,7 @@ gdd() {
   if [ -x "$(command -v bat)" ]; then
     git diff --name-only --diff-filter=d | xargs bat --diff
   else
+    # Revert to plain old `git diff` if no fancy tools are available.
     git diff
   fi
 }

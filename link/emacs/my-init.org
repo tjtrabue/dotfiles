@@ -24,6 +24,8 @@ loads:
   (require 'dired-x)
   ;; String manipulation library
   (require 'subr-x)
+  ;; Make C and C++ modes available; necessary for many third-party packages
+  (require 'cc-mode)
 #+end_src
 
 * Define User Variables

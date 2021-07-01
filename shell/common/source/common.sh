@@ -12,6 +12,7 @@ COMMON_SHELL="${DOTFILES_SHELL}/common"
 DOTFILES_BASH="${DOTFILES_SHELL}/bash"
 DOTFILES_ZSH="${DOTFILES_SHELL}/zsh"
 COMMON_SOURCE="${COMMON_SHELL}/source"
+COMMON_SOURCE_FILE="${COMMON_SOURCE}/common.sh"
 LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 # }}}
 
@@ -105,6 +106,9 @@ __src() {
   local srcDir
   local f
   local d
+
+  # Source this file
+  . "${COMMON_SOURCE_FILE}"
 
   # Determine in which directory our shell-specific aliases and functions
   # reside.

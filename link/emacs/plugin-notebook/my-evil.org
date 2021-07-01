@@ -118,7 +118,6 @@ Needed for performance:
       ;; Unbind some unused mappings
      ("M-." . nil))
     :init
-    (require 'cc-mode)
     ;; Whether or not to use Vim keys in the minibuffer.
     (setq evil-collection-setup-minibuffer nil)
     :config
