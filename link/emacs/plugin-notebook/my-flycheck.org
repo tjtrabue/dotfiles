@@ -17,6 +17,11 @@ Needed for performance:
 #+end_src
 
 * flycheck
+  *NOTE ABOUT FLYSPELL:* =flyspell-mode= requires you to have an
+  ispell-compatible spell-checking binary installed, such as =hunspell=.
+  Furthermore, =hunspell= requires you to have dictionaries installed in
+  predictable locations. Run =hunspell -D= to view the path =hunspell= uses to
+  find dictionaries, which is different depending on your operating system.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package flycheck

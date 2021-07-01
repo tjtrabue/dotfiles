@@ -26,6 +26,8 @@ loads:
   (require 'subr-x)
   ;; Make C and C++ modes available; necessary for many third-party packages
   (require 'cc-mode)
+  ;; "find function at point" library
+  (require 'ffap)
 #+end_src
 
 * Define User Variables
@@ -180,7 +182,7 @@ with straight.el.")
   ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
   ;; screen with debugging output seems to mess with evil-mode, so I find it
   ;; prudent to turn this variable off until I have a reason to turn it on.
-  (setq debug-on-error nil)
+  (setq debug-on-error t)
   ;; Always follow symlinks
   (setq vc-follow-symlinks t)
   ;; Reduce risk of loading outdated bytecode
@@ -727,6 +729,9 @@ lock file."
           (load bootstrap-file nil 'nomessage))
         ;; Refresh package repositories
         (straight-pull-recipe-repositories)
+        ;; Default mode for loading packages: either defer or demand.
+        (setq use-package-always-demand t)
+        ;; (setq use-package-always-defer t)
         ;; Install use-package via straight.
         ;; After this function runs, use-package will automatically use straight
         ;; to install packages if you specify ':stright t' instead of ':ensure t'.

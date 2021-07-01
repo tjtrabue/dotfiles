@@ -19,7 +19,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs
-    :defer t
+    :after (all-the-icons)
     :init
     (with-eval-after-load 'winum
       (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))

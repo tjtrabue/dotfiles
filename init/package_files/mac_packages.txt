@@ -16,6 +16,7 @@ gnu-which
 gnutls
 grep
 gzip
+hunspell
 kind
 kubectl
 lazygit
