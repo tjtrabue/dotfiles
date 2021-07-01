@@ -144,6 +144,15 @@ lastchange() {
 
   git log -p -1 "${file}"
 }
+
+# An extended diff function leveraging powerful previewer tools such as bat.
+gdd() {
+  if [ -x "$(command -v bat)" ]; then
+    git diff --name-only --diff-filter=d | xargs bat --diff
+  else
+    git diff
+  fi
+}
 # }}}
 
 # Rebasing/squashing {{{

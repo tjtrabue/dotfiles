@@ -545,7 +545,8 @@ lock file."
 
   (defun straight-pull-recipe-repositories ()
     "Update all straight.el recipe repositories. This is a custom function that
-    I defined in order to make my life easier. --tjtrabue"
+    I defined in order to make my life easier.
+    --tjtrabue"
     (interactive)
     (dolist (repo straight-recipe-repositories)
       (straight-pull-package repo)))

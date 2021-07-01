@@ -37,7 +37,7 @@ highlighting.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package tree-sitter-langs
-    :disabled
+    ;; :disabled
     :after tree-sitter
     )
 #+end_src
