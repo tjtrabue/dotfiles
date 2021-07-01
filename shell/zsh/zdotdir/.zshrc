@@ -78,6 +78,10 @@ prepare_shell_for_os
 src_all
 
 # Plugins {{{
+# Troubleshooting: if you see issues like __zplug::core::load::from_cache,
+# run `zplug clean`, `zplug clear`, and then `zplug 'package'` for each package
+# you want to use. After that, run `zplug install` and then `zplug load`.
+
 # Install zplug if it does not already exist
 if [ ! -d "${ZPLUG_HOME}" ]; then
   git clone "https://github.com/zplug/zplug" "${ZPLUG_HOME}"
