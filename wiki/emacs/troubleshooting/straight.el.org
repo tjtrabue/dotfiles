@@ -10,7 +10,6 @@ Sometimes =straight.el= doesn't behave as expected when you attempt to bootstrap
 a new Emacs installation, or when upgrading an old installation. This guide is
 here to help you navigate some of the pitfalls you may encounter.
 
-
 * The golden rule of troubleshooting straight.el problems
 ** Always run straight-rebuild-package on the problem packages!
    Package fails to build? Refresh your package recipe repos and rebuild the

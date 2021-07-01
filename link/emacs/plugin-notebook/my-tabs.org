@@ -32,8 +32,8 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
         ("g t" . centaur-tabs-forward)
         ("g T" . centaur-tabs-backward)
       :map evil-collection-unimpaired-mode-map
-        ([remap evil-next-buffer] . centaur-tabs-forward)
-        ([remap evil-prev-buffer] . centaur-tabs-backward))
+        ([remap next-buffer] . centaur-tabs-forward)
+        ([remap previous-buffer] . centaur-tabs-backward))
      :custom
      ;; Use themed icons for tabs.
      (centaur-tabs-set-icons t)
