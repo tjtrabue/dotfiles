@@ -106,12 +106,25 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # Fish-like syntax highlighting that colorizes your commands as you type them.
   zplug "zsh-users/zsh-syntax-highlighting"
 
+  # zsh-vi-mode {{{
   # Use 'jk' to return to normal mode.
   ZVM_VI_INSERT_ESCAPE_BINDKEY="jk"
   # Use standard vim-surround style keybindings for manipulating surroundings.
   ZVM_VI_SURROUND_BINDKEY="classic"
+
+  # The plugin will auto execute this zvm_after_init function after zsh-vi-mode
+  # loads and initializes. Thus, this code executes after zsh-vi-mode loads,
+  # so this is where we list overrides for the defaults provided by
+  # zsh-vi-mode.
+  zvm_after_init() {
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    # Definitely want to override the C-P functionality of zsh-vi-mode.
+    bindkey -s '^P' 'ctrlp^M'
+  }
+
   # Vim-like line editing for Zsh.
   zplug "jeffreytse/zsh-vi-mode"
+  # }}}
 
   # Install any registered plugins that have not yet been installed.
   if ! zplug check; then
