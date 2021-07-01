@@ -102,9 +102,12 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # Fish-like syntax highlighting that colorizes your commands as you type them.
   zplug "zsh-users/zsh-syntax-highlighting"
 
-  # Use C-n to leave insert mode.
-  VIM_MODE_VICMD_KEY='^N'
-  zplug "softmoth/zsh-vim-mode"
+  # Use 'jk' to return to normal mode.
+  ZVM_VI_INSERT_ESCAPE_BINDKEY="jk"
+  # Use standard vim-surround style keybindings for manipulating surroundings.
+  ZVM_VI_SURROUND_BINDKEY="classic"
+  # Vim-like line editing for Zsh.
+  zplug "jeffreytse/zsh-vi-mode"
 
   # Install any registered plugins that have not yet been installed.
   if ! zplug check; then

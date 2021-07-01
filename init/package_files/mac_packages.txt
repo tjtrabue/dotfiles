@@ -23,6 +23,8 @@ meld
 neovim
 openssh
 parallel
+pyenv
+ranger
 ripgrep
 screen
 the_silver_searcher
