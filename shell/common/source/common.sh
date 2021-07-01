@@ -169,7 +169,7 @@ src_all() {
   # Add extra binary paths to $PATH
   # NOTE: Currently disabled in favor of more predictable options, such as
   # hardcoding PATH in all relevant profile files.
-  # spath
+  spath
 
   # Make sure luarocks are available
   src_lua_path

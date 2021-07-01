@@ -60,7 +60,7 @@ epath() {
 
 # Source the LuaRocks module path.
 src_lua_path() {
-  if [ "$(command -v luarocks)" != "" ]; then
+  if [ -x "$(command -v luarocks)" ]; then
     eval "$(luarocks path)"
   fi
 }
