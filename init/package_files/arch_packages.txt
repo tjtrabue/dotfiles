@@ -185,6 +185,7 @@ xorg-xfd
 xorg-xinit
 xorg-xinput
 xscreensaver
+xsel
 xterm
 zathura
 zathura-pdf-poppler

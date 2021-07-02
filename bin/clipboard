@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+# The clipboard CLI command to use
+declare CLIPBOARD_CMD=""
+declare CONTENTS=""
+
+# Help function {{{
+clipboard__help() {
+  cat <<EOF
+clipboard - dynamic wrapper around cli clipboard program
+
+Use the clipboard program to pipe the output of a text-yielding command to the
+system's clipboard. The CLI tool for interacting with the system clipboard is
+different depending on the operating system. This tool figures out which tool to
+use dynmically so that you don't have to.
+
+EXAMPLES:
+  cat README.md | clipboard
+EOF
+}
+# }}}
+
+# Primary functions {{{
+clipboard__get_clipboard_command() {
+  local os="$(uname -s)"
+
+  case "${os}" in
+    "Darwin")
+      CLIPBOARD_CMD="pbcopy"
+      ;;
+    *)
+      CLIPBOARD_CMD="xclip -selection clipboard"
+      ;;
+  esac
+}
+
+clipboard__check_clipboard_program_exists() {
+  local clipboardExecutable="$(echo "${CLIPBOARD_CMD}" | awk '{print $1}')"
+
+  if [ -z "$(command -v "${clipboardExecutable}")" ]; then
+    cat <<EOF
+Error: clipboard program "${clipboardExecutable}" not found on \$PATH. It may
+not be installed. Please ensure this program is installed and on your \$PATH and
+try again.
+EOF
+    exit 1
+  fi
+}
+
+# Does the actual content copying.
+clipboard__copy_contents_to_clipboard() {
+  if [ -z "${CONTENTS}" ]; then
+    eval "${CLIPBOARD_CMD} </dev/stdin"
+  else
+    eval "${CLIPBOARD_CMD} ${CONTENTS}"
+  fi
+}
+# }}}
+
+# Main function {{{
+# Main point of entry for the program.
+main() {
+  CONTENTS="${*}"
+  clipboard__get_clipboard_command
+  clipboard__check_clipboard_program_exists
+  clipboard__copy_contents_to_clipboard
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n 'clipboard' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+    -h | --help)
+      clipboard__help
+      exit 0
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    *)
+      err "Unknown option $1 to ${THIS_EXEC}"
+      exit 2
+      ;;
+  esac
+done
+# }}}
+
+main "${*}"
+
+# vim:foldenable:foldmethod=marker:

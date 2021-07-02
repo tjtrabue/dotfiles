@@ -7,7 +7,7 @@
 /usr/local/bin
 $HOME/bin
 $HOME/.local/bin
-$HOME/.dotfiles/bash/bin
+$HOME/.dotfiles/bin
 $HOME/.fzf/bin
 $HOME/.ghcup/bin
 $HOME/.cabal/bin
