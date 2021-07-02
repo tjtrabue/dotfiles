@@ -98,6 +98,26 @@ add_custom_keybindings() {
   # Ctrl-O to open Ranger as a means of changing directories.
   bindkey -s '^O' 'ranger-cd^M'
 }
+
+# Add FZF completions to Zsh shell.
+enable_fzf_in_zsh() {
+  local fzfSystem="/usr/share/fzf"
+  local fzfUserShell="${HOME}/.fzf/shell"
+
+  # Load fzf zsh keybindings
+  if [ -f "${fzfSystem}/key-bindings.zsh" ]; then
+    . "${fzfSystem}/key-bindings.zsh"
+  elif [ -f "${fzfUserShell}/key-bindings.zsh" ]; then
+    . "${fzfUserShell}/key-bindings.zsh"
+  fi
+
+  # Load fzf zsh completions
+  if [ -f "${fzfSystem}/completion.zsh" ]; then
+    . "${fzfSystem}/completion.zsh"
+  elif [ -f "${fzfUserShell}/completion.zsh" ]; then
+    . "${fzfUserShell}/completion.zsh"
+  fi
+}
 # }}}
 
 # Plugins {{{
@@ -149,7 +169,7 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # zsh-vi-mode.
   zvm_after_init() {
     # Make sure FZF keybindings take precedence over zsh-vi-mode keybindings.
-    [ -f "${HOME}/.fzf.zsh" ] && source "${HOME}/.fzf.zsh"
+    enable_fzf_in_zsh
     add_custom_keybindings
   }
 
@@ -166,28 +186,6 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # (use '--verbose' flag to see output as each plugin loads).
   zplug load
 fi
-# }}}
-
-# fzf {{{
-FZF_SYSTEM="/usr/share/fzf"
-FZF_USER_SHELL="${HOME}/.fzf/shell"
-
-# Load fzf zsh keybindings
-if [ -f "${FZF_SYSTEM}/key-bindings.zsh" ]; then
-  . "${FZF_SYSTEM}/key-bindings.zsh"
-elif [ -f "${FZF_USER_SHELL}/key-bindings.zsh" ]; then
-  . "${FZF_USER_SHELL}/key-bindings.zsh"
-fi
-
-# Load fzf zsh completions
-if [ -f "${FZF_SYSTEM}/completion.zsh" ]; then
-  . "${FZF_SYSTEM}/completion.zsh"
-elif [ -f "${FZF_USER_SHELL}/completion.zsh" ]; then
-  . "${FZF_USER_SHELL}/completion.zsh"
-fi
-
-unset FZF_SYSTEM
-unset FZF_USER_SHELL
 # }}}
 
 # Completions {{{
