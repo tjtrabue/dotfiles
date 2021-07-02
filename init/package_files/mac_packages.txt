@@ -1,5 +1,7 @@
 binutils
+broot
 clang-format
+cmatrix
 coreutils
 diffutils
 docker
