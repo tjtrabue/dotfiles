@@ -45,17 +45,23 @@ shortpath() {
 spath() {
   local pathFile="${1:-${PATH_FILE}}"
   local pathVar="${2:-PATH}"
-  local constructedPath=""
-  constructedPath="$(__evaluate_paths "${pathFile}" | tr '\n' ':' |
-    sed 's/:$//')"
 
-  eval "${pathVar}=${constructedPath}"
+  eval "${pathVar}=$(construct_path)"
   export "${pathVar?}"
 }
 
-# echo the $PATH environment variable to the terminal.
+# Echo a path variable (PATH by default) and its value to stdout.
 epath() {
-  printf "%s\n" "${PATH}"
+  local pathFile="${1:-${PATH_FILE}}"
+  local pathVar="${2:-PATH}"
+  printf "%s='%s'\n" "${pathVar}" "$(construct_path "${pathFile}")"
+}
+
+# Put together a path string from an input path file containing lines to join
+# into a single path specifier.
+construct_path() {
+  local pathFile="${1:-${PATH_FILE}}"
+  __evaluate_paths "${pathFile}" | tr '\n' ':' | sed 's/:$//'
 }
 
 # Source the LuaRocks module path.
@@ -109,11 +115,17 @@ pathsync() {
 # works in concert with `spath()` to enhance performance.
 export_path() {
   local f
+  local pathValue
 
-  spath
-  for f in "${HOME}"/.{profile,bash_profile,bashrc,zshenv,zshrc}; do
-    sed -E -i --follow-symlinks \
-      's,^\s*export\sPATH.*,export PATH="'"$PATH"'",' "${f}"
+  pathValue="$(construct_path)"
+  for f in "${HOME}"/.{profile,bash_profile,bashrc,zshenv} \
+    "${ZDOTDIR}/.zshrc"; do
+    if [ -f "${f}" ] || [ -h "${f}" ]; then
+      sed -E -i --follow-symlinks \
+        's,^\s*export\sPATH.*,export PATH="'"${pathValue}"'",' "${f}"
+    else
+      warn "No such file ${f}"
+    fi
   done
 }
 

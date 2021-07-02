@@ -9,3 +9,4 @@ $(brew --prefix)/opt/gnu-indent/libexec/gnubin
 $(brew --prefix)/opt/gnu-tar/libexec/gnubin
 $(brew --prefix)/opt/gnu-which/libexec/gnubin
 $(brew --prefix)/opt/grep/libexec/gnubin
+$(brew --prefix)/opt/llvm/bin

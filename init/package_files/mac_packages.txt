@@ -1,4 +1,5 @@
 binutils
+clang-format
 coreutils
 diffutils
 ed
@@ -7,6 +8,7 @@ fd
 findutils
 fzy
 gawk
+gcc
 global
 gnu-getopt
 gnu-indent
@@ -21,6 +23,7 @@ jq
 kind
 kubectl
 lazygit
+llvm
 meld
 neovim
 openssh
@@ -30,6 +33,7 @@ ranger
 rclone
 ripgrep
 screen
+shellcheck
 the_silver_searcher
 tmux
 up
