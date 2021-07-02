@@ -36,6 +36,30 @@ install_mac_packages() {
   done <"${BREW_PACKAGES_FILE}"
 }
 
+# Install the most important GNU tools on macOS.
+install_gnu_cli_tools_for_mac() {
+  brew install coreutils
+  brew install binutils
+  brew install diffutils
+  brew install ed
+  brew install findutils
+  brew install gawk
+  brew install global
+  brew install gnu-getopt
+  brew install gnu-indent
+  brew install gnu-sed
+  brew install gnu-tar
+  brew install gnu-which
+  brew install gnutls
+  brew install grep
+  brew install gzip
+  brew install screen
+  brew install tmux
+  brew install watch
+  brew install wdiff
+  brew install wget
+}
+
 # macOS uses BSD versions of UNIX command line tools by default. The GNU
 # versions are much more powerful and up-to-date, so we want to use them
 # instead.
@@ -59,8 +83,8 @@ create_gnu_cli_tool_aliases_for_mac() {
 # not present on $PATH already.
 __add_mac_tool_to_path() {
   local pathToToolBinDir="${1}"
-  if ! echo "${PATH}" | grep -q "${pathToToolBinDir}" && \
-    ([ -d "${pathToToolBinDir}" ] || [ -h "${pathToToolBinDir}" ]); then
+  if ! echo "${PATH}" | grep -q "${pathToToolBinDir}" &&
+  ([ -d "${pathToToolBinDir}" ] || [ -h "${pathToToolBinDir}" ]); then
     PATH="${pathToToolBinDir}:${PATH}"
     export PATH
   fi
