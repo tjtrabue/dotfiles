@@ -15,6 +15,7 @@ aws-cli
 bash-completion
 bat
 biber
+broot
 cabal-install
 chromium
 clang
