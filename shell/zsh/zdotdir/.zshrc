@@ -148,7 +148,8 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # so this is where we list overrides for the defaults provided by
   # zsh-vi-mode.
   zvm_after_init() {
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    # Make sure FZF keybindings take precedence over zsh-vi-mode keybindings.
+    [ -f "${HOME}/.fzf.zsh" ] && source "${HOME}/.fzf.zsh"
     add_custom_keybindings
   }
 
