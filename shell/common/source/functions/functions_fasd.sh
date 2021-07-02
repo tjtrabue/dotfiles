@@ -5,6 +5,7 @@ src_fasd_for_profile() {
   if [ ! -x "$(command -v fasd)" ]; then
     install_fasd
   fi
+  log_info "Activating fasd for shell"
   eval "$(fasd --init auto)"
 }
 
@@ -19,6 +20,7 @@ install_fasd() {
   if [ ! -x "${fasdBinDir}/fasd" ]; then
     __clone_fasd
     (
+      log_info "Installing fasd"
       cd "${fasdRepo}"
       PREFIX="${fasdInstallPrefix}" make install
     )
@@ -36,6 +38,7 @@ __clone_fasd() {
 
   mkdir -p "${ws}"
   if [ ! -d "${fasdRepo}" ]; then
+    log_info "Cloning fasd repository"
     git clone "${fasdGitUrl}" "${fasdRepo}"
   else
     warn "fasd repo already present at: ${fasdRepo}"
