@@ -83,5 +83,8 @@ TAB: menu-complete
 # Use Ctrl+o to open the directory navigator and cd into final directory
 "\C-o": "dirnav\n"
 
+# Use Ctrl+u to invoke lazygit in the current directory.
+"\C-u": "lazygit\n"
+
 # Use Ctrl+l to use fzf's fuzzy search feature for cd.
 "\C-l": "cd \*\*\t"
