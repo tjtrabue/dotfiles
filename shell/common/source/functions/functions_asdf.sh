@@ -6,11 +6,12 @@
 src_asdf_for_profile() {
   local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
 
-  if [ -d "${asdfDir}" ]; then
-    __src_asdf
-  else
-    warn "asdf dir not found."
+  if [ ! -d "${asdfDir}" ]; then
+    clone_asdf
+    add_asdf_plugins
   fi
+
+  __src_asdf
 }
 
 # Clone the asdf Git repository to ~/.asdf
@@ -30,10 +31,14 @@ clone_asdf() {
 add_asdf_plugins() {
   local plugin
 
-  echoe "${ASDF_PLUGINS_FILE}"
   if [ ! -f "${ASDF_PLUGINS_FILE}" ]; then
-    err "No asdf plugins file defined"
+    err "No asdf plugins file defined."
     return 1
+  fi
+
+  if [ ! -x "$(command -v asdf)" ]; then
+    err "asdf executable not found on PATH."
+    return 2
   fi
 
   log_info "Adding asdf plugins..."
@@ -58,19 +63,19 @@ __src_asdf() {
   log_info "Sourcing asdf for shell: ${currentShell}"
 
   case "${currentShell}" in
-  "bash")
-    . "${asdfSourceFile}"
-    ;;
-  "zsh")
-    . "${asdfSourceFile}"
-    ;;
-  "fish")
-    source "${asdfSourceFileFish}"
-    ;;
-  *)
-    err "Shell ${currentShell} not supported by asdf."
-    return 1
-    ;;
+    "bash")
+      . "${asdfSourceFile}"
+      ;;
+    "zsh")
+      . "${asdfSourceFile}"
+      ;;
+    "fish")
+      source "${asdfSourceFileFish}"
+      ;;
+    *)
+      err "Shell ${currentShell} not supported by asdf."
+      return 1
+      ;;
   esac
 }
 
