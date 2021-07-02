@@ -2,6 +2,7 @@ binutils
 clang-format
 coreutils
 diffutils
+docker
 ed
 emacs-plus@28 --with-xwidgets --with-mailutils --with-dbus --with-native-comp --with-debug --with-elrumo2-icon
 exa
