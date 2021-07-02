@@ -125,6 +125,7 @@ python-pip
 python2
 python2-pip
 ranger
+rclone
 read-edid
 ripgrep
 rlwrap

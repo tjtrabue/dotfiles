@@ -17,6 +17,7 @@ gnutls
 grep
 gzip
 hunspell
+jq
 kind
 kubectl
 lazygit
@@ -26,6 +27,7 @@ openssh
 parallel
 pyenv
 ranger
+rclone
 ripgrep
 screen
 the_silver_searcher
@@ -35,4 +37,5 @@ watch
 wdiff
 wget
 yank
+yq
 zsh

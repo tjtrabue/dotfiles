@@ -8,6 +8,7 @@ flake8
 grip
 ipython
 jedi
+mdv3
 pipenv
 powerline-gitstatus
 powerline-status
