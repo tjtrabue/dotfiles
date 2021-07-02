@@ -49,6 +49,9 @@ if [ -f "${HOME}/.fzf.bash" ]; then
 fi
 # }}}
 
+# One more src for good luck!
+src
+
 # These icons are supplied by the icons-in-terminal project.
 use_icons_in_terminal() {
   local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"

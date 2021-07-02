@@ -75,18 +75,18 @@ __src_os() {
   os="$(getdistro)"
 
   case "${os}" in
-  "Arch Linux")
-    __src_standard_subdirs_under_dir "${archSrcDir}"
-    ;;
+    "Arch Linux")
+      __src_standard_subdirs_under_dir "${archSrcDir}"
+      ;;
 
-  "Darwin")
-    __src_standard_subdirs_under_dir "${macSrcDir}"
-    ;;
+    "Darwin")
+      __src_standard_subdirs_under_dir "${macSrcDir}"
+      ;;
 
-  *)
-    # This warning will quickly become annoying, but is sometimes useful.
-    # echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
-    ;;
+    *)
+      # This warning will quickly become annoying, but is sometimes useful.
+      # echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
+      ;;
   esac
 }
 
@@ -97,7 +97,9 @@ __src_standard_subdirs_under_dir() {
   local d
 
   for d in "${baseDir}/"{aliases,functions,other}; do
-    [ -d "${d}" ] && __src_dir "${d}"
+    if [ -d "${d}" ]; then
+      __src_dir "${d}"
+    fi
   done
 }
 
@@ -118,7 +120,7 @@ __src() {
     # Also load readline bindings if using Bash.
     # NOTE: We only bind the readline file if our shell is interactive.
     [ -f "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" &&
-      bind -f "${HOME}/.inputrc"
+    bind -f "${HOME}/.inputrc"
   elif [ "${currentShell}" = "zsh" ]; then
     srcDir="${DOTFILES_ZSH}/source"
   fi
@@ -129,8 +131,8 @@ __src() {
   # Source all alias/function/other files, both in the common source directory
   # and in current shell's source directory.
   for d in $(find "${COMMON_SOURCE}" "${srcDir}" \
-    -maxdepth 1 -mindepth 1 -type d \
-    -name '*functions' -o -name '*aliases' -o -name '*other'); do
+      -maxdepth 1 -mindepth 1 -type d \
+      -name '*functions' -o -name '*aliases' -o -name '*other'); do
     __src_dir "${d}"
   done
 
