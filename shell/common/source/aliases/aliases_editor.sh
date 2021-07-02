@@ -8,7 +8,7 @@ alias e="edit"
 # Get around that muscle memory!
 alias vim="edit"
 # Fix that common typo.
-alias ivm="vim"
+alias ivm="edit"
 
 # Edit a file (with the configured $EDITOR) as the super user
 alias se="sudoedit"
@@ -36,4 +36,4 @@ alias vzrc="edit \${ZDOTDIR}/.zshrc"
 alias vi3="edit \${USER_CONF}/i3/config"
 # }}}
 
-# vim:foldmethod=marker:
+# vim:foldmethod=marker

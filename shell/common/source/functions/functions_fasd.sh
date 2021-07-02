@@ -5,8 +5,8 @@ src_fasd_for_profile() {
   if [ ! -x "$(command -v fasd)" ]; then
     install_fasd
   fi
-  log_info "Activating fasd for shell"
-  eval "$(fasd --init auto)"
+  __src_fasd
+  __add_fasd_aliases
 }
 
 # Install fasd for the current user
@@ -43,6 +43,30 @@ __clone_fasd() {
   else
     warn "fasd repo already present at: ${fasdRepo}"
   fi
+}
+
+# Activate fasd for the current shell.
+__src_fasd() {
+  local fasdCache="${HOME}/.fasd-init-cache"
+  __create_fasd_startup_cache
+  log_info "Activating fasd for shell"
+  . "${fasdCache}"
+}
+
+# Create a fasd cache in order to speed up shell startup.
+__create_fasd_startup_cache() {
+  local fasdCache="${HOME}/.fasd-init-cache"
+  if [ "$(command -v fasd)" -nt "${fasdCache}" -o ! -s "${fasdCache}" ]; then
+    log_info "Creating fasd startup cache to enhance performance"
+    fasd --init auto >|"${fasdCache}"
+  fi
+}
+
+# Add custom fasd aliases.
+__add_fasd_aliases() {
+  log_info "Sourcing custom fasd aliases"
+  # Edit files with the established editor program.
+  alias v='f -e $(eval echo \${EDITOR})'
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

@@ -68,16 +68,16 @@ rmbaks() {
 mkbin() {
   local executableName="$1"
   local bashTemplate
-  if [[ -L "$DOTFILES_HOME" ]]; then
+  if [ -L "$DOTFILES_HOME" ]; then
     bashTemplate="$(find -L "$DOTFILES_HOME" -type f -iname "*mkbin.bash")"
-  elif [[ -d "$DOTFILES_HOME" ]]; then
+  elif [ -d "$DOTFILES_HOME" ]; then
     bashTemplate="$(find "$DOTFILES_HOME" -type f -iname "*mkbin.bash")"
   else
     err "No \$DOTFILES_HOME directory found! Please ensure that this variable is set," \
       "that the directory exists, and try again."
     return 1
   fi
-  while [[ -z "$executableName" ]]; do
+  while [ -z "$executableName" ]; do
     echoe "Please enter a name for the executable (with or without file extension):"
     read -er executableName
   done
@@ -361,16 +361,6 @@ getcertnames() {
   else
     echo "ERROR: Certificate not found."
     return 1
-  fi
-}
-
-# `v` with no arguments opens the current directory in Vim, otherwise opens the
-# given location
-v() {
-  if [ $# -eq 0 ]; then
-    vim .
-  else
-    vim "$@"
   fi
 }
 
