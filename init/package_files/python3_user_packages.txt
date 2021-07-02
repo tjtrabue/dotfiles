@@ -18,6 +18,7 @@ pynvim
 python-language-server
 pywal
 rebound-cli
+cookiecutter
 thefuck
 ueberzug
 vint

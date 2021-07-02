@@ -58,6 +58,7 @@ hacksaw
 haskell-ghc-check
 haskell-haddock-library
 htop
+httpie
 hunspell
 hunspell-en_US
 imagemagick
@@ -138,6 +139,7 @@ scrot
 shellcheck
 shotgun
 stack
+streamlink
 texinfo
 texlive-bibtexextra
 texlive-core

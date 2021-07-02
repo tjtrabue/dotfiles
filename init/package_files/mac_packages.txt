@@ -22,8 +22,10 @@ gnu-which
 gnutls
 grep
 gzip
+httpie
 hunspell
 jq
+kakoune
 kind
 kubectl
 lazygit
@@ -39,6 +41,7 @@ rclone
 ripgrep
 screen
 shellcheck
+streamlink
 the_silver_searcher
 tmux
 up

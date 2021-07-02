@@ -5,6 +5,8 @@
 @babel/polyfill
 babel-eslint
 bash-language-server
+bible
+caniuse-cmd
 csslint
 dockerfile-language-server-nodejs
 eslint
