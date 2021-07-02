@@ -8,8 +8,12 @@ backup/
 # Ignore the test directory, used for developing test scripts:
 test/
 
+# Python {{{
 # Compiled Python files
 *.pyc
+# Python cache
+__pycache__
+# }}}
 
 # Folder view configuration files
 .DS_Store

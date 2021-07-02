@@ -17,6 +17,7 @@ pynvim
 python-language-server
 pywal
 rebound-cli
+thefuck
 ueberzug
 vint
 virtualenvwrapper

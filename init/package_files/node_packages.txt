@@ -25,11 +25,13 @@ eslint-plugin-react
 eslint-plugin-react-hooks
 graphql-language-service-server
 intelephense
+localtunnel
 lua-fmt
 markdownlint
 markdownlint-cli
 npm-check-updates
 prettier
+speed-test
 sql-language-server
 stylelint
 tern
