@@ -30,7 +30,9 @@ ripgrep
 screen
 the_silver_searcher
 tmux
+up
 watch
 wdiff
 wget
+yank
 zsh

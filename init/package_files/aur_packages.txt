@@ -20,3 +20,5 @@ optimus-manager
 polybar-git
 roswell-git
 transset-df
+up
+yank
