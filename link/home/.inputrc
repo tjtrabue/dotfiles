@@ -80,8 +80,8 @@ TAB: menu-complete
 # Use Ctrl+n to leave insert mode
 "\C-n": "\e"
 
-# Use Ctrl+o to open ranger and cd into final directory
-"\C-o": "ranger-cd\n"
+# Use Ctrl+o to open the directory navigator and cd into final directory
+"\C-o": "dirnav\n"
 
 # Use Ctrl+l to use fzf's fuzzy search feature for cd.
 "\C-l": "cd \*\*\t"
