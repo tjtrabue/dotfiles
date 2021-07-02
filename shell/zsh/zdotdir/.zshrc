@@ -80,6 +80,19 @@ prepare_shell_for_os
 # Activate custom aliases/functions
 src_all
 
+# Custom widgets {{{
+add_custom_keybindings() {
+  # Definitely want to override the C-P functionality of zsh-vi-mode.
+  bindkey -s '^P' 'ctrlp^M'
+
+  # Ctrl-L to move cursor to end of autosuggestion.
+  bindkey '^L' autosuggest-accept
+
+  # Ctrl-O to open Ranger as a means of changing directories.
+  bindkey -s '^O' 'ranger-cd^M'
+}
+# }}}
+
 # Plugins {{{
 # Troubleshooting: if you see issues like __zplug::core::load::from_cache,
 # run `zplug clean`, `zplug clear`, and then `zplug 'package'` for each package
@@ -94,20 +107,28 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # Ready zplug
   . "${ZPLUG_HOME}/init.zsh"
 
-  ## Register plugins
+  ### Register plugins
 
+  # zsh-autosuggestions {{{
   # Show completion suggestions as you type, like in fish.
   zplug "zsh-users/zsh-autosuggestions"
+  # }}}
 
+  # zsh-autocomplete {{{
   # real-time type-ahead autocompletion.
   # Fairly buggy. May want to wait before using.
   # zplug "marlonrichert/zsh-autocomplete"
+  # }}}
 
+  # zsh-completions {{{
   # Use extra community completions.
   zplug "zsh-users/zsh-completions"
+  # }}}
 
+  # zsh-syntax-highlighting {{{
   # Fish-like syntax highlighting that colorizes your commands as you type them.
   zplug "zsh-users/zsh-syntax-highlighting"
+  # }}}
 
   # zsh-vi-mode {{{
   # Use 'jk' to return to normal mode.
@@ -121,8 +142,7 @@ if [ -f "${ZPLUG_HOME}/init.zsh" ]; then
   # zsh-vi-mode.
   zvm_after_init() {
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-    # Definitely want to override the C-P functionality of zsh-vi-mode.
-    bindkey -s '^P' 'ctrlp^M'
+    add_custom_keybindings
   }
 
   # Vim-like line editing for Zsh.
@@ -166,20 +186,6 @@ unset FZF_USER_SHELL
 # Zsh has fantastic completion support by default, but we do have a few extra
 # plugins we'd like to support. See functions_completion.sh for more details.
 add_shell_completions
-# }}}
-
-# Keybindings {{{
-# Ctrl-P to edit files with fzf or fzy.
-# The '-s' option translates the input string to an output string that evaluates
-# as a shell command, as opposed to evaluating the second option as a Zsh
-# widget.
-bindkey -s '^P' 'ctrlp^M'
-
-# Ctrl-L to move cursor to end of autosuggestion.
-bindkey '^L' autosuggest-accept
-
-# Ctrl-O to open Ranger as a means of changing directories.
-bindkey -s '^O' 'ranger-cd^M'
 # }}}
 
 # zstyle {{{
