@@ -5,6 +5,7 @@ cmake-language-server
 django
 eyed3
 flake8
+grip
 ipython
 jedi
 pipenv
