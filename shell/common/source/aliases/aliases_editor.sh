@@ -2,7 +2,7 @@
 
 # Basic aliases {{{
 # Set an alias that invokes the default editor program.
-alias edit="\${EDITOR:-vim}"
+alias edit="\${EDITOR:-\$(command vim)}"
 # Shorthand for 'edit'.
 alias e="edit"
 # Get around that muscle memory!
