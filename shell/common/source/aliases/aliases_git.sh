@@ -61,4 +61,9 @@ alias grbc="git rebase --continue"
 alias greh="git reset HEAD"
 # }}}
 
+# lazygit {{{
+# Activate lazygit porcelain tool.
+alias lg="lazygit"
+# }}}
+
 # vim:foldenable:foldmethod=marker:foldlevel=0

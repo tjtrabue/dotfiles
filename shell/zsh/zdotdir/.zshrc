@@ -100,7 +100,10 @@ add_custom_keybindings() {
   bindkey '^L' autosuggest-accept
 
   # Ctrl-O to open the directory navigator as a means of changing directories.
-  bindkey -s '^O' "dirnav^M"
+  bindkey -s '^O' 'dirnav^M'
+
+  # Ctrl-U activates lazygit in the current directory.
+  bindkey -s '^U' 'lazygit^M'
 }
 
 # Add FZF completions to Zsh shell.
