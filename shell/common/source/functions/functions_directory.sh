@@ -10,7 +10,7 @@ dirnav() {
     dirNavTool="br"
   fi
 
-  "${dirNavTool}"
+  eval "${dirNavTool}"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
