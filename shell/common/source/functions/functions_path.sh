@@ -103,13 +103,15 @@ pathsync() {
   rmduplines "${PATH_FILE}"
 }
 
-# Write the dynamically constructred $PATH variable to ~/.profile,
-# ~/.bash_profile, and ~/.zshenv. This helps speed up profile loading.
+# Write the dynamically constructred $PATH variable to all relevant shell
+# startup files to make initialization faster. The `spath()` function is still
+# the defacto standard for getting an accurate $PATH, however. This function
+# works in concert with `spath()` to enhance performance.
 export_path() {
   local f
 
   spath
-  for f in "${HOME}"/.{profile,bash_profile,zshenv}; do
+  for f in "${HOME}"/.{profile,bash_profile,bashrc,zshenv,zshrc}; do
     sed -E -i --follow-symlinks \
       's,^\s*export\sPATH.*,export PATH="'"$PATH"'",' "${f}"
   done
