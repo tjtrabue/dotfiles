@@ -158,6 +158,7 @@ __src_extra_environment_profiles() {
   src_python_for_profile
   src_ruby_for_profile
   src_asdf_for_profile
+  src_fasd_for_profile
   src_prompt_for_profile
 }
 # }}}
