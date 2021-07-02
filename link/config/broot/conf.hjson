@@ -166,6 +166,7 @@
 		{
 			invocation: edit
 			shortcut: e
+			key: ctrl-k
 			execution: "$EDITOR +{line} {file}"
 			leave_broot: false
 		}
@@ -225,14 +226,14 @@
 		#		key: ctrl-j
 		#		execution: ":line_down"
 		# }
-		# {
-		#		key: ctrl-u
-		#		execution: ":page_up"
-		# }
-		# {
-		#		key: ctrl-d
-		#		execution: ":page_down"
-		# }
+		{
+			key: ctrl-u
+			execution: ":page_up"
+		}
+		{
+			key: ctrl-d
+			execution: ":page_down"
+		}
 
 		# If you develop using git, you might like to often switch
 		# to the git status filter:
