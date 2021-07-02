@@ -25,6 +25,7 @@ kubectl
 lazygit
 llvm
 meld
+neofetch
 neovim
 openssh
 parallel
