@@ -14,27 +14,31 @@ install_fasd() {
   local fasdRepo="${ws}/fasd"
   # The directory containing the 'bin' directory for fasd.
   local fasdInstallPrefix="${HOME}"
+  local fasdBinDir="${fasdInstallPrefix}/bin"
 
-  if [ -x "${fasdInstallPrefix}/bin/fasd" ]; then
-    err "fasd already installed at ${fasdInstallPrefix}/bin/"
-    return 1
+  if [ ! -x "${fasdBinDir}/fasd" ]; then
+    __clone_fasd
+    (
+      cd "${fasdRepo}"
+      PREFIX="${fasdInstallPrefix}" make install
+    )
+  else
+    warn "fasd already installed at: ${fasdBinDir}"
   fi
 
-  __clone_fasd
-  (
-    cd "${fasdRepo}"
-    PREFIX="${fasdInstallPrefix}" make install
-  )
 }
 
 # Clone the fasd git repository
 __clone_fasd() {
   local ws="${WS:-${HOME}/workspace}"
   local fasdRepo="${ws}/fasd"
+  local fasdGitUrl="https://github.com/clvv/fasd.git"
 
   mkdir -p "${ws}"
   if [ ! -d "${fasdRepo}" ]; then
-    git -C "${ws}" clone "https://github.com/clvv/fasd.git"
+    git clone "${fasdGitUrl}" "${fasdRepo}"
+  else
+    warn "fasd repo already present at: ${fasdRepo}"
   fi
 }
 
