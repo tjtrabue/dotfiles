@@ -16,15 +16,20 @@ COMMON_SOURCE_FILE="${COMMON_SOURCE}/common.sh"
 LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 # }}}
 
+# Imports {{{
+. "${COMMON_SOURCE}/functions/functions_os.sh"
+# }}}
+
 # Make sure preparatory steps are taken before running the main profile sourcing
 # functions. This should be run before the src() or src_all() functions since it
 # takes care of things like setting $PATH correctly on some systems that do not
 # automatically have access to required basic resources like the GNU CLI tools.
 prepare_shell_for_os() {
-  local os="$(uname -s)"
+  local os="$(getdistro)"
+
   case "${os}" in
     "Darwin")
-      . "${COMMON_SOURCE}/mac/functions/functions_mac.sh"
+      __src_standard_subdirs_under_dir "${COMMON_SOURCE}/mac"
       prepare_mac
       ;;
   esac
@@ -67,8 +72,6 @@ __src_os() {
   local macSrcDir="${COMMON_SOURCE}/mac"
   local os
 
-  # Make sure to get reference to "getosinfo" function
-  . "${COMMON_SOURCE}/functions/functions_os.sh"
   os="$(getdistro)"
 
   case "${os}" in
@@ -94,9 +97,7 @@ __src_standard_subdirs_under_dir() {
   local d
 
   for d in "${baseDir}/"{aliases,functions,other}; do
-    if [ -d "${d}" ]; then
-      __src_dir "${d}"
-    fi
+    [ -d "${d}" ] && __src_dir "${d}"
   done
 }
 
@@ -165,11 +166,6 @@ __src_extra_environment_profiles() {
 src_all() {
   # Immediately source all function/alias files.
   __src
-
-  # Add extra binary paths to $PATH
-  # NOTE: Currently disabled in favor of more predictable options, such as
-  # hardcoding PATH in all relevant profile files.
-  spath
 
   # Make sure luarocks are available
   src_lua_path

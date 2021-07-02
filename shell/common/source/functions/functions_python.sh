@@ -102,13 +102,15 @@ install_pyenv() {
 
 # Prepare Python environment for the current shell.
 src_python_for_profile() {
-  local pyenvHome="${PYENV_DIR:-${HOME}/.pyenv}"
+  local pyenvHome="${PYENV_ROOT:-${HOME}/.pyenv}"
 
   if ! __tool_installed "pyenv" "${pyenvHome}"; then
     install_pyenv
   fi
 
   if [ "$(command -v pyenv)" != "" ]; then
+    # Add shims to PATH
+    eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
   fi
