@@ -89,6 +89,10 @@ src_all
 # times in Zsh.
 
 add_custom_keybindings() {
+  # Use C-J and C-K to navigate command history.
+  bindkey '^J' down-line-or-history
+  bindkey '^K' up-line-or-history
+
   # Definitely want to override the C-P functionality of zsh-vi-mode.
   bindkey -s '^P' 'ctrlp^M'
 
