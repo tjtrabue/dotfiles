@@ -32,7 +32,7 @@ install_mac_packages() {
   fi
 
   while read -r package || [ -n "${package}" ]; do
-    brew install "${package}"
+    eval "brew install -- ${package}"
   done <"${BREW_PACKAGES_FILE}"
 }
 
