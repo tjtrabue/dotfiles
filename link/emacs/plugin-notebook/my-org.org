@@ -41,7 +41,8 @@ Needed for performance:
   activation.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package org-beautify-theme)
+  (use-package org-beautify-theme
+    :demand t)
 #+end_src
 
 ** org-roam

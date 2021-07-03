@@ -15,6 +15,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package which-key
+    :demand t
     :config
     (which-key-mode t))
 #+end_src

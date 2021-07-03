@@ -81,30 +81,30 @@ Needed for performance:
   Extra helper functions for defining major mode hooks for =lsp-mode= and such.
 
 #+begin_src emacs-lisp :tangle yes
-    (defun my/lsp-add-format-on-save-hook (mode)
-      "This function adds a buffer local hook for the major mode represented by
-  MODE that runs `lsp-format-buffer' before saving the buffer's file."
-      ;; Ignore major-modes listed in the blacklist variable.
-      (unless (member mode my/lsp-format-major-mode-blacklist)
-        ;; Make sure to take out the format-all hook so that we don't use
-        ;; two different formatting systems for the same buffer.
-        (remove-hook 'before-save-hook #'format-all-buffer--from-hook 'local)
-        (add-hook 'before-save-hook #'lsp-format-buffer 0 'local)))
+(defun my/lsp-add-format-on-save-hook (mode)
+    "This function adds a buffer local hook for the major mode represented by
+MODE that runs `lsp-format-buffer' before saving the buffer's file."
+    ;; Ignore major-modes listed in the blacklist variable.
+    (unless (member mode my/lsp-format-major-mode-blacklist)
+    ;; Make sure to take out the format-all hook so that we don't use
+    ;; two different formatting systems for the same buffer.
+    (remove-hook 'before-save-hook #'format-all-buffer--from-hook 'local)
+    (add-hook 'before-save-hook #'lsp-format-buffer 0 'local)))
 
-    (defun my/add-lsp-mode-hooks ()
-      "Add hooks to the major modes specified in `my/lsp-enabled-modes' to
-  automatically start lsp-mode when editing files associated with those major
-  modes, as well as format buffers on save."
-      (mapc #'(lambda (mode)
-                ;; This is necessary for providing closure-like behavior
-                (lexical-let ((mode mode)
-                              (hook-name (concat (symbol-name mode) "-hook")))
-                   (add-hook (intern hook-name) #'(lambda ()
-                    ;; Automatically start lsp when you visit a relevant file
-                    (lsp-deferred)
-                    ;; Format lsp-mode buffers on save.
-                    (my/lsp-add-format-on-save-hook mode)))))
-          my/lsp-enabled-modes))
+(defun my/add-lsp-mode-hooks ()
+    "Add hooks to the major modes specified in `my/lsp-enabled-modes' to
+automatically start lsp-mode when editing files associated with those major
+modes, as well as format buffers on save."
+    (mapc #'(lambda (mode)
+	    ;; This is necessary for providing closure-like behavior
+	    (lexical-let ((mode mode)
+			    (hook-name (concat (symbol-name mode) "-hook")))
+		(add-hook (intern hook-name) #'(lambda ()
+		;; Automatically start lsp when you visit a relevant file
+		(lsp-deferred)
+		;; Format lsp-mode buffers on save.
+		(my/lsp-add-format-on-save-hook mode)))))
+	my/lsp-enabled-modes))
 
     (defun my/check-lsp-enabled-for-mode-p (mode &optional all &rest modes)
       "Return non-nil if a specific MODE is enabled for `lsp-mode' based on the
@@ -175,6 +175,8 @@ debugging."
 #+begin_src emacs-lisp :tangle yes
   (use-package lsp-mode
     :after format-all
+    ;; Define autoloaded functions
+    :commands lsp
     ;; Here you can change the package's customizable variables.
     :custom
     ;;; General settings
@@ -200,10 +202,10 @@ debugging."
     ;;; clangd
     ;; Make sure to use all processor cores, and to
     (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
-                                  "--background-index" "--log=error"
-                                  "--clang-tidy"
-                                  "--header-insertion-decorators"
-                                  "--suggest-missing-includes"))
+				  "--background-index" "--log=error"
+				  "--clang-tidy"
+				  "--header-insertion-decorators"
+				  "--suggest-missing-includes"))
     (lsp-clients-clangd-executable (executable-find "clangd"))
     ;;; lua-language-server
     ;; lsp-mode can try to install lua-language-server automatically, but

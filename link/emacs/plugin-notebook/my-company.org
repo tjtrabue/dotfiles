@@ -87,6 +87,7 @@ optionally for extra modes"
 ** company
 #+begin_src emacs-lisp :tangle yes
   (use-package company
+    :demand t
     :after (evil evil-collection)
     :bind
     (:map c-mode-map
@@ -115,12 +116,11 @@ optionally for extra modes"
           '(company-pseudo-tooltip-unless-just-one-frontend
             company-preview-frontend
             company-echo-metadata-frontend))
+    :config
     ;; Tweak company backends.
     ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
     ;; slow to be anything other than harmful, especially for emacs-lisp-mode.
     (setq company-backends (delete 'company-semantic company-backends))
-
-    :config
     ;; Enable downcase only when completing the completion.
     (advice-add 'company-complete-selection :around
             #'my/company-complete-selection--advice-around)

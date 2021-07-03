@@ -25,6 +25,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm
+    :demand t
     :straight
     (helm :type git :host github :repo "emacs-helm/helm" :branch "devel")
     :after evil

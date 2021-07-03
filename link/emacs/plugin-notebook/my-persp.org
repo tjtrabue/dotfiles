@@ -30,19 +30,19 @@ Needed for performance:
   (use-package persp-mode
     :hook
     (after-init . (lambda ()
-                    (persp-mode 1)))
-    :init
-          ;; switch off animation
-    (setq wg-morph-on nil
-          persp-autokill-buffer-on-remove 'kill-weak
-          ;; Change persp-keymap-prefix so as not to conflict with projectile.
-          ;; Needs to be set here in :init rather than in :config so that the
-          ;; change actually takes place.
-          persp-keymap-prefix (kbd "C-c u")
-          ;; This variable sets the number of seconds until persp-mode
-          ;; automatically resumes the last perspective from the autosave
-          ;; file. If its value is <= 0, do not resume last perspective.
-          persp-auto-resume-time 3.0))
+      (persp-mode 1)))
+    :custom
+    ;; switch off animation
+    (wg-mortph-on nil)
+    (persp-autokill-buffer-on-remove 'kill-weak)
+    ;; Change persp-keymap-prefix so as not to conflict with projectile.
+    ;; Needs to be set here in :init rather than in :config so that the
+    ;; change actually takes place.
+    (persp-keymap-prefix (kbd "C-c u"))
+    ;; This variable sets the number of seconds until persp-mode
+    ;; automatically resumes the last perspective from the autosave
+    ;; file. If its value is <= 0, do not resume last perspective.
+    (persp-auto-resume-time 1.0))
 #+end_src
 
 * Plugins

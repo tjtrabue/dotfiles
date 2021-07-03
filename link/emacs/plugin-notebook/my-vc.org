@@ -75,9 +75,12 @@ Next, copy and save your token to your =~/.authinfo= file in
   ;;; Use the 'git-gutter-fringe' plugin instead of the standard 'git-gutter'
   ;;; because we also want to use vim-like line numbers
   (use-package git-gutter-fringe
+    :demand t
+    :commands 
+    (git-gutter-mode global-git-gutter-mode)
     :config
     (setq git-gutter:update-interval 2)
-    (global-git-gutter-mode t)
+    (global-git-gutter-mode 1)
     ;; Refresh git-gutter when Emacs regains focus
     (add-function :after after-focus-change-function #'git-gutter))
 #+end_src

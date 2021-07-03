@@ -33,12 +33,12 @@ clipboard__get_clipboard_command() {
   local os="$(uname -s)"
 
   case "${os}" in
-    "Darwin")
-      CLIPBOARD_CMD="pbcopy"
-      ;;
-    *)
-      CLIPBOARD_CMD="xclip -selection clipboard"
-      ;;
+  "Darwin")
+    CLIPBOARD_CMD="pbcopy"
+    ;;
+  *)
+    CLIPBOARD_CMD="xclip -selection clipboard"
+    ;;
   esac
 }
 
@@ -82,20 +82,20 @@ eval set -- "$args"
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-    -h | --help)
-      clipboard__help
-      exit 0
-      ;;
+  -h | --help)
+    clipboard__help
+    exit 0
+    ;;
 
-    --)
-      shift
-      break
-      ;;
+  --)
+    shift
+    break
+    ;;
 
-    *)
-      echoe "Unknown option ${1} to ${THIS_EXEC}"
-      exit 2
-      ;;
+  *)
+    echoe "Unknown option ${1} to ${THIS_EXEC}"
+    exit 2
+    ;;
   esac
 done
 # }}}

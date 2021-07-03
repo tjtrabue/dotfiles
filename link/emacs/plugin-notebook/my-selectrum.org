@@ -24,6 +24,7 @@ completion framework.
 #+begin_src emacs-lisp :tangle yes
   (use-package selectrum
     :after (helm ivy)
+    :commands selectrum-mode
     :custom
     (selectrum-num-candidates-displayed 20)
     (selectrum-fix-minibuffer-height t)
@@ -42,6 +43,7 @@ completion framework.
 #+begin_src emacs-lisp :tangle yes
   (use-package selectrum-prescient
     :after (selectrum prescient)
+    :commands selectrum-prescient-mode
     :config
     (selectrum-prescient-mode 1))
 #+end_src

@@ -80,6 +80,7 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
 
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
+    :demand t
     :after (all-the-icons org-beautify-theme)
     :custom
     ;; Enable bold fonts

@@ -19,5 +19,6 @@ to Perl version 5, and is the new brainchild of Perl's creator, Larry Wall.
   to make your life easier when writing Raku.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package raku-mode)
+  (use-package raku-mode
+    :commands raku-mode)
 #+end_src

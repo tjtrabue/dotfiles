@@ -14,33 +14,35 @@ Needed for performance:
   Use fancy dev icons in Emacs.  Very pretty!
 
 #+begin_src emacs-lisp :tangle yes
-(use-package all-the-icons
-  :config
-  (let (
-        (icon-paths (mapcar #'(lambda (file-name)
-				(expand-file-name file-name user-fonts-dir))
-			    '("all-the-icons.ttf"
-                              "material-design-icons.ttf"
-                              "weathericons.ttf"
-                              "octicons.ttf"
-                              "fontawesome.ttf"
-                              "file-icons.ttf")))
-        )
-    ;; If the icons files have not yet been installed, download them.
-    ;; If you feel that not all font files are present in the fonts dir, then
-    ;; simply type 'C-x C-e' after the (all-the-icons-install-fonts t) sexp
-    ;; to redownload all files.
-    (if (member nil (mapcar 'file-exists-p icon-paths))
-        (all-the-icons-install-fonts t))))
+  (use-package all-the-icons
+    :demand t
+    :config
+    (let (
+          (icon-paths (mapcar #'(lambda (file-name)
+                                  (expand-file-name file-name user-fonts-dir))
+                              '("all-the-icons.ttf"
+                                "material-design-icons.ttf"
+                                "weathericons.ttf"
+                                "octicons.ttf"
+                                "fontawesome.ttf"
+                                "file-icons.ttf")))
+          )
+      ;; If the icons files have not yet been installed, download them.
+      ;; If you feel that not all font files are present in the fonts dir, then
+      ;; simply type 'C-x C-e' after the (all-the-icons-install-fonts t) sexp
+      ;; to redownload all files.
+      (if (member nil (mapcar 'file-exists-p icon-paths))
+          (all-the-icons-install-fonts t))))
 #+end_src
 
 * all-the-icons-dired
   Use =all-the-icons= in =dired= mode, too.
 
 #+begin_src emacs-lisp :tangle yes
-;; Use fancy icons in dired-mode
-(use-package all-the-icons-dired
-  :after (all-the-icons)
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
+  ;; Use fancy icons in dired-mode
+  (use-package all-the-icons-dired
+    :demand t
+    :after all-the-icons
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
 #+end_src

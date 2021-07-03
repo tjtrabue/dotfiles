@@ -39,7 +39,8 @@ Needed for performance:
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
-    :after (helm)
+    :demand t
+    :after helm
     :bind
     (:map ivy-switch-buffer-map
      ;; Make sure that navigation shortcuts work
@@ -78,6 +79,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy-prescient
+    :demand t
     :config
     (ivy-prescient-mode 1))
 #+end_src
@@ -112,6 +114,7 @@ Needed for performance:
 ** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package counsel
+    :demand t
     :after ivy
     :config
     (counsel-mode))
@@ -121,6 +124,7 @@ Needed for performance:
 *** counsel-projectile
 #+begin_src emacs-lisp :tangle yes
   (use-package counsel-projectile
+    :demand t
     :after (counsel projectile)
     :config
     (counsel-projectile-mode))
@@ -132,6 +136,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package swiper
+    :demand t
     :after (evil-collection)
     :bind
     (("C-s" . swiper)

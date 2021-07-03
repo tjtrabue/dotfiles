@@ -26,14 +26,10 @@ ECB.")
 * projectile
 #+begin_src emacs-lisp :tangle yes
   (use-package projectile
-    :after evil
-    ;; Here you can change the package's customizable variables.
+    :demand t
+    :after (evil ivy)
     :custom
-    (projectile-project-root-files-top-down-recurring
-      (append '("compile_commands.json")
-        projectile-project-root-files-top-down-recurring))
-    ;; Use Ivy for projectile completion
-    ;; (can also use helm or ido).
+    ;; Use Ivy for projectile completion (can also use helm or ido).
     (projectile-completion-system 'ivy)
     ;; Make projects in workspace discovered automatically.
     ;; The list is a space-separated collection of directory paths
@@ -44,9 +40,6 @@ ECB.")
     :bind
     (:map evil-normal-state-map
      ([remap evil-paste-pop] . projectile-find-file))
-    :hook
-    ;; Keep ECB in sync with the current Projectile project
-    (ecb-basic-buffer-sync . my/sync-ecb-with-projectile)
     :config
     ;; Add extra ignored directories here.
     (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d/straight")
