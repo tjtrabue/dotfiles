@@ -198,6 +198,9 @@ with straight.el.")
   ;; Silence the annoying error/warning bell
   (setq ring-bell-function 'ignore)
 
+  ;; Display relative line numbers like in Vim.
+  (setq display-line-numbers-type 'relative)
+
   ;; Up the maximum depth for eval, apply, and funcall functions.
   ;; This variable is supposed to catch infinite recursions before
   ;; they cause a stack overflow, but its default value is very low.
@@ -318,6 +321,9 @@ with straight.el.")
 
   ;; Turn on syntax highlighting (AKA font locking) by default.
   (global-font-lock-mode 1)
+
+  ;; Always show line numbers
+  (global-display-line-numbers-mode 1)
 #+end_src
 
 * Advice
