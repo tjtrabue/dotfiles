@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # The clipboard CLI command to use
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare CLIPBOARD_CMD=""
 declare CONTENTS=""
 
@@ -17,6 +18,13 @@ use dynmically so that you don't have to.
 EXAMPLES:
   cat README.md | clipboard
 EOF
+}
+# }}}
+
+# Printing functions {{{
+echoe() {
+  local msg="${*}"
+  printf "%s\n" "${msg}" 1>&2
 }
 # }}}
 
@@ -85,7 +93,7 @@ while true; do
       ;;
 
     *)
-      err "Unknown option $1 to ${THIS_EXEC}"
+      echoe "Unknown option ${1} to ${THIS_EXEC}"
       exit 2
       ;;
   esac
