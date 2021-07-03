@@ -23,25 +23,10 @@ Needed for performance:
 ECB.")
 #+end_src
 
-* Functions
-#+begin_src emacs-lisp :tangle yes
-  (defun my/sync-ecb-with-projectile ()
-    "Hook function for ECB that puts it in sync with Projectile."
-    (when (functionp 'projectile-get-project-directories)
-      (when (projectile-project-p)
-        (dolist (path-dir (projectile-get-project-directories))
-          (unless (member (list path-dir path-dir) default-ecb-source-path)
-            (push (list path-dir path-dir) default-ecb-source-path)
-            (customize-set-variable 'ecb-source-path default-ecb-source-path))))))
-#+end_src
-
 * projectile
 #+begin_src emacs-lisp :tangle yes
   (use-package projectile
-    ;; IMPORTANT: You may need to change the :after block below to suit your use
-    ;; of ECB (either ecb or ecb-autoloads). Check my-ecb.org for more
-    ;; information.
-    :after (evil ecb-autoloads)
+    :after evil
     ;; Here you can change the package's customizable variables.
     :custom
     (projectile-project-root-files-top-down-recurring
@@ -54,11 +39,11 @@ ECB.")
     ;; The list is a space-separated collection of directory paths
     ;; that projectile should use when searching for projects.
     (projectile-project-search-path '("~/workspace/"))
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
     :bind
     (:map evil-normal-state-map
-     ([remap evil-paste-pop] . projectile-find-file)
-     :map projectile-mode-map
-     ("C-c p" . projectile-command-map))
+     ([remap evil-paste-pop] . projectile-find-file))
     :hook
     ;; Keep ECB in sync with the current Projectile project
     (ecb-basic-buffer-sync . my/sync-ecb-with-projectile)
