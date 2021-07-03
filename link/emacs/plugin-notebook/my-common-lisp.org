@@ -14,6 +14,10 @@ Needed for performance:
 
 #+end_src
 
+* SLIME
+  The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
+  Lisp IDE.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package slime
     :hook
