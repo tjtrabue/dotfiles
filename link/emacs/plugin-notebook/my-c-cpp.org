@@ -36,6 +36,8 @@ C and C++ extensions and configuration for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package google-c-style
+    ;; Not needed due to fancier things like clang-format being available.
+    :disabled
     :hook
     (c-mode-common . google-set-c-style))
 #+end_src

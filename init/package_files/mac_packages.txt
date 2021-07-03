@@ -45,6 +45,7 @@ streamlink
 the_silver_searcher
 tmux
 up
+vlc
 watch
 wdiff
 wget
