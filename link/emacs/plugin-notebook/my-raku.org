@@ -1,0 +1,23 @@
+#+title:    Raku Programming Language Configuration
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:03
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+Raku is the official name for what was once known as Perl 6. It is the successor
+to Perl version 5, and is the new brainchild of Perl's creator, Larry Wall.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* raku-mode
+  Major mode for editing Raku files. Comes packed with plenty of fancy functions
+  to make your life easier when writing Raku.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package raku-mode)
+#+end_src

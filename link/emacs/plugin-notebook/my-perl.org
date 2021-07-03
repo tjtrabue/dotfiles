@@ -157,20 +157,21 @@ such plugins is sure to slow your system down significantly.
     =plsense= is more generally useful.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; (use-package perly-sense-mode
-  ;;   :straight
-  ;;   (perly-sense-mode :type git :host github :repo "tjtrabue/perly-sense-mode")
-  ;;   :after (cperl-mode evil-collection)
-  ;;   :hook ((cperl-mode perl-mode) . (lambda ()
-  ;;            (perly-sense-mode)))
-  ;;   :init
-  ;;   ;; The PerlySense prefix key (unset only if needed)
-  ;;   (setq ps/key-prefix (kbd "C-c C-o"))
-  ;;   (global-unset-key ps/key-prefix)
-  ;;   ;; Load flymake if t
-  ;;   (setq ps/load-flymake nil)
-  ;;   :config
-  ;;   (install-perly-sense))
+  (use-package perly-sense-mode
+    :disabled
+    :straight
+    (perly-sense-mode :type git :host github :repo "tjtrabue/perly-sense-mode")
+    :after (cperl-mode evil-collection)
+    :hook ((cperl-mode perl-mode) . (lambda ()
+             (perly-sense-mode)))
+    :init
+    ;; The PerlySense prefix key (unset only if needed)
+    (setq ps/key-prefix (kbd "C-c C-o"))
+    (global-unset-key ps/key-prefix)
+    ;; Load flymake if t
+    (setq ps/load-flymake nil)
+    :config
+    (install-perly-sense))
 #+end_src
 
 ** plsense
@@ -197,31 +198,32 @@ such plugins is sure to slow your system down significantly.
    in the near future.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; (use-package plsense
-  ;;   :after cperl-mode
-  ;;   :hook
-  ;;   ((cperl-mode perl-mode) . (lambda ()
-  ;;     (make-local-variable 'after-save-hook)
-  ;;     ;; Start the plsense servers automatically.
-  ;;     (plsense-server-start)
-  ;;     ;; Add keybindings and such.
-  ;;     (plsense-setup-current-buffer)
-  ;;     (plsense-update-current-buffer)
-  ;;     ;; Turn auto-complete-mode OFF.
-  ;;     ;; This must come after plsense-setup-current-buffer
-  ;;     (auto-complete-mode -1)
-  ;;     ;; Tell plsense to update the buffer after saving.
-  ;;     (add-hook 'after-save-hook 'plsense-update-current-buffer t)
-  ;;     ;; Define advice for informing changes of current buffer to server.
-  ;;     (plsense-server-sync-trigger-ize newline)
-  ;;     (plsense-server-sync-trigger-ize newline-and-indent)
-  ;;     (plsense-server-sync-trigger-ize yank)
-  ;;     (plsense-server-sync-trigger-ize yas/commit-snippet)))
-  ;;   :init
-  ;;   ;; Key binding
-  ;;   (setq plsense-popup-help-key "C-:")
-  ;;   (setq plsense-display-help-buffer-key "M-:")
-  ;;   (setq plsense-jump-to-definition-key "C-k"))
+  (use-package plsense
+    :disabled
+    :after cperl-mode
+    :hook
+    ((cperl-mode perl-mode) . (lambda ()
+      (make-local-variable 'after-save-hook)
+      ;; Start the plsense servers automatically.
+      (plsense-server-start)
+      ;; Add keybindings and such.
+      (plsense-setup-current-buffer)
+      (plsense-update-current-buffer)
+      ;; Turn auto-complete-mode OFF.
+      ;; This must come after plsense-setup-current-buffer
+      (auto-complete-mode -1)
+      ;; Tell plsense to update the buffer after saving.
+      (add-hook 'after-save-hook 'plsense-update-current-buffer t)
+      ;; Define advice for informing changes of current buffer to server.
+      (plsense-server-sync-trigger-ize newline)
+      (plsense-server-sync-trigger-ize newline-and-indent)
+      (plsense-server-sync-trigger-ize yank)
+      (plsense-server-sync-trigger-ize yas/commit-snippet)))
+    :init
+    ;; Key binding
+    (setq plsense-popup-help-key "C-:")
+    (setq plsense-display-help-buffer-key "M-:")
+    (setq plsense-jump-to-definition-key "C-k"))
 #+end_src
 
 ** perl-find-library
