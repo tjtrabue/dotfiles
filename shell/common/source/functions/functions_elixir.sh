@@ -6,9 +6,21 @@
 install_elixir_ls() {
   local installPrefix="${1:-${HOME}}"
 
+  __check_elixir_installed &&
   __clone_elixir_ls &&
   __build_elixir_ls &&
   __install_elixir_ls "${installPrefix}"
+}
+
+# Make sure we have the correct executables before proceeding.
+__check_elixir_installed() {
+  if [ ! -x "$(command -v elixir)" ]; then
+    err "No elixir executable found on PATH"
+    return 1
+  elif [ ! -x "$(command -v mix)" ]; then
+    err "No mix executable found on PATH"
+    return 2
+  fi
 }
 
 # Clone the elixir-ls project.
@@ -24,7 +36,7 @@ __clone_elixir_ls() {
       git clone "${elixirLsGitUrl}"
     )
   else
-    warn "ElixirLS project already found at: ${elixirLsRepo}"
+    warn "ElixirLS git repository already found at: ${elixirLsRepo}"
   fi
 }
 
