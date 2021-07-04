@@ -13,7 +13,7 @@ blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
@@ -28,98 +28,98 @@ Needed for performance:
 * Variable
   Define special =lsp-mode= variables here.
 
-#+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp :tangle yes
     (defvar my/lsp-format-major-mode-blacklist '(
-        cperl-mode
-        lua-mode
-        perl-mode
-        python-mode
-        sh-mode
-      )
+                                                 cperl-mode
+                                                 lua-mode
+                                                 perl-mode
+                                                 python-mode
+                                                 sh-mode
+                                                 )
       "List of major modes to ignore when activating lsp-format hooks, usually
-  because the LSP server for these major modes does not yet support document
-  formatting, or because their formatters are lacking in features. Thankfully
-  the reformatter package provides a generic interface for creating formatters
-  for any programming language that supports a formatting tool.")
+    because the LSP server for these major modes does not yet support document
+    formatting, or because their formatters are lacking in features. Thankfully
+    the reformatter package provides a generic interface for creating formatters
+    for any programming language that supports a formatting tool.")
 
-  (defvar my/lsp-enabled-modes '(
-      LaTeX-mode
-      c++-mode
-      c-mode
-      clojure-mode
-      cmake-mode
-      ;; cperl-mode
-      css-mode
-      dart-mode
-      elixir-mode
-      go-mode
-      haskell-mode
-      haskell-literate-mode
-      html-mode
-      java-mode
-      javascript-mode
-      js-mode
-      json-mode
-      less-css-mode
-      lua-mode
-      mhtml-mode
-      objc-mode
-      ;; perl-mode
-      php-mode
-      python-mode
-      ruby-mode
-      scss-mode
-      sh-mode
-      tex-mode
-      web-mode
-      xml-mode
-      yaml-mode)
-    "List of all major modes allowing `lsp-mode' to run as a minor mode.")
-#+end_src
+    (defvar my/lsp-enabled-modes '(
+                                   LaTeX-mode
+                                   c++-mode
+                                   c-mode
+                                   clojure-mode
+                                   cmake-mode
+                                   ;; cperl-mode
+                                   css-mode
+                                   dart-mode
+                                   elixir-mode
+                                   go-mode
+                                   haskell-mode
+                                   haskell-literate-mode
+                                   html-mode
+                                   java-mode
+                                   javascript-mode
+                                   js-mode
+                                   json-mode
+                                   less-css-mode
+                                   lua-mode
+                                   mhtml-mode
+                                   objc-mode
+                                   ;; perl-mode
+                                   php-mode
+                                   python-mode
+                                   ruby-mode
+                                   scss-mode
+                                   sh-mode
+                                   tex-mode
+                                   web-mode
+                                   xml-mode
+                                   yaml-mode)
+      "List of all major modes allowing `lsp-mode' to run as a minor mode.")
+  #+end_src
 
 * Functions
   Extra helper functions for defining major mode hooks for =lsp-mode= and such.
 
-#+begin_src emacs-lisp :tangle yes
-(defun my/lsp-add-format-on-save-hook (mode)
-    "This function adds a buffer local hook for the major mode represented by
-MODE that runs `lsp-format-buffer' before saving the buffer's file."
-    ;; Ignore major-modes listed in the blacklist variable.
-    (unless (member mode my/lsp-format-major-mode-blacklist)
-    ;; Make sure to take out the format-all hook so that we don't use
-    ;; two different formatting systems for the same buffer.
-    (remove-hook 'before-save-hook #'format-all-buffer--from-hook 'local)
-    (add-hook 'before-save-hook #'lsp-format-buffer 0 'local)))
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/lsp-add-format-on-save-hook (mode)
+      "This function adds a buffer local hook for the major mode represented by
+    MODE that runs `lsp-format-buffer' before saving the buffer's file."
+      ;; Ignore major-modes listed in the blacklist variable.
+      (unless (member mode my/lsp-format-major-mode-blacklist)
+        ;; Make sure to take out the format-all hook so that we don't use
+        ;; two different formatting systems for the same buffer.
+        (remove-hook 'before-save-hook #'format-all-buffer--from-hook 'local)
+        (add-hook 'before-save-hook #'lsp-format-buffer 0 'local)))
 
-(defun my/add-lsp-mode-hooks ()
-    "Add hooks to the major modes specified in `my/lsp-enabled-modes' to
-automatically start lsp-mode when editing files associated with those major
-modes, as well as format buffers on save."
-    (mapc #'(lambda (mode)
-	    ;; This is necessary for providing closure-like behavior
-	    (lexical-let ((mode mode)
-			    (hook-name (concat (symbol-name mode) "-hook")))
-		(add-hook (intern hook-name) #'(lambda ()
-		;; Automatically start lsp when you visit a relevant file
-		(lsp-deferred)
-		;; Format lsp-mode buffers on save.
-		(my/lsp-add-format-on-save-hook mode)))))
-	my/lsp-enabled-modes))
+    (defun my/add-lsp-mode-hooks ()
+      "Add hooks to the major modes specified in `my/lsp-enabled-modes' to
+    automatically start lsp-mode when editing files associated with those major
+    modes, as well as format buffers on save."
+      (mapc #'(lambda (mode)
+                ;; This is necessary for providing closure-like behavior
+                (lexical-let ((mode mode)
+                              (hook-name (concat (symbol-name mode) "-hook")))
+                  (add-hook (intern hook-name) #'(lambda ()
+                                                   ;; Automatically start lsp when you visit a relevant file
+                                                   (lsp-deferred)
+                                                   ;; Format lsp-mode buffers on save.
+                                                   (my/lsp-add-format-on-save-hook mode)))))
+            my/lsp-enabled-modes))
 
     (defun my/check-lsp-enabled-for-mode-p (mode &optional all &rest modes)
       "Return non-nil if a specific MODE is enabled for `lsp-mode' based on the
-  value of `my/lsp-enabled-modes'.
+      value of `my/lsp-enabled-modes'.
 
-  MODES are optional additional major modes to check for in
-  `my/enabled-mode-for-lsp'. The behavior of the check depends on the value of
-  ALL.
+      MODES are optional additional major modes to check for in
+      `my/enabled-mode-for-lsp'. The behavior of the check depends on the value of
+      ALL.
 
-  The optional ALL argument is a truthy value determining whether or not all
-  specified major modes appear in `my/enabled-mode-for-lsp'. If ALL is non-nil,
-  then the final result of this function will only be non-nil if all supplied
-  modes are present in `my/enabled-mode-for-lsp'. If ALL is nil, then the result
-  of this function will be non-nil if any of the supplied major modes are in the
-  list."
+      The optional ALL argument is a truthy value determining whether or not all
+      specified major modes appear in `my/enabled-mode-for-lsp'. If ALL is non-nil,
+      then the final result of this function will only be non-nil if all supplied
+      modes are present in `my/enabled-mode-for-lsp'. If ALL is nil, then the result
+      of this function will be non-nil if any of the supplied major modes are in the
+      list."
       (require 'cl-lib)
       (if modes
           (let ((full-modes (cons mode modes)))
@@ -128,196 +128,196 @@ modes, as well as format buffers on save."
               (cl-intersection full-modes my/lsp-enabled-modes)))
         (member mode my/lsp-enabled-modes)))
 
-  (defun my/lsp-add-language-ids ()
-    "Add more major-mode to language server mappings. This allows
-  Emacs to automatically start lsp-mode with a particular server
-  when a certain type of file is found."
-    (add-to-list 'lsp-language-id-configuration '(cperl-mode . "perl")))
+    (defun my/lsp-add-language-ids ()
+      "Add more major-mode to language server mappings. This allows
+      Emacs to automatically start lsp-mode with a particular server
+      when a certain type of file is found."
+      (add-to-list 'lsp-language-id-configuration '(cperl-mode . "perl")))
 
-  (defun my/lsp-add-dap-mode-tool-hooks ()
-    "Add hooks for various languages to pull in `dap-mode' tools to aid in
-debugging."
-    ;; Add C++ DAP tools when entering c++-mode
-    (add-hook 'c++-mode-hook #'(lambda ()
-      (require 'dap-cpptools))))
-#+end_src
+    (defun my/lsp-add-dap-mode-tool-hooks ()
+      "Add hooks for various languages to pull in `dap-mode' tools to aid in
+    debugging."
+      ;; Add C++ DAP tools when entering c++-mode
+      (add-hook 'c++-mode-hook #'(lambda ()
+                                   (require 'dap-cpptools))))
+  #+end_src
 
 * Register New LSP Servers
   Here we add =lsp-mode= support for new LSP servers not supported by default.
 
-#+begin_src emacs-lisp :tangle yes
-(defun my/register-lsp-servers ()
-  "Register all custom LSP servers that we want."
-  (my/register-lua-lsp-servers))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/register-lsp-servers ()
+      "Register all custom LSP servers that we want."
+      (my/register-lua-lsp-servers))
+  #+end_src
 
 ** lua
    =lua-language-server= is a much more complete language server right now than
    =lua-lsp=, but it is not supported out of the box by =lsp-mode=.
 
-#+begin_src emacs-lisp :tangle yes
-  (defun my/register-lua-lsp-servers ()
-    "Register Lua languageservers for use with `lsp-mode'."
-    ;; Add lua-language-server (can be installed from GitHub or from the AUR on
-    ;; Arch Linux)
-    (lsp-register-client
-      (make-lsp-client
-        :new-connection (lsp-stdio-connection "lua-language-server")
-        :major-modes '(lua-mode)
-        :server-id 'lua-language-server)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (defun my/register-lua-lsp-servers ()
+       "Register Lua languageservers for use with `lsp-mode'."
+       ;; Add lua-language-server (can be installed from GitHub or from the AUR on
+       ;; Arch Linux)
+       (lsp-register-client
+        (make-lsp-client
+         :new-connection (lsp-stdio-connection "lua-language-server")
+         :major-modes '(lua-mode)
+         :server-id 'lua-language-server)))
+   #+end_src
 * lsp-mode
   =lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
   heavy lifting of starting up Language Servers and managing connections to
   them, not to mention all the fancy UI stuff regarding completions,
   documentation on hover, syntax linting and error checking, etc.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-mode
-    :after format-all
-    ;; Commands used to autoload this package.
-    :commands (lsp lsp-deferred)
-    ;; Code to be executed in :preface is seen by the byte-compiler, unlike code
-    ;; in :init which gets ignored by the byte-compiler. Thus, if you're byte-
-    ;; compiling your code, you should put any init code to be run in :preface.
-    :preface
-    (my/add-lsp-mode-hooks)
-    ;; Here you can change the package's customizable variables.
-    :custom
-    ;;; General settings
-    (lsp-keymap-prefix "C-c l")
-    (lsp-enable-snippet t)
-    (lsp-enable-semantic-highlighting t)
-    ;; Whether to include all info returned by document/onHover in the eldoc
-    ;; echo area rather than simply basic info.
-    (lsp-eldoc-render-all nil)
-    ;; Use this to enable debugging output
-    ;; NOTE: Enabling logging can slow lsp-mode considerably!
-    (lsp-log-io nil)
-    ;; Increase the number of simultaneously watchable files
-    ;; (the default number is 1000).
-    ;; If nil, then no warning is printed for any number of files.
-    (lsp-file-watch-threshold nil)
-    ;; The length that lsp-mode waits to begin completion. Most of the
-    ;; time the variable you want to tweak is company-idle-delay, not this
-    ;; one.
-    (lsp-idle-delay 0.000)
-    ;;; bash-language-server
-    (lsp-bash-highlight-parsing-errors t)
-    ;;; clangd
-    ;; Make sure to use all processor cores, and to report warnings.
-    (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
-          "--background-index" "--log=error"
-          "--clang-tidy"
-          "--header-insertion-decorators"
-          "--suggest-missing-includes"))
-    (lsp-clients-clangd-executable (executable-find "clangd"))
-    ;;; lua-language-server
-    ;; lsp-mode can try to install lua-language-server automatically, but
-    ;; I've noticed that version tends to be really slow.
-    ;; It's best to install it yourself.
-    (lsp-clients-lua-language-server-bin
-      (executable-find "lua-language-server"))
-    :hook
-    ;; NOTE: Language mode hooks are set in the Functions section of this
-    ;;       file.
-    ;; Enable which-key integration for lsp-mode
-    (lsp-mode . lsp-enable-which-key-integration)
-    :bind-keymap
-    ;; Redefine lsp command prefix (default is "s-l" which messes with
-    ;; most window managers).
-    ("C-c l" . lsp-command-map)
-    :bind
-    (:map lsp-command-map
-      ;; Need to bind lsp-treemacs commands here instead of in its own
-      ;; use-package specification because these keybindings do not take
-      ;; if we do that.
-      ("t c" . lsp-treemacs-call-hierarchy)
-      ("t e" . lsp-treemacs-errors-list)
-      ("t i" . lsp-treemacs-implementations)
-      ("t r" . lsp-treemacs-references)
-      ("t s" . lsp-treemacs-symbols)
-      ("t t" . lsp-treemacs-type-hierarchy))
-    :config
-    (my/register-lsp-servers)
-    (my/lsp-add-language-ids)
-    (my/lsp-add-dap-mode-tool-hooks))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package lsp-mode
+      :after format-all
+      ;; Commands used to autoload this package.
+      :commands (lsp lsp-deferred)
+      ;; Code to be executed in :preface is seen by the byte-compiler, unlike code
+      ;; in :init which gets ignored by the byte-compiler. Thus, if you're byte-
+      ;; compiling your code, you should put any init code to be run in :preface.
+      :preface
+      (my/add-lsp-mode-hooks)
+      ;; Here you can change the package's customizable variables.
+      :custom
+      ;;; General settings
+      (lsp-keymap-prefix "C-c l")
+      (lsp-enable-snippet t)
+      (lsp-enable-semantic-highlighting t)
+      ;; Whether to include all info returned by document/onHover in the eldoc
+      ;; echo area rather than simply basic info.
+      (lsp-eldoc-render-all nil)
+      ;; Use this to enable debugging output
+      ;; NOTE: Enabling logging can slow lsp-mode considerably!
+      (lsp-log-io nil)
+      ;; Increase the number of simultaneously watchable files
+      ;; (the default number is 1000).
+      ;; If nil, then no warning is printed for any number of files.
+      (lsp-file-watch-threshold nil)
+      ;; The length that lsp-mode waits to begin completion. Most of the
+      ;; time the variable you want to tweak is company-idle-delay, not this
+      ;; one.
+      (lsp-idle-delay 0.000)
+      ;;; bash-language-server
+      (lsp-bash-highlight-parsing-errors t)
+      ;;; clangd
+      ;; Make sure to use all processor cores, and to report warnings.
+      (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
+                                 "--background-index" "--log=error"
+                                 "--clang-tidy"
+                                 "--header-insertion-decorators"
+                                 "--suggest-missing-includes"))
+      (lsp-clients-clangd-executable (executable-find "clangd"))
+      ;;; lua-language-server
+      ;; lsp-mode can try to install lua-language-server automatically, but
+      ;; I've noticed that version tends to be really slow.
+      ;; It's best to install it yourself.
+      (lsp-clients-lua-language-server-bin
+       (executable-find "lua-language-server"))
+      :hook
+      ;; NOTE: Language mode hooks are set in the Functions section of this
+      ;;       file.
+      ;; Enable which-key integration for lsp-mode
+      (lsp-mode . lsp-enable-which-key-integration)
+      :bind-keymap
+      ;; Redefine lsp command prefix (default is "s-l" which messes with
+      ;; most window managers).
+      ("C-c l" . lsp-command-map)
+      :bind
+      (:map lsp-command-map
+            ;; Need to bind lsp-treemacs commands here instead of in its own
+            ;; use-package specification because these keybindings do not take
+            ;; if we do that.
+            ("t c" . lsp-treemacs-call-hierarchy)
+            ("t e" . lsp-treemacs-errors-list)
+            ("t i" . lsp-treemacs-implementations)
+            ("t r" . lsp-treemacs-references)
+            ("t s" . lsp-treemacs-symbols)
+            ("t t" . lsp-treemacs-type-hierarchy))
+      :config
+      (my/register-lsp-servers)
+      (my/lsp-add-language-ids)
+      (my/lsp-add-dap-mode-tool-hooks))
+  #+end_src
 
 * Plugins
 ** lsp-ui
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-ui
-    :after lsp-mode
-    :custom
-    ;; How long to wait before showing documentation in a floating window
-    (lsp-ui-doc-delay 0.2)
-    ;; Show directories of files
-    (lsp-ui-peek-show-directory t)
-    ;; Customize what gets shown in the sideline
-    (lsp-ui-sideline-ignore-duplicate t)
-    (lsp-ui-sideline-show-diagnostics t)
-    (lsp-ui-sideline-show-code-actions t)
-    (lsp-ui-sideline-show-hover t)
-    ;; Enable the fancy peek feature for previewing code actions
-    (lsp-ui-peek-enable t)
-    ;; Show documentation for the thing at point
-    (lsp-ui-doc-enable t)
-    ;; Where to display the documentation tooltip
-    (lsp-ui-doc-position 'at-point)
-    :bind
-    (:map lsp-ui-mode-map
-     ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-     ([remap xref-find-references] . lsp-ui-peek-find-references)
-     :map lsp-ui-peek-mode-map
-     ;; Navigate through the peek menu for references
-     ("C-j" . lsp-ui-peek--select-next)
-     ("C-k" . lsp-ui-peek--select-prev)
-     ("M-j" . lsp-ui-peek--select-next-file)
-     ("M-k" . lsp-ui-peek--select-prev-file))
-    :config
-    (add-hook 'lsp-mode-hook #'(lambda ()
-      ;; Turn off flycheck tool tips if they are active.
-      (if (bound-and-true-p flycheck-pos-tip-mode)
-        (flycheck-pos-tip-mode -1)))))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package lsp-ui
+       :after lsp-mode
+       :custom
+       ;; How long to wait before showing documentation in a floating window
+       (lsp-ui-doc-delay 0.2)
+       ;; Show directories of files
+       (lsp-ui-peek-show-directory t)
+       ;; Customize what gets shown in the sideline
+       (lsp-ui-sideline-ignore-duplicate t)
+       (lsp-ui-sideline-show-diagnostics t)
+       (lsp-ui-sideline-show-code-actions t)
+       (lsp-ui-sideline-show-hover t)
+       ;; Enable the fancy peek feature for previewing code actions
+       (lsp-ui-peek-enable t)
+       ;; Show documentation for the thing at point
+       (lsp-ui-doc-enable t)
+       ;; Where to display the documentation tooltip
+       (lsp-ui-doc-position 'at-point)
+       :bind
+       (:map lsp-ui-mode-map
+             ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+             ([remap xref-find-references] . lsp-ui-peek-find-references)
+             :map lsp-ui-peek-mode-map
+             ;; Navigate through the peek menu for references
+             ("C-j" . lsp-ui-peek--select-next)
+             ("C-k" . lsp-ui-peek--select-prev)
+             ("M-j" . lsp-ui-peek--select-next-file)
+             ("M-k" . lsp-ui-peek--select-prev-file))
+       :config
+       (add-hook 'lsp-mode-hook #'(lambda ()
+                                    ;; Turn off flycheck tool tips if they are active.
+                                    (if (bound-and-true-p flycheck-pos-tip-mode)
+                                        (flycheck-pos-tip-mode -1)))))
+   #+end_src
 
 ** lsp-haskell
 
-#+begin_src emacs-lisp :tangle yes
-  ;; NOTE: This plugin requires haskell-language-server to be installed on your
-  ;;       system.
-  (use-package lsp-haskell
-    :after lsp-mode
-    :hook
-    ((haskell-mode haskell-literate-mode) . lsp))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     ;; NOTE: This plugin requires haskell-language-server to be installed on your
+     ;;       system.
+     (use-package lsp-haskell
+       :after lsp-mode
+       :hook
+       ((haskell-mode haskell-literate-mode) . lsp))
+   #+end_src
 
 ** lsp-java
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-java
-    :after lsp-mode
-    :hook
-    (java-mode . lsp))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package lsp-java
+       :after lsp-mode
+       :hook
+       (java-mode . lsp))
+   #+end_src
 
 ** lsp-treemacs
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-treemacs
-    :after (lsp-mode treemacs)
-    :commands (lsp-treemacs-errors-list)
-    :hook
-    ((lsp-mode . (lambda ()
-                    ;; Enable bidirectional sync of lsp workspace folders
-                    ;; and treemacs projects.
-                    (lsp-treemacs-sync-mode 1)))
-     (java-mode . (lambda ()
-                     (define-key lsp-command-map (kbd "t d")
-                       'lsp-treemacs-java-deps-list)))))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package lsp-treemacs
+       :after (lsp-mode treemacs)
+       :commands (lsp-treemacs-errors-list)
+       :hook
+       ((lsp-mode . (lambda ()
+                      ;; Enable bidirectional sync of lsp workspace folders
+                      ;; and treemacs projects.
+                      (lsp-treemacs-sync-mode 1)))
+        (java-mode . (lambda ()
+                       (define-key lsp-command-map (kbd "t d")
+                         'lsp-treemacs-java-deps-list)))))
+   #+end_src
 
 ** ccls
    *NOTE*: Currently deprecated in favor of =clangd=, which seems much more
@@ -343,123 +343,123 @@ debugging."
    your file system.
 
 *** variables
-#+begin_src emacs-lisp :tangle yes
-  (defvar my/ccls-compile-commands-map (make-hash-table :test 'equal)
-    "Hash table associating build tool names to their associated internal
-data structure used to generate the debug cache for CCLS.")
-#+end_src
+    #+begin_src emacs-lisp :tangle yes
+      (defvar my/ccls-compile-commands-map (make-hash-table :test 'equal)
+        "Hash table associating build tool names to their associated internal
+      data structure used to generate the debug cache for CCLS.")
+    #+end_src
 
 *** structures
-#+begin_src emacs-lisp :tangle yes
-  (cl-defstruct my/ccls-gen-compile-commands
-    "Structure defining a generic CCLS command and arguments for generating the
-compile_commands.json file and other debugging information that CCLS makes use
-of."
-    command args)
-#+end_src
+    #+begin_src emacs-lisp :tangle yes
+      (cl-defstruct my/ccls-gen-compile-commands
+        "Structure defining a generic CCLS command and arguments for generating the
+      compile_commands.json file and other debugging information that CCLS makes use
+      of."
+        command args)
+    #+end_src
 
 *** helper functions
-#+begin_src emacs-lisp :tangle yes
-  (defun my/insert-semicolon-eol ()
-    "Insert ';' at the end of the current line and moves point to EOL."
-    (interactive)
-    (move-end-of-line nil)
-    (insert ";"))
+    #+begin_src emacs-lisp :tangle yes
+      (defun my/insert-semicolon-eol ()
+        "Insert ';' at the end of the current line and moves point to EOL."
+        (interactive)
+        (move-end-of-line nil)
+        (insert ";"))
 
-  (defun my/ccls--create-compile-commands-structs ()
-    "Create a number of different structs corresponding to different build tools
- used to create CCLS's debug cache."
-    (let ((ccstruct-list `(,(make-my/ccls-gen-compile-commands
-                              :command "cmake" :args '("-H." "-BDebug"
-                                      "-DCMAKE_BUILD_TYPE=Debug"
-                                      "-DCMAKE_EXPORT_COMPILE_COMMANDS=YES")))))
-      (cl-loop for struct in ccstruct-list do
-             (puthash (my/ccls-gen-compile-commands-command struct)
-                      struct my/ccls-compile-commands-map))))
+      (defun my/ccls--create-compile-commands-structs ()
+        "Create a number of different structs corresponding to different build tools
+      used to create CCLS's debug cache."
+        (let ((ccstruct-list `(,(make-my/ccls-gen-compile-commands
+                                 :command "cmake" :args '("-H." "-BDebug"
+                                                          "-DCMAKE_BUILD_TYPE=Debug"
+                                                          "-DCMAKE_EXPORT_COMPILE_COMMANDS=YES")))))
+          (cl-loop for struct in ccstruct-list do
+                   (puthash (my/ccls-gen-compile-commands-command struct)
+                            struct my/ccls-compile-commands-map))))
 
-  (defun my/ccls-gen-compile-commands-json ()
-    "Generate the compile_commands.json file for a CCLS project."
-    (interactive)
-    (when (= 0 (hash-table-count my/ccls-compile-commands-map))
-      ;; Create the command-struct hash map if it has not yet been initialized.
-      (my/ccls--create-compile-commands-structs))
-    (let* ((output-buffer-name "*ccls-compile-commands*")
-           (default-directory (if (fboundp 'projectile-project-root)
-                                    (projectile-project-root)))
-           (output-buffer (get-buffer-create output-buffer-name))
-           (compile-commands-file "compile_commands.json")
-           (user-window (selected-window))
-           (selected-command-struct
-             (gethash "cmake" my/ccls-compile-commands-map))
-           ;; The generator function to apply to arguments later on
-           (gen-compile-commands (apply-partially 'call-process
-             (my/ccls-gen-compile-commands-command selected-command-struct)
-               nil output-buffer 'redisplay-buffer)))
-      (unless (file-exists-p (expand-file-name ".ccls"))
-          (error "ERROR: No .ccls file found in project root."))
-      (if default-directory
-          (with-current-buffer output-buffer
-              (erase-buffer)
-              (switch-to-buffer-other-window output-buffer t)
-              (apply gen-compile-commands (my/ccls-gen-compile-commands-args
-                  selected-command-struct))
-              (call-process "ln" nil nil nil "-s"
-                          (concat "Debug/" compile-commands-file)
-                          ".")
-              (select-window user-window))
-         (error "ERROR: Not in a projectile project."))))
-#+end_src
+      (defun my/ccls-gen-compile-commands-json ()
+        "Generate the compile_commands.json file for a CCLS project."
+        (interactive)
+        (when (= 0 (hash-table-count my/ccls-compile-commands-map))
+          ;; Create the command-struct hash map if it has not yet been initialized.
+          (my/ccls--create-compile-commands-structs))
+        (let* ((output-buffer-name "*ccls-compile-commands*")
+               (default-directory (if (fboundp 'projectile-project-root)
+                                      (projectile-project-root)))
+               (output-buffer (get-buffer-create output-buffer-name))
+               (compile-commands-file "compile_commands.json")
+               (user-window (selected-window))
+               (selected-command-struct
+                (gethash "cmake" my/ccls-compile-commands-map))
+               ;; The generator function to apply to arguments later on
+               (gen-compile-commands (apply-partially 'call-process
+                                                      (my/ccls-gen-compile-commands-command selected-command-struct)
+                                                      nil output-buffer 'redisplay-buffer)))
+          (unless (file-exists-p (expand-file-name ".ccls"))
+            (error "ERROR: No .ccls file found in project root."))
+          (if default-directory
+              (with-current-buffer output-buffer
+                (erase-buffer)
+                (switch-to-buffer-other-window output-buffer t)
+                (apply gen-compile-commands (my/ccls-gen-compile-commands-args
+                                             selected-command-struct))
+                (call-process "ln" nil nil nil "-s"
+                              (concat "Debug/" compile-commands-file)
+                              ".")
+                (select-window user-window))
+            (error "ERROR: Not in a projectile project."))))
+    #+end_src
 
 *** use-package specification
-#+begin_src emacs-lisp :tangle yes
-  ;; LSP language clients
-  ;; CCLS - For use with C, C++, and Objective C
-  ;;
-  ;; NOTE: If a C/C++ file is opened in Emacs and CCLS fails to
-  ;;       provide its services automatically then most likely CCLS
-  ;;       cannot find the project's root directory (or has been confused
-  ;;       by projectile). Put a ".ccls-root" file in the project root
-  ;;       directory to fix this problem.
-  ;; (use-package ccls
-  ;;   :after (evil projectile)
-  ;;   :bind
-  ;;   (:map evil-insert-state-map
-  ;;   ("<C-return>" . my/insert-semicolon-eol))
-  ;;   :init
-  ;;   ;; Always use flycheck, not flymake.
-  ;;   (setq lsp-diagnostic-package :auto)
-  ;;   ;; Turn off other syntax checkers
-  ;;   (setq-default flycheck-disabled-checkers
-  ;;                 '(c/c++-clang c/c++-cppcheck c/c++-gcc))
-  ;;   ;; Deprecated in favor of clangd
-  ;;   :hook
-  ;;   ;; NOTE: CMake now has its own language server: cmake-language-server
-  ;;   ;;       It is a Python package.
-  ;;   ((c-mode c++-mode objc-mode makefile-mode) . (lambda ()
-  ;;       (require 'ccls)))
-  ;;   ;; Set package's customizable variables
-  ;;   :custom
-  ;;   (ccls-args nil)
-  ;;   ;; Make sure this plugin can actually find CCLS
-  ;;   (ccls-executable (executable-find "ccls"))
-  ;;   ;; Make CCLS project files indicative of a projectile project root.
-  ;;   (projectile-project-root-files-top-down-recurring
-  ;;     (append '("compile_commands.json" ".ccls")
-  ;;       projectile-project-root-files-top-down-recurring))
-  ;;   :config
-  ;;   ;; Always ignore the .ccls-cache directory
-  ;;   (push ".ccls-cache" projectile-globally-ignored-directories))
-#+end_src
+    #+begin_src emacs-lisp :tangle yes
+      ;; LSP language clients
+      ;; CCLS - For use with C, C++, and Objective C
+      ;;
+      ;; NOTE: If a C/C++ file is opened in Emacs and CCLS fails to
+      ;;       provide its services automatically then most likely CCLS
+      ;;       cannot find the project's root directory (or has been confused
+      ;;       by projectile). Put a ".ccls-root" file in the project root
+      ;;       directory to fix this problem.
+      ;; (use-package ccls
+      ;;   :after (evil projectile)
+      ;;   :bind
+      ;;   (:map evil-insert-state-map
+      ;;   ("<C-return>" . my/insert-semicolon-eol))
+      ;;   :init
+      ;;   ;; Always use flycheck, not flymake.
+      ;;   (setq lsp-diagnostic-package :auto)
+      ;;   ;; Turn off other syntax checkers
+      ;;   (setq-default flycheck-disabled-checkers
+      ;;                 '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+      ;;   ;; Deprecated in favor of clangd
+      ;;   :hook
+      ;;   ;; NOTE: CMake now has its own language server: cmake-language-server
+      ;;   ;;       It is a Python package.
+      ;;   ((c-mode c++-mode objc-mode makefile-mode) . (lambda ()
+      ;;       (require 'ccls)))
+      ;;   ;; Set package's customizable variables
+      ;;   :custom
+      ;;   (ccls-args nil)
+      ;;   ;; Make sure this plugin can actually find CCLS
+      ;;   (ccls-executable (executable-find "ccls"))
+      ;;   ;; Make CCLS project files indicative of a projectile project root.
+      ;;   (projectile-project-root-files-top-down-recurring
+      ;;     (append '("compile_commands.json" ".ccls")
+      ;;       projectile-project-root-files-top-down-recurring))
+      ;;   :config
+      ;;   ;; Always ignore the .ccls-cache directory
+      ;;   (push ".ccls-cache" projectile-globally-ignored-directories))
+    #+end_src
 
 ** lsp-origami
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-origami
-    :after (lsp-mode))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package lsp-origami
+       :after (lsp-mode))
+   #+end_src
 ** lsp-dart
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-dart
-    :after lsp-mode)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package lsp-dart
+       :after lsp-mode)
+   #+end_src

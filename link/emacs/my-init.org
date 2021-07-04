@@ -10,7 +10,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 We always begin our Org Mode Elisp config files with this line to speed up our
 loads:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
@@ -20,100 +20,100 @@ loads:
   here. Wait to load modules only used by an individual plugin in its =init=
   block.
 
-#+begin_src emacs-lisp :tangle yes
-   ;; Man pager library
-  (require 'man)
-  ;; Newer dired library
-  (require 'dired-x)
-  ;; String manipulation library
-  (require 'subr-x)
-  ;; Make C and C++ modes available; necessary for many third-party packages
-  (require 'cc-mode)
-  ;; "find function at point" library
-  (require 'ffap)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Man pager library
+    (require 'man)
+    ;; Newer dired library
+    (require 'dired-x)
+    ;; String manipulation library
+    (require 'subr-x)
+    ;; Make C and C++ modes available; necessary for many third-party packages
+    (require 'cc-mode)
+    ;; "find function at point" library
+    (require 'ffap)
+  #+end_src
 
 * Define User Variables
   This is where I define new variables to be used throughout my configuration.
 
-#+begin_src emacs-lisp :tangle yes
-;; Make these variables compile-time constants (and available during compilation)
-(eval-when-compile
-  (defvar my/emacs-plugin-dir (expand-file-name
-                                (concat user-emacs-directory "plugin"))
-    "Directory for additional elisp config files.
-Mostly for enumerating and configuring downloaded plugins.")
-  (defvar my/plugin-notebook-dir (expand-file-name
-                                  (concat user-emacs-directory "plugin-notebook"))
-    "Directory for config files written in Org syntax.")
-  (defvar my/elisp-lib-dir (expand-file-name
-                            (concat user-emacs-directory "require"))
-    "Directory for custom Emacs Lisp library files.")
-  (defvar my/local-repos-dir (expand-file-name
-                              (concat user-emacs-directory "local-repos"))
-    "Directory for local `straight' repos.")
-  (defvar my/emacs-backup-dir (expand-file-name
-                               (concat user-emacs-directory "backups"))
-    "Directory housing all Emacs backup files.")
-  (defvar my/emacs-lisp-dir (expand-file-name
-                             (concat user-emacs-directory "lisp"))
-    "Extra miscellaneous elisp code goes here (if necessary).")
-  (defvar user-fonts-dir (expand-file-name
-                          (concat (getenv "HOME") "/.local/share/fonts"))
-    "Fonts directory for the current user")
-  (defvar my/straight-home-dir (expand-file-name
-                                (concat user-emacs-directory "straight/"))
-    "Home directory for the straight package manager.")
-  (defvar my/straight-repos-dir (expand-file-name
-                                 (concat my/straight-home-dir "repos/"))
-    "Housing area for repositories cloned by straight.")
-  (defvar my/straight-build-dir (expand-file-name
-                                 (concat my/straight-home-dir "build/"))
-    "Housing area for linked and compiled Elisp files for packages installed
-with straight.el.")
-  (defvar my/workspace-dir (expand-file-name
-                            (concat (getenv "HOME") "/workspace"))
-    "Directory containig development projects.")
-  (defvar my/line-width 80 "The width of each line of code.")
-  (defvar my/use-helm-gtags t
-    "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")
-  (defvar my/user-info-dir (expand-file-name (concat (getenv "HOME") "/.local/share/info"))
-    "The directory containing extra info pages installed by the user.")
-  (defvar my/max-worker-processes (string-trim (shell-command-to-string "nproc"))
-    "The maximum number of processor threads that can be running at once.")
-)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Make these variables compile-time constants (and available during compilation)
+    (eval-when-compile
+      (defvar my/emacs-plugin-dir (expand-file-name
+                                   (concat user-emacs-directory "plugin"))
+        "Directory for additional elisp config files.
+    Mostly for enumerating and configuring downloaded plugins.")
+      (defvar my/plugin-notebook-dir (expand-file-name
+                                      (concat user-emacs-directory "plugin-notebook"))
+        "Directory for config files written in Org syntax.")
+      (defvar my/elisp-lib-dir (expand-file-name
+                                (concat user-emacs-directory "require"))
+        "Directory for custom Emacs Lisp library files.")
+      (defvar my/local-repos-dir (expand-file-name
+                                  (concat user-emacs-directory "local-repos"))
+        "Directory for local `straight' repos.")
+      (defvar my/emacs-backup-dir (expand-file-name
+                                   (concat user-emacs-directory "backups"))
+        "Directory housing all Emacs backup files.")
+      (defvar my/emacs-lisp-dir (expand-file-name
+                                 (concat user-emacs-directory "lisp"))
+        "Extra miscellaneous elisp code goes here (if necessary).")
+      (defvar user-fonts-dir (expand-file-name
+                              (concat (getenv "HOME") "/.local/share/fonts"))
+        "Fonts directory for the current user")
+      (defvar my/straight-home-dir (expand-file-name
+                                    (concat user-emacs-directory "straight/"))
+        "Home directory for the straight package manager.")
+      (defvar my/straight-repos-dir (expand-file-name
+                                     (concat my/straight-home-dir "repos/"))
+        "Housing area for repositories cloned by straight.")
+      (defvar my/straight-build-dir (expand-file-name
+                                     (concat my/straight-home-dir "build/"))
+        "Housing area for linked and compiled Elisp files for packages installed
+    with straight.el.")
+      (defvar my/workspace-dir (expand-file-name
+                                (concat (getenv "HOME") "/workspace"))
+        "Directory containig development projects.")
+      (defvar my/line-width 80 "The width of each line of code.")
+      (defvar my/use-helm-gtags t
+        "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")
+      (defvar my/user-info-dir (expand-file-name (concat (getenv "HOME") "/.local/share/info"))
+        "The directory containing extra info pages installed by the user.")
+      (defvar my/max-worker-processes (string-trim (shell-command-to-string "nproc"))
+        "The maximum number of processor threads that can be running at once.")
+      )
+  #+end_src
 
 * Language/Encoding
   Language and encoding parameters for this particular Emacs instance.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Define a standard text encoding system for all files.
-  (set-language-environment "UTF-8")
-  (set-default-coding-systems 'utf-8)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Define a standard text encoding system for all files.
+    (set-language-environment "UTF-8")
+    (set-default-coding-systems 'utf-8)
+  #+end_src
 
 * Configure Load Path
   The load-path list is a collection of file paths that Emacs uses to locate
   Elisp modules at runtime.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Tell Emacs where custom library files are
-  (add-to-list 'load-path my/elisp-lib-dir)
-  ;; Tell Emacs where our personal elisp lib dir resides.
-  (add-to-list 'load-path my/emacs-lisp-dir)
-  ;; Tell Emacs where to find plugin config files.
-  (add-to-list 'load-path my/emacs-plugin-dir)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Tell Emacs where custom library files are
+    (add-to-list 'load-path my/elisp-lib-dir)
+    ;; Tell Emacs where our personal elisp lib dir resides.
+    (add-to-list 'load-path my/emacs-lisp-dir)
+    ;; Tell Emacs where to find plugin config files.
+    (add-to-list 'load-path my/emacs-plugin-dir)
+  #+end_src
 
 * Require Custom Libraries
   Once we have configured the =load-path= we can add =require= statements for
   custom Emacs Lisp libraries.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; My own font functions and definitions.
-  (require 'my-font)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; My own font functions and definitions.
+    (require 'my-font)
+  #+end_src
 
 * Load Hotfix Modules
   Load any HOTFIX modules in order to fix backwards-compatibility issues.  It is
@@ -121,41 +121,41 @@ with straight.el.")
   since they are necessary evil, not main configuration code, and as such will
   soon become unnecessary and may be safely removed.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Fix `make-obsolete' functions argument list issues.
-  (load "fix/em28-obsolete-functions-fix")
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Fix `make-obsolete' functions argument list issues.
+    (load "fix/em28-obsolete-functions-fix")
+  #+end_src
 
 * Configure Backup Dirs/Files
   It's handy to have Emacs put all backup files in a centralized directory, as
   opposed to strewing them about each directory you visit.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Put all backup files in ~/.emacs.d/backups to avoid causing
-  ;; unwanted side-effects.
-  (if (not (file-exists-p my/emacs-backup-dir))
-          (make-directory my/emacs-backup-dir t))
-  (setq backup-directory-alist `(("." . ,my/emacs-backup-dir)))
-  (setq make-backup-files t ; backup of a file the first time it is saved.
-        ;; don't clobber symlinks
-        backup-by-copying t
-        ;; version numbers for backup files
-        version-control t
-        ;; delete excess backup files silently
-        delete-old-versions t
-        delete-by-moving-to-trash t
-        ;; oldest versions to keep when new numbered backups created (default 2)
-        kept-old-versions 6
-        ;; newest versions to keep when new numbered backups created (default 2)
-        kept-new-versions 9
-        ;; auto-save every buffer that visits a file
-        auto-save-default t
-        ;; number of seconds idle time before auto-save (default 30)
-        auto-save-timeout 20
-        ;; number of keystrokes between auto-saves (default 300)
-        auto-save-interval 200
-        )
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Put all backup files in ~/.emacs.d/backups to avoid causing
+    ;; unwanted side-effects.
+    (if (not (file-exists-p my/emacs-backup-dir))
+        (make-directory my/emacs-backup-dir t))
+    (setq backup-directory-alist `(("." . ,my/emacs-backup-dir)))
+    (setq make-backup-files t ; backup of a file the first time it is saved.
+          ;; don't clobber symlinks
+          backup-by-copying t
+          ;; version numbers for backup files
+          version-control t
+          ;; delete excess backup files silently
+          delete-old-versions t
+          delete-by-moving-to-trash t
+          ;; oldest versions to keep when new numbered backups created (default 2)
+          kept-old-versions 6
+          ;; newest versions to keep when new numbered backups created (default 2)
+          kept-new-versions 9
+          ;; auto-save every buffer that visits a file
+          auto-save-default t
+          ;; number of seconds idle time before auto-save (default 30)
+          auto-save-timeout 20
+          ;; number of keystrokes between auto-saves (default 300)
+          auto-save-interval 200
+          )
+  #+end_src
 
 * Color Configuration
   Here we configure ANSI colors for various modes used throughout Emacs.
@@ -163,17 +163,17 @@ with straight.el.")
   inferior interpreters) inherit from, recognize ANSI color escape sequences
   so that shells don't look like a hot mess. We also want colorized man pages.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Set ANSI color integration in comint-mode
-  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
-  ;; Colorize Emacs' man page viewer
-  (set-face-attribute 'Man-overstrike nil
-    :inherit font-lock-type-face
-    :bold t)
-  (set-face-attribute 'Man-underline nil
-    :inherit font-lock-keyword-face
-    :underline t)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Set ANSI color integration in comint-mode
+    (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+    ;; Colorize Emacs' man page viewer
+    (set-face-attribute 'Man-overstrike nil
+                        :inherit font-lock-type-face
+                        :bold t)
+    (set-face-attribute 'Man-underline nil
+                        :inherit font-lock-keyword-face
+                        :underline t)
+  #+end_src
 
 * Set Emacs Variables
   Here is where we set existing Emacs variables to our preferred values, both
@@ -181,85 +181,89 @@ with straight.el.")
   many existing variables, especially if you use advanced programming tools such
   as LanguageServerProtocol clients and servers.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
-  ;; screen with debugging output seems to mess with evil-mode, so I find it
-  ;; prudent to turn this variable off until I have a reason to turn it on.
-  (setq debug-on-error nil)
-  ;; Always follow symlinks
-  (setq vc-follow-symlinks t)
-  ;; Reduce risk of loading outdated bytecode
-  (setq load-prefer-newer t)
+  #+begin_src emacs-lisp :tangle yes
+    ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
+    ;; screen with debugging output seems to mess with evil-mode, so I find it
+    ;; prudent to turn this variable off until I have a reason to turn it on.
+    (setq debug-on-error nil)
+    ;; Always follow symlinks
+    (setq vc-follow-symlinks t)
+    ;; Reduce risk of loading outdated bytecode
+    (setq load-prefer-newer t)
 
-  ;; Do not show standard GNU Emacs welcome screen when Emacs starts,
-  ;; but instead enter the *scratch* buffer.
-  (setq inhibit-startup-screen t)
+    ;; Do not show standard GNU Emacs welcome screen when Emacs starts,
+    ;; but instead enter the *scratch* buffer.
+    (setq inhibit-startup-screen t)
 
-  ;; Silence the annoying error/warning bell
-  (setq ring-bell-function 'ignore)
+    ;; Silence the annoying error/warning bell
+    (setq ring-bell-function 'ignore)
 
-  ;; Display relative line numbers like in Vim.
-  (setq display-line-numbers-type 'relative)
+    ;; Display relative line numbers like in Vim.
+    (setq display-line-numbers-type 'relative)
 
-  ;; Up the maximum depth for eval, apply, and funcall functions.
-  ;; This variable is supposed to catch infinite recursions before
-  ;; they cause a stack overflow, but its default value is very low.
-  (setq max-lisp-eval-depth 10000)
+    ;; Up the maximum depth for eval, apply, and funcall functions.
+    ;; This variable is supposed to catch infinite recursions before
+    ;; they cause a stack overflow, but its default value is very low.
+    (setq max-lisp-eval-depth 10000)
 
-  ;; Get rid of scrollbars since l33t programmers don't need any.
-  (setq vertical-scroll-bar nil)
+    ;; Get rid of scrollbars since l33t programmers don't need any.
+    (setq vertical-scroll-bar nil)
 
-  ;; Increase the amount of bytes Emacs reads per unit time from a given
-  ;; process. The initial value is 4KB, far too low for modern day applications.
-  (setq read-process-output-max (* 1024 1024))
+    ;; Increase the amount of bytes Emacs reads per unit time from a given
+    ;; process. The initial value is 4KB, far too low for modern day applications.
+    (setq read-process-output-max (* 1024 1024))
 
-  ;; Set the max number of variable bindings allowed at one time to a
-  ;; number considerably higher than the default (which is 1600).
-  ;; Modern problems require modern solutions!
-  (setq max-specpdl-size 12000)
+    ;; Set the max number of variable bindings allowed at one time to a
+    ;; number considerably higher than the default (which is 1600).
+    ;; Modern problems require modern solutions!
+    (setq max-specpdl-size 12000)
 
-  ;; Each line should be 80 characters wide.
-  (setq-default fill-column my/line-width)
+    ;; Each line should be 80 characters wide.
+    (setq-default fill-column my/line-width)
 
-  ;; Set vertical ruler in programming modes
-  (setq-default
-    whitespace-line-column my/line-width
-    whitespace-style '(face lines-tail))
+    ;; Set vertical ruler in programming modes
+    (setq-default
+     whitespace-line-column my/line-width
+     whitespace-style '(face lines-tail))
 
-  ;; Set smooth scrolling
-  ;; (also see the sublimity plugin configuration)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-  (setq mouse-wheel-progressive-speed nil)
-  (setq mouse-wheel-follow-mouse 't)
-  (setq scroll-step 1)
-  (setq scroll-conservatively 10000)
-  (setq auto-window-vscroll nil)
+    ;; Set smooth scrolling
+    ;; (also see the sublimity plugin configuration)
+    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+    (setq mouse-wheel-progressive-speed nil)
+    (setq mouse-wheel-follow-mouse 't)
+    (setq scroll-step 1)
+    (setq scroll-conservatively 10000)
+    (setq auto-window-vscroll nil)
 
-  ;; Automatically reload TAGS file without prompting us.
-  (setq tags-revert-without-query t)
+    ;; Automatically reload TAGS file without prompting us.
+    (setq tags-revert-without-query t)
 
-  ;; Never prompt us to take tags tables with us when moving between
-  ;; directories. Always assume "no".
-  (setq tags-add-tables nil)
+    ;; Never prompt us to take tags tables with us when moving between
+    ;; directories. Always assume "no".
+    (setq tags-add-tables nil)
 
-  ;; Use spaces instead of tabs.
-  (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 2)
+    ;; Use spaces instead of tabs.
+    (setq-default indent-tabs-mode nil)
+    ;; Indent in increments of 2 spaces.
+    (setq-default tab-width 2)
 
-  ;; This must be set to nil in order for evil-collection to replace
-  ;; evil-integration in all important ways. This variable must be set
-  ;; here, NOT in the :config or :init blocks of a use-package expression.
-  ;; (otherwise a warning gets printed)
-  (setq evil-want-keybinding nil)
-#+end_src
+    ;; Show trailing whitespace characters by default.
+    (setq-default show-trailing-whitespace t)
+
+    ;; This must be set to nil in order for evil-collection to replace
+    ;; evil-integration in all important ways. This variable must be set
+    ;; here, NOT in the :config or :init blocks of a use-package expression.
+    ;; (otherwise a warning gets printed)
+    (setq evil-want-keybinding nil)
+  #+end_src
 
 * Font Configuration
   Set default font for Emacs.
   *NOTE:* The main font configuration is in =my-font.el=.
 
-#+begin_src emacs-lisp :tangle yes
-  (my-font-set-default-font)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (my-font-set-default-font)
+  #+end_src
 
 * Info
   =info= is Emacs' built in help system. You use =info= to browse various
@@ -267,20 +271,20 @@ with straight.el.")
   of locations for help pages. Here we add more locations for browsing
   user-installed info pages.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Make sure user-installed info pages are available.
-  (add-to-list 'Info-default-directory-list my/user-info-dir)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Make sure user-installed info pages are available.
+    (add-to-list 'Info-default-directory-list my/user-info-dir)
+  #+end_src
 
 * Aliases
   Here we alias existing functions to new names, usually to tell Emacs to run a
   different function whenever it tries to use one we don't like.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Turn all "yes or no" prompts into "y or n" single character prompts to make
-  ;; our lives eaiser.
-  (defalias 'yes-or-no-p 'y-or-n-p)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Turn all "yes or no" prompts into "y or n" single character prompts to make
+    ;; our lives eaiser.
+    (defalias 'yes-or-no-p 'y-or-n-p)
+  #+end_src
 
 * Activate/Deactivate Default Minor Modes
   Turn certain minor modes on or off by default. You can think of a minor mode
@@ -289,61 +293,61 @@ with straight.el.")
   (save-place-mode 1) will make Emacs open previously closed files at their last
   edited location, as opposed to opening them at the beginning.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Disable menubar and toolbar (they take up a lot of space!)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  ;; Also diable the scrollbar
-  (toggle-scroll-bar -1)
+  #+begin_src emacs-lisp :tangle yes
+    ;; Disable menubar and toolbar (they take up a lot of space!)
+    (menu-bar-mode -1)
+    (tool-bar-mode -1)
+    ;; Also diable the scrollbar
+    (toggle-scroll-bar -1)
 
-  ;; Open files at last edited position
-  (save-place-mode 1)
+    ;; Open files at last edited position
+    (save-place-mode 1)
 
-  ;; Turn on recentf-mode for keeping track of recently opened files.
-  (recentf-mode 1)
-  (setq recentf-max-menu-items 25)
-  (setq recentf-max-saved-items 25)
-  (global-set-key (kbd "C-x C-r") 'recentf-open-files)
-  ;; Periodically save recent file list (every 5 minutes) so that we do not lose
-  ;; the list if Emacs crashes.
-  (run-at-time nil (* 5 60) 'recentf-save-list)
+    ;; Turn on recentf-mode for keeping track of recently opened files.
+    (recentf-mode 1)
+    (setq recentf-max-menu-items 25)
+    (setq recentf-max-saved-items 25)
+    (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+    ;; Periodically save recent file list (every 5 minutes) so that we do not lose
+    ;; the list if Emacs crashes.
+    (run-at-time nil (* 5 60) 'recentf-save-list)
 
-  ;; subword-mode is super handy! It treats parts of camelCase and snake_case
-  ;; names as separate words. This enables subword-mode in all buffers.
-  (global-subword-mode 1)
+    ;; subword-mode is super handy! It treats parts of camelCase and snake_case
+    ;; names as separate words. This enables subword-mode in all buffers.
+    (global-subword-mode 1)
 
-  ;; Automatically insert closing delimiters when an opening delimiter is typed.
-  (electric-pair-mode 1)
+    ;; Automatically insert closing delimiters when an opening delimiter is typed.
+    (electric-pair-mode 1)
 
-  ;; Automatically keep code indented when blocks change.
-  ;; Not necessary since we use clean-aindent-mode.
-  ;; See my-whitespace.org for more details.
-  (electric-indent-mode -1)
+    ;; Automatically keep code indented when blocks change.
+    ;; Not necessary since we use clean-aindent-mode.
+    ;; See my-whitespace.org for more details.
+    (electric-indent-mode -1)
 
-  ;; Allow tooltips in pop-up mini-frames.
-  (tooltip-mode 1)
+    ;; Allow tooltips in pop-up mini-frames.
+    (tooltip-mode 1)
 
-  ;; Turn on syntax highlighting (AKA font locking) by default.
-  (global-font-lock-mode 1)
+    ;; Turn on syntax highlighting (AKA font locking) by default.
+    (global-font-lock-mode 1)
 
-  ;; Always show line numbers
-  (global-display-line-numbers-mode 1)
-#+end_src
+    ;; Always show line numbers
+    (global-display-line-numbers-mode 1)
+  #+end_src
 
 * Advice
   Custom advising functions that run before, after, or around other functions to
   inform their behavior.
 
 ** load-theme
-#+begin_src emacs-lisp :tangle yes
-  ;; This hook runs after the main theme is loaded.
-  (defvar after-load-theme-hook nil
-    "Hook run after a color theme is loaded using `load-theme'.")
+   #+begin_src emacs-lisp :tangle yes
+     ;; This hook runs after the main theme is loaded.
+     (defvar after-load-theme-hook nil
+       "Hook run after a color theme is loaded using `load-theme'.")
 
-  (defadvice load-theme (after run-after-load-theme-hook activate)
-    "Run `after-load-theme-hook'."
-    (run-hooks 'after-load-theme-hook))
-#+end_src
+     (defadvice load-theme (after run-after-load-theme-hook activate)
+       "Run `after-load-theme-hook'."
+       (run-hooks 'after-load-theme-hook))
+   #+end_src
 
 * Key Bindings
   Custom key bindings.
@@ -351,223 +355,223 @@ with straight.el.")
 ** Global
    Key bindings available in any major mode.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Find file at point ("g f" in evil-mode)
-  ;; (global-set-key (kbd "C-c f p") 'ffap)
+   #+begin_src emacs-lisp :tangle yes
+     ;; Find file at point ("g f" in evil-mode)
+     ;; (global-set-key (kbd "C-c f p") 'ffap)
 
-  ;; Change window size (Vim-like bindings)
-  (global-set-key (kbd "S-C-l") 'enlarge-window-horizontally)
-  (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
-  (global-set-key (kbd "S-C-j") 'enlarge-window)
-  (global-set-key (kbd "S-C-k") 'shrink-window)
+     ;; Change window size (Vim-like bindings)
+     (global-set-key (kbd "S-C-l") 'enlarge-window-horizontally)
+     (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
+     (global-set-key (kbd "S-C-j") 'enlarge-window)
+     (global-set-key (kbd "S-C-k") 'shrink-window)
 
-#+end_src
+   #+end_src
 
 * Email
   These settings are used to configure Emacs' mail-mode and integrations with
   external email programs, such as mutt.
 
-#+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp :tangle yes
 
-  ;; Change mode when Emacs is used to edit emails for Mutt
-  (setq auto-mode-alist (append '(("/tmp/mutt.*" . message-mode)) auto-mode-alist))
-#+end_src
+    ;; Change mode when Emacs is used to edit emails for Mutt
+    (setq auto-mode-alist (append '(("/tmp/mutt.*" . message-mode)) auto-mode-alist))
+  #+end_src
 
 * Customize Built-in Modes
   Here we configure built-in major and minor modes to make them more user-friendly.
 
 ** dired
-  ~dired~ is Emacs' built in directory editor and file explorer. You invoke the ~dired~
-  command on a directory by using the default key binding ~C-x d~.
+   ~dired~ is Emacs' built in directory editor and file explorer. You invoke the ~dired~
+   command on a directory by using the default key binding ~C-x d~.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; allow dired to delete or copy dir
-  ;; “always” means no asking
-  ;; “top” means ask once
-  (setq dired-recursive-copies 'always
-        dired-recursive-deletes 'top
-        ;; Copy from one dired buffer to another dired buffer shown
-        ;; in a split window.
-        dired-dwim-target t)
+   #+begin_src emacs-lisp :tangle yes
+     ;; allow dired to delete or copy dir
+     ;; “always” means no asking
+     ;; “top” means ask once
+     (setq dired-recursive-copies 'always
+           dired-recursive-deletes 'top
+           ;; Copy from one dired buffer to another dired buffer shown
+           ;; in a split window.
+           dired-dwim-target t)
 
-  ;; Allow using 'a' in dired to find file or directory in same buffer.
-  (put 'dired-find-alternate-file 'disabled nil)
+     ;; Allow using 'a' in dired to find file or directory in same buffer.
+     (put 'dired-find-alternate-file 'disabled nil)
 
-  ;; Have 'RET' and '^' open directories in same buffer as current dir by
-  ;; default.
-  ;; This key was dired-advertised-find-file
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  ;; This key was dired-up-directory
-  (define-key dired-mode-map (kbd "^") (lambda ()
-                                         (interactive)
-                                         (find-alternate-file "..")))
-#+end_src
+     ;; Have 'RET' and '^' open directories in same buffer as current dir by
+     ;; default.
+     ;; This key was dired-advertised-find-file
+     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+     ;; This key was dired-up-directory
+     (define-key dired-mode-map (kbd "^") (lambda ()
+                                            (interactive)
+                                            (find-alternate-file "..")))
+   #+end_src
 
 * Custom Modes
   Here we define new major and minor modes.
 
 ** Minor Modes
 *** sensitive-mode
-#+begin_src emacs-lisp :tangle yes
-  ;; Create a minor mode for editing sensitive information.
-  (define-minor-mode sensitive-mode
-    "For sensitive files like password lists.
-  It disables backup creation and auto saving.
+    #+begin_src emacs-lisp :tangle yes
+      ;; Create a minor mode for editing sensitive information.
+      (define-minor-mode sensitive-mode
+        "For sensitive files like password lists.
+      It disables backup creation and auto saving.
 
-  With no argument, this command toggles the mode.
-  Non-null prefix argument turns on the mode.
-  Null prefix argument turns off the mode."
-    ;; The initial value.
-    nil
-    ;; The indicator for the mode line.
-    " Sensitive"
-    ;; The minor mode bindings.
-    nil
-    (if (symbol-value sensitive-mode)
-        (progn
-    ;; disable backups
-    (set (make-local-variable 'backup-inhibited) t)
-    ;; disable auto-save
-    (if auto-save-default
-        (auto-save-mode -1)))
-      ;resort to default value of backup-inhibited
-      (kill-local-variable 'backup-inhibited)
-      ;resort to default auto save setting
-      (if auto-save-default
-        (auto-save-mode 1))))
+      With no argument, this command toggles the mode.
+      Non-null prefix argument turns on the mode.
+      Null prefix argument turns off the mode."
+        ;; The initial value.
+        nil
+        ;; The indicator for the mode line.
+        " Sensitive"
+        ;; The minor mode bindings.
+        nil
+        (if (symbol-value sensitive-mode)
+            (progn
+              ;; disable backups
+              (set (make-local-variable 'backup-inhibited) t)
+              ;; disable auto-save
+              (if auto-save-default
+                  (auto-save-mode -1)))
+                                              ;resort to default value of backup-inhibited
+          (kill-local-variable 'backup-inhibited)
+                                              ;resort to default auto save setting
+          (if auto-save-default
+              (auto-save-mode 1))))
 
-  ;; Use sensitive-mode automatically when editing specific filetypes
-  (setq auto-mode-alist
-        (append
-         (list
-          '("\\.\\(vcf\\|gpg\\)$" . sensitive-mode)
-          )
-         auto-mode-alist))
-#+end_src
+      ;; Use sensitive-mode automatically when editing specific filetypes
+      (setq auto-mode-alist
+            (append
+             (list
+              '("\\.\\(vcf\\|gpg\\)$" . sensitive-mode)
+              )
+             auto-mode-alist))
+    #+end_src
 
 * Function Definitions
   Custom functions, both standard and interactive.
 
-#+begin_src emacs-lisp :tangle yes
-  (defun print-major-mode ()
-    "Show the major mode of the current buffer in the echo area."
-    (interactive)
-    (message "%s" major-mode))
+  #+begin_src emacs-lisp :tangle yes
+    (defun print-major-mode ()
+      "Show the major mode of the current buffer in the echo area."
+      (interactive)
+      (message "%s" major-mode))
 
-  (defun gnus-new-frame ()
-    "Create a new frame and start the Gnus news reader in it."
-    (interactive)
-    (with-selected-frame (make-frame)
-      (gnus)))
+    (defun gnus-new-frame ()
+      "Create a new frame and start the Gnus news reader in it."
+      (interactive)
+      (with-selected-frame (make-frame)
+        (gnus)))
 
-  (defun reload-config ()
-    "Reload all Emacs config files."
-    (interactive)
-    (load-file my/emacsrc))
+    (defun reload-config ()
+      "Reload all Emacs config files."
+      (interactive)
+      (load-file my/emacsrc))
 
-  (defun load-directory (dir load-fn pattern)
-    "Load all files in a given DIR using a provided file loading function
-  LOAD-FN. Files in the directory are matched based on PATTERN, which is a
-  regex."
-    (require 'cl-lib)
-    (cl-flet ((load-it (f)
-                (funcall load-fn (concat (file-name-as-directory dir) f))))
-      (if (file-directory-p dir)
-        (mapc #'load-it (directory-files dir nil pattern)))))
+    (defun load-directory (dir load-fn pattern)
+      "Load all files in a given DIR using a provided file loading function
+      LOAD-FN. Files in the directory are matched based on PATTERN, which is a
+      regex."
+      (require 'cl-lib)
+      (cl-flet ((load-it (f)
+                         (funcall load-fn (concat (file-name-as-directory dir) f))))
+        (if (file-directory-p dir)
+            (mapc #'load-it (directory-files dir nil pattern)))))
 
-  (defun download-elisp-lib (url &optional file-name)
-    "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
+    (defun download-elisp-lib (url &optional file-name)
+      "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
 
-  If FILE-NAME is omitted or nil, it defaults to the last segment of the URL."
-    (if (not file-name)
-        (setq file-name (url-file-nondirectory (url-unhex-string url))))
-    (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
-      (make-directory my/emacs-lisp-dir t)
-      (url-copy-file url (expand-file-name file-path) t)))
+      If FILE-NAME is omitted or nil, it defaults to the last segment of the URL."
+      (if (not file-name)
+          (setq file-name (url-file-nondirectory (url-unhex-string url))))
+      (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
+        (make-directory my/emacs-lisp-dir t)
+        (url-copy-file url (expand-file-name file-path) t)))
 
-  (defun my/gtags-root-dir ()
+    (defun my/gtags-root-dir ()
       "Returns GTAGS root directory or nil if doesn't exist."
       (with-temp-buffer
         (if (zerop (call-process "global" nil t nil "-pr"))
             (buffer-substring (point-min) (1- (point-max)))
           nil)))
 
-  (defun my/gtags-update ()
-    "Make GTAGS incremental update"
-    (call-process "global" nil nil nil "-u"))
+    (defun my/gtags-update ()
+      "Make GTAGS incremental update"
+      (call-process "global" nil nil nil "-u"))
 
-  (defun my/gtags-update-hook-fn ()
-    "Update GTAGS file whenever an appropriate file is saved."
-    (when (my/gtags-root-dir)
-      (my/gtags-update)))
+    (defun my/gtags-update-hook-fn ()
+      "Update GTAGS file whenever an appropriate file is saved."
+      (when (my/gtags-root-dir)
+        (my/gtags-update)))
 
-  (defun my/trimmed-shell-result (shell-command-str)
-    "Execute a shell command and return the result without leading or
-trailing whitespace.
+    (defun my/trimmed-shell-result (shell-command-str)
+      "Execute a shell command and return the result without leading or
+    trailing whitespace.
 
-SHELL-COMMAND-STR is the shell command to execute."
-    (string-trim (shell-command-to-string shell-command-str)))
+    SHELL-COMMAND-STR is the shell command to execute."
+      (string-trim (shell-command-to-string shell-command-str)))
 
-  (defun my/tool-installed-p (tool)
-    "Determine whether or not a given executable (TOOL) exists
+    (defun my/tool-installed-p (tool)
+      "Determine whether or not a given executable (TOOL) exists
 
-TOOL is a string corresponding to an executable in the UNIX environment."
-    (not (string= "" (my/trimmed-shell-result (concat "command -v " tool)))))
+    TOOL is a string corresponding to an executable in the UNIX environment."
+      (not (string= "" (my/trimmed-shell-result (concat "command -v " tool)))))
 
-  (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
-    "Recursively add directories from a BASE-DIR to load-path.
+    (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
+      "Recursively add directories from a BASE-DIR to load-path.
 
-Optionally, SUBDIRS is a list of subdirectory strings beneath BASE-DIR that
-should be added to load-path. If this argument is absent, all subdirectories
-of BASE-DIR are added to load-path."
-    (interactive)
-    (let ((default-directory base-dir))
-      (setq load-path
-        (append
-          (let ((load-path (copy-sequence load-path))) ;; Shadow
-            (if subdirs
-              ;; If user supplied list of subdirs, pass it here
-              (normal-top-level-add-to-load-path subdirs)
-              ;; Otherwise, add all directories under base-dir
-              (normal-top-level-add-subdirs-to-load-path)))
-          load-path))))
+    Optionally, SUBDIRS is a list of subdirectory strings beneath BASE-DIR that
+    should be added to load-path. If this argument is absent, all subdirectories
+    of BASE-DIR are added to load-path."
+      (interactive)
+      (let ((default-directory base-dir))
+        (setq load-path
+              (append
+               (let ((load-path (copy-sequence load-path))) ;; Shadow
+                 (if subdirs
+                     ;; If user supplied list of subdirs, pass it here
+                     (normal-top-level-add-to-load-path subdirs)
+                   ;; Otherwise, add all directories under base-dir
+                   (normal-top-level-add-subdirs-to-load-path)))
+               load-path))))
 
-  (defun my/compile-org-dir (org-dir)
-    "Tangle then byte compile every .org file in ORG-DIR, but only if necessary.
+    (defun my/compile-org-dir (org-dir)
+      "Tangle then byte compile every .org file in ORG-DIR, but only if necessary.
 
-This function first checks for byte-compiled .elc files in the
-directory. If they do not yet exist for their corresponding .el
-files, or if the .elc files are older than their parent .el
-files, this function byte-compiles the .el files. However, the
-.el files are generated from their ancestor .org files, so this
-function then checks to make sure that the .el files are present
-and up-to-date with each .org file. If they are absent or out of
-sync, tangle the .org files to generate the .el files."
-    (interactive)
-    (let* ((default-directory org-dir)
-          (org-files (directory-files org-dir 'full ".*\\.org"))
-          (elc-files (mapcar #'(lambda (file)
-                                  (concat
-                                  (file-name-sans-extension file) ".elc"))
-            org-files)))
-      (mapc #'my/create-update-config-artifact elc-files)))
+    This function first checks for byte-compiled .elc files in the
+    directory. If they do not yet exist for their corresponding .el
+    files, or if the .elc files are older than their parent .el
+    files, this function byte-compiles the .el files. However, the
+    .el files are generated from their ancestor .org files, so this
+    function then checks to make sure that the .el files are present
+    and up-to-date with each .org file. If they are absent or out of
+    sync, tangle the .org files to generate the .el files."
+      (interactive)
+      (let* ((default-directory org-dir)
+             (org-files (directory-files org-dir 'full ".*\\.org"))
+             (elc-files (mapcar #'(lambda (file)
+                                    (concat
+                                     (file-name-sans-extension file) ".elc"))
+                                org-files)))
+        (mapc #'my/create-update-config-artifact elc-files)))
 
-  (defun straight-update-and-freeze ()
-    "Custom function that updates all installed packages and regenerates the
-lock file."
-    (interactive)
-    (straight-pull-all)
-    (straight-rebuild-all)
-    (straight-freeze-versions t))
+    (defun straight-update-and-freeze ()
+      "Custom function that updates all installed packages and regenerates the
+    lock file."
+      (interactive)
+      (straight-pull-all)
+      (straight-rebuild-all)
+      (straight-freeze-versions t))
 
-  (defun straight-pull-recipe-repositories ()
-    "Update all straight.el recipe repositories. This is a custom function that
-    I defined in order to make my life easier.
-    --tjtrabue"
-    (interactive)
-    (dolist (repo straight-recipe-repositories)
-      (straight-pull-package repo)))
-#+end_src
+    (defun straight-pull-recipe-repositories ()
+      "Update all straight.el recipe repositories. This is a custom function that
+        I defined in order to make my life easier.
+        --tjtrabue"
+      (interactive)
+      (dolist (repo straight-recipe-repositories)
+        (straight-pull-package repo)))
+  #+end_src
 
 * Environment Variables
   Set additional environment variables not taken care of through the
@@ -577,16 +581,16 @@ lock file."
    Perl's operations depends on a number of environment variables that Emacs
    will not recognize by default, so we must set them here.
 
-#+begin_src emacs-lisp :tangle yes
-  (let* ((perl-local-lib-root (concat (getenv "HOME") "/perl5"))
-         (perl-local-lib (concat perl-local-lib-root "/lib/perl5")))
-    (setenv "PERL5LIB" perl-local-lib)
-    (setenv "PERL_LOCAL_LIB_ROOT"
-      (concat perl-local-lib-root ":$PERL_LOCAL_LIB_ROOT") 'subst-env-vars)
-    (setenv "PERL_MB_OPT" (concat "--install_base '" perl-local-lib-root "'"))
-    (setenv "PERL_MM_OPT" (concat "INSTALL_BASE=" perl-local-lib-root))
-    (setenv "PERL_MM_USE_DEFAULT" "1"))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (let* ((perl-local-lib-root (concat (getenv "HOME") "/perl5"))
+            (perl-local-lib (concat perl-local-lib-root "/lib/perl5")))
+       (setenv "PERL5LIB" perl-local-lib)
+       (setenv "PERL_LOCAL_LIB_ROOT"
+               (concat perl-local-lib-root ":$PERL_LOCAL_LIB_ROOT") 'subst-env-vars)
+       (setenv "PERL_MB_OPT" (concat "--install_base '" perl-local-lib-root "'"))
+       (setenv "PERL_MM_OPT" (concat "INSTALL_BASE=" perl-local-lib-root))
+       (setenv "PERL_MM_USE_DEFAULT" "1"))
+   #+end_src
 
 * Hooks
   Hooks are analogous to Vim's autocmds. They represent a series of functions to
@@ -601,95 +605,108 @@ lock file."
    dired is the awesome "directory editor" mode in Emacs. It's much more
    convenient than entering the shell, for the most part.
 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'dired-mode-hook #'(lambda ()
-       ;; Auto-refresh dired buffer when files change.
-       (auto-revert-mode 1)
-       ;; Allow user to toggle long-form ls output in dired mode with '('.
-       (dired-hide-details-mode 1)))
-  (add-hook 'wdired-mode-hook #'(lambda ()
-       ;; Auto-refresh wdired buffer when files change.
-       (auto-revert-mode 1)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (add-hook 'dired-mode-hook #'(lambda ()
+                                    ;; Auto-refresh dired buffer when files change.
+                                    (auto-revert-mode 1)
+                                    ;; Allow user to toggle long-form ls output in dired mode with '('.
+                                    (dired-hide-details-mode 1)))
+     (add-hook 'wdired-mode-hook #'(lambda ()
+                                     ;; Auto-refresh wdired buffer when files change.
+                                     (auto-revert-mode 1)))
+   #+end_src
 
 ** emacs-startup hooks
    These run after loading init files and handling the command line.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; after startup, it is important you reset this to some reasonable default. A
-  ;; large gc-cons-threshold will cause freezing and stuttering during long-term
-  ;; interactive use. I find these are nice defaults:
-  (add-hook 'emacs-startup-hook #'(lambda ()
-    (setq gc-cons-threshold (* 100 1024 1024)
-          gc-cons-percentage 0.1
-          file-name-handler-alist last-file-name-handler-alist)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     ;; after startup, it is important you reset this to some reasonable default. A
+     ;; large gc-cons-threshold will cause freezing and stuttering during long-term
+     ;; interactive use. I find these are nice defaults:
+     (add-hook 'emacs-startup-hook #'(lambda ()
+                                       (setq gc-cons-threshold (* 100 1024 1024)
+                                             gc-cons-percentage 0.1
+                                             file-name-handler-alist last-file-name-handler-alist)))
+   #+end_src
 
 ** prog-mode hooks
-#+begin_src emacs-lisp :tangle yes
-  ;; These commands run whenever Emacs finds a file of any programming language.
-  (add-hook 'prog-mode-hook #'(lambda ()
-       ;; Make hyperlinks clickable.
-       (goto-address-mode 1)
-       ;; Turn various keywords into pretty programming symbols,
-       ;; such as "lambda" -> "λ" in lisp-mode.
-       (prettify-symbols-mode 1)
-       ;; Show invisible characters.
-       (whitespace-mode 1)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     ;; These commands run whenever Emacs finds a file of any programming language.
+     (add-hook 'prog-mode-hook #'(lambda ()
+                                   ;; Make hyperlinks clickable.
+                                   (goto-address-mode 1)
+                                   ;; Turn various keywords into pretty programming symbols,
+                                   ;; such as "lambda" -> "λ" in lisp-mode.
+                                   (prettify-symbols-mode 1)
+                                   ;; Show invisible characters.
+                                   (whitespace-mode 1)))
+   #+end_src
 
 ** shell-mode hooks
    shell-mode is a basic terminal emulator in Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'shell-mode-hook #'(lambda ()
-        (ansi-color-for-comint-mode-on)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (add-hook 'shell-mode-hook #'(lambda ()
+                                    (ansi-color-for-comint-mode-on)))
+   #+end_src
 
 ** text-mode hooks
-  These commands run whenever Emacs finds a text type file or any of its
-  derivatives.
+   These commands run whenever Emacs finds a text type file or any of its
+   derivatives.
 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'text-mode-hook #'(lambda ()
-       ;; Wrap words if they exceed the fill column threshold.
-       (auto-fill-mode 1)
-       ;; Make hyperlinks clickable.
-       (goto-address-mode 1)
-       ;; Show invisible characters.
-       (whitespace-mode 1)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (add-hook 'text-mode-hook #'(lambda ()
+                                   ;; Wrap words if they exceed the fill column
+                                   ;; threshold.
+                                   (auto-fill-mode 1)
+                                   ;; Make hyperlinks clickable.
+                                   (goto-address-mode 1)
+                                   ;; Show invisible characters.
+                                   (whitespace-mode 1)))
+   #+end_src
 
 ** conf-mode hooks
-  These commands run whenever Emacs finds a configuration file, such as =.ini=
-  or =.gitconfig= files.
+   These commands run whenever Emacs finds a configuration file, such as =.ini=
+   or =.gitconfig= files.
 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'conf-mode-hook #'(lambda ()
-       ;; Make hyperlinks clickable.
-       (goto-address-mode 1)
-       ;; Show invisible characters.
-       (whitespace-mode 1)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (add-hook 'conf-mode-hook #'(lambda ()
+                                   ;; Make hyperlinks clickable.
+                                   (goto-address-mode 1)
+                                   ;; Show invisible characters.
+                                   (whitespace-mode 1)))
+   #+end_src
+
+** before-save hooks
+   These hooks run before Emacs saves a file.
+
+   #+begin_src emacs-lisp :tangle yes
+     (add-hook 'before-save-hook #'(lambda ()
+                                     ;; Strip trailing whitespace from the
+                                     ;; current buffer before saving.
+                                     (delete-trailing-whitespace)
+                                     ;; Convert tabs to spaces.
+                                     (untabify (point-min) (point-max))))
+   #+end_src
 
 ** after-save hooks
-   These hooks run after every time Emacs saves a file.
+   These hooks run after Emacs saves a file.
 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'after-save-hook #'(lambda ()
-    ;; Update any GTAGS files if necessary.
-    (my/gtags-update-hook-fn)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (add-hook 'after-save-hook #'(lambda ()
+                                    ;; Update any GTAGS files if necessary.
+                                    (my/gtags-update-hook-fn)))
+   #+end_src
 
 ** window-size-change hooks
    Hooks that run whenever the window size changes.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; NOTE: Most of the time, Emacs seems to take care of zooming the font size
-  ;;       by itself. Only uncomment this hook if you notice a very small font
-  ;;       size on large monitors.
-  ;; (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     ;; NOTE: Most of the time, Emacs seems to take care of zooming the font size
+     ;;       by itself. Only uncomment this hook if you notice a very small font
+     ;;       size on large monitors.
+     ;; (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
+   #+end_src
 
 * TRAMP
   TRAMP is a generic external process interaction client for Emacs. It is often
@@ -703,59 +720,59 @@ lock file."
    example would be placing the following in your =.bashrc= files, both on your
    remote server and your local development machine:
 
-#+begin_src shell
-  if [ $TERM == "dumb" ]; then
-    PS1="tramp $ "
-  fi
-#+end_src
+   #+begin_src shell
+     if [ $TERM == "dumb" ]; then
+         PS1="tramp $ "
+     fi
+   #+end_src
 
 * Package Manager
 ** straight
-  ~straight~ is a newer package manager for Emacs that differs from ~package.el~.
-  It operates by cloning Git repositories for Emacs packages and symlinking them
-  to Emacs' runtime path. ~straight~ is also a purely functional package manager,
-  and integrates nicely with the ~use-package~ macro.
-  *NOTE:* straight requires Emacs version 24.5 or higher to properly function.
+   ~straight~ is a newer package manager for Emacs that differs from ~package.el~.
+   It operates by cloning Git repositories for Emacs packages and symlinking them
+   to Emacs' runtime path. ~straight~ is also a purely functional package manager,
+   and integrates nicely with the ~use-package~ macro.
+   *NOTE:* straight requires Emacs version 24.5 or higher to properly function.
 
-  To update all packages installed through straight, run ~M-x straight-pull-all~
+   To update all packages installed through straight, run ~M-x straight-pull-all~
 
-#+begin_src emacs-lisp :tangle yes
-  (when (>= emacs-major-version 24)
-    (eval-when-compile
-      (defvar bootstrap-version)
-      ;; Always use use-package when installing packages, making the ':straight t'
-      ;; part of the use-package macro unnecessary.
-      (setq straight-use-package-by-default t)
-      ;; Clone the develop branch of straight instead of master.
-      (setq straight-repository-branch "develop")
-      (let ((bootstrap-file
-            (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-            (bootstrap-version 5))
-        (unless (file-exists-p bootstrap-file)
-          (with-current-buffer
-              (url-retrieve-synchronously
-              "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-              'silent 'inhibit-cookies)
-            (goto-char (point-max))
-            (eval-print-last-sexp)))
-        (with-no-warnings
-          (load bootstrap-file nil 'nomessage))
-        ;; Refresh package repositories
-        (straight-pull-recipe-repositories)
-        ;; Default mode for loading packages: either defer or demand.
-        ;; (setq use-package-always-demand t)
-        (setq use-package-always-defer t)
-        ;; Install use-package via straight.
-        ;; After this function runs, use-package will automatically use straight
-        ;; to install packages if you specify ':stright t' instead of ':ensure t'.
-        ;; If you have set straight-use-package-by-default to t, this is
-        ;; unnecessary.
-        (straight-use-package 'use-package)
-        ;; Also install use-package-chords for key-chord definitions
-        (use-package use-package-chords
-          :config
-          (key-chord-mode 1)))))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (when (>= emacs-major-version 24)
+       (eval-when-compile
+         (defvar bootstrap-version)
+         ;; Always use use-package when installing packages, making the ':straight t'
+         ;; part of the use-package macro unnecessary.
+         (setq straight-use-package-by-default t)
+         ;; Clone the develop branch of straight instead of master.
+         (setq straight-repository-branch "develop")
+         (let ((bootstrap-file
+                (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+               (bootstrap-version 5))
+           (unless (file-exists-p bootstrap-file)
+             (with-current-buffer
+                 (url-retrieve-synchronously
+                  "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+                  'silent 'inhibit-cookies)
+               (goto-char (point-max))
+               (eval-print-last-sexp)))
+           (with-no-warnings
+             (load bootstrap-file nil 'nomessage))
+           ;; Refresh package repositories
+           (straight-pull-recipe-repositories)
+           ;; Default mode for loading packages: either defer or demand.
+           ;; (setq use-package-always-demand t)
+           (setq use-package-always-defer t)
+           ;; Install use-package via straight.
+           ;; After this function runs, use-package will automatically use straight
+           ;; to install packages if you specify ':stright t' instead of ':ensure t'.
+           ;; If you have set straight-use-package-by-default to t, this is
+           ;; unnecessary.
+           (straight-use-package 'use-package)
+           ;; Also install use-package-chords for key-chord definitions
+           (use-package use-package-chords
+             :config
+             (key-chord-mode 1)))))
+   #+end_src
 
 * Load External Configuration Files
   Load additional Emacs configuration files from my custom plugins directories.
@@ -763,7 +780,7 @@ lock file."
   MELPA.  My configuration files install, configure, and load those third-party
   packages in a way that does not clutter my primary configuration file.
 
-#+begin_src emacs-lisp :tangle yes
-  (load-directory my/emacs-plugin-dir #'load-file "\\.el$")
-  (load-directory my/plugin-notebook-dir #'org-babel-load-file "\\.org$")
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (load-directory my/emacs-plugin-dir #'load-file "\\.el$")
+    (load-directory my/plugin-notebook-dir #'org-babel-load-file "\\.org$")
+  #+end_src
