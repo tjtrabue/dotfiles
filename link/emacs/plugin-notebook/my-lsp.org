@@ -175,8 +175,13 @@ debugging."
 #+begin_src emacs-lisp :tangle yes
   (use-package lsp-mode
     :after format-all
-    ;; Define autoloaded functions
-    :commands lsp
+    ;; Commands used to autoload this package.
+    :commands (lsp lsp-deferred)
+    ;; Code to be executed in :preface is seen by the byte-compiler, unlike code
+    ;; in :init which gets ignored by the byte-compiler. Thus, if you're byte-
+    ;; compiling your code, you should put any init code to be run in :preface.
+    :preface
+    (my/add-lsp-mode-hooks)
     ;; Here you can change the package's customizable variables.
     :custom
     ;;; General settings
@@ -200,12 +205,12 @@ debugging."
     ;;; bash-language-server
     (lsp-bash-highlight-parsing-errors t)
     ;;; clangd
-    ;; Make sure to use all processor cores, and to
+    ;; Make sure to use all processor cores, and to report warnings.
     (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
-				  "--background-index" "--log=error"
-				  "--clang-tidy"
-				  "--header-insertion-decorators"
-				  "--suggest-missing-includes"))
+          "--background-index" "--log=error"
+          "--clang-tidy"
+          "--header-insertion-decorators"
+          "--suggest-missing-includes"))
     (lsp-clients-clangd-executable (executable-find "clangd"))
     ;;; lua-language-server
     ;; lsp-mode can try to install lua-language-server automatically, but
@@ -213,6 +218,11 @@ debugging."
     ;; It's best to install it yourself.
     (lsp-clients-lua-language-server-bin
       (executable-find "lua-language-server"))
+    :hook
+    ;; NOTE: Language mode hooks are set in the Functions section of this
+    ;;       file.
+    ;; Enable which-key integration for lsp-mode
+    (lsp-mode . lsp-enable-which-key-integration)
     :bind-keymap
     ;; Redefine lsp command prefix (default is "s-l" which messes with
     ;; most window managers).
@@ -228,16 +238,8 @@ debugging."
       ("t r" . lsp-treemacs-references)
       ("t s" . lsp-treemacs-symbols)
       ("t t" . lsp-treemacs-type-hierarchy))
-    :hook
-    ;; NOTE: Language mode hooks are set in the Functions section of this
-    ;;       file.
-    ;; Enable which-key integration for lsp-mode
-    (lsp-mode . lsp-enable-which-key-integration)
-    :commands (lsp lsp-deferred)
-    :init
-    (my/add-lsp-mode-hooks)
     :config
-    (my/register-lua-lsp-servers)
+    (my/register-lsp-servers)
     (my/lsp-add-language-ids)
     (my/lsp-add-dap-mode-tool-hooks))
 #+end_src
