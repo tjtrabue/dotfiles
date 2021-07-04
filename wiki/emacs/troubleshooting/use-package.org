@@ -1,0 +1,32 @@
+#+title:    Troubleshooting use-package Issues
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:03
+#+property: header-args:emacs-lisp :lexical t
+#+tags:     
+#+STARTUP: fold
+
+=use-package= is a marvel of a module management layer for Emacs, but it can be
+difficult to debug at times.
+
+* Code in :init not running when file loads
+** Problem
+   If your code in an =:init= block is not running automatically, most likely
+   you are byte-compiling your Elisp code. If you are, then know that Emacs will
+   ignore any code set to be executed in =:init= at compile-time. In effect,
+   this means that any functions called in =:init= will never be run if you are
+   byte-compiling your Emacs Lisp code.
+** Solution
+   This problem has a simple solution: move your code from =:init= to =:preface=
+   instead. Code to be run in =:preface= will be seen by the byte-compiler.
+
+* use-package not doing what it should / generally misbehaving
+** Problem
+   Emacs is not doing what the =use-package= documentation says it should:
+   keybindings are not being bound, code that should run is not being run, etc.
+** Solution
+   Make sure you have no syntax errors in your =use-package=
+   specification. Check the =*warnings*= buffer for any errors beginning with
+   =use-package= and fix them. Most of the time if Emacs is not doing what it
+   should regarding your =use-package= specification you have some error that's
+   keeping Emasc from loading the entire specification.
