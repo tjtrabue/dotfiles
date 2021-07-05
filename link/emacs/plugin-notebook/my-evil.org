@@ -29,7 +29,7 @@ Needed for performance:
     (eval-when-compile
       (unless (fboundp 'my/define-custom-evil-operators)
         (defun my/define-custom-evil-operators ()
-          "Define extra operators for use in `evil-mode`."
+          "Define extra operators for use in `evil-mode'."
 
           ;; FIXME
           ;; when done on line:
@@ -39,9 +39,9 @@ Needed for performance:
           ;;
           ;; if joined lines are comments, remove delimiters
           (evil-define-operator my-evil-join (beg end)
-            "Join the selected lines. Based on work done by blaenk on GitHub.
+            "Join the selected lines. Based on blaenk/dots on GitHub.
 
-This custom version of `evil-join` handles joining commented
+This custom version of `evil-join' handles joining commented
 lines more handily than evil's default J operator, removing
 leading comment designators. In that sense, it behaves far more
 like Vim."
