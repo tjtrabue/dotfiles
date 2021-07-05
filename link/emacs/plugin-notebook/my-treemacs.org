@@ -8,94 +8,95 @@ Really beautiful file explorer for Emacs. Treemacs opens in a sidebar window and
 appears much like any other project file tree explorer, but provides many, many
 features absent from the majority of such explorers.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 * treemacs
   This is the configuration for =treemacs= itself.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package treemacs
-    :after (all-the-icons)
-    :init
-    (with-eval-after-load 'winum
-      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-    :config
-    (progn
-      (treemacs-follow-mode t)
-      (treemacs-filewatch-mode t)
-      (treemacs-fringe-indicator-mode t)
-      (pcase (cons (not (null (executable-find "git")))
-                   (not (null treemacs-python-executable)))
-        (`(t . t)
-         (treemacs-git-mode 'deferred))
-        (`(t . _)
-         (treemacs-git-mode 'simple))))
-    :bind
-    (:map global-map
-     ("M-0"       . treemacs-select-window)
-     ("C-c t 1"   . treemacs-delete-other-windows)
-     ("C-c t t"   . treemacs)
-     ("C-c t B"   . treemacs-bookmark)
-     ("C-c t C-t" . treemacs-find-file)
-     ("C-c t M-t" . treemacs-find-tag)))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package treemacs
+      :after all-the-icons
+      :commands treemacs
+      :init
+      (with-eval-after-load 'winum
+        (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+      :config
+      (progn
+        (treemacs-follow-mode t)
+        (treemacs-filewatch-mode t)
+        (treemacs-fringe-indicator-mode t)
+        (pcase (cons (not (null (executable-find "git")))
+                     (not (null treemacs-python-executable)))
+          (`(t . t)
+           (treemacs-git-mode 'deferred))
+          (`(t . _)
+           (treemacs-git-mode 'simple))))
+      :bind
+      (:map global-map
+            ("M-0"       . treemacs-select-window)
+            ("C-c t 1"   . treemacs-delete-other-windows)
+            ("C-c t t"   . treemacs)
+            ("C-c t B"   . treemacs-bookmark)
+            ("C-c t C-t" . treemacs-find-file)
+            ("C-c t M-t" . treemacs-find-tag)))
+  #+end_src
 
 * Plugins
 ** treemacs-projectile
-  Integration with =projectile= project manager.
-  Currently I have had to add an advising function to =projectile= in order to
-  update the =treemacs= workspace when we switch =projectile= projects because
-  =treemacs-projectile= does not take care of this on its own.
+   Integration with =projectile= project manager.
+   Currently I have had to add an advising function to =projectile= in order to
+   update the =treemacs= workspace when we switch =projectile= projects because
+   =treemacs-projectile= does not take care of this on its own.
 
 *** Helper Functions
-#+begin_src emacs-lisp :tangle yes
-  (defun my/sync-treemacs-with-projectile ()
-    "Add advising functions to keep treemacs in sync with projectile
-whenever a new projectile project is visited. I don't know why
-treemacs-projectile does not provide this feature itself."
-    (advice-add 'projectile-switch-project-by-name
-      :after #'(lambda (&rest args)
-        (let* ((path (car args))
-               (name (treemacs--filename path)))
-          (treemacs-do-add-project-to-workspace path name)))))
-#+end_src
+    #+begin_src emacs-lisp :tangle yes
+      (defun my/sync-treemacs-with-projectile ()
+        "Add advising functions to keep treemacs in sync with projectile
+      whenever a new projectile project is visited. I don't know why
+      treemacs-projectile does not provide this feature itself."
+        (advice-add 'projectile-switch-project-by-name
+                    :after #'(lambda (&rest args)
+                               (let* ((path (car args))
+                                      (name (treemacs--filename path)))
+                                 (treemacs-do-add-project-to-workspace path name)))))
+    #+end_src
 
 *** use-package specification
-#+begin_src emacs-lisp :tangle yes
-  (use-package treemacs-projectile
-    :after (treemacs projectile)
-    :config
-    ;; Make sure to add new projects to treemacs workspace when we switch
-    ;; to a new projectile project.
-    ;; For some reason treemacs-projectile does not do this by itself.
-    (my/sync-treemacs-with-projectile))
-#+end_src
+    #+begin_src emacs-lisp :tangle yes
+      (use-package treemacs-projectile
+        :after (treemacs projectile)
+        :config
+        ;; Make sure to add new projects to treemacs workspace when we switch
+        ;; to a new projectile project.
+        ;; For some reason treemacs-projectile does not do this by itself.
+        (my/sync-treemacs-with-projectile))
+    #+end_src
 
 ** treemacs-evil
-  Needed for evil-mode integration!
+   Needed for evil-mode integration!
 
-#+begin_src emacs-lisp :tangle yes
-(use-package treemacs-evil
-  :after (treemacs evil))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package treemacs-evil
+       :after (treemacs evil))
+   #+end_src
 
 ** treemacs-magit
-  Git integration via the amazing =magit= Git client plugin
+   Git integration via the amazing =magit= Git client plugin
 
-#+begin_src emacs-lisp :tangle yes
-(use-package treemacs-magit
-  :after (treemacs magit))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package treemacs-magit
+       :after (treemacs magit))
+   #+end_src
 
 ** treemacs-persp
-   =persp-mode= integration.
+   =persp-mode= integration with =treemacs=.
 
-#+begin_src emacs-lisp :tangle yes
-(use-package treemacs-persp
-  :after (treemacs persp-mode)
-  :config (treemacs-set-scope-type 'Perspectives))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package treemacs-persp
+       :after (treemacs persp-mode)
+       :config
+       (treemacs-set-scope-type 'Perspectives))
+   #+end_src

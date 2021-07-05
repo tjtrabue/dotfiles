@@ -92,6 +92,7 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy-yasnippet
     :after (ivy yasnippet)
+    :commands ivy-yasnippet
     :custom
     ;; How ivy-yasnippet should expand keywords before point. "smart" means that
     ;; ivy-yasnippet should expand when a matching candidate is selected for the
