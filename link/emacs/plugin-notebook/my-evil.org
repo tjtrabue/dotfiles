@@ -266,8 +266,8 @@ Needed for performance:
 #+end_src
 
 ** lispyville
-   Provides better integration between =evil-mode= and =lispy-mode=, which is
-   Emacs's minor mode for editing files written in LISP dialects.  Here are the
+   Provides better integration between =evil-mode= and =lispy-mode=, which is a
+   minor mode plugin for editing files written in LISP dialects.  Here are the
    main features of =lispyville=:
 
    - Provides “safe” versions of vim’s yank, delete, and change related
