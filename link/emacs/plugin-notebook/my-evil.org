@@ -17,9 +17,56 @@ to =nil=, so this may help you.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
+
+* Define custom evil operators
+  An =evil-operator= is a custom function that acts on text objects, just like
+  Vim's operators.
+
+  #+begin_src emacs-lisp :tangle yes
+    (eval-when-compile
+      (unless (fboundp 'my/define-custom-evil-operators)
+        (defun my/define-custom-evil-operators ()
+          "Define extra operators for use in `evil-mode`."
+
+          ;; FIXME
+          ;; when done on line:
+          ;;     (insert "\n#endif  // " ident)))))
+          ;; it modifies the string and becomes:
+          ;;     (insert "\n#endif // " ident)))))
+          ;;
+          ;; if joined lines are comments, remove delimiters
+          (evil-define-operator my-evil-join (beg end)
+            "Join the selected lines.
+
+This custom version of `evil-join` handles joining commented
+lines more handily than evil's default J operator, removing
+leading comment designators. In that sense, it behaves far more
+like Vim."
+            :motion evil-line
+            (let* ((count (count-lines beg end))
+                   ;; we join pairs at a time
+                   (count (if (> count 1) (1- count) count))
+                   ;; the mark at the middle of the joined pair of lines
+                   (fixup-mark (make-marker)))
+              (dotimes (var count)
+                (if (and (bolp) (eolp))
+                    (join-line 1)
+                  (let* ((end (line-beginning-position 3))
+                         (fill-column (1+ (- end beg))))
+                    ;; save the mark at the middle of the pair
+                    (set-marker fixup-mark (line-end-position))
+                    ;; join it via fill
+                    (fill-region-as-paragraph beg end)
+                    ;; jump back to the middle
+                    (goto-char fixup-mark)
+                    ;; context-dependent whitespace fixup
+                    (fixup-whitespace))))
+              ;; remove the mark
+              (set-marker fixup-mark nil))))))
+  #+end_src
 
 * evil-mode
   The Evil mode plugin itself.
@@ -27,28 +74,31 @@ Needed for performance:
   *NOTE*: If you want to use =evil-leader=, you need to load =evil-leader=
   /before/ loading =evil=.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil
-    :demand t
-    :after evil-leader
-    :bind
-    (:map evil-normal-state-map
-      ("H" . evil-window-top)
-      ("L" . evil-window-bottom)
-      ;; Only scroll half a page up/down with C-b and C-f instead of a full
-      ;; page.
-      ([remap evil-scroll-page-up] . evil-scroll-up)
-      ([remap evil-scroll-page-down] . evil-scroll-down)
-     :map evil-insert-state-map
-      ;; TAB key should insert spaces to next tab stop, as one would expect.
-      ("<tab>" . tab-to-tab-stop))
-    ;; NOTE: We must set all variables for evil-mode in evil-leader's
-    ;;       use-package directive because it loads first, and it in turn
-    ;;       loads evil mode.
-    ;; :init
-    :config
-    (evil-mode 1))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package evil
+      :demand t
+      :after evil-leader
+      :bind
+      (:map evil-normal-state-map
+            ("H" . evil-window-top)
+            ("L" . evil-window-bottom)
+            ;; Only scroll half a page up/down with C-b and C-f instead of a full
+            ;; page.
+            ([remap evil-scroll-page-up] . evil-scroll-up)
+            ([remap evil-scroll-page-down] . evil-scroll-down)
+            :map evil-insert-state-map
+            ;; TAB key should insert spaces to next tab stop, as one would expect.
+            ("<tab>" . tab-to-tab-stop))
+      ;; NOTE: We must set all variables for evil-mode in evil-leader's
+      ;;       use-package directive because it loads first, and it in turn
+      ;;       loads evil mode.
+      ;; :init
+      :config
+      (my/define-custom-evil-operators)
+      ;; Use custom "J" command that removes leading comment designators.
+      (define-key evil-normal-state-map [remap evil-join] 'my-evil-join)
+      (evil-mode 1))
+  #+end_src
 
 * Plugins
 ** evil-leader
@@ -57,213 +107,213 @@ Needed for performance:
    by an arbitrary succession of additional key strokes to call a predefined
    function. It's similar in nature to Emacs' =key-chord= plugin.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-leader
-    :demand t
-    :init
-    ;; Set evil-mode variables here.
-    ;; These values must be set here because evil-leader loads before evil
-    ;; itself. Thus, these variables will have already been set by the time
-    ;; Evil's use-package specification loads, making any variable definitions
-    ;; set there useless.
-    ;;
-    ;; Tell Evil that 'Y' in normal state yanks from point to the end of line
-    ;; as opposed to the entire line like 'yy'.
-    (setq evil-want-Y-yank-to-eol t
-          ;; Need this for evil-collection; loads evil-integration.el
-          evil-want-integration t
-          ;; Do not use any default keybinding since evil-collection
-          ;; takes care of that part.
-          evil-want-keybinding nil)
-    ;; Make '>>' and '<<' commands indent according to Emacs' tab width.
-    (setq-default evil-shift-width tab-width
-    ;; '>>' and '<<' should round indent to the next nearest tab stop.
-                  evil-shift-round t)
-    :config
-    (evil-leader/set-leader ",")
-    (evil-leader/set-key
-      ;; ace-jump-mode (inspired by vim-easymotion)
-      ",w" 'ace-jump-word-mode
-      ",f" 'ace-jump-char-mode
-      ",l" 'ace-jump-line-mode
-      ;; Buffer
-      "bb" 'helm-buffers-list
-      "bk" 'kill-this-buffer
-      ;; eshell
-      "es" 'eshell-below
-      ;; Git/Magit
-      "gg" 'magit-status
-      "gd" 'magit-dispatch
-      "gtt" 'git-timemachine-toggle
-      ;; ace-window
-      "jk" 'ace-window
-      ;; avy (buffer navigation plugin)
-      "jj" 'avy-goto-char
-      "jl" 'avy-goto-line
-      "jw" 'avy-goto-word-1
-      "jW" 'avy-goto-word-0
-      ;; File
-      "lf" 'load-file
-      "of" 'org-babel-load-file
-      ;; Flycheck
-      "fn" 'flycheck-next-error
-      "fp" 'flycheck-previous-error
-      ;; File searching
-      "rg" 'deadgrep
-      ;; evil-snipe
-      "ss" 'evil-snipe-s
-      "sS" 'evil-snipe-S
-      ;; Treemacs
-      "tm" 'treemacs
-      ;; undo-tree
-      "ut" 'undo-tree-visualize)
-    (global-evil-leader-mode 1))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-leader
+       :demand t
+       :init
+       ;; Set evil-mode variables here.
+       ;; These values must be set here because evil-leader loads before evil
+       ;; itself. Thus, these variables will have already been set by the time
+       ;; Evil's use-package specification loads, making any variable definitions
+       ;; set there useless.
+       ;;
+       ;; Tell Evil that 'Y' in normal state yanks from point to the end of line
+       ;; as opposed to the entire line like 'yy'.
+       (setq evil-want-Y-yank-to-eol t
+             ;; Need this for evil-collection; loads evil-integration.el
+             evil-want-integration t
+             ;; Do not use any default keybinding since evil-collection
+             ;; takes care of that part.
+             evil-want-keybinding nil)
+       ;; Make '>>' and '<<' commands indent according to Emacs' tab width.
+       (setq-default evil-shift-width tab-width
+                     ;; '>>' and '<<' should round indent to the next nearest tab stop.
+                     evil-shift-round t)
+       :config
+       (evil-leader/set-leader ",")
+       (evil-leader/set-key
+         ;; ace-jump-mode (inspired by vim-easymotion)
+         ",w" 'ace-jump-word-mode
+         ",f" 'ace-jump-char-mode
+         ",l" 'ace-jump-line-mode
+         ;; Buffer
+         "bb" 'helm-buffers-list
+         "bk" 'kill-this-buffer
+         ;; eshell
+         "es" 'eshell-below
+         ;; Git/Magit
+         "gg" 'magit-status
+         "gd" 'magit-dispatch
+         "gtt" 'git-timemachine-toggle
+         ;; ace-window
+         "jk" 'ace-window
+         ;; avy (buffer navigation plugin)
+         "jj" 'avy-goto-char
+         "jl" 'avy-goto-line
+         "jw" 'avy-goto-word-1
+         "jW" 'avy-goto-word-0
+         ;; File
+         "lf" 'load-file
+         "of" 'org-babel-load-file
+         ;; Flycheck
+         "fn" 'flycheck-next-error
+         "fp" 'flycheck-previous-error
+         ;; File searching
+         "rg" 'deadgrep
+         ;; evil-snipe
+         "ss" 'evil-snipe-s
+         "sS" 'evil-snipe-S
+         ;; Treemacs
+         "tm" 'treemacs
+         ;; undo-tree
+         "ut" 'undo-tree-visualize)
+       (global-evil-leader-mode 1))
+   #+end_src
 
 ** evil-collection
-  Used to provide default Vim keybindings for all standard Emacs modes.
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-collection
-    :demand t
-    :after evil
-    :bind
-    (:map evil-normal-state-map
-      ;; Unbind some unused mappings
-     ("M-." . nil))
-    :init
-    ;; Whether or not to use Vim keys in the minibuffer.
-    (setq evil-collection-setup-minibuffer nil)
-    :config
-    (evil-collection-init)
-    ;; Get rid of troublesome keybindings:
-    ;; We do not need to kill a line with C-k anymore since we're using
-    ;; Vim keys.
-    (global-unset-key (kbd "C-k"))
-    ;; We never need to insert digraphs!
-    (define-key evil-insert-state-map (kbd "C-k") nil))
-#+end_src
+   Used to provide default Vim keybindings for all standard Emacs modes.
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-collection
+       :demand t
+       :after evil
+       :bind
+       (:map evil-normal-state-map
+             ;; Unbind some unused mappings
+             ("M-." . nil))
+       :init
+       ;; Whether or not to use Vim keys in the minibuffer.
+       (setq evil-collection-setup-minibuffer nil)
+       :config
+       (evil-collection-init)
+       ;; Get rid of troublesome keybindings:
+       ;; We do not need to kill a line with C-k anymore since we're using
+       ;; Vim keys.
+       (global-unset-key (kbd "C-k"))
+       ;; We never need to insert digraphs!
+       (define-key evil-insert-state-map (kbd "C-k") nil))
+   #+end_src
 
 ** evil-surround
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-surround
-    :demand t
-    :config (global-evil-surround-mode 1))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-surround
+       :demand t
+       :config (global-evil-surround-mode 1))
+   #+end_src
 
 ** evil-numbers
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-numbers
-    :demand t
-    :config
-    (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
-    (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-numbers
+       :demand t
+       :config
+       (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+       (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+   #+end_src
 
 ** evil-commentary
-#+begin_src emacs-lisp :tangle yes
-  ;; Use the incredible vim-commentary plugin
-  (use-package evil-commentary
-    :demand t
-    :config (evil-commentary-mode t))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     ;; Use the incredible vim-commentary plugin
+     (use-package evil-commentary
+       :demand t
+       :config (evil-commentary-mode t))
+   #+end_src
 
 ** evil-mark-replace
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-mark-replace
-    :demand t)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-mark-replace
+       :demand t)
+   #+end_src
 
 ** evil-matchit
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-matchit
-    :demand t
-    :config (global-evil-matchit-mode t))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-matchit
+       :demand t
+       :config (global-evil-matchit-mode t))
+   #+end_src
 
 ** evil-exchange
-#+begin_src emacs-lisp :tangle yes
-  ;; Port of vim-exchange used to exchange two text selections based on two
-  ;; consecutive motions beginning with 'gx'
-  (use-package evil-exchange
-    :demand t)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     ;; Port of vim-exchange used to exchange two text selections based on two
+     ;; consecutive motions beginning with 'gx'
+     (use-package evil-exchange
+       :demand t)
+   #+end_src
 
 ** evil-extra-operator
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-extra-operator
-    :demand t)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-extra-operator
+       :demand t)
+   #+end_src
 
 ** evil-args
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-args
-    :demand t
-    :bind
-    (:map evil-inner-text-objects-map
-      ("a" . evil-inner-arg)
-    :map evil-outer-text-objects-map
-      ("a" . evil-outer-arg)
-    :map evil-normal-state-map
-      ("C-c a l" . evil-forward-arg)
-      ("C-c a h" . evil-backward-arg)
-      ("C-c a k" . evil-jump-out-arg)
-    :map evil-motion-state-map
-      ("C-c a l" . evil-forward-arg)
-      ("C-c a h" . evil-backward-arg)))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-args
+       :demand t
+       :bind
+       (:map evil-inner-text-objects-map
+             ("a" . evil-inner-arg)
+             :map evil-outer-text-objects-map
+             ("a" . evil-outer-arg)
+             :map evil-normal-state-map
+             ("C-c a l" . evil-forward-arg)
+             ("C-c a h" . evil-backward-arg)
+             ("C-c a k" . evil-jump-out-arg)
+             :map evil-motion-state-map
+             ("C-c a l" . evil-forward-arg)
+             ("C-c a h" . evil-backward-arg)))
+   #+end_src
 
 ** evil-visualstar
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-visualstar
-    :demand t
-    :config (global-evil-visualstar-mode t))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-visualstar
+       :demand t
+       :config (global-evil-visualstar-mode t))
+   #+end_src
 
 ** evil-snipe
    =evil-snipe= allows you to move around buffers a bit more flexibly using keys
    such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-snipe
-    :demand t
-    :after (evil-leader evil-collection)
-    :hook
-    ;; Turn off snipe in magit-mode for compatibility.
-    (magit-mode . turn-off-evil-snipe-override-mode)
-    :custom
-    (evil-snipe-scope 'whole-visible)
-    (evil-snipe-repeat-scope 'whole-buffer)
-    (evil-snipe-spillover-scope 'whole-buffer)
-    :config
-    ;; Don't want snipe messing with evil-leader's mappings.
-    (define-key evil-snipe-override-mode-map (kbd "<motion-state> ,") nil)
-    (define-key evil-snipe-override-local-mode-map (kbd "<motion-state> ,") nil)
-    ;; Map '[' to match any opening delimiter in any snipe mode.
-    (push '(?\[ "[[{(]") evil-snipe-aliases)
-    (evil-snipe-override-mode 1))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-snipe
+       :demand t
+       :after (evil-leader evil-collection)
+       :hook
+       ;; Turn off snipe in magit-mode for compatibility.
+       (magit-mode . turn-off-evil-snipe-override-mode)
+       :custom
+       (evil-snipe-scope 'whole-visible)
+       (evil-snipe-repeat-scope 'whole-buffer)
+       (evil-snipe-spillover-scope 'whole-buffer)
+       :config
+       ;; Don't want snipe messing with evil-leader's mappings.
+       (define-key evil-snipe-override-mode-map (kbd "<motion-state> ,") nil)
+       (define-key evil-snipe-override-local-mode-map (kbd "<motion-state> ,") nil)
+       ;; Map '[' to match any opening delimiter in any snipe mode.
+       (push '(?\[ "[[{(]") evil-snipe-aliases)
+       (evil-snipe-override-mode 1))
+   #+end_src
 
 ** evil-org
-#+begin_src emacs-lisp :tangle yes
-  (use-package evil-org
-    :demand t
-    :after (org evil)
-    :hook
-    ((org-mode . evil-org-mode)
-     (evil-org-mode . (lambda ()
-       (evil-org-set-key-theme))))
-    :config
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-org
+       :demand t
+       :after (org evil)
+       :hook
+       ((org-mode . evil-org-mode)
+        (evil-org-mode . (lambda ()
+                           (evil-org-set-key-theme))))
+       :config
+       (require 'evil-org-agenda)
+       (evil-org-agenda-set-keys))
+   #+end_src
 
 ** kubernetes-evil
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package kubernetes-evil
-    :demand t
-    :after (evil kubernetes))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package kubernetes-evil
+       :demand t
+       :after (evil kubernetes))
+   #+end_src
 
 ** lispyville
    Provides better integration between =evil-mode= and =lispy-mode=, which is a

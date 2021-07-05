@@ -21,7 +21,7 @@
     (use-package auctex
       :defer t
       :defines (latex-help-cmd-alist latex-help-file)
-      :mode ("\\\.tex\\\'" . TeX-latex-mode)
+      :mode ("\\.tex\\'" . TeX-latex-mode)
       :hook
       (TeX-latex-mode . (lambda ()
                           (visual-line-mode 1)
