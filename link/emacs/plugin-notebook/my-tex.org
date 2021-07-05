@@ -4,9 +4,8 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
-LaTeX plugins and configuration for Emacs.
+=LaTeX= plugins and configuration for Emacs.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
 
@@ -19,17 +18,20 @@ Needed for performance:
   work through a tutorial or two.
 
   #+begin_src emacs-lisp :tangle yes
-    (use-package tex-site
-      :straight auctex
+    (use-package auctex
+      :defer t
+      :defines (latex-help-cmd-alist latex-help-file)
+      :mode ("\\\.tex\\\'" . TeX-latex-mode)
       :hook
-      ((LaTeX-mode .
-        (visual-line-mode flyspell-mode LaTeX-math-mode turn-on-reftex)))
-      :preface
+      (TeX-latex-mode . (lambda ()
+                          (visual-line-mode 1)
+                          (flyspell-mode 1)
+                          (reftex-mode 1)))
+      :init
       (setq TeX-auto-save t
             TeX-parse-self t
             ;; Compile to PDF by default
             TeX-PDF-mode t
-            reftex-plug-into-AUCTeX t
             ;; Do not ask for permission before saving TeX files when compiling
             TeX-save-query nil)
       ;; Allow AUCTeX to work with multiple files like a project

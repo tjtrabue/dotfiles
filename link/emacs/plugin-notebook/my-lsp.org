@@ -43,7 +43,6 @@ Needed for performance:
     for any programming language that supports a formatting tool.")
 
     (defvar my/lsp-enabled-modes '(
-                                   LaTeX-mode
                                    c++-mode
                                    c-mode
                                    clojure-mode
@@ -60,6 +59,8 @@ Needed for performance:
                                    javascript-mode
                                    js-mode
                                    json-mode
+                                   LaTeX-mode
+                                   latex-mode
                                    less-css-mode
                                    lua-mode
                                    mhtml-mode
@@ -70,6 +71,7 @@ Needed for performance:
                                    ruby-mode
                                    scss-mode
                                    sh-mode
+                                   TeX-latex-mode
                                    tex-mode
                                    web-mode
                                    xml-mode

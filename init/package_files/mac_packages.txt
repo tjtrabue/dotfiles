@@ -30,6 +30,7 @@ kind
 kubectl
 lazygit
 llvm
+mactex
 meld
 neofetch
 neovim
@@ -42,6 +43,7 @@ ripgrep
 screen
 shellcheck
 streamlink
+texlab
 the_silver_searcher
 tmux
 up
