@@ -776,6 +776,7 @@ loads:
                :files (:defaults)))
            ;; Also install use-package-chords for key-chord definitions
            (use-package use-package-chords
+             :demand t
              :config
              (key-chord-mode 1)))))
    #+end_src
