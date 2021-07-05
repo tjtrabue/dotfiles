@@ -22,8 +22,8 @@ Needed for performance:
 #+end_src
 
 * Define custom evil operators
-  An =evil-operator= is a custom function that acts on text objects, just like
-  Vim's operators.
+  An =evil-operator= is a function that acts on text objects (characters, words,
+  lines, etc.). They are designed to mimic Vim's operators.
 
   #+begin_src emacs-lisp :tangle yes
     (eval-when-compile
@@ -39,7 +39,7 @@ Needed for performance:
           ;;
           ;; if joined lines are comments, remove delimiters
           (evil-define-operator my-evil-join (beg end)
-            "Join the selected lines.
+            "Join the selected lines. Based on work done by blaenk on GitHub.
 
 This custom version of `evil-join` handles joining commented
 lines more handily than evil's default J operator, removing
