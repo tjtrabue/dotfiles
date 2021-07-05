@@ -16,5 +16,7 @@
 #+begin_src emacs-lisp :tangle yes
   (use-package prescient
     :config
+    ;; Save command history to disk so that prescient gets more intelligent over
+    ;; time.
     (prescient-persist-mode 1))
 #+end_src

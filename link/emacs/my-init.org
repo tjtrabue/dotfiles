@@ -37,7 +37,8 @@ loads:
   This is where I define new variables to be used throughout my configuration.
 
   #+begin_src emacs-lisp :tangle yes
-    ;; Make these variables compile-time constants (and available during compilation)
+    ;; Make these variables compile-time constants (and available during
+    ;; compilation)
     (eval-when-compile
       (defvar my/emacs-plugin-dir (expand-file-name
                                    (concat user-emacs-directory "plugin"))
@@ -767,7 +768,12 @@ loads:
            ;; to install packages if you specify ':stright t' instead of ':ensure t'.
            ;; If you have set straight-use-package-by-default to t, this is
            ;; unnecessary.
-           (straight-use-package 'use-package)
+           (straight-use-package
+            ;; Override the MELPA recipe in order to get all Elisp files for
+            ;; use-package. For some reason, the MELPA recipe excludes several
+            ;; important source files.
+            '(use-package :type git :host github :repo "jwiegley/use-package"
+              :files (:defaults)))
            ;; Also install use-package-chords for key-chord definitions
            (use-package use-package-chords
              :config

@@ -10,22 +10,22 @@ systems.  It behaves similarly to =grep= and =ag=, but is faster than either of
 them. I highly recommend that you use =rg= over =grep= or even =ag= whenever
 possible.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
-* ag
-  Emacs plugin for =the_silver_searcher=.
+* deadgrep
+  =deadgrep= is a beautiful front-end for =ripgrep=, the faster replacement for
+  =grep= and =ag=.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package ag)
-#+end_src
-
-* rg
-  Emacs plugin for =ripgrep=.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package rg)
+  (use-package deadgrep
+    ;; Make sure the system package manager has installed ripgrep before loading
+    ;; this plugin.
+    :ensure-system-package
+    ;; This cdr maps a binary name to its corresponding system package name.
+    (rg . ripgrep)
+    :bind
+    (("C-c S" . deadgrep)))
 #+end_src
