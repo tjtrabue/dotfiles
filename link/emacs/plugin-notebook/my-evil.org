@@ -107,6 +107,8 @@ Needed for performance:
       ;; Flycheck
       "fn" 'flycheck-next-error
       "fp" 'flycheck-previous-error
+      ;; File searching
+      "rg" 'deadgrep
       ;; evil-snipe
       "ss" 'evil-snipe-s
       "sS" 'evil-snipe-S
