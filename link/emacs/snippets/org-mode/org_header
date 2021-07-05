@@ -13,6 +13,6 @@
 $0
 
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
