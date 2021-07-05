@@ -264,3 +264,22 @@ Needed for performance:
     :demand t
     :after (evil kubernetes))
 #+end_src
+
+** lispyville
+   Provides better integration between =evil-mode= and =lispy-mode=, which is
+   Emacs's minor mode for editing files written in LISP dialects.  Here are the
+   main features of =lispyville=:
+
+   - Provides “safe” versions of vim’s yank, delete, and change related
+     operators that won’t unbalance parentheses.
+   - Provides lisp-related evil operators, commands, motions, and text objects.
+   - Integrates =evil= with =lispy= by providing commands to more easily switch
+     between normal state and lispy’s “special” context/mode and by providing
+     options for integrating visual state with lispy’s special region model
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package lispyville
+       :after (evil lispy)
+       :hook
+       (lispy-mode . lispyville-mode))
+   #+end_src

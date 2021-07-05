@@ -1,0 +1,27 @@
+#+title:   Generic Lisp Configuration
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:05
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+This file contains configuration and plugins for editing generic LISP code
+regardless of its particular dialect.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* lispy
+  =lispy= is a great plugin for editing LISP files in a VI-oriented
+  manner. There is also the fantastic =lispyville= plugin for integrating
+  =lispy= with =evil-mode=. See the =my-evil.org= file for its configuration.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package lispy
+      :hook
+      ;; Load lispyj-mode for any LISP derived major mode.
+      ((lisp-mode emacs-lisp-mode) . lispy-mode))
+  #+end_src
