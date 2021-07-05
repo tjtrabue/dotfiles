@@ -773,7 +773,7 @@ loads:
             ;; use-package. For some reason, the MELPA recipe excludes several
             ;; important source files.
             '(use-package :type git :host github :repo "jwiegley/use-package"
-              :files (:defaults)))
+               :files (:defaults)))
            ;; Also install use-package-chords for key-chord definitions
            (use-package use-package-chords
              :config
