@@ -68,22 +68,30 @@ Next, copy and save your token to your =~/.authinfo= file in
     :after (magit))
 #+end_src
 
-* git-gutter-fringe
-  Show git gutter in Emacs' fringe.
+* diff-hl
+  Highlights current Git changes in the fringe, much like =git-gutter= in
+  Vim. There were =git-gutter= plugins for Emacs, but they are no longer
+  maintained.
 
-#+begin_src emacs-lisp :tangle yes
-  ;;; Use the 'git-gutter-fringe' plugin instead of the standard 'git-gutter'
-  ;;; because we also want to use vim-like line numbers
-  (use-package git-gutter-fringe
-    :demand t
-    :commands 
-    (git-gutter-mode global-git-gutter-mode)
-    :config
-    (setq git-gutter:update-interval 2)
-    (global-git-gutter-mode 1)
-    ;; Refresh git-gutter when Emacs regains focus
-    (add-function :after after-focus-change-function #'git-gutter))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package diff-hl
+      :demand t
+      :hook
+      ;; These hooks are needed for Magit 2.4 and newer.
+      ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+       (magit-post-refresh . diff-hl-magit-post-refresh))
+      :config
+      ;; Enable diff-hl globally.
+      (global-diff-hl-mode)
+      ;; Provide similar functionality in dired-mode.
+      (diff-hl-dired-mode)
+      ;; Update highlights on the fly instead of after each file write. Much
+      ;; more useul than the default behavior.
+      (diff-hl-flydiff-mode)
+      ;; Makes the fringe/margin react to mouse clicks to show the corresponding
+      ;; hunk.
+      (diff-hl-show-hunk-mouse-mode))
+  #+end_src
 
 * gitignore-mode
   Syntax for =.gitignore= files.
