@@ -11,7 +11,7 @@ them. I highly recommend that you use =rg= over =grep= or even =ag= whenever
 possible.
 
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
@@ -19,9 +19,9 @@ possible.
   =deadgrep= is a beautiful front-end for =ripgrep=, the faster replacement for
   =grep= and =ag=.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package deadgrep
-    :commands deadgrep
-    :bind
-    (("C-c S" . deadgrep)))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package deadgrep
+      :commands deadgrep
+      :bind
+      (("C-c S" . deadgrep)))
+  #+end_src
