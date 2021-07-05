@@ -91,9 +91,10 @@ Needed for performance:
       "bk" 'kill-this-buffer
       ;; eshell
       "es" 'eshell-below
-      ;; Magit
+      ;; Git/Magit
       "gg" 'magit-status
       "gd" 'magit-dispatch
+      "gtt" 'git-timemachine-toggle
       ;; ace-window
       "jk" 'ace-window
       ;; avy (buffer navigation plugin)

@@ -20,6 +20,13 @@ Needed for performance:
   (use-package vc)
 #+end_src
 
+* git-modes
+  The following plugin contains major modes for editing various Git file types.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package git-modes)
+#+end_src
+
 * magit
   The /best/ Git client out there!
 
@@ -93,9 +100,20 @@ Next, copy and save your token to your =~/.authinfo= file in
       (diff-hl-show-hunk-mouse-mode))
   #+end_src
 
-* gitignore-mode
-  Syntax for =.gitignore= files.
+* git-timemachine
+  Step through historic versions of git controlled file using Emacs.  All you
+  must do is visit a git-controlled file and invoke =git-timemachine= or
+  =git-timemachine-toggle= Check the documentation for the default keybindings.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package git-modes)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package git-timemachine
+      :commands (git-timemachine git-timemachine-toggle))
+  #+end_src
+
+* git-link
+  Interactively create and retrieve links to the current file's page on GitHub,
+  GitLab, BitBucket, etc.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package git-link)
+  #+end_src
