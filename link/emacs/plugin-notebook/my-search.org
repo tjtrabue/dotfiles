@@ -21,11 +21,7 @@ possible.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package deadgrep
-    ;; Make sure the system package manager has installed ripgrep before loading
-    ;; this plugin.
-    :ensure-system-package
-    ;; This cdr maps a binary name to its corresponding system package name.
-    (rg . ripgrep)
+    :commands deadgrep
     :bind
     (("C-c S" . deadgrep)))
 #+end_src

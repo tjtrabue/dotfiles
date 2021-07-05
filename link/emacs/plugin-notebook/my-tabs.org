@@ -26,7 +26,7 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
       ;; this specification. If :demand is not present, use-package waits for an
       ;; autoloaded function from this package to be used before it loads
       ;; everything. This can lead to the tab bar not loading automatically.
-      :demand
+      :demand t
       :bind
       (:map evil-normal-state-map
             ("g t" . centaur-tabs-forward)
