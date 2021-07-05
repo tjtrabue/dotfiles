@@ -8,72 +8,72 @@ Plugins for extending Emacs with version control capabilities.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 * vc
   General version control plugin for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; General version control plugin for Emacs.
-  (use-package vc)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; General version control plugin for Emacs.
+    (use-package vc)
+  #+end_src
 
 * git-modes
   The following plugin contains major modes for editing various Git file types.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package git-modes)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package git-modes)
+  #+end_src
 
 * magit
   The /best/ Git client out there!
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
-  ;; config section.
-  (use-package magit
-    :bind
-    (("C-c g" . magit-status))
-    :config
-    ;; List of symbols for actions that Magit should not confirm, or t.
-    (setq magit-no-confirm '(stage-all-changes unstage-all-changes)))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
+    ;; config section.
+    (use-package magit
+      :bind
+      (("C-c g" . magit-status))
+      :config
+      ;; List of symbols for actions that Magit should not confirm, or t.
+      (setq magit-no-confirm '(stage-all-changes unstage-all-changes)))
+  #+end_src
 
 * magit-todos
   Lists TODOs and related comments in the =magit-status= buffer.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package magit-todos
-    :config
-    (magit-todos-mode))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package magit-todos
+      :config
+      (magit-todos-mode))
+  #+end_src
 
 * forge
   A plugin for =magit= to interface with numerous Git hosts, such as GitHub,
   GitLab, and many more.
 
 ** Configuring Authentication with GitHub
-  First, you need to create a Personal Authentication Token (PAT) on GitHub. You
-  need to specify certain scopes to when you create your PAT, I'd go ahead and
-  check all of the boxes.
-Next, copy and save your token to your =~/.authinfo= file in
-  a line like this:
+   First, you need to create a Personal Authentication Token (PAT) on GitHub. You
+   need to specify certain scopes to when you create your PAT, I'd go ahead and
+   check all of the boxes.
+   Next, copy and save your token to your =~/.authinfo= file in
+   a line like this:
 
-  =machine api.github.com login YOUR_GITHUB_USERNAME^forge password
-  YOUR_GITHUB_TOKEN=
+   =machine api.github.com login YOUR_GITHUB_USERNAME^forge password
+   YOUR_GITHUB_TOKEN=
 
-  Note that the =^forge= after your GitHub username is important! That is a
-  package specifier.
+   Note that the =^forge= after your GitHub username is important! That is a
+   package specifier.
 
-  After this, you should be able to use =forge= and all of its features.
+   After this, you should be able to use =forge= and all of its features.
 
 ** use-package specification
-#+begin_src emacs-lisp :tangle yes
-  (use-package forge
-    :after (magit))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package forge
+       :after (magit))
+   #+end_src
 
 * diff-hl
   Highlights current Git changes in the fringe, much like =git-gutter= in
