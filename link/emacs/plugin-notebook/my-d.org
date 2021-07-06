@@ -1,0 +1,25 @@
+#+title:    D Programming Language Configuration
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:06
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+The D programming language is a bit of an odd bird. It's most similar to C++,
+and aims to fulfill similar programming needs, but does so using opinionated
+programming paradigms such as Behavior-Driven Development and Design by
+Contract.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* d-mode
+  Major mode for editing files written in the D programming language.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package d-mode
+      :mode ("\\.d\\'" . d-mode))
+  #+end_src
