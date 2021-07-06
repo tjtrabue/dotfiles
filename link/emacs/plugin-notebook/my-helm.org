@@ -104,7 +104,10 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-rg
-    :after (helm projectile rg)
+    :after helm
+    :commands helm-rg
+    :bind
+    (("C-c s r" . helm-rg))
     :config
     ;; Extra CLI options to pass to ripgrep
     (setq helm-rg-default-extra-args '("--hidden")))
@@ -115,7 +118,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package helm-ag
-    :after (helm)
+    :after helm
     :config
     ;; Use ripgrep if available
     (if (executable-find "rg")

@@ -34,7 +34,7 @@ ECB.")
     ;; Make projects in workspace discovered automatically.
     ;; The list is a space-separated collection of directory paths
     ;; that projectile should use when searching for projects.
-    (projectile-project-search-path '("~/workspace/"))
+    (projectile-project-search-path `(,my/workspace-dir))
     :bind-keymap
     ("C-c p" . projectile-command-map)
     :bind
@@ -42,6 +42,6 @@ ECB.")
      ([remap evil-paste-pop] . projectile-find-file))
     :config
     ;; Add extra ignored directories here.
-    (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d/straight")
+    (add-to-list 'projectile-globally-ignored-directories my/straight-home-dir)
     (projectile-mode 1))
 #+end_src

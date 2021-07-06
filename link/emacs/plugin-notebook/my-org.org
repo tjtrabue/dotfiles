@@ -32,8 +32,8 @@
       (org-return-follows-link t)
       ;; Record a timestamp when a TODO item is marked as done.
       (org-log-done 'time)
-      ;; Set Org agenda files directory.
-      (org-agenda-files my/org-agenda-dir)
+      ;; Set Org agenda files to a list of files and/or directories.
+      (org-agenda-files `(,my/org-agenda-dir))
       :init
       ;; Make sure the Org notes directory is present.
       (make-directory my/org-dir t)

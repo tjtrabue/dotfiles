@@ -25,3 +25,11 @@ possible.
       :bind
       (("C-c S" . deadgrep)))
   #+end_src
+
+* ripgrep
+  Another =ripgrep= package for Emacs needed by some other plugins.
+  *NOTE:* Please keep this package around for the sake of =projectile=.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package ripgrep)
+  #+end_src

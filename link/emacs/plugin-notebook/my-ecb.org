@@ -21,9 +21,9 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (defvar my/use-ecb-p t
     "Whether to load ECB on startup.")
-  (defvar my/ecb-git-home (concat my/straight-repos-dir "ecb/")
+  (defvar my/ecb-git-home (file-truename (concat my/straight-repos-dir "/ecb"))
     "Local ECB development repository.")
-  (defvar my/ecb-makefile (concat my/ecb-git-home "Makefile")
+  (defvar my/ecb-makefile (file-truename (concat my/ecb-git-home "/Makefile"))
     "The path to the Makefile for ECB.")
 #+end_src
 
@@ -49,7 +49,8 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (when my/use-ecb-p
     (let ((default-directory my/ecb-git-home)
-          (ecb-autoloads-file (concat my/ecb-git-home "ecb-autoloads.el")))
+          (ecb-autoloads-file
+            (file-truename (concat my/ecb-git-home "/ecb-autoloads.el"))))
       ;; We have to build the ECB project if the autoloads file is not present.
       (when (not (file-exists-p ecb-autoloads-file))
         (call-process "make" nil nil nil "-f" my/ecb-makefile))))
