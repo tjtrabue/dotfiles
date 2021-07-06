@@ -18,8 +18,13 @@ Needed for performance:
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
 
+  *NOTE:* SLIME, although still popular amongst Common Lisp programmers, is not
+  well maintained. I recommend using SLY as a more up-to-date alternative.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package slime
+    ;; Disabled in favor of SLY
+    :disabled
     :hook
     ((lisp-mode . slime-mode)
      (inferior-lisp-mode . inferior-slime-mode))
@@ -33,3 +38,15 @@ Needed for performance:
     ;; Bring in almost every contributor package (that's what slime-fancy does).
     (setq slime-contribs '(slime-fancy)))
 #+end_src
+
+* SLY
+  SLY is a fork of SLIME which is actively maintained.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package sly
+      :hook
+      ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
+      ((lisp-mode . sly-mode))
+      :custom
+      (sly-complete-symbol-function 'sly-flex-completions))
+  #+end_src
