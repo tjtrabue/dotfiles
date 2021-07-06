@@ -16,9 +16,10 @@
     (use-package org
       :mode ("\\.org\\'" . org-mode)
       :bind
-      (:map org-mode-map
-       ("C-c o a" . org-agenda)
-       ("C-c o l" . org-store-link))
+      ;; These bindings should be available everywhere.  We'll want to use them
+      ;; outside of org-mode.
+      (("C-c o l" . org-store-link)
+       ("C-c o a" . org-agenda))
       :custom
       (org-hide-leading-stars 1)
       ;; Only show headings when visiting a new Org file.
@@ -31,9 +32,13 @@
       (org-return-follows-link t)
       ;; Record a timestamp when a TODO item is marked as done.
       (org-log-done 'time)
-      :config
+      ;; Set Org agenda files directory.
+      (org-agenda-files my/org-agenda-dir)
+      :init
       ;; Make sure the Org notes directory is present.
-      (make-directory my/org-dir t))
+      (make-directory my/org-dir t)
+      ;; Also create the agenda directory.
+      (make-directory my/org-agenda-dir t))
   #+end_src
 
 * Plugins

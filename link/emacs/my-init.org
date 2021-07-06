@@ -40,51 +40,53 @@ loads:
     ;; Make these variables compile-time constants (and available during
     ;; compilation)
     (eval-when-compile
-      (defvar my/emacs-plugin-dir (expand-file-name
+      (defvar my/emacs-plugin-dir (file-truename
                                    (concat user-emacs-directory "plugin"))
         "Directory for additional elisp config files.
     Mostly for enumerating and configuring downloaded plugins.")
-      (defvar my/plugin-notebook-dir (expand-file-name
+      (defvar my/plugin-notebook-dir (file-truename
                                       (concat user-emacs-directory "plugin-notebook"))
         "Directory for config files written in Org syntax.")
-      (defvar my/elisp-lib-dir (expand-file-name
+      (defvar my/elisp-lib-dir (file-truename
                                 (concat user-emacs-directory "require"))
         "Directory for custom Emacs Lisp library files.")
-      (defvar my/local-repos-dir (expand-file-name
+      (defvar my/local-repos-dir (file-truename
                                   (concat user-emacs-directory "local-repos"))
         "Directory for local `straight' repos.")
-      (defvar my/emacs-backup-dir (expand-file-name
+      (defvar my/emacs-backup-dir (file-truename
                                    (concat user-emacs-directory "backups"))
         "Directory housing all Emacs backup files.")
-      (defvar my/emacs-lisp-dir (expand-file-name
+      (defvar my/emacs-lisp-dir (file-truename
                                  (concat user-emacs-directory "lisp"))
         "Extra miscellaneous elisp code goes here (if necessary).")
-      (defvar user-fonts-dir (expand-file-name
+      (defvar user-fonts-dir (file-truename
                               (concat (getenv "HOME") "/.local/share/fonts"))
         "Fonts directory for the current user")
-      (defvar my/straight-home-dir (expand-file-name
+      (defvar my/straight-home-dir (file-truename
                                     (concat user-emacs-directory "straight/"))
         "Home directory for the straight package manager.")
-      (defvar my/straight-repos-dir (expand-file-name
+      (defvar my/straight-repos-dir (file-truename
                                      (concat my/straight-home-dir "repos/"))
         "Housing area for repositories cloned by straight.")
-      (defvar my/straight-build-dir (expand-file-name
+      (defvar my/straight-build-dir (file-truename
                                      (concat my/straight-home-dir "build/"))
         "Housing area for linked and compiled Elisp files for packages installed
     with straight.el.")
-      (defvar my/workspace-dir (expand-file-name
+      (defvar my/workspace-dir (file-truename
                                 (concat (getenv "HOME") "/workspace"))
         "Directory containig development projects.")
       (defvar my/line-width 80 "The width of each line of code.")
       (defvar my/use-helm-gtags t
         "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")
-      (defvar my/user-info-dir (expand-file-name (concat (getenv "HOME") "/.local/share/info"))
+      (defvar my/user-info-dir (file-truename (concat (getenv "HOME") "/.local/share/info"))
         "The directory containing extra info pages installed by the user.")
       (defvar my/max-worker-processes (string-trim (shell-command-to-string "nproc"))
         "The maximum number of processor threads that can be running at once.")
       (defvar my/org-dir
-        (expand-file-name (concat user-emacs-directory "org"))
-        "My custom directory used by Org to store miscellaneous notes."))
+        (file-truename (concat user-emacs-directory "/org"))
+        "My custom directory used by Org to store miscellaneous notes.")
+      (defvar my/org-agenda-dir (file-truename (concat my/org-dir "/agenda"))
+        "Directory containing my Org agenda files."))
   #+end_src
 
 * Language/Encoding
@@ -490,7 +492,7 @@ loads:
           (setq file-name (url-file-nondirectory (url-unhex-string url))))
       (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
         (make-directory my/emacs-lisp-dir t)
-        (url-copy-file url (expand-file-name file-path) t)))
+        (url-copy-file url (file-truename file-path) t)))
 
     (defun my/gtags-root-dir ()
       "Returns GTAGS root directory or nil if doesn't exist."
