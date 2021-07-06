@@ -15,19 +15,25 @@
   #+begin_src emacs-lisp :tangle yes
     (use-package org
       :mode ("\\.org\\'" . org-mode)
+      :bind
+      (:map org-mode-map
+       ("C-c o a" . org-agenda)
+       ("C-c o l" . org-store-link))
       :custom
       (org-hide-leading-stars 1)
       ;; Only show headings when visiting a new Org file.
       (org-startup-folded 'fold)
       ;; Directory used by Org only in rare circumstances, such as when filing
       ;; away remember notes.
-      (org-directory my/org-notes-dir)
+      (org-directory my/org-dir)
       ;; Pressing return while point is over a hyperlink will open the link in
       ;; the user's web browser.
       (org-return-follows-link t)
+      ;; Record a timestamp when a TODO item is marked as done.
+      (org-log-done 'time)
       :config
-      ;; Make sure the notes directory is present.
-      (make-directory my/org-notes-dir t))
+      ;; Make sure the Org notes directory is present.
+      (make-directory my/org-dir t))
   #+end_src
 
 * Plugins

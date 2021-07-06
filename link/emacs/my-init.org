@@ -82,8 +82,8 @@ loads:
         "The directory containing extra info pages installed by the user.")
       (defvar my/max-worker-processes (string-trim (shell-command-to-string "nproc"))
         "The maximum number of processor threads that can be running at once.")
-      (defvar my/org-notes-dir
-        (expand-file-name (concat user-emacs-directory "org-notes"))
+      (defvar my/org-dir
+        (expand-file-name (concat user-emacs-directory "org"))
         "My custom directory used by Org to store miscellaneous notes."))
   #+end_src
 
