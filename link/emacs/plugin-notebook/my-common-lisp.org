@@ -40,7 +40,7 @@ Needed for performance:
 #+end_src
 
 * SLY
-  SLY is a fork of SLIME which is actively maintained.
+  SLY is a fork of SLIME which is enhanced and actively maintained.
 
   #+begin_src emacs-lisp :tangle yes
     (use-package sly
