@@ -9,7 +9,7 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
@@ -18,43 +18,49 @@ Needed for performance:
   more contextual information. It is essentially a drop-in replacement for the
   help system.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package helpful
-    :bind (
-    ;; Replace standard help functions with helpful functions.
-    ("C-h f" . helpful-callable)
-    ("C-h v" . helpful-variable)
-    ("C-h k" . helpful-key)
-    ;; Other useful keybindings.
-    ("C-h C" . helpful-command)
-    ("C-h F" . helpful-function)
-    ("C-c C-d" . helpful-at-point)))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package helpful
+      :bind
+      (;; Replace standard help functions with helpful functions.
+       ("C-h f" . helpful-callable)
+       ("C-h v" . helpful-variable)
+       ("C-h k" . helpful-key)
+       ;; Other useful keybindings.
+       ("C-h C" . helpful-command)
+       ("C-h F" . helpful-function)
+       ("C-c C-d" . helpful-at-point)))
+  #+end_src
 
 * help+
   Enhance Emacs' help system with new functions and key bindings.
-#+begin_src emacs-lisp :tangle yes
-(use-package help+)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package help+)
+  #+end_src
 
 * help+ plugins
   Extra plugins to complete =help+='s power.
 
 ** help-fns+
-  Add cool new help functions, such as describe-keymap
+   Add cool new help functions, such as describe-keymap
 
-#+begin_src emacs-lisp :tangle yes
-(use-package help-fns+)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package help-fns+
+       :demand t
+       :bind
+       ("C-h M-m" . describe-keymap)
+       ("C-h M-f" . describe-face))
+   #+end_src
 
 ** help-macro+
 
-#+begin_src emacs-lisp :tangle yes
-(use-package help-macro+)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package help-macro+
+       :demand t)
+   #+end_src
 
 ** help-mode+
 
-#+begin_src emacs-lisp :tangle yes
-(use-package help-mode+)
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package help-mode+
+       :demand t)
+   #+end_src

@@ -14,49 +14,38 @@ Needed for performance:
 
 #+end_src
 
-* Functions
-  #+begin_src emacs-lisp :tangle yes
-    (eval-when-compile
-      (defun my/get-inferior-lisp-program ()
-        "Return a string representing the shell command used to launch SBCL."
-        (let ((path-to-ros (executable-find "ros"))
-              (path-to-sbcl (executable-find "sbcl")))
-          (if path-to-ros
-              (concat path-to-ros " run")
-            (concat path-to-sbcl)))))
-  #+end_src
-
 * SLIME
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
 
   #+begin_src emacs-lisp :tangle yes
     (use-package slime
+      :disabled
       :commands slime
       :hook
       ((lisp-mode . slime-mode)
        (inferior-lisp-mode . inferior-slime-mode))
       :custom
-      ;; Tell SLIME the name of the Inferior Lisp program to run in lisp-mode.
-      ;; In this case, we use the 'roswell' full-stack development tool to
-      ;; install and run our Common Lisp implementations.
-      (inferior-lisp-program (my/get-inferior-lisp-program))
       ;; Bring in almost every contributor package
       ;; (that's what slime-fancy does).
       (slime-contribs '(slime-fancy)))
   #+end_src
 
 * SLY
-  SLY is a fork of SLIME with some enhancements. Both SLIME and SLY are actively
-  maintained, so which one you decide to use is a matter of preference.
+  SLY is a fork of SLIME with some enhancements. I recommend using SLY over
+  SLIME since SLY has fixed many long-standing bugs in SLIME's code.
+
+  Both SLIME and SLY are actively maintained, so which one you decide to use is
+  a matter of preference. However, SLY's development team is far more dedicated
+  to timely bug fixes and support tickets than SLIME's team.
 
   #+begin_src emacs-lisp :tangle yes
     (use-package sly
-      ;; Using SLIME instead
-      :disabled
+      :commands sly
       :hook
       ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
       ((lisp-mode . sly-mode))
       :custom
+      ;; Allow better completions.
       (sly-complete-symbol-function 'sly-flex-completions))
   #+end_src

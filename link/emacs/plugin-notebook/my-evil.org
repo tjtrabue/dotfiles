@@ -41,10 +41,10 @@ Needed for performance:
           (evil-define-operator my-evil-join (beg end)
             "Join the selected lines. Based on blaenk/dots on GitHub.
 
-This custom version of `evil-join' handles joining commented
-lines more handily than evil's default J operator, removing
-leading comment designators. In that sense, it behaves far more
-like Vim."
+    This custom version of `evil-join' handles joining commented
+    lines more handily than evil's default J operator, removing
+    leading comment designators. In that sense, it behaves far more
+    like Vim."
             :motion evil-line
             (let* ((count (count-lines beg end))
                    ;; we join pairs at a time
@@ -67,6 +67,24 @@ like Vim."
               ;; remove the mark
               (set-marker fixup-mark nil))))))
   #+end_src
+
+* Custom advice functions
+  Evil mode functions will call these advice functions back automatically based
+  on their parameters.
+
+** Define advice functions
+  #+begin_src emacs-lisp :tangle yes
+    (eval-when-compile
+      (defun my/highlight-evil-region-advice (orig-fn beg end &rest args)
+        "Pulse a selected buffer region with a highlight for a moment."
+        (pulse-momentary-highlight-region beg end 'highlight)
+        (apply orig-fn beg end args)))
+  #+end_src
+
+** Add advice to evil functions
+   #+begin_src emacs-lisp :tangle yes
+    (advice-add 'evil-yank :around 'my/highlight-evil-region-advice)
+   #+end_src
 
 * evil-mode
   The Evil mode plugin itself.
@@ -331,5 +349,13 @@ like Vim."
      (use-package lispyville
        :after (evil lispy)
        :hook
-       (lispy-mode . lispyville-mode))
+       (lispy-mode . lispyville-mode)
+       ;; :bind
+       ;; (:map evil-collection-lispy-mode-map
+       ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
+       ;; unimpaired bindings.
+       ;; ("<normal-state> [" . nil)
+       ;; ("<normal-state> ]" . nil)
+       ;; )
+       )
    #+end_src
