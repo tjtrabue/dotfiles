@@ -37,7 +37,6 @@ Needed for performance:
   #+begin_src emacs-lisp :tangle yes
     (use-package lsp-mode
       :after (format-all my-custom-lsp)
-      :demand t
       ;; Commands used to autoload this package.
       :commands (lsp lsp-deferred)
       ;; Here you can change the package's customizable variables.

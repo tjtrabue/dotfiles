@@ -83,7 +83,7 @@ for any programming language that supports a formatting tool.")
   "List of all major modes allowing `lsp-mode' to run as a minor mode.")
 
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
-  "List to be concatenated with lsp-language-id-configuration.")
+  "List to be concatenated with `lsp-language-id-configuration'.")
 
 ;;;###autoload
 (defun my-custom-lsp-add-format-on-save-hook (mode)
@@ -143,7 +143,13 @@ debugging."
   (add-hook 'c++-mode-hook #'(lambda ()
                                (require 'dap-cpptools))))
 
-(defun my-custom-lsp-register-lua-lsp-servers ()
+;;;###autoload
+(defun my-custom-lsp-register-lsp-servers ()
+  "Register all custom LSP servers that we want."
+  (my-custom-lsp--register-lua-lsp-servers)
+  (my-custom-lsp--register-common-lisp-lsp-servers))
+
+(defun my-custom-lsp--register-lua-lsp-servers ()
   "Register Lua language servers for use with `lsp-mode'."
   ;; Add lua-language-server (can be installed from GitHub or from the AUR
   ;; on Arch Linux)
@@ -153,7 +159,7 @@ debugging."
     :activation-fn (lsp-activate-on "lua")
     :server-id 'lua-language-server)))
 
-(defun my-custom-lsp-register-common-lisp-lsp-servers ()
+(defun my-custom-lsp--register-common-lisp-lsp-servers ()
   "Register Common Lisp languageservers for use with `lsp-mode'."
   ;; Register cl-lsp as a language server for Common Lisp.
   ;; You'll probably need to install it with roswell.
@@ -162,12 +168,6 @@ debugging."
     :new-connection (lsp-stdio-connection "cl-lsp")
     :activation-fn (lsp-activate-on "lisp")
     :server-id 'cl-lsp)))
-
-;;;###autoload
-(defun my-custom-lsp-register-lsp-servers ()
-  "Register all custom LSP servers that we want."
-  (my-custom-lsp-register-lua-lsp-servers)
-  (my-custom-lsp-register-common-lisp-lsp-servers))
 
 ;;;###autoload
 (defun my-custom-lsp-add-language-ids ()
