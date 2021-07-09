@@ -48,6 +48,7 @@ so that each time they are saved they are formatted"
 * editorconfig
 #+begin_src emacs-lisp :tangle yes
   (use-package editorconfig
+    :demand t
     :init
     (my/add-editorconfig-hooks)
     :config

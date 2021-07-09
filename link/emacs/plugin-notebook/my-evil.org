@@ -350,12 +350,12 @@ Needed for performance:
        :after (evil lispy)
        :hook
        (lispy-mode . lispyville-mode)
-       ;; :bind
-       ;; (:map evil-collection-lispy-mode-map
+       :bind
+       (:map evil-collection-lispy-mode-map
        ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
        ;; unimpaired bindings.
-       ;; ("<normal-state> [" . nil)
-       ;; ("<normal-state> ]" . nil)
-       ;; )
-       )
+       ("<normal-state> [" . nil)
+       ("<normal-state> ]" . nil)
+       ("<normal-state> <" . nil)
+       ("<normal-state> >" . nil)))
    #+end_src

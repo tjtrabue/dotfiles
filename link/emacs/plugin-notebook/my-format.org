@@ -84,7 +84,8 @@ by format-all or some other code formatter."
 
 #+begin_src emacs-lisp :tangle yes
   (use-package format-all
-    :after (editorconfig)
+    :demand t
+    :after editorconfig
     :init
     (my/remove-editorconfig-format-hooks)
     (my/add-format-all-hooks))

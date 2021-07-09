@@ -36,16 +36,9 @@ Needed for performance:
 
   #+begin_src emacs-lisp :tangle yes
     (use-package lsp-mode
-      :demand t
-      :after format-all
+      :after (format-all my-custom-lsp)
       ;; Commands used to autoload this package.
       :commands (lsp lsp-deferred)
-      ;; Code to be executed in :preface is seen by the byte-compiler, unlike code
-      ;; in :init which gets ignored by the byte-compiler. Thus, if you're byte-
-      ;; compiling your code, you should put any init code to be run in :preface.
-      :preface
-      (require 'my-custom-lsp)
-      (my-custom-lsp-add-lsp-mode-hooks)
       ;; Here you can change the package's customizable variables.
       :custom
       ;;; General settings
@@ -108,6 +101,23 @@ Needed for performance:
       (my-custom-lsp-add-dap-mode-tool-hooks))
   #+end_src
 
+* Custom lsp-mode configuration
+  This is my own package I use to customize =lsp-mode= to my specification.
+  We should load it before we load =lsp-mode= because it contains important
+  configuration functions we'll want to use for =lsp-mode=.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package my-custom-lsp
+      ;; This is a local package, so we don't want straight.el to download
+      ;; anything.
+      :straight nil
+      ;; We also don't want package.el to download anything from MELPA.
+      :ensure nil
+      :demand t
+      :config
+      ;; Add hooks to automatically start lsp-mode for certain major modes.
+      (my-custom-lsp-add-lsp-mode-hooks))
+  #+end_src
 * Plugins
 ** lsp-ui
 
