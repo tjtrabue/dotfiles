@@ -110,9 +110,17 @@ add_extra_paths_to_path_file() {
 # Make sure ~/.path is up-to-date with default paths from the dotfiles
 # repository.
 pathsync() {
-  cat "${DOTFILES_COPY}/.path" >>"${PATH_FILE}"
+  local pathFile="${1:-${PATH_FILE}}"
+
+  # Backup the current path file just in case.
+  if [ -f "${pathFile}" ]; then
+    log_info "Backing up path file: ${pathFile}"
+    cp "${pathFile}"{,.bak}
+  fi
+
+  cat "${DOTFILES_COPY}/.path" >>"${pathFile}"
   add_extra_paths_to_path_file
-  rmduplines "${PATH_FILE}"
+  rmduplines "${pathFile}"
 }
 
 # Write the dynamically constructred $PATH variable to all relevant shell
