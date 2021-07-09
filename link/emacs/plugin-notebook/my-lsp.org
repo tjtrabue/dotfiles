@@ -4,9 +4,9 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-Language Server Protocol client (=lsp-mode=) configuration.  It is highly advised
-that you run Emacs version 27+ in order to get the best performance out of LSP
-mode due to Emacs 27's native JSON parsing capability.
+Language Server Protocol client (=lsp-mode=) configuration.  It is highly
+advised that you run Emacs version 27+ in order to get the best performance out
+of LSP mode due to Emacs 27's native JSON parsing capability.
 
 If you run =lsp= and get a message like '<filename> not in project or was
 blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
