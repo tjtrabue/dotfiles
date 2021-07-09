@@ -40,6 +40,7 @@ pyenv
 ranger
 rclone
 ripgrep
+roswell
 screen
 shellcheck
 streamlink
