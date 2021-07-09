@@ -31,6 +31,12 @@ install_common_lisps() {
   fi
 }
 
+# Install the LSP server for Common Lisp.
+# You need roswell in order to install this.
+install_common_lisp_lsp() {
+  ros install cxxxr/lem cxxxr/cl-lsp
+}
+
 # Install roswell with homebrew.
 __install_roswell_mac() {
   brew install roswell
