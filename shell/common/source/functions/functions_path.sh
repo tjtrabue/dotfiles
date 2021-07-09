@@ -71,14 +71,20 @@ src_lua_path() {
   fi
 }
 
-# Print paths in $PATH file with all environment variables evaluated
+# Print paths in $PATH file with all environment variables/subshells evaluated
 __evaluate_paths() {
   local pathFile="${1:-${PATH_FILE}}"
+  local binPath
+
   # Make sure that paths are evaluated in reverse order from their listing in
   # the .path file since we want more recently added paths to take precedence
   # over older ones.
+  # The grep command is to remove empty and commented lines.
   # The awk command at the end removes cuplicates from the listing.
-  eval echo "$(xargs -a "${pathFile}")" | tr ' ' '\n' | tac | awk '!x[$0]++'
+
+  while read -r binPath || [ -n "${binPath}" ]; do
+    eval "printf '%s\n' ${binPath}"
+  done <"${pathFile}" | grep -v -E -e "^#.*" -e "^$" | tac | awk '!x[$0]++'
 }
 
 # Write additional paths to the ~/.path file depending on the operating system.

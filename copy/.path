@@ -1,3 +1,6 @@
+# This file contains entries that will be evaluated and concatenated together in
+# order to construct the $PATH environment variable. Entries added to the end of
+# the file take precedence over entries at the beginning of the file.
 /bin
 /sbin
 /usr/bin
