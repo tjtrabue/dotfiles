@@ -11,6 +11,9 @@ mode due to Emacs 27's native JSON parsing capability.
 If you run =lsp= and get a message like '<filename> not in project or was
 blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
 
+Because it was growing too large, I refactored my custom LSP mode configuration
+to the =my-custom-lsp.el= file.
+
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
@@ -25,167 +28,6 @@ Needed for performance:
     in the =~/.emacs.d/= directory.
   - *haskell-language-server*: Install with =ghcup=.
 
-* Variable
-  Define special =lsp-mode= variables here.
-
-  #+begin_src emacs-lisp :tangle yes
-    (defvar my/lsp-format-major-mode-blacklist '(
-                                                 cperl-mode
-                                                 lua-mode
-                                                 perl-mode
-                                                 python-mode
-                                                 sh-mode
-                                                 )
-      "List of major modes to ignore when activating lsp-format hooks, usually
-    because the LSP server for these major modes does not yet support document
-    formatting, or because their formatters are lacking in features. Thankfully
-    the reformatter package provides a generic interface for creating formatters
-    for any programming language that supports a formatting tool.")
-
-    (defvar my/lsp-enabled-modes '(
-                                   c++-mode
-                                   c-mode
-                                   clojure-mode
-                                   cmake-mode
-                                   ;; cperl-mode
-                                   css-mode
-                                   dart-mode
-                                   elixir-mode
-                                   go-mode
-                                   haskell-mode
-                                   haskell-literate-mode
-                                   html-mode
-                                   java-mode
-                                   javascript-mode
-                                   js-mode
-                                   json-mode
-                                   LaTeX-mode
-                                   latex-mode
-                                   less-css-mode
-                                   lisp-mode
-                                   lua-mode
-                                   mhtml-mode
-                                   objc-mode
-                                   ;; perl-mode
-                                   php-mode
-                                   python-mode
-                                   ruby-mode
-                                   scss-mode
-                                   sh-mode
-                                   TeX-latex-mode
-                                   tex-mode
-                                   web-mode
-                                   xml-mode
-                                   yaml-mode)
-      "List of all major modes allowing `lsp-mode' to run as a minor mode.")
-  #+end_src
-
-* Functions
-  Extra helper functions for defining major mode hooks for =lsp-mode= and such.
-
-  #+begin_src emacs-lisp :tangle yes
-    (defun my/lsp-add-format-on-save-hook (mode)
-      "This function adds a buffer local hook for the major mode represented by
-    MODE that runs `lsp-format-buffer' before saving the buffer's file."
-      ;; Ignore major-modes listed in the blacklist variable.
-      (unless (member mode my/lsp-format-major-mode-blacklist)
-        ;; Make sure to take out the format-all hook so that we don't use
-        ;; two different formatting systems for the same buffer.
-        (remove-hook 'before-save-hook #'format-all-buffer--from-hook 'local)
-        (add-hook 'before-save-hook #'lsp-format-buffer 0 'local)))
-
-    (defun my/add-lsp-mode-hooks ()
-      "Add hooks to the major modes specified in `my/lsp-enabled-modes' to
-    automatically start lsp-mode when editing files associated with those major
-    modes, as well as format buffers on save."
-      (mapc #'(lambda (mode)
-                ;; This is necessary for providing closure-like behavior
-                (lexical-let ((mode mode)
-                              (hook-name (concat (symbol-name mode) "-hook")))
-                  (add-hook (intern hook-name) #'(lambda ()
-                                                   ;; Automatically start lsp when you visit a relevant file
-                                                   (lsp-deferred)
-                                                   ;; Format lsp-mode buffers on save.
-                                                   (my/lsp-add-format-on-save-hook mode)))))
-            my/lsp-enabled-modes))
-
-    (defun my/check-lsp-enabled-for-mode-p (mode &optional all &rest modes)
-      "Return non-nil if a specific MODE is enabled for `lsp-mode' based on the
-      value of `my/lsp-enabled-modes'.
-
-      MODES are optional additional major modes to check for in
-      `my/enabled-mode-for-lsp'. The behavior of the check depends on the value of
-      ALL.
-
-      The optional ALL argument is a truthy value determining whether or not all
-      specified major modes appear in `my/enabled-mode-for-lsp'. If ALL is non-nil,
-      then the final result of this function will only be non-nil if all supplied
-      modes are present in `my/enabled-mode-for-lsp'. If ALL is nil, then the result
-      of this function will be non-nil if any of the supplied major modes are in the
-      list."
-      (require 'cl-lib)
-      (if modes
-          (let ((full-modes (cons mode modes)))
-            (if all
-                (not (cl-set-difference full-modes my/lsp-enabled-modes))
-              (cl-intersection full-modes my/lsp-enabled-modes)))
-        (member mode my/lsp-enabled-modes)))
-
-    (defun my/lsp-add-language-ids ()
-      "Add more major-mode to language server mappings. This allows
-Emacs to automatically start lsp-mode with a particular server
-when a certain type of file is found."
-      (add-to-list 'lsp-language-id-configuration '(lisp-mode . "lisp")))
-
-    (defun my/lsp-add-dap-mode-tool-hooks ()
-      "Add hooks for various languages to pull in `dap-mode' tools to aid in
-    debugging."
-      ;; Add C++ DAP tools when entering c++-mode
-      (add-hook 'c++-mode-hook #'(lambda ()
-                                   (require 'dap-cpptools))))
-  #+end_src
-
-* Register New LSP Servers
-  Here we add =lsp-mode= support for new LSP servers not supported by default.
-
-  #+begin_src emacs-lisp :tangle yes
-    (defun my/register-lsp-servers ()
-      "Register all custom LSP servers that we want."
-      (my/register-lua-lsp-servers)
-      (my/register-common-lisp-lsp-servers))
-  #+end_src
-
-** lua
-   =lua-language-server= is a much more complete language server right now than
-   =lua-lsp=, but it is not supported out of the box by =lsp-mode=.
-
-   #+begin_src emacs-lisp :tangle yes
-     (defun my/register-lua-lsp-servers ()
-       "Register Lua languageservers for use with `lsp-mode'."
-       ;; Add lua-language-server (can be installed from GitHub or from the AUR
-       ;; on Arch Linux)
-       (lsp-register-client
-        (make-lsp-client
-         :new-connection (lsp-stdio-connection "lua-language-server")
-         :activation-fn (lsp-activate-on "lua")
-         :server-id 'lua-language-server)))
-   #+end_src
-
-** Common Lisp
-   =cl-lsp= is not fully functional yet, so if we want to use it in =lsp-mode=
-   we'll need to register it ourselves.
-
-   #+begin_src emacs-lisp :tangle yes
-     (defun my/register-common-lisp-lsp-servers ()
-       "Register Common Lisp languageservers for use with `lsp-mode'."
-       ;; Register cl-lsp as a language server for Common Lisp.
-       ;; You'll probably need to install it with roswell.
-       (lsp-register-client
-        (make-lsp-client
-         :new-connection (lsp-stdio-connection "cl-lsp")
-         :activation-fn (lsp-activate-on "lisp")
-         :server-id 'cl-lsp)))
-   #+end_src
 * lsp-mode
   =lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
   heavy lifting of starting up Language Servers and managing connections to
@@ -194,6 +36,7 @@ when a certain type of file is found."
 
   #+begin_src emacs-lisp :tangle yes
     (use-package lsp-mode
+      :demand t
       :after format-all
       ;; Commands used to autoload this package.
       :commands (lsp lsp-deferred)
@@ -201,7 +44,8 @@ when a certain type of file is found."
       ;; in :init which gets ignored by the byte-compiler. Thus, if you're byte-
       ;; compiling your code, you should put any init code to be run in :preface.
       :preface
-      (my/add-lsp-mode-hooks)
+      (require 'my-custom-lsp)
+      (my-custom-lsp-add-lsp-mode-hooks)
       ;; Here you can change the package's customizable variables.
       :custom
       ;;; General settings
@@ -237,7 +81,7 @@ when a certain type of file is found."
       ;; I've noticed that version tends to be really slow.
       ;; It's best to install it yourself.
       (lsp-clients-lua-language-server-bin
-       (executable-find "lua-language-server"))
+        (executable-find "lua-language-server"))
       :hook
       ;; NOTE: Language mode hooks are set in the Functions section of this
       ;;       file.
@@ -259,9 +103,9 @@ when a certain type of file is found."
             ("t s" . lsp-treemacs-symbols)
             ("t t" . lsp-treemacs-type-hierarchy))
       :config
-      (my/lsp-add-language-ids)
-      (my/register-lsp-servers)
-      (my/lsp-add-dap-mode-tool-hooks))
+      (my-custom-lsp-add-language-ids)
+      (my-custom-lsp-register-lsp-servers)
+      (my-custom-lsp-add-dap-mode-tool-hooks))
   #+end_src
 
 * Plugins
