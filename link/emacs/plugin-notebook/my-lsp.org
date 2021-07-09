@@ -37,6 +37,7 @@ Needed for performance:
   #+begin_src emacs-lisp :tangle yes
     (use-package lsp-mode
       :after (format-all my-custom-lsp)
+      :demand t
       ;; Commands used to autoload this package.
       :commands (lsp lsp-deferred)
       ;; Here you can change the package's customizable variables.
@@ -97,8 +98,7 @@ Needed for performance:
             ("t t" . lsp-treemacs-type-hierarchy))
       :config
       (my-custom-lsp-add-language-ids)
-      (my-custom-lsp-register-lsp-servers)
-      (my-custom-lsp-add-dap-mode-tool-hooks))
+      (my-custom-lsp-register-lsp-servers))
   #+end_src
 
 * Custom lsp-mode configuration
@@ -116,7 +116,8 @@ Needed for performance:
       :demand t
       :config
       ;; Add hooks to automatically start lsp-mode for certain major modes.
-      (my-custom-lsp-add-lsp-mode-hooks))
+      (my-custom-lsp-add-lsp-mode-hooks)
+      (my-custom-lsp-add-dap-mode-tool-hooks))
   #+end_src
 * Plugins
 ** lsp-ui

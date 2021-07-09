@@ -82,6 +82,9 @@ for any programming language that supports a formatting tool.")
                                       yaml-mode)
   "List of all major modes allowing `lsp-mode' to run as a minor mode.")
 
+(defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
+  "List to be concatenated with lsp-language-id-configuration.")
+
 ;;;###autoload
 (defun my-custom-lsp-add-format-on-save-hook (mode)
   "This function adds a buffer local hook for the major mode represented by
@@ -133,13 +136,6 @@ list."
     (member mode my-custom-lsp-enabled-modes)))
 
 ;;;###autoload
-(defun my-custom-lsp-add-language-ids ()
-  "Add more major-mode to language server mappings. This allows
-Emacs to automatically start lsp-mode with a particular server
-when a certain type of file is found."
-  (add-to-list 'lsp-language-id-configuration '(lisp-mode . "lisp")))
-
-;;;###autoload
 (defun my-custom-lsp-add-dap-mode-tool-hooks ()
   "Add hooks for various languages to pull in `dap-mode' tools to aid in
 debugging."
@@ -173,6 +169,12 @@ debugging."
   (my-custom-lsp-register-lua-lsp-servers)
   (my-custom-lsp-register-common-lisp-lsp-servers))
 
+;;;###autoload
+(defun my-custom-lsp-add-language-ids ()
+  "Add extra language ID specifications for lsp-mode."
+  (setq lsp-language-id-configuration
+        (append my-custom-lsp-language-id-configuration
+                lsp-language-id-configuration)))
 (provide 'my-custom-lsp)
 
 ;;; my-custom-lsp.el ends here
