@@ -73,17 +73,19 @@ Needed for performance:
   on their parameters.
 
 ** Define advice functions
-  #+begin_src emacs-lisp :tangle yes
-    (eval-when-compile
-      (defun my/highlight-evil-region-advice (orig-fn beg end &rest args)
-        "Pulse a selected buffer region with a highlight for a moment."
-        (pulse-momentary-highlight-region beg end 'highlight)
-        (apply orig-fn beg end args)))
-  #+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (eval-when-compile
+       (defun my/highlight-evil-region-advice (orig-fn beg end &rest args)
+         "Pulse a selected buffer region with a highlight for a moment."
+         (pulse-momentary-highlight-region beg end 'highlight)
+         (apply orig-fn beg end args)))
+   #+end_src
 
 ** Add advice to evil functions
    #+begin_src emacs-lisp :tangle yes
-    (advice-add 'evil-yank :around 'my/highlight-evil-region-advice)
+     (defun my/add-evil-advice ()
+       "Add advice to various `evil-mode' functions."
+       (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
    #+end_src
 
 * evil-mode
@@ -100,12 +102,12 @@ Needed for performance:
       (:map evil-normal-state-map
             ("H" . evil-window-top)
             ("L" . evil-window-bottom)
-            ;; Only scroll half a page up/down with C-b and C-f instead of a full
-            ;; page.
+            ;; Only scroll half a page up/down with C-b and C-f instead of a
+            ;; full page.
             ([remap evil-scroll-page-up] . evil-scroll-up)
             ([remap evil-scroll-page-down] . evil-scroll-down)
             :map evil-insert-state-map
-            ;; TAB key should insert spaces to next tab stop, as one would expect.
+            ;; TAB key should insert spaces to next tab stop, like in Vim.
             ("<tab>" . tab-to-tab-stop))
       ;; NOTE: We must set all variables for evil-mode in evil-leader's
       ;;       use-package directive because it loads first, and it in turn
@@ -113,6 +115,7 @@ Needed for performance:
       ;; :init
       :config
       (my/define-custom-evil-operators)
+      (my/add-evil-advice)
       ;; Use custom "J" command that removes leading comment designators.
       (define-key evil-normal-state-map [remap evil-join] 'my-evil-join)
       (evil-mode 1))
@@ -352,10 +355,10 @@ Needed for performance:
        (lispy-mode . lispyville-mode)
        :bind
        (:map evil-collection-lispy-mode-map
-       ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
-       ;; unimpaired bindings.
-       ("<normal-state> [" . nil)
-       ("<normal-state> ]" . nil)
-       ("<normal-state> <" . nil)
-       ("<normal-state> >" . nil)))
+             ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
+             ;; unimpaired bindings.
+             ("<normal-state> [" . nil)
+             ("<normal-state> ]" . nil)
+             ("<normal-state> <" . nil)
+             ("<normal-state> >" . nil)))
    #+end_src
