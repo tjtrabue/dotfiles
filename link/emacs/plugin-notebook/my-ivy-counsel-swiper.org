@@ -37,6 +37,9 @@ Needed for performance:
 #+end_src
 
 ** use-package specification
+   *NOTE:* If you want to accept the currently typed name in =ivy-find-file=,
+    press =C-M-j=.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
     :demand t
@@ -49,13 +52,11 @@ Needed for performance:
      ;; Rebind the switch-buffer-kill function to something sane
      ("C-d" . ivy-switch-buffer-kill)
      :map ivy-minibuffer-map
+     ;; Navigation shortcuts
      ("C-j" . ivy-next-line)
      ("C-k" . ivy-previous-line)
      ;; Use TAB to mark/unmark candidates
-     ("<tab>" . my/ivy-toggle-mark)
-     ;; C-m accepts current selection without completing.
-     ;; C-M-j also does this by default.
-     ("C-m" . ivy-immediate-done ))
+     ("<tab>" . my/ivy-toggle-mark))
     :custom
     ;; Keep the ivy completion buffer's height fixed.
     (ivy-fixed-height-minibuffer t)
@@ -123,7 +124,7 @@ Needed for performance:
     :demand t
     :after ivy
     :config
-    (counsel-mode))
+    (counsel-mode 1))
 #+end_src
 
 ** Plugins
@@ -142,8 +143,8 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package swiper
-    :demand t
-    :after (evil-collection)
+    :after evil-collection
+    :commands swiper
     :bind
     (("C-s" . swiper)
      ("C-r" . swiper)
