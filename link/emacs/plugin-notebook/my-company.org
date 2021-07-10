@@ -96,23 +96,23 @@ optionally for extra modes"
      ([(tab)] . company-complete))
     :hook
     (company-mode . set-company-keybindings)
-    :init
+    :custom
     ;; Align annotation to the right side.
-    (setq company-tooltip-align-annotations t
-          ;; Never require a match; continue to use cursor as normal
-          company-require-match nil
-          ;; Stop eclim auto save.
-          company-eclim-auto-save nil
-          ;; Don't make plain text completions lowercase.
-          company-dabbrev-downcase nil
-          ;; Tweak company completion delay
-          ;; WARNING: Setting this value too low could cause a huge performance
-          ;;          bottleneck!
-          company-idle-delay 0.000
-          ;; Start completing as soon as we begin typing.
-          company-minimum-prefix-length 1)
+    (company-tooltip-align-annotations t)
+    ;; Never require a match; continue to use cursor as normal
+    (company-require-match nil)
+    ;; Stop eclim auto save.
+    (company-eclim-auto-save nil)
+    ;; Don't make plain text completions lowercase.
+    (company-dabbrev-downcase nil)
+    ;; Tweak company completion delay
+    ;; WARNING: Setting this value too low could cause a huge performance
+    ;;          bottleneck!
+    (company-idle-delay 0.01)
+    ;; Start completing as soon as we begin typing.
+    (company-minimum-prefix-length 1)
     ;; Change UI appearance of company
-    (setq company-frontends
+    (company-frontends
           '(company-pseudo-tooltip-unless-just-one-frontend
             company-preview-frontend
             company-echo-metadata-frontend))
