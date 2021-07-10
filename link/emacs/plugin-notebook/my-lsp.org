@@ -1,4 +1,4 @@
-#+title:  LanguageServerProtocol Client
+#+title:  Language Server Protocol Client for Emacs
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
@@ -329,7 +329,7 @@ Needed for performance:
 
    #+begin_src emacs-lisp :tangle yes
      (use-package lsp-origami
-       :after (lsp-mode))
+       :after lsp-mode)
    #+end_src
 ** lsp-dart
 

@@ -44,7 +44,7 @@ Needed for performance:
       :commands sly
       :hook
       ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
-      ((lisp-mode . sly-mode))
+      (lisp-mode . sly-mode)
       :custom
       ;; Allow better completions.
       (sly-complete-symbol-function 'sly-flex-completions))
