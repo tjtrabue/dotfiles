@@ -61,9 +61,8 @@ Needed for performance:
     (ivy-fixed-height-minibuffer t)
     (ivy-use-virtual-buffers t)
     (enable-recursive-minibuffers t)
-    :init
     ;; Make the ivy window's height a function of its parent frame's height
-    (setq ivy-height-alist
+    (ivy-height-alist
       '((t
          lambda (_caller)
          (/ (frame-height) 3))))
