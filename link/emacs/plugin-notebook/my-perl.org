@@ -123,6 +123,11 @@ such plugins is sure to slow your system down significantly.
 *** use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package cperl-mode
+    :mode
+    (("\\.pl\\'" . cperl-mode)
+     ("\\.plx\\'" . cperl-mode))
+    :interpreter
+    ("perl" . cperl-mode)
     :hook
     (cperl-mode . (lambda ()
       (make-local-variable 'eldoc-documentation-function)
@@ -131,11 +136,6 @@ such plugins is sure to slow your system down significantly.
       (cperl-lazy-install)
       (add-hook 'after-save-hook #'font-lock-fontify-buffer)))
     :config
-    ;; Add cperl-mode to auto-mode-alist for editing perl files.
-    (mapc (lambda (pair)
-        (if (eq (cdr pair) 'perl-mode)
-            (setcdr pair 'cperl-mode)))
-      (append auto-mode-alist interpreter-mode-alist))
     ;; Get rid of troublesome keybindings
     (define-key cperl-mode-map (kbd "C-j") nil)
     ;; Add find-file-at-point function for cperl-mode.

@@ -41,9 +41,10 @@ Needed for performance:
   (use-package ivy
     :demand t
     :after helm
-    :bind
+    :bind*
     (:map ivy-switch-buffer-map
      ;; Make sure that navigation shortcuts work
+     ("C-j" . ivy-next-line)
      ("C-k" . ivy-previous-line)
      ;; Rebind the switch-buffer-kill function to something sane
      ("C-d" . ivy-switch-buffer-kill)
@@ -51,8 +52,13 @@ Needed for performance:
      ("C-j" . ivy-next-line)
      ("C-k" . ivy-previous-line)
      ;; Use TAB to mark/unmark candidates
-     ("TAB" . my/ivy-toggle-mark))
+     ("<tab>" . my/ivy-toggle-mark)
+     ;; C-m accepts current selection without completing.
+     ;; C-M-j also does this by default.
+     ("C-m" . ivy-immediate-done ))
     :custom
+    ;; Keep the ivy completion buffer's height fixed.
+    (ivy-fixed-height-minibuffer t)
     (ivy-use-virtual-buffers t)
     (enable-recursive-minibuffers t)
     :init
@@ -62,7 +68,7 @@ Needed for performance:
          lambda (_caller)
          (/ (frame-height) 3))))
     :config
-    (ivy-mode))
+    (ivy-mode 1))
 #+end_src
 
 ** Plugins

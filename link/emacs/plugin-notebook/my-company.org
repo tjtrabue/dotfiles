@@ -215,6 +215,7 @@ optionally for extra modes"
 
 #+begin_src emacs-lisp :tangle yes
   (use-package company-plsense
+    :disabled
     :hook
     ((cperl-mode perl-mode) . (lambda ()
       ;; Turn on company-plsense for perl and cperl mode.

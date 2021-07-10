@@ -50,7 +50,7 @@ for any programming language that supports a formatting tool.")
                                       c-mode
                                       clojure-mode
                                       cmake-mode
-                                      ;; cperl-mode
+                                      cperl-mode
                                       css-mode
                                       dart-mode
                                       elixir-mode
@@ -69,7 +69,7 @@ for any programming language that supports a formatting tool.")
                                       lua-mode
                                       mhtml-mode
                                       objc-mode
-                                      ;; perl-mode
+                                      perl-mode
                                       php-mode
                                       python-mode
                                       ruby-mode
@@ -101,15 +101,15 @@ MODE that runs `lsp-format-buffer' before saving the buffer's file."
   "Add hooks to the major modes specified in `my-lsp-enabled-modes' to
 automatically start lsp-mode when editing files associated with those major
 modes, as well as format buffers on save."
-  (mapc #'(lambda (mode)
-            ;; This is necessary for providing closure-like behavior
-            (lexical-let ((mode mode)
-                          (hook-name (concat (symbol-name mode) "-hook")))
-              (add-hook (intern hook-name) #'(lambda ()
-                                               ;; Automatically start lsp when you visit a relevant file
-                                               (lsp-deferred)
-                                               ;; Format lsp-mode buffers on save.
-                                               (my-custom-lsp-add-format-on-save-hook mode)))))
+  (mapc (lambda (mode)
+          ;; This is necessary for providing closure-like behavior
+          (lexical-let ((mode mode)
+                        (hook-name (concat (symbol-name mode) "-hook")))
+            (add-hook (intern hook-name) (lambda ()
+                                           ;; Automatically start lsp when you visit a relevant file
+                                           (lsp-deferred)
+                                           ;; Format lsp-mode buffers on save.
+                                           (my-custom-lsp-add-format-on-save-hook mode)))))
         my-custom-lsp-enabled-modes))
 
 ;;;###autoload
@@ -140,24 +140,13 @@ list."
   "Add hooks for various languages to pull in `dap-mode' tools to aid in
 debugging."
   ;; Add C++ DAP tools when entering c++-mode
-  (add-hook 'c++-mode-hook #'(lambda ()
-                               (require 'dap-cpptools))))
+  (add-hook 'c++-mode-hook (lambda ()
+                             (require 'dap-cpptools))))
 
 ;;;###autoload
 (defun my-custom-lsp-register-lsp-servers ()
   "Register all custom LSP servers that we want."
-  (my-custom-lsp--register-lua-lsp-servers)
   (my-custom-lsp--register-common-lisp-lsp-servers))
-
-(defun my-custom-lsp--register-lua-lsp-servers ()
-  "Register Lua language servers for use with `lsp-mode'."
-  ;; Add lua-language-server (can be installed from GitHub or from the AUR
-  ;; on Arch Linux)
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection "lua-language-server")
-    :activation-fn (lsp-activate-on "lua")
-    :server-id 'lua-language-server)))
 
 (defun my-custom-lsp--register-common-lisp-lsp-servers ()
   "Register Common Lisp languageservers for use with `lsp-mode'."
