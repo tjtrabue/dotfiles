@@ -88,3 +88,24 @@
              (("C-c n i" . org-roam-insert))
              (("C-c n I" . org-roam-insert-immediate))))
    #+end_src
+
+** org-super-agenda
+   Improved Org agenda that allows you to break your agenda items up into
+   sections.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package org-super-agenda)
+   #+end_src
+
+** org-download
+   Utility for moving downloaded images into Org buffers.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package org-download
+       :hook
+       ;; Enable org-download in dired-mode.
+       (dired-mode . org-download-enable)
+       :init
+       (setq-default org-download-image-dir
+         (file-truename (concat (getenv "HOME") "/images/org"))))
+   #+end_src
