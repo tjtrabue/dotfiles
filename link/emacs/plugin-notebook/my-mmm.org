@@ -23,7 +23,7 @@ embedded PHP.
       :demand t
       :custom
       ;; Only activate mmm-mode in specified major modes.
-      (mmm-global-mode 'auto)
+      (mmm-global-mode 'maybe)
       :config
       ;; Allow PHP embedded inside HTML files.
       (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php))
