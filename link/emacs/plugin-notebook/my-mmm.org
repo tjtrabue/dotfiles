@@ -1,0 +1,30 @@
+#+title:    MMM: Multiple Major Modes
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:11
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=mmm-mode= is a minor mode that enables multiple major modes to coexist in a
+single buffer. This is useful when editing Org mode files, or HTML files with
+embedded PHP.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* mmm-mode
+  The eponymous =mmm-mode=.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package mmm-mode
+      :demand t
+      :custom
+      ;; Only activate mmm-mode in specified major modes.
+      (mmm-global-mode 'auto)
+      :config
+      ;; Allow PHP embedded inside HTML files.
+      (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php))
+  #+end_src

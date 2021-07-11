@@ -12,46 +12,56 @@ that expands the snippet based on the abbreviation before point.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 * yasnippet
   =yasnippet= itself.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package yasnippet
-    :commands (yas-minor-mode)
-    :hook
-    ((conf-mode prog-mode text-mode) . yas-minor-mode)
-    :bind
-    (:map yas-minor-mode-map
-      ;; Use conditional expansion, falling back on helm-yas-complete if there
-      ;; is no precise snippet name before point.
-     ("C-c y" . yas-expand)
-     ("<tab>" . nil)
-     ("TAB" . nil))
-    :config
-    (yas-reload-all))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package yasnippet
+      :commands yas-minor-mode
+      :hook
+      ((conf-mode prog-mode text-mode) . yas-minor-mode)
+      :bind
+      (:map yas-minor-mode-map
+            ;; Use conditional expansion, falling back on helm-yas-complete if
+            ;; there is no precise snippet name before point.
+            ("C-c y" . yas-expand)
+            ("<tab>" . nil)
+            ("TAB" . nil))
+      :config
+      (yas-reload-all))
+  #+end_src
 
 * yasnippet-snippets
   A big collection of pre-written snippets for =yasnippet=.
 
-#+begin_src emacs-lisp :tangle yes
-(use-package yasnippet-snippets
-  :after yasnippet)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package yasnippet-snippets
+      :after yasnippet
+      :demand t)
+  #+end_src
+
+* common-lisp-snippets
+  Yasnippet snippets for Common Lisp.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package common-lisp-snippets
+      :after yasnippet
+      :demand t)
+  #+end_src
 
 * helm-c-yasnippet
   Use helm menu for yasnippet completions
 
-#+begin_src emacs-lisp :tangle yes
-(use-package helm-c-yasnippet
-  :after (helm yasnippet)
-  :config
-  (setq helm-yas-space-match-any-greedy t)
-  ;; Must use global-set-key here because this function must be defined at the
-  ;; top level to be used in conjunction with yas-maybe-expand.
-  (global-set-key (kbd "C-c y") 'helm-yas-complete))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package helm-c-yasnippet
+      :after (helm yasnippet)
+      :config
+      (setq helm-yas-space-match-any-greedy t)
+      ;; Must use global-set-key here because this function must be defined at
+      ;; the top level to be used in conjunction with yas-maybe-expand.
+      (global-set-key (kbd "C-c y") 'helm-yas-complete))
+  #+end_src

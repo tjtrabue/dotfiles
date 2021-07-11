@@ -1,0 +1,25 @@
+#+title:    Rust Programming Language Configuration/Plugins
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:11
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+Rust is the next-generation successor to C++ for programming highly performant
+applications that run as native compiled binaries.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* rust-mode
+  Major mode for editing Rust files.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package rust-mode
+      :mode
+      ("\\.rs\\'" . rust-mode)
+      ("\\.rlib\\'" . rust-mode))
+  #+end_src
