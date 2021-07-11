@@ -33,19 +33,15 @@ Needed for performance:
     :bind (:map dired-mode-map
            ("P" . peep-dired)))
 #+end_src
-* dired-git-info
-  Shows git info inside =dired=.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package dired-git-info)
-#+end_src
-
-* dired-hacks
-   Collection of =dired= extensions.
+* dired-k
+  Highlight =dired= buffers with Git information. Inspired by the =k= package
+  for Zsh.
 
   #+begin_src emacs-lisp :tangle yes
-    (use-package dired-hacks
-      ;; Doesn't seem to load properly for some reason.
-      :disabled
-      :after (dired dash))
+    (use-package dired-k
+      :after dired
+      :hook
+      ;; Always activate dired-k when dired buffer opens.
+      ((dired-initial-position . dired-k)
+       (dired-after-readin . dired-k-no-revert)))
   #+end_src
