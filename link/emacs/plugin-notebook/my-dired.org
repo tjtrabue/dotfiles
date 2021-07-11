@@ -21,7 +21,7 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package dired+
-    :after (dired))
+    :after dired)
 #+end_src
 
 * peep-dired
@@ -39,3 +39,13 @@ Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   (use-package dired-git-info)
 #+end_src
+
+* dired-hacks
+   Collection of =dired= extensions.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-hacks
+      ;; Doesn't seem to load properly for some reason.
+      :disabled
+      :after (dired dash))
+  #+end_src

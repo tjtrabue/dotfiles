@@ -1,0 +1,20 @@
+#+title:    dash.el: Modern API for Emacs
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:11
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=dash= provides modern functions and services for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dash
+      :demand t)
+  #+end_src
