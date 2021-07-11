@@ -20,6 +20,9 @@ embedded PHP.
 
   #+begin_src emacs-lisp :tangle yes
     (use-package mmm-mode
+      ;; Currently disabled since many new major modes natively support multiple
+      ;; major modes.
+      :disabled
       :demand t
       :custom
       ;; Only activate mmm-mode in specified major modes.

@@ -1,0 +1,30 @@
+#+title:    Snails: Simple Fuzzy Search Framework
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:11
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=snails= acts like =rofi= (Linux) or =searchlight= (Mac) for Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package snails
+      ;; Disabled because it doesn't work
+      :disabled
+      ;; 6/11/2021: This package does not yet have an official release, and is
+      ;; not yet hosted in Melpa.
+      :straight
+      (snails :type git :host github :repo "manateelazycat/snails")
+      :commands (snails snails-search-point)
+      :config
+      ;; Use custom backends to make Snails faster.
+      (add-to-list 'snails-default-backends 'snails-backend-rg)
+      (add-to-list 'snails-default-backends 'snails-backend-fd))
+  #+end_src

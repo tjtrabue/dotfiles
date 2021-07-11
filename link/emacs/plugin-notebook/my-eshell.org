@@ -617,7 +617,7 @@ If you are currently in an eshell session then this function does nothing."
   ;;     (venv-initialize-eshell)
   ;;     (autoload 'epe-theme-lambda "eshell-prompt-extras")
   ;;     (setq eshell-highlight-prompt nil
-  ;; 	  eshell-prompt-function 'epe-theme-multiline-with-status)))
+  ;;    eshell-prompt-function 'epe-theme-multiline-with-status)))
 #+end_src
 
 ** esh-autosuggest
@@ -662,6 +662,7 @@ up pa
   ;; problem by manually importing the user's PATH variable and using it as the
   ;; value of Emacs exec-path variable.
   (use-package exec-path-from-shell
+    :demand t
     :config
     ;; Initialize the plugin, but only for macOS or Linux.
     (when (memq window-system '(mac ns x))
