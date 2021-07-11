@@ -107,5 +107,7 @@
        (dired-mode . org-download-enable)
        :init
        (setq-default org-download-image-dir
-         (file-truename (concat (getenv "HOME") "/images/org"))))
+         (file-truename (concat (getenv "HOME") "/images/org")))
+       :config
+       (make-directory org-download-image-dir t))
    #+end_src
