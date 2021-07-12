@@ -67,6 +67,7 @@ This is command becomes the selected Common Lisp interpreter."
       (lisp-mode . sly-mode)
       :bind
       (:map sly-prefix-map
+       ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
        ("C-n" . sly)
        ("C-q l" . sly-quit-lisp)
        ("C-q s" . sly-quit-sentinel)
