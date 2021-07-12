@@ -6,7 +6,15 @@
 #+tags:
 #+STARTUP: fold
 
-=snails= acts like =rofi= (Linux) or =searchlight= (Mac) for Emacs.
+=snails= acts like =rofi= (Linux) or =searchlight= (Mac) for Emacs. It is a
+fuzzy searching framework for nearly anything, from web browser history, to open
+buffers, to files on disk.
+
+*NOTE:* =snails= is /not/ ready for prime time. The author has not seen fit to
+create a MELPA package for it, and due to its odd composition, =straight.el=
+cannot build it correctly. The only way I've found to install it properly is to
+download the repository manually (or through =straight.el=) and point
+=load-path= at the repository's location.
 
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
