@@ -18,7 +18,8 @@ ELisp and other delimiter-heavy languages.
     :hook
     ;; Add mode hooks for rainbow-delimiters-mode
     ;; NOTE: Do NOT use prog-mode)!
-    ((emacs-lisp-mode
+    ((clojure-mode
+      emacs-lisp-mode
       haskell-mode
       lisp-mode
       sh-mode)

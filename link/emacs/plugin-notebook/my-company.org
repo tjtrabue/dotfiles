@@ -49,12 +49,13 @@ Needed for performance:
     (evil-define-key 'insert company-active-map (kbd "<return>")
       'company-complete-selection)
     ;; Vim-style keybindings for cycling through matches
-    (define-key company-active-map (kbd "C-j") #'(lambda ()
-       (interactive)
-       (company-complete-common-or-cycle 1)))
-    (define-key company-active-map (kbd "C-k") #'(lambda ()
-       (interactive)
-       (company-complete-common-or-cycle -1))))
+    (define-key company-active-map (kbd "C-j") (lambda ()
+      (interactive)
+      (company-complete-common-or-cycle 1)))
+    (define-key company-active-map (kbd "C-k") (lambda ()
+      (interactive)
+      (company-complete-common-or-cycle -1)))
+    (define-key company-active-map (kbd "C-l") #'company-complete))
 
   (defun my/company-complete-selection--advice-around (fn)
     "Advice execute around `company-complete-selection' command."
