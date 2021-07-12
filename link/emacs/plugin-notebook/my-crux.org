@@ -16,5 +16,9 @@
 * use package specification
 
   #+begin_src emacs-lisp :tangle yes
-    (use-package crux)
+    (use-package crux
+      :demand t
+      :config
+      ;; Automatically reopen any root-owned file as root.
+      (crux-reopen-as-root-mode))
   #+end_src

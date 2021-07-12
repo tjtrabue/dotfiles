@@ -1,0 +1,23 @@
+#+title:    Solaire: Distinguish Visited Buffers
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:11
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=solaire= is a plugin that gives "real" buffers -- that is, buffers for files
+that you visit -- a slightly different background than those buffers that are
+less "real", such as popups, terminals, sidebars, etc.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package solaire-mode
+      :hook
+      (after-init . solaire-global-mode))
+  #+end_src
