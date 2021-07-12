@@ -75,6 +75,8 @@ This is command becomes the selected Common Lisp interpreter."
       :custom
       ;; Set the program used to interact with Common Lisp.
       (inferior-lisp-program (my/get-inferior-lisp-program))
+      ;; The default Common Lisp implementation for SLY to fall back on.
+      (sly-default-lisp 'sbcl)
       ;; Allow better completions.
       (sly-complete-symbol-function 'sly-flex-completions))
   #+end_src
