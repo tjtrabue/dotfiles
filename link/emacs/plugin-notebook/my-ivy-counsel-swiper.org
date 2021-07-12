@@ -76,6 +76,7 @@ depending on =ivy= for their operations.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package all-the-icons-ivy
+    :after (all-the-icons ivy)
     :hook
     (after-init . all-the-icons-ivy-setup))
 #+end_src

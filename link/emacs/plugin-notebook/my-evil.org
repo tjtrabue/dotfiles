@@ -108,7 +108,9 @@ Needed for performance:
             ([remap evil-scroll-page-down] . evil-scroll-down)
             :map evil-insert-state-map
             ;; TAB key should insert spaces to next tab stop, like in Vim.
-            ("<tab>" . tab-to-tab-stop))
+            ("<tab>" . tab-to-tab-stop)
+            ;; Get rid of annoying evil-paste-from-register binding.
+            ("C-r" . nil))
       ;; NOTE: We must set all variables for evil-mode in evil-leader's
       ;;       use-package directive because it loads first, and it in turn
       ;;       loads evil mode.

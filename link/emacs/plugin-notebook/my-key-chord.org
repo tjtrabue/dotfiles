@@ -37,9 +37,8 @@ Needed for performance:
   (use-package key-chord
     :after (evil evil-collection)
     :hook
-    ;; Start key-chord-mode for all programming/text editing modes
-    ((prog-mode text-mode) . (lambda ()
-      (key-chord-mode 1)))
+    ;; Start key-chord-mode globally
+    (after-init . (lambda () (key-chord-mode 1)))
     :config
     ;; Revert back to normal mode with 'jk'
     ;; Have to use key-chord.el because define-key will keep us from
