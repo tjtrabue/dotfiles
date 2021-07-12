@@ -54,6 +54,8 @@ __install_roswell_generic() {
   local roswellGitUrl="https://github.com/roswell/roswell.git"
   local roswellGitBranch="release"
   local roswellRepo="${workspace}/roswell"
+  # Install roswell locally
+  local roswellInstallPrefix="${HOME}/.local"
 
   log_info "Installing roswell for generic *NIX systems"
 
@@ -62,11 +64,11 @@ __install_roswell_generic() {
   fi
 
   (
-    cd "${roswellRepo}"
-    sh bootstrap
-    ./configure
-    make
-    sudo make install
+    cd "${roswellRepo}" &&
+    sh bootstrap &&
+    ./configure --prefix="${roswellInstallPrefix}/" &&
+    make &&
+    make install &&
     ros setup
   )
 }
