@@ -6,42 +6,44 @@
 
 Projectile is a project management plugin for Emacs that helps you perform
 important coding actions at the project level. Such actions include searching
-for project files, searching for text, renaming files, etc.
+for project files, searching for text, renaming files, building and installing
+project artifacts, etc.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 * Variables
-#+begin_src emacs-lisp :tangle yes
-  (defvar default-ecb-source-path (list '("~/workspace" "Workspace")
-                  '("~/" "~/")
-                  '("/" "/"))
-    "Default directories for ECB mode. Useful for Projectile integration with
-ECB.")
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (defvar default-ecb-source-path (list '("~/workspace" "Workspace")
+                                          '("~/" "~/")
+                                          '("/" "/"))
+      "Default directories for ECB mode. Useful for Projectile integration with
+    ECB.")
+  #+end_src
 
-* projectile
-#+begin_src emacs-lisp :tangle yes
-  (use-package projectile
-    :demand t
-    :after (evil ivy)
-    :custom
-    ;; Use Ivy for projectile completion (can also use helm or ido).
-    (projectile-completion-system 'ivy)
-    ;; Make projects in workspace discovered automatically.
-    ;; The list is a space-separated collection of directory paths
-    ;; that projectile should use when searching for projects.
-    (projectile-project-search-path `(,my/workspace-dir))
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :bind
-    (:map evil-normal-state-map
-     ([remap evil-paste-pop] . projectile-find-file))
-    :config
-    ;; Add extra ignored directories here.
-    (add-to-list 'projectile-globally-ignored-directories my/straight-home-dir)
-    (projectile-mode 1))
-#+end_src
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package projectile
+      :after (evil ivy)
+      :hook
+      ;; Turn projectile on globally.
+      (after-init . projectile-mode)
+      :custom
+      ;; Use Ivy for projectile completion (can also use helm or ido).
+      (projectile-completion-system 'ivy)
+      ;; Make projects in workspace discovered automatically.
+      ;; The list is a space-separated collection of directory paths
+      ;; that projectile should use when searching for projects.
+      (projectile-project-search-path `(,my/workspace-dir))
+      :bind-keymap
+      ("C-c p" . projectile-command-map)
+      :bind
+      (:map evil-normal-state-map
+            ([remap evil-paste-pop] . projectile-find-file))
+      :config
+      ;; Add extra ignored directories here.
+      (add-to-list 'projectile-globally-ignored-directories
+        my/straight-home-dir))
+  #+end_src
