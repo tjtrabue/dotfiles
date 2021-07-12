@@ -18,13 +18,14 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
   (defun my/get-inferior-lisp-program ()
     "Return the shell command used to launch the `inferior-lisp-program'.
 This is command becomes the selected Common Lisp interpreter."
-    (let (;; Use Roswell CL manager if possible.
-          (path-to-ros (executable-find "ros"))
-          ;; Revert back to SBCL installation if nothing else available.
+    (let ((path-to-ros (executable-find "ros"))
           (path-to-sbcl (executable-find "sbcl")))
-      (if path-to-ros
-          (concat path-to-ros " run")
-        (concat path-to-sbcl))))
+      (cond (path-to-ros
+              ;; Use Roswell CL manager if possible.
+              (concat path-to-ros " run"))
+            (t
+              ;; Revert back to SBCL installation if nothing else available.
+              path-to-sbcl))))
 #+end_src
 
 * SLIME
