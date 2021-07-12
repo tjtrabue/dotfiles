@@ -1,4 +1,4 @@
-#+title:    dash.el: Modern API for Emacs
+#+title:    Crux: Collection of Ridiculously Useful eXtensions
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2021:07:11
@@ -6,14 +6,15 @@
 #+tags:
 #+STARTUP: fold
 
-=dash= provides modern functions and services for Emacs.
+=crux= is a collection of ridiculously useful extensions for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
 
   #+end_src
 
-* use-package specification
+* use package specification
+
   #+begin_src emacs-lisp :tangle yes
-    (use-package dash)
+    (use-package crux)
   #+end_src
