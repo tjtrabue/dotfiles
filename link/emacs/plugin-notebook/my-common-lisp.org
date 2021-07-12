@@ -53,7 +53,9 @@ This is command becomes the selected Common Lisp interpreter."
 
   Both SLIME and SLY are actively maintained, so which one you decide to use is
   a matter of preference. However, SLY's development team is far more dedicated
-  to timely bug fixes and support tickets than SLIME's team.
+  to timely bug fixes and support tickets than SLIME's team. SLY is also much
+  more feature-rich than SLIME, and has an absolutely beautiful system
+  architecture that allows it to adapt gracefully to new environments.
 
   The default key combination for =sly-prefix-map= is =C-c= by itself.
 
