@@ -14,8 +14,7 @@ install_roswell() {
       __install_roswell_arch_linux
       ;;
     *)
-      err "Cannot install roswell for OS: ${os}"
-      return 1
+      __install_roswell_generic
       ;;
   esac
 
@@ -39,12 +38,37 @@ install_common_lisp_lsp() {
 
 # Install roswell with homebrew.
 __install_roswell_mac() {
+  log_info "Installing roswell for macOS"
   brew install roswell
 }
 
 # Use the AUR helper to install roswell.
 __install_roswell_arch_linux() {
+  log_info "Installing roswell for Arch Linux from AUR"
   aurhinc roswell
+}
+
+# Generic installation instructions for roswell
+__install_roswell_generic() {
+  local workspace="${WS:-${HOME}/workspace}"
+  local roswellGitUrl="https://github.com/roswell/roswell.git"
+  local roswellGitBranch="release"
+  local roswellRepo="${workspace}/roswell"
+
+  log_info "Installing roswell for generic *NIX systems"
+
+  if [ ! -d "${roswellRepo}" ]; then
+    git clone -b "${roswellGitBranch}" "${roswellGitUrl}" "${roswellRepo}"
+  fi
+
+  (
+    cd "${roswellRepo}"
+    sh bootstrap
+    ./configure
+    make
+    sudo make install
+    ros setup
+  )
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
