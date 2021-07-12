@@ -55,12 +55,20 @@ This is command becomes the selected Common Lisp interpreter."
   a matter of preference. However, SLY's development team is far more dedicated
   to timely bug fixes and support tickets than SLIME's team.
 
+  The default key combination for =sly-prefix-map= is =C-c= by itself.
+
   #+begin_src emacs-lisp :tangle yes
     (use-package sly
       :commands sly
       :hook
       ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
       (lisp-mode . sly-mode)
+      :bind
+      (:map sly-prefix-map
+       ("C-n" . sly)
+       ("C-q l" . sly-quit-lisp)
+       ("C-q s" . sly-quit-sentinel)
+       ("C-q c" . sly-quit-connection-at-point))
       :custom
       ;; Set the program used to interact with Common Lisp.
       (inferior-lisp-program (my/get-inferior-lisp-program))
