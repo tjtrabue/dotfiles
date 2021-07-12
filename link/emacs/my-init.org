@@ -120,8 +120,6 @@ loads:
   #+begin_src emacs-lisp :tangle yes
     ;; My own font functions and definitions.
     (require 'my-font)
-    ;; My library used for managing external LISP programs.
-    (require 'my-inferior-lisp)
   #+end_src
 
 * Load Hotfix Modules
@@ -258,9 +256,6 @@ loads:
 
     ;; Show trailing whitespace characters by default.
     (setq-default show-trailing-whitespace t)
-
-    ;; Set the program used for interacting with Common Lisp.
-    (setq inferior-lisp-program (my-inferior-lisp-get-program))
 
     ;; This must be set to nil in order for evil-collection to replace
     ;; evil-integration in all important ways. This variable must be set

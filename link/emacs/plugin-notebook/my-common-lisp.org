@@ -13,6 +13,20 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
 
 #+end_src
 
+* Functions
+#+begin_src emacs-lisp :tangle yes
+  (defun my/get-inferior-lisp-program ()
+    "Return the shell command used to launch the `inferior-lisp-program'.
+This is command becomes the selected Common Lisp interpreter."
+    (let (;; Use Roswell CL manager if possible.
+          (path-to-ros (executable-find "ros"))
+          ;; Revert back to SBCL installation if nothing else available.
+          (path-to-sbcl (executable-find "sbcl")))
+      (if path-to-ros
+          (concat path-to-ros " run")
+        (concat path-to-sbcl))))
+#+end_src
+
 * SLIME
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
@@ -25,6 +39,8 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
       ((lisp-mode . slime-mode)
        (inferior-lisp-mode . inferior-slime-mode))
       :custom
+      ;; Set the program used to interact with Common Lisp.
+      (inferior-lisp-program (my/get-inferior-lisp-program))
       ;; Bring in almost every contributor package
       ;; (that's what slime-fancy does).
       (slime-contribs '(slime-fancy)))
@@ -45,6 +61,8 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
       ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
       (lisp-mode . sly-mode)
       :custom
+      ;; Set the program used to interact with Common Lisp.
+      (inferior-lisp-program (my/get-inferior-lisp-program))
       ;; Allow better completions.
       (sly-complete-symbol-function 'sly-flex-completions))
   #+end_src
