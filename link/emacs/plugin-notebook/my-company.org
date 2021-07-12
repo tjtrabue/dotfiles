@@ -109,7 +109,7 @@ optionally for extra modes"
     ;; Tweak company completion delay
     ;; WARNING: Setting this value too low could cause a huge performance
     ;;          bottleneck!
-    (company-idle-delay 0.01)
+    (company-idle-delay 0)
     ;; Start completing as soon as we begin typing.
     (company-minimum-prefix-length 1)
     ;; Change UI appearance of company
