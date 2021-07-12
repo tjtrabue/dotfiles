@@ -16,14 +16,18 @@
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package snails
-      ;; Disabled because it doesn't work
       :disabled
       ;; 6/11/2021: This package does not yet have an official release, and is
       ;; not yet hosted in Melpa.
       :straight
-      (snails :type git :host github :repo "manateelazycat/snails")
-      :commands (snails snails-search-point)
+      (snails :type git :host github :repo "manateelazycat/snails"
+              :files ("*"))
+      :demand t
+      ;; :commands (snails snails-search-point)
+      ;; :init
+      ;; (add-to-list 'load-path "~/.emacs.d/straight/repos/snails")
       :config
+      ;; (require 'snails)
       ;; Use custom backends to make Snails faster.
       (add-to-list 'snails-default-backends 'snails-backend-rg)
       (add-to-list 'snails-default-backends 'snails-backend-fd))
