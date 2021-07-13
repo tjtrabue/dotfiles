@@ -176,8 +176,8 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        ;; Allow better completions.
        (sly-complete-symbol-function 'sly-flex-completions)
        :config
-       ;; sly-mrepl-mode-map symbol is not available when use-package initializes
-       ;; sly, so :bind cannot be used to attach keybindings to
+       ;; sly-mrepl-mode-map symbol is not available when use-package
+       ;; initializes sly, so :bind cannot be used to attach keybindings to
        ;; sly-mrepl-mode-map.
        (with-eval-after-load 'sly-mrepl
          ;; History navigation.
