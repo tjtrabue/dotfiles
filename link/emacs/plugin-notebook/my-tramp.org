@@ -18,15 +18,26 @@ name looks always like =/method:user@host:/path/to/file=.
 You can use remote files exactly like ordinary files, that means you could open
 a file or directory by =C-x C-f /method:user@host:/path/to/file RET=, edit the
 file, and save it. You can also mix local files and remote files in file
-operations with two arguments, like copy-file or rename-file. And finally, you
-can run even processes on a remote host, when the buffer you call the process
-from has a remote default-directory.
+operations with two arguments, like =copy-file= or =rename-file=. And finally,
+you can run even processes on a remote host, when the buffer you call the
+process from has a remote =default-directory=.
  #+END_QUOTE
 
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
 
   #+end_src
+
+* Usage Notes
+** Using SSH and Plink
+   If your local host runs an SSH client, and the remote host runs an SSH
+   server, the simplest remote file name is =/ssh:user@host:/path/to/file=. The
+   remote file name =/ssh::= opens a remote connection to yourself on the local
+   host, and is taken often for testing TRAMP.
+
+   On MS Windows, PuTTY is often used as SSH client. Its =plink= method can be
+   used there to open a connection to a remote host running an ssh server:
+   =/plink:user@host:/path/to/file=.
 
 * Plugins
 ** docker-tramp
