@@ -226,3 +226,23 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
       (use-package sly-macrostep
         :after sly)
     #+end_src
+
+*** sly-named-readtables
+    Enables different =readtables= to be active in different parts of the same
+    file.
+
+    #+begin_src emacs-lisp :tangle yes
+      (use-package sly-named-readtables
+        :after sly)
+    #+end_src
+
+*** sly-repl-ansi-color
+    Adds ANSI color support to the SLY REPL.
+
+    #+begin_src emacs-lisp :tangle yes
+      (use-package sly-repl-ansi-color
+        :after sly
+        :demand t
+        :config
+        (add-to-list 'sly-contribs 'sly-repl-ansi-color))
+    #+end_src

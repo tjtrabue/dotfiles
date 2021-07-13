@@ -1,0 +1,45 @@
+#+title:    TRAMP: Interact with Remote Resources
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:13
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+TRAMP is Emacs' built-in system for interacting with non-local or unusual
+resources, such as files located on remote servers or even Docker containers.
+
+From the Emacs manual:
+
+ #+BEGIN_QUOTE
+TRAMP extends the Emacs file name syntax by a remote component. A remote file
+name looks always like =/method:user@host:/path/to/file=.
+
+You can use remote files exactly like ordinary files, that means you could open
+a file or directory by =C-x C-f /method:user@host:/path/to/file RET=, edit the
+file, and save it. You can also mix local files and remote files in file
+operations with two arguments, like copy-file or rename-file. And finally, you
+can run even processes on a remote host, when the buffer you call the process
+from has a remote default-directory.
+ #+END_QUOTE
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* Plugins
+** docker-tramp
+   Offers the TRAMP method =docker= for interacting with running Docker
+   containers.
+
+   Use =C-x C-f /docker:user@container:/path/to/file=, where =user= is the user
+   you want to use inside of the container (optional), and =container= is the
+   name of the container you want to access.
+
+   For example, if you want to access a Docker container as the root user:
+   =/sudo:root@localhost|docker:user@container:/path/to/file=
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package docker-tramp)
+   #+end_src
