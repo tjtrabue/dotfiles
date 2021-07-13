@@ -1,2 +1,7 @@
-rove
+# Please leave these lines in their respective order.
 sbcl-bin
+rove
+clhs
+# Language server packages
+cxxxr/lem
+cxxxr/cl-lsp

@@ -47,11 +47,9 @@ install_common_lisp_packages() {
     fi
   } &&
   {
-    log_info "Installing Common Lisp packages"
-    while read -r package || [ -n "${package}" ]; do
-      log_info "Installing package ${package}"
-      ros install "${package}"
-    done <"${COMMON_LISP_PACKAGES_FILE}"
+    log_info "Installing Common Lisp packages..."
+    install_packages_from_file_with_tool "ros install" \
+      "${COMMON_LISP_PACKAGES_FILE}"
   }
 }
 
