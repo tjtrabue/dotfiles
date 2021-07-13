@@ -36,6 +36,25 @@ install_common_lisp_lsp() {
   ros install cxxxr/lem cxxxr/cl-lsp
 }
 
+# Install all Common Lisp packages needed globally.
+install_common_lisp_packages() {
+  local package
+
+  {
+    if [ ! -x "$(command -v ros)" ]; then
+      warn "Roswell executable not found; installing"
+      install_roswell
+    fi
+  } &&
+  {
+    log_info "Installing Common Lisp packages"
+    while read -r package || [ -n "${package}" ]; do
+      log_info "Installing package ${package}"
+      ros install "${package}"
+    done <"${COMMON_LISP_PACKAGES_FILE}"
+  }
+}
+
 # Install roswell with homebrew.
 __install_roswell_mac() {
   log_info "Installing roswell for macOS"
