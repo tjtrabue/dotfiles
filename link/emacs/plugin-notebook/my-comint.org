@@ -1,0 +1,36 @@
+#+title:    COMINT: Generic REPL Mode
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:13
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=comint-mode= is a built-in, generic major mode for interacting with REPLs. Many
+other major modes inherit from =comint-mode=, such as =sly-mrepl-mode=.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+  #+end_src
+
+* use-package specification
+#+begin_src emacs-lisp :tangle yes
+  (use-package comint
+    :demand t
+    ;; This is a built-in feature, so we don't want to clone or install
+    ;; anything.
+    :ensure nil
+    :straight nil
+    :bind
+    (:map comint-mode-map
+     ("<normal-state> C-j" . comint-next-input)
+     ("<normal-state> C-k" . comint-previous-input)
+     ("<insert-state> C-j" . comint-next-input)
+     ("<insert-state> C-k" . comint-previous-input))
+    :custom
+    ;; Increase the comint buffer (e.g., history) size.
+    (comint-buffer-maximum-size 20000)
+    ;; Make the prompt read only.
+    (comint-prompt-read-only t))
+#+end_src

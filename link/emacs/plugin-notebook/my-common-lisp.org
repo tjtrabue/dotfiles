@@ -56,7 +56,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        (interactive)
        (ivy-read
         "History: "
-        (ring-elements comint-input-ring)
+        (reverse (ring-elements comint-input-ring))
         :action (lambda (e)
                   (insert e))))
 
@@ -155,7 +155,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
 ** use-package specification
    #+begin_src emacs-lisp :tangle yes
      (use-package sly
-       :after key-chord
+       :after (evil key-chord)
        :commands sly
        :hook
        ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
@@ -180,7 +180,18 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        ;; sly, so :bind cannot be used to attach keybindings to
        ;; sly-mrepl-mode-map.
        (with-eval-after-load 'sly-mrepl
+         ;; History navigation.
          (define-key sly-mrepl-mode-map (kbd "C-r") 'counsel-sly-mrepl-history)
+         (define-key sly-mrepl-mode-map (kbd "C-j") 'comint-next-input)
+         (define-key sly-mrepl-mode-map (kbd "C-k") 'comint-previous-input)
+         (define-key sly-mrepl-mode-map (kbd "<insert-state> C-j")
+           'comint-next-input)
+         (define-key sly-mrepl-mode-map (kbd "<insert-state> C-k")
+           'comint-previous-input)
+         (define-key sly-mrepl-mode-map (kbd "<normal-state> C-j")
+           'comint-next-input)
+         (define-key sly-mrepl-mode-map (kbd "<normal-state> C-k")
+           'comint-previous-input)
          ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
          (define-key sly-mrepl-mode-map (kbd ",") nil)
          ;; Define useful key-chords:
