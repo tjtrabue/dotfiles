@@ -97,22 +97,26 @@ This is command becomes the selected Common Lisp interpreter."
 
 ** Useful commands (many have a SLY equivalent)
    These commands can supercharge your workflow! Many of them have a SLY
-   equivalent, so be on the lookout for those analogs.
+   equivalent, so be sure to look for them using =C-h f=.
 
-  - =slime-who-*=
-  - =slime-eval-last-expression-in-repl= (=C-c C-j=)
-  - =slime-list-compiler-notes=
-  - =slime-export-symbol-at-point= (=C-c x=)
-  - =slime-export-class, slime-export-structure=
-  - =slime-trace-dialog-toggle-trace= (=C-c M-t=)
-  - =slime-inspect-definition=
-  - =slime-delete-system-fasls= (Useful when .fasls are out-of-sync)
-  - =slime-repl-clear-buffer= (=C-c M-o:= useful when =lispy= or =paredit= goes
-    berserk)
-  - =slime-profile-package=, then run the desired functions, then
-    =slime-profile-report=.
-  - =hyperspec-lookup-format= and =hyperspec-lookup-reader-macro=.
+   - =slime-who-*=
+   - =slime-eval-last-expression-in-repl= (=C-c C-j=)
+   - =slime-list-compiler-notes=
+   - =slime-export-symbol-at-point= (=C-c x=)
+   - =slime-export-class, slime-export-structure=
+   - =slime-trace-dialog-toggle-trace= (=C-c M-t=)
+   - =slime-inspect-definition=
+   - =slime-delete-system-fasls= (Useful when .fasls are out-of-sync)
+   - =slime-repl-clear-buffer= (=C-c M-o:= useful when =lispy= or =paredit= goes
+     berserk)
+   - =slime-profile-package=, then run the desired functions, then
+     =slime-profile-report=.
+   - =hyperspec-lookup-format= and =hyperspec-lookup-reader-macro=.
 
+   In particular, note that =slime-who-specializes= lists the methods of a given
+   class, which answers a common complaint coming from people used to languages
+   from the Algol family: the ability to complete the methods of the foo class
+   by typing =foo.<TAB>=.
 ** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package slime
