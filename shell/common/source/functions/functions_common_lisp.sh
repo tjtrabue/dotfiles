@@ -38,8 +38,6 @@ install_common_lisp_lsp() {
 
 # Install all Common Lisp packages needed globally.
 install_common_lisp_packages() {
-  local package
-
   {
     if [ ! -x "$(command -v ros)" ]; then
       warn "Roswell executable not found; installing"
