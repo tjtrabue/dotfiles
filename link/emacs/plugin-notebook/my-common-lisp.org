@@ -170,6 +170,11 @@ This is command becomes the selected Common Lisp interpreter."
     Enables editing of ASDF systems from SLY. ASDF is the de-facto standard
     build system for Common Lisp.
 
+    This plugin adds the =load-system= shortcut to the SLY REPL. When using this
+    shortcut, ASDF system compilation and load errors will be trapped and
+    recorded as with other sly compilation errors, as opposed to dumping into
+    the debugger like with calling =asdf:load-system= directly.
+
     #+begin_src emacs-lisp :tangle yes
       (use-package sly-asdf
         :after sly)
