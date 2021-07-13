@@ -95,6 +95,13 @@ This is command becomes the selected Common Lisp interpreter."
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
 
+  SLIME, although still powerful and semi-regularly updated, has conceded ground
+  in recent years to SLY, which is a fork of SLIME that has become the more
+  modern and feature-rich Common Lisp enhancement suite for Emacs (see my
+  section on SLY for more information and configuration). SLIME will most likely
+  remain in use for years to come, but in all likelihood SLY will overtake it as
+  the more relevant and useful plugin.
+
 ** Useful commands (many have a SLY equivalent)
    These commands can supercharge your workflow! Many of them have a SLY
    equivalent, so be sure to look for them using =C-h f=.
