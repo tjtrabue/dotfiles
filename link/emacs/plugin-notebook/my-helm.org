@@ -387,7 +387,7 @@ Needed for performance:
    #+begin_src emacs-lisp :tangle yes
      (use-package helm-sly
        ;; Currently disabled since the xref buffer is perfectly helpful.
-       :disable
+       :disabled
        :after (helm sly)
        :hook
        ((after-init . global-helm-sly-mode)
