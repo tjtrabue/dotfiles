@@ -120,6 +120,8 @@ loads:
   #+begin_src emacs-lisp :tangle yes
     ;; My own font functions and definitions.
     (require 'my-font)
+    ;; My custom window functions.
+    (require 'my-window)
   #+end_src
 
 * Load Hotfix Modules
@@ -371,7 +373,6 @@ loads:
      (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
      (global-set-key (kbd "S-C-j") 'enlarge-window)
      (global-set-key (kbd "S-C-k") 'shrink-window)
-
    #+end_src
 
 * Email
@@ -571,7 +572,7 @@ loads:
       (straight-rebuild-all)
       (straight-freeze-versions t))
 
-    (defun straight-pull-recipe-repositories ()
+    (defun my/straight-pull-recipe-repositories ()
       "Update all straight.el recipe repositories. This is a custom function that
         I defined in order to make my life easier.
         --tjtrabue"
@@ -765,7 +766,7 @@ loads:
            (with-no-warnings
              (load bootstrap-file nil 'nomessage))
            ;; Refresh package repositories
-           (straight-pull-recipe-repositories)
+           (my/straight-pull-recipe-repositories)
            ;; Default mode for loading packages: either defer or demand.
            ;; (setq use-package-always-demand t)
            (setq use-package-always-defer t)
