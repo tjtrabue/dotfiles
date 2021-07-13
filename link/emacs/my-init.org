@@ -373,6 +373,9 @@ loads:
      (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
      (global-set-key (kbd "S-C-j") 'enlarge-window)
      (global-set-key (kbd "S-C-k") 'shrink-window)
+
+     ;; 'C-x 5' turns vertically split frame into a horizontal split one.
+     (global-set-key (kbd "C-x 5") 'my-window-toggle-frame-split)
    #+end_src
 
 * Email
