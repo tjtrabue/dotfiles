@@ -188,10 +188,6 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
            'comint-next-input)
          (define-key sly-mrepl-mode-map (kbd "<insert-state> C-k")
            'comint-previous-input)
-         (define-key sly-mrepl-mode-map (kbd "<normal-state> C-j")
-           'comint-next-input)
-         (define-key sly-mrepl-mode-map (kbd "<normal-state> C-k")
-           'comint-previous-input)
          ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
          (define-key sly-mrepl-mode-map (kbd ",") nil)
          ;; Define useful key-chords:
