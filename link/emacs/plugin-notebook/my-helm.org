@@ -362,3 +362,36 @@ Needed for performance:
     ((cperl-mode perl-mode) . (lambda ()
       (helm-perldoc:setup))))
 #+end_src
+
+** helm-company
+   Helm mode for =company= completion system. This mode is not as useful as
+   company's default completion buffer since it does not integrate with
+   documentation on hover and other nice features.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package helm-company
+       ;; Not super useful, and it doesn't integrate with documentation on
+       ;; hover.
+       :disabled
+       :after (helm company)
+       :bind
+       (:map company-mode-map
+        ("C-;" . helm-company)
+        :map company-active-map
+        ("C-;" . helm-company)))
+   #+end_src
+** helm-sly
+   =helm= integration for =sly=, the newer Common Lisp IDE for Emacs superseding
+   SLIME.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package helm-sly
+       ;; Currently disabled since the xref buffer is perfectly helpful.
+       :disable
+       :after (helm sly)
+       :hook
+       ((after-init . global-helm-sly-mode)
+        (sly-mrepl . helm-sly-disable-internal-completion))
+       :custom
+       (helm-completion-in-region-fuzzy-match t))
+   #+end_src

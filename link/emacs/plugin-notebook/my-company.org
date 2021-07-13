@@ -28,7 +28,7 @@ Needed for performance:
   we set them in the =:bind= clause of its =use-package= specification.
 
 #+begin_src emacs-lisp :tangle yes
-  (defun set-company-keybindings ()
+  (defun my/set-company-keybindings ()
     "Used to get around problem with company keybindings not being set.
   For some horrible, unknown reason, company does not respect keybindings
   that go against its default keybindings in use-package syntax. For
@@ -96,7 +96,7 @@ optionally for extra modes"
      :map c++-mode-map
      ([(tab)] . company-complete))
     :hook
-    (company-mode . set-company-keybindings)
+    (company-mode . my/set-company-keybindings)
     :custom
     ;; Align annotation to the right side.
     (company-tooltip-align-annotations t)

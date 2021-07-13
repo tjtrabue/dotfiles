@@ -31,6 +31,9 @@ This is command becomes the selected Common Lisp interpreter."
 #+end_src
 
 ** sly-counsel integration functions
+   These functions were taken directly from [[https://mihaiolteanu.me/counsel-sly/][Mihai Olteanu's blog]].
+   Thank you so much for the your contributions, Mihai!
+
 #+begin_src emacs-lisp :tangle yes
   ;; Define functionality for interacting with the sly repl using counsel
   (defun counsel-sly-mrepl-shortcut ()
@@ -119,6 +122,7 @@ This is command becomes the selected Common Lisp interpreter."
 
   The default key combination for =sly-prefix-map= is =C-c= by itself.
 
+** use-package-specification
   #+begin_src emacs-lisp :tangle yes
     (use-package sly
       :after key-chord
@@ -158,3 +162,31 @@ This is command becomes the selected Common Lisp interpreter."
         (key-chord-define sly-mrepl-mode-map ",r"
           'sly-restart-inferior-lisp)))
   #+end_src
+
+** Plugins
+   Extra plugins for SLY.
+
+*** sly-asdf
+    Enables editing of ASDF systems from SLY. ASDF is the de-facto standard
+    build system for Common Lisp.
+
+    #+begin_src emacs-lisp :tangle yes
+      (use-package sly-asdf
+        :after sly)
+    #+end_src
+
+*** sly-quicklisp
+    Allows you to download dependencies via Quicklisp from inside SLY.
+
+    #+begin_src emacs-lisp :tangle yes
+      (use-package sly-quicklisp
+        :after sly)
+    #+end_src
+
+*** sly-macrostep
+    Expand macros right inside source files!
+
+    #+begin_src emacs-lisp :tangle yes
+      (use-package sly-macrostep
+        :after sly)
+    #+end_src
