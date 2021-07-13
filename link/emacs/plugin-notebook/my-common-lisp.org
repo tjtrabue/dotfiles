@@ -103,7 +103,7 @@ This is command becomes the selected Common Lisp interpreter."
    - =slime-eval-last-expression-in-repl= (=C-c C-j=)
    - =slime-list-compiler-notes=
    - =slime-export-symbol-at-point= (=C-c x=)
-   - =slime-export-class, slime-export-structure=
+   - =slime-export-class=, =slime-export-structure=
    - =slime-trace-dialog-toggle-trace= (=C-c M-t=)
    - =slime-inspect-definition=
    - =slime-delete-system-fasls= (Useful when .fasls are out-of-sync)
