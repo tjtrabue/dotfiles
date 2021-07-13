@@ -7,7 +7,8 @@
 #+STARTUP: fold
 
 TRAMP is Emacs' built-in system for interacting with non-local or unusual
-resources, such as files located on remote servers or even Docker containers.
+resources, such as files located on remote servers, modifying local files as
+root, or even Docker containers.
 
 From the Emacs manual:
 
@@ -28,8 +29,8 @@ process from has a remote =default-directory=.
 
   #+end_src
 
-* Usage Notes
-** Using SSH and Plink
+* Usage Notes from the Emacs Manual
+** =ssh= and =plink=
    If your local host runs an SSH client, and the remote host runs an SSH
    server, the simplest remote file name is =/ssh:user@host:/path/to/file=. The
    remote file name =/ssh::= opens a remote connection to yourself on the local
@@ -39,6 +40,32 @@ process from has a remote =default-directory=.
    used there to open a connection to a remote host running an ssh server:
    =/plink:user@host:/path/to/file=.
 
+** =su=, =sudo=, and =sg=
+   Sometimes, it is necessary to work on your local host under different
+   permissions. For this, you could use the =su= or =sudo= connection
+   method. Both methods use ‘root’ as default user name and the return value of
+   =(system-name)= as default host name. Therefore, it is convenient to open a
+   file as =/sudo::/path/to/file=.
+
+   The method =sg= stands for “switch group”; the changed group must be used
+   here as user name. The default host name is the same.
+** Combining =ssh= or =plink= with =su= or =sudo=
+   If the =su= or =sudo= option shall be performed on another host, it could be
+   combined with a leading =ssh= or =plink= option. That means, TRAMP connects
+   first to the other host with non-administrative credentials, and changes to
+   administrative credentials on that host afterwards. In a simple case, the
+   syntax looks like =/ssh:user@host|sudo::/path/to/file=.
+** =sudoedit=
+   The =sudoedit= method is similar to the =sudo= method. However, it is a
+   different implementation: it does not keep an open session running in the
+   background. This is for security reasons; on the backside this method is less
+   performant than the sudo method, it is restricted to the ‘localhost’ only,
+   and it does not support external processes.
+** =smbclient=
+   In order to access a remote MS Windows host or Samba server, the =smbclient=
+   client is used. The remote file name syntax is
+   =/smb:user%domain@host:/path/to/file=. The first part of the local file name
+   is the share exported by the remote host, ‘path’ in this example.
 * Plugins
 ** docker-tramp
    Offers the TRAMP method =docker= for interacting with running Docker
