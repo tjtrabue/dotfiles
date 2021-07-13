@@ -95,6 +95,25 @@ This is command becomes the selected Common Lisp interpreter."
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
 
+** Useful commands (many have a SLY equivalent)
+   These commands can supercharge your workflow! Many of them have a SLY
+   equivalent, so be on the lookout for those analogs.
+
+  - =slime-who-*=
+  - =slime-eval-last-expression-in-repl= (=C-c C-j=)
+  - =slime-list-compiler-notes=
+  - =slime-export-symbol-at-point= (=C-c x=)
+  - =slime-export-class, slime-export-structure=
+  - =slime-trace-dialog-toggle-trace= (=C-c M-t=)
+  - =slime-inspect-definition=
+  - =slime-delete-system-fasls= (Useful when .fasls are out-of-sync)
+  - =slime-repl-clear-buffer= (=C-c M-o:= useful when =lispy= or =paredit= goes
+    berserk)
+  - =slime-profile-package=, then run the desired functions, then
+    =slime-profile-report=.
+  - =hyperspec-lookup-format= and =hyperspec-lookup-reader-macro=.
+
+** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package slime
       :disabled
@@ -122,7 +141,7 @@ This is command becomes the selected Common Lisp interpreter."
 
   The default key combination for =sly-prefix-map= is =C-c= by itself.
 
-** use-package-specification
+** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package sly
       :after key-chord
@@ -134,6 +153,7 @@ This is command becomes the selected Common Lisp interpreter."
       (:map sly-prefix-map
        ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
        ("C-n" . sly)
+       ("C-h" . sly-documentation)
        ("C-q l" . sly-quit-lisp)
        ("C-q s" . sly-quit-sentinel)
        ("C-q c" . sly-quit-connection-at-point))
