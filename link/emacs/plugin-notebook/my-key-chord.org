@@ -9,33 +9,32 @@ which is a common task in Vim. Emacs tends to favor mapping a large combination
 of keys hit in unison, also known as key chords. The =key-chord= library
 provides functionality for achieving Vim-like key mappings within Emacs.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 * Variable definitions
-#+begin_src emacs-lisp :tangle yes
-  (defvar my/key-chord-config-file
-    (concat (file-name-sans-extension
-              (or load-file-name buffer-file-name)) ".org")
-    "The full path to the file containing my key-chord configuration.")
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (defvar my/key-chord-config-file
+      (concat (file-name-sans-extension
+               (or load-file-name buffer-file-name)) ".org")
+      "The full path to the file containing my key-chord configuration.")
+  #+end_src
 
 * Function definitions
 
-#+begin_src emacs-lisp :tangle yes
-  (defun rechord ()
-    "Re-load the my-key-chord config file to fix issues."
-    (interactive)
-    (org-babel-load-file my/key-chord-config-file))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (defun rechord ()
+      "Re-load the my-key-chord config file to fix issues."
+      (interactive)
+      (org-babel-load-file my/key-chord-config-file))
+  #+end_src
 
 * key-chord
-#+begin_src emacs-lisp :tangle yes
-  (use-package key-chord
-    :hook
-    ;; Start key-chord-mode globally
-    (after-init . (lambda () (key-chord-mode 1))))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (use-package key-chord
+      :hook
+      ;; Start key-chord-mode globally
+      (after-init . (lambda () (key-chord-mode 1))))
+  #+end_src

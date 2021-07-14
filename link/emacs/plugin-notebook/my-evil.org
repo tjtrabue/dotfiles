@@ -97,9 +97,7 @@ like Vim."
   #+begin_src emacs-lisp :tangle yes
     (use-package evil
       :after (evil-leader key-chord)
-      :hook
-      ;; Enable evil-mode globally
-      (after-init . evil-mode)
+      :demand t
       :bind
       (:map evil-normal-state-map
             ("H" . evil-window-top)
@@ -117,6 +115,8 @@ like Vim."
       ;;       use-package directive because it loads first, and it in turn
       ;;       loads evil mode.
       :config
+      ;; Enable evil-mode globally
+      (evil-mode 1)
       ;; Revert back to normal mode with 'jk'
       ;; Have to use key-chord.el because define-key will keep us from
       ;; ever typing 'j' as text since j will thitherto be a leader key in
