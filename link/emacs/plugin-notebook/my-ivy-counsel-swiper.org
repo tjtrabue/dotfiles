@@ -41,8 +41,8 @@ depending on =ivy= for their operations.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
+    :after (evil helm)
     :demand t
-    :after helm
     :bind*
     (:map ivy-switch-buffer-map
      ;; Make sure that navigation shortcuts work
@@ -55,7 +55,9 @@ depending on =ivy= for their operations.
      ("C-j" . ivy-next-line)
      ("C-k" . ivy-previous-line)
      ;; Use TAB to mark/unmark candidates
-     ("<tab>" . my/ivy-toggle-mark))
+     ("<tab>" . my/ivy-toggle-mark)
+     :map evil-normal-state-map
+     ("C-e" . ivy-switch-buffer))
     :custom
     ;; Keep the ivy completion buffer's height fixed.
     (ivy-fixed-height-minibuffer t)
