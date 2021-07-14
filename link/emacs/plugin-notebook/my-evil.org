@@ -242,11 +242,30 @@ like Vim."
    #+end_src
 
 ** evil-commentary
+   Code commenting plugin based on =vim-commentary= for Vim.
+
    #+begin_src emacs-lisp :tangle yes
-     ;; Use the incredible vim-commentary plugin
      (use-package evil-commentary
+       ;; Disabled in favor of evil-nerd-commenter
+       :disabled
        :demand t
        :config (evil-commentary-mode t))
+   #+end_src
+
+** evil-nerd-commenter
+   A very powerful code commenting plugin based on =NerdCommenter= for Vim.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package evil-nerd-commenter
+       :after evil
+       :bind*
+       (:map evil-normal-state-map
+        ("g c c" . evilnc-comment-or-uncomment-lines)
+        ("g c l" . evilnc-quick-comment-or-uncomment-to-the-line)
+        ("g c p" . evilnc-comment-or-uncomment-paragraphs)
+        :map evil-visual-state-map
+        ("g c" . evilnc-comment-or-uncomment-lines)
+        ("g C" . comment-or-uncomment-region)))
    #+end_src
 
 ** evil-mark-replace
