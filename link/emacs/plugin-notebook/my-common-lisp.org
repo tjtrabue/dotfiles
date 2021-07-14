@@ -91,6 +91,30 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
                              )))
    #+end_src
 
+** Set SLY MREPL keybindings
+   #+begin_src emacs-lisp :tangle yes
+     (defun my/set-sly-mrepl-keybindings ()
+       "Hook function for setting keybindings in SLY MREPL mode.
+Make sure to only run this function after 'sly-mrepl loads."
+       ;; History navigation.
+       (evil-define-key '(normal insert) sly-mrepl-mode-map
+         (kbd "C-r") 'counsel-sly-mrepl-history)
+       (evil-define-key 'insert sly-mrepl-mode-map
+         (kbd "C-j") 'comint-next-input
+         (kbd "C-k") 'comint-previous-input)
+       ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
+       (define-key sly-mrepl-mode-map (kbd ",") nil)
+       ;; Define useful key-chords:
+       (key-chord-define sly-mrepl-mode-map ",,"
+                         'counsel-sly-mrepl-shortcut)
+       (key-chord-define sly-mrepl-mode-map ",p"
+                         'sly-mrepl-set-package)
+       (key-chord-define sly-mrepl-mode-map ",i"
+                         'counsel-sly-package-internal-symbols)
+       (key-chord-define sly-mrepl-mode-map ",r"
+                        'sly-restart-inferior-lisp))
+   #+end_src
+
 * SLIME
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
@@ -159,7 +183,9 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        :commands sly
        :hook
        ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
-       (lisp-mode . sly-mode)
+       ((lisp-mode . sly-mode)
+        ;; Set keybindings for the REPL
+        (sly-mrepl-mode . my/set-sly-mrepl-keybindings))
        :bind
        (:map sly-prefix-map
              ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
@@ -174,29 +200,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        ;; The default Common Lisp implementation for SLY to fall back on.
        (sly-default-lisp 'sbcl)
        ;; Allow better completions.
-       (sly-complete-symbol-function 'sly-flex-completions)
-       :config
-       ;; sly-mrepl-mode-map symbol is not available when use-package
-       ;; initializes sly, so :bind cannot be used to attach keybindings to
-       ;; sly-mrepl-mode-map.
-       (with-eval-after-load 'sly-mrepl
-         ;; History navigation.
-         (evil-define-key '(normal insert) sly-mrepl-mode-map
-           (kbd "C-r") 'counsel-sly-mrepl-history)
-         (evil-define-key 'insert sly-mrepl-mode-map
-           (kbd "C-j") 'comint-next-input
-           (kbd "C-k") 'comint-previous-input)
-         ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
-         (define-key sly-mrepl-mode-map (kbd ",") nil)
-         ;; Define useful key-chords:
-         (key-chord-define sly-mrepl-mode-map ",,"
-                           'counsel-sly-mrepl-shortcut)
-         (key-chord-define sly-mrepl-mode-map ",p"
-                           'sly-mrepl-set-package)
-         (key-chord-define sly-mrepl-mode-map ",i"
-                           'counsel-sly-package-internal-symbols)
-         (key-chord-define sly-mrepl-mode-map ",r"
-                           'sly-restart-inferior-lisp)))
+       (sly-complete-symbol-function 'sly-flex-completions))
    #+end_src
 
 ** Plugins
