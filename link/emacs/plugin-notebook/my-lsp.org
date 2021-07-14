@@ -64,10 +64,12 @@ Needed for performance:
       ;;; clangd
       ;; Make sure to use all processor cores, and to report warnings.
       (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
-                                 "--background-index" "--log=error"
+                                 "--background-index"
+                                 "--log=error"
+                                 "--completion-style=bundled"
+                                 "--pch-storage=memory"
                                  "--clang-tidy"
-                                 "--header-insertion-decorators"
-                                 "--suggest-missing-includes"))
+                                 "--header-insertion-decorators=0"))
       (lsp-clients-clangd-executable (executable-find "clangd"))
       ;;; lua-language-server
       ;; lsp-mode can try to install lua-language-server automatically, but

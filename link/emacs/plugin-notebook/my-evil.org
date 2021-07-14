@@ -263,6 +263,7 @@ like Vim."
         ("g c c" . evilnc-comment-or-uncomment-lines)
         ("g c l" . evilnc-quick-comment-or-uncomment-to-the-line)
         ("g c p" . evilnc-comment-or-uncomment-paragraphs)
+        ("g c r" . comment-or-uncomment-region)
         :map evil-visual-state-map
         ("g c" . evilnc-comment-or-uncomment-lines)
         ("g C" . comment-or-uncomment-region)))
