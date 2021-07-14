@@ -15,7 +15,7 @@ is similar to =vim-endwise=.
 
   #+end_src
 
-* Notes on smartparens-mode and smartparens-strict-mode
+* Notes on =smartparens-mode= and =smartparens-strict-mode=
 This package contains two minor modes for managing delimiters:
 =smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not
 enforce balanced delimiters, whereas =smartparens-strict-mode= does.
@@ -25,8 +25,5 @@ enforce balanced delimiters, whereas =smartparens-strict-mode= does.
 #+begin_src emacs-lisp :tangle yes
   (use-package smartparens
     :hook
-    (prog-mode . smartparens-mode)
-    :config
-    ;; Load the default configuration for smartparens after the plugin loads.
-    (require 'smartparens-config))
+    (after-init . smartparens-mode))
 #+end_src

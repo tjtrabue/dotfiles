@@ -1,0 +1,31 @@
+#+title:    Automatically Keep Code Indented
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:14
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=aggressive-indent-mode= is an enhancement on =electric-indent-mode= that keeps
+your indentation consistent as you manipulate code blocks. Be warned: It is
+aggressive, and as such will not allow you to violate it's consistency
+guidelines as long as the mode is active. This can get annoying if you value
+flexibility in code style over consistency.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package aggressive-indent
+      :hook
+      ;; Probably don't want to enable aggressive-indent mode globally.
+      ;; It's helpful, but it doesn't play nicely with automatic code
+      ;; formatters.
+      ((clojure-mode
+        emacs-lisp-mode
+        lisp-mode)
+       . aggressive-indent-mode))
+  #+end_src
