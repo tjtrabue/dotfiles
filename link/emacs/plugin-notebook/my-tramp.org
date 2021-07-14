@@ -81,3 +81,25 @@ process from has a remote =default-directory=.
    #+begin_src emacs-lisp :tangle yes
      (use-package docker-tramp)
    #+end_src
+
+** kubernetes-tramp
+   =kubernetes-tramp= offers a TRAMP method for Docker containers deployed in a
+   Kubernetes cluster.
+
+  =C-x C-f /kubectl:container:/path/to/file=
+
+  where =container= is the name of the container.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package kubernetes-tramp)
+   #+end_src
+
+** vagrant-tramp
+   =vagrant-tramp= adds an Emacs TRAMP method for Vagrant boxes. As far as
+   Vagrant is concerned, the TRAMP =vagrant= method behaves like the built-in
+   =vagrant ssh= command does. The =vagrant-tramp= method simply provides
+   auto-completion and a wrapper around =vagrant ssh= for connecting to boxes.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package vagrant-tramp)
+   #+end_src

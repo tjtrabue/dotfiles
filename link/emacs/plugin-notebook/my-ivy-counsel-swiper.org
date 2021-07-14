@@ -137,6 +137,13 @@ depending on =ivy= for their operations.
     (counsel-projectile-mode))
 #+end_src
 
+*** counsel-tramp
+   #+begin_src emacs-lisp :tangle yes
+     (use-package counsel-tramp
+       :bind
+       ("M-r" . counsel-tramp))
+   #+end_src
+
 * Swiper
   =swiper= is a narrowing search tool which serves as an alternative to
   =isearch=.
