@@ -50,8 +50,8 @@ Needed for performance:
        (defhydra hydra-resize-window (evil-normal-state-map "C-]")
          "Resize window with VI keys"
          ("h" shrink-window-horizontally "shrink horizontally")
-         ("j" enlarge-window "enlarge vertically")
-         ("k" shrink-window "shrink vertically")
+         ("j" shrink-window "shrink vertically")
+         ("k" enlarge-window "enlarge vertically")
          ("l" enlarge-window-horizontally "enlarge horizontally")))
    #+end_src
 
