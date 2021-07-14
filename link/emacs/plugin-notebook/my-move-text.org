@@ -6,19 +6,21 @@
 
 Move lines of text up and down with the =move-text= package.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
-(use-package move-text
-  :after (evil)
-  :config
-  (move-text-default-bindings)
-  (define-key evil-normal-state-map (kbd "M-k") 'move-text-up)
-  (define-key evil-normal-state-map (kbd "M-j") 'move-text-down)
-  (define-key evil-visual-state-map (kbd "M-k") 'move-text-region-up)
-  (define-key evil-visual-state-map (kbd "M-j") 'move-text-region-down))
+  (use-package move-text
+    :after evil
+    :hook
+    (after-init . move-text-default-bindings)
+    :bind
+    (:map evil-normal-state-map
+     ("M-j" . move-text-down)
+     ("M-k" . move-text-up)
+    :map evil-visual-state-map
+     ("M-j" . move-text-region-down)
+     ("M-k" . move-text-region-up)))
 #+end_src
