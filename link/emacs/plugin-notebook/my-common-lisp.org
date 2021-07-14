@@ -181,7 +181,8 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        ;; sly-mrepl-mode-map.
        (with-eval-after-load 'sly-mrepl
          ;; History navigation.
-         (define-key sly-mrepl-mode-map (kbd "C-r") 'counsel-sly-mrepl-history)
+         (evil-define-key '(normal insert) sly-mrepl-mode-map
+           (kbd "C-r") 'counsel-sly-mrepl-history)
          (evil-define-key 'insert sly-mrepl-mode-map
            (kbd "C-j") 'comint-next-input
            (kbd "C-k") 'comint-previous-input)
