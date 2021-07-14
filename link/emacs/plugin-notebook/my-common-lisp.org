@@ -105,14 +105,14 @@ Make sure to only run this function after 'sly-mrepl loads."
        ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
        (define-key sly-mrepl-mode-map (kbd ",") nil)
        ;; Define useful key-chords:
-       (key-chord-define sly-mrepl-mode-map ",,"
-                         'counsel-sly-mrepl-shortcut)
-       (key-chord-define sly-mrepl-mode-map ",p"
-                         'sly-mrepl-set-package)
-       (key-chord-define sly-mrepl-mode-map ",i"
-                         'counsel-sly-package-internal-symbols)
-       (key-chord-define sly-mrepl-mode-map ",r"
-                        'sly-restart-inferior-lisp))
+       (evil-leader/set-key-for-mode 'sly-mrepl-mode ","
+         'counsel-sly-mrepl-shortcut)
+       (evil-leader/set-key-for-mode 'sly-mrepl-mode "p"
+         'sly-mrepl-set-package)
+       (evil-leader/set-key-for-mode 'sly-mrepl-mode "i"
+         'counsel-sly-package-internal-symbols)
+       (evil-leader/set-key-for-mode 'sly-mrepl-mode "r"
+         'sly-restart-inferior-lisp))
    #+end_src
 
 * SLIME
@@ -179,7 +179,7 @@ Make sure to only run this function after 'sly-mrepl loads."
 ** use-package specification
    #+begin_src emacs-lisp :tangle yes
      (use-package sly
-       :after (evil key-chord)
+       :after evil
        :commands sly
        :hook
        ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
