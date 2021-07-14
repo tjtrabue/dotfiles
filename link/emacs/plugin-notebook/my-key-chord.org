@@ -35,18 +35,7 @@ Needed for performance:
 * key-chord
 #+begin_src emacs-lisp :tangle yes
   (use-package key-chord
-    :after (evil evil-collection)
     :hook
     ;; Start key-chord-mode globally
-    (after-init . (lambda () (key-chord-mode 1)))
-    :config
-    ;; Revert back to normal mode with 'jk'
-    ;; Have to use key-chord.el because define-key will keep us from
-    ;; ever typing 'j' as text since j will thitherto be a leader key in
-    ;; evil-insert-state-mode.
-    (let ((revert-to-normal "jk"))
-      (key-chord-define evil-insert-state-map revert-to-normal
-                        'evil-normal-state)
-      (key-chord-define evil-replace-state-map revert-to-normal
-                        'evil-normal-state)))
+    (after-init . (lambda () (key-chord-mode 1))))
 #+end_src

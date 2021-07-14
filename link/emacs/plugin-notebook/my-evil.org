@@ -41,10 +41,10 @@ Needed for performance:
           (evil-define-operator my-evil-join (beg end)
             "Join the selected lines. Based on blaenk/dots on GitHub.
 
-    This custom version of `evil-join' handles joining commented
-    lines more handily than evil's default J operator, removing
-    leading comment designators. In that sense, it behaves far more
-    like Vim."
+This custom version of `evil-join' handles joining commented
+lines more handily than evil's default J operator, removing
+leading comment designators. In that sense, it behaves far more
+like Vim."
             :motion evil-line
             (let* ((count (count-lines beg end))
                    ;; we join pairs at a time
@@ -96,8 +96,10 @@ Needed for performance:
 
   #+begin_src emacs-lisp :tangle yes
     (use-package evil
-      :demand t
-      :after evil-leader
+      :after (evil-leader key-chord)
+      :hook
+      ;; Enable evil-mode globally
+      (after-init . evil-mode)
       :bind
       (:map evil-normal-state-map
             ("H" . evil-window-top)
@@ -114,13 +116,20 @@ Needed for performance:
       ;; NOTE: We must set all variables for evil-mode in evil-leader's
       ;;       use-package directive because it loads first, and it in turn
       ;;       loads evil mode.
-      ;; :init
       :config
+      ;; Revert back to normal mode with 'jk'
+      ;; Have to use key-chord.el because define-key will keep us from
+      ;; ever typing 'j' as text since j will thitherto be a leader key in
+      ;; evil-insert-state-mode.
+      (let ((revert-to-normal "jk"))
+        (key-chord-define evil-insert-state-map revert-to-normal
+                          'evil-force-normal-state)
+        (key-chord-define evil-replace-state-map revert-to-normal
+                          'evil-force-normal-state))
       (my/define-custom-evil-operators)
       (my/add-evil-advice)
       ;; Use custom "J" command that removes leading comment designators.
-      (define-key evil-normal-state-map [remap evil-join] 'my-evil-join)
-      (evil-mode 1))
+      (define-key evil-normal-state-map [remap evil-join] 'my-evil-join))
   #+end_src
 
 * Plugins
