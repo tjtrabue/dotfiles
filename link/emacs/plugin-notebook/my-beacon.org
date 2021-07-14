@@ -17,5 +17,8 @@ around a window. Very pretty and very helpful.
   (use-package beacon
     :hook
     ;; Enable beacon globally.
-    (after-init . beacon-mode))
+    (after-init . beacon-mode)
+    :custom
+    ;; Make beacon color match cursor color.
+    (beacon-color (face-attribute 'cursor :background)))
 #+end_src
