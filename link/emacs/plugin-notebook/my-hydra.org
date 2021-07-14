@@ -19,7 +19,7 @@ the contents of the selected paste register would be pasted at point.
 
 Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
@@ -31,23 +31,43 @@ Needed for performance:
    for creating more complex specimens. All that =hydra-zoom= accomplishes is
    defining a zoom in/out hydra for the global keymap.
 
-#+begin_src emacs-lisp :tangle yes
-       ;; Check spelling as you type.
-       (flyspell-mode 1)
-  (defun define-hydra-zoom ()
-    "Wrapper function for defhydra hydra-zoom"
+   #+begin_src emacs-lisp :tangle yes
+     (defun my/define-hydra-zoom ()
+       "Wrapper function for defhydra hydra-zoom"
 
-    (defhydra hydra-zoom (global-map "C-*")
-    "Zoom in/out in the current window:"
-    ("k" text-scale-increase "in")
-    ("j" text-scale-decrease "out")))
-#+end_src
+       (defhydra hydra-zoom (global-map "C-*")
+         "Zoom in/out in the current window:"
+         ("k" text-scale-increase "in")
+         ("j" text-scale-decrease "out")))
+   #+end_src
 
-* use-package macro
+** hydra-resize-window
+   This hydra resizes the current window using VI keys.
 
-#+begin_src emacs-lisp :tangle yes
-(use-package hydra
-  :after (evil evil-collection)
-  :config
-  (define-hydra-zoom))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (defun my/define-hydra-resize-window ()
+       "Wrapper function for defhydra hydra-resize-window."
+       (defhydra hydra-resize-window (evil-normal-state-map "C-]")
+         "Resize window with VI keys"
+         ("h" shrink-window-horizontally "shrink horizontally")
+         ("j" enlarge-window "enlarge vertically")
+         ("k" shrink-window "shrink vertically")
+         ("l" enlarge-window-horizontally "enlarge horizontally")))
+   #+end_src
+
+* Activate hydras
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/define-hydras ()
+      "Load custom hydra definitions."
+      (interactive)
+      (my/define-hydra-zoom)
+      (my/define-hydra-resize-window))
+  #+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package hydra
+      :after evil-collection
+      :hook
+      (after-init . my/define-hydras))
+  #+end_src
