@@ -57,6 +57,8 @@ depending on =ivy= for their operations.
      ;; Use TAB to mark/unmark candidates
      ("<tab>" . my/ivy-toggle-mark)
      :map evil-normal-state-map
+     ("C-e" . ivy-switch-buffer)
+     :map evil-insert-state-map
      ("C-e" . ivy-switch-buffer))
     :custom
     ;; Keep the ivy completion buffer's height fixed.

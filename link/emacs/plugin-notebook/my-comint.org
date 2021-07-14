@@ -6,31 +6,38 @@
 #+tags:
 #+STARTUP: fold
 
-=comint-mode= is a built-in, generic major mode for interacting with REPLs. Many
-other major modes inherit from =comint-mode=, such as =sly-mrepl-mode=.
+=comint-mode= (which stands for "Command Interpreter") is a built-in, generic
+framework for designing modes for interacting with REPLs. Many other major modes
+inherit from =comint-mode=, such as =sly-mrepl-mode=.
 
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
 
   #+end_src
 
+* Functions
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/set-comint-keybindings ()
+      "Set evil keybindings for `comint-mode'."
+      (evil-define-key 'insert comint-mode-map
+        (kbd "C-j") 'comint-next-input
+        (kbd "C-k") 'comint-previous-input))
+  #+end_src
+
 * use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package comint
+    :after evil
     :demand t
     ;; This is a built-in feature, so we don't want to clone or install
     ;; anything.
     :ensure nil
     :straight nil
-    :bind
-    (:map comint-mode-map
-     ("<normal-state> C-j" . comint-next-input)
-     ("<normal-state> C-k" . comint-previous-input)
-     ("<insert-state> C-j" . comint-next-input)
-     ("<insert-state> C-k" . comint-previous-input))
     :custom
     ;; Increase the comint buffer (e.g., history) size.
     (comint-buffer-maximum-size 20000)
     ;; Make the prompt read only.
-    (comint-prompt-read-only t))
+    (comint-prompt-read-only t)
+    :config
+    (my/set-comint-keybindings))
 #+end_src
