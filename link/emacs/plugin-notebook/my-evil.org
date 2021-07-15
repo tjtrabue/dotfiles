@@ -202,6 +202,12 @@ like Vim."
          "tm" 'treemacs
          ;; undo-tree
          "ut" 'undo-tree-visualize)
+       ;; Leader shortcuts for dired-mode.
+       (evil-leader/set-key-for-mode 'dired-mode
+         "dC" 'dired-do-copy-regexp
+         "dM" 'dired-mark-files-regexp
+         "dR" 'dired-do-rename-regexp
+         "dS" 'dired-do-symlink-regexp)
        (global-evil-leader-mode 1))
    #+end_src
 

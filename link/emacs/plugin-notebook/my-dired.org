@@ -19,7 +19,9 @@ Needed for performance:
 * dired+
   Use the improved =dired+= plugin for a better =dired= experience.
 
-  *NOTE:* =dired+= is super slow, so you probably don't want to use it.
+  *NOTE:* =dired+= is super slow, so you probably don't want to use
+  it. =dired-hacks= is a more suitable suite of enhancements for most
+  developers.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package dired+
@@ -32,13 +34,13 @@ Needed for performance:
 #+end_src
 
 * peep-dired
-  Preview files in =dired=.
+  Preview files if a peep window.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package peep-dired
-    :bind
+    :bind*
     (:map dired-mode-map
-     ("P" . peep-dired)))
+     ([remap dired-do-print] . peep-dired)))
 #+end_src
 * dired-k
   Highlight =dired= buffers with Git information. Inspired by the =k= package
