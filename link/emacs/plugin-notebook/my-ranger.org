@@ -1,0 +1,23 @@
+#+title:    Ranger File Manager for Emacs
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:15
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=ranger= is an amazing file manager for UNIX terminals. This plugin brings the
+magic of =ranger= into Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package ranger
+      ;; Too slow to be useful.
+      :disabled
+      :commands ranger)
+  #+end_src

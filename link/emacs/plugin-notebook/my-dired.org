@@ -19,9 +19,12 @@ Needed for performance:
 * dired+
   Use the improved =dired+= plugin for a better =dired= experience.
 
+  *NOTE:* =dired+= is super slow, so you probably don't want to use it.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package dired+
-    :after dired
+    ;; Too slow to be useful.
+    :disabled
     :hook
     (dired-mode . (lambda ()
       ;; Reuse a single dired buffer for each directory visited.
@@ -33,9 +36,9 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package peep-dired
-    :after (dired)
-    :bind (:map dired-mode-map
-           ("P" . peep-dired)))
+    :bind
+    (:map dired-mode-map
+     ("P" . peep-dired)))
 #+end_src
 * dired-k
   Highlight =dired= buffers with Git information. Inspired by the =k= package
@@ -43,9 +46,56 @@ Needed for performance:
 
   #+begin_src emacs-lisp :tangle yes
     (use-package dired-k
-      :after dired
       :hook
       ;; Always activate dired-k when dired buffer opens.
       ((dired-initial-position . dired-k)
        (dired-after-readin . dired-k-no-revert)))
+  #+end_src
+
+* dired-hacks
+  =dired=hacks= is a collection of =dired= enhancements that aims to be more
+  modular and less bulky than =dired+=.
+
+  *NOTE:* You *must* require each "hack" plugin individually! You cannot specify
+  a =use-package= macro for the entire =dired-hacks= repository. It was designed
+  this way on purpose.
+
+** dired-filter
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-filter)
+  #+end_src
+
+** dired-avfs
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-avfs)
+  #+end_src
+
+** dired-open
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-open)
+  #+end_src
+
+** dired-rainbow
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-rainbow)
+  #+end_src
+
+** dired-subtree
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-subtree)
+  #+end_src
+
+** dired-ranger
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-ranger)
+  #+end_src
+
+** dired-narrow
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-narrow)
+  #+end_src
+
+** dired-collapse
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-collapse)
   #+end_src

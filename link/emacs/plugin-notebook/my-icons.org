@@ -39,7 +39,6 @@ Needed for performance:
   Use =all-the-icons= in =dired= mode, too.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Use fancy icons in dired-mode
   (use-package all-the-icons-dired
     :demand t
     :after all-the-icons

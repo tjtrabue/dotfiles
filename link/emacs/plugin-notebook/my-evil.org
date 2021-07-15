@@ -123,9 +123,9 @@ like Vim."
       ;; evil-insert-state-mode.
       (let ((revert-to-normal "jk"))
         (key-chord-define evil-insert-state-map revert-to-normal
-                          'evil-force-normal-state)
+                          'evil-normal-state)
         (key-chord-define evil-replace-state-map revert-to-normal
-                          'evil-force-normal-state))
+                          'evil-normal-state))
       (my/define-custom-evil-operators)
       (my/add-evil-advice)
       ;; Use custom "J" command that removes leading comment designators.
