@@ -391,5 +391,8 @@ like Vim."
              ("<normal-state> [" . nil)
              ("<normal-state> ]" . nil)
              ("<normal-state> <" . nil)
-             ("<normal-state> >" . nil)))
+             ("<normal-state> >" . nil))
+       :config
+       ;; Highlight yanked text in lispy-mode.
+       (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice))
    #+end_src
