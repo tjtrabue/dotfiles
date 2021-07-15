@@ -88,6 +88,10 @@ Needed for performance:
   #+begin_src emacs-lisp :tangle yes
     (use-package dired-subtree
       :after evil-collection
+      :bind*
+      (:map dired-mode-map
+       ("<tab>". dired-subtree-toggle)
+       ("<backtab>" . dired-subtree-cycle))
       :hook
       (dired-mode . (lambda ()
         (evil-leader/set-key-for-mode 'dired-mode "dsi"
@@ -172,18 +176,14 @@ Needed for performance:
     (use-package dired-ranger
       :bind*
       (:map dired-mode-map
-       ([remap dired-do-copy] . dired-ranger-copy)
-       ([remap dired-do-rename] . dired-ranger-move)
-       ;; We don't do much printing these days.
-       ([remap dired-do-print] . dired-ranger-paste)
-       ;; Use lesser used keybindings for ranger bookmark commands.
-       ([remap dired-do-byte-compile] . dired-ranger-bookmark)
-       ([remap dired-do-hardlink] . dired-ranger-bookmark-visit)))
+       ("C-c C-c" . dired-ranger-copy)
+       ("C-c C-p" . dired-ranger-paste)
+       ("C-c C-m" . dired-ranger-move)
+       ("C-c C-b m" . dired-ranger-bookmark)
+       ("C-c C-b v" . dired-ranger-bookmark-visit)))
   #+end_src
 
 ** dired-collapse
   #+begin_src emacs-lisp :tangle yes
-    (use-package dired-collapse
-      :hook
-      (dired-mode . dired-collapse-mode))
+    (use-package dired-collapse)
   #+end_src
