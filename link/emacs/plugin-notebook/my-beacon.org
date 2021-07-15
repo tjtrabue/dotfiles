@@ -15,10 +15,7 @@ around a window. Very pretty and very helpful.
 * use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package beacon
-    :hook
+    :demand t
     ;; Enable beacon globally.
-    (after-init . beacon-mode)
-    :custom
-    ;; Make beacon color match cursor color.
-    (beacon-color (face-attribute 'cursor :background)))
+    :hook (after-init . beacon-mode))
 #+end_src

@@ -14,61 +14,93 @@ do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
 
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
 * Provide Package
-#+begin_src emacs-lisp :tangle yes
-  (provide 'my-theme)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (provide 'my-theme)
+  #+end_src
 
 * Variables
-#+begin_src emacs-lisp :tangle yes
-  (defvar my-theme-after-load-hook nil
-    "Functions to run after the primary theme loads.")
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (defvar my/theme-after-load-hook nil
+      "Functions to run after the main theme activates.
+Please do not make this hook run as advice to `load-theme' because
+it will end up in an infinite loop due to the need to load the
+`org-beautify-theme' after the main theme. Thus, it will call `load-theme'
+automatically after it calls `load-theme' for all eternity.")
+  #+end_src
 
 * Functions
 
-#+begin_src emacs-lisp :tangle yes
-  (defun my/set-color-theme-alist (theme-alist &optional sublist)
-    "Sets `my/color-theme-alist' to the specified THEME-ALIST.
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/set-color-theme-alist (theme-alist &optional sublist)
+      "Sets `my/color-theme-alist' to the specified THEME-ALIST.
 
 If the user specifies SUBLIST as the name of a nested alist within
 THEME-ALIST, then use that nested SUBLIST as the main theme alist."
-    (require 'my-colors)
-    (let ((the-right-alist theme-alist))
-      (if sublist
-          (setq the-right-alist (cdr (assq sublist theme-alist))))
-      (setq my/color-theme-alist the-right-alist)))
+      (require 'my-colors)
+      (let ((the-right-alist theme-alist))
+        (if sublist
+            (setq the-right-alist (cdr (assq sublist theme-alist))))
+        (setq my/color-theme-alist the-right-alist)))
 
-  (defun my/set-semantic-colors-for-theme ()
-    "Make Semantic's faces match our theme."
-    (set-face-attribute 'semantic-tag-boundary-face nil :overline
-      (alist-get 'purple my/color-theme-alist)))
+    (defun my/set-semantic-colors-for-theme ()
+      "Make Semantic's faces match our theme."
+      (set-face-attribute 'semantic-tag-boundary-face nil :overline
+                          (alist-get 'purple my/color-theme-alist)))
 
-  (defun my/set-ecb-colors-for-theme ()
-    "Make some of the faces in ECB cohesive with our color theme."
-    (set-face-attribute 'ecb-default-highlight-face nil
-      :foreground (alist-get 'alt-background my/color-theme-alist)
-      :background (alist-get 'orange my/color-theme-alist)
-      :weight 'extra-bold))
-#+end_src
+    (defun my/set-ecb-colors-for-theme ()
+      "Make some of the faces in ECB cohesive with our color theme."
+      (set-face-attribute 'ecb-default-highlight-face nil
+                          :foreground (alist-get 'alt-background my/color-theme-alist)
+                          :background (alist-get 'orange my/color-theme-alist)
+                          :weight 'extra-bold))
+
+    (defun my/activate-theme--doom ()
+      "Activation/configuration function for doom theme."
+      (load-theme 'doom-vibrant t)
+      ;; Flash the modeline when the Emacs bell rings.
+      ;; (doom-themes-visual-bell-config)
+      ;; Two treemacs icon themes: one that takes after Atom's themes, and
+      ;; another more colorful theme.
+      (doom-themes-treemacs-config)
+      ;; Correct and improve some of org-mode's native fontification.
+      (doom-themes-org-config))
+
+    (defun my/activate-theme ()
+      "Activate my favorite color theme.
+This function wraps the `load-theme' function and other theme activation
+functions to provide a single point of theme configuration."
+      (my/activate-theme--doom))
+  #+end_src
+
+* Add advice to theme activation function
+  We want to run our custom theme hooks automatically after the theme loads.
+
+  #+begin_src emacs-lisp :tangle yes
+    (defadvice my/activate-theme (after run-my/theme-after-load-hook activate)
+      "Run `my/theme-after-load-hook'."
+      (run-hooks 'my/theme-after-load-hook))
+  #+end_src
 
 * Add theme hooks
   There are some appearance-based functions that can only run after the primary
   theme has loaded, so we should put all such logic inside of an "after load"
   hook.
 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'my-theme-after-load-hook #'(lambda ()
-    ;; It's important to load org-beautify-theme after the main theme has
-    ;; loaded.
-    (with-eval-after-load "org-beautify-theme"
-      (if (not (custom-theme-enabled-p 'org-beautify-theme))
-        (load-theme 'org-beautify t)))))
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    (add-hook 'my/theme-after-load-hook (lambda ()
+      ;; It's important to load org-beautify-theme after the main theme has
+      ;; loaded.
+      (with-eval-after-load "org-beautify-theme"
+        (if (not (custom-theme-enabled-p 'org-beautify-theme))
+            (load-theme 'org-beautify t)))
+      (with-eval-after-load "beacon"
+        (setq beacon-color (face-attribute 'cursor :background)))))
+  #+end_src
 
 * Theme Packages
   These are some great themes from Emacs contributors. I marked the theme I
@@ -78,28 +110,20 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
    This is a /huge/ collection of Emacs themes contributed by the very gracious
    creator of Doom Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package doom-themes
-    :after (all-the-icons org-beautify-theme)
-    :demand t
-    :custom
-    ;; Enable bold fonts
-    (doom-themes-enable-bold t)
-    ;; Enable italic fonts
-    (doom-themes-enable-italic t)
-    ;; A more colorful theme for Treemacs that leverages all-the-icons.
-    (doom-themes-treemacs-theme "doom-colors")
-    :config
-    (load-theme 'doom-vibrant t)
-    ;; Flash the modeline when the Emacs bell rings.
-    ;; (doom-themes-visual-bell-config)
-    ;; Two treemacs icon themes: one that takes after Atom's themes, and
-    ;; another more colorful theme.
-    (doom-themes-treemacs-config)
-    ;; Correct and improve some of org-mode's native fontification.
-    (doom-themes-org-config)
-    (run-hooks 'my-theme-after-load-hook))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package doom-themes
+       :after all-the-icons
+       :demand t
+       :custom
+       ;; Enable bold fonts
+       (doom-themes-enable-bold t)
+       ;; Enable italic fonts
+       (doom-themes-enable-italic t)
+       ;; A more colorful theme for Treemacs that leverages all-the-icons.
+       (doom-themes-treemacs-theme "doom-colors")
+       :config
+       (my/activate-theme))
+   #+end_src
 
 * theme-magic
   This package applies your Emacs theme to the rest of Linux. It. Is. Awesome.
@@ -107,21 +131,21 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
   It also depends on =pywal=, so make sure that you have it installed on
   your =PATH=. =pywal= is a Python package, so installing it is easy:
 
-#+begin_src shell
-python3 -m pip install --user --upgrade pywal
-#+end_src
+  #+begin_src shell
+    python3 -m pip install --user --upgrade pywal
+  #+end_src
 
 ** use-package specification
-#+begin_src emacs-lisp :tangle yes
-  (use-package theme-magic
-    :config
-    ;; This global minor mode automatically updates your Linux theme
-    ;; whenever Emacs' theme changes.
-    (theme-magic-export-theme-mode))
-#+end_src
+   #+begin_src emacs-lisp :tangle yes
+     (use-package theme-magic
+       :config
+       ;; This global minor mode automatically updates your Linux theme
+       ;; whenever Emacs' theme changes.
+       (theme-magic-export-theme-mode))
+   #+end_src
 
 * Apply theme to other faces
-#+begin_src emacs-lisp :tangle yes
-  ;; (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
-  ;; (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
-#+end_src
+  #+begin_src emacs-lisp :tangle yes
+    ;; (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
+    ;; (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
+  #+end_src
