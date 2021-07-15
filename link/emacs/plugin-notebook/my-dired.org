@@ -107,6 +107,8 @@ Needed for performance:
   #+end_src
 
 ** dired-rainbow
+   Provides far more customization options for file colors in =dired=.
+
   #+begin_src emacs-lisp :tangle yes
     (use-package dired-rainbow
       :demand t
@@ -163,8 +165,20 @@ Needed for performance:
   #+end_src
 
 ** dired-ranger
+   Provides welcome additions to =dired= from =ranger=, such as two-stage
+   copy-and-paste and bookmarks.
+
   #+begin_src emacs-lisp :tangle yes
-    (use-package dired-ranger)
+    (use-package dired-ranger
+      :bind*
+      (:map dired-mode-map
+       ([remap dired-do-copy] . dired-ranger-copy)
+       ([remap dired-do-rename] . dired-ranger-move)
+       ;; We don't do much printing these days.
+       ([remap dired-do-print] . dired-ranger-paste)
+       ;; Use lesser used keybindings for ranger bookmark commands.
+       ([remap dired-do-byte-compile] . dired-ranger-bookmark)
+       ([remap dired-do-hardlink] . dired-ranger-bookmark-visit)))
   #+end_src
 
 ** dired-collapse
