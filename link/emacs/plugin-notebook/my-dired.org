@@ -91,13 +91,7 @@ Needed for performance:
       :bind*
       (:map dired-mode-map
        ("<tab>". dired-subtree-toggle)
-       ("<backtab>" . dired-subtree-cycle))
-      :hook
-      (dired-mode . (lambda ()
-        (evil-leader/set-key-for-mode 'dired-mode "dsi"
-          'dired-subtree-insert)
-        (evil-leader/set-key-for-mode 'dired-mode "dst"
-          'dired-subtree-toggle))))
+       ("<backtab>" . dired-subtree-cycle)))
   #+end_src
 
 ** dired-avfs
@@ -185,5 +179,8 @@ Needed for performance:
 
 ** dired-collapse
   #+begin_src emacs-lisp :tangle yes
-    (use-package dired-collapse)
+    (use-package dired-collapse
+      :bind
+      (:map dired-mode-map
+       ("C-c C" . dired-collapse-mode)))
   #+end_src
