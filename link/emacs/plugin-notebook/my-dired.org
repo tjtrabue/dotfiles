@@ -78,11 +78,10 @@ Needed for performance:
   #+begin_src emacs-lisp :tangle yes
     (use-package dired-narrow
       :after evil-collection
-      :demand t
       :hook
-      (dired-mode . (lambda ()
-        (dired-narrow-mode 1)
-        (evil-leader/set-key-for-mode 'dired-mode "dn" 'dired-narrow-fuzzy))))
+      ((dired-mode . dired-narrow-mode)
+       (dired-mode . (lambda ()
+        (evil-leader/set-key-for-mode 'dired-mode "dn" 'dired-narrow-fuzzy)))))
   #+end_src
 
 ** dired-subtree
