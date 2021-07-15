@@ -205,9 +205,11 @@ like Vim."
        ;; Leader shortcuts for dired-mode.
        (evil-leader/set-key-for-mode 'dired-mode
          "dC" 'dired-do-copy-regexp
+         "dG" 'dired-mark-files-containing-regexp
          "dM" 'dired-mark-files-regexp
          "dR" 'dired-do-rename-regexp
-         "dS" 'dired-do-symlink-regexp)
+         "dS" 'dired-do-symlink-regexp
+         "dY" 'dired-do-relsymlink-regexp)
        (global-evil-leader-mode 1))
    #+end_src
 
