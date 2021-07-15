@@ -161,8 +161,9 @@ like Vim."
        (setq-default evil-shift-width tab-width
                      ;; '>>' and '<<' should round indent to the next nearest tab stop.
                      evil-shift-round t)
+       :custom
+       (evil-leader/leader ",")
        :config
-       (evil-leader/set-leader ",")
        (evil-leader/set-key
          ;; ace-jump-mode (inspired by vim-easymotion)
          ",w" 'ace-jump-word-mode
@@ -171,6 +172,8 @@ like Vim."
          ;; Buffer
          "bb" 'helm-buffers-list
          "bk" 'kill-this-buffer
+         ;; Dired
+         "dd" 'counsel-dired
          ;; eshell
          "es" 'eshell-below
          ;; Git/Magit

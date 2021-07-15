@@ -127,6 +127,8 @@ depending on =ivy= for their operations.
   (use-package counsel
     :demand t
     :after ivy
+    :bind
+    (([remap dired] . counsel-dired))
     :config
     (counsel-mode 1))
 #+end_src

@@ -62,19 +62,39 @@ Needed for performance:
 
 ** dired-hacks-utils
   #+begin_src emacs-lisp :tangle yes
-    (use-package dired-hacks-utils
-      :hook
-      (dired-mode . dired-utils-format-information-line-mode))
+    (use-package dired-hacks-utils)
   #+end_src
 
 ** dired-filter
   #+begin_src emacs-lisp :tangle yes
     (use-package dired-filter
+      :after evil-collection
       :hook
       (dired-mode . (lambda ()
-        ;; Change the dired-filter keymap prefix
-        (define-key dired-mode-map
-          (kbd "<normal-state> , d f") dired-filter-map))))
+        (evil-leader/set-key-for-mode 'dired-mode "df" dired-filter-map))))
+  #+end_src
+
+** dired-narrow
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-narrow
+      :after evil-collection
+      :demand t
+      :hook
+      (dired-mode . (lambda ()
+        (dired-narrow-mode 1)
+        (evil-leader/set-key-for-mode 'dired-mode "dn" 'dired-narrow-fuzzy))))
+  #+end_src
+
+** dired-subtree
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dired-subtree
+      :after evil-collection
+      :hook
+      (dired-mode . (lambda ()
+        (evil-leader/set-key-for-mode 'dired-mode "dsi"
+          'dired-subtree-insert)
+        (evil-leader/set-key-for-mode 'dired-mode "dst"
+          'dired-subtree-toggle))))
   #+end_src
 
 ** dired-avfs
@@ -143,24 +163,9 @@ Needed for performance:
         (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
   #+end_src
 
-** dired-subtree
-  #+begin_src emacs-lisp :tangle yes
-    (use-package dired-subtree
-      :after evil-collection
-      :bind
-      (:map dired-mode-map
-       ("<normal-state> , d s i" . dired-subtree-insert)
-       ("<normal-state> , d s t" . dired-subtree-toggle)))
-  #+end_src
-
 ** dired-ranger
   #+begin_src emacs-lisp :tangle yes
     (use-package dired-ranger)
-  #+end_src
-
-** dired-narrow
-  #+begin_src emacs-lisp :tangle yes
-    (use-package dired-narrow)
   #+end_src
 
 ** dired-collapse
