@@ -21,7 +21,11 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package dired+
-    :after dired)
+    :after dired
+    :hook
+    (dired-mode . (lambda ()
+      ;; Reuse a single dired buffer for each directory visited.
+      (diredp-toggle-find-file-reuse-dir 1))))
 #+end_src
 
 * peep-dired
