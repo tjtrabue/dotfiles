@@ -40,7 +40,7 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    #+begin_src emacs-lisp :tangle yes
      (use-package highlight-defined
        :hook
-       ((emacs-lisp-mode) . highlight-defined-mode))
+       (emacs-lisp-mode . highlight-defined-mode))
    #+end_src
 
 ** suggest
@@ -73,6 +73,9 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    #+end_src
 
 ** elmacro
+   Shows keyboard macros or latest interactive commands as emacs lisp.
+   This package is quite old, so I don't expect it to be updated again.
+
    #+begin_src emacs-lisp :tangle yes
      (use-package elmacro)
    #+end_src

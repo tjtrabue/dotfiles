@@ -11,8 +11,7 @@ world needed another Lisp.
   Major mode for editing Clojure files.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package clojure-mode
-    :mode "\\.clj\\'")
+  (use-package clojure-mode)
 #+end_src
 
 * CIDER
@@ -21,7 +20,8 @@ world needed another Lisp.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package cider
-    :after clojure-mode)
+    :hook
+    (clojure-mode . cider-mode))
 #+end_src
 
 * clj-refactor
@@ -31,7 +31,6 @@ world needed another Lisp.
 
   #+begin_src emacs-lisp :tangle yes
     (use-package clj-refactor
-      :after clojure-mode
       :hook
       (clojure-mode . (lambda ()
                         (clj-refactor-mode 1)

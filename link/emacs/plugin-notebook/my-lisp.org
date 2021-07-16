@@ -24,7 +24,12 @@ regardless of its particular dialect.
       :hook
       ;; Load lispyj-mode for any LISP derived major mode.
       ;; IELM is the Emacs Lisp REPL.
-      ((lisp-mode emacs-lisp-mode ielm-mode) . lispy-mode))
+      ((clojure-mode
+        emacs-lisp-mode
+        ielm-mode
+        lisp-mode
+        sly-mrepl-mode)
+       . lispy-mode))
   #+end_src
 
 * parinfer-rust-mode
@@ -40,7 +45,7 @@ regardless of its particular dialect.
   the performance they desired, they deprecated the original plugin and created
   this version written it in Rust, hence the =-rust-= part of the name.
 
-** How Parinfer affects your workflow
+** *IMPORTANT:* How Parinfer affects your workflow
    Parinfer is quite opinionated, and takes control of several aspects of your
    Lisp code without asking. This can take some getting used to. Take the
    following Emacs Lisp snippet as an example (Note: =:tangle no= in the source
@@ -68,6 +73,23 @@ regardless of its particular dialect.
   simultaneously enforces proper Lisp coding style and makes it easy to change
   expression nesting, which is a common coding task.
 
+  You will notice similar phenomena when you delete or comment a line of Lisp
+  code. If you delete the second line of the last code block:
+
+   #+begin_src emacs-lisp :tangle no
+     (+ 1 2
+       (* 3 4))
+   #+end_src
+
+  You will end up with:
+
+   #+begin_src emacs-lisp :tangle no
+     (+ 1 2)
+   #+end_src
+
+  Notice how Parinfer automatically closes the expression on line 1. The same
+  edit would have happened if you had commented line 2 instead of deleting it.
+
 ** Notes on interoperability between Parinfer and other plugins
    Parinfer automatically detects active troublesome minor modes and prompts
    the user to deactivate them. Such minor modes include =electric-pair-mode=,
@@ -85,10 +107,9 @@ regardless of its particular dialect.
 ** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package parinfer-rust-mode
-      :after clojure-mode
       :hook
       ;; Automatically activate parinfer-rust-mode in these major modes.
-      (clojure-mode emacs-lisp-mode lisp-mode)
+      (clojure-mode emacs-lisp-mode ielm-mode lisp-mode sly-mrepl-mode)
       :custom
       ;; Controls how parinfer behaves. Can be one of "paren", "indent", or
       ;; "smart".
@@ -101,6 +122,8 @@ regardless of its particular dialect.
       (parinfer-rust-preferred-mode "smart")
       ;; Never prompt user for permission before adjusting indentation.
       (parinfer-rust-check-before-enable nil)
+      ;; Dim the parentheses inferred by Parinfer.
+      (parinfer-rust-dim-parens t)
       ;; Automatically download latest parinfer-rust library needed for this
       ;; plugin to work without prompting the user.
       (parinfer-rust-auto-download t))
