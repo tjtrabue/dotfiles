@@ -23,7 +23,8 @@ regardless of its particular dialect.
     (use-package lispy
       :hook
       ;; Load lispyj-mode for any LISP derived major mode.
-      ((lisp-mode emacs-lisp-mode) . lispy-mode))
+      ;; IELM is the Emacs Lisp REPL.
+      ((lisp-mode emacs-lisp-mode ielm-mode) . lispy-mode))
   #+end_src
 
 * parinfer-rust-mode

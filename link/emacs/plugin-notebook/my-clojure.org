@@ -15,7 +15,7 @@ world needed another Lisp.
     :mode "\\.clj\\'")
 #+end_src
 
-* cider
+* CIDER
   An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
   Lisp.
 

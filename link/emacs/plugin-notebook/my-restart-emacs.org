@@ -5,14 +5,26 @@
 #+STARTUP: fold
 
 Pretty straightforward. This package provides a function called =restart-emacs=
-that does just that: restarts Emacs.
+that does just that: it restarts Emacs. Quite handy, and worth binding to a key
+in the global map.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package restart-emacs)
-#+end_src
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package restart-emacs
+      :after evil-leader
+      :demand t
+      :custom
+      ;; Experimental feature: set this to t to restore frames when Emacs
+      ;; restarts.
+      ;; NOTE: persp-mode does a much better job of this task! Leave this
+      ;; feature turned off.
+      (restart-emacs-restore-frames nil)
+      :config
+      ;; Set the key sequence to something we're not bound to type accidentally.
+      (evil-leader/set-key "rere" 'restart-emacs))
+  #+end_src
