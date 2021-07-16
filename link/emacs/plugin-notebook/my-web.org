@@ -89,7 +89,7 @@ Needed for performance:
       :after org
       :hook
       (org-mode . (lambda ()
-                    (define-key org-mode-map (kbd "C-c C-r") verb-command-map))))
+                    (define-key org-mode-map (kbd "C-c C-v") verb-command-map))))
   #+end_src
 
 * ob-restclient
