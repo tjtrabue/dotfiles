@@ -82,18 +82,20 @@ Needed for performance:
   - Ability to resend old requests,
   - Much more.
 
-  The package introduces a new minor mode, Verb mode, which works as an
-  extension to =org-mode=. The core idea is to organize specifications for HTTP
-  requests using Org's tree structure. Properties defined in the child headings
-  extend or sometimes override properties defined in the parent headings - this
-  way, it is easy to define many HTTP request specifications without having to
-  repeat common components as URL hosts, authentication headers, ports,
-  etc. Verb tries to combine the usefulness of Org mode with the common
-  functionality provided by other HTTP clients. However, very little knowledge
-  of Org mode is needed to use Verb.
+** Notes
+   The package introduces a new minor mode, Verb mode, which works as an
+   extension to =org-mode=. The core idea is to organize specifications for HTTP
+   requests using Org's tree structure. Properties defined in the child headings
+   extend or sometimes override properties defined in the parent headings - this
+   way, it is easy to define many HTTP request specifications without having to
+   repeat common components as URL hosts, authentication headers, ports,
+   etc. Verb tries to combine the usefulness of Org mode with the common
+   functionality provided by other HTTP clients. However, very little knowledge
+   of Org mode is needed to use Verb.
 
-  Verb requires at least Emacs version 25 to work.
+   Verb requires at least Emacs version 25 to work.
 
+** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package verb
       :after org
