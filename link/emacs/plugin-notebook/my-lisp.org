@@ -90,8 +90,12 @@ regardless of its particular dialect.
       :custom
       ;; Controls how parinfer behaves. Can be one of "paren", "indent", or
       ;; "smart".
-      ;; The "smart" setting automatically balance delimiters but try to
-      ;; preserve structure as well.
+      ;; "paren" gives you full control over parentheses and automatically
+      ;; balances indentation blocks. It's a bit like aggressive-indent-mode.
+      ;; "indent" gives you full control over indentation and automatically
+      ;; adjusts parentheses as you indent blocks.
+      ;; "smart" automatically balance delimiters but try to preserve structure
+      ;; as well.
       (parinfer-rust-preferred-mode "smart")
       ;; Never prompt user for permission before adjusting indentation.
       (parinfer-rust-check-before-enable nil)
