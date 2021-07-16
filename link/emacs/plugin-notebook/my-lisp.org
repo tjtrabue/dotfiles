@@ -27,25 +27,46 @@ regardless of its particular dialect.
   #+end_src
 
 * parinfer-rust-mode
-  =parinfer= is an incredible system written in Rust designed to make
-  programming in any Lisp dialect a joy. It automatically handles indentation
-  and parentheses for you, effectively replacing and improving upon plugins such
-  as =aggressive-indent= and =smartparens=.
+  Parinfer is an incredible editing system designed to make programming in any
+  Lisp dialect a joy. It automatically handles indentation and parentheses for
+  you, effectively replacing and improving upon minor modes such as
+  =aggressive-indent= and =electric-pair-mode=. There are Parinfer
+  plugins for Vim, Neovim, Kakoune, and Emacs. This is the latter.
 
+  Please note that this minor mode has nothing to do with the Rust programming
+  language, from the user's perspective, at least. The authors wrote the
+  original version of this plugin in Emacs Lisp, but after failing to achieve
+  the performance they desired, they deprecated the original plugin and created
+  this version written it in Rust, hence the =-rust-= part of the name.
+
+** Notes on interoperability between Parinfer and other plugins
+   Parinfer automatically detects active troublesome minor modes and prompts
+   the user to deactivate them. Such minor modes include =electric-pair-mode=,
+   =hungry-delete-mode=, and =global-hungry-delete-mode=
+
+   You should be able to use Parinfer with plugins such as =smartparens= without
+   any trouble.
+
+** Parinfer default keymap
+   Be default, the Parinfer commands keymap is bound to =C-c C-p=. See the
+   GitHub page for more information about which interactive functions are
+   available.
+
+** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package parinfer-rust-mode
       :hook
-      ((clojure-mode
-        emacs-lisp-mode
-        lisp-mode)
-       . parinfer-rust-mode)
+      ;; Automatically activate parinfer-rust-mode in these major modes.
+      (clojure-mode emacs-lisp-mode lisp-mode)
       :custom
       ;; Controls how parinfer behaves. Can be one of "paren", "indent", or
       ;; "smart".
-      ;; Automatically balance delimiters but try to preserve structure as well.
+      ;; The "smart" setting automatically balance delimiters but try to
+      ;; preserve structure as well.
       (parinfer-rust-preferred-mode "smart")
       ;; Never prompt user for permission before adjusting indentation.
       (parinfer-rust-check-before-enable nil)
-      ;; Automatically download latest parinfer-rust library.
+      ;; Automatically download latest parinfer-rust library needed for this
+      ;; plugin to work without prompting the user.
       (parinfer-rust-auto-download t))
   #+end_src
