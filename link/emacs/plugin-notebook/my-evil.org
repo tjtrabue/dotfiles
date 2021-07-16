@@ -15,7 +15,6 @@ some other buffer you need to delete to get Evil working again. Remember, you
 can turn off automatic error debugging by changing the =debug-on-error= variable
 to =nil=, so this may help you.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
 
@@ -442,8 +441,8 @@ like Vim."
              ("<normal-state> <" . nil)
              ("<normal-state> >" . nil)
              ;; We want '(' and ')' to navigate s-exps.
-             ("<normal-state> (" . lispyville-backward-sexp)
-             ("<normal-state> )" . lispyville-forward-sexp))
+             ("<normal-state> (" . lispy-backward)
+             ("<normal-state> )" . lispy-forward))
        :config
        (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
        (evil-define-key '(insert visual) evil-collection-lispy-mode-map
