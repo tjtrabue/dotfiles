@@ -166,6 +166,7 @@ This is a Perl based tool, and its installation varies from system to system.
        (:map dired-mode-map
              ("C-c C" . dired-collapse-mode)))
    #+end_src
+
 * peep-dired
   Preview files if a peep window.
 
@@ -175,6 +176,7 @@ This is a Perl based tool, and its installation varies from system to system.
       (:map dired-mode-map
             ([remap dired-do-print] . peep-dired)))
   #+end_src
+
 * dired-k
   Highlight =dired= buffers with Git information. Inspired by the =k= package
   for Zsh.
