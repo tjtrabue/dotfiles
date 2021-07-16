@@ -165,6 +165,8 @@ like Vim."
        (evil-leader/leader ",")
        :config
        (evil-leader/set-key
+         "m" 'evil-first-non-blank
+         "." 'evil-end-of-line
          ;; ace-jump-mode (inspired by vim-easymotion)
          ",w" 'ace-jump-word-mode
          ",f" 'ace-jump-char-mode
@@ -392,7 +394,7 @@ like Vim."
 
    #+begin_src emacs-lisp :tangle yes
      (use-package lispyville
-       :after (evil lispy)
+       :after (evil-collection lispy)
        :hook
        (lispy-mode . lispyville-mode)
        :bind
@@ -401,9 +403,31 @@ like Vim."
              ;; unimpaired bindings.
              ("<normal-state> [" . nil)
              ("<normal-state> ]" . nil)
+             ;; Similarly, we may still want to use our indent bindings.
              ("<normal-state> <" . nil)
              ("<normal-state> >" . nil))
        :config
-       ;; Highlight yanked text in lispy-mode.
-       (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice))
+       (require 'cl-lib)
+       (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
+       ;; Set lispy evil-leader keybindings for all Lisp-based major modes.
+       (cl-loop for mode in my/lisp-major-modes do
+                (let ((evil-leader-lispy-keys-alist '(("l(" . lispy-wrap-round)
+                                                      ("l)" . lispy-wrap-round)
+                                                      ("l<" . lispy-slurp-or-barf-left)
+                                                      ("l>" . lispy-slurp-or-barf-right)
+                                                      ("ld" . evil-collection-lispy-delete)
+                                                      ("lR" . lispy-raise-some)
+                                                      ("lS" . lispy-split)
+                                                      ("lj" . lispy-join)
+                                                      ("ln" . lispy-left)
+                                                      ("lp" . lispy-clone)
+                                                      ("lo" . lispy-string-oneline)
+                                                      ("lr" . lispy-raise-sexp)
+                                                      ("ls" . lispy-splice)
+                                                      ("ly" . lispy-new-copy))))
+                   (mapcar (lambda (element)
+                             (let ((key (car element))
+                                   (fun (cdr element)))
+                               (evil-leader/set-key-for-mode mode key fun)))
+                           evil-leader-lispy-keys-alist))))
    #+end_src

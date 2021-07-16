@@ -88,7 +88,10 @@ loads:
         (file-truename (concat user-emacs-directory "/org"))
         "My custom directory used by Org to store miscellaneous notes.")
       (defvar my/org-agenda-dir (file-truename (concat my/org-dir "/agenda"))
-        "Directory containing my Org agenda files."))
+        "Directory containing my Org agenda files.")
+      (defvar my/lisp-major-modes
+        '(clojure-mode emacs-lisp-mode ielm-mode lisp-mode sly-mrepl-mode)
+        "List of important Lisp major modes"))
   #+end_src
 
 * Language/Encoding
