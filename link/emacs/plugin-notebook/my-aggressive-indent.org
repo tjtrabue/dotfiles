@@ -20,6 +20,7 @@ flexibility in code style over consistency.
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package aggressive-indent
+      :after clojure-mode
       ;; Using parinfer instead (see my-lisp.org for details).
       :disabled
       :hook

@@ -8,11 +8,34 @@ Integration for the awesome Clojure programming language.  Thanks, Rich! The
 world needed another Lisp.
 
 * clojure-mode
+  Major mode for editing Clojure files.
+
 #+begin_src emacs-lisp :tangle yes
-  (use-package clojure-mode)
+  (use-package clojure-mode
+    :mode "\\.clj\\'")
 #+end_src
 
 * cider
+  An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
+  Lisp.
+
 #+begin_src emacs-lisp :tangle yes
-  (use-package cider)
+  (use-package cider
+    :after clojure-mode)
 #+end_src
+
+* clj-refactor
+  =clj-refactor= provides refactoring support for Clojure projects. It
+  complements the refactoring functionality you'd find in =clojure-mode= and
+  CIDER.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package clj-refactor
+      :after clojure-mode
+      :hook
+      (clojure-mode . (lambda ()
+                        (clj-refactor-mode 1)
+                        ;; This choice of keybinding leaves cider-macroexpand-1
+                        ;; unbound
+                        (cljr-add-keybindings-with-prefix "C-c C-m"))))
+  #+end_src

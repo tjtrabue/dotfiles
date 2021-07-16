@@ -53,6 +53,15 @@ Needed for performance:
       :demand t)
   #+end_src
 
+* clojure-snippets
+  Yasnippet snippets for Clojure.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package clojure-snippets
+      :after yasnippet
+      :demand t)
+  #+end_src
+
 * helm-c-yasnippet
   Use helm menu for yasnippet completions
 

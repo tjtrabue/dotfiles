@@ -84,6 +84,7 @@ regardless of its particular dialect.
 ** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package parinfer-rust-mode
+      :after clojure-mode
       :hook
       ;; Automatically activate parinfer-rust-mode in these major modes.
       (clojure-mode emacs-lisp-mode lisp-mode)
