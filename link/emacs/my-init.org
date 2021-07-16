@@ -326,7 +326,8 @@ loads:
     (global-subword-mode 1)
 
     ;; Automatically insert closing delimiters when an opening delimiter is typed.
-    (electric-pair-mode 1)
+    ;; NOTE: parinfer does a much better job. See my-lisp.org for details.
+    (electric-pair-mode -1)
 
     ;; Automatically keep code indented when blocks change.
     ;; Not necessary since we use clean-aindent-mode.

@@ -25,3 +25,27 @@ regardless of its particular dialect.
       ;; Load lispyj-mode for any LISP derived major mode.
       ((lisp-mode emacs-lisp-mode) . lispy-mode))
   #+end_src
+
+* parinfer-rust-mode
+  =parinfer= is an incredible system written in Rust designed to make
+  programming in any Lisp dialect a joy. It automatically handles indentation
+  and parentheses for you, effectively replacing and improving upon plugins such
+  as =aggressive-indent= and =smartparens=.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package parinfer-rust-mode
+      :hook
+      ((clojure-mode
+        emacs-lisp-mode
+        lisp-mode)
+       . parinfer-rust-mode)
+      :custom
+      ;; Controls how parinfer behaves. Can be one of "paren", "indent", or
+      ;; "smart".
+      ;; Automatically balance delimiters but try to preserve structure as well.
+      (parinfer-rust-preferred-mode "smart")
+      ;; Never prompt user for permission before adjusting indentation.
+      (parinfer-rust-check-before-enable nil)
+      ;; Automatically download latest parinfer-rust library.
+      (parinfer-rust-auto-download t))
+  #+end_src

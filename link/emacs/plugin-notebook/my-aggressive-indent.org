@@ -20,6 +20,8 @@ flexibility in code style over consistency.
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package aggressive-indent
+      ;; Using parinfer instead (see my-lisp.org for details).
+      :disabled
       :hook
       ;; Probably don't want to enable aggressive-indent mode globally.
       ;; It's helpful, but it doesn't play nicely with automatic code
