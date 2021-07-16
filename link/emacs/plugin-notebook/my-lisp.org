@@ -78,7 +78,8 @@ regardless of its particular dialect.
 ** Parinfer default keymap
    Be default, the Parinfer commands keymap is bound to =C-c C-p=. See the
    GitHub page for more information about which interactive functions are
-   available.
+   available. You can change the default keymap prefix by changing the binding
+   for =parinfer-rust-mode-map=.
 
 ** use-package specification
   #+begin_src emacs-lisp :tangle yes
