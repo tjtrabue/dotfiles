@@ -30,14 +30,42 @@ regardless of its particular dialect.
   Parinfer is an incredible editing system designed to make programming in any
   Lisp dialect a joy. It automatically handles indentation and parentheses for
   you, effectively replacing and improving upon minor modes such as
-  =aggressive-indent= and =electric-pair-mode=. There are Parinfer
-  plugins for Vim, Neovim, Kakoune, and Emacs. This is the latter.
+  =aggressive-indent= and =electric-pair-mode=. There are Parinfer plugins for
+  Vim, Neovim, Kakoune, and Emacs. This is the latter.
 
   Please note that this minor mode has nothing to do with the Rust programming
   language, from the user's perspective, at least. The authors wrote the
   original version of this plugin in Emacs Lisp, but after failing to achieve
   the performance they desired, they deprecated the original plugin and created
   this version written it in Rust, hence the =-rust-= part of the name.
+
+** How Parinfer affects your workflow
+   Parinfer is quite opinionated, and takes control of several aspects of your
+   Lisp code without asking. This can take some getting used to. Take the
+   following Emacs Lisp snippet as an example (Note: =:tangle no= in the source
+   code blocks means that Org will not include them in the tangled Emacs Lisp
+   file it generates):
+
+   #+begin_src emacs-lisp :tangle no
+     (+ 1 2)
+     (* 3 4)
+   #+end_src
+
+   When =parinfer-rust-mode= is active, if you indent the second line at all,
+   Parinfer changes the structure of your code to the following:
+
+   #+begin_src emacs-lisp :tangle no
+     (+ 1 2
+       (* 3 4))
+   #+end_src
+
+  Please note what just happened: Parinfer detected that you indented the second
+  line, and interpreted that action as a desire on your part to /nest/ the
+  second expression inside of the first. This makes sense from a stylistic point
+  of view: the coding convention in Lisp is to only indent lines for expressions
+  that are continuations of the expression on the previous line. Thus, Parinfer
+  simultaneously enforces proper Lisp coding style and makes it easy to change
+  expression nesting, which is a common coding task.
 
 ** Notes on interoperability between Parinfer and other plugins
    Parinfer automatically detects active troublesome minor modes and prompts
