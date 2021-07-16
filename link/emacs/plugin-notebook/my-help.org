@@ -20,7 +20,7 @@ Needed for performance:
 
   #+begin_src emacs-lisp :tangle yes
     (use-package helpful
-      :bind
+      :bind*
       (;; Replace standard help functions with helpful functions.
        ("C-h f" . helpful-callable)
        ("C-h v" . helpful-variable)
@@ -33,14 +33,16 @@ Needed for performance:
 
 * help+
   Enhance Emacs' help system with new functions and key bindings.
+
   #+begin_src emacs-lisp :tangle yes
-    (use-package help+)
+    (use-package help+
+      :demand t)
   #+end_src
 
-* help+ plugins
-  Extra plugins to complete =help+='s power.
+** Plugins
+   Extra plugins to complete =help+='s power.
 
-** help-fns+
+*** help-fns+
    Add cool new help functions, such as describe-keymap
 
    #+begin_src emacs-lisp :tangle yes
@@ -51,15 +53,13 @@ Needed for performance:
        ("C-h M-f" . describe-face))
    #+end_src
 
-** help-macro+
-
+*** help-macro+
    #+begin_src emacs-lisp :tangle yes
      (use-package help-macro+
        :demand t)
    #+end_src
 
-** help-mode+
-
+*** help-mode+
    #+begin_src emacs-lisp :tangle yes
      (use-package help-mode+
        :demand t)

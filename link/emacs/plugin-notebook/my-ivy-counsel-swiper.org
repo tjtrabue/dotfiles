@@ -129,6 +129,9 @@ depending on =ivy= for their operations.
     :after ivy
     :bind
     (([remap dired] . counsel-dired))
+    :custom
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
     :config
     (counsel-mode 1))
 #+end_src
