@@ -26,6 +26,7 @@ eslint-plugin-promise
 eslint-plugin-react
 eslint-plugin-react-hooks
 graphql-language-service-server
+indium
 intelephense
 localtunnel
 lua-fmt

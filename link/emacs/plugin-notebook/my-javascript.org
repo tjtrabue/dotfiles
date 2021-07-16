@@ -1,0 +1,44 @@
+#+title:    Javascript Configuration/Plugins
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:16
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+Javascript is perhaps the mode widely used programming language in the world
+today. I don't like it, but it is very important to be able to work with
+Javascript in your favorite editor. This is my Emacs configuration for
+Javascript integration.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* indium
+  Indium is a fully featured Javascript development environment for Emacs.
+
+** Installation Instructions
+   Indium runs on a client-server architecture. Thus, you need to install the
+   server before you can run Indium from Emacs.  You need to run =npm install -g
+   indium= to install the Indium server.
+
+** use-package specification
+   #+begin_src emacs-lisp :tangle yes
+     (use-package indium)
+   #+end_src
+
+* npm-mode
+  Build and run NPM projects from Emacs.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package npm-mode)
+  #+end_src
+
+* rjsx-mode
+  Major mode for editing JSX files.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package rjsx-mode)
+  #+end_src

@@ -70,7 +70,17 @@ Needed for performance:
 
 * verb
   Verb is a package for Emacs which allows you to organize and send HTTP
-  requests.
+  requests. More than that, it helps you create full blown REST APIs similar to
+  Swagger/OpenAPI for Java, only Verb operates on Org mode files instead of code
+  comments. Verb includes:
+
+  - Multiple HTTP calls per files, each specified in its own Org mode heading,
+  - A templating system for URLs based on Emacs Lisp,
+  - Hierarchical organization of requests, which allows for more templating,
+  - Easy system for specifying request headers and request body,
+  - Interactive system for examining response headers,
+  - Ability to resend old requests,
+  - Much more.
 
   The package introduces a new minor mode, Verb mode, which works as an
   extension to =org-mode=. The core idea is to organize specifications for HTTP
@@ -89,7 +99,10 @@ Needed for performance:
       :after org
       :hook
       (org-mode . (lambda ()
-                    (define-key org-mode-map (kbd "C-c C-v") verb-command-map))))
+                    (define-key org-mode-map (kbd "C-c C-v") verb-command-map)))
+      :custom
+      ;; Automatically kill old response buffers when new responses arrive.
+      (verb-auto-kill-response-buffers t))
   #+end_src
 
 * ob-restclient
