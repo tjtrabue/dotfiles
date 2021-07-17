@@ -138,6 +138,10 @@ __src() {
 
   # Source OS-specific aliases and functions.
   __src_os
+
+  # export the dynamically constructed $PATH variable from the entries in
+  # ~/.path.
+  spath
 }
 
 # Start SSH, GPG, and other agents, if necessary.
