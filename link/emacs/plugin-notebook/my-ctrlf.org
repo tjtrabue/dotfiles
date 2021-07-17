@@ -19,8 +19,14 @@ so I personally like to use CTRLF alongside Swiper.
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package ctrlf
+      :after evil-collection
       :hook
       (after-init . ctrlf-mode)
+      :bind
+      (:map evil-normal-state-map
+            ;; Remap standard Emacs isearch keys.
+            ("C-s" . ctrlf-forward-default)
+            ("C-r" . ctrlf-backward-default))
       :custom
       ;; Use fuzzy search and regular expressions by default.
       (ctrlf-default-search-style 'fuzzy-regexp)
