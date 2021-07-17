@@ -58,7 +58,7 @@ features absent from the majority of such explorers.
       whenever a new projectile project is visited. I don't know why
       treemacs-projectile does not provide this feature itself."
         (advice-add 'projectile-switch-project-by-name
-                    :after #'(lambda (&rest args)
+                    :after (lambda (&rest args)
                                (let* ((path (car args))
                                       (name (treemacs--filename path)))
                                  (treemacs-do-add-project-to-workspace path name)))))

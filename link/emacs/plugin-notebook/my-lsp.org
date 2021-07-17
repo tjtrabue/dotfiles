@@ -153,7 +153,7 @@ Needed for performance:
              ("M-j" . lsp-ui-peek--select-next-file)
              ("M-k" . lsp-ui-peek--select-prev-file))
        :config
-       (add-hook 'lsp-mode-hook #'(lambda ()
+       (add-hook 'lsp-mode-hook (lambda ()
                                     ;; Turn off flycheck tool tips if they are active.
                                     (if (bound-and-true-p flycheck-pos-tip-mode)
                                         (flycheck-pos-tip-mode -1)))))

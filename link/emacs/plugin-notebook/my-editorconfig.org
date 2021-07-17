@@ -35,7 +35,7 @@ before saving."
   (defun my/add-editorconfig-format-hooks ()
     "Add hooks to major modes listed in `my/modes-to-format-with-editorconfig'
 so that each time they are saved they are formatted"
-    (mapc #'(lambda (mode)
+    (mapc (lambda (mode)
           (let ((hook-name (concat (symbol-name mode) "-hook")))
             (add-hook (intern hook-name) #'my/add-editorconfig-format-hook)))
       my/modes-to-format-with-editorconfig))

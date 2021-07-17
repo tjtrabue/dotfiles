@@ -40,7 +40,7 @@ Needed for performance:
     ;; We need to use with-eval-after-load because the map keeps getting
     ;; reported as void otherwise; must be a loading mismatch in haskell-mode.
     (with-eval-after-load 'haskell
-      (add-hook 'haskell-mode-hook #'(lambda ()
+      (add-hook 'haskell-mode-hook (lambda ()
                                        ;; Used to integrate Emacs with
                                        ;; inferior-haskell shells.
                                        (interactive-haskell-mode)

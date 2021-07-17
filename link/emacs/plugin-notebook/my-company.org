@@ -65,23 +65,23 @@ Needed for performance:
   (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
     "Helper function that sets my company-backends for a specific mode and
 optionally for extra modes"
-    (add-hook 'emacs-lisp-mode-hook #'(lambda ()
+    (add-hook 'emacs-lisp-mode-hook (lambda ()
        (setq-local company-backends (cons 'company-elisp company-backends)))))
 
   (defun my/set-company-backends-elisp ()
     "Set `company-backends' for `emacs-lisp-mode'."
-    (add-hook 'emacs-lisp-mode-hook #'(lambda ()
+    (add-hook 'emacs-lisp-mode-hook (lambda ()
        (setq-local company-backends (cons 'company-elisp company-backends)))))
 
   (defun my/set-company-backends-makefile ()
     "Set `company-backends' for makefile-mode."
-    (add-hook 'makefile-mode-hook #'(lambda ()
+    (add-hook 'makefile-mode-hook (lambda ()
       (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
           company-backends)))))
 
   (defun my/set-company-backends-scratch ()
     "Set `company-backends' for the *scratch* buffer."
-    (add-hook 'lisp-interaction-mode-hook #'(lambda ()
+    (add-hook 'lisp-interaction-mode-hook (lambda ()
        (setq-local company-backends (cons 'company-elisp company-backends)))))
 #+end_src
 

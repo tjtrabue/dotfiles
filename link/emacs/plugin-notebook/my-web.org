@@ -37,11 +37,7 @@ Needed for performance:
       ;; Django template
       (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
       ;; Embedded Elixir template.
-      (add-to-list 'auto-mode-alist '("\.html\\.eex\\'" . web-mode))
-
-      ;; Hooks for web-mode
-      (add-hook 'web-mode-hook #'(lambda ()
-                                   ())))
+      (add-to-list 'auto-mode-alist '("\.html\\.eex\\'" . web-mode)))
   #+end_src
 
 * emmet-mode
@@ -55,7 +51,7 @@ Needed for performance:
       ((css-mode sgml-mode web-mode) . emmet-mode)
       :config
       ;; Emmet mode hooks
-      (add-hook 'emmet-mode-hook #'(lambda ()
+      (add-hook 'emmet-mode-hook (lambda ()
                                      ;; Move the cursor between the first empty
                                      ;; quotes after expanding
                                      (setq emmet-move-cursor-between-quotes t))))

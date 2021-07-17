@@ -100,7 +100,7 @@ Needed for performance:
     ;; It is quite a hefy program, and it makes switching buffers somewhat of a
     ;; pain. Only start it when you have a C/C++ project you need to work on,
     ;; that's my advice.
-    ;; (add-hook 'ede-minor-mode-hook #'(lambda ()
+    ;; (add-hook 'ede-minor-mode-hook (lambda ()
     ;;   (ecb-activate)))
 
     ;; Turn on escreen integration for window management.

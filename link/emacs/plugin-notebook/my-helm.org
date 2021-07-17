@@ -122,7 +122,7 @@ Needed for performance:
     :config
     ;; Use ripgrep if available
     (if (executable-find "rg")
-        #'(lambda ()
+        (lambda ()
         (setq helm-grep-ag-command "rg --hidden --smart-case --no-heading --line-number %s %s %s"))))
 #+end_src
 

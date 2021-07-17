@@ -447,7 +447,7 @@ like Vim."
        (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
        (evil-define-key 'normal evil-collection-lispy-mode-map
          (kbd "M-m") 'lispy-mark-symbol)
-       (evil-define-key '(insert visual) evil-collection-lispy-mode-map
+       (evil-define-key '(normal insert visual) evil-collection-lispy-mode-map
          (kbd "M-;") 'lispy-comment)
        (my/set-lispyville-leader-keys))
    #+end_src

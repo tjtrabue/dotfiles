@@ -18,7 +18,7 @@ Needed for performance:
     :demand t
     :config
     (let (
-          (icon-paths (mapcar #'(lambda (file-name)
+          (icon-paths (mapcar (lambda (file-name)
                                   (expand-file-name file-name user-fonts-dir))
                               '("all-the-icons.ttf"
                                 "material-design-icons.ttf"

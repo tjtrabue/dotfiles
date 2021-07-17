@@ -60,7 +60,7 @@ Needed for performance:
   (defun my/add-format-all-hooks ()
     "Add hooks for `format-all-mode' to all major modes listed in
 `my/format-all-major-modes'."
-    (mapc #'(lambda (mode)
+    (mapc (lambda (mode)
         (let ((hook-name (concat (symbol-name mode) "-hook")))
           (add-hook (intern hook-name) #'format-all-mode)))
       my/format-all-major-modes))
@@ -68,9 +68,9 @@ Needed for performance:
   (defun my/remove-editorconfig-format-hooks ()
     "Get rid of editorconfig code formatting hooks for major modes managed
 by format-all or some other code formatter."
-    (mapc #'(lambda (mode)
+    (mapc (lambda (mode)
         (let ((hook-name (concat (symbol-name mode) "-hook")))
-          (add-hook (intern hook-name) #'(lambda ()
+          (add-hook (intern hook-name) (lambda ()
              (remove-hook 'before-save-hook #'editorconfig-format-buffer
                                             'local)))))
       my/format-all-major-modes))
