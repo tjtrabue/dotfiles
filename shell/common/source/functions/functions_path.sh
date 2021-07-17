@@ -161,7 +161,8 @@ export_path() {
 #   '${pathFile}'
 # and then run 'export_path' to regenerate this file.
 
-export PATH="${pathValue}"
+PATH="${pathValue}"
+export PATH
 EOF
 }
 
