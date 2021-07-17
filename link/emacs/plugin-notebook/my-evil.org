@@ -108,9 +108,6 @@ like Vim."
             :map evil-insert-state-map
             ;; TAB key should insert spaces to next tab stop, like in Vim.
             ("<tab>" . tab-to-tab-stop)
-            ;; Make pressing enter/return automatically insert comment markers
-            ;; when creating a new line after a commented line.
-            ("RET" . comment-indent-new-line)
             ;; Get rid of annoying evil-paste-from-register binding.
             ("C-r" . nil))
       ;; NOTE: We must set all variables for evil-mode in evil-leader's
