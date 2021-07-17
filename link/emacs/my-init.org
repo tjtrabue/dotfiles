@@ -623,12 +623,12 @@ loads:
    convenient than entering the shell, for the most part.
 
    #+begin_src emacs-lisp :tangle yes
-     (add-hook 'dired-mode-hook #'(lambda ()
+     (add-hook 'dired-mode-hook (lambda ()
                                     ;; Auto-refresh dired buffer when files change.
                                     (auto-revert-mode 1)
                                     ;; Allow user to toggle long-form ls output in dired mode with '('.
                                     (dired-hide-details-mode 1)))
-     (add-hook 'wdired-mode-hook #'(lambda ()
+     (add-hook 'wdired-mode-hook (lambda ()
                                      ;; Auto-refresh wdired buffer when files change.
                                      (auto-revert-mode 1)))
    #+end_src
@@ -640,7 +640,7 @@ loads:
      ;; after startup, it is important you reset this to some reasonable default. A
      ;; large gc-cons-threshold will cause freezing and stuttering during long-term
      ;; interactive use. I find these are nice defaults:
-     (add-hook 'emacs-startup-hook #'(lambda ()
+     (add-hook 'emacs-startup-hook (lambda ()
                                        (setq gc-cons-threshold (* 100 1024 1024)
                                              gc-cons-percentage 0.1
                                              file-name-handler-alist last-file-name-handler-alist)))
@@ -649,21 +649,21 @@ loads:
 ** prog-mode hooks
    #+begin_src emacs-lisp :tangle yes
      ;; These commands run whenever Emacs finds a file of any programming language.
-     (add-hook 'prog-mode-hook #'(lambda ()
-                                   ;; Make hyperlinks clickable.
-                                   (goto-address-mode 1)
-                                   ;; Turn various keywords into pretty programming symbols,
-                                   ;; such as "lambda" -> "λ" in lisp-mode.
-                                   (prettify-symbols-mode 1)
-                                   ;; Show invisible characters.
-                                   (whitespace-mode 1)))
+     (add-hook 'prog-mode-hook (lambda ()
+                                  ;; Make hyperlinks clickable.
+                                  (goto-address-mode 1)
+                                  ;; Turn various keywords into pretty programming symbols,
+                                  ;; such as "lambda" -> "λ" in lisp-mode.
+                                  (prettify-symbols-mode 1)
+                                  ;; Show invisible characters.
+                                  (whitespace-mode 1)))
    #+end_src
 
 ** shell-mode hooks
    shell-mode is a basic terminal emulator in Emacs.
 
    #+begin_src emacs-lisp :tangle yes
-     (add-hook 'shell-mode-hook #'(lambda ()
+     (add-hook 'shell-mode-hook (lambda ()
                                     (ansi-color-for-comint-mode-on)))
    #+end_src
 
@@ -672,7 +672,7 @@ loads:
    derivatives.
 
    #+begin_src emacs-lisp :tangle yes
-     (add-hook 'text-mode-hook #'(lambda ()
+     (add-hook 'text-mode-hook (lambda ()
                                    ;; Wrap words if they exceed the fill column
                                    ;; threshold.
                                    (auto-fill-mode 1)
@@ -698,7 +698,7 @@ loads:
    These hooks run before Emacs saves a file.
 
    #+begin_src emacs-lisp :tangle yes
-     (add-hook 'before-save-hook #'(lambda ()
+     (add-hook 'before-save-hook (lambda ()
                                      ;; Strip trailing whitespace from the
                                      ;; current buffer before saving.
                                      (delete-trailing-whitespace)
@@ -710,7 +710,7 @@ loads:
    These hooks run after Emacs saves a file.
 
    #+begin_src emacs-lisp :tangle yes
-     (add-hook 'after-save-hook #'(lambda ()
+     (add-hook 'after-save-hook (lambda ()
                                     ;; Update any GTAGS files if necessary.
                                     (my/gtags-update-hook-fn)))
    #+end_src

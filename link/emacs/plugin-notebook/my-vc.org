@@ -6,7 +6,6 @@
 
 Plugins for extending Emacs with version control capabilities.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
 
@@ -28,17 +27,34 @@ Needed for performance:
   #+end_src
 
 * magit
-  The /best/ Git client out there!
+  The /best/ interactive Git client out there! Honestly, Magit is reason enough
+  by itself to use Emacs. Every capability you have ever wanted from a Git
+  porcelain exists in Magit.
 
+** Functions
+   #+begin_src emacs-lisp :tangle yes
+     (defun my/magit-kill-buffers ()
+       "Restore window configuration and kill all Magit buffers."
+       (interactive)
+       (let ((buffers (magit-mode-get-buffers)))
+         (magit-restore-window-configuration)
+         (mapc #'kill-buffer buffers)))
+   #+end_src
+
+** use-package specification
   #+begin_src emacs-lisp :tangle yes
     ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
     ;; config section.
     (use-package magit
       :bind
-      (("C-c g" . magit-status))
-      :config
+      (("C-c g" . magit-status)
+       :map magit-status-mode-map
+       ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
+       ;; buffer, which keeps our buffer list clean.
+       ("q" . my/magit-kill-buffers))
+      :custom
       ;; List of symbols for actions that Magit should not confirm, or t.
-      (setq magit-no-confirm '(stage-all-changes unstage-all-changes)))
+      (magit-no-confirm '(stage-all-changes unstage-all-changes)))
   #+end_src
 
 * magit-todos
