@@ -1,0 +1,38 @@
+#+title:    Undo Features and Plugins for Emacs
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:17
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+This file adds some enhancements to Emacs' undo functionality.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* undo-fu
+  A simple plugin providing linear undo/redo actions. It does not interfere with
+  Emacs' internal undo data.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package undo-fu
+      :after evil-collection
+      :bind*
+      (:map evil-normal-state-map
+            ("u" . undo-fu-only-undo)
+            ("C-r" . undo-fu-only-redo)))
+  #+end_src
+
+* undo-fu-session
+  Saves =undo-fu='s data across Emacs sessions so that Emacs remembers undo
+  history after restarting.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package undo-fu-session
+      :demand t
+      :config
+      (global-undo-fu-session-mode 1))
+  #+end_src
