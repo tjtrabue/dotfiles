@@ -7,18 +7,38 @@
 =dimmer= dynamically adjusts inactive windows in Emacs to be dimmer than the
 active window.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
+  ;; -*- lexical-binding: t; -*-
 
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package dimmer
+* Functions
+  #+begin_src emacs-lisp :tangle yes
+    (defun dimmer-lsp-ui-doc-p ()
+      "Check whether current buffer is an lsp-ui-doc buffer."
+      (string-prefix-p " *lsp-ui-doc-" (buffer-name)))
+
+    (defun my/dimmer-config-change-handler-advice ()
+      (dimmer--dbg-buffers 1 "dimmer-config-change-handler")
+      (let ((ignore (cl-some (lambda (f) (and (fboundp f) (funcall f)))
+                             dimmer-prevent-dimming-predicates)))
+        (dimmer-process-all (not ignore))))
+  #+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package dimmer
+      ;; This package is too problematic; too many special cases, too many
+      ;; chances to go wrong. It's not very well made.
+      :disabled
+      :demand t
       :config
+      ;; Keep dimmer.el from messing with lsp-ui-doc buffer.
+      (add-to-list 'dimmer-prevent-dimming-predicates #'dimmer-lsp-ui-doc-p)
+      (advice-add 'dimmer-config-change-handler
+                  :override #'my/dimmer-config-change-handler-advice)
+      ;; Standard configuration options for dimmer.el
       (dimmer-configure-which-key)
       (dimmer-configure-helm)
-      ;; dimmer messes with lsp-mode
-      ;; (dimmer-mode t)
-  )
-#+end_src
+      (dimmer-mode t))
+  #+end_src

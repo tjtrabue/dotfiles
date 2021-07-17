@@ -6,7 +6,6 @@
 
 Provides visual feedback to certain editor actions.
 
-Needed for performance:
 #+begin_src emacs-lisp :tangle yes
 ;; -*- lexical-binding: t; -*-
 
@@ -14,14 +13,22 @@ Needed for performance:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package volatile-highlights
-    :after (evil)
+    ;; Doesn't seem to work on modern Emacs.
+    :disabled
+    :after (evil-collection undo-tree)
+    :demand t
     :hook
-    ((prog-mode text-mode) . volatile-highlights-mode)
+    (after-init . volatile-highlights-mode)
     :config
     ;;--------------------------------------------------------------------------
     ;; Supporting evil-mode.
     ;;--------------------------------------------------------------------------
     (vhl/define-extension 'evil 'evil-paste-after 'evil-paste-before
                           'evil-paste-pop 'evil-move)
-    (vhl/install-extension 'evil))
+    (vhl/install-extension 'evil)
+    ;;--------------------------------------------------------------------------
+    ;; Supporting undo-tree.
+    ;;--------------------------------------------------------------------------
+    (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
+    (vhl/install-extension 'undo-tree))
 #+end_src
