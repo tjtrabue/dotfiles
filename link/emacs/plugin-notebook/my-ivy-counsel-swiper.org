@@ -168,5 +168,5 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        ;; Use swiper for evil-mode's forward and reverse search
        ;; functions, as well.
        ("/" . swiper)
-       ("?" . swiper)))
+       ("?" . swiper-backward)))
   #+end_src
