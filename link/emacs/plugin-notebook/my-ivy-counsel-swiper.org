@@ -162,9 +162,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
       :after evil-collection
       :commands swiper
       :bind
-      (("C-s" . swiper)
-       ("C-r" . swiper)
-       :map evil-normal-state-map
+      (:map evil-normal-state-map
        ;; Use swiper for evil-mode's forward and reverse search
        ;; functions, as well.
        ("/" . swiper)

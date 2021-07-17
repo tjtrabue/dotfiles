@@ -1,0 +1,31 @@
+#+title:    CTRLF: Fast, Efficient In-Buffer Search
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:16
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=ctrlf= is an Emacs plugin for fast text searching within a buffer. It is a
+newer replacement for plugins like Swiper and Helm Swoop, but it's not as
+feature-rich and it does behave a little differently than isearch, Swiper, etc.,
+so I personally like to use CTRLF alongside Swiper.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t; -*-
+
+#+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package ctrlf
+      :hook
+      (after-init . ctrlf-mode)
+      :custom
+      ;; Use fuzzy search and regular expressions by default.
+      (ctrlf-default-search-style 'fuzzy-regexp)
+      :config
+      ;; We want to use VI-style navigation for search results.
+      (add-to-list 'ctrlf-minibuffer-bindings '("C-j" . ctrlf-forward-default))
+      (add-to-list 'ctrlf-minibuffer-bindings '("C-k" . ctrlf-backward-default)))
+  #+end_src
