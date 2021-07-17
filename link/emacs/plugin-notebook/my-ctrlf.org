@@ -6,10 +6,11 @@
 #+tags:
 #+STARTUP: fold
 
-=ctrlf= is an Emacs plugin for fast text searching within a buffer. It is a
-newer replacement for plugins like Swiper and Helm Swoop, but it's not as
-feature-rich and it does behave a little differently than isearch, Swiper, etc.,
-so I personally like to use CTRLF alongside Swiper.
+=ctrlf= is an Emacs plugin for fast text searching within a buffer. It brands
+itself as a replacement for =isearch=, but it is also trying to evolve into a
+replacement for plugins like Swiper and Helm Swoop. Currently, however it is not
+as feature-rich as Swiper, and it does behave a little differently, so I
+personally like to use CTRLF alongside Swiper.
 
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t; -*-
