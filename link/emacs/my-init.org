@@ -745,6 +745,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   packages in a way that does not clutter my primary configuration file.
 
   #+begin_src emacs-lisp
-    (my/apply-to-dir-files my/emacs-plugin-dir #'load-file "\\.el$")
-    (my/apply-to-dir-files my/plugin-notebook-dir #'org-babel-load-file "\\.org$")
+    (my/apply-to-dir-files my/emacs-plugin-dir
+                           #'load-file "\\.el$")
+    (my/apply-to-dir-files my/plugin-notebook-dir
+                           #'org-babel-load-file "\\.org$")
   #+end_src
