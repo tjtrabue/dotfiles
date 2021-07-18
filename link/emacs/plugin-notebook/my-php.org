@@ -9,6 +9,6 @@ Emacs plugins and configuration for the PHP dynamic web programming language.
 * php-mode
   Major mode for editing PHP files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package php-mode)
 #+end_src

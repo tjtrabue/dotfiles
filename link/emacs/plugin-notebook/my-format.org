@@ -8,7 +8,7 @@ Assorted code formatting plugins.
 
 * Variables
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; I've commented out several major modes that are either badly supported
   ;; (like sh-mode) or have better support with lsp-mode.
   (defvar my/format-all-major-modes '(
@@ -50,7 +50,7 @@ Assorted code formatting plugins.
 #+end_src
 
 * Functions
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/add-format-all-hooks ()
     "Add hooks for `format-all-mode' to all major modes listed in
 `my/format-all-major-modes'."
@@ -76,7 +76,7 @@ by format-all or some other code formatter."
   require third-party plugins to perform its tasks, so be ready to hunt down
   some code formatting software.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package format-all
     :demand t
     :after editorconfig
@@ -103,7 +103,7 @@ by format-all or some other code formatter."
   Bearing all of this in mind, it is now incredibly easy to fill in the gaps
   where systems like =format-all= fall short. Thanks, Steve!
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package reformatter
     :hook
     (python-mode . my-python-format-on-save-mode)
@@ -130,7 +130,7 @@ by format-all or some other code formatter."
   code for =format-all= directly, something I refuse to do. This plugin is much
   nicer for =shfmt= integration with Emacs.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package shfmt
     :after (reformatter)
     :hook (sh-mode . shfmt-on-save-mode))

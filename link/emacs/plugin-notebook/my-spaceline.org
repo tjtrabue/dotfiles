@@ -32,7 +32,7 @@ configurable modeline taken from Doom Emacs.
 
 ** Load custom colors package
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Pull in my own custom color theme features.
   (use-package my-colors
     :after color-theme-sanityinc-tomorrow
@@ -44,7 +44,7 @@ configurable modeline taken from Doom Emacs.
    We need to define a custom alist of evil state faces for =spaceline= to use
    when changing color based on evil's state.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
     (defvar my/spaceline-evil-state-faces
         '((normal . spaceline-custom-evil-normal)
             (insert . spaceline-custom-evil-insert)
@@ -58,7 +58,7 @@ configurable modeline taken from Doom Emacs.
 
 ** Functions
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/set-spaceline-evil-faces ()
     "Set the spaceline colors to match custom Emacs theme."
     (let (face-color face)
@@ -101,7 +101,7 @@ configurable modeline taken from Doom Emacs.
 #+end_src
 
 ** use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package spaceline
   ;;   :after (my-colors color-theme-sanityinc-tomorrow)
   ;;   :init
@@ -134,7 +134,7 @@ configurable modeline taken from Doom Emacs.
   Add a collection of awesome development icons to =spaceline= to spiff it up.
   This is a lot like =vim-devicons= integration with =airline=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package spaceline-all-the-icons
   ;;   :after (spaceline color-theme-sanityinc-tomorrow)
   ;;   :init

@@ -11,6 +11,6 @@ Plugins and configuration for TOML support in Emacs.
 * toml-mode
   =toml-mode= is a major mode for editing TOML files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package toml-mode)
 #+end_src

@@ -7,7 +7,7 @@
 * all-the-icons
   Use fancy dev icons in Emacs.  Very pretty!
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package all-the-icons
     :demand t
     :config
@@ -32,7 +32,7 @@
 * all-the-icons-dired
   Use =all-the-icons= in =dired= mode, too.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package all-the-icons-dired
     :demand t
     :after all-the-icons

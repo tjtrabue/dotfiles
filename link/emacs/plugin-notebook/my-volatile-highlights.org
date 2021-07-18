@@ -7,7 +7,7 @@
 Provides visual feedback to certain editor actions.
 
 * use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package volatile-highlights
     ;; Doesn't seem to work on modern Emacs.
     :disabled

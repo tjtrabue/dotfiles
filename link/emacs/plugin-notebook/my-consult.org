@@ -13,7 +13,7 @@ Thus, I think Consult will be the future completion system for Emacs, but right
 now I can't be bothered to configure it. It's very feature-rich.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Example configuration for Consult
     (use-package consult
       :disabled

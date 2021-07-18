@@ -21,7 +21,7 @@ eshell dotfiles.
 ** Required modules
    Import necessary external modules, most of which I wrote myself.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Includes functions for retrieving and dealing with the current color theme.
   (require 'my-colors)
 #+end_src
@@ -32,7 +32,7 @@ eshell dotfiles.
     This is a hook function that sets important environment variables upon
     entering =eshell-mode=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun set-eshell-env-vars ()
     "Set eshell environment variables.
 This function is called as part of the `shell-mode-hook'."
@@ -44,7 +44,7 @@ This function is called as part of the `shell-mode-hook'."
     These are special alias definitions wrapped in a function call that will be
     called as a hook upon entering =eshell-mode=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
     (defun set-eshell-aliases ()
       "Set aliases for use within eshell-mode.
 
@@ -115,7 +115,7 @@ This function is called as part of the `shell-mode-hook'."
     in terse form any changed files, added files, or untracked files if the user
     is currently in a Git repository.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun in-git-repo (curr-dir)
     "Returns t if CURR-DIR is part of a Git repository.
         Returns nil otherwise."
@@ -244,7 +244,7 @@ This function is called as part of the `shell-mode-hook'."
 ***** File segment
      This is the standard directory path segment of the prompt.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun pwd-replace-home (curr-dir)
     "Replace home in CURR-DIR with tilde (~) character."
     (interactive)
@@ -281,7 +281,7 @@ This function is called as part of the `shell-mode-hook'."
 ***** Ruby virtual environment segment
      Displays some information about Ruby virtual environments.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/prompt-ruby-segment ()
     "Returns a string (may be empty) based on the current Ruby Virtual Environment."
     (let* ((executable "~/.rvm/bin/rvm-prompt")
@@ -297,7 +297,7 @@ This function is called as part of the `shell-mode-hook'."
 ***** Python virtual environment segment
      Displays some information about Python virtual environments.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
       (defun my/prompt-python-segment ()
         "Returns a string (may be empty) based on the current Python
   Virtual Environment. Assuming the M-x command: `pyenv-mode-set'
@@ -312,7 +312,7 @@ This function is called as part of the `shell-mode-hook'."
 
 ***** User segment
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/prompt-user-segment ()
     "Return the propertiezed user segment of the eshell prompt."
     (interactive)
@@ -327,7 +327,7 @@ This function is called as part of the `shell-mode-hook'."
 
 ***** Directory segment
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
     (defun my/prompt-dir-segment (curr-dir)
       "Return the propertiezed directory segment of the eshell prompt."
       (interactive)
@@ -348,7 +348,7 @@ This function is called as part of the `shell-mode-hook'."
      Here's where all the magic happens! This function puts everything together
      into one super prompt.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
     (defun eshell/eshell-local-prompt-function ()
         "A prompt for eshell that works locally (in that is assumes
   that it could run certain commands) in order to make a prettier,
@@ -386,7 +386,7 @@ This function is called as part of the `shell-mode-hook'."
 
 *** TRAMP Functions
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
       (defun eshell-there (host)
         "Creates an eshell session that uses Tramp to automatically connect to a
 remote system, HOST.  The hostname can be either the IP address, or FQDN, and
@@ -495,7 +495,7 @@ Call with PREFIX to connect with the `root' useraccount, via `sudo'."
      These interactive functions are meant to be called from outside of the
      =eshell= environment.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
     (defun eshell-cwd ()
       "Set the eshell directory to that of the current buffer.
 
@@ -513,7 +513,7 @@ Usage: \\[eshell-cwd]."
      These are similar to Bash functions. They are meant to be called like a
      normal executable from within the =eshell=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
     ;; Custom eshell functions
     ;; These can be called from within eshell by the name following the
     ;; 'eshell/' prefix.
@@ -549,7 +549,7 @@ If you are currently in an eshell session then this function does nothing."
     This is where we specify the =use-package= directive for =eshell=, which
     makes use of all the functions we've written above.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package eshell
     :after (evil evil-collection color-theme-sanityinc-tomorrow)
     :hook
@@ -586,7 +586,7 @@ If you are currently in an eshell session then this function does nothing."
 ** virtualenvwrapper
    Use Python virtualenvs in =eshell=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Display python virtualenvs in eshell.
   (use-package virtualenvwrapper)
 #+end_src
@@ -599,7 +599,7 @@ If you are currently in an eshell session then this function does nothing."
    recommend it to people who want to use =eshell= without being bothered by
    copious amounts of customization.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Fancy prompt information for eshell mode
   ;; Not currently used due to custom prompt set in the :config section of
   ;; the eshell package.
@@ -618,7 +618,7 @@ If you are currently in an eshell session then this function does nothing."
    =esh-autosuggest= is a Fish-style autosuggest feature for =eshell=. This is
    one of my must-have plugins for =eshell=, and I recommend it to everybody!
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package esh-autosuggest
     :hook
     (eshell-mode . esh-autosuggest-mode))
@@ -634,7 +634,7 @@ up pa
 # new cwd: /long/path
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package eshell-up
     :hook (eshell-mode . (lambda ()
       ;; Set eshell-up aliases for eshell-mode.
@@ -648,7 +648,7 @@ up pa
    environment variable in sync with the user's =$PATH=, making sure that all
    external executables available to the user are also within Emacs' reach.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 
   ;; When launched as a graphical application, Emacs typically inherits a default
   ;; PATH variable, not the user's.  This can very annoying when it comes to
@@ -668,7 +668,7 @@ up pa
    It's an opinionated way to quickly operate on files, directories, etc. I
    refer you to the man pages for further details, as there are quite a few.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Emacs eshell integration with the fasd command line productivity booster.
   (use-package fasd)
 #+end_src

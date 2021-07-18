@@ -73,7 +73,7 @@ process from has a remote =default-directory=.
    For example, if you want to access a Docker container as the root user:
    =/sudo:root@localhost|docker:user@container:/path/to/file=
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package docker-tramp)
    #+end_src
 
@@ -85,7 +85,7 @@ process from has a remote =default-directory=.
 
   where =container= is the name of the container.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package kubernetes-tramp)
    #+end_src
 
@@ -95,6 +95,6 @@ process from has a remote =default-directory=.
    =vagrant ssh= command does. The =vagrant-tramp= method simply provides
    auto-completion and a wrapper around =vagrant ssh= for connecting to boxes.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package vagrant-tramp)
    #+end_src

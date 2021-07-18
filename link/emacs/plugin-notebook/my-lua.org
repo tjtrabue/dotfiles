@@ -9,13 +9,13 @@ This file contains all Emacs configuration related to the Lua programming langua
 * lua-mode
   This is the major mode for editing Lua files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package lua-mode)
 #+end_src
 
 * luarocks
   Emacs integration with the =luarocks= package manager.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package luarocks)
 #+end_src

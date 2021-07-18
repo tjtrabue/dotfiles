@@ -15,7 +15,7 @@
   something simple (like =tramp $=). See my =.bashrc= file for an example of how
   to set your prompt for TRAMP integration.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package system-packages
     :init
     ;; Enable sudo for system-packages

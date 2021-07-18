@@ -4,6 +4,6 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package e2ansi)
 #+end_src

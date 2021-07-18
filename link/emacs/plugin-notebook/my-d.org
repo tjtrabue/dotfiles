@@ -14,7 +14,7 @@ Contract.
 * d-mode
   Major mode for editing files written in the D programming language.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package d-mode
       :mode ("\\.d\\'" . d-mode))
   #+end_src

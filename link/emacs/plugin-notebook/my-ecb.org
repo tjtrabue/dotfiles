@@ -12,7 +12,7 @@ layouts.
 * Variables
   =ECB= related user variables.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defvar my/use-ecb-p t
     "Whether to load ECB on startup.")
   (defvar my/ecb-git-home (file-truename (concat my/straight-repos-dir "/ecb"))
@@ -28,7 +28,7 @@ layouts.
   and it also has no utility for running generic build commands, which is what
   we desperately want. Thus, once again, we have to hack our way to glory.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (when my/use-ecb-p
     (straight-use-package `(ecb :no-build t))
     (add-to-list 'load-path my/ecb-git-home))
@@ -40,7 +40,7 @@ layouts.
   straight directive itself.  This makes installing ECB a major pain, but it's
   the only way that I can think of at the moment.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (when my/use-ecb-p
     (let ((default-directory my/ecb-git-home)
           (ecb-autoloads-file
@@ -53,7 +53,7 @@ layouts.
 * Load ECB Libraries
   Require important ECB Elisp features.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (when my/use-ecb-p
     (let ((byte-compile-verbose nil)
           (byte-compile-warnings nil))
@@ -64,7 +64,7 @@ layouts.
   And /finally/ we come to the configuration section.  Seriously, people. Add
   generic build commands to =use-package= and =straight=!
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (when my/use-ecb-p
     ;; Enable version control features in all cases.
     (setq ecb-vc-enable-support t

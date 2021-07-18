@@ -8,7 +8,7 @@
 
 * anzu
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package anzu
     :bind
     (([remap query-replace] . anzu-query-replace)

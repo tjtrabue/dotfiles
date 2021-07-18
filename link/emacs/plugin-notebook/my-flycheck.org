@@ -17,7 +17,7 @@ it is very simple to do.
   predictable locations. Run =hunspell -D= to view the path =hunspell= uses to
   find dictionaries, which is different depending on your operating system.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package flycheck
     :hook
     ((prog-mode . (lambda ()
@@ -35,20 +35,20 @@ it is very simple to do.
 
 * Plugins
 ** flycheck-cask
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package flycheck-cask
   :after (flycheck))
 #+end_src
 
 ** flycheck-clojure
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package flycheck-clojure
   :after flycheck)
 #+end_src
 
 ** flycheck-haskell
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package flycheck-haskell
   :after flycheck)
 #+end_src
@@ -58,7 +58,7 @@ it is very simple to do.
    an alternative to =flycheck-pos-tip=. I tend to like =flycheck-pos-tip=
    better, though.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package flycheck-inline
   ;;   :after (flycheck quick-peek)
   ;;   :hook
@@ -68,7 +68,7 @@ it is very simple to do.
 ** flycheck-package
    Check Emacs Lisp packages for common errors.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package flycheck-package
     :after flycheck
     :config
@@ -78,7 +78,7 @@ it is very simple to do.
 ** flycheck-pkg-config
    Allows Flycheck to use =pkg-config= when determining C/C++ library headers.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package flycheck-pkg-config
     :after flycheck)
 #+end_src
@@ -86,7 +86,7 @@ it is very simple to do.
 ** flycheck-pos-tip
    Shows the error at point in a =pos-tip= graphical popup.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package flycheck-pos-tip
     :after flycheck
     :hook
@@ -100,7 +100,7 @@ it is very simple to do.
 ** flycheck-relint
    Checks regular expression syntax.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package flycheck-relint
   :after flycheck
   :config
@@ -109,7 +109,7 @@ it is very simple to do.
 
 ** flycheck-rust
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package flycheck-rust
   :after flycheck)
 #+end_src
@@ -117,7 +117,7 @@ it is very simple to do.
 ** flycheck-status-emoji
    Replaces standard Flycheck indicators with expressive emojis.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package flycheck-status-emoji
     :after flycheck
     :hook

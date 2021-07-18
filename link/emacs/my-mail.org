@@ -9,7 +9,7 @@ This is my Emacs email configuration file.
 * mu4e
   This is a fancy email client included in the =mu= repository.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package mu
   ;;   :straight (mu :type git :host github :repo "djcb/mu"
   ;;                  :files ("mu4e/*.el")))

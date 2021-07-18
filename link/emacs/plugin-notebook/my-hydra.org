@@ -25,7 +25,7 @@ the contents of the selected paste register would be pasted at point.
    for creating more complex specimens. All that =hydra-zoom= accomplishes is
    defining a zoom in/out hydra for the global keymap.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (defun my/define-hydra-zoom ()
        "Wrapper function for defhydra hydra-zoom"
 
@@ -38,7 +38,7 @@ the contents of the selected paste register would be pasted at point.
 ** hydra-resize-window
    This hydra resizes the current window using VI keys.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (defun my/define-hydra-resize-window ()
        "Wrapper function for defhydra hydra-resize-window."
        (defhydra hydra-resize-window (evil-normal-state-map "C-]")
@@ -50,7 +50,7 @@ the contents of the selected paste register would be pasted at point.
    #+end_src
 
 * Activate hydras
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun my/define-hydras ()
       "Load custom hydra definitions."
       (interactive)
@@ -59,7 +59,7 @@ the contents of the selected paste register would be pasted at point.
   #+end_src
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package hydra
       :after evil-collection
       :hook

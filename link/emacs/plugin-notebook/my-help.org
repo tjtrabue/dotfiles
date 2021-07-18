@@ -12,7 +12,7 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
   more contextual information. It is essentially a drop-in replacement for the
   help system.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package helpful
       :bind*
       (;; Replace standard help functions with helpful functions.
@@ -28,7 +28,7 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
 * help+
   Enhance Emacs' help system with new functions and key bindings.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package help+
       :demand t)
   #+end_src
@@ -39,7 +39,7 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
 *** help-fns+
    Add cool new help functions, such as describe-keymap
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package help-fns+
        :demand t
        :bind
@@ -48,13 +48,13 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
    #+end_src
 
 *** help-macro+
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package help-macro+
        :demand t)
    #+end_src
 
 *** help-mode+
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package help-mode+
        :demand t)
    #+end_src

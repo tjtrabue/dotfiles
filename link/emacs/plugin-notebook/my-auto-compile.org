@@ -8,7 +8,7 @@ Automatically compile Emacs Lisp files on save.
 
 * auto-compile
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package auto-compile
   :config
   (auto-compile-on-load-mode)

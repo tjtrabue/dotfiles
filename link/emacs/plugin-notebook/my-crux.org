@@ -10,7 +10,7 @@
 
 * use package specification
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package crux
       :hook
       ;; Automatically reopen any root-owned file as root.

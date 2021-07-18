@@ -17,7 +17,7 @@ Configuration for all things helm-related, including helm-projectile integration
   errors in Helm, notably in =helm-config.el=, citing undefined/void variables
   as the reason for halting compilation. I recommend you use =ivy= in this case.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm
     :demand t
     :straight
@@ -96,7 +96,7 @@ Configuration for all things helm-related, including helm-projectile integration
 ** helm-rg
   Helm integration with =ripgrep=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-rg
     :after helm
     :commands helm-rg
@@ -110,7 +110,7 @@ Configuration for all things helm-related, including helm-projectile integration
 ** helm-ag
   Helm integration with =the_silver_searcher=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-ag
     :after helm
     :config
@@ -128,7 +128,7 @@ Configuration for all things helm-related, including helm-projectile integration
    That function prompts for a project if we're not already in one,
    whereas helm-projectile-find-file does not.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-projectile
     :after (helm projectile ag rg helm-rg helm-ag)
     :bind
@@ -143,7 +143,7 @@ Configuration for all things helm-related, including helm-projectile integration
   open buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you
   will enter an edit mode. Press =C-x C-s= from the edit buffer to apply your changes.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-swoop
     :after (helm projectile)
     :bind
@@ -196,7 +196,7 @@ Configuration for all things helm-related, including helm-projectile integration
           alternatives, and each has its own set of benefits and drawbacks.
 
 *** Additional functions
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/create-helm-gtags-keybindings ()
     "Create my own custom keybindings for helm-gtags commands."
     (let* ((my/helm-gtags-prefix-key "C-c g")
@@ -224,7 +224,7 @@ Configuration for all things helm-related, including helm-projectile integration
 *** use-package definition
     *NOTE*: Currently deprecated in favor of =helm-lsp=
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-gtags
     :after (helm)
     :init
@@ -262,7 +262,7 @@ Configuration for all things helm-related, including helm-projectile integration
    =escreen= for ECB integration, but even that does not work too well. I use
    =persp-mode= for everything else.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-escreen
     :after (helm escreen)
     :straight (helm-escreen :host github
@@ -278,7 +278,7 @@ Configuration for all things helm-related, including helm-projectile integration
    This package provides an alternative to the built-in =xref-apropos= for
    =lsp-mode=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-lsp
     :after (lsp-mode helm)
     :bind
@@ -293,7 +293,7 @@ Configuration for all things helm-related, including helm-projectile integration
    bunch of useful functions but no default keybindings, so we must do that
    ourselves.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-make
     :after (helm projectile)
     :init
@@ -322,7 +322,7 @@ Configuration for all things helm-related, including helm-projectile integration
    update, delete, etc.) whereas =system-packages= can operate on packages en
    mass.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-system-packages
     :after helm
     :bind
@@ -333,14 +333,14 @@ Configuration for all things helm-related, including helm-projectile integration
 ** helm-dash
    Documentation browser plugin using Dash
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-dash)
 #+end_src
 ** helm-perldoc
    Search =perldoc= documentation with =helm=. It has lots of nice helm actions
    built into it, as well.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package helm-perldoc
     :after cperl-mode
     :bind
@@ -359,7 +359,7 @@ Configuration for all things helm-related, including helm-projectile integration
    company's default completion buffer since it does not integrate with
    documentation on hover and other nice features.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package helm-company
        ;; Not super useful, and it doesn't integrate with documentation on
        ;; hover.
@@ -375,7 +375,7 @@ Configuration for all things helm-related, including helm-projectile integration
    =helm= integration for =sly=, the newer Common Lisp IDE for Emacs superseding
    SLIME.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package helm-sly
        ;; Currently disabled since the xref buffer is perfectly helpful.
        :disabled

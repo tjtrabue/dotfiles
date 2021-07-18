@@ -14,7 +14,7 @@ possible.
   =deadgrep= is a beautiful front-end for =ripgrep=, the faster replacement for
   =grep= and =ag=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package deadgrep
       :commands deadgrep
       :bind
@@ -25,6 +25,6 @@ possible.
   Another =ripgrep= package for Emacs needed by some other plugins.
   *NOTE:* Please keep this package around for the sake of =projectile=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package ripgrep)
   #+end_src

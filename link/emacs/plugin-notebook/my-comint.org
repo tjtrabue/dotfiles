@@ -11,7 +11,7 @@ framework for designing modes for interacting with REPLs. Many other major modes
 inherit from =comint-mode=, such as =sly-mrepl-mode=.
 
 * Functions
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun my/set-comint-keybindings ()
       "Set evil keybindings for `comint-mode'."
       (evil-define-key 'insert comint-mode-map
@@ -20,7 +20,7 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
   #+end_src
 
 * use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package comint
     :after evil
     :demand t

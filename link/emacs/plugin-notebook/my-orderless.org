@@ -11,7 +11,7 @@
 *NOTE:* Currently unused in favor of =prescient= because orderless is quite slow
 by comparison.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package orderless
   ;;   :init
   ;;   (icomplete-mode)

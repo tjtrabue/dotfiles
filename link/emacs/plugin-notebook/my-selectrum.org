@@ -15,7 +15,7 @@ Currently, =selectrum= and =projectile= just don't play well together. Until the
 completion framework.
 
 * use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package selectrum
     :after (helm ivy)
     :demand t
@@ -34,7 +34,7 @@ completion framework.
    Integrates =selectrum= with =prescient= for intelligent sorting and
    filtering.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package selectrum-prescient
     :after (selectrum prescient)
     :commands selectrum-prescient-mode

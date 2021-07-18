@@ -10,7 +10,7 @@
 magic of =ranger= into Emacs.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package ranger
       ;; Too slow to be useful.
       :disabled

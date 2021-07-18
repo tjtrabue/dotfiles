@@ -10,7 +10,7 @@ possible.
 
 * Plugins
 ** flymake-haskell-multi
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package flymake-haskell-multi
   ;;   ;; NOTE: Not loading anything right now because of lsp-mode.
   ;;   ;; :hook
@@ -20,6 +20,6 @@ possible.
 #+end_src
 
 ** flymake-lua
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package flymake-lua)
 #+end_src

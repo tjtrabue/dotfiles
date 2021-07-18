@@ -12,7 +12,7 @@ debuggers. It is quite feature-rich, and I recommend you take a look at its
 * realgud
   This is the debugging package itself.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package realgud)
 #+end_src
 
@@ -21,20 +21,20 @@ debuggers. It is quite feature-rich, and I recommend you take a look at its
 ** realgud-byebug
    =realgud= interface to =byebug=, a popular Ruby debugger.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package realgud-byebug)
 #+end_src
 
 ** realgud-ipdb
    =realgud= interface to =ipdb=, a Python debugger that leverages IPython.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package realgud-ipdb)
 #+end_src
 
 ** realgud-trepan-ni
    Node.js debugger.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package realgud-trepan-ni)
 #+end_src

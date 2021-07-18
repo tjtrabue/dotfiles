@@ -16,7 +16,7 @@ lines as is necessary, and second, it keeps your code contributions clean.
   Cleans trailing whitespace on buffer save, but only for lines of code that
   have been edited.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package whitespace-cleanup-mode
     :config
     (global-whitespace-cleanup-mode))
@@ -30,7 +30,7 @@ lines as is necessary, and second, it keeps your code contributions clean.
   hanging there. However, with =clean-aindent-mode= those spaces will be removed
   once your cursor moves away.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package clean-aindent-mode
     :bind
     (("RET" . newline-and-indent))
@@ -46,7 +46,7 @@ lines as is necessary, and second, it keeps your code contributions clean.
   =dtrt-indent-mode= guesses the indentation offset for any file in which it is
   enabled.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package dtrt-indent
     :init
     (setq dtrt-indent-verbosity 0)

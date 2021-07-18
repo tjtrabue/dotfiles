@@ -9,6 +9,6 @@
 =dash= provides modern functions and services for Emacs.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package dash)
   #+end_src

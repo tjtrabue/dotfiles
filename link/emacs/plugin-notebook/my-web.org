@@ -10,7 +10,7 @@
   I recommend using =web-mode= instead of =html-mode= or =mhtml-mode=.
   There is a bug in =mhtml-mode= where typing a comment causes Emacs to hang.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package web-mode
       :config
       ;; Automatically start files with the following file extensions in web-mode
@@ -38,7 +38,7 @@
   This is Emacs' Emmet package.
   The default expand key for emmet snippets is =C-j=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package emmet-mode
       :hook
       ;; Auto start Emmet in certain modes, such as any markup language or CSS
@@ -54,7 +54,7 @@
 
 * restclient
   Awesome REST client for Emacs!
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package restclient)
   #+end_src
 
@@ -86,7 +86,7 @@
    Verb requires at least Emacs version 25 to work.
 
 ** use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package verb
       :after org
       :hook
@@ -116,7 +116,7 @@
     </html>
   #+END_SRC
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package ob-restclient
       :config
       (org-babel-do-load-languages
@@ -128,7 +128,7 @@
   Provides a live development environemnt for JavaScript, CSS, and HTML from
   within Emacs.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package skewer-mode
       :config
       (skewer-setup))

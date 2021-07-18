@@ -8,12 +8,12 @@ Plugins and configuration for various stylesheet languages, such as CSS, LESS, a
 
 * less-css-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package less-css-mode)
 #+end_src
 
 * scss-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package scss-mode)
 #+end_src

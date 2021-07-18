@@ -11,7 +11,7 @@ cross-platform.
 * ggtags
   =ggtags= is Emacs' front end to GNU Global.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package ggtags
    :bind
    (:map ggtags-mode-map

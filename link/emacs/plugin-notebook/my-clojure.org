@@ -10,7 +10,7 @@ world needed another Lisp.
 * clojure-mode
   Major mode for editing Clojure files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package clojure-mode)
 #+end_src
 
@@ -18,7 +18,7 @@ world needed another Lisp.
   An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
   Lisp.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package cider
     :hook
     (clojure-mode . cider-mode))
@@ -29,7 +29,7 @@ world needed another Lisp.
   complements the refactoring functionality you'd find in =clojure-mode= and
   CIDER.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package clj-refactor
       :hook
       (clojure-mode . (lambda ()

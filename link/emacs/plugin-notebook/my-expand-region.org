@@ -8,7 +8,7 @@
 textual region to broader and broader scopes as you continue to press the
 prescribed selection key.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package expand-region
     :bind
     ;; Pressing 'C-=' will gradually expand the selection under the cursor.

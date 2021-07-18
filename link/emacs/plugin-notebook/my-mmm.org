@@ -13,7 +13,7 @@ embedded PHP.
 * mmm-mode
   The eponymous =mmm-mode=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package mmm-mode
       ;; Currently disabled since many new major modes natively support multiple
       ;; major modes.

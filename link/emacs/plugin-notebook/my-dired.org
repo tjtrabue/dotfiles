@@ -19,12 +19,12 @@ This is a Perl based tool, and its installation varies from system to system.
   this way on purpose.
 
 ** dired-hacks-utils
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-hacks-utils)
    #+end_src
 
 ** dired-filter
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-filter
        :after evil-collection
        :hook
@@ -34,7 +34,7 @@ This is a Perl based tool, and its installation varies from system to system.
    #+end_src
 
 ** dired-narrow
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-narrow
        :after evil-collection
        :hook
@@ -45,7 +45,7 @@ This is a Perl based tool, and its installation varies from system to system.
    #+end_src
 
 ** dired-subtree
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-subtree
        :after evil-collection
        :bind*
@@ -55,19 +55,19 @@ This is a Perl based tool, and its installation varies from system to system.
    #+end_src
 
 ** dired-avfs
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-avfs)
    #+end_src
 
 ** dired-open
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-open)
    #+end_src
 
 ** dired-rainbow
    Provides far more customization options for file colors in =dired=.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-rainbow
        :demand t
        :config
@@ -126,7 +126,7 @@ This is a Perl based tool, and its installation varies from system to system.
    Provides welcome additions to =dired= from =ranger=, such as two-stage
    copy-and-paste and bookmarks.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-ranger
        :bind*
        (:map dired-mode-map
@@ -138,7 +138,7 @@ This is a Perl based tool, and its installation varies from system to system.
    #+end_src
 
 ** dired-collapse
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package dired-collapse
        :bind
        (:map dired-mode-map
@@ -148,7 +148,7 @@ This is a Perl based tool, and its installation varies from system to system.
 * peep-dired
   Preview files if a peep window.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package peep-dired
       :bind*
       (:map dired-mode-map
@@ -159,7 +159,7 @@ This is a Perl based tool, and its installation varies from system to system.
   Highlight =dired= buffers with Git information. Inspired by the =k= package
   for Zsh.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package dired-k
       :hook
       ;; Always activate dired-k when dired buffer opens.
@@ -174,7 +174,7 @@ This is a Perl based tool, and its installation varies from system to system.
   it. =dired-hacks= is a more suitable suite of enhancements for most
   developers.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package dired+
       ;; Too slow to be useful.
       :disabled

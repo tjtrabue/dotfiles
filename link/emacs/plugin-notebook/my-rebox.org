@@ -8,7 +8,7 @@
 
 =rebox2= is a plugin for seamlessly editing boxed comments in Emacs.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package rebox2
     :hook
     ((prog-mode . (lambda ()

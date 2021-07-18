@@ -17,7 +17,7 @@ similar to Java's =javadoc=, or Haskell's =haddock=.
   Emacs to an absolute crawl. This problem was incredibly hard to debug. Please,
   for the love of efficient text editing, do not repeat my mistake.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package highlight-doxygen
     :hook
     ;; Only highlight doxygen comments in appropriate languages

@@ -12,7 +12,7 @@ however, making =avy= a better, more modern alternative.
 
 * use-package specification
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; NOTE: See evil-leader config for keybindings.
   (use-package avy
     :after (evil-collection evil-snipe))

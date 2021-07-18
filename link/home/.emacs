@@ -69,6 +69,13 @@
 (require 'bytecomp)
 (require 'org)
 
+;; Settings for Emacs Lisp embedded in Org source blocks.
+(with-eval-after-load "ob-emacs-lisp"
+  ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
+  (setq org-babel-default-header-args:emacs-lisp
+        `((:lexical . t)
+          (:tangle . "yes"))))
+
 ;; Define and set variables
 (eval-when-compile
   (defconst my/home-dir (getenv "HOME")
@@ -78,13 +85,12 @@
   Emacs config.")
   (defconst my/dotfiles-emacs-dir (concat my/dotfiles-dir "/link/emacs")
     "Main Emacs directory in tjtrabue's dotfiles repository.")
-  ;; This file
-  (defconst my/emacsrc (concat (getenv "HOME") "/.emacs")
+  (defconst my/emacsrc (file-truename (concat (getenv "HOME") "/.emacs"))
     "The main Emacs config file in the user's home directory.")
-  ;; my-init.org
-  (defconst my/main-emacs-init-org (concat my/dotfiles-emacs-dir "/my-init.org")
+  (defconst my/main-emacs-init-org (file-truename
+                                    (concat my/dotfiles-emacs-dir
+                                            "/my-init.org"))
     "My primary Emacs configuration file in `org-mode' syntax.")
-  ;; my-init.el
   (defconst my/main-emacs-init-el (car (org-babel-tangle-file my/main-emacs-init-org))
     "My tangled Emacs configuration file created from `my/main-emacs-init-org'.")
   (defconst my/main-emacs-init-elc (byte-compile-dest-file my/main-emacs-init-el)
@@ -142,6 +148,16 @@ FILE's extension is '.el'."
            (setq ancestor-file (concat file-name ".org"))
            (my/tangle-config-artifact file)))))
 
+(defsubst my/apply-to-dir-files (dir fn pattern)
+  "Apply FN to all files in DIR.
+
+Files in the directory are matched based on PATTERN, which is a regex."
+  (require 'cl-lib)
+  (cl-flet ((apply-it (f)
+                      (funcall fn (concat (file-name-as-directory dir) f))))
+    (if (file-directory-p dir)
+        (mapc #'apply-it (directory-files dir nil pattern)))))
+
 ;; Load extra packages using Emacs 24's package system.
 (when (>= emacs-major-version 24)
   ;; Package configuration
@@ -170,11 +186,6 @@ FILE's extension is '.el'."
 ;;   (package-refresh-contents)
 ;;   (package-install 'use-package))
 ;; (eval-when-compile (require 'use-package))
-
-;; Settings for Emacs Lisp embedded in Org source blocks.
-(with-eval-after-load "ob-emacs-lisp"
-  ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
-  (add-to-list 'org-babel-default-header-args:emacs-lisp '(:lexical . t)))
 
 ;; Have to set default-directory to the dotfiles directory in my dotfiles
 ;; repository because symlinks and Emacs apparently do not play well together.

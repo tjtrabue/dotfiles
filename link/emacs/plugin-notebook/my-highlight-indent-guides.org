@@ -14,7 +14,7 @@ popular but much more limited in terms of configuration.
 
 * use-package specification
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package highlight-indent-guides
     :custom
     ;; Only highlight the first character of each indent level instead of the

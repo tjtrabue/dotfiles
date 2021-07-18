@@ -13,7 +13,7 @@ that expands the snippet based on the abbreviation before point.
 * yasnippet
   =yasnippet= itself.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package yasnippet
       :commands yas-minor-mode
       :hook
@@ -32,7 +32,7 @@ that expands the snippet based on the abbreviation before point.
 * yasnippet-snippets
   A big collection of pre-written snippets for =yasnippet=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package yasnippet-snippets
       :after yasnippet
       :demand t)
@@ -41,7 +41,7 @@ that expands the snippet based on the abbreviation before point.
 * common-lisp-snippets
   Yasnippet snippets for Common Lisp.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package common-lisp-snippets
       :after yasnippet
       :demand t)
@@ -50,7 +50,7 @@ that expands the snippet based on the abbreviation before point.
 * clojure-snippets
   Yasnippet snippets for Clojure.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package clojure-snippets
       :after yasnippet
       :demand t)
@@ -59,7 +59,7 @@ that expands the snippet based on the abbreviation before point.
 * helm-c-yasnippet
   Use helm menu for yasnippet completions
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package helm-c-yasnippet
       :after (helm yasnippet)
       :config

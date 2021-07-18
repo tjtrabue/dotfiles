@@ -12,7 +12,7 @@ textual documents and evaluated as needed, or all at once.
 * org-mode
   The ubiquitous =org-mode=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package org
       :mode ("\\.org\\'" . org-mode)
       :bind
@@ -45,7 +45,7 @@ textual documents and evaluated as needed, or all at once.
 ** org-bullets
    Use fancy bullets in =org-mode=.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package org-bullets
        :hook
        (org-mode . (lambda () (org-bullets-mode 1))))
@@ -60,7 +60,7 @@ textual documents and evaluated as needed, or all at once.
    surrounded by big ugly boxes. See file =my-theme.org= for this theme's
    activation.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package org-beautify-theme
        :demand t)
    #+end_src
@@ -69,7 +69,7 @@ textual documents and evaluated as needed, or all at once.
    =org-roam= is an amazing plugin that integrates some of Roam's advanced note
    taking features into =org-mode=.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package org-roam
        :hook
        (after-init . org-roam-mode)
@@ -93,14 +93,14 @@ textual documents and evaluated as needed, or all at once.
    Improved Org agenda that allows you to break your agenda items up into
    sections.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package org-super-agenda)
    #+end_src
 
 ** org-download
    Utility for moving downloaded images into Org buffers.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package org-download
        :hook
        ;; Enable org-download in dired-mode.

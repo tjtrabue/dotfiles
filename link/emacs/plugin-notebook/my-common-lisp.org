@@ -11,7 +11,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
 * Functions
 
 ** General purpose Lisp functions
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (defun my/get-inferior-lisp-program ()
        "Return the shell command used to launch the `inferior-lisp-program'.
      This is command becomes the selected Common Lisp interpreter."
@@ -29,7 +29,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
    These functions were taken directly from [[https://mihaiolteanu.me/counsel-sly/][Mihai Olteanu's blog]].
    Thank you so much for the your contributions, Mihai!
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; Define functionality for interacting with the sly repl using counsel
      (defun counsel-sly-mrepl-shortcut ()
        (interactive)
@@ -87,7 +87,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
    #+end_src
 
 ** Set SLY MREPL keybindings
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
     (defun my/set-sly-mrepl-keybindings ()
       "Hook function for setting keybindings in SLY MREPL mode.
 Make sure to only run this function after 'sly-mrepl loads."
@@ -141,7 +141,7 @@ Make sure to only run this function after 'sly-mrepl loads."
    from the Algol family: the ability to complete the methods of the foo class
    by typing =foo.<TAB>=.
 ** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package slime
        :disabled
        :commands slime
@@ -169,7 +169,7 @@ Make sure to only run this function after 'sly-mrepl loads."
   The default key combination for =sly-prefix-map= is =C-c= by itself.
 
 ** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package sly
        :after evil
        :commands sly
@@ -207,7 +207,7 @@ Make sure to only run this function after 'sly-mrepl loads."
     recorded as with other sly compilation errors, as opposed to dumping into
     the debugger like with calling =asdf:load-system= directly.
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package sly-asdf
         :after sly)
     #+end_src
@@ -215,7 +215,7 @@ Make sure to only run this function after 'sly-mrepl loads."
 *** sly-quicklisp
     Allows you to download dependencies via Quicklisp from inside SLY.
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package sly-quicklisp
         :after sly)
     #+end_src
@@ -223,7 +223,7 @@ Make sure to only run this function after 'sly-mrepl loads."
 *** sly-macrostep
     Expand macros right inside source files!
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package sly-macrostep
         :after sly)
     #+end_src
@@ -232,7 +232,7 @@ Make sure to only run this function after 'sly-mrepl loads."
     Enables different =readtables= to be active in different parts of the same
     file.
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package sly-named-readtables
         :after sly)
     #+end_src
@@ -240,7 +240,7 @@ Make sure to only run this function after 'sly-mrepl loads."
 *** sly-repl-ansi-color
     Adds ANSI color support to the SLY REPL.
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package sly-repl-ansi-color
         :after sly
         :demand t

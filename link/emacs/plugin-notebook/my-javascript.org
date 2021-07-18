@@ -20,20 +20,20 @@ Javascript integration.
    indium= to install the Indium server.
 
 ** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package indium)
    #+end_src
 
 * npm-mode
   Build and run NPM projects from Emacs.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package npm-mode)
   #+end_src
 
 * rjsx-mode
   Major mode for editing JSX files.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package rjsx-mode)
   #+end_src

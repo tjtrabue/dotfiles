@@ -9,7 +9,7 @@ Plugins for extending Emacs with version control capabilities.
 * vc
   General version control plugin for Emacs.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; General version control plugin for Emacs.
     (use-package vc)
   #+end_src
@@ -17,7 +17,7 @@ Plugins for extending Emacs with version control capabilities.
 * git-modes
   The following plugin contains major modes for editing various Git file types.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package git-modes)
   #+end_src
 
@@ -27,7 +27,7 @@ Plugins for extending Emacs with version control capabilities.
   porcelain exists in Magit.
 
 ** Functions
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (defun my/magit-kill-buffers ()
        "Restore window configuration and kill all Magit buffers."
        (interactive)
@@ -37,7 +37,7 @@ Plugins for extending Emacs with version control capabilities.
    #+end_src
 
 ** use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
     ;; config section.
     (use-package magit
@@ -55,7 +55,7 @@ Plugins for extending Emacs with version control capabilities.
 * magit-todos
   Lists TODOs and related comments in the =magit-status= buffer.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package magit-todos
       :config
       (magit-todos-mode))
@@ -81,7 +81,7 @@ Plugins for extending Emacs with version control capabilities.
    After this, you should be able to use =forge= and all of its features.
 
 ** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package forge
        :after (magit))
    #+end_src
@@ -91,7 +91,7 @@ Plugins for extending Emacs with version control capabilities.
   Vim. There were =git-gutter= plugins for Emacs, but they are no longer
   maintained.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package diff-hl
       :demand t
       :hook
@@ -116,7 +116,7 @@ Plugins for extending Emacs with version control capabilities.
   must do is visit a git-controlled file and invoke =git-timemachine= or
   =git-timemachine-toggle= Check the documentation for the default keybindings.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package git-timemachine
       :commands (git-timemachine git-timemachine-toggle))
   #+end_src
@@ -125,6 +125,6 @@ Plugins for extending Emacs with version control capabilities.
   Interactively create and retrieve links to the current file's page on GitHub,
   GitLab, BitBucket, etc.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package git-link)
   #+end_src

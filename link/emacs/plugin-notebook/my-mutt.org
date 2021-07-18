@@ -6,6 +6,6 @@
 
 Package for integrating Emacs with the =mutt= terminal mail client.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package mutt-mode)
 #+end_src

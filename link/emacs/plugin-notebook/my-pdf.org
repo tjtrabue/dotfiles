@@ -10,7 +10,7 @@ Emacs.
 
 * pdf-tools
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package pdf-tools)
 #+end_src
 
@@ -18,7 +18,7 @@ Emacs.
   An add-on to =pdf-tools= that allows users to open PDFs at their last known
   position.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package pdf-view-restore
     :after (pdf-tools)
     :hook

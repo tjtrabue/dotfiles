@@ -21,7 +21,7 @@ completion.
   For some strange reason company does not want to respect our keybindings when
   we set them in the =:bind= clause of its =use-package= specification.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/set-company-keybindings ()
     "Used to get around problem with company keybindings not being set.
   For some horrible, unknown reason, company does not respect keybindings
@@ -80,7 +80,7 @@ optionally for extra modes"
 #+end_src
 
 ** company
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package company
     :demand t
     :after (evil evil-collection)
@@ -132,7 +132,7 @@ optionally for extra modes"
    =company= completion for C and C++ header files when typing =#include=
    statements.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package company-c-headers
     ;; We need s.el for trimming strings.
     :after (company s cedet)
@@ -150,13 +150,13 @@ optionally for extra modes"
 #+end_src
 
 ** company-dict
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package company-dict
   :after (company))
 #+end_src
 
 ** company-quickhelp
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 ;; Show quick documentation for company completions in a popup.
 (use-package company-quickhelp
   :after (company)
@@ -166,7 +166,7 @@ optionally for extra modes"
 #+end_src
 
 ** company-statistics
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package company-statistics
   :after (company)
   :init
@@ -174,13 +174,13 @@ optionally for extra modes"
 #+end_src
 
 ** company-web
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package company-web
   :after (company))
 #+end_src
 
 ** company-try-hard
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package company-try-hard
   :after (company)
   :bind
@@ -190,12 +190,12 @@ optionally for extra modes"
 #+end_src
 
 ** company-ghc
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 ;; (use-package company-ghc)
 #+end_src
 
 ** company-cabal
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package company-cabal)
 #+end_src
 
@@ -208,7 +208,7 @@ optionally for extra modes"
    command line before trying to use this plugin, since this plugin depends on
    the =~/.plsense= configuration file containing the proper settings.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package company-plsense
     :disabled
     :hook
@@ -224,7 +224,7 @@ optionally for extra modes"
 #+end_src
 
 ** company-auctex
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package company-auctex
     :after (auctex company)
     :config
@@ -240,7 +240,7 @@ optionally for extra modes"
     company backend for =lsp-mode= is =company-capf=, so try using that one
     first.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package company-lsp
   ;;   :after (company lsp-mode)
   ;;   ;; Only activate company-lsp for specific modes
@@ -259,14 +259,14 @@ optionally for extra modes"
    looking UI for company completions similar to something like Visual Studio
    Code.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package company-box
     :hook (company-mode . company-box-mode))
 #+end_src
 ** company-prescient
    =prescient= intelligent completion support for =company-mode=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package company-prescient
     :config
     (company-prescient-mode 1))

@@ -10,7 +10,7 @@ for project files, searching for text, renaming files, building and installing
 project artifacts, etc.
 
 * Variables
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defvar default-ecb-source-path (list '("~/workspace" "Workspace")
                                           '("~/" "~/")
                                           '("/" "/"))
@@ -19,7 +19,7 @@ project artifacts, etc.
   #+end_src
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package projectile
       :after (evil ivy)
       :hook

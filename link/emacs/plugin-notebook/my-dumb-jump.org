@@ -14,7 +14,7 @@ finding definitions at point. All you must do is add =dumb-jump= to the list of
 After you've set up your =xref= hook, you can find the definition under the
 cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package dumb-jump
     :hook
     (xref-backend-functions . dumb-jump-xref-activate))

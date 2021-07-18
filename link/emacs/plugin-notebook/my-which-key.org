@@ -7,7 +7,7 @@
 =which-key= is a plugin that displays key completions after you type an
 incomplete key command (a prefix) in a popup.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package which-key
     :demand t
     :config

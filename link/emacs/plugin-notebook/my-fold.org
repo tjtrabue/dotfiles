@@ -14,7 +14,7 @@ category, and it is one of the best representatives.
   Code folding backend for Emacs. Works best with ALGOL-derived programming
   languages (C, C++, Java, etc.).
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package origami
     :hook
     ((prog-mode conf-mode conf-space-mode) . origami-mode))
@@ -26,7 +26,7 @@ category, and it is one of the best representatives.
 
   The default keybinding for toggling a vimish fold is =C-`=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package vimish-fold
     :after (evil-collection)
     :custom

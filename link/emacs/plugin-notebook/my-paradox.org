@@ -7,7 +7,7 @@
 Paradox is a modernized package UI for Emacs that can act as a drop-in
 replacement as the standard =list-packages= interface.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package paradox
     :config
     ;; Use paradox as default package interface for list-packages

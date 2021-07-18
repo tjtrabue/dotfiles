@@ -13,6 +13,6 @@ operating system like Bash or Zsh.
 Not currently using =vterm= because EShell is largely a better alternative, and
 an actual terminal emulator is usually better when EShell isn't enough.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package vterm)
 #+end_src

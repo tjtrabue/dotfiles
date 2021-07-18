@@ -11,6 +11,6 @@ capability to edit Typescript files.
 * typescript-mode
   Major mode editing Typescript files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package typescript-mode)
 #+end_src

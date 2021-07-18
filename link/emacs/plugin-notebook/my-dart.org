@@ -9,6 +9,6 @@
 Plugins and configuration for the Dart programming language.
 * dart-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package dart-mode)
 #+end_src

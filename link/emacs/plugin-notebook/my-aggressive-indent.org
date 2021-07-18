@@ -13,7 +13,7 @@ guidelines as long as the mode is active. This can get annoying if you value
 flexibility in code style over consistency.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package aggressive-indent
       :after clojure-mode
       ;; Using parinfer instead (see my-lisp.org for details).

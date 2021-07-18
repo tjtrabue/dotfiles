@@ -12,7 +12,7 @@ This file defines configuration for a number of Eamcs profiling programs.
   =ESUP= is the Emacs Start-Up Profiler. It does not currently work with my
   convoluted configuration.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; (use-package esup
   ;;   ;; To use MELPA Stable use ":pin mepla-stable",
   ;;   ;; :pin melpa

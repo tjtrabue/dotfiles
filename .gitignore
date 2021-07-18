@@ -126,8 +126,6 @@ link/config/TabNine/*
 # Auto-generated Emacs config files based on org-mode source files
 my-init.el
 cedet-rc.el
-
-# Other auto-generated Elisp files from Org files
 **/plugin-notebook/*.el
 
 # Emacs straight package manager

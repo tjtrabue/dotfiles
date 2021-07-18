@@ -10,7 +10,7 @@ than tabs in all files except for Makefiles, or automatically wrapping text
 after a certain number of columns have been typed.
 
 * Variables
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defvar my/modes-to-format-with-editorconfig '(
       ;; sh-mode
   )
@@ -20,7 +20,7 @@ if no 'smarter' code formatting tool exists for your programming language.")
 #+end_src
 
 * Functions
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/add-editorconfig-format-hook ()
     "Add a single before-save-hook for formatting a buffer with editorconfig
 before saving."
@@ -40,7 +40,7 @@ so that each time they are saved they are formatted"
 #+end_src
 
 * editorconfig
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package editorconfig
     :demand t
     :init

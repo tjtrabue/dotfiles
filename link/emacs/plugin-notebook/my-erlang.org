@@ -6,6 +6,6 @@
 
 This file sets up Erlang integration for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package erlang)
 #+end_src

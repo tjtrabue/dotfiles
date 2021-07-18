@@ -8,6 +8,6 @@ Here are a few Emacs plugins and settings for the =go= programming language.
 
 * go-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package go-mode)
 #+end_src

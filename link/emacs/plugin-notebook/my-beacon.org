@@ -8,7 +8,7 @@
 around a window. Very beautiful. Very powerful.
 
 * use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package beacon
     :demand t
     ;; Enable beacon globally.

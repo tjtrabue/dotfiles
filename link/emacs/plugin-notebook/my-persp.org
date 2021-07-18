@@ -20,7 +20,7 @@ because I use =C-c p= as my =projectile= keymap prefix.
 * persp-mode
   The main package.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package persp-mode
     :hook
     (after-init . (lambda ()
@@ -43,7 +43,7 @@ because I use =C-c p= as my =projectile= keymap prefix.
 ** Projectile Bridge
    This is a package to integrate =persp-mode= with =projectile=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package persp-mode-projectile-bridge
     :after (persp-mode projectile)
     :hook

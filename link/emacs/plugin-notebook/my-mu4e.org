@@ -33,7 +33,7 @@ an offline IMAP sync of the user's email account for reading email.
 
 * use-package specification
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Only load mu4e if we have the requisite executables installed.
   (when (and (executable-find "mu") (executable-find "mbsync"))
     (use-package mu4e

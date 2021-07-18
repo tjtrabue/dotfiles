@@ -9,13 +9,13 @@ Plugins and configuration for regular expression support within Emacs.
 * relint
   Code linter (that is, a syntax/style checker) for regular expressions.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package relint)
 #+end_src
 
 * visual-regexp
   Makes regular expressions look nicer in Emacs Lisp strings.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package visual-regexp)
 #+end_src

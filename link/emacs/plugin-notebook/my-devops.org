@@ -7,12 +7,12 @@
 Various dev-ops packages and configuration for Emacs.
 
 * ansible
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package ansible)
 #+end_src
 
 * docker
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package docker
   :bind
   (("C-c d" . docker)))
@@ -23,7 +23,7 @@ Various dev-ops packages and configuration for Emacs.
   There is also a =kubernetes-evil= plugin for evil-mode support.
   See =my-evil= for its configuration.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package kubernetes
     :commands
     (kubernetes-overview))

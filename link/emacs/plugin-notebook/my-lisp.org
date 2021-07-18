@@ -14,7 +14,7 @@ regardless of its particular dialect.
   manner. There is also the fantastic =lispyville= plugin for integrating
   =lispy= with =evil-mode=. See the =my-evil.org= file for its configuration.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package lispy
       :hook
       ;; Load lispyj-mode for any LISP derived major mode.
@@ -100,7 +100,7 @@ regardless of its particular dialect.
    for =parinfer-rust-mode-map=.
 
 ** use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package parinfer-rust-mode
       :hook
       ;; Automatically activate parinfer-rust-mode in these major modes.

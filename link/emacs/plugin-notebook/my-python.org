@@ -9,7 +9,7 @@ Plugins and configuration for programming in Python.
 * elpy
   =elpy= is a complete Python development environment for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package elpy
     :defer t
     :hook
@@ -33,7 +33,7 @@ Plugins and configuration for programming in Python.
 * pipenv
   Pipenv integration for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package pipenv
   :hook
   (python-mode . pipenv-mode)
@@ -46,6 +46,6 @@ Plugins and configuration for programming in Python.
 * ein
   Emacs Jupyter Notebook plugin.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package ein)
 #+end_src

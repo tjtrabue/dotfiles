@@ -7,7 +7,7 @@
 Colorize color names/hex codes in buffers to help you visualize what actual
 color a name refers to.  Very handy!
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package rainbow-mode
     :hook
     ;; Automatically turn on rainbow-mode when editing a source code file

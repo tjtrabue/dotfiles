@@ -14,7 +14,7 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
   includes support for themed icons, modified indicators, adjustable fonts, and
   more.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package centaur-tabs
       :after evil-collection
       :demand t

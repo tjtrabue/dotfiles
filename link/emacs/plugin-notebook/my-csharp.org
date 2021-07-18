@@ -12,7 +12,7 @@ now anybody can create CLR applications using Microsoft's languages. Hence, it
 may be useful to configure Emacs for CLR programming, even if you're a
 non-Windows programmer.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package csharp-mode
     ;; :disabled
     :after (tree-sitter tree-sitter-langs)

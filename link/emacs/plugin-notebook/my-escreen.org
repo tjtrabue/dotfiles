@@ -17,7 +17,7 @@ superseded by =tmux=).
   I recommend you use =helm-escreen= for all interactions with =escreen= to make
   your life easier.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package escreen
     :init
     ;; Have to set this value here since some internal function is trying

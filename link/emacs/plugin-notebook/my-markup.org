@@ -9,30 +9,30 @@ TOML, YAML, etc.
 
 * json-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package json-mode)
 #+end_src
 
 * markdown-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package markdown-mode)
 #+end_src
 
 * toml
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package toml)
 #+end_src
 
 * toml-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package toml-mode)
 #+end_src
 
 * yaml-mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package yaml-mode)
 #+end_src

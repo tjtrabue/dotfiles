@@ -13,7 +13,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   here. Wait to load modules only used by an individual plugin in its =init=
   block.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Man pager library
     (require 'man)
     ;; Newer dired library
@@ -29,7 +29,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 * Define User Variables
   This is where I define new variables to be used throughout my configuration.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Make these variables compile-time constants (and available during
     ;; compilation)
     (eval-when-compile
@@ -90,7 +90,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 * Language/Encoding
   Language and encoding parameters for this particular Emacs instance.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Define a standard text encoding system for all files.
     (set-language-environment "UTF-8")
     (set-default-coding-systems 'utf-8)
@@ -100,7 +100,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   The load-path list is a collection of file paths that Emacs uses to locate
   Elisp modules at runtime.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Tell Emacs where custom library files are
     (add-to-list 'load-path my/elisp-lib-dir)
     ;; Tell Emacs where our personal elisp lib dir resides.
@@ -113,7 +113,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   Once we have configured the =load-path= we can add =require= statements for
   custom Emacs Lisp libraries.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; My own font functions and definitions.
     (require 'my-font)
     ;; My custom window functions.
@@ -126,7 +126,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   since they are necessary evil, not main configuration code, and as such will
   soon become unnecessary and may be safely removed.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Fix `make-obsolete' functions argument list issues.
     (load "fix/em28-obsolete-functions-fix")
   #+end_src
@@ -135,7 +135,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   It's handy to have Emacs put all backup files in a centralized directory, as
   opposed to strewing them about each directory you visit.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Put all backup files in ~/.emacs.d/backups to avoid causing
     ;; unwanted side-effects.
     (if (not (file-exists-p my/emacs-backup-dir))
@@ -168,7 +168,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   inferior interpreters) inherit from, recognize ANSI color escape sequences
   so that shells don't look like a hot mess. We also want colorized man pages.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Set ANSI color integration in comint-mode
     (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
     ;; Colorize Emacs' man page viewer
@@ -186,7 +186,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   many existing variables, especially if you use advanced programming tools such
   as LanguageServerProtocol clients and servers.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
     ;; screen with debugging output seems to mess with evil-mode, so I find it
     ;; prudent to turn this variable off until I have a reason to turn it on.
@@ -266,7 +266,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   Set default font for Emacs.
   *NOTE:* The main font configuration is in =my-font.el=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (my-font-set-default-font)
   #+end_src
 
@@ -276,7 +276,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   of locations for help pages. Here we add more locations for browsing
   user-installed info pages.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Make sure user-installed info pages are available.
     (add-to-list 'Info-default-directory-list my/user-info-dir)
   #+end_src
@@ -285,7 +285,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   Here we alias existing functions to new names, usually to tell Emacs to run a
   different function whenever it tries to use one we don't like.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Turn all "yes or no" prompts into "y or n" single character prompts to make
     ;; our lives eaiser.
     (defalias 'yes-or-no-p 'y-or-n-p)
@@ -298,7 +298,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   (save-place-mode 1) will make Emacs open previously closed files at their last
   edited location, as opposed to opening them at the beginning.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Disable menubar and toolbar (they take up a lot of space!)
     (menu-bar-mode -1)
     (tool-bar-mode -1)
@@ -347,7 +347,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   inform their behavior.
 
 ** load-theme
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; This hook runs after the main theme is loaded.
      (defvar after-load-theme-hook nil
        "Hook run after a color theme is loaded using `load-theme'.")
@@ -363,7 +363,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** Global
    Key bindings available in any major mode.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; Find file at point ("g f" in evil-mode)
      ;; (global-set-key (kbd "C-c f p") 'ffap)
 
@@ -381,7 +381,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   These settings are used to configure Emacs' mail-mode and integrations with
   external email programs, such as mutt.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
 
     ;; Change mode when Emacs is used to edit emails for Mutt
     (setq auto-mode-alist (append '(("/tmp/mutt.*" . message-mode)) auto-mode-alist))
@@ -394,7 +394,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    ~dired~ is Emacs' built in directory editor and file explorer. You invoke the ~dired~
    command on a directory by using the default key binding ~C-x d~.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; allow dired to delete or copy dir
      ;; “always” means no asking
      ;; “top” means ask once
@@ -420,7 +420,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 * Function Definitions
   Custom functions, both standard and interactive.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun print-major-mode ()
       "Show the major mode of the current buffer in the echo area."
       (interactive)
@@ -436,16 +436,6 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       "Reload all Emacs config files."
       (interactive)
       (load-file my/emacsrc))
-
-    (defun load-directory (dir load-fn pattern)
-      "Load all files in a given DIR using a provided file loading function
-      LOAD-FN. Files in the directory are matched based on PATTERN, which is a
-      regex."
-      (require 'cl-lib)
-      (cl-flet ((load-it (f)
-                         (funcall load-fn (concat (file-name-as-directory dir) f))))
-        (if (file-directory-p dir)
-            (mapc #'load-it (directory-files dir nil pattern)))))
 
     (defun download-elisp-lib (url &optional file-name)
       "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
@@ -549,7 +539,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    Perl's operations depends on a number of environment variables that Emacs
    will not recognize by default, so we must set them here.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (let* ((perl-local-lib-root (concat (getenv "HOME") "/perl5"))
             (perl-local-lib (concat perl-local-lib-root "/lib/perl5")))
        (setenv "PERL5LIB" perl-local-lib)
@@ -573,7 +563,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    dired is the awesome "directory editor" mode in Emacs. It's much more
    convenient than entering the shell, for the most part.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (add-hook 'dired-mode-hook (lambda ()
                                     ;; Auto-refresh dired buffer when files change.
                                     (auto-revert-mode 1)
@@ -587,7 +577,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** emacs-startup hooks
    These run after loading init files and handling the command line.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; after startup, it is important you reset this to some reasonable default. A
      ;; large gc-cons-threshold will cause freezing and stuttering during long-term
      ;; interactive use. I find these are nice defaults:
@@ -598,7 +588,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    #+end_src
 
 ** prog-mode hooks
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; These commands run whenever Emacs finds a file of any programming language.
      (add-hook 'prog-mode-hook (lambda ()
                                   ;; Make hyperlinks clickable.
@@ -613,7 +603,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** shell-mode hooks
    shell-mode is a basic terminal emulator in Emacs.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (add-hook 'shell-mode-hook (lambda ()
                                     (ansi-color-for-comint-mode-on)))
    #+end_src
@@ -622,7 +612,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    These commands run whenever Emacs finds a text type file or any of its
    derivatives.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (add-hook 'text-mode-hook (lambda ()
                                    ;; Wrap words if they exceed the fill column
                                    ;; threshold.
@@ -637,7 +627,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    These commands run whenever Emacs finds a configuration file, such as =.ini=
    or =.gitconfig= files.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (add-hook 'conf-mode-hook (lambda ()
                                    ;; Make hyperlinks clickable.
                                    (goto-address-mode 1)
@@ -648,7 +638,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** before-save hooks
    These hooks run before Emacs saves a file.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (add-hook 'before-save-hook (lambda ()
                                      ;; Strip trailing whitespace from the
                                      ;; current buffer before saving.
@@ -660,7 +650,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** after-save hooks
    These hooks run after Emacs saves a file.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (add-hook 'after-save-hook (lambda ()
                                     ;; Update any GTAGS files if necessary.
                                     (my/gtags-update-hook-fn)))
@@ -669,7 +659,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** window-size-change hooks
    Hooks that run whenever the window size changes.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; NOTE: Most of the time, Emacs seems to take care of zooming the font size
      ;;       by itself. Only uncomment this hook if you notice a very small font
      ;;       size on large monitors.
@@ -704,7 +694,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
    To update all packages installed through straight, run ~M-x straight-pull-all~
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (when (>= emacs-major-version 24)
        (eval-when-compile
          (defvar bootstrap-version)
@@ -754,7 +744,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   MELPA.  My configuration files install, configure, and load those third-party
   packages in a way that does not clutter my primary configuration file.
 
-  #+begin_src emacs-lisp :tangle yes
-    (load-directory my/emacs-plugin-dir #'load-file "\\.el$")
-    (load-directory my/plugin-notebook-dir #'org-babel-load-file "\\.org$")
+  #+begin_src emacs-lisp
+    (my/apply-to-dir-files my/emacs-plugin-dir #'load-file "\\.el$")
+    (my/apply-to-dir-files my/plugin-notebook-dir #'org-babel-load-file "\\.org$")
   #+end_src

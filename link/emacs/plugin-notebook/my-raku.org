@@ -13,7 +13,7 @@ to Perl version 5, and is the new brainchild of Perl's creator, Larry Wall.
   Major mode for editing Raku files. Comes packed with plenty of fancy functions
   to make your life easier when writing Raku.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package raku-mode
     :commands raku-mode)
 #+end_src

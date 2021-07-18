@@ -24,7 +24,7 @@ such plugins is sure to slow your system down significantly.
   *NOTE*: I do not recommend you use PDE right now as it can hijack a number of
   different configuration settings, such as =helm=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 ;; Add the Elisp code in the PDE directory to load-path.
 (let ((pde-dir (concat user-emacs-directory "pde")))
   (when (file-directory-p pde-dir)
@@ -55,7 +55,7 @@ such plugins is sure to slow your system down significantly.
    why it's not the default Perl editing mode.
 
 *** Variables
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defvar my/ffap-perl-inc-dirs
         (apply 'append
         (mapcar (function ffap-all-subdirs)
@@ -66,7 +66,7 @@ such plugins is sure to slow your system down significantly.
 #+end_src
 
 *** Functions
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defun my/cperl-ffap-locate(name)
     "Return cperl module for find-file-at-point."
     (let* ((r (replace-regexp-in-string ":" "/" (file-name-sans-extension name)))
@@ -116,7 +116,7 @@ such plugins is sure to slow your system down significantly.
 #+end_src
 
 *** use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package cperl-mode
     :mode
     (("\\.pl\\'" . cperl-mode)
@@ -151,7 +151,7 @@ such plugins is sure to slow your system down significantly.
     short, =plsense= shines. I highly recommend you use both, but I do find that
     =plsense= is more generally useful.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package perly-sense-mode
     :disabled
     :straight
@@ -192,7 +192,7 @@ such plugins is sure to slow your system down significantly.
    is and the slow pace of its change history, I doubt that it will change much
    in the near future.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package plsense
     :disabled
     :after cperl-mode
@@ -225,7 +225,7 @@ such plugins is sure to slow your system down significantly.
    This is a community package for finding Perl library source files.
    It really supersedes my custom =find-perl-module= function.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package perl-find-library
     :after cperl-mode
     :bind

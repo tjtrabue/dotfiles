@@ -13,6 +13,6 @@ standard JSON) to define infrastructure roll-outs.
 * terraform-mode
   Major mode for editing Terraform configuration files (=.tf= files).
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package terraform-mode)
 #+end_src

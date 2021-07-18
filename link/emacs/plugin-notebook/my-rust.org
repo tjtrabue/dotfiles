@@ -12,7 +12,7 @@ applications that run as native compiled binaries.
 * rust-mode
   Major mode for editing Rust files.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package rust-mode
       :mode
       ("\\.rs\\'" . rust-mode)

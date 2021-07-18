@@ -8,7 +8,7 @@ Emacs Lisp is the Emacs Lisp dialect of the age-old Lisp programming language.
 This file contains Emacs plugins and configuration for writin Emacs Lisp.
 
 * Hooks for emacs-lisp-mode
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; Turn on eldoc-mode for simple documentation
     (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
     (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
@@ -20,7 +20,7 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    Lisp built on COMINT. It comes packaged with Emacs, so no installation is
    necessary.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package ielm
        :commands ielm
        :hook
@@ -32,7 +32,7 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    Highlights defined Elisp symbols.
    Recognizes Lisp function, built-in function, macro, face and variable names.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package highlight-defined
        :hook
        (emacs-lisp-mode . highlight-defined-mode))
@@ -41,14 +41,14 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
 ** suggest
    Discover Emacs Lisp functions that do what you want
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package suggest)
    #+end_src
 
 ** easy-escape
    Fix escapes in Emacs Lisp regular expressions.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package easy-escape
        :hook
        ((lisp-mode emacs-lisp-mode) . easy-escape-minor-mode))
@@ -60,7 +60,7 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    For example,
    (number-sequence 1 10) => 1 2 3 4 5 6 7 8 9 10
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package eros
        :hook
        ((emacs-lisp-mode) . (lambda ()
@@ -71,6 +71,6 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    Shows keyboard macros or latest interactive commands as emacs lisp.
    This package is quite old, so I don't expect it to be updated again.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package elmacro)
    #+end_src

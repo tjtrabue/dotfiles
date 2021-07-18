@@ -12,7 +12,7 @@
   here, but I highly recommend you peruse the online documentation, and maybe
   work through a tutorial or two.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package auctex
       :defer t
       :defines (latex-help-cmd-alist latex-help-file)
@@ -38,12 +38,12 @@
 
 * auctex-lua
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package auctex-lua)
   #+end_src
 
 * auctex-latexmk
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package auctex-latexmk)
   #+end_src

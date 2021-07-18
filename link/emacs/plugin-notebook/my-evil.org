@@ -19,7 +19,7 @@ to =nil=, so this may help you.
   An =evil-operator= is a function that acts on text objects (characters, words,
   lines, etc.). They are designed to mimic Vim's operators.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (eval-when-compile
       (unless (fboundp 'my/define-custom-evil-operators)
         (defun my/define-custom-evil-operators ()
@@ -67,7 +67,7 @@ like Vim."
   on their parameters.
 
 ** Define advice functions
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (eval-when-compile
        (defun my/highlight-evil-region-advice (orig-fn beg end &rest args)
          "Pulse a selected buffer region with a highlight for a moment."
@@ -76,7 +76,7 @@ like Vim."
    #+end_src
 
 ** Add advice to evil functions
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (defun my/add-evil-advice ()
        "Add advice to various `evil-mode' functions."
        (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
@@ -88,7 +88,7 @@ like Vim."
   *NOTE*: If you want to use =evil-leader=, you need to load =evil-leader=
   /before/ loading =evil=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package evil
       :after (evil-leader key-chord)
       :demand t
@@ -133,7 +133,7 @@ like Vim."
    by an arbitrary succession of additional key strokes to call a predefined
    function. It's similar in nature to Emacs' =key-chord= plugin.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-leader
        :demand t
        :init
@@ -211,7 +211,7 @@ like Vim."
 
 ** evil-collection
    Used to provide default Vim keybindings for all standard Emacs modes.
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-collection
        :demand t
        :after evil
@@ -233,14 +233,14 @@ like Vim."
    #+end_src
 
 ** evil-surround
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-surround
        :demand t
        :config (global-evil-surround-mode 1))
    #+end_src
 
 ** evil-numbers
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-numbers
        :demand t
        :config
@@ -251,7 +251,7 @@ like Vim."
 ** evil-commentary
    Code commenting plugin based on =vim-commentary= for Vim.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-commentary
        ;; Disabled in favor of evil-nerd-commenter
        :disabled
@@ -262,7 +262,7 @@ like Vim."
 ** evil-nerd-commenter
    A very powerful code commenting plugin based on =NerdCommenter= for Vim.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-nerd-commenter
        :after evil
        :bind*
@@ -277,20 +277,20 @@ like Vim."
    #+end_src
 
 ** evil-mark-replace
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-mark-replace
        :demand t)
    #+end_src
 
 ** evil-matchit
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-matchit
        :demand t
        :config (global-evil-matchit-mode t))
    #+end_src
 
 ** evil-exchange
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; Port of vim-exchange used to exchange two text selections based on two
      ;; consecutive motions beginning with 'gx'
      (use-package evil-exchange
@@ -298,13 +298,13 @@ like Vim."
    #+end_src
 
 ** evil-extra-operator
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-extra-operator
        :demand t)
    #+end_src
 
 ** evil-args
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-args
        :demand t
        :bind
@@ -322,7 +322,7 @@ like Vim."
    #+end_src
 
 ** evil-visualstar
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-visualstar
        :demand t
        :config (global-evil-visualstar-mode t))
@@ -332,7 +332,7 @@ like Vim."
    =evil-snipe= allows you to move around buffers a bit more flexibly using keys
    such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-snipe
        :demand t
        :after (evil-leader evil-collection)
@@ -353,7 +353,7 @@ like Vim."
    #+end_src
 
 ** evil-org
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package evil-org
        :demand t
        :after (org evil)
@@ -368,7 +368,7 @@ like Vim."
 
 ** kubernetes-evil
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package kubernetes-evil
        :demand t
        :after (evil kubernetes))
@@ -387,7 +387,7 @@ like Vim."
      options for integrating visual state with lispy’s special region model
 
 *** Functions
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (defun my/set-lispyville-leader-keys ()
         "Set `evil-leader' keybindings for all lispy modes."
         (interactive)
@@ -421,7 +421,7 @@ like Vim."
     #+end_src
 
 *** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package lispyville
        :after (evil-collection lispy)
        :hook

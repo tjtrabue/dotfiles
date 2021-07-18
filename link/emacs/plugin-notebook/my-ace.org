@@ -13,7 +13,7 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
         alternative. See =my-avy= for configuration details.
 
 * Ace Window
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Quick and easy window navigation with M-o.
   (use-package ace-window
     :after (evil evil-collection)
@@ -28,7 +28,7 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
 #+end_src
 
 * Ace Link
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;; Quickly follow links in org-mode, help-mode, info-mode, etc.
   ;; Uses the 'o' key by default to select a link.
   (use-package ace-link

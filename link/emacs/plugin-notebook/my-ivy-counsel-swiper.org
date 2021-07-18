@@ -20,7 +20,7 @@ depending on =ivy= for their operations.
 
 ** Functions
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (defun my/ivy-toggle-mark ()
        "Used to toggle an ivy mark in the ivy minibuffer. If the current
 candidate is not marked, mark it. Otherwise, unmark the marked candidate."
@@ -34,7 +34,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
    *NOTE:* If you want to accept the currently typed name in =ivy-find-file=,
    press =C-M-j=.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package ivy
        :after (evil helm)
        :demand t
@@ -73,7 +73,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 *** ivy-all-the-icons
     Ivy integration plugin for the incredible =all-the-icons= plugin.
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package all-the-icons-ivy
         :after (all-the-icons ivy)
         :hook
@@ -82,7 +82,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
 *** ivy-prescient
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package ivy-prescient
         :demand t
         :config
@@ -94,7 +94,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
     is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
     =ivy-yasnippet=.
 
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package ivy-yasnippet
         :after (ivy yasnippet)
         :commands ivy-yasnippet
@@ -118,7 +118,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
   details.
 
 ** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package counsel
        :demand t
        :after ivy
@@ -133,7 +133,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
 ** Plugins
 *** counsel-projectile
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package counsel-projectile
         :demand t
         :after (counsel projectile)
@@ -142,7 +142,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
     #+end_src
 
 *** counsel-tramp
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package counsel-tramp
         :bind
         ("M-r" . counsel-tramp))
@@ -152,7 +152,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
   =swiper= is a narrowing search tool which serves as an alternative to
   =isearch=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package swiper
       :after evil-collection
       :commands swiper

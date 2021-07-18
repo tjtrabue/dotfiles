@@ -18,7 +18,7 @@ strengthen your Haskell game in no time.
   =ghci=, =stack=, =cabal=, and other Haskell tools, as well as =ghci='s
   built-in debugger.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package haskell-mode
     :after (evil evil-collection)
     :init
@@ -65,7 +65,7 @@ strengthen your Haskell game in no time.
 
    Not currently used because it's hard to get it to work globally.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 ;; (use-package shm
 ;;   :hook (haskell-mode . structured-haskell-mode)
 ;;   :config
@@ -76,6 +76,6 @@ strengthen your Haskell game in no time.
    =ghci= command completions for =inferior-haskell= buffers. The completion's
    appearance is very similar to that of the =fish= shell.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package ghci-completion)
 #+end_src

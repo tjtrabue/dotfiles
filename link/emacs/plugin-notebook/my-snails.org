@@ -17,7 +17,7 @@ download the repository manually (or through =straight.el=) and point
 =load-path= at the repository's location.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package snails
       :disabled
       ;; 6/11/2021: This package does not yet have an official release, and is

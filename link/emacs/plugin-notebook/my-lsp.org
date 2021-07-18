@@ -28,7 +28,7 @@ to the =my-custom-lsp.el= file.
   them, not to mention all the fancy UI stuff regarding completions,
   documentation on hover, syntax linting and error checking, etc.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package lsp-mode
       :after (format-all my-custom-lsp)
       ;; Commands used to autoload this package.
@@ -101,7 +101,7 @@ to the =my-custom-lsp.el= file.
   We should load it before we load =lsp-mode= because it contains important
   configuration functions we'll want to use for =lsp-mode=.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package my-custom-lsp
       ;; This is a local package, so we don't want straight.el to download
       ;; anything.
@@ -117,7 +117,7 @@ to the =my-custom-lsp.el= file.
 * Plugins
 ** lsp-ui
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package lsp-ui
        :after lsp-mode
        :custom
@@ -155,7 +155,7 @@ to the =my-custom-lsp.el= file.
 
 ** lsp-haskell
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      ;; NOTE: This plugin requires haskell-language-server to be installed on your
      ;;       system.
      (use-package lsp-haskell
@@ -166,7 +166,7 @@ to the =my-custom-lsp.el= file.
 
 ** lsp-java
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package lsp-java
        :after lsp-mode
        :hook
@@ -175,7 +175,7 @@ to the =my-custom-lsp.el= file.
 
 ** lsp-treemacs
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package lsp-treemacs
        :after (lsp-mode treemacs)
        :commands (lsp-treemacs-errors-list)
@@ -213,14 +213,14 @@ to the =my-custom-lsp.el= file.
    your file system.
 
 *** variables
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (defvar my/ccls-compile-commands-map (make-hash-table :test 'equal)
         "Hash table associating build tool names to their associated internal
       data structure used to generate the debug cache for CCLS.")
     #+end_src
 
 *** structures
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (cl-defstruct my/ccls-gen-compile-commands
         "Structure defining a generic CCLS command and arguments for generating the
       compile_commands.json file and other debugging information that CCLS makes use
@@ -229,7 +229,7 @@ to the =my-custom-lsp.el= file.
     #+end_src
 
 *** helper functions
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (defun my/insert-semicolon-eol ()
         "Insert ';' at the end of the current line and moves point to EOL."
         (interactive)
@@ -281,7 +281,7 @@ to the =my-custom-lsp.el= file.
     #+end_src
 
 *** use-package specification
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       ;; LSP language clients
       ;; CCLS - For use with C, C++, and Objective C
       ;;
@@ -323,13 +323,13 @@ to the =my-custom-lsp.el= file.
 
 ** lsp-origami
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package lsp-origami
        :after lsp-mode)
    #+end_src
 ** lsp-dart
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package lsp-dart
        :after lsp-mode)
    #+end_src

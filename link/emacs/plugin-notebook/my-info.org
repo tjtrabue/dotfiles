@@ -10,7 +10,7 @@ Contains additional packages and configuration for Emacs' built-in =info-mode=.
   Use =info+=
   The custom code below is used to grab the working version from the EmacsWiki website.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 ;; The following code downloads the info+ library and loads it into Emacs.
 (let ((info+-file-path (expand-file-name "info+.el" my/emacs-lisp-dir)))
   ;; Download the info+.el source file if it does not already exist.
@@ -24,7 +24,7 @@ Contains additional packages and configuration for Emacs' built-in =info-mode=.
 * info-colors
   Colorize =info-mode= even without =info+=.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package info-colors
   :hook
   ((Info-selection) . info-colors-fontify-node))

@@ -13,7 +13,7 @@ as feature-rich as Swiper, and it does behave a little differently, so I
 personally like to use CTRLF alongside Swiper.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package ctrlf
       :after evil-collection
       :hook

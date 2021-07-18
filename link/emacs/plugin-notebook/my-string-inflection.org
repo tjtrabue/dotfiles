@@ -11,7 +11,7 @@ through an array of standard naming conventions, such as "camelCase", "UPCASE",
 "snake_case", and more.
 
 * use-package specification
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package string-inflection
     :hook
     ((java-mode . (lambda ()

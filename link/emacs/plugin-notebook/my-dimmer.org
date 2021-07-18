@@ -8,7 +8,7 @@
 active window.
 
 * Functions
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun dimmer-lsp-ui-doc-p ()
       "Check whether current buffer is an lsp-ui-doc buffer."
       (string-prefix-p " *lsp-ui-doc-" (buffer-name)))
@@ -21,7 +21,7 @@ active window.
   #+end_src
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package dimmer
       ;; This package is too problematic; too many special cases, too many
       ;; chances to go wrong. It's not very well made.

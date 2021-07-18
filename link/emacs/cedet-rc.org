@@ -9,14 +9,14 @@ dotfiles repository on GitHub.
 
 * Variables
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (defvar my/cedet-home (concat user-emacs-directory "straight/repos/cedet/")
     "The root directory for the CEDET repository.")
 #+end_src
 
 * Main Configuration
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   ;;; emacs-rc-cedet.el ---
 
   (load-file (concat my/cedet-home "cedet-devel-load.el"))

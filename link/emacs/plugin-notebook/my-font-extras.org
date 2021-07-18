@@ -10,7 +10,7 @@ Any extra font configuration goes here.
 * hasklig-mode
   Use fancy ligatures for Haskell programming.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package hasklig-mode
   :hook (haskell-mode))
 #+end_src

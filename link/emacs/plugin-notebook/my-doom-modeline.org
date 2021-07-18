@@ -11,7 +11,7 @@ modeline from Doom Emacs.
 
 * doom-modeline
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package doom-modeline
     :after (all-the-icons doom-themes)
     :demand t

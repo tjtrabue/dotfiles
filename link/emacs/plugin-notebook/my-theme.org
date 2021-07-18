@@ -14,12 +14,12 @@ do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
 
 * Provide Package
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (provide 'my-theme)
   #+end_src
 
 * Variables
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defvar my/theme-after-load-hook nil
       "Functions to run after the main theme activates.
 Please do not make this hook run as advice to `load-theme' because
@@ -30,7 +30,7 @@ automatically after it calls `load-theme' for all eternity.")
 
 * Functions
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun my/set-color-theme-alist (theme-alist &optional sublist)
       "Sets `my/color-theme-alist' to the specified THEME-ALIST.
 
@@ -75,7 +75,7 @@ functions to provide a single point of theme configuration."
 * Add advice to theme activation function
   We want to run our custom theme hooks automatically after the theme loads.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defadvice my/activate-theme (after run-my/theme-after-load-hook activate)
       "Run `my/theme-after-load-hook'."
       (run-hooks 'my/theme-after-load-hook))
@@ -86,7 +86,7 @@ functions to provide a single point of theme configuration."
   theme has loaded, so we should put all such logic inside of an "after load"
   hook.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (add-hook 'my/theme-after-load-hook (lambda ()
       ;; It's important to load org-beautify-theme after the main theme has
       ;; loaded.
@@ -106,7 +106,7 @@ functions to provide a single point of theme configuration."
    This is a /huge/ collection of Emacs themes contributed by the very gracious
    creator of Doom Emacs.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package doom-themes
        :after all-the-icons
        :demand t
@@ -132,7 +132,7 @@ functions to provide a single point of theme configuration."
   #+end_src
 
 ** use-package specification
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package theme-magic
        :config
        ;; This global minor mode automatically updates your Linux theme
@@ -141,7 +141,7 @@ functions to provide a single point of theme configuration."
    #+end_src
 
 * Apply theme to other faces
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     ;; (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
     ;; (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
   #+end_src

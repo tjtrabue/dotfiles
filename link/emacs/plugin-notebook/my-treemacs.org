@@ -11,7 +11,7 @@ features absent from the majority of such explorers.
 * treemacs
   This is the configuration for =treemacs= itself.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package treemacs
       :after all-the-icons
       :commands treemacs
@@ -47,7 +47,7 @@ features absent from the majority of such explorers.
    =treemacs-projectile= does not take care of this on its own.
 
 *** Helper Functions
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (defun my/sync-treemacs-with-projectile ()
         "Add advising functions to keep treemacs in sync with projectile
       whenever a new projectile project is visited. I don't know why
@@ -60,7 +60,7 @@ features absent from the majority of such explorers.
     #+end_src
 
 *** use-package specification
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp
       (use-package treemacs-projectile
         :after (treemacs projectile)
         :config
@@ -73,7 +73,7 @@ features absent from the majority of such explorers.
 ** treemacs-evil
    Needed for evil-mode integration!
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package treemacs-evil
        :after (treemacs evil))
    #+end_src
@@ -81,7 +81,7 @@ features absent from the majority of such explorers.
 ** treemacs-magit
    Git integration via the amazing =magit= Git client plugin
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package treemacs-magit
        :after (treemacs magit))
    #+end_src
@@ -89,7 +89,7 @@ features absent from the majority of such explorers.
 ** treemacs-persp
    =persp-mode= integration with =treemacs=.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package treemacs-persp
        :after (treemacs persp-mode)
        :config

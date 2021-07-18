@@ -12,7 +12,7 @@ This file adds some enhancements to Emacs' undo functionality.
   A simple plugin providing linear undo/redo actions. It does not interfere with
   Emacs' internal undo data.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package undo-fu
       :after evil-collection
       :bind*
@@ -25,7 +25,7 @@ This file adds some enhancements to Emacs' undo functionality.
   Saves =undo-fu='s data across Emacs sessions so that Emacs remembers undo
   history after restarting.
 
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package undo-fu-session
       :demand t
       :config
