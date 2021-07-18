@@ -93,18 +93,18 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
 Make sure to only run this function after 'sly-mrepl loads."
       ;; History navigation.
       (evil-define-key '(normal insert) sly-mrepl-mode-map
-        (kbd "C-r") 'counsel-sly-mrepl-history)
+        (kbd "C-r") #'counsel-sly-mrepl-history)
       (evil-define-key 'insert sly-mrepl-mode-map
-        (kbd "C-j") 'comint-next-input
-        (kbd "C-k") 'comint-previous-input)
+        (kbd "C-j") #'comint-next-input
+        (kbd "C-k") #'comint-previous-input)
       ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
       (define-key sly-mrepl-mode-map (kbd ",") nil)
       ;; Define useful key-chords:
       (evil-leader/set-key-for-mode 'sly-mrepl-mode
-        "," 'counsel-sly-mrepl-shortcut
-        "p" 'sly-mrepl-set-package
-        "i" 'counsel-sly-package-internal-symbols
-        "r" 'sly-restart-inferior-lisp))
+        "," #'counsel-sly-mrepl-shortcut
+        "p" #'sly-mrepl-set-package
+        "i" #'counsel-sly-package-internal-symbols
+        "r" #'sly-restart-inferior-lisp))
    #+end_src
 
 * SLIME

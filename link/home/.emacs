@@ -31,6 +31,8 @@
  '(minimap-dedicated-window nil)
  '(minimap-hide-scroll-bar t)
  '(minimap-window-location 'right)
+ '(org-agenda-files
+   '("~/workspace/dotfiles/link/emacs/plugin-notebook/my-evil.org" "/Users/thomastrabue/.emacs.d/org/agenda/home.org" "/Users/thomastrabue/.emacs.d/org/agenda/work.org"))
  '(send-mail-function 'smtpmail-send-it)
  '(sublimity-mode nil)
  '(warning-suppress-types '((comp))))

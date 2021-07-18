@@ -157,10 +157,10 @@ of interest."
 
         (defun git-num-commits (curr-dir &optional ahead)
           "Return the how far ahead or behind the current branch is from its remote
-        tracking branch in terms of commits. CURR-DIR is the current directory.
+tracking branch in terms of commits. CURR-DIR is the current directory.
 
-        Return number of commits ahead of remote branch unless AHEAD is nil, in which
-        case return the number of commits behind the remote branch."
+Return number of commits ahead of remote branch unless AHEAD is nil, in which
+case return the number of commits behind the remote branch."
           (interactive)
           (let* ((curr-branch (s-trim (shell-command-to-string
                                        "git rev-parse --abbrev-ref HEAD")))
@@ -177,13 +177,13 @@ of interest."
 
         (defun git-num-commits-ahead (curr-dir)
           "Return number of commits the current branch has that are not part of
-        its remote counterpart."
+its remote counterpart."
           (interactive)
           (git-num-commits curr-dir t))
 
         (defun git-num-commits-behind (curr-dir)
           "Return number of commits present in the remote tracking branch for the
-        current branch that are not present in the current branch. "
+current branch that are not present in the current branch. "
           (interactive)
           (git-num-commits curr-dir nil))
 
@@ -211,8 +211,7 @@ of interest."
           (git-symbol-number curr-dir "\xf024" "git stash list | cat | wc -l"))
 
         (defun create-git-segment (curr-dir branch face-for-separator)
-          "Put together pieces of Git information into a cohesive, informative
-          segment."
+          "Put together all Git information into a cohesive, informative segment."
           (interactive)
           (let ((for-branch      `(:foreground ,(my-colors-get-color 'green) :weight bold))
                 (for-delta       `(:foreground ,(my-colors-get-color 'yellow)))
@@ -301,8 +300,8 @@ of interest."
       #+begin_src emacs-lisp
         (defun my/prompt-python-segment ()
           "Returns a string (may be empty) based on the current Python
-        Virtual Environment. Assuming the M-x command: `pyenv-mode-set'
-        has been called."
+Virtual Environment. Assuming the M-x command: `pyenv-mode-set'
+has been called."
           (when (fboundp #'pyenv-mode-version)
             (let ((venv (pyenv-mode-version)))
               (when venv
@@ -352,8 +351,8 @@ of interest."
       #+begin_src emacs-lisp
         (defun eshell/eshell-local-prompt-function ()
           "A prompt for eshell that works locally (in that is assumes
-        that it could run certain commands) in order to make a prettier,
-        more-helpful local prompt."
+that it could run certain commands) in order to make a prettier,
+more-helpful local prompt."
           (interactive)
           (let* ((curr-dir (eshell/pwd))
                  ;; Colors/faces
@@ -580,7 +579,7 @@ of interest."
        :config
        ;; Use C-r in eshell mode to search back through history
        (evil-define-key '(normal insert) eshell-mode-map
-         (kbd "C-r") 'helm-eshell-history))
+         (kbd "C-r") #'helm-eshell-history))
    #+end_src
 
 * Plugins

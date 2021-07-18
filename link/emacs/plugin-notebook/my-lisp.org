@@ -114,7 +114,7 @@ regardless of its particular dialect.
       ;; adjusts parentheses as you indent blocks.
       ;; "smart" automatically balance delimiters but try to preserve structure
       ;; as well.
-      (parinfer-rust-preferred-mode "paren")
+      (parinfer-rust-preferred-mode "smart")
       ;; Never prompt user for permission before adjusting indentation.
       (parinfer-rust-check-before-enable nil)
       ;; Dim the parentheses inferred by Parinfer.

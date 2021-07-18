@@ -22,61 +22,61 @@ completion.
   we set them in the =:bind= clause of its =use-package= specification.
 
 #+begin_src emacs-lisp
-  (defun my/set-company-keybindings ()
-    "Used to get around problem with company keybindings not being set.
-  For some horrible, unknown reason, company does not respect keybindings
-  that go against its default keybindings in use-package syntax. For
-  instance, 'TAB' is already bound to `company-select-next', and as such
-  is not allowed to be rebound within a :config block. This function
-  circumvents the aforementioned shortcoming by running its body after
-  company-mode initializes."
-    (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-    (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-    (define-key company-active-map (kbd "RET") 'company-complete-selection)
-    (define-key company-active-map (kbd "<return>") 'company-complete-selection)
-    ;; Re-bind some of evil's keybindings.
-    ;; Use RET to complete company completions
-    (evil-define-key 'insert company-active-map (kbd "RET")
-      'company-complete-selection)
-    (evil-define-key 'insert company-active-map (kbd "<return>")
-      'company-complete-selection)
-    ;; Vim-style keybindings for cycling through matches
-    (define-key company-active-map (kbd "C-j") (lambda ()
-      (interactive)
-      (company-complete-common-or-cycle 1)))
-    (define-key company-active-map (kbd "C-k") (lambda ()
-      (interactive)
-      (company-complete-common-or-cycle -1)))
-    (define-key company-active-map (kbd "C-l") #'company-complete))
+    (defun my/set-company-keybindings ()
+      "Used to get around problem with company keybindings not being set.
+    For some horrible, unknown reason, company does not respect keybindings
+    that go against its default keybindings in use-package syntax. For
+    instance, 'TAB' is already bound to `company-select-next', and as such
+    is not allowed to be rebound within a :config block. This function
+    circumvents the aforementioned shortcoming by running its body after
+    company-mode initializes."
+      (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+      (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+      (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+      (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+      (define-key company-active-map (kbd "RET") 'company-complete-selection)
+      (define-key company-active-map (kbd "<return>") 'company-complete-selection)
+      ;; Re-bind some of evil's keybindings.
+      ;; Use RET to complete company completions
+      (evil-define-key 'insert company-active-map
+        (kbd "RET") #'company-complete-selection)
+      (evil-define-key 'insert company-active-map
+        (kbd "<return>") #'company-complete-selection)
+      ;; Vim-style keybindings for cycling through matches
+      (define-key company-active-map (kbd "C-j") (lambda ()
+                                                  (interactive)
+                                                  (company-complete-common-or-cycle 1)))
+      (define-key company-active-map (kbd "C-k") (lambda ()
+                                                  (interactive)
+                                                  (company-complete-common-or-cycle -1)))
+      (define-key company-active-map (kbd "C-l") #'company-complete))
 
-  (defun my/company-complete-selection--advice-around (fn)
-    "Advice execute around `company-complete-selection' command."
-    (let ((company-dabbrev-downcase t))
-      (call-interactively fn)))
+    (defun my/company-complete-selection--advice-around (fn)
+      "Advice execute around `company-complete-selection' command."
+      (let ((company-dabbrev-downcase t))
+        (call-interactively fn)))
 
-  (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
-    "Helper function that sets my company-backends for a specific mode and
-optionally for extra modes"
-    (add-hook 'emacs-lisp-mode-hook (lambda ()
-       (setq-local company-backends (cons 'company-elisp company-backends)))))
+    (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
+      "Helper function that sets my company-backends for a specific mode and
+  optionally for extra modes"
+      (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                       (setq-local company-backends (cons 'company-elisp company-backends)))))
 
-  (defun my/set-company-backends-elisp ()
-    "Set `company-backends' for `emacs-lisp-mode'."
-    (add-hook 'emacs-lisp-mode-hook (lambda ()
-       (setq-local company-backends (cons 'company-elisp company-backends)))))
+    (defun my/set-company-backends-elisp ()
+      "Set `company-backends' for `emacs-lisp-mode'."
+      (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                       (setq-local company-backends (cons 'company-elisp company-backends)))))
 
-  (defun my/set-company-backends-makefile ()
-    "Set `company-backends' for makefile-mode."
-    (add-hook 'makefile-mode-hook (lambda ()
-      (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
-          company-backends)))))
+    (defun my/set-company-backends-makefile ()
+      "Set `company-backends' for makefile-mode."
+      (add-hook 'makefile-mode-hook (lambda ()
+                                     (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
+                                                                   company-backends)))))
 
-  (defun my/set-company-backends-scratch ()
-    "Set `company-backends' for the *scratch* buffer."
-    (add-hook 'lisp-interaction-mode-hook (lambda ()
-       (setq-local company-backends (cons 'company-elisp company-backends)))))
+    (defun my/set-company-backends-scratch ()
+      "Set `company-backends' for the *scratch* buffer."
+      (add-hook 'lisp-interaction-mode-hook (lambda ()
+                                             (setq-local company-backends (cons 'company-elisp company-backends)))))
 #+end_src
 
 ** company

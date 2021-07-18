@@ -434,15 +434,42 @@ like Vim."
              ("<normal-state> ]" . nil)
              ;; Similarly, we may still want to use our indent bindings.
              ("<normal-state> <" . nil)
-             ("<normal-state> >" . nil)
-             ;; We want "(" and ")" to navigate lists.
-             ("<normal-state> (" . lispy-backward)
-             ("<normal-state> )" . lispy-forward))
+             ("<normal-state> >" . nil))
        :config
+       ;; Change default keybindings for lispyville.
+       (lispyville-set-key-theme '(operators
+                                   c-w
+                                   prettify
+                                   text-objects
+                                   additional))
        (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
-       (evil-define-key 'normal evil-collection-lispy-mode-map
-         (kbd "M-m") 'lispy-mark-symbol)
-       (evil-define-key '(normal insert visual) evil-collection-lispy-mode-map
-         (kbd "M-;") 'lispy-comment)
+       ;; Normal state mappings
+       (evil-define-key 'normal lispyville-mode-map
+         ;; slurp: expand current s-exp; barf: Contract current s-exp
+         "-" #'lispyville-slurp
+         "_" #'lispyville-barf
+         ;; Split and join s-exps.
+         "\\" #'lispy-split
+         "|" #'lispy-join
+         ;; Delimiter navigation
+         "{" #'lispyville-previous-opening
+         "}" #'lispyville-next-closing
+         ;; List navigation
+         "(" #'lispyville-backward-up-list
+         ")" #'lispyville-up-list
+         ;; Function navigation
+         (kbd "M-h") #'lispyville-beginning-of-defun
+         (kbd "M-l") #'lispyville-end-of-defun
+         ;; Make "J" into the safe join operator in Lisp modes.
+         "J" #'lispyville-join
+         ;; Mark symbols with M-m
+         (kbd "M-m") #'lispy-mark-symbol)
+       ;; Normal and visual state mappings
+       (evil-define-key '(normal visual) lispyville-mode-map
+         "gcc" #'lispyville-comment-or-uncomment-line
+         "gcy" #'lispyville-comment-and-clone-dwim)
+       ;; Normal, insert, and visual state mappings
+       (evil-define-key '(normal insert visual) lispyville-mode-map
+         (kbd "M-;") #'lispy-comment)
        (my/set-lispyville-leader-keys))
    #+end_src

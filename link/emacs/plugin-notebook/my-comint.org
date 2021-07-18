@@ -15,8 +15,8 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
     (defun my/set-comint-keybindings ()
       "Set evil keybindings for `comint-mode'."
       (evil-define-key 'insert comint-mode-map
-        (kbd "C-j") 'comint-next-input
-        (kbd "C-k") 'comint-previous-input))
+        (kbd "C-j") #'comint-next-input
+        (kbd "C-k") #'comint-previous-input))
   #+end_src
 
 * use-package specification
