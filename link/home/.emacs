@@ -26,8 +26,6 @@
      (output-html "xdg-open")))
  '(ecb-cache-directory-contents '(("^/\\([^:/]*@\\)?\\([^@:/]*\\):.*" . 0) (".*" . 500)))
  '(ecb-options-version "2.50")
- '(ede-project-directories
-   '("/home/merlin/workspace/practice/cpp" "/home/merlin/workspace/practice/cpp/include" "/home/merlin/workspace/practice/cpp/src"))
  '(helm-minibuffer-history-key "M-p")
  '(lsp-semantic-tokens-enable t nil nil "Customized with use-package lsp-mode")
  '(minimap-dedicated-window nil)
@@ -73,17 +71,18 @@
 (with-eval-after-load "ob-emacs-lisp"
   ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
   (setq org-babel-default-header-args:emacs-lisp
-        `((:lexical . t)
+        '((:lexical . t)
           (:tangle . "yes"))))
 
 ;; Define and set variables
 (eval-when-compile
   (defconst my/home-dir (getenv "HOME")
     "User's home directory path.")
-  (defconst my/dotfiles-dir (concat my/home-dir "/.dotfiles")
+  (defconst my/dotfiles-dir (file-truename (concat my/home-dir "/.dotfiles"))
     "tjtrabue's dotfiles repository directory which houses the primary
   Emacs config.")
-  (defconst my/dotfiles-emacs-dir (concat my/dotfiles-dir "/link/emacs")
+  (defconst my/dotfiles-emacs-dir (file-truename (concat my/dotfiles-dir
+                                                         "/link/emacs"))
     "Main Emacs directory in tjtrabue's dotfiles repository.")
   (defconst my/emacsrc (file-truename (concat (getenv "HOME") "/.emacs"))
     "The main Emacs config file in the user's home directory.")
@@ -91,11 +90,12 @@
                                     (concat my/dotfiles-emacs-dir
                                             "/my-init.org"))
     "My primary Emacs configuration file in `org-mode' syntax.")
-  (defconst my/main-emacs-init-el (car (org-babel-tangle-file my/main-emacs-init-org))
+  (defconst my/main-emacs-init-el (car (org-babel-tangle-file
+                                        my/main-emacs-init-org))
     "My tangled Emacs configuration file created from `my/main-emacs-init-org'.")
   (defconst my/main-emacs-init-elc (byte-compile-dest-file my/main-emacs-init-el)
     "My compiled Emacs configuration file byte-compiled from
-  `main-emacs-init-el'."))
+`main-emacs-init-el'."))
 
 ;; Define functions to help us get started compiling and loading our other
 ;; files.

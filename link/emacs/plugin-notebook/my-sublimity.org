@@ -4,9 +4,10 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
-Cool Sublime Text like features for Emacs.
-Contains features for smooth scrolling, distraction-free editing, and a minimap feature.
+Sublime Text-inspired features for Emacs, such as smooth scrolling,
+distraction-free editing, and a minimap feature.
 
+* use-package specification
 #+begin_src emacs-lisp
 (use-package sublimity
   :demand t

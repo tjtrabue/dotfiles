@@ -38,7 +38,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
         "Directory for additional elisp config files.
     Mostly for enumerating and configuring downloaded plugins.")
       (defvar my/plugin-notebook-dir (file-truename
-                                      (concat user-emacs-directory "/plugin-notebook"))
+                                      (concat user-emacs-directory
+                                              "/plugin-notebook"))
         "Directory for config files written in Org syntax.")
       (defvar my/elisp-lib-dir (file-truename
                                 (concat user-emacs-directory "/require"))
