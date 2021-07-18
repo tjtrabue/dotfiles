@@ -319,7 +319,7 @@ This function is called as part of the `shell-mode-hook'."
     (let* ((username (getenv "USER"))
            (for-user (if (string= username "root")
              `(:foreground ,(my-colors-get-color 'red) :weight bold)
-             `(:foreground ,(my-colors-get-color 'aqua) :weight bold)))
+             `(:foreground ,(my-colors-get-color 'cyan) :weight bold)))
            (user (propertize username 'face for-user))
            (user-icon (propertize "\xf2be" 'face for-user)))
       (concat user-icon " " user)))
@@ -334,7 +334,7 @@ This function is called as part of the `shell-mode-hook'."
       (let* ((dark-env (eq 'dark (frame-parameter nil 'background-mode)))
             (for-parent  (if dark-env `(:foreground ,(my-colors-get-color 'yellow))
                           `(:foreground ,(my-colors-get-color 'blue))))
-            (for-dir     (if dark-env `(:foreground ,(my-colors-get-color 'purple) :weight bold)
+            (for-dir     (if dark-env `(:foreground ,(my-colors-get-color 'violet) :weight bold)
                            `(:foreground ,(my-colors-get-color 'orange) :weight bold)))
             (dir-icon (propertize "\xf413" 'face for-dir))
             (directory (split-directory-prompt
@@ -551,33 +551,35 @@ If you are currently in an eshell session then this function does nothing."
 
 #+begin_src emacs-lisp
   (use-package eshell
-    :after (evil evil-collection color-theme-sanityinc-tomorrow)
+    :after evil-collection
     :hook
-    (eshell-mode . (set-eshell-env-vars set-eshell-aliases))
+    (eshell-mode . (lambda ()
+                     (set-eshell-env-vars)
+                     (set-eshell-aliases)))
     :bind
-    (("C-M-j" . eshell-below)
-     :map eshell-proc-mode-map
+    (:map eshell-proc-mode-map
      ("M-j" . eshell-next-matching-input-from-input)
      ("M-k" . eshell-previous-matching-input-from-input))
-    :init
-    (setq ;; eshell-buffer-shorthand t ...  Can't see Bug 19391
-     eshell-scroll-to-bottom-on-input 'all
-     eshell-error-if-no-glob t
-     eshell-hist-ignoredups t
-     eshell-save-history-on-exit t
-     eshell-prefer-lisp-functions nil
-     eshell-destroy-buffer-when-process-dies t
+    :custom
+    ;; eshell-buffer-shorthand t ...  Can't see Bug 19391
+    (eshell-scroll-to-bottom-on-input 'all)
+    (eshell-error-if-no-glob t)
+    (eshell-hist-ignoredups t)
+    (eshell-save-history-on-exit t)
+    (eshell-prefer-lisp-functions nil)
+    (eshell-destroy-buffer-when-process-dies t)
      ;; Turn off default prompt, otherwise our custom one will not work.
-     eshell-highlight-prompt nil
+    (eshell-highlight-prompt nil)
      ;; Set eshell variables
      ;; The main directory where Emacs will store eshell files
      ;; ~/.emacs.d/eshell
-     eshell-directory-name (expand-file-name "eshell" user-emacs-directory))
+    (eshell-directory-name (expand-file-name "eshell" user-emacs-directory))
+    :init
+    (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function)
     :config
     ;; Use C-r in eshell mode to search back through history
-    (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'helm-eshell-history)
-    (evil-define-key 'normal eshell-mode-map (kbd "C-r") 'helm-eshell-history)
-    (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function))
+    (evil-define-key '(normal insert) eshell-mode-map
+      (kbd "C-r") 'helm-eshell-history))
 #+end_src
 
 * Plugins

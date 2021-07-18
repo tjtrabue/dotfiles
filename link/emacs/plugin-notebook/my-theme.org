@@ -13,11 +13,6 @@ up our nice, easy method of loading themes from right here in this file. If you
 do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
 
-* Provide Package
-  #+begin_src emacs-lisp
-    (provide 'my-theme)
-  #+end_src
-
 * Variables
   #+begin_src emacs-lisp
     (defvar my/theme-after-load-hook nil
@@ -29,31 +24,7 @@ automatically after it calls `load-theme' for all eternity.")
   #+end_src
 
 * Functions
-
   #+begin_src emacs-lisp
-    (defun my/set-color-theme-alist (theme-alist &optional sublist)
-      "Sets `my/color-theme-alist' to the specified THEME-ALIST.
-
-If the user specifies SUBLIST as the name of a nested alist within
-THEME-ALIST, then use that nested SUBLIST as the main theme alist."
-      (require 'my-colors)
-      (let ((the-right-alist theme-alist))
-        (if sublist
-            (setq the-right-alist (cdr (assq sublist theme-alist))))
-        (setq my/color-theme-alist the-right-alist)))
-
-    (defun my/set-semantic-colors-for-theme ()
-      "Make Semantic's faces match our theme."
-      (set-face-attribute 'semantic-tag-boundary-face nil :overline
-                          (alist-get 'purple my/color-theme-alist)))
-
-    (defun my/set-ecb-colors-for-theme ()
-      "Make some of the faces in ECB cohesive with our color theme."
-      (set-face-attribute 'ecb-default-highlight-face nil
-                          :foreground (alist-get 'alt-background my/color-theme-alist)
-                          :background (alist-get 'orange my/color-theme-alist)
-                          :weight 'extra-bold))
-
     (defun my/activate-theme--doom ()
       "Activation/configuration function for doom theme."
       (load-theme 'doom-vibrant t)
@@ -139,9 +110,3 @@ functions to provide a single point of theme configuration."
        ;; whenever Emacs' theme changes.
        (theme-magic-export-theme-mode))
    #+end_src
-
-* Apply theme to other faces
-  #+begin_src emacs-lisp
-    ;; (add-hook 'semantic-mode-hook #'my/set-semantic-colors-for-theme)
-    ;; (add-hook 'ecb-activate-hook #'my/set-ecb-colors-for-theme)
-  #+end_src
