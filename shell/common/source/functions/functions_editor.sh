@@ -49,7 +49,7 @@ grepedit() {
   [ -n "${extraOpts}" ] && searchCommand="${searchCommand} ${extraOpts}"
 
   # Add the search pattern to the end of the search command.
-  searchCommand="${searchCommand} -- ${searchPattern}"
+  searchCommand="${searchCommand} -- '${searchPattern}'"
 
   # Open the files in the configured editor
   eval "edit "$(eval "${searchCommand}")""
