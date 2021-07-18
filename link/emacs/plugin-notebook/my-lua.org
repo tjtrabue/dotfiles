@@ -6,12 +6,6 @@
 
 This file contains all Emacs configuration related to the Lua programming language.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * lua-mode
   This is the major mode for editing Lua files.
 

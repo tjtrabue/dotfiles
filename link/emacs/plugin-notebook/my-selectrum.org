@@ -14,13 +14,7 @@ Currently, =selectrum= and =projectile= just don't play well together. Until the
 =selectrum= boys get some interoperability, I'm sticking with =ivy= as my
 completion framework.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * use-package specification
-
 #+begin_src emacs-lisp :tangle yes
   (use-package selectrum
     :after (helm ivy)

@@ -12,11 +12,6 @@ replacement for plugins like Swiper and Helm Swoop. Currently, however it is not
 as feature-rich as Swiper, and it does behave a little differently, so I
 personally like to use CTRLF alongside Swiper.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package ctrlf

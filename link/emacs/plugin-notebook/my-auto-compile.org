@@ -6,12 +6,6 @@
 
 Automatically compile Emacs Lisp files on save.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * auto-compile
 
 #+begin_src emacs-lisp :tangle yes

@@ -11,11 +11,6 @@ and aims to fulfill similar programming needs, but does so using opinionated
 programming paradigms such as Behavior-Driven Development and Design by
 Contract.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * d-mode
   Major mode for editing files written in the D programming language.
 

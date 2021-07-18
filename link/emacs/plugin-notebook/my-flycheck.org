@@ -10,12 +10,6 @@ plugins, so it will probably work for you without any extra
 configuration. However, should you need to install a few new =flycheck= plugins
 it is very simple to do.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * flycheck
   *NOTE ABOUT FLYSPELL:* =flyspell-mode= requires you to have an
   ispell-compatible spell-checking binary installed, such as =hunspell=.

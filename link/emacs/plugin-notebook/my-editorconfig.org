@@ -9,12 +9,6 @@ basic operations on different file types, such as indenting with spaces rather
 than tabs in all files except for Makefiles, or automatically wrapping text
 after a certain number of columns have been typed.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Variables
 #+begin_src emacs-lisp :tangle yes
   (defvar my/modes-to-format-with-editorconfig '(

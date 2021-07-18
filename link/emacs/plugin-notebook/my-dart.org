@@ -7,12 +7,6 @@
 #+STARTUP: fold
 
 Plugins and configuration for the Dart programming language.
-
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * dart-mode
 
 #+begin_src emacs-lisp :tangle yes

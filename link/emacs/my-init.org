@@ -7,13 +7,6 @@ This Org document contains my primary Emacs configuration. =~/.emacs= only
 holds custom-set-variables and a few core pieces of code needed to load this
 file. The full repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][here]].
 
-We always begin our Org Mode Elisp config files with this line to speed up our
-loads:
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Require statements
   These are =require= directives used to import Elisp modules used heavily by
   plugins and my custom code. Please only list the most important modules

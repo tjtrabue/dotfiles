@@ -13,11 +13,6 @@ up our nice, easy method of loading themes from right here in this file. If you
 do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Provide Package
   #+begin_src emacs-lisp :tangle yes
     (provide 'my-theme)

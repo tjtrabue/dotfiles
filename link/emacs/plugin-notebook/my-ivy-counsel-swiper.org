@@ -8,11 +8,6 @@ These three plugins are a great alternative to =helm=. =ivy= is the primary
 plugin in this tool suite, and =swiper= and =counsel= sit on top of =ivy=,
 depending on =ivy= for their operations.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Ivy
   =ivy= is a generic completion mechanism for Emacs, and a faster alternative to
   =helm=. While it operates similarly to other completion schemes such as

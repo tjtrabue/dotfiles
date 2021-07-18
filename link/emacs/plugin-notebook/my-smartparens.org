@@ -10,11 +10,6 @@
 delimiters based on the syntax of the programming language currently in use. It
 is similar to =vim-endwise=.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * Notes on =smartparens-mode= and =smartparens-strict-mode=
 This package contains two minor modes for managing delimiters:
 =smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not

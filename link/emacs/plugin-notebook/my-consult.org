@@ -6,12 +6,11 @@
 #+tags:
 #+STARTUP: fold
 
-
-
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
+Yet another narrowing completion framework for Emacs. Jeez, you think there
+would be enough of them at this point for people to be satisfied, but no.
+Consult is newer than Helm, Ivy, and Vertico, and integrates with Selectrum.
+Thus, I think Consult will be the future completion system for Emacs, but right
+now I can't be bothered to configure it. It's very feature-rich.
 
 * use-package specification
   #+begin_src emacs-lisp :tangle yes

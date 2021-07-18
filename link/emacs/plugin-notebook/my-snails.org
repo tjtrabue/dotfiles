@@ -16,11 +16,6 @@ cannot build it correctly. The only way I've found to install it properly is to
 download the repository manually (or through =straight.el=) and point
 =load-path= at the repository's location.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package snails

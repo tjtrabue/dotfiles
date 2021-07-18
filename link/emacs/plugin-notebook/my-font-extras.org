@@ -7,12 +7,6 @@
 
 Any extra font configuration goes here.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * hasklig-mode
   Use fancy ligatures for Haskell programming.
 

@@ -8,12 +8,6 @@
 =escreen= is essentially an Emacs version of GNU Screen (which has been
 superseded by =tmux=).
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * escreen
   Window manager for Emacs windows. This should not be confused with a graphical
   window manager for an entire computing environment, such as =i3= (even though

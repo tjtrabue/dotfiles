@@ -10,11 +10,6 @@
 It provides, among other things, an alternative to =font-lock= for syntax
 highlighting.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * tree-sitter
 #+begin_src emacs-lisp :tangle yes
   (use-package tree-sitter

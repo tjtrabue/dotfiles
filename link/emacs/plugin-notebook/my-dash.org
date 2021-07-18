@@ -8,11 +8,6 @@
 
 =dash= provides modern functions and services for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package dash)

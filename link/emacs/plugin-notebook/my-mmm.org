@@ -10,11 +10,6 @@
 single buffer. This is useful when editing Org mode files, or HTML files with
 embedded PHP.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * mmm-mode
   The eponymous =mmm-mode=.
 

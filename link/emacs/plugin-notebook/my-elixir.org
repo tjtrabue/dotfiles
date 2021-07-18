@@ -6,12 +6,6 @@
 
 Integration with Elixir, a functional, process-oriented programming language.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * elixir-mode
   The ubiquitous mode for working with Elixir files. =elixir-mode= provides
   font-locking, indentation, and navigation support for the Elixir programming

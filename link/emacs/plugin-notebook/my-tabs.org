@@ -9,11 +9,6 @@
 This file contains plugins and configuration for editor tabs similar to those
 found in other modern editors, such as Notepad++ and VisualStudio Code.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * centaur-tabs
   =centaur-tabs= is a stylish, highly configurable tabs plugin for Emacs. It
   includes support for themed icons, modified indicators, adjustable fonts, and

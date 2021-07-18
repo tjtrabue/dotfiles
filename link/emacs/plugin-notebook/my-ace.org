@@ -12,12 +12,6 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
         longer maintained, so I recommend using =avy= as a modern
         alternative. See =my-avy= for configuration details.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Ace Window
 #+begin_src emacs-lisp :tangle yes
   ;; Quick and easy window navigation with M-o.

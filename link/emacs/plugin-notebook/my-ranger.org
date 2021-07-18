@@ -9,11 +9,6 @@
 =ranger= is an amazing file manager for UNIX terminals. This plugin brings the
 magic of =ranger= into Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package ranger

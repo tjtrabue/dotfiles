@@ -10,11 +10,6 @@
 through an array of standard naming conventions, such as "camelCase", "UPCASE",
 "snake_case", and more.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package string-inflection

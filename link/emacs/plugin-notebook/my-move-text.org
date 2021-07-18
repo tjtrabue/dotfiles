@@ -6,11 +6,7 @@
 
 Move lines of text up and down with the =move-text= package.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
+* use-package specification
 #+begin_src emacs-lisp :tangle yes
   (use-package move-text
     :after evil

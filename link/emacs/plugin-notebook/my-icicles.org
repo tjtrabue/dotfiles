@@ -10,11 +10,6 @@ Icicles is a text completion framework for Emacs. I'd use =helm= whenever
 possible since it is vastly more powerful and flexible.
 
 #+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
-#+begin_src emacs-lisp :tangle yes
   ;; Currently unused in favor of helm
   ;; (use-package icicles)
 #+end_src

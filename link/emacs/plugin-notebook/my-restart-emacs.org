@@ -8,11 +8,6 @@ Pretty straightforward. This package provides a function called =restart-emacs=
 that does just that: it restarts Emacs. Quite handy, and worth binding to a key
 in the global map.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package restart-emacs

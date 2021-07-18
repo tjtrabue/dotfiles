@@ -4,10 +4,10 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
+Org is one of Emacs' killer apps: a powerful ORGanizer and much more, Org
+enables Emacs users to engage in literate programming, a method of software
+development where source code is embedded into explanatory, notebook-like
+textual documents and evaluated as needed, or all at once.
 
 * org-mode
   The ubiquitous =org-mode=.

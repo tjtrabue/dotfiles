@@ -8,11 +8,6 @@
 
 This file defines configuration for a number of Eamcs profiling programs.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * ESUP
   =ESUP= is the Emacs Start-Up Profiler. It does not currently work with my
   convoluted configuration.

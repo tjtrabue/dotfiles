@@ -9,25 +9,14 @@ It started as a plugin for customizing Vim's modeline, and due to its popularity
 it has grown into a staple of nearly every persistent UNIX application, terminal
 or GUI oriented.
 
-I prefer the =spaceline= modeline to =powerline= since it's fancier and more
-extensible.
-
-*NOTE*: you do not need to manually installing this plugin in order to
-installing =spaceline=, I have left my configuration because =spaceline= does
-inherit some of =powerline='s properties.
-
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 #+begin_src emacs-lisp :tangle yes
   (use-package powerline
+    ;; Currently using Doom Emacs' modeline.
+    :disabled
     :init
     ;; Set the shape of the segment separator
     (setq powerline-default-separator 'wave)
-    ;; :config
-    ;; ;; The powerline theme to use
-    ;; (powerline-center-evil-theme)
-  )
+    :config
+    ;; The powerline theme to use
+    (powerline-center-evil-theme))
 #+end_src

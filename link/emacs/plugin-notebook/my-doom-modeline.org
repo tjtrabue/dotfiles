@@ -9,11 +9,6 @@
 =doom-modeline= allows any Emacs configuration to use the fancy, modular
 modeline from Doom Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * doom-modeline
 
 #+begin_src emacs-lisp :tangle yes

@@ -10,11 +10,6 @@
 Vim-derived editors. It is newer and more maintained than =ace-jump-mode=,
 however, making =avy= a better, more modern alternative.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes

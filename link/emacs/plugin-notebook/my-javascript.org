@@ -11,11 +11,6 @@ today. I don't like it, but it is very important to be able to work with
 Javascript in your favorite editor. This is my Emacs configuration for
 Javascript integration.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * indium
   Indium is a fully featured Javascript development environment for Emacs.
 

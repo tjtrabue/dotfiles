@@ -6,11 +6,6 @@
 
 =LaTeX= plugins and configuration for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * auctex
   AucTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
   integration systems of all time. Its features are too numerous to mention

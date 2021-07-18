@@ -15,11 +15,6 @@ fairly sophisticated configuration for various Perl plugins should you wish to
 use them, such as =plsense= and =Devel::PerlySense=. Just be warned that using
 such plugins is sure to slow your system down significantly.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * PDE
   PDE is a collection of Emacs Lisp modules for interacting with Perl code
   distributed through CPAN in a package named =Emacs::PDE=. Thus, you must

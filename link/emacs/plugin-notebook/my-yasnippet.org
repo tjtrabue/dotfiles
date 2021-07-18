@@ -10,12 +10,6 @@ snippet's /key/, which is a word used as an abbreviation for expanding the
 snippet, followed by a /trigger/ for the snippet, which is a key or key chord
 that expands the snippet based on the abbreviation before point.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * yasnippet
   =yasnippet= itself.
 

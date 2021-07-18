@@ -10,11 +10,6 @@ Doxygen is a fantastic, multi-lingual documentation engine based around using
 special syntax embedded in comments in order to generate documentation. It is
 similar to Java's =javadoc=, or Haskell's =haddock=.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * highlight-doxygen
   Adds advanced syntax highlighting to Doxygen comments.
 

@@ -9,12 +9,6 @@
 explore the source code of software projects through graphical windows and tree
 layouts.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Variables
   =ECB= related user variables.
 

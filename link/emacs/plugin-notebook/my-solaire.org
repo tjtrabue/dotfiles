@@ -10,11 +10,6 @@
 that you visit -- a slightly different background than those buffers that are
 less "real", such as popups, terminals, sidebars, etc.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package solaire-mode

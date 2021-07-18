@@ -7,11 +7,6 @@
 =dimmer= dynamically adjusts inactive windows in Emacs to be dimmer than the
 active window.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Functions
   #+begin_src emacs-lisp :tangle yes
     (defun dimmer-lsp-ui-doc-p ()

@@ -10,11 +10,6 @@
 like =gnus=, which get their information from a remote server, =mu4e= relies on
 an offline IMAP sync of the user's email account for reading email.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Installing mu4e
   Installing =mu4e= is a different creature than most Emacs packages. Instead of
   installing =mu4e= from MELPA, you must install the =mu= or =maildir-utils=

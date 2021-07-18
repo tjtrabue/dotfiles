@@ -5,12 +5,7 @@
 #+STARTUP: fold
 
 =beacon= is a global minor-mode for briefly highlighting your cursor as it jumps
-around a window. Very pretty and very helpful.
-
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
+around a window. Very beautiful. Very powerful.
 
 * use-package specification
 #+begin_src emacs-lisp :tangle yes

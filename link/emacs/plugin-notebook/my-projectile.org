@@ -9,11 +9,6 @@ important coding actions at the project level. Such actions include searching
 for project files, searching for text, renaming files, building and installing
 project artifacts, etc.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Variables
   #+begin_src emacs-lisp :tangle yes
     (defvar default-ecb-source-path (list '("~/workspace" "Workspace")

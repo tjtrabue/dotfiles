@@ -15,11 +15,6 @@ some other buffer you need to delete to get Evil working again. Remember, you
 can turn off automatic error debugging by changing the =debug-on-error= variable
 to =nil=, so this may help you.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Define custom evil operators
   An =evil-operator= is a function that acts on text objects (characters, words,
   lines, etc.). They are designed to mimic Vim's operators.

@@ -8,11 +8,6 @@ Really beautiful file explorer for Emacs. Treemacs opens in a sidebar window and
 appears much like any other project file tree explorer, but provides many, many
 features absent from the majority of such explorers.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * treemacs
   This is the configuration for =treemacs= itself.
 

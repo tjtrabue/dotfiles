@@ -6,12 +6,6 @@
 
 Plugins and configuration for various stylesheet languages, such as CSS, LESS, and SCSS.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * less-css-mode
 
 #+begin_src emacs-lisp :tangle yes

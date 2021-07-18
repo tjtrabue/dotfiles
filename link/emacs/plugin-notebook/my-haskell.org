@@ -12,12 +12,6 @@ for Emacs just so happens to be the best IDE for writing Haskell code. With the
 incredible =haskell-mode= and =lsp-mode= features working together, Emacs will
 strengthen your Haskell game in no time.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * haskell-mode
   The most important Haskell plugin for Emacs has to be =haskell-mode=. Far more
   than a simple syntax highlighter, =haskell-mode= provides integration with

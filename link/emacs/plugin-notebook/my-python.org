@@ -6,12 +6,6 @@
 
 Plugins and configuration for programming in Python.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * elpy
   =elpy= is a complete Python development environment for Emacs.
 

@@ -18,11 +18,6 @@ change its colors.
 *NOTE:* Currently unused in favor of =doom-modeline=, a newer, more easily
 configurable modeline taken from Doom Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * spaceline
   =spaceline= is a specialized =powerline= status bar that's super pretty and
   informative. Getting =spaceline= to work with its default configuration is

@@ -7,11 +7,6 @@
 Emacs Lisp is the Emacs Lisp dialect of the age-old Lisp programming language.
 This file contains Emacs plugins and configuration for writin Emacs Lisp.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Hooks for emacs-lisp-mode
   #+begin_src emacs-lisp :tangle yes
     ;; Turn on eldoc-mode for simple documentation

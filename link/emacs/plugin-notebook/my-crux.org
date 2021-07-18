@@ -8,11 +8,6 @@
 
 =crux= is a collection of ridiculously useful extensions for Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * use package specification
 
   #+begin_src emacs-lisp :tangle yes

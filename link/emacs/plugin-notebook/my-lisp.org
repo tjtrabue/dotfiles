@@ -9,11 +9,6 @@
 This file contains configuration and plugins for editing generic LISP code
 regardless of its particular dialect.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * lispy
   =lispy= is a great plugin for editing LISP files in a VI-oriented
   manner. There is also the fantastic =lispyville= plugin for integrating
@@ -107,6 +102,7 @@ regardless of its particular dialect.
 ** use-package specification
   #+begin_src emacs-lisp :tangle yes
     (use-package parinfer-rust-mode
+      :disabled
       :hook
       ;; Automatically activate parinfer-rust-mode in these major modes.
       (clojure-mode emacs-lisp-mode ielm-mode lisp-mode sly-mrepl-mode)

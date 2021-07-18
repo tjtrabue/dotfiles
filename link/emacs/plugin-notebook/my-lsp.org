@@ -14,12 +14,6 @@ blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
 Because it was growing too large, I refactored my custom LSP mode configuration
 to the =my-custom-lsp.el= file.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Notes about specific LSP servers
   - *CCLS*: Available as an AUR packge on Arch Linux. This LSP server requires the
     =ccls= Emacs package from MELPA, as well.

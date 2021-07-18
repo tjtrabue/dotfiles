@@ -10,12 +10,6 @@ your cursors around the Emacs window.
 
 When you want to get rid of your additional cursors, simply press =C-g=.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 #+begin_src emacs-lisp :tangle yes
   (use-package multiple-cursors
     :bind

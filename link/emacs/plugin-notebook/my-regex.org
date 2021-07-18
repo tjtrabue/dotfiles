@@ -6,12 +6,6 @@
 
 Plugins and configuration for regular expression support within Emacs.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * relint
   Code linter (that is, a syntax/style checker) for regular expressions.
 

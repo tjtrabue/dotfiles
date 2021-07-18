@@ -8,12 +8,6 @@
 GNU Global is a source code tagging system like C-tags, but is designed to be
 cross-platform.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * ggtags
   =ggtags= is Emacs' front end to GNU Global.
 

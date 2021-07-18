@@ -17,17 +17,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-view-program-selection
-    '(((output-dvi has-no-display-manager)
-        "dvi2tty")
-       ((output-dvi style-pstricks)
-         "dvips and gv")
-       (output-dvi "xdvi")
-       (output-pdf "Zathura")
-       (output-html "xdg-open")))
+   '(((output-dvi has-no-display-manager)
+      "dvi2tty")
+     ((output-dvi style-pstricks)
+      "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Zathura")
+     (output-html "xdg-open")))
  '(ecb-cache-directory-contents '(("^/\\([^:/]*@\\)?\\([^@:/]*\\):.*" . 0) (".*" . 500)))
  '(ecb-options-version "2.50")
  '(ede-project-directories
-    '("/home/merlin/workspace/practice/cpp" "/home/merlin/workspace/practice/cpp/include" "/home/merlin/workspace/practice/cpp/src"))
+   '("/home/merlin/workspace/practice/cpp" "/home/merlin/workspace/practice/cpp/include" "/home/merlin/workspace/practice/cpp/src"))
  '(helm-minibuffer-history-key "M-p")
  '(lsp-semantic-tokens-enable t nil nil "Customized with use-package lsp-mode")
  '(minimap-dedicated-window nil)
@@ -156,21 +156,25 @@ FILE's extension is '.el'."
   ;; (add-to-list 'package-archives
   ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives
-	       '("org" . "https://orgmode.org/elpa/") t)
+               '("org" . "https://orgmode.org/elpa/") t)
   (add-to-list 'package-archives
-	       '("melpa" . "https://melpa.org/packages/") t)
+               '("melpa" . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives
-	       '("marmalade" . "https://marmalade-repo.org/packages/") t)
-  (package-initialize)
+               '("marmalade" . "https://marmalade-repo.org/packages/") t)
+  (package-initialize))
 
-  ;; Automatically install packages using use-package
-  ;; Should NOT use this right now since we're now using straight.el instead of
-  ;; package.el
-  ;; (unless (package-installed-p 'use-package)
-  ;;   (package-refresh-contents)
-  ;;   (package-install 'use-package))
-  ;; (eval-when-compile (require 'use-package))
-  )
+;; Automatically install packages using use-package
+;; Should NOT use this right now since we're now using straight.el instead of
+;; package.el
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
+;; (eval-when-compile (require 'use-package))
+
+;; Settings for Emacs Lisp embedded in Org source blocks.
+(with-eval-after-load "ob-emacs-lisp"
+  ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
+  (add-to-list 'org-babel-default-header-args:elisp '(:lexical . t)))
 
 ;; Have to set default-directory to the dotfiles directory in my dotfiles
 ;; repository because symlinks and Emacs apparently do not play well together.

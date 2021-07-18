@@ -10,11 +10,6 @@ Terraform is a modular, technology-agnostic infrastructure provisioning
 tool. Terraform uses its own declarative configuration language (as well as
 standard JSON) to define infrastructure roll-outs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
 * terraform-mode
   Major mode for editing Terraform configuration files (=.tf= files).
 

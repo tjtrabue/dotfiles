@@ -6,11 +6,6 @@
 
 Plugins for extending Emacs with version control capabilities.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * vc
   General version control plugin for Emacs.
 

@@ -8,11 +8,6 @@
 
 This file adds some enhancements to Emacs' undo functionality.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * undo-fu
   A simple plugin providing linear undo/redo actions. It does not interfere with
   Emacs' internal undo data.

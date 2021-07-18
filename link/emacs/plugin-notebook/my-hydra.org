@@ -17,12 +17,6 @@ out with the =j= and =k= keys after hitting =C-*= and you hit =p= to slay the
 hydra, then assuming you are using =evil-mode=, the hydra would disappear and
 the contents of the selected paste register would be pasted at point.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 * Hydras
   This is where we define our hydras for use in various modes.
 

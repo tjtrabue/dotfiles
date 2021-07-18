@@ -6,12 +6,6 @@
 
 Package for integrating Emacs with the =mutt= terminal mail client.
 
-Needed for performance:
-#+begin_src emacs-lisp :tangle yes
-;; -*- lexical-binding: t; -*-
-
-#+end_src
-
 #+begin_src emacs-lisp :tangle yes
   (use-package mutt-mode)
 #+end_src

@@ -12,12 +12,6 @@ level similar to the behavior of other modern text editors.
 An alternative to this plugin is =highlight-indentaton.el=, which is very
 popular but much more limited in terms of configuration.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; -*- lexical-binding: t; -*-
-
-  #+end_src
-
-
 * use-package specification
 
 #+begin_src emacs-lisp :tangle yes
