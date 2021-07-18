@@ -15,13 +15,11 @@ flexibility in code style over consistency.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package aggressive-indent
-      ;; Using parinfer instead (see my-lisp.org for details).
-      :disabled
       :hook
       ;; Probably don't want to enable aggressive-indent mode globally.  It's
-      ;; helpful, but it doesn't play nicely with automatic code formatters. It's
-      ;; also far more useful in Lisp modes than it is for editing ALGOL-derived
-      ;; languages.
+      ;; helpful, but it doesn't always play nicely with automatic code
+      ;; formatters. It's also far more useful in Lisp modes than it is for editing
+      ;; ALGOL-derived languages.
       ((clojure-mode
         emacs-lisp-mode
         ielm-mode

@@ -12,7 +12,9 @@ regardless of its particular dialect.
 * lispy
   =lispy= is a great plugin for editing LISP files in a VI-oriented
   manner. There is also the fantastic =lispyville= plugin for integrating
-  =lispy= with =evil-mode=. See the =my-evil.org= file for its configuration.
+  =lispy= with =evil-mode=. See the =my-evil.org= file for =lispyville='s
+  configuration, which is where most of the interesting =lispy= settings are
+  kept.
 
   #+begin_src emacs-lisp
     (use-package lispy
@@ -102,6 +104,8 @@ regardless of its particular dialect.
 ** use-package specification
   #+begin_src emacs-lisp
     (use-package parinfer-rust-mode
+      ;; I'm trying not to use parinfer as a crutch while I learn Lispy.
+      :disabled
       :hook
       ;; Automatically activate parinfer-rust-mode in these major modes.
       (clojure-mode emacs-lisp-mode ielm-mode lisp-mode sly-mrepl-mode)
