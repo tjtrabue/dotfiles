@@ -174,7 +174,7 @@ FILE's extension is '.el'."
 ;; Settings for Emacs Lisp embedded in Org source blocks.
 (with-eval-after-load "ob-emacs-lisp"
   ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
-  (add-to-list 'org-babel-default-header-args:elisp '(:lexical . t)))
+  (add-to-list 'org-babel-default-header-args:emacs-lisp '(:lexical . t)))
 
 ;; Have to set default-directory to the dotfiles directory in my dotfiles
 ;; repository because symlinks and Emacs apparently do not play well together.
