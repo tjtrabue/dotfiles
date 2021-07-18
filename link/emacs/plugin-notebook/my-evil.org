@@ -421,12 +421,11 @@ like Vim."
       (defun my/set-lispyville-mode-keys ()
         "Set extra `evil-mode' keybindings for `lispyville-mode'."
         (let ((keymap lispyville-mode-map))
-          ;; Normal state mappings
           (evil-define-key 'normal keymap
             ;; slurp: expand current s-exp; barf: Contract current s-exp
-            "-" #'lispyville-slurp
-            "_" #'lispyville-barf
-            ;; Split and join s-exps.
+            "-" #'lispyville->
+            "_" #'lispyville-<
+            ;; Split and join s-exps
             "\\" #'lispy-split
             "|" #'lispy-join
             ;; Delimiter navigation
@@ -435,7 +434,10 @@ like Vim."
             ;; List navigation
             "(" #'lispyville-backward-up-list
             ")" #'lispyville-up-list
-            ;; Make "J" into the safe join operator in Lisp modes.
+            ;; Use H and L to move across s-exps
+            "H" #'lispyville-backward-sexp
+            "L" #'lispyville-forward-sexp
+            ;; Make "J" into the safe join operator in Lisp modes
             "J" #'lispyville-join
             ;; Special comment functions
             "gcc" #'lispyville-comment-or-uncomment-line
@@ -443,17 +445,14 @@ like Vim."
             "gcy" #'lispyville-comment-and-clone-dwim
             ;; Mark symbols with M-m
             (kbd "M-m") #'lispy-mark-symbol)
-          ;; Normal and insert state mappings
           (evil-define-key '(normal insert) keymap
             ;; Function navigation
             (kbd "M-h") #'lispyville-beginning-of-defun
             (kbd "M-l") #'lispyville-end-of-defun)
-          ;; Visual state mappings
           (evil-define-key 'visual keymap
             "gc" #'lispyville-comment-or-uncomment-line
             "gC" #'lispyville-comment-or-uncomment
             "gy" #'lispyville-comment-and-clone-dwim)
-          ;; Normal, insert, and visual state mappings
           (evil-define-key '(normal insert visual) keymap
             (kbd "M-;") #'lispy-comment)))
     #+end_src
@@ -475,10 +474,18 @@ like Vim."
              ("<normal-state> >" . nil))
        :config
        ;; Change default keybindings for lispyville.
-       (lispyville-set-key-theme '(operators
+       (lispyville-set-key-theme '(;; Standard evil operator remappings
+                                   operators
+                                   ;; Safe backward word delete
                                    c-w
+                                   ;; evil-indent now prettifies expressions
                                    prettify
+                                   ;; Use W, B, E, and ge to move semantically across
+                                   ;; Lisp objects.
+                                   (atom-movement t)
+                                   ;; Extra text object motions
                                    text-objects
+                                   ;; Extra bindings
                                    additional))
        (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
        (my/set-lispyville-mode-keys)
