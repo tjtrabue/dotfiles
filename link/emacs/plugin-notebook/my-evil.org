@@ -440,8 +440,6 @@ like Vim."
             ;; Use H and L to move across s-exps
             "H" #'lispyville-backward-sexp
             "L" #'lispyville-forward-sexp
-            ;; Wrap v to mark symbol and then enter visual
-            "v" (lispyville-wrap-command lispy-mark-symbol visual)
             ;; Make "J" into the safe join operator in Lisp modes
             "J" #'lispyville-join
             ;; Special comment functions
@@ -463,6 +461,9 @@ like Vim."
             "gy" #'lispyville-comment-and-clone-dwim
             "<" #'evil-shift-left-line
             ">" #'evil-shift-right-line)
+          (evil-define-key '(normal visual) keymap
+            ;; Wrap v to mark symbol and then enter visual
+            "v" (lispyville-wrap-command lispy-mark-symbol visual))
           (evil-define-key '(normal insert visual) keymap
             (kbd "M-;") #'lispy-comment)))
     #+end_src
