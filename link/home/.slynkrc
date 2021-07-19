@@ -2,4 +2,8 @@
 ;; for Common Lisp.
 ;; This file's syntax is that of Common Lisp's.
 
+;; Needed to force SLY MREPL to flush strings to *query-io* every time a
+;; (format *query-io* ...) form is used. Otherwise strings seem to be cached for
+;; later outputting. Very frustrating.
+;; Only tested with SBCL.
 (setf slynk:*use-dedicated-output-stream* nil)
