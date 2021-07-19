@@ -498,14 +498,14 @@ like Vim."
                                    ;; Enter normal mode and deactivate region in one
                                    ;; step.
                                    escape
-                                   ;; <i and >i insert at beginning and end of s-exp
+                                   ;; <i and >i insert at beginning and end of sexp
                                    arrows
                                    ;; evil-indent now prettifies expressions
                                    prettify
                                    ;; wrap v, V, and C-v in lispy-mark, making
                                    ;; visually selecting sexps easier.
                                    mark
-                                   ;; Use W, B, E, and ge to move semantically across
+                                   ;; Use W, B, E, and gE to move semantically across
                                    ;; Lisp objects.
                                    (atom-movement t)
                                    ;; Extra text object motions
