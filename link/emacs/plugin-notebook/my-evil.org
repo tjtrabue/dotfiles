@@ -400,6 +400,7 @@ like Vim."
                                                         ("l<" . lispyville-barf)
                                                         ("l>" . lispyville-slurp)
                                                         ("lC" . lispy-convolute-sexp)
+                                                        ("lD" . lispy-describe-inline)
                                                         ("lO" . lispy-oneline)
                                                         ("lR" . lispyville-raise-list)
                                                         ("lS" . lispy-splice)

@@ -341,6 +341,13 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
     ;; Always show line numbers
     (global-display-line-numbers-mode 1)
+
+    ;; Keep buffers in sync with their respective files on disk as they change
+    ;; outside of Emacs. An example would be an untracked file being added to the
+    ;; Git index. With this mode active, Git information would display automatically
+    ;; after the file is added. If it was not active, you would have to manually
+    ;; revert the buffer.
+    (global-auto-revert-mode 1)
   #+end_src
 
 * Advice
