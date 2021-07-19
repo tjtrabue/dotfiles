@@ -426,8 +426,8 @@ like Vim."
         (let ((keymap lispyville-mode-map))
           (evil-define-key 'normal keymap
             ;; slurp: expand current s-exp; barf: Contract current s-exp
-            "-" #'lispyville->
-            "_" #'lispyville-<
+            "-" #'lispyville-slurp
+            "_" #'lispyville-barf
             ;; Split and join s-exps
             "\\" #'lispy-split
             "|" #'lispy-join
@@ -505,6 +505,9 @@ like Vim."
                                    ;; wrap v, V, and C-v in lispy-mark, making
                                    ;; visually selecting sexps easier.
                                    mark
+                                   ;; Use M-(, M-{, and M-[ to wrap Lisp objects in
+                                   ;; delimiters.
+                                   wrap
                                    ;; Use W, B, E, and gE to move semantically across
                                    ;; Lisp objects.
                                    (atom-movement t)
