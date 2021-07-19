@@ -434,6 +434,9 @@ like Vim."
             ;; List navigation
             "(" #'lispyville-backward-up-list
             ")" #'lispyville-up-list
+            ;; Move up and down s-exps
+            (kbd "C-j") #'lispyville-right
+            (kbd "C-k") #'lispyville-left
             ;; Use H and L to move across s-exps
             "H" #'lispyville-backward-sexp
             "L" #'lispyville-forward-sexp
