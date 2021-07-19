@@ -490,6 +490,9 @@ like Vim."
                                    c-w
                                    ;; Safe delete back to indent
                                    c-u
+                                   ;; Enter normal mode and deactivate region in one
+                                   ;; step.
+                                   escape
                                    ;; evil-indent now prettifies expressions
                                    prettify
                                    ;; Use W, B, E, and ge to move semantically across
