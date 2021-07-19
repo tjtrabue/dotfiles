@@ -434,9 +434,6 @@ like Vim."
             ;; List navigation
             "(" #'lispyville-backward-up-list
             ")" #'lispyville-up-list
-            ;; Insert text at beginning or end of list
-            (kbd "C-j") #'lispyville-insert-at-end-of-list
-            (kbd "C-k") #'lispyville-insert-at-beginning-of-list
             ;; Use H and L to move across s-exps
             "H" #'lispyville-backward-sexp
             "L" #'lispyville-forward-sexp
@@ -447,7 +444,10 @@ like Vim."
             "gcC" #'lispyville-comment-or-uncomment
             "gcy" #'lispyville-comment-and-clone-dwim
             ;; Mark symbols with M-m
-            (kbd "M-m") #'lispy-mark-symbol)
+            (kbd "M-m") #'lispy-mark-symbol
+            ;; Indent operators
+            "<<" #'evil-shift-left-line
+            ">>" #'evil-shift-right-line)
           (evil-define-key '(normal insert) keymap
             ;; Function navigation
             (kbd "M-h") #'lispyville-beginning-of-defun
@@ -493,6 +493,8 @@ like Vim."
                                    ;; Enter normal mode and deactivate region in one
                                    ;; step.
                                    escape
+                                   ;; <i and >i insert at beginning and end of s-exp
+                                   arrows
                                    ;; evil-indent now prettifies expressions
                                    prettify
                                    ;; Use W, B, E, and ge to move semantically across
