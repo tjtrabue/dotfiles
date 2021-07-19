@@ -434,9 +434,9 @@ like Vim."
             ;; List navigation
             "(" #'lispyville-backward-up-list
             ")" #'lispyville-up-list
-            ;; Move up and down s-exps
-            (kbd "C-j") #'lispyville-right
-            (kbd "C-k") #'lispyville-left
+            ;; Insert text at beginning or end of list
+            (kbd "C-j") #'lispyville-insert-at-end-of-list
+            (kbd "C-k") #'lispyville-insert-at-beginning-of-list
             ;; Use H and L to move across s-exps
             "H" #'lispyville-backward-sexp
             "L" #'lispyville-forward-sexp
@@ -475,12 +475,21 @@ like Vim."
              ;; Similarly, we may still want to use our indent bindings.
              ("<normal-state> <" . nil)
              ("<normal-state> >" . nil))
+       :custom
+       ;; Setting this variable to t means lispyville motion commands, such as (, ),
+       ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
+       (lispyville-motions-put-into-special nil)
+       ;; The preferred state for editing text in lispyville mode.
+       ;; Can be either 'insert or 'emacs.
+       (lispyville-preferred-lispy-state 'insert)
        :config
        ;; Change default keybindings for lispyville.
        (lispyville-set-key-theme '(;; Standard evil operator remappings
                                    operators
                                    ;; Safe backward word delete
                                    c-w
+                                   ;; Safe delete back to indent
+                                   c-u
                                    ;; evil-indent now prettifies expressions
                                    prettify
                                    ;; Use W, B, E, and ge to move semantically across
