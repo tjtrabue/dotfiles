@@ -1,0 +1,5 @@
+;; Configuration file for the Slynk code server used by Emacs' SLY toolsuite
+;; for Common Lisp.
+;; This file's syntax is that of Common Lisp's.
+
+(setf slynk:*use-dedicated-output-stream* nil)
