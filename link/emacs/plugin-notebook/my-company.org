@@ -17,187 +17,194 @@ completion.
   completions will shadow any others, which is not what you want.
 
 ** Functions
-  We have to write a function or two to make =company= do what we want.
-  For some strange reason company does not want to respect our keybindings when
-  we set them in the =:bind= clause of its =use-package= specification.
+   We have to write a function or two to make =company= do what we want.
+   For some strange reason company does not want to respect our keybindings when
+   we set them in the =:bind= clause of its =use-package= specification.
 
-#+begin_src emacs-lisp
-    (defun my/set-company-keybindings ()
-      "Used to get around problem with company keybindings not being set.
-    For some horrible, unknown reason, company does not respect keybindings
-    that go against its default keybindings in use-package syntax. For
-    instance, 'TAB' is already bound to `company-select-next', and as such
-    is not allowed to be rebound within a :config block. This function
-    circumvents the aforementioned shortcoming by running its body after
-    company-mode initializes."
-      (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-      (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-      (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-      (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-      (define-key company-active-map (kbd "RET") 'company-complete-selection)
-      (define-key company-active-map (kbd "<return>") 'company-complete-selection)
-      ;; Re-bind some of evil's keybindings.
-      ;; Use RET to complete company completions
-      (evil-define-key 'insert company-active-map
-        (kbd "RET") #'company-complete-selection)
-      (evil-define-key 'insert company-active-map
-        (kbd "<return>") #'company-complete-selection)
-      ;; Vim-style keybindings for cycling through matches
-      (define-key company-active-map (kbd "C-j") (lambda ()
-                                                  (interactive)
-                                                  (company-complete-common-or-cycle 1)))
-      (define-key company-active-map (kbd "C-k") (lambda ()
-                                                  (interactive)
-                                                  (company-complete-common-or-cycle -1)))
-      (define-key company-active-map (kbd "C-l") #'company-complete))
+   #+begin_src emacs-lisp
+     (defun my/set-company-keybindings ()
+       "Used to get around problem with company keybindings not being set.
+     For some horrible, unknown reason, company does not respect keybindings
+     that go against its default keybindings in use-package syntax. For
+     instance, 'TAB' is already bound to `company-select-next', and as such
+     is not allowed to be rebound within a :config block. This function
+     circumvents the aforementioned shortcoming by running its body after
+     company-mode initializes."
+       (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+       (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+       (define-key company-active-map (kbd "RET") 'company-complete-selection)
+       ;; Re-bind some of evil's keybindings.
+       ;; Use RET to complete company completions
+       (evil-define-key 'insert company-active-map
+         (kbd "RET") #'company-complete-selection)
+       ;; Vim-style keybindings for cycling through matches
+       (define-key company-active-map (kbd "C-j") (lambda ()
+                                                    (interactive)
+                                                    (company-complete-common-or-cycle 1)))
+       (define-key company-active-map (kbd "C-k") (lambda ()
+                                                    (interactive)
+                                                    (company-complete-common-or-cycle -1)))
+       (define-key company-active-map (kbd "C-l") #'company-complete))
 
-    (defun my/company-complete-selection--advice-around (fn)
-      "Advice execute around `company-complete-selection' command."
-      (let ((company-dabbrev-downcase t))
-        (call-interactively fn)))
+     (defun my/company-complete-selection--advice-around (fn)
+       "Advice execute around `company-complete-selection' command."
+       (let ((company-dabbrev-downcase t))
+         (call-interactively fn)))
 
-    (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
-      "Helper function that sets my company-backends for a specific mode and
-  optionally for extra modes"
-      (add-hook 'emacs-lisp-mode-hook (lambda ()
-                                       (setq-local company-backends (cons 'company-elisp company-backends)))))
+     (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
+       "Helper function that sets my company-backends for a specific mode and
+     optionally for extra modes"
+       (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                         (setq-local company-backends (cons 'company-elisp company-backends)))))
 
-    (defun my/set-company-backends-elisp ()
-      "Set `company-backends' for `emacs-lisp-mode'."
-      (add-hook 'emacs-lisp-mode-hook (lambda ()
-                                       (setq-local company-backends (cons 'company-elisp company-backends)))))
+     (defun my/set-company-backends-elisp ()
+       "Set `company-backends' for `emacs-lisp-mode'."
+       (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                         (setq-local company-backends (cons 'company-elisp company-backends)))))
 
-    (defun my/set-company-backends-makefile ()
-      "Set `company-backends' for makefile-mode."
-      (add-hook 'makefile-mode-hook (lambda ()
-                                     (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
-                                                                   company-backends)))))
+     (defun my/set-company-backends-makefile ()
+       "Set `company-backends' for makefile-mode."
+       (add-hook 'makefile-mode-hook (lambda ()
+                                       (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
+                                                                          company-backends)))))
 
-    (defun my/set-company-backends-scratch ()
-      "Set `company-backends' for the *scratch* buffer."
-      (add-hook 'lisp-interaction-mode-hook (lambda ()
-                                             (setq-local company-backends (cons 'company-elisp company-backends)))))
-#+end_src
+     (defun my/set-company-backends-scratch ()
+       "Set `company-backends' for the *scratch* buffer."
+       (add-hook 'lisp-interaction-mode-hook (lambda ()
+                                               (setq-local company-backends (cons 'company-elisp company-backends)))))
+   #+end_src
 
-** company
-#+begin_src emacs-lisp
-  (use-package company
-    :demand t
-    :after (evil evil-collection)
-    :bind
-    (:map c-mode-map
-     ([(tab)] . company-complete)
-     :map c++-mode-map
-     ([(tab)] . company-complete))
-    :hook
-    (company-mode . my/set-company-keybindings)
-    :custom
-    ;; Align annotation to the right side.
-    (company-tooltip-align-annotations t)
-    ;; Never require a match; continue to use cursor as normal
-    (company-require-match nil)
-    ;; Stop eclim auto save.
-    (company-eclim-auto-save nil)
-    ;; Don't make plain text completions lowercase.
-    (company-dabbrev-downcase nil)
-    ;; Tweak company completion delay
-    ;; WARNING: Setting this value too low could cause a huge performance
-    ;;          bottleneck!
-    (company-idle-delay 0)
-    ;; Start completing as soon as we begin typing.
-    (company-minimum-prefix-length 1)
-    ;; Change UI appearance of company
-    (company-frontends
-          '(company-pseudo-tooltip-unless-just-one-frontend
-            company-preview-frontend
-            company-echo-metadata-frontend))
-    :config
-    ;; Tweak company backends.
-    ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
-    ;; slow to be anything other than harmful, especially for emacs-lisp-mode.
-    (setq company-backends (delete 'company-semantic company-backends))
-    ;; Enable downcase only when completing the completion.
-    (advice-add 'company-complete-selection :around
-            #'my/company-complete-selection--advice-around)
-    ;; Perform further tweaks for company-backends depending on the major mode.
-    (my/set-company-backends-elisp)
-    (my/set-company-backends-makefile)
-    (my/set-company-backends-scratch)
-    ;; Enable company-mode globally.
-    (global-company-mode))
-#+end_src
+** use-package specification
+   #+begin_src emacs-lisp
+     (use-package company
+       :after evil-collection
+       :bind
+       (:map c-mode-map
+             ([(tab)] . company-complete)
+             :map c++-mode-map
+             ([(tab)] . company-complete))
+       :hook
+       (;; Turn on company-mode globally.
+        (after-init . global-company-mode)
+        (company-mode . my/set-company-keybindings))
+       :custom
+       ;; Align annotation to the right side.
+       (company-tooltip-align-annotations t)
+       ;; Never require a match; continue to use cursor as normal
+       (company-require-match nil)
+       ;; Stop eclim auto save.
+       (company-eclim-auto-save nil)
+       ;; Don't make plain text completions lowercase.
+       (company-dabbrev-downcase nil)
+       ;; Tweak company completion delay
+       ;; WARNING: Setting this value too low could cause a huge performance
+       ;;          bottleneck!
+       (company-idle-delay 0)
+       ;; Start completing as soon as we begin typing.
+       (company-minimum-prefix-length 1)
+       ;; Change UI appearance of company
+       (company-frontends
+        '(company-pseudo-tooltip-unless-just-one-frontend
+          company-preview-frontend
+          company-echo-metadata-frontend))
+       :config
+       ;; Tweak company backends.
+       ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
+       ;; slow to be anything other than harmful, especially for emacs-lisp-mode.
+       (delete 'company-semantic company-backends)
+       ;; Enable downcase only when completing the completion.
+       (advice-add 'company-complete-selection :around
+                   #'my/company-complete-selection--advice-around)
+       ;; Perform further tweaks for company-backends depending on the major mode.
+       (my/set-company-backends-elisp)
+       (my/set-company-backends-makefile)
+       (my/set-company-backends-scratch))
+   #+end_src
 
 * Plugins
 ** company-c-headers
    =company= completion for C and C++ header files when typing =#include=
    statements.
 
-#+begin_src emacs-lisp
-  (use-package company-c-headers
-    ;; We need s.el for trimming strings.
-    :after (company s cedet)
-    ;; :init
-    ;; Eventually we will want to set this variable to integrate this package
-    ;; CEDET.
-    ;; (setq company-c-headers-path-system 'ede-object-system-include-path)
-    :config
-    ;; Currently unused in favor of company-lsp.
-    ;; (add-to-list 'company-backends 'company-c-headers)
-    (let* ((c++-version (s-trim (shell-command-to-string
-             "gcc -v 2>&1 | tail -n 1 | grep -Eo '[0-9]+(\.[0-9]+)*'")))
-           (c++-include-path (concat "/usr/include/c++/" c++-version "/")))
-        (add-to-list 'company-c-headers-path-system c++-include-path)))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-c-headers
+       ;; We need s.el for trimming strings.
+       :after (company s cedet)
+       ;; :init
+       ;; Eventually we will want to set this variable to integrate this package
+       ;; CEDET.
+       ;; (setq company-c-headers-path-system 'ede-object-system-include-path)
+       :config
+       ;; Currently unused in favor of company-lsp.
+       ;; (add-to-list 'company-backends 'company-c-headers)
+       (let* ((c++-version (s-trim (shell-command-to-string
+                                    "gcc -v 2>&1 | tail -n 1 | grep -Eo '[0-9]+(\.[0-9]+)*'")))
+              (c++-include-path (concat "/usr/include/c++/" c++-version "/")))
+         (add-to-list 'company-c-headers-path-system c++-include-path)))
+   #+end_src
 
 ** company-dict
-#+begin_src emacs-lisp
-(use-package company-dict
-  :after (company))
-#+end_src
+   This simple company backend emulates =ac-source-dictionary= and Vim's
+   dictionary omnicompletion (=C-x C-k=). It's much like =company-keywords=, but
+   with lazy-loaded dictionary files, and support for annotations and
+   documentation.
+
+   #+begin_src emacs-lisp
+     (use-package company-dict
+       :after company
+       :hook
+       (company-mode . (lambda ()
+                         (add-to-list 'company-backends 'company-dict)))
+       :custom
+       ;; Where user's custom dictionary files are kept.
+       (company-dict-dir (file-truename (concat user-emacs-directory "/dict/"))))
+   #+end_src
 
 ** company-quickhelp
-#+begin_src emacs-lisp
-;; Show quick documentation for company completions in a popup.
-(use-package company-quickhelp
-  :after (company)
-  :config
-  (company-quickhelp-mode 1)
-  (setq company-quickhelp-delay 0.3))
-#+end_src
+   Show quick documentation for company completions in a popup.
+
+   #+begin_src emacs-lisp
+     (use-package company-quickhelp
+       :after company
+       :hook
+       (company-mode . company-quickhelp-mode)
+       :custom
+       (company-quickhelp-delay 0.3))
+   #+end_src
 
 ** company-statistics
-#+begin_src emacs-lisp
-(use-package company-statistics
-  :after (company)
-  :init
-  (company-statistics-mode))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-statistics
+       :after company
+       :hook
+       (company-mode . company-statistics-mode))
+   #+end_src
 
 ** company-web
-#+begin_src emacs-lisp
-(use-package company-web
-  :after (company))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-web
+       :after company)
+   #+end_src
 
 ** company-try-hard
-#+begin_src emacs-lisp
-(use-package company-try-hard
-  :after (company)
-  :bind
-  (("C-<tab>" . company-try-hard)
-   :map company-active-map
-   ("C-<tab>" . company-try-hard)))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-try-hard
+       :after (company)
+       :bind
+       (("C-<tab>" . company-try-hard)
+        :map company-active-map
+        ("C-<tab>" . company-try-hard)))
+   #+end_src
 
 ** company-ghc
-#+begin_src emacs-lisp
-;; (use-package company-ghc)
-#+end_src
+   #+begin_src emacs-lisp
+     ;; (use-package company-ghc)
+   #+end_src
 
 ** company-cabal
-#+begin_src emacs-lisp
-(use-package company-cabal)
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-cabal)
+   #+end_src
 
 ** company-plsense
    This is a company backend for the =plsense= intellisense engine for Perl.  It
@@ -208,66 +215,70 @@ completion.
    command line before trying to use this plugin, since this plugin depends on
    the =~/.plsense= configuration file containing the proper settings.
 
-#+begin_src emacs-lisp
-  (use-package company-plsense
-    :disabled
-    :hook
-    ((cperl-mode perl-mode) . (lambda ()
-      ;; Turn on company-plsense for perl and cperl mode.
-      (make-local-variable 'company-backends)
-      (add-to-list 'company-backends 'company-plsense)
-      (when (not company-plsense--server-started-p)
-        (company-plsense-start-server))
-      (company-plsense-init)))
-    :init
-    (setq company-plsense-ignore-compile-errors t))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-plsense
+       :disabled
+       :hook
+       ((cperl-mode perl-mode) . (lambda ()
+                                   ;; Turn on company-plsense for perl and cperl mode.
+                                   (make-local-variable 'company-backends)
+                                   (add-to-list 'company-backends 'company-plsense)
+                                   (when (not company-plsense--server-started-p)
+                                     (company-plsense-start-server))
+                                   (company-plsense-init)))
+       :init
+       (setq company-plsense-ignore-compile-errors t))
+   #+end_src
 
 ** company-auctex
-#+begin_src emacs-lisp
-  (use-package company-auctex
-    :after (auctex company)
-    :config
-    (add-to-list 'company-backends 'company-auctex)
-    (company-auctex-init))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-auctex
+       :after (auctex company)
+       :hook
+       (tex-mode . (lambda ()
+                     (add-to-list 'company-backends 'company-auctex)
+                     (company-auctex-init))))
+   #+end_src
 
 ** company-lsp
    =company-lsp= is a company backend supporting =lsp-mode=.
 
    *NOTE*: You should never have to use =company-lsp=! It is a deprecated
-    package that is only useful in particular circumstances. The only supported
-    company backend for =lsp-mode= is =company-capf=, so try using that one
-    first.
+   package that is only useful in particular circumstances. The only supported
+   company backend for =lsp-mode= is =company-capf=, so try using that one
+   first.
 
-#+begin_src emacs-lisp
-  ;; (use-package company-lsp
-  ;;   :after (company lsp-mode)
-  ;;   ;; Only activate company-lsp for specific modes
-  ;;   :hook
-  ;;   ((sh-mode c-mode-common) . (lambda ()
-  ;;           (make-local-variable 'company-backends)
-  ;;           (add-to-list 'company-backends 'company-lsp)))
-  ;;   :init
-  ;;   (setq company-lsp-cache-candidates nil
-  ;;         company-lsp-async t
-  ;;         company-lsp-enable-snippet t
-  ;;         company-lsp-enable-recompletion t))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-lsp
+       :disabled
+       :after (company lsp-mode)
+       ;; Only activate company-lsp for specific modes
+       :hook
+       ((sh-mode c-mode-common) . (lambda ()
+                                    (make-local-variable 'company-backends)
+                                    (add-to-list 'company-backends 'company-lsp)))
+       :custom
+       (company-lsp-cache-candidates nil)
+       (company-lsp-async t)
+       (company-lsp-enable-snippet t)
+       (company-lsp-enable-recompletion t))
+   #+end_src
 ** company-box
    =company-box= is a company front-end with icons. It provides a great, modern
    looking UI for company completions similar to something like Visual Studio
    Code.
 
-#+begin_src emacs-lisp
-  (use-package company-box
-    :hook (company-mode . company-box-mode))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-box
+       :after company
+       :hook (company-mode . company-box-mode))
+   #+end_src
 ** company-prescient
    =prescient= intelligent completion support for =company-mode=.
 
-#+begin_src emacs-lisp
-  (use-package company-prescient
-    :config
-    (company-prescient-mode 1))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package company-prescient
+       :after company
+       :hook
+       (company-mode . company-prescient-mode))
+   #+end_src

@@ -25,88 +25,6 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
                 path-to-sbcl))))
    #+end_src
 
-** sly-counsel integration functions
-   These functions were taken directly from [[https://mihaiolteanu.me/counsel-sly/][Mihai Olteanu's blog]].
-   Thank you so much for the your contributions, Mihai!
-
-   #+begin_src emacs-lisp
-     ;; Define functionality for interacting with the sly repl using counsel
-     (defun counsel-sly-mrepl-shortcut ()
-       (interactive)
-       (ivy-read
-        "Action: "
-        (mapcar #'car sly-mrepl-shortcut-alist)
-        :action (lambda (string)
-                  (let ((command (and string
-                                      (cdr (assoc string sly-mrepl-shortcut-alist)))))
-                    (call-interactively command)))))
-
-     (defun sly-read-package-name (prompt &optional initial-value allow-blank)
-       (ivy-read
-        "Package: "
-        (sly-eval `(slynk:list-all-package-names t))
-        :action #'identity))
-
-     (defun counsel-sly-mrepl-history ()
-       (interactive)
-       (ivy-read
-        "History: "
-        (reverse (ring-elements comint-input-ring))
-        :action (lambda (e)
-                  (insert e))))
-
-     (defun eval-grab-output (string)
-       (let ((res nil))
-         (sly-eval-async `(slynk:eval-and-grab-output ,string)
-           (lambda (result)
-             (cl-destructuring-bind (output value) result
-               (setf res (car (read-from-string value))))))
-         (while (null res)
-           (sleep-for 0.1))
-         res))
-
-     (defun counsel-sly-eval (string action)
-       (let ((result (eval-grab-output string)))
-         (ivy-read
-          "Symbol: "
-          result
-          :action action)))
-
-     (defun send-input (expr)
-       (insert expr)
-       (comint-send-input))
-
-     (defun counsel-sly-package-internal-symbols ()
-       (interactive)
-       (counsel-sly-eval "(common-lisp-user::package-internal-symbols \*package\*)"
-                         `(1 ("o" ,#'insert "insert")
-                             ("f" ,(lambda (candidate)
-                                     (send-input (format "(find-symbol \"%s\")" candidate)))
-                              "find symbol")
-                             )))
-   #+end_src
-
-** Set SLY MREPL keybindings
-   #+begin_src emacs-lisp
-    (defun my/set-sly-mrepl-keybindings ()
-      "Hook function for setting keybindings in SLY MREPL mode.
-Make sure to only run this function after 'sly-mrepl loads."
-      ;; History navigation.
-      (evil-define-key '(normal insert) sly-mrepl-mode-map
-        (kbd "C-r") #'counsel-sly-mrepl-history)
-      (evil-define-key 'insert sly-mrepl-mode-map
-        (kbd "C-j") #'comint-next-input
-        (kbd "C-k") #'comint-previous-input)
-      ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
-      (define-key sly-mrepl-mode-map (kbd ",") nil)
-      ;; Define useful key-chords:
-      (evil-leader/set-key-for-mode 'sly-mrepl-mode
-        "," #'counsel-sly-mrepl-shortcut
-        "p" #'sly-mrepl-set-package
-        "i" #'counsel-sly-package-internal-symbols
-        "r" #'sly-restart-inferior-lisp))
-   #+end_src
-
 * SLIME
   The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
   Lisp IDE.
@@ -168,6 +86,90 @@ Make sure to only run this function after 'sly-mrepl loads."
 
   The default key combination for =sly-prefix-map= is =C-c= by itself.
 
+** Functions
+*** sly-counsel integration functions
+   These functions were taken directly from [[https://mihaiolteanu.me/counsel-sly/][Mihai Olteanu's blog]].
+   Thank you so much for the your contributions, Mihai!
+
+   #+begin_src emacs-lisp
+     ;; Define functionality for interacting with the sly repl using counsel
+     (defun counsel-sly-mrepl-shortcut ()
+       (interactive)
+       (ivy-read
+        "Action: "
+        (mapcar #'car sly-mrepl-shortcut-alist)
+        :action (lambda (string)
+                  (let ((command (and string
+                                      (cdr (assoc string sly-mrepl-shortcut-alist)))))
+                    (call-interactively command)))))
+
+     (defun sly-read-package-name (prompt &optional initial-value allow-blank)
+       (ivy-read
+        "Package: "
+        (sly-eval `(slynk:list-all-package-names t))
+        :action #'identity))
+
+     (defun counsel-sly-mrepl-history ()
+       (interactive)
+       (ivy-read
+        "History: "
+        (reverse (ring-elements comint-input-ring))
+        :action (lambda (e)
+                  (insert e))))
+
+     (defun eval-grab-output (string)
+       (let ((res nil))
+         (sly-eval-async `(slynk:eval-and-grab-output ,string)
+           (lambda (result)
+             (cl-destructuring-bind (output value) result
+               (setf res (car (read-from-string value))))))
+         (while (null res)
+           (sleep-for 0.1))
+         res))
+
+     (defun counsel-sly-eval (string action)
+       (let ((result (eval-grab-output string)))
+         (ivy-read
+          "Symbol: "
+          result
+          :action action)))
+
+     (defun send-input (expr)
+       (insert expr)
+       (comint-send-input))
+
+     (defun counsel-sly-package-internal-symbols ()
+       (interactive)
+       (counsel-sly-eval "(common-lisp-user::package-internal-symbols \*package\*)"
+                         `(1 ("o" ,#'insert "insert")
+                             ("f" ,(lambda (candidate)
+                                     (send-input (format "(find-symbol \"%s\")" candidate)))
+                              "find symbol")
+                             )))
+   #+end_src
+
+*** Set SLY MREPL keybindings
+   #+begin_src emacs-lisp
+     (defun my/set-sly-mrepl-keybindings ()
+       "Hook function for setting keybindings in SLY MREPL mode.
+     Make sure to only run this function after 'sly-mrepl loads."
+       (with-eval-after-load "sly-mrepl"
+         ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
+         (define-key sly-mrepl-mode-map (kbd ",") nil)
+         ;; History navigation.
+         (evil-define-key '(normal insert) sly-mrepl-mode-map
+           (kbd "C-r") #'counsel-sly-mrepl-history)
+         (evil-define-key 'insert sly-mrepl-mode-map
+           (kbd "C-j") #'comint-next-input
+           (kbd "C-k") #'comint-previous-input)
+         ;; Define useful key-chords:
+         (evil-leader/set-key-for-mode 'sly-mrepl-mode
+           "," #'counsel-sly-mrepl-shortcut
+           "p" #'sly-mrepl-set-package
+           "i" #'counsel-sly-package-internal-symbols
+           "r" #'sly-restart-inferior-lisp)))
+   #+end_src
+
 ** use-package specification
    #+begin_src emacs-lisp
      (use-package sly
@@ -176,7 +178,6 @@ Make sure to only run this function after 'sly-mrepl loads."
        :hook
        ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
        ((lisp-mode . sly-mode)
-        ;; Set keybindings for the REPL
         (sly-mrepl-mode . my/set-sly-mrepl-keybindings))
        :bind
        (:map sly-prefix-map
@@ -191,7 +192,9 @@ Make sure to only run this function after 'sly-mrepl loads."
        (inferior-lisp-program (my/get-inferior-lisp-program))
        ;; The default Common Lisp implementation for SLY to fall back on.
        (sly-default-lisp 'sbcl)
-       ;; Allow better completions.
+       ;; Select completion method. Can be one of:
+       ;;   'sly-simple-completions (speculative completions)
+       ;;   'sly-flex-completions (exact completions)
        (sly-complete-symbol-function 'sly-flex-completions))
    #+end_src
 
