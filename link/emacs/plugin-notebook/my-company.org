@@ -30,8 +30,12 @@ completion.
      is not allowed to be rebound within a :config block. This function
      circumvents the aforementioned shortcoming by running its body after
      company-mode initializes."
-       (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-       (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+       (define-key company-active-map (kbd "<tab>") (lambda ()
+                                                      (interactive)
+                                                      (company-complete-common-or-cycle 1)))
+       (define-key company-active-map (kbd "<backtab>") (lambda ()
+                                                          (interactive)
+                                                          (company-complete-common-or-cycle -1)))
        (define-key company-active-map (kbd "RET") 'company-complete-selection)
        ;; Re-bind some of evil's keybindings.
        ;; Use RET to complete company completions
@@ -44,7 +48,7 @@ completion.
        (define-key company-active-map (kbd "C-k") (lambda ()
                                                     (interactive)
                                                     (company-complete-common-or-cycle -1)))
-       (define-key company-active-map (kbd "C-l") #'company-complete))
+       (define-key company-active-map (kbd "C-l") #'company-complete-selection))
 
      (defun my/company-complete-selection--advice-around (fn)
        "Advice execute around `company-complete-selection' command."
