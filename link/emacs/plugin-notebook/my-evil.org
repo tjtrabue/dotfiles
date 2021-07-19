@@ -440,6 +440,8 @@ like Vim."
             ;; Use H and L to move across s-exps
             "H" #'lispyville-backward-sexp
             "L" #'lispyville-forward-sexp
+            ;; Wrap v to mark symbol and then enter visual
+            "v" (lispyville-wrap-command lispy-mark-symbol visual)
             ;; Make "J" into the safe join operator in Lisp modes
             "J" #'lispyville-join
             ;; Special comment functions
@@ -502,9 +504,6 @@ like Vim."
                                    arrows
                                    ;; evil-indent now prettifies expressions
                                    prettify
-                                   ;; wrap v, V, and C-v in lispy-mark, making
-                                   ;; visually selecting sexps easier.
-                                   mark
                                    ;; Use M-(, M-{, and M-[ to wrap Lisp objects in
                                    ;; delimiters.
                                    wrap
@@ -515,6 +514,8 @@ like Vim."
                                    text-objects
                                    ;; Extra bindings
                                    additional))
+       ;; Only use evil-mode's visual selection instead of lispy marks.
+       (lispyville-enter-visual-when-marking)
        (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
        (my/set-lispyville-mode-keys)
        (my/set-lispyville-leader-keys))
