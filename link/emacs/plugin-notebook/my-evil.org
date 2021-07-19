@@ -458,7 +458,9 @@ like Vim."
           (evil-define-key 'visual keymap
             "gc" #'lispyville-comment-or-uncomment-line
             "gC" #'lispyville-comment-or-uncomment
-            "gy" #'lispyville-comment-and-clone-dwim)
+            "gy" #'lispyville-comment-and-clone-dwim
+            "<" #'evil-shift-left-line
+            ">" #'evil-shift-right-line)
           (evil-define-key '(normal insert visual) keymap
             (kbd "M-;") #'lispy-comment)))
     #+end_src
