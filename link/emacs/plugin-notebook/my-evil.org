@@ -502,6 +502,9 @@ like Vim."
                                    arrows
                                    ;; evil-indent now prettifies expressions
                                    prettify
+                                   ;; wrap v, V, and C-v in lispy-mark, making
+                                   ;; visually selecting sexps easier.
+                                   mark
                                    ;; Use W, B, E, and ge to move semantically across
                                    ;; Lisp objects.
                                    (atom-movement t)
