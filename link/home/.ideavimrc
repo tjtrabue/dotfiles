@@ -1,51 +1,4 @@
-" Author: Thomas J. Trabue
-" Date: 3/23/2017
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""                                                                                                ""
-""                                                                                                ""
-""                                           Basic Config                                         ""
-""                                                                                                ""
-""                                                                                                ""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Launch Config {{{
-" The g:pathogen_disabled array holds the names of plugins that you do not want to load
-" automatically when starting a Vim editing session.
-let g:pathogen_disabled = []
-
-" Add YouCompleteMe to disabled list because it is frigging HUGE
-" call add(g:pathogen_disabled, 'YouCompleteMe')
-
-" Add pathogen to runtime path.
-" This allows for cloning pathogen to ~/.vim/bundle/ just like a normal vim
-" plugin.
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-
-" Use Pathogen
-execute pathogen#infect()
-
-" Make Pathogen generate help docs for all plugins
-call pathogen#helptags()
-" }}}
-
-" Color and Theme {{{
-" Uncomment these lines to use the Solarized Dark theme
-"set background=dark
-"colorscheme solarized
-"let g:solarized_termtrans=1
-
-" Use the gruvbox color scheme (a bit more complete than badwolf)
-"colorscheme gruvbox
-
-" Change gruvbox contrast setting to be darker and more stark
-"let g:gruvbox_contrast_dark = 'hard'
-
-" Use the space-vim-dark theme
-colorscheme space-vim-dark
-hi Comment cterm=italic
-let g:space_vim_dark_background = 235
-" }}}
+" Configuration file for IdeaVim plugin for IntelliJ IDEA.
 
 " General {{{
 " Make Vim more useful
@@ -55,7 +8,7 @@ set nocompatible
 " NOTE: tmux interferes with the unnamed register, so it may be beneficial
 " to disable this feature when using tmux.
 "if !exists('$TMUX')
-    set clipboard=unnamed
+set clipboard=unnamedplus
 "endif
 
 " Allow backspace in insert mode
@@ -84,6 +37,10 @@ set autoread
 " current file (.), then the current working directory (,,), then each directory under the
 " current directory (**)
 set path=.,,**
+
+" Turn on spell checking for many document types
+autocmd BufRead,BufNewFile *.tex,*.html,*.txt,*.md
+    \ set spelllang=en_us spell
 " }}}
 
 " Backups {{{
@@ -92,7 +49,7 @@ set backup
 set writebackup
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
-if exists("&undodir")
+if exists('&undodir')
     set undodir=~/.vim/undo
 endif
 
@@ -103,19 +60,20 @@ set backupskip=/tmp/*,/private/tmp/*
 set history=700
 
 " Open files with cursor at last edited position
-if has("autocmd")
+if has('autocmd')
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
 endif
 " }}}
 
 " UI Config {{{
-" Draw a vertical ruler at 101 characters to designate max width for coding
+" Draw a vertical ruler at 1 character after textwidth to designate max width
+" for coding
 set colorcolumn=+1
 :highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
-" Set text width to 100 characters
-set textwidth=100
+" Set text width to 80 characters
+set textwidth=80
 
 " Wrap lines
 set wrap
@@ -212,13 +170,15 @@ set scrolloff=3
 " Start scrolling three columns before vertical border of window
 set sidescrolloff=3
 
-" Cause pane splits to occur below (for horizontal split) and to the right (for vertical splits)
+" Cause pane splits to occur below (for horizontal split) and to the right
+" (for vertical splits)
 set splitbelow
 set splitright
 " }}}
 
 " Searching {{{
-" Use normal regular expression syntax and character meaning (should be on by default anyway)
+" Use normal regular expression syntax and character meaning
+" (should be on by default anyway)
 set magic
 
 " Highlight searches
@@ -232,10 +192,6 @@ set ignorecase
 
 " Turn on case-sensitivity if user types an upper-case letter
 set smartcase
-
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-noremap <space> /
-noremap <c-space> ?
 " }}}
 
 " Tabs and Spaces {{{
@@ -243,11 +199,11 @@ noremap <c-space> ?
 set expandtab
 
 " Set tab size to 4 spaces
-set tabstop=4
+set tabstop=2
 
 " Don't use soft tabs, so as to avoid compatibility errors with other editors
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=2
+set shiftwidth=2
 
 " Use multiples of shiftwidth when indenting with '<' and '>'
 set shiftround
@@ -277,20 +233,20 @@ vmap <D-]> >gv
 " Enable folding (code block collapsing)
 set foldenable
 
-" Open most folds by default
-set foldlevelstart=10
+" Start folding from the very beginning
+set foldlevel=0
 
 " Nest at most 10 folds
 set foldnestmax=10
 
-" Fold based on indent level
-set foldmethod=indent
+" Fold based on language syntax by default
+set foldmethod=syntax
 " }}}
 
 " Movement {{{
 " Disable arrow keys in all modes *gasp!*
-" I know, but get over it. You need to learn to use Vim's intended movement buttons, and trust me,
-" you'll thank me later when you do.
+" I know, but get over it. You need to learn to use Vim's intended movement
+" buttons, and trust me, you'll thank me when you do.
 map <UP> <NOP>
 map <DOWN> <NOP>
 map <LEFT> <NOP>
@@ -308,94 +264,44 @@ nnoremap k gk
 
 " Highlight last inserted text
 nnoremap gV `[v`]
-
-" (Ctrl+j) in insert mode navigates to next closing delimeter
-inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
-
-" (Ctrl+j) and (Ctrl+k) move down and up, respectively, 20 lines at a time.
-":noremap <C-j> 20j
-":noremap <C-k> 20k
 " }}}
 
-" Custom Mappings {{{
-" Use nj as an Escape alias to exit insert and visual modea.
-imap nj <ESC>
-vmap nj <ESC>
-
+" Normal Mode Mappings {{{
 " Use 'QQ' to exit without saving
 noremap QQ :qa!<CR>
 
-" Use 'ZZ' to strip trailing whitespace, save, and exit
-noremap ZZ :call StripTrailingWhitespace()<CR>:wq<CR>
-
 " Use 'ZC' to enter command mode
 noremap ZC :
+
+" Move lines with Alt-j and Alt-k
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+
+" Make 'Y' yank to the end of the current line.
+" This makes 'Y' behave more like other 'capital letter' commands.
+nnoremap Y y$
 " }}}
 
-" Leader Shortcuts {{{
-" Change mapleader
-let mapleader=","
+" Insert Mode Mappings {{{
+" Use 'jk' as an Escape alias to exit insert and visual modea.
+inoremap jk <ESC>
 
-" Save session for restoring later with 'vim -S' (,ss)
-map <leader>ss :mksession<CR>
-
-" Save a file as root (,W)
-map <leader>W :w !sudo tee % > /dev/null<CR>
-
-" typing ',WP' in command mode enters word processor mode
-map <leader>WP :call WordProcessorMode()<CR>
-
-" Use ',w' to strip whitespace
-map <leader>w :call StripTrailingWhitespace()<CR>
-
-" Use ',t' to toggle absolute and relative line numbers
-map <leader>t :call ToggleNumber()<CR>
-
-" Open ag.vim with ',a'
-map <leader>a :Ag
-
-" Use ',.' to go to end of current line
-map <leader>. $
-
-" Use ',m' to go to beginning of current line
-map <leader>m ^
-
-" Use ',f' in normal mode to open / close folds
-map <leader>f za
-
-" Use ',sg' to enter a global substitution pattern
-map <leader>sg :%s/
-
-" Pasting from clipboard into vim is formatted correctly (,p)
-map <silent> <leader>p :set paste<CR>"*p:set nopaste<CR>
-
-" Use ',/' to clear highlighted searches
-map <silent> <leader>/ :nohlsearch<CR>
-
-" Quickly edit/reload the ~/.vimrc file
-" ',ev' opens ~/.vimrc in a new buffer to edit.
-" ',sv' sources the ~/.vimrc file.
-map <silent> <leader>ev :e $MYVIMRC<CR>
-map <silent> <leader>sv :so $MYVIMRC<CR>
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Text bubbling shortcuts
-nmap <leader>k ddkP
-nmap <leader>j ddp
-
-" Bubble a visual selection up or down
-vmap <leader>k xkP`[V`]
-vmap <leader>j xp`[V`]
+" Move lines with Alt-j and Alt-k
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
 " }}}
 
-" Window Configuration {{{
-" Move between windows with Ctrl+h/j/k/l
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-h> <C-w>h
-noremap <C-l> <C-w>l
+" Terminal Mode Mappings {{{
+" Use Esc to exit terminal mode
+tnoremap <Esc> <C-\><C-n>
+" Also use Alt+[ to exit terminal mode
+tnoremap <A-[> <Esc>
+" }}}
+
+" Visual Mode Mappings {{{
+" Move lines with Alt-j and Alt-k
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 " }}}
 
 " Tab Configuration {{{
@@ -421,8 +327,9 @@ map <C-i>e :tabedit <C-r>=expand("%:p:h")<CR>/
 " }}}
 
 " Buffer Configuration {{{
-" Hide old buffers instead of close them when editing a new one. That is, allow the user to have
-" unsaved changes in a buffer and still be able to open a new one.
+" Hide old buffers instead of close them when editing a new one. That is, allow
+" the user to have unsaved changes in a buffer and still be able to open a new
+" one.
 set hidden
 
 " Remember info about open buffers on close
@@ -464,112 +371,10 @@ catch
 endtry
 " }}}
 
-" Custom Functions {{{
-" Return the number of open buffers
-function! NrBuffs()
-    let currentBufferNumber = bufnr('$')
-    let numberOfBuffers = 0
-    while currentBufferNumber >= 1
-        if buflisted(currentBufferNumber)
-            let numberOfBuffers+=1
-        endif
-        let currentBufferNumber-=1
-    endwhile
-    return numberOfBuffers
-endfunction
-
-" Enter a distraction-free word processor mode
-function! WordProcessorMode()
-    setlocal textwidth=100
-    setlocal smartindent
-    setlocal spell spelllang=en_us
-    setlocal noexpandtab
-endfunction
-
-" Strip trailing whitespace (,w)
-function! StripTrailingWhitespace()
-    " Preparation: save last search and cursor position
-    let _s=@/
-    let l = line(".")
-    let c = col('.')
-    " Do the busniess
-    :%s/\s\+$//e
-    " Clean up: restore previous search history and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
-
-" toggle between number and relativenumber
-function! ToggleNumber()
-    if(&relativenumber == 1)
-        set norelativenumber
-        set number
-    else
-        set relativenumber
-    endif
-endfunc
-" }}}
-
-" Surrounding Delimeters {{{
-" Automatically close square brackets, braces, parentheses, angle brackets, and both kinds of
-" quotation marks.
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap {<CR> {<CR>}<Esc>O
-
-if has ('autocmd')
-    autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
-endif
-
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
-
-" Closes a pair of parentheses or square brackets when the user types a closing
-" character and the symbol under the cursor is that same closing character.
-" e.g., typing `]` while a ']' is under the cursor does not an extra ']', it only moves the cursor
-" ahead.
-function ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endf
-
-" Close a pair of braces if the user types a closing brace and the char under  the cursor is a
-" closing brace, or the only char on the next line down from the cursor is a closing brace.
-" e.g., typing `}` when a '}' is under the cursor or is the first symbol on the line below the
-" current line will move the cursor to that next '}' without adding an extra one.
-function CloseBracket()
-    if match(getline(line('.') + 1), '\s*}') < 0
-        return "\<CR>}"
-    else
-        return "\<Esc>j0f}a"
-    endif
-endf
-
-" Close a pair of single or double quotes if the character under the cursor is the quotation mark typed
-function QuoteDelim(char)
-    let line = getline('.')
-    let col = col('.')
-    if line[col - 2] == "\\"
-        " Inserting a quoted quotation mark into the string
-        return a:char
-    elseif line[col - 1] == a:char
-        " Escaping out of the string
-        return "\<Right>"
-    else
-        " Starting a string
-        return a:char.a:char."\<Esc>i"
-    endif
-endf
-" }}}
-
 " Autocommands {{{
-" EVERY auto command in this section should be inside of the enclosing 'if' statement to avoid
-" compatibility issues with versions of Vim that do not have autocmd functions.
+" EVERY auto command in this section should be inside of the enclosing 'if'
+" statement to avoid compatibility issues with versions of Vim that do not have
+" autocmd functions.
 if has('autocmd')
     " Make line numbers absolute upon entering insert mode, and
     " make them relative upon leaving insert mode.
@@ -584,206 +389,32 @@ if has('autocmd')
 
     " Treat .md files as Markdown
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
-" }}}
 
-" Autogroups {{{
-augroup configgroup
-    autocmd!
-    autocmd VimEnter * highlight clear SignColumn
-    autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md,*.plx,*.sh,*.bash,*.zsh
-                \ :call StripTrailingWhitespace()
-augroup END
-" }}}
+    " Strip trailing whitespace on buffer write
+    autocmd BufWritePre * :%s/\s+$//e
 
-" Sudo {{{
-" Use ':w!!' to save changes to a file requiring root privileges that you opened without first
-" invoking the 'sudo' command
-cmap w!! w !sudo tee % > /dev/null
-" }}}
+    " Move cursor to last known position when reopening a file
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+          \| exe "normal! g'\"" | endif
 
-" tmux {{{
-" Change cursor from block cursor mode to vertical bar cursor mode in tmux
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    " Interpret config files for IDE Vim plugins as Vim syntax
+    autocmd BufNewFile,BufRead .vrapperrc set filetype=vim syntax=vim
 endif
 " }}}
 
 " Visual Mode {{{
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
+" Pressing * or # searches for the current visual selection
+vnoremap <silent> * :call setreg("/",
+    \ substitute(<SID>GetSelectedText(),
+    \ '\_s\+',
+    \ '\\_s\\+', 'g')
+    \ )<Cr>n
+
+vnoremap <silent> # :call setreg("?",
+    \ substitute(<SID>GetSelectedText(),
+    \ '\_s\+',
+    \ '\\_s\\+', 'g')
+    \ )<Cr>n
 " }}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""                                                                                                ""
-""                                                                                                ""
-""                                              Plugins                                           ""
-""                                                                                                ""
-""                                                                                                ""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Airline {{{
-" Enable smart tab line above file that lists all open buffers as long as only one tab is open
-let g:airline#extensions#tabline#enabled = 1
-
-" Use Powerline font symbols:
-let g:airline_powerline_fonts = 1
-
-" Use the gruvbox theme for Airline to match Vim theme
-let g:airline_theme = 'gruvbox'
-" }}}
-
-" Awesome Terminal Fonts {{{
-" For use in adding fancy icons to Vim's powerline settings
-let g:Powerline_symbols = 'fancy'
-let g:Powerline_dividers_override = [[0xe0b0], [0xe0b1], [0xe0b2], [0xe0b3]]
-let g:Powerline_symbols_override = {
-  \ 'BRANCH': [0xe238],
-  \ 'RO'    : [0xe0a2],
-  \ 'FT'    : [0xe1f6],
-  \ 'LINE'  : [0xe0a1],
-\ }
-" }}}
-
-" ctrlp {{{
-" Order matching files top to bottom
-let g:ctrlp_match_window = 'bottom,order:ttb'
-
-" Always open files in new buffers
-let g:ctrlp_switch_buffer = 0
-
-" Allow the user to change working directories in Vim and have CtrlP respect that change
-let g:ctrlp_working_path_mode = 0
-
-" Exclude version control directories when searching
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
-
-" Use ag (The Silver Searcher) to greatly speed up file searching
-let g:ctrlp_user_command = 'ag -l -p "$HOME/.agignore" --nocolor --hidden -g "" %s | sort'
-"let g:ctrlp_user_command = {
-"    \ 'types': {
-"      \ 1: ['.git', 'cd %s && git ls-files'],
-"      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-"      \ },
-"    \ 'fallback': 'ag -l -p "$HOME/.agignore" --nocolor --hidden -g "" %s | sort',
-"    \ 'ignore': 1
-"    \ }
-
-" When pressing <C-o>, open multiple files in hidden buffers
-let g:ctrlp_open_multiple_files = 'i'
-
-" Don't prompt user for how to open multiple files
-let g:ctrlp_arg_map = 0
-" }}}
-
-" Emmet {{{
-" NOTE: Default Emmet trigger sequence is Ctrl+y. You can remap this sequence with something
-" like the following example (which remaps the sequence to Ctrl+z):
-" let g:user_emmet_leader_key='<C-Z>'
-
-" Remap the Emmet leader key sequence to ',y'
-let g:user_emmet_leader_key='<leader>y'
-
-" Enable all functions in all modes
-let g:user_emmet_mode='a'
-
-" Only enable normal mode functions
-" let g:user_emmet_mode='n'
-" }}}
-
-" fugitive {{{
-" NOTE: fugitive commands do NOT work on external symlinks to files inside of a Git repo.
-" This is because fugitive operates on individual files, not the current directory structure.
-" If you want to be able to use fugitive commands, you must edit the file inside of the repo
-" itself, not an external symlink to that file.
-" }}}
-
-" Gundo {{{
-" toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
-" }}}
-
-" NERDCommenter {{{
-" Add a space after comment delimeter by default
-let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" }}}
-
-" NERDTree {{{
-" Any autocmds should go inside of this 'if' statement
-if has('autocmd')
-    " Uncomment this line to start NERDTree when vim opens
-    "autocmd vimenter * NERDTree
-
-    " Start NERDTree when vim opens even if no files were specified
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-    " Put the focus on the primary file when vim opens (instead of on NERDTree)
-    autocmd VimEnter * wincmd p
-endif
-
-" Exit Vim if NERDTree is the last and only open buffer
-function! s:CloseIfOnlyControlWinLeft()
-    if winnr("$") != 1
-        return
-    endif
-    if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1
-        \ && NrBuffs() == 1) || &buftype == 'quickfix'
-        q
-    endif
-endfunction
-augroup CloseIfOnlyControlWinLeft
-    au!
-    au BufEnter * call s:CloseIfOnlyControlWinLeft()
-augroup END
-
-" Use ',n' to toggle NERDTree
-" If NERDTree is toggled on, then focus is automatically placed on previously addressed window
-map <leader>n :NERDTreeToggle<CR><C-w>p
-" }}}
-
-" Powerline {{{
-" If powerline was installed with PIP, use the following lines:
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
-
-" If powerline was cloned, uncomment this line:
-"set rtp+=~/.dotfiles/vendors/powerline/powerline/bindings/vim
-" }}}
-
-" tmuxline {{{
-" Uncomment this line if you don't want to overwrite tmuxline theme with airline-theme automatically
-"let g:airline#extensions#tmuxline#enabled = 0
-" }}}
-
-" UltiSnips {{{
-" Remap expand trigger for snippets to Ctrl+E to avoid conflict with
-" YouCompleteMe trigger (Tab)
-let g:UltiSnipsExpandTrigger="<C-e>"
-
-" Jump forward with Ctrl+B and backward with Ctrl+Z
-let g:UltiSnipsJumpForwardTrigger="<C-b>"
-let g:UltiSnipsJumpBackwardTrigger="<C-z>"
-
-" Tell UltiSnips where to locate and create private snippet files
-let g:UltiSnipsSnippetsDir="$HOME/.vim/UltiSnips"
-" }}}
-
-" Modeline for this file (LEAVE IT COMMENTED!)
-" vim:foldmethod=marker
+" vim:foldenable:foldmethod=marker
