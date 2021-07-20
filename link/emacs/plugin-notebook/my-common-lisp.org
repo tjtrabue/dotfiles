@@ -195,7 +195,10 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        ;; Select completion method. Can be one of:
        ;;   'sly-simple-completions (speculative completions)
        ;;   'sly-flex-completions (exact completions)
-       (sly-complete-symbol-function 'sly-flex-completions))
+       (sly-complete-symbol-function 'sly-flex-completions)
+       :init
+       ;; Make Slynk config file recognized as Common Lisp.
+       (add-to-list 'auto-mode-alist '("\\.slynkrc\\'" . lisp-mode)))
    #+end_src
 
 ** Plugins
