@@ -24,6 +24,8 @@ built-in Emacs completion system, or any other compatible framework.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package consult
+      ;; Selectrum seems better off without it.
+      :disabled
       ;; Replace bindings. Lazily loaded due by `use-package'.
       :bind (;; C-c bindings (mode-specific-map)
              ("C-c h" . consult-history)
