@@ -28,7 +28,7 @@ type =C-h= which will prompt you for an action with completion, and remind you
 of the key bindings.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package embark
       :demand t
       :bind
@@ -50,7 +50,7 @@ of the key bindings.
 ** embark-consult
      Consult users will also want the =embark-consult= package.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package embark-consult
        :after (embark consult)
        :demand t
