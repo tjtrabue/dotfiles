@@ -21,13 +21,14 @@ project artifacts, etc.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package projectile
-      :after (evil ivy)
+      :after evil-collection
+      :demand t
       :hook
       ;; Turn projectile on globally.
       (after-init . projectile-mode)
       :custom
-      ;; Use Ivy for projectile completion (can also use helm or ido).
-      (projectile-completion-system 'ivy)
+      ;; Figure out completion system to use automatically.
+      (projectile-completion-system 'auto)
       ;; Make projects in workspace discovered automatically.
       ;; The list is a space-separated collection of directory paths
       ;; that projectile should use when searching for projects.

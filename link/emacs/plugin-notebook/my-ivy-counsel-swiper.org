@@ -36,8 +36,10 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
    #+begin_src emacs-lisp
      (use-package ivy
-       :after evil
+       :after evil-collection
        :demand t
+       :hook
+       (after-init . ivy-mode)
        :bind*
        (:map ivy-switch-buffer-map
              ;; Make sure that navigation shortcuts work
@@ -49,6 +51,9 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
              ;; Navigation shortcuts
              ("C-j" . ivy-next-line)
              ("C-k" . ivy-previous-line)
+             ;; Change directory to current completion candidate and continue
+             ;; completion selection
+             ("C-l" . ivy-alt-done)
              ;; Use TAB to mark/unmark candidates
              ("<tab>" . my/ivy-toggle-mark)
              :map evil-normal-state-map
@@ -68,9 +73,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        (ivy-height-alist
         '((t
            lambda (_caller)
-           (/ (frame-height) 3))))
-       :config
-       (ivy-mode 1))
+           (/ (frame-height) 3)))))
    #+end_src
 
 ** Plugins
@@ -139,10 +142,14 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 *** counsel-projectile
     #+begin_src emacs-lisp
       (use-package counsel-projectile
-        :demand t
         :after (counsel projectile)
-        :config
-        (counsel-projectile-mode))
+        :hook
+        (counsel-mode . counsel-projectile-mode)
+        :bind*
+        (:map evil-normal-state-map
+              ;; Overwrite the standard projectile-find-file shortcut
+              ;; with the enhanced counsel version.
+              ("C-p" . counsel-projectile-find-file)))
     #+end_src
 
 *** counsel-tramp
@@ -159,7 +166,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
   #+begin_src emacs-lisp
     (use-package swiper
       :after evil-collection
-      :commands swiper
+      :commands (swiper swiper-backward)
       :bind
       (:map evil-normal-state-map
        ;; Use swiper for evil-mode's forward and reverse search
