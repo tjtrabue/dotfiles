@@ -361,6 +361,9 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     ;; after the file is added. If it was not active, you would have to manually
     ;; revert the buffer.
     (global-auto-revert-mode 1)
+
+    ;; Persist command history to disk so that it is saved between restarts.
+    (savehist-mode 1)
   #+end_src
 
 * Key Bindings
