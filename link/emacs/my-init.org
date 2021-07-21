@@ -612,11 +612,21 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    #+end_src
 
 ** minibuffer-setup hooks
-   These hooks run to set up the minibuffer.
+   These hooks just after entry into the minibuffer.
 
    #+begin_src emacs-lisp
      ;; Do not allow the cursor in the minibuffer prompt
      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+   #+end_src
+
+** minibuffer-mode hooks
+   These hooks run after =minibuffer-mode= activates for a buffer.
+
+   #+begin_src emacs-lisp
+     (add-hook 'minibuffer-mode-hook (lambda ()
+                                       ;; Don't highlight whitespace in minibuffer.
+                                       (setq-local show-trailing-whitespace nil)
+                                       (whitespace-mode -1)))
    #+end_src
 
 ** prog-mode hooks
