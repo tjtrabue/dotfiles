@@ -11,9 +11,19 @@ including the built-in Emacs completion system and the =consult=
 framework. Please keep in mind that =vertico= is only the UI. It is not a
 completion framework unto itself.
 
+* Vertico vs. other UIs
+  Vertico is an alternative to completion frameworks such as Selectrum, Ivy,
+  IDO, etc. The main difference is that Vertico aims to be as minimal as
+  possible, only providing a pretty UI and deferring the completion system to
+  other plugins, such as the built-in Emacs completion system or =orderless=.
+
 * use-package specification
   #+begin_src emacs-lisp
     (use-package vertico
+      ;; Disabled in favor of Selectrum, which is a bit more mature and
+      ;; feature-packed, not to mention Selectrum integrates with `prescient.el',
+      ;; and as far as I know Vertico does not.
+      :disabled
       :hook
       (after-init . vertico-mode)
       :bind*

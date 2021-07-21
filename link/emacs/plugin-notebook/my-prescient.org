@@ -6,8 +6,23 @@
 #+tags:
 #+STARTUP: fold
 
-=prescient= provides more intelligent sorting and filtering functions for Emacs.
+=prescient.el= provides more intelligent sorting and filtering functions for
+Emacs. It was designed to be used with existing completion frameworks, such as
+Helm, Ivy, Selectrum, and others.
 
+* Prescient vs. Orderless
+=prescient.el= is an /alternative/ to =orderless=. They should not be used in
+conjunction. The main difference between the two completion tools is that
+=orderless= is designed to be more generic and does not provide any sorting
+capabilities of its own, deferring that task to the underlying completion
+framework (such as Ivy, IDO, Helm, Selectrum, etc.). =prescient=, on the other
+hand, is less generic in that specific integration plugins must be deployed in
+order to marry =prescient= to the completion UI, and it is not fully compatible
+with Emacs' native completion system. However, =prescient= is much faster than
+=orderless=, and provides built-in sorting capabilities which can be very handy
+if your completion UI does not sort matches.
+
+* use-package specification
 #+begin_src emacs-lisp
   (use-package prescient
     :hook
