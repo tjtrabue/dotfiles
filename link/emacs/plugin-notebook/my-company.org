@@ -100,12 +100,12 @@ completion.
        (company-eclim-auto-save nil)
        ;; Don't make plain text completions lowercase.
        (company-dabbrev-downcase nil)
-       ;; Tweak company completion delay
+       ;; How long company waits before suggesting completions.
        ;; WARNING: Setting this value too low could cause a huge performance
        ;;          bottleneck!
-       (company-idle-delay 0)
-       ;; Start completing as soon as we begin typing.
-       (company-minimum-prefix-length 1)
+       (company-idle-delay 0.2)
+       ;; Start suggesting completions after this many characters typed.
+       (company-minimum-prefix-length 2)
        ;; Change UI appearance of company
        (company-frontends
         '(company-pseudo-tooltip-unless-just-one-frontend
