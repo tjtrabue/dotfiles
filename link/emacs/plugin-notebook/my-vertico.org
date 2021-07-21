@@ -7,15 +7,24 @@
 #+STARTUP: fold
 
 =vertico= provides a Helm-like completion UI for several completion frameworks,
-such as =consult=.
+including the built-in Emacs completion system and the =consult=
+framework. Please keep in mind that =vertico= is only the UI. It is not a
+completion framework unto itself.
 
 * use-package specification
   #+begin_src emacs-lisp
     (use-package vertico
-      ;; Vertico seems not to be in the straight.el GNU ELPA mirror yet.
-      :disabled
       :hook
       (after-init . vertico-mode)
+      :bind*
+      (:map vertico-map
+            ;; Navigate vertico with C-j and C-k
+            ([remap exit-minibuffer] . vertico-next)
+            ("C-k" . vertico-previous)
+            ;; Pressing ? brings up help for available completions
+            ("?" . minibuffer-completion-help)
+            ;; Complete selection with C-l
+            ("C-l" . minibuffer-complete))
       :custom
       ;; Enable cycling for vertico-next and vertico-previous
       (vertico-cycle t))

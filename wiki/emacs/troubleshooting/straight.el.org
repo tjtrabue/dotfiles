@@ -10,17 +10,31 @@ Sometimes =straight.el= doesn't behave as expected when you attempt to bootstrap
 a new Emacs installation, or when upgrading an old installation. This guide is
 here to help you navigate some of the pitfalls you may encounter.
 
-* The golden rule of troubleshooting straight.el problems
-** Always run straight-rebuild-package on the problem packages!
+* The golden rule of troubleshooting =straight.el= problems
+** Always run straight-rebuild-package on the problematic packages!
    Package fails to build? Refresh your package recipe repos and rebuild the
    package manually. Package fails to load when you call an autoloaded function?
-   Rebuild the package manually. Strange issues with package dependencies? Rebuild
-   manually. I cannot stress enough just how many problems with =straight.el=
-   can be resolved by simply rebuilding the packages in question. I don't know
-   why this is the case, but it is. Probably because several dependencies want
-   different versions of the same package.
+   Rebuild the package manually. Strange issues with package dependencies?
+   Rebuild manually. I cannot stress enough just how many problems with
+   =straight.el= can be resolved by simply rebuilding the packages in
+   question. I don't know why this is the case, but it is. Probably because
+   several dependencies want different versions of the same package.
 
    Sometimes, =straight-pull-all= followed by =straight-rebuild-all= helps.
+
+* =straight.el= cannot find package in repos although you know it's there
+  If =straight.el= reports that it cannot find a certain package in its
+  configured repositories even though you know full well that the package /is/
+  there, educate =straight.el= by doing the following:
+
+  - Update your package repos by running =straight-pull-package= for each of
+    your package repositories,
+  - run =straight-pull-package= on =straight= itself,
+  - run =straight-rebuild-package= on =straight=,
+  - restart Emacs.
+
+  At this point, try pulling the problematic package again. =straight.el= should
+  now be able to locate it.
 
 * Package fails to build...
 ** ...due to files being excluded from the build step
