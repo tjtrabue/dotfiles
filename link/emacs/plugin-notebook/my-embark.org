@@ -1,0 +1,61 @@
+#+title:    Emabark
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:21
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+Embark provides a sort of right-click contextual menu for Emacs, accessed
+through the =embark-act= command (which you should bind to a convenient key),
+offering you relevant actions to use on a target determined by the context:
+
+- In the minibuffer, the target is the current best completion candidate.
+- In the =*Completions*= buffer the target is the completion at point.
+- In a regular buffer, the target is the region if active, or else the file,
+  symbol or URL at point.
+-
+The type of actions offered depend on the type of the target:
+
+- For files you get offered actions like deleting, copying, renaming, visiting
+  in another window, running a shell command on the file, etc.
+- For buffers the actions include switching to or killing the buffer.
+- For package names the actions include installing, removing or visiting the
+  homepage.
+
+If you want a reminder of which actions are available after running =embark-act=
+type =C-h= which will prompt you for an action with completion, and remind you
+of the key bindings.
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package embark
+      :demand t
+      :bind
+      (("C-M-." . embark-act)
+       ("C-M-;" . embark-dwim)
+       ("C-h E" . embark-bindings)) ;; alternative for `describe-bindings'
+      :init
+      ;; Optionally replace the key help with a completing-read interface
+      (setq prefix-help-command #'embark-prefix-help-command)
+      :config
+      ;; Hide the mode line of the Embark live/completions buffers
+      (add-to-list 'display-buffer-alist
+                   '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                     nil
+                     (window-parameters (mode-line-format . none)))))
+  #+end_src
+
+* Plugins
+** embark-consult
+     Consult users will also want the =embark-consult= package.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package embark-consult
+       :after (embark consult)
+       :demand t
+       ;; if you want to have consult previews as you move around an
+       ;; auto-updating embark collect buffer
+       :hook
+       (embark-collect-mode . consult-preview-at-point-mode))
+   #+end_src

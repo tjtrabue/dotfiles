@@ -28,11 +28,11 @@ built-in Emacs completion system, or any other compatible framework.
       :bind (;; C-c bindings (mode-specific-map)
              ("C-c h" . consult-history)
              ("C-c m" . consult-mode-command)
-             ("C-c b" . consult-bookmark)
+             ("C-c B" . consult-bookmark)
              ("C-c k" . consult-kmacro)
              ;; C-x bindings (ctl-x-map)
              ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-             ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+             ("C-c b" . consult-buffer)                ;; orig. switch-to-buffer
              ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
              ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
              ;; Custom M-# bindings for fast register access
