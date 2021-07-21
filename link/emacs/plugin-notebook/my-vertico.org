@@ -1,0 +1,22 @@
+#+title:    Vertico: Minimal Completion UI
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:21
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=vertico= provides a Helm-like completion UI for several completion frameworks,
+such as =consult=.
+
+* use-package specification
+  #+begin_src emacs-lisp
+    (use-package vertico
+      ;; Vertico seems not to be in the straight.el GNU ELPA mirror yet.
+      :disabled
+      :hook
+      (after-init . vertico-mode)
+      :custom
+      ;; Enable cycling for vertico-next and vertico-previous
+      (vertico-cycle t))
+  #+end_src
