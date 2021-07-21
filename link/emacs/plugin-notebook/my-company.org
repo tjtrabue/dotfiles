@@ -282,7 +282,7 @@ completion.
 
    #+begin_src emacs-lisp
      (use-package company-prescient
-       :after company
+       :after (company prescient)
        :hook
        (company-mode . company-prescient-mode))
    #+end_src

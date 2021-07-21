@@ -15,29 +15,31 @@ Currently, =selectrum= and =projectile= just don't play well together. Until the
 completion framework.
 
 * use-package specification
-#+begin_src emacs-lisp
-  (use-package selectrum
-    :after (helm ivy)
-    :demand t
-    :custom
-    (selectrum-num-candidates-displayed 20)
-    (selectrum-fix-minibuffer-height t)
-    :bind
-    (:map selectrum-minibuffer-map
-     ("C-j" . selectrum-next-candidate)
-     ("C-k" . selectrum-previous-candidate))
-    :config
-    (selectrum-mode 1))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package selectrum
+      :after (helm counsel)
+      :hook
+      (after-init . selectrum-mode)
+      :custom
+      (selectrum-num-candidates-displayed 20)
+      (selectrum-fix-minibuffer-height t)
+      :bind*
+      (:map selectrum-minibuffer-map
+            ("C-j" . selectrum-next-candidate)
+            ("C-k" . selectrum-previous-candidate)))
+  #+end_src
+
 * Plugins
 ** selectrum-prescient
    Integrates =selectrum= with =prescient= for intelligent sorting and
    filtering.
 
-#+begin_src emacs-lisp
-  (use-package selectrum-prescient
-    :after (selectrum prescient)
-    :commands selectrum-prescient-mode
-    :config
-    (selectrum-prescient-mode 1))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package selectrum-prescient
+       :after (selectrum prescient)
+       :hook
+       (selectrum-mode . selectrum-prescient-mode)
+       :custom
+       (selectrum-prescient-enable-filtering t)
+       (selectrum-prescient-enable-sorting t))
+   #+end_src

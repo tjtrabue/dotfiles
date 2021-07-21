@@ -6,15 +6,21 @@
 #+tags:
 #+STARTUP: fold
 
-=orderless= is a smart completion backend for Emacs.
-
-*NOTE:* Currently unused in favor of =prescient= because orderless is quite slow
-by comparison.
+=orderless= provides an orderless completion style that divides the pattern into
+space-separated components, and matches candidates that match all of the
+components in any order. Each component can match in any one of several ways:
+literally, as a regexp, as an initialism, in the flex style, or as multiple word
+prefixes. By default, regexp and literal matches are enabled.
 
 #+begin_src emacs-lisp
-  ;; (use-package orderless
-  ;;   :init
-  ;;   (icomplete-mode)
-  ;;   :custom
-  ;;   (completion-styles '(orderless)))
+  (use-package orderless
+    ;; Currently disabled in favor of prescient becasue orderless is quite slow.
+    :disabled
+    :demand t
+    :init
+    (icomplete-mode 1)
+    :custom
+    (completion-styles '(orderless))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
 #+end_src

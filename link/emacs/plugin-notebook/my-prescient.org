@@ -10,8 +10,13 @@
 
 #+begin_src emacs-lisp
   (use-package prescient
-    :config
-    ;; Save command history to disk so that prescient gets more intelligent over
-    ;; time.
-    (prescient-persist-mode 1))
+    :hook
+    (after-init . prescient-persist-mode)
+    :custom
+    ;; Whether to put full matches before partial matches.
+    (prescient-sort-full-matches-first t)
+    ;; Whether to perform down-casing on filter arguments
+    (prescient-use-case-folding 'smart)
+    ;; List of filtering methods prescient uses on space-separated arguments
+    (prescient-filter-method '(literal regexp initialism fuzzy)))
 #+end_src

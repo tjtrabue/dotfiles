@@ -59,6 +59,10 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        ;; Keep the ivy completion buffer's height fixed.
        (ivy-fixed-height-minibuffer t)
        (ivy-use-virtual-buffers t)
+       ;; Use `orderless' for ivy completions
+       ;; (using prescient.el instead)
+       ;; (ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
+       ;; Make sure recursive minibuffers are enabled (should be already).
        (enable-recursive-minibuffers t)
        ;; Make the ivy window's height a function of its parent frame's height
        (ivy-height-alist
@@ -84,9 +88,11 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
     #+begin_src emacs-lisp
       (use-package ivy-prescient
-        :demand t
-        :config
-        (ivy-prescient-mode 1))
+        ;; this plugin MUST be loaded after Counsel, since it has to undo a bunch of
+        ;; Counsel's nonsense.
+        :after (counsel prescient)
+        :hook
+        (counsel-mode . ivy-prescient-mode))
     #+end_src
 
 *** ivy-yasnippet
@@ -113,22 +119,20 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
   =counsel= is a collection of =ivy= enhancements for standard Emacs functions,
   such as =find-file= and =switch-to-buffer=.
 
-  *NOTE:* Currently deprecated in favor of =selectrum=, which is a newer,
-  fancier narrowing selection framework for Emacs. See =my-selectrum= for more
-  details.
+  *NOTE:* We should start moving away from Counsel and toward Selectrum, which
+  is more general and faster.
 
 ** use-package specification
    #+begin_src emacs-lisp
      (use-package counsel
-       :demand t
        :after ivy
+       :hook
+       (after-init . counsel-mode)
        :bind
        (([remap dired] . counsel-dired))
        :custom
        (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :config
-       (counsel-mode 1))
+       (counsel-describe-variable-function #'helpful-variable))
    #+end_src
 
 ** Plugins
