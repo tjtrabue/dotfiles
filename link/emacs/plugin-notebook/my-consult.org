@@ -12,11 +12,18 @@ Consult is newer than Helm, Ivy, and Vertico, and integrates with Selectrum.
 Thus, I think Consult will be the future completion system for Emacs, but right
 now I can't be bothered to configure it. It's very feature-rich.
 
+* What is Consult really?
+Consult is designed to fulfill the same role for Selectrum and Vertico that
+Counsel does for Ivy. You can think of Selectrum, Consult, and Embark as a
+similar tool suite to Ivy, Counsel, and Swiper. The main difference between
+these two tool suites is that Ivy, Counsel, and Swiper are exclusive to one
+another, and must be used as a package deal. Consult is completely agnostic to
+the narrowing completion UI you choose. It could be Selectrum, Vertico, the
+built-in Emacs completion system, or any other compatible framework.
+
 * use-package specification
   #+begin_src emacs-lisp
-    ;; Example configuration for Consult
     (use-package consult
-      :disabled
       ;; Replace bindings. Lazily loaded due by `use-package'.
       :bind (;; C-c bindings (mode-specific-map)
              ("C-c h" . consult-history)
@@ -61,36 +68,29 @@ now I can't be bothered to configure it. It's very feature-rich.
              ("M-e" . consult-isearch)                 ;; orig. isearch-edit-string
              ("M-s e" . consult-isearch)               ;; orig. isearch-edit-string
              ("M-s l" . consult-line))                 ;; needed by consult-line to detect isearch
-
       ;; Enable automatic preview at point in the *Completions* buffer.
       ;; This is relevant when you use the default completion UI,
       ;; and not necessary for Vertico, Selectrum, etc.
-      :hook (completion-list-mode . consult-preview-at-point-mode)
-
+      :hook
+      (completion-list-mode . consult-preview-at-point-mode)
       ;; The :init configuration is always executed (Not lazy)
       :init
-
       ;; Optionally configure the register formatting. This improves the register
       ;; preview for `consult-register', `consult-register-load',
       ;; `consult-register-store' and the Emacs built-ins.
       (setq register-preview-delay 0
             register-preview-function #'consult-register-format)
-
       ;; Optionally tweak the register preview window.
       ;; This adds thin lines, sorting and hides the mode line of the window.
       (advice-add #'register-preview :override #'consult-register-window)
-
       ;; Optionally replace `completing-read-multiple' with an enhanced version.
       (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-
       ;; Use Consult to select xref locations with preview
       (setq xref-show-xrefs-function #'consult-xref
             xref-show-definitions-function #'consult-xref)
-
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
       :config
-
       ;; Optionally configure preview. The default value
       ;; is 'any, such that any key triggers the preview.
       ;; (setq consult-preview-key 'any)
@@ -105,28 +105,13 @@ now I can't be bothered to configure it. It's very feature-rich.
        consult-bookmark consult-recent-file consult-xref
        consult--source-file consult--source-project-file consult--source-bookmark
        :preview-key (kbd "M-."))
-
       ;; Optionally configure the narrowing key.
       ;; Both < and C-+ work reasonably well.
       (setq consult-narrow-key "<") ;; (kbd "C-+")
-
       ;; Optionally make narrowing help available in the minibuffer.
       ;; You may want to use `embark-prefix-help-command' or which-key instead.
       ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
       ;; Optionally configure a function which returns the project root directory.
-      ;; There are multiple reasonable alternatives to chose from.
-      ;;;; 1. project.el (project-roots)
-      ;; (setq consult-project-root-function
-      ;;       (lambda ()
-      ;;         (when-let (project (project-current))
-      ;;           (car (project-roots project)))))
-      ;;;; 2. projectile.el (projectile-project-root)
       (autoload 'projectile-project-root "projectile")
       (setq consult-project-root-function #'projectile-project-root))
-      ;;;; 3. vc.el (vc-root-dir)
-    ;; (setq consult-project-root-function #'vc-root-dir)
-      ;;;; 4. locate-dominating-file
-    ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
-
   #+end_src

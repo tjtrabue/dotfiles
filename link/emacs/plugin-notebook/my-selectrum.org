@@ -24,9 +24,12 @@ completion framework.
       (selectrum-num-candidates-displayed 20)
       (selectrum-fix-minibuffer-height t)
       :bind*
-      (:map selectrum-minibuffer-map
-            ("C-j" . selectrum-next-candidate)
-            ("C-k" . selectrum-previous-candidate)))
+      (;; Pull up selectrum with the previous input already entered
+       ("C-x C-z" . selectrum-repeat)
+       :map selectrum-minibuffer-map
+       ;; Selectrum completion buffer navigation
+       ("C-j" . selectrum-next-candidate)
+       ("C-k" . selectrum-previous-candidate)))
   #+end_src
 
 * Plugins
