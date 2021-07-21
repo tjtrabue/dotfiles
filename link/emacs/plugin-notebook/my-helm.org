@@ -19,6 +19,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm
+    :disabled
     :demand t
     :straight
     (helm :type git :host github :repo "emacs-helm/helm" :branch "devel")
@@ -98,6 +99,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-rg
+    :disabled
     :after helm
     :commands helm-rg
     :bind
@@ -112,6 +114,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-ag
+    :disabled
     :after helm
     :config
     ;; Use ripgrep if available
@@ -139,13 +142,19 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-swoop
-  Creates a narrowing find buffer for locating and manipulating text within
-  open buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you
-  will enter an edit mode. Press =C-x C-s= from the edit buffer to apply your changes.
+  Creates a narrowing find buffer for locating and manipulating text within open
+  buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you will
+  enter an edit mode. Press =C-x C-s= from the edit buffer to apply your
+  changes.
+
+  Please note that this plugin does /not/ depend on Helm itself, which is very
+  nice since Helm is quite old and slow, yielding ground to far more efficient
+  completion systems such as Selectrum. Thus, we can use =helm-swoop= by itself
+  without loading Helm.
 
 #+begin_src emacs-lisp
   (use-package helm-swoop
-    :after (helm projectile)
+    :after projectile
     :bind
     (;; Main key bindings
      ("M-i" . helm-swoop)
@@ -226,7 +235,8 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-gtags
-    :after (helm)
+    :disabled
+    :after helm
     :init
     (setq helm-gtags-prefix-key (kbd "C-c g"))
     :bind
@@ -264,6 +274,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-escreen
+    :disabled
     :after (helm escreen)
     :straight (helm-escreen :host github
                             :repo "dmh43/helm-escreen")
@@ -280,6 +291,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-lsp
+    :disabled
     :after (lsp-mode helm)
     :bind
     (:map lsp-mode-map
@@ -295,6 +307,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-make
+    :disabled
     :after (helm projectile)
     :init
     ;; Save files automatically before executing a make target.
@@ -324,6 +337,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-system-packages
+    :disabled
     :after helm
     :bind
     (:map helm-map
@@ -334,7 +348,8 @@ Configuration for all things helm-related, including helm-projectile integration
    Documentation browser plugin using Dash
 
 #+begin_src emacs-lisp
-  (use-package helm-dash)
+  (use-package helm-dash
+    :disabled)
 #+end_src
 ** helm-perldoc
    Search =perldoc= documentation with =helm=. It has lots of nice helm actions
@@ -342,6 +357,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-perldoc
+    :disabled
     :after cperl-mode
     :bind
     (:map cperl-mode-map

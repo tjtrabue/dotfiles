@@ -36,7 +36,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
    #+begin_src emacs-lisp
      (use-package ivy
-       :after (evil helm)
+       :after evil
        :demand t
        :bind*
        (:map ivy-switch-buffer-map

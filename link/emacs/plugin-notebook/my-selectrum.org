@@ -17,7 +17,7 @@ completion framework.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package selectrum
-      :after (helm counsel)
+      :after counsel
       :hook
       (after-init . selectrum-mode)
       :custom
