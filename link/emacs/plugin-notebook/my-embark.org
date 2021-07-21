@@ -1,4 +1,4 @@
-#+title:    Emabark
+#+title:    Embark: Universal Context Menu for Emacs
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2021:07:21
