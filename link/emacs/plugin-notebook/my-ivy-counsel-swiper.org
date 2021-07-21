@@ -6,7 +6,15 @@
 
 These three plugins are a great alternative to =helm=. =ivy= is the primary
 plugin in this tool suite, and =swiper= and =counsel= sit on top of =ivy=,
-depending on =ivy= for their operations.
+depending on =ivy= for their operations. Ivy provides the completion backend
+(that is, the API), and Cousel provides a collection of commonly-used functions
+that make calls to Ivy for generating completion candidates. Swiper is a search
+tool for visible text in a buffer, and an alternative to Emacs' built-in
+=isearch= feature.
+
+*NOTE:* Ivy is much faster than Helm, but these days Selectrum is a better
+alternative since it is more general and extensible. Try to use Selectrum,
+Consult, and Embark whenever possible.
 
 * Ivy
   =ivy= is a generic completion mechanism for Emacs, and a faster alternative to
