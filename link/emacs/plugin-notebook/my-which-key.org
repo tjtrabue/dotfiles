@@ -9,7 +9,11 @@ incomplete key command (a prefix) in a popup.
 
 #+begin_src emacs-lisp
   (use-package which-key
-    :demand t
-    :config
-    (which-key-mode t))
+    :hook
+    (after-init . which-key-mode)
+    :custom
+    ;; The delay between pressing a key and which-key suggesting further keys
+    (which-key-idle-delay 1.0)
+    ;; Once which-key is active, shorten the delay for further suggestions
+    (which-key-idle-secondary-delay 0.05))
 #+end_src
