@@ -25,9 +25,6 @@ project artifacts, etc.
       ;; projectile after perspective.
       :after (evil-collection perspective)
       :demand t
-      :hook
-      ;; Turn projectile on globally.
-      (after-init . projectile-mode)
       :custom
       ;; Figure out completion system to use automatically.
       (projectile-completion-system 'auto)
@@ -40,8 +37,11 @@ project artifacts, etc.
       :bind
       (:map evil-normal-state-map
             ([remap evil-paste-pop] . projectile-find-file))
+      :init
+      ;; Turn projectile on globally.
+      (projectile-mode 1)
       :config
       ;; Add extra ignored directories here.
       (add-to-list 'projectile-globally-ignored-directories
-        my/straight-home-dir))
+                   my/straight-home-dir))
   #+end_src

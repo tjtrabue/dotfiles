@@ -29,7 +29,7 @@ provides functionality for achieving Vim-like key mappings within Emacs.
 * key-chord
   #+begin_src emacs-lisp
     (use-package key-chord
-      :hook
+      :init
       ;; Start key-chord-mode globally
-      (after-init . (lambda () (key-chord-mode 1))))
+      (key-chord-mode 1))
   #+end_src

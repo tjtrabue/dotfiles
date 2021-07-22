@@ -16,6 +16,15 @@ list of available commands. These commands include adding a buffer to the
 current perspective, removing a buffer from the perspective, switching to a
 different perspective, and many more.
 
+* perspective.el vs persp-mode package
+  You may be wondering why there are two different packages offering the
+  =persp-mode= global minor mode. There's =perspective.el=, and then there's a
+  package just called =persp-mode=. =persp-mode= the package is a /fork/ of
+  =perspective.el= that has fallen behind and lost momentum. It was originally
+  intended to make =perspective.el= easier to work with, especially with
+  multiple frames, but it is less configurable and can be frustrating since it
+  seizes control of Emacs in some invasive ways.
+
 * use-package specification
   #+begin_src emacs-lisp
     (use-package perspective

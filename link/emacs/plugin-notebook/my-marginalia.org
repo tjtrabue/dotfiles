@@ -22,6 +22,6 @@ command =marginalia-cycle=.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package marginalia
-      :hook
-      (after-init . marginalia-mode))
+      :init
+      (marginalia-mode 1))
   #+end_src
