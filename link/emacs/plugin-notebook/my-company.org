@@ -88,8 +88,8 @@ completion.
              :map c++-mode-map
              ([(tab)] . company-complete))
        :hook
-       ((after-init . global-company-mode)
-        ;; Turn on company-mode globally.
+       (;; Turn on company-mode globally.
+        (after-init . global-company-mode)
         (company-mode . my/set-company-keybindings))
        :custom
        ;; Align annotation to the right side.
