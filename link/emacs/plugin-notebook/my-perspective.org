@@ -28,9 +28,9 @@ different perspective, and many more.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package perspective
-      :demand t
       :hook
-      ((after-init . persp-mode)
+      (;; Turn on persp-mode globally
+       (after-init . persp-mode)
        ;; Save perspective to disk whenever the user kills Emacs.
        (kill-emacs . persp-state-save))
       :bind-keymap
@@ -52,3 +52,17 @@ different perspective, and many more.
       ;; perspective.
       (run-with-timer 7 nil #'persp-state-load persp-state-default-file))
   #+end_src
+
+* Plugins
+** persp-projectile
+   Integrates =perspective.el= with =projectile=, allowing you to switch between
+   perspectives specifically for Projectile projects. This is very similar to
+   the standard =projectile-switch-project= function.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package persp-projectile
+       :after (perspective projectile)
+       :bind
+       (:map projectile-command-map
+             ("C-p" . projectile-persp-switch-project)))
+   #+end_src
