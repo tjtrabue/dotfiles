@@ -33,6 +33,9 @@ different perspective, and many more.
       ;; Save perspective to disk whenever the user kills Emacs.
       ((after-init . persp-mode)
        (kill-emacs . persp-state-save))
+      :bind-keymap
+      ;; May be necessary to tie keybinding to perspective prefix
+      ("C-c j" . perspective-map)
       :bind*
       (("C-x b" . persp-counsel-switch-buffer)
        ("C-x C-b" . persp-list-buffers)
