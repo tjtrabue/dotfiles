@@ -1,0 +1,44 @@
+#+title:    Perspective: Named Workspaces for Emacs
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:22
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=perspective.el= is a workspace management package for Emacs. It provides
+facilities for grouping buffers and windows into named "perspectives" that you
+can save and load at will.
+
+To interact with =perspective.el=, type the command prefix (detailed in the
+=use-package= specification below), and then observe the =which-key= guide for a
+list of available commands. These commands include adding a buffer to the
+current perspective, removing a buffer from the perspective, switching to a
+different perspective, and many more.
+
+* use-package specification
+  #+begin_src emacs-lisp
+    (use-package perspective
+      :hook
+      ;; Save perspective to disk whenever the user kills Emacs.
+      (kill-emacs . persp-state-save)
+      :bind*
+      (("C-x b" . persp-counsel-switch-buffer)
+       ("C-x C-b" . persp-list-buffers)
+       ("C-x k" . persp-kill-buffer*))
+      :custom
+      ;; Prefix for all perspective.el commands
+      (persp-mode-prefix-key (kbd "C-c j"))
+      ;; Where perspective.el saves its configuration
+      (persp-state-default-file
+       (file-truename (concat user-emacs-directory "/persp-state")))
+      :init
+      ;; It's important to keep this in the :init block! That forces use-package to
+      ;; always autoload the package.
+      (persp-mode 1)
+      :config
+      ;; Automatically resume the main perspective after x seconds.  The delay is
+      ;; necessary to allow Emacs time to initialize before resuming the previous
+      ;; perspective.
+      (run-with-timer 7 nil #'persp-state-load persp-state-default-file))
+  #+end_src

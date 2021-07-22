@@ -21,7 +21,9 @@ project artifacts, etc.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package projectile
-      :after evil-collection
+      ;; perspective.el overwrites projectile's command prefix, so we want to load
+      ;; projectile after perspective.
+      :after (evil-collection perspective)
       :demand t
       :hook
       ;; Turn projectile on globally.
