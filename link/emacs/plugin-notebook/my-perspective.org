@@ -59,7 +59,7 @@ different perspective, and many more.
    perspectives specifically for Projectile projects. This is very similar to
    the standard =projectile-switch-project= function.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
      (use-package persp-projectile
        :after (perspective projectile)
        :bind

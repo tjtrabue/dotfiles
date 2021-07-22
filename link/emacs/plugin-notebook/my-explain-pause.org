@@ -10,7 +10,7 @@
 Emacs are slowing the system down. Very useful for debugging.
 
 * use-package specification
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (use-package explain-pause-mode
       ;; explain-pasue-mode isn't in MELPA yet.
       :straight (explain-pause-mode :type git :host github
