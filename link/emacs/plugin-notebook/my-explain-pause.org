@@ -1,0 +1,19 @@
+#+title:    Explain Slow Processes in Emacs
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:22
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=explain-pause-mode= is a top-like mode for figuring out which processes in
+Emacs are slowing the system down. Very useful for debugging.
+
+* use-package specification
+  #+begin_src emacs-lisp :tangle yes
+    (use-package explain-pause-mode
+      ;; explain-pasue-mode isn't in MELPA yet.
+      :straight (explain-pause-mode :type git :host github
+                                    :repo "lastquestion/explain-pause-mode")
+      :commands explain-pause-mode)
+  #+end_src
