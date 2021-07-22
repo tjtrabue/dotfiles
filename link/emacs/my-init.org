@@ -583,6 +583,15 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   java-mode-hook, or haskell-mode-hook.  However, most packages provide
   additional hooks for use besides those for major and minor modes.
 
+** Buffer-menu-mode hooks
+   #+begin_src emacs-lisp
+     (add-hook 'Buffer-menu-mode-hook (lambda ()
+                                        ;; Disable whitespace visualization in Buffer
+                                        ;; menu.
+                                        (setq-local show-trailing-whitespace nil)
+                                        (whitespace-mode -1)))
+   #+end_src
+
 ** dired-mode hooks
    dired is the awesome "directory editor" mode in Emacs. It's much more
    convenient than entering the shell, for the most part.
