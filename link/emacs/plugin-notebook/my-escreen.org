@@ -8,17 +8,23 @@
 =escreen= is essentially an Emacs version of GNU Screen (which has been
 superseded by =tmux=).
 
-* escreen
-  Window manager for Emacs windows. This should not be confused with a graphical
-  window manager for an entire computing environment, such as =i3= (even though
-  Emacs is capable of acting as such). =escreen= simply manages Emacs' editing
-  windows.
+=escreen= is a window manager for Emacs windows. This should not be confused
+with a graphical window manager for an entire computing environment, such as
+=i3= (even though Emacs is capable of acting as such). =escreen= simply manages
+Emacs' editing windows.
 
-  I recommend you use =helm-escreen= for all interactions with =escreen= to make
-  your life easier.
+I recommend you use =helm-escreen= for all interactions with =escreen= to make
+your life easier.
 
+* Deprecated in favor of perspective.el
+  =escreen= is largely unmaintained. =perspective.el= provides a better, more
+  modern solution for managing buffers and windows in Emacs.
+
+* use-package specification
 #+begin_src emacs-lisp
   (use-package escreen
+    ;; perspective.el is a better alternative
+    :disabled
     :init
     ;; Have to set this value here since some internal function is trying
     ;; to reference the `escreen-current-screen-number' function as a
