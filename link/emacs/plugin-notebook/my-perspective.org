@@ -30,8 +30,8 @@ different perspective, and many more.
     (use-package perspective
       :demand t
       :hook
-      ;; Save perspective to disk whenever the user kills Emacs.
       ((after-init . persp-mode)
+       ;; Save perspective to disk whenever the user kills Emacs.
        (kill-emacs . persp-state-save))
       :bind-keymap
       ;; May be necessary to tie keybinding to perspective prefix
