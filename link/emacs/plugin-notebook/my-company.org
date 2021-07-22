@@ -88,7 +88,9 @@ completion.
              :map c++-mode-map
              ([(tab)] . company-complete))
        :hook
-       (company-mode . my/set-company-keybindings)
+       ((after-init . global-company-mode)
+        ;; Turn on company-mode globally.
+        (company-mode . my/set-company-keybindings))
        :custom
        ;; Align annotation to the right side.
        (company-tooltip-align-annotations t)
@@ -109,9 +111,6 @@ completion.
         '(company-pseudo-tooltip-unless-just-one-frontend
           company-preview-frontend
           company-echo-metadata-frontend))
-       :init
-       ;; Turn on company-mode globally.
-       (global-company-mode 1)
        :config
        ;; Tweak company backends.
        ;; Trust me, you want NOTHING to do with Semantic!!! It is far too

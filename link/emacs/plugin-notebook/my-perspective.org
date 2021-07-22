@@ -28,9 +28,11 @@ different perspective, and many more.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package perspective
+      :demand t
       :hook
       ;; Save perspective to disk whenever the user kills Emacs.
-      (kill-emacs . persp-state-save)
+      ((after-init . persp-mode)
+       (kill-emacs . persp-state-save))
       :bind*
       (("C-x b" . persp-counsel-switch-buffer)
        ("C-x C-b" . persp-list-buffers)
@@ -41,10 +43,6 @@ different perspective, and many more.
       ;; Where perspective.el saves its configuration
       (persp-state-default-file
        (file-truename (concat user-emacs-directory "/persp-state")))
-      :init
-      ;; It's important to keep this in the :init block! That forces use-package to
-      ;; always autoload the package.
-      (persp-mode 1)
       :config
       ;; Automatically resume the main perspective after x seconds.  The delay is
       ;; necessary to allow Emacs time to initialize before resuming the previous
