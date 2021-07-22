@@ -327,8 +327,11 @@ Configuration for all things helm-related, including helm-projectile integration
           helm-make-nproc 0))
 #+end_src
 ** helm-system-packages
-   Helm wrapper around =system-packages= plugin used to manager operating system
-   packages from within Emacs.
+   Helm wrapper around the =system-packages= plugin used to manager operating
+   system packages from within Emacs.
+
+   This is another Helm plugin you can use without installing Helm itself, which
+   is wonderful since avoiding Helm is desirable these days.
 
    This package is not an alternative to =system-packages=, since all
    =helm-system-packages= can do is operating on individual packages (install,
@@ -337,11 +340,8 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-system-packages
-    :disabled
-    :after helm
     :bind
-    (:map helm-map
-     ("S" . helm-system-packages)))
+    (("C-c s p" . helm-system-packages)))
 #+end_src
 
 ** helm-dash

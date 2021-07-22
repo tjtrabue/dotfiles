@@ -5,19 +5,56 @@
 #+tags:   os operating-system
 #+STARTUP: fold
 
-* system-packages
-  Manage your operating system packages from inside Emacs. =system-packages=
-  know about a lot of package managers by default, but you can always register
-  more.
+Manage your operating system packages from inside Emacs. =system-packages=
+understands a lot of package managers by default, but you can always register
+more.
 
-  *NOTE:* =system-packages= uses TRAMP to connect to your package manager, which
-  can be incredibly slow if you have not set your PS1 environment variable to
-  something simple (like =tramp $=). See my =.bashrc= file for an example of how
-  to set your prompt for TRAMP integration.
+* NOTE: system-packages can be very slow
+  =system-packages= uses TRAMP to connect to your package manager, which can be
+  incredibly slow if you have not set your PS1 environment variable to something
+  simple (like =tramp $=). See my =.bashrc= file for an example of how to set
+  your prompt for TRAMP integration.
 
-#+begin_src emacs-lisp
-  (use-package system-packages
-    :init
-    ;; Enable sudo for system-packages
-    (setq system-packages-use-sudo t))
-#+end_src
+* Example of registering a new package manager
+  For example, to add =pacaur= as a system package manager for your OS, use the
+  following approach:
+
+  #+begin_src emacs-lisp :tangle no
+    (add-to-list 'system-packages-supported-package-managers
+                 '(pacaur .
+                          ((default-sudo . nil)
+                           (install . "pacaur -S")
+                           (search . "pacaur -Ss")
+                           (uninstall . "pacaur -Rs")
+                           (update . "pacaur -Syu")
+                           (clean-cache . "pacaur -Sc")
+                           (log . "cat /var/log/pacman.log")
+                           (get-info . "pacaur -Qi")
+                           (get-info-remote . "pacaur -Si")
+                           (list-files-provided-by . "pacaur -Ql")
+                           (verify-all-packages . "pacaur -Qkk")
+                           (verify-all-dependencies . "pacaur -Dk")
+                           (remove-orphaned . "pacaur -Rns $(pacman -Qtdq)")
+                           (list-installed-packages . "pacaur -Qe")
+                           (list-installed-packages-all . "pacaur -Q")
+                           (list-dependencies-of . "pacaur -Qi")
+                           (noconfirm . "--noconfirm"))))
+  #+end_src
+
+  You may then need to adjust =system-packages-package-manager= and
+  =system-packages-use-sudo= accordingly:
+
+  #+BEGIN_SRC emacs-lisp :tangle no
+    (setq system-packages-use-sudo t)
+    (setq system-packages-package-manager 'pacaur)
+  #+END_SRC
+* use-package specification
+  #+begin_src emacs-lisp
+    (use-package system-packages
+      :init
+      (when (memq system-type '(gnu gnu/linux))
+        ;; Preface system-packages commands with `sudo' when using Linux.  Most
+        ;; modern package managers allow you to use them without `sudo', so this
+        ;; approach should be avoided if at all possible.
+        (setq system-packages-use-sudo t)))
+  #+end_src

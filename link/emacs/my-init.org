@@ -718,24 +718,6 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
      ;; (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
    #+end_src
 
-* TRAMP
-  TRAMP is a generic external process interaction client for Emacs. It is often
-  used for SSH connectivity with other servers from within Emacs, although it
-  can be used to interact with system processes on your local machine, as well.
-
-** Too Slow!
-   If TRAMP is super slow for you, make sure to set your PS1 prompt variable to
-   something very, very simple. TRAMP parses your shell's prompt to determine
-   whether or not a command has finished, so the simpler the better. A good
-   example would be placing the following in your =.bashrc= files, both on your
-   remote server and your local development machine:
-
-   #+begin_src shell
-     if [ $TERM == "dumb" ]; then
-         PS1="tramp $ "
-     fi
-   #+end_src
-
 * Package Manager
 ** straight
    ~straight~ is a newer package manager for Emacs that differs from ~package.el~.

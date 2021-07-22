@@ -12,7 +12,7 @@ root, or even Docker containers.
 
 From the Emacs manual:
 
- #+BEGIN_QUOTE
+#+BEGIN_QUOTE
 TRAMP extends the Emacs file name syntax by a remote component. A remote file
 name looks always like =/method:user@host:/path/to/file=.
 
@@ -22,7 +22,7 @@ file, and save it. You can also mix local files and remote files in file
 operations with two arguments, like =copy-file= or =rename-file=. And finally,
 you can run even processes on a remote host, when the buffer you call the
 process from has a remote =default-directory=.
- #+END_QUOTE
+#+END_QUOTE
 
 * Usage Notes from the Emacs Manual
 ** =ssh= and =plink=
@@ -61,6 +61,33 @@ process from has a remote =default-directory=.
    client is used. The remote file name syntax is
    =/smb:user%domain@host:/path/to/file=. The first part of the local file name
    is the share exported by the remote host, ‘path’ in this example.
+
+* Troubleshooting TRAMP
+** TRAMP is too slow!
+   If TRAMP is super slow for you, make sure to set your PS1 prompt variable to
+   something very, very simple. TRAMP parses your shell's prompt to determine
+   whether or not a command has finished, so the simpler the better. A good
+   example would be placing the following in your =.bashrc= files, both on your
+   remote server and your local development machine:
+
+   #+begin_src shell
+     if [ $TERM == "dumb" ]; then
+         PS1="tramp $ "
+     fi
+   #+end_src
+
+* use-package specification
+  TRAMP is built-in to Emacs, but it's nice to work with TRAMP in a
+  =use-package= specification.
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package tramp
+      :custom
+      ;; Cache sudo password for the day.
+      (password-cache t)
+      (password-cache-expiry (* 8 3600)))
+  #+end_src
+
 * Plugins
 ** docker-tramp
    Offers the TRAMP method =docker= for interacting with running Docker
@@ -81,9 +108,9 @@ process from has a remote =default-directory=.
    =kubernetes-tramp= offers a TRAMP method for Docker containers deployed in a
    Kubernetes cluster.
 
-  =C-x C-f /kubectl:container:/path/to/file=
+   =C-x C-f /kubectl:container:/path/to/file=
 
-  where =container= is the name of the container.
+   where =container= is the name of the container.
 
    #+begin_src emacs-lisp
      (use-package kubernetes-tramp)
