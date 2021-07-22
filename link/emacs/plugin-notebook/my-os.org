@@ -48,6 +48,7 @@ more.
     (setq system-packages-use-sudo t)
     (setq system-packages-package-manager 'pacaur)
   #+END_SRC
+
 * use-package specification
   #+begin_src emacs-lisp
     (use-package system-packages
