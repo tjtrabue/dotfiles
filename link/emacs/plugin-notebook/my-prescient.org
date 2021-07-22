@@ -33,5 +33,6 @@ if your completion UI does not sort matches.
     ;; Whether to perform down-casing on filter arguments
     (prescient-use-case-folding 'smart)
     ;; List of filtering methods prescient uses on space-separated arguments
-    (prescient-filter-method '(literal regexp initialism)))
+    ;; (prescient-filter-method '(literal regexp initialism fuzzy))
+    )
 #+end_src
