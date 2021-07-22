@@ -9,15 +9,6 @@ important coding actions at the project level. Such actions include searching
 for project files, searching for text, renaming files, building and installing
 project artifacts, etc.
 
-* Variables
-  #+begin_src emacs-lisp
-    (defvar default-ecb-source-path (list '("~/workspace" "Workspace")
-                                          '("~/" "~/")
-                                          '("/" "/"))
-      "Default directories for ECB mode. Useful for Projectile integration with
-    ECB.")
-  #+end_src
-
 * use-package specification
   #+begin_src emacs-lisp
     (use-package projectile
