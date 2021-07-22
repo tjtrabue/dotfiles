@@ -9,7 +9,6 @@ Mode for Emacs) package used to integrate Emacs with Common Lisp.
 SLIME essentially turns Emacs into a Common Lisp IDE.
 
 * Functions
-
 ** General purpose Lisp functions
    #+begin_src emacs-lisp
      (defun my/get-inferior-lisp-program ()
@@ -23,55 +22,6 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
                (t
                 ;; Revert back to SBCL installation if nothing else available.
                 path-to-sbcl))))
-   #+end_src
-
-* SLIME
-  The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
-  Lisp IDE.
-
-  SLIME, although still powerful and semi-regularly updated, has conceded ground
-  in recent years to SLY, which is a fork of SLIME that has become the more
-  modern and feature-rich Common Lisp enhancement suite for Emacs (see my
-  section on SLY for more information and configuration). SLIME will most likely
-  remain in use for years to come, but in all likelihood SLY will overtake it as
-  the more relevant and useful plugin.
-
-** Useful commands (many have a SLY equivalent)
-   These commands can supercharge your workflow! Many of them have a SLY
-   equivalent, so be sure to look for them using =C-h f=.
-
-   - =slime-who-*=
-   - =slime-eval-last-expression-in-repl= (=C-c C-j=)
-   - =slime-list-compiler-notes=
-   - =slime-export-symbol-at-point= (=C-c x=)
-   - =slime-export-class=, =slime-export-structure=
-   - =slime-trace-dialog-toggle-trace= (=C-c M-t=)
-   - =slime-inspect-definition=
-   - =slime-delete-system-fasls= (Useful when .fasls are out-of-sync)
-   - =slime-repl-clear-buffer= (=C-c M-o:= useful when =lispy= or =paredit= goes
-     berserk)
-   - =slime-profile-package=, then run the desired functions, then
-     =slime-profile-report=.
-   - =hyperspec-lookup-format= and =hyperspec-lookup-reader-macro=.
-
-   In particular, note that =slime-who-specializes= lists the methods of a given
-   class, which answers a common complaint coming from people used to languages
-   from the Algol family: the ability to complete the methods of the foo class
-   by typing =foo.<TAB>=.
-** use-package specification
-   #+begin_src emacs-lisp
-     (use-package slime
-       :disabled
-       :commands slime
-       :hook
-       ((lisp-mode . slime-mode)
-        (inferior-lisp-mode . inferior-slime-mode))
-       :custom
-       ;; Set the program used to interact with Common Lisp.
-       (inferior-lisp-program (my/get-inferior-lisp-program))
-       ;; Bring in almost every contributor package
-       ;; (that's what slime-fancy does).
-       (slime-contribs '(slime-fancy)))
    #+end_src
 
 * SLY
@@ -88,87 +38,87 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
 
 ** Functions
 *** sly-counsel integration functions
-   These functions were taken directly from [[https://mihaiolteanu.me/counsel-sly/][Mihai Olteanu's blog]].
-   Thank you so much for the your contributions, Mihai!
+    These functions were taken directly from [[https://mihaiolteanu.me/counsel-sly/][Mihai Olteanu's blog]].
+    Thank you so much for the your contributions, Mihai!
 
-   #+begin_src emacs-lisp
-     ;; Define functionality for interacting with the sly repl using counsel
-     (defun counsel-sly-mrepl-shortcut ()
-       (interactive)
-       (ivy-read
-        "Action: "
-        (mapcar #'car sly-mrepl-shortcut-alist)
-        :action (lambda (string)
-                  (let ((command (and string
-                                      (cdr (assoc string sly-mrepl-shortcut-alist)))))
-                    (call-interactively command)))))
+    #+begin_src emacs-lisp
+      ;; Define functionality for interacting with the sly repl using counsel
+      (defun counsel-sly-mrepl-shortcut ()
+        (interactive)
+        (ivy-read
+         "Action: "
+         (mapcar #'car sly-mrepl-shortcut-alist)
+         :action (lambda (string)
+                   (let ((command (and string
+                                       (cdr (assoc string sly-mrepl-shortcut-alist)))))
+                     (call-interactively command)))))
 
-     (defun sly-read-package-name (prompt &optional initial-value allow-blank)
-       (ivy-read
-        "Package: "
-        (sly-eval `(slynk:list-all-package-names t))
-        :action #'identity))
+      (defun sly-read-package-name (prompt &optional initial-value allow-blank)
+        (ivy-read
+         "Package: "
+         (sly-eval `(slynk:list-all-package-names t))
+         :action #'identity))
 
-     (defun counsel-sly-mrepl-history ()
-       (interactive)
-       (ivy-read
-        "History: "
-        (reverse (ring-elements comint-input-ring))
-        :action (lambda (e)
-                  (insert e))))
+      (defun counsel-sly-mrepl-history ()
+        (interactive)
+        (ivy-read
+         "History: "
+         (reverse (ring-elements comint-input-ring))
+         :action (lambda (e)
+                   (insert e))))
 
-     (defun eval-grab-output (string)
-       (let ((res nil))
-         (sly-eval-async `(slynk:eval-and-grab-output ,string)
-           (lambda (result)
-             (cl-destructuring-bind (output value) result
-               (setf res (car (read-from-string value))))))
-         (while (null res)
-           (sleep-for 0.1))
-         res))
+      (defun eval-grab-output (string)
+        (let ((res nil))
+          (sly-eval-async `(slynk:eval-and-grab-output ,string)
+                          (lambda (result)
+                            (cl-destructuring-bind (output value) result
+                              (setf res (car (read-from-string value))))))
+          (while (null res)
+            (sleep-for 0.1))
+          res))
 
-     (defun counsel-sly-eval (string action)
-       (let ((result (eval-grab-output string)))
-         (ivy-read
-          "Symbol: "
-          result
-          :action action)))
+      (defun counsel-sly-eval (string action)
+        (let ((result (eval-grab-output string)))
+          (ivy-read
+           "Symbol: "
+           result
+           :action action)))
 
-     (defun send-input (expr)
-       (insert expr)
-       (comint-send-input))
+      (defun send-input (expr)
+        (insert expr)
+        (comint-send-input))
 
-     (defun counsel-sly-package-internal-symbols ()
-       (interactive)
-       (counsel-sly-eval "(common-lisp-user::package-internal-symbols \*package\*)"
-                         `(1 ("o" ,#'insert "insert")
-                             ("f" ,(lambda (candidate)
-                                     (send-input (format "(find-symbol \"%s\")" candidate)))
-                              "find symbol")
-                             )))
-   #+end_src
+      (defun counsel-sly-package-internal-symbols ()
+        (interactive)
+        (counsel-sly-eval "(common-lisp-user::package-internal-symbols \*package\*)"
+                          `(1 ("o" ,#'insert "insert")
+                              ("f" ,(lambda (candidate)
+                                      (send-input (format "(find-symbol \"%s\")" candidate)))
+                               "find symbol")
+                              )))
+    #+end_src
 
 *** Set SLY MREPL keybindings
-   #+begin_src emacs-lisp
-     (defun my/set-sly-mrepl-keybindings ()
-       "Hook function for setting keybindings in SLY MREPL mode.
-     Make sure to only run this function after 'sly-mrepl loads."
-       (with-eval-after-load "sly-mrepl"
-         ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
-         (define-key sly-mrepl-mode-map (kbd ",") nil)
-         ;; History navigation.
-         (evil-define-key '(normal insert) sly-mrepl-mode-map
-           (kbd "C-r") #'counsel-sly-mrepl-history)
-         (evil-define-key 'insert sly-mrepl-mode-map
-           (kbd "C-j") #'comint-next-input
-           (kbd "C-k") #'comint-previous-input)
-         ;; Define useful key-chords:
-         (evil-leader/set-key-for-mode 'sly-mrepl-mode
-           "," #'counsel-sly-mrepl-shortcut
-           "p" #'sly-mrepl-set-package
-           "i" #'counsel-sly-package-internal-symbols
-           "r" #'sly-restart-inferior-lisp)))
-   #+end_src
+    #+begin_src emacs-lisp
+      (defun my/set-sly-mrepl-keybindings ()
+        "Hook function for setting keybindings in SLY MREPL mode.
+      Make sure to only run this function after 'sly-mrepl loads."
+        (with-eval-after-load "sly-mrepl"
+          ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
+          (define-key sly-mrepl-mode-map (kbd ",") nil)
+          ;; History navigation.
+          (evil-define-key '(normal insert) sly-mrepl-mode-map
+            (kbd "C-r") #'counsel-sly-mrepl-history)
+          (evil-define-key 'insert sly-mrepl-mode-map
+            (kbd "C-j") #'comint-next-input
+            (kbd "C-k") #'comint-previous-input)
+          ;; Define useful key-chords:
+          (evil-leader/set-key-for-mode 'sly-mrepl-mode
+            "," #'counsel-sly-mrepl-shortcut
+            "p" #'sly-mrepl-set-package
+            "i" #'counsel-sly-package-internal-symbols
+            "r" #'sly-restart-inferior-lisp)))
+    #+end_src
 
 ** use-package specification
    #+begin_src emacs-lisp
@@ -253,3 +203,52 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
         :config
         (add-to-list 'sly-contribs 'sly-repl-ansi-color))
     #+end_src
+
+* SLIME
+  The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
+  Lisp IDE.
+
+  SLIME, although still powerful and semi-regularly updated, has conceded ground
+  in recent years to SLY, which is a fork of SLIME that has become the more
+  modern and feature-rich Common Lisp enhancement suite for Emacs (see my
+  section on SLY for more information and configuration). SLIME will most likely
+  remain in use for years to come, but in all likelihood SLY will overtake it as
+  the more relevant and useful plugin.
+
+** Useful commands (many have a SLY equivalent)
+   These commands can supercharge your workflow! Many of them have a SLY
+   equivalent, so be sure to look for them using =C-h f=.
+
+   - =slime-who-*=
+   - =slime-eval-last-expression-in-repl= (=C-c C-j=)
+   - =slime-list-compiler-notes=
+   - =slime-export-symbol-at-point= (=C-c x=)
+   - =slime-export-class=, =slime-export-structure=
+   - =slime-trace-dialog-toggle-trace= (=C-c M-t=)
+   - =slime-inspect-definition=
+   - =slime-delete-system-fasls= (Useful when .fasls are out-of-sync)
+   - =slime-repl-clear-buffer= (=C-c M-o:= useful when =lispy= or =paredit= goes
+     berserk)
+   - =slime-profile-package=, then run the desired functions, then
+     =slime-profile-report=.
+   - =hyperspec-lookup-format= and =hyperspec-lookup-reader-macro=.
+
+   In particular, note that =slime-who-specializes= lists the methods of a given
+   class, which answers a common complaint coming from people used to languages
+   from the Algol family: the ability to complete the methods of the foo class
+   by typing =foo.<TAB>=.
+** use-package specification
+   #+begin_src emacs-lisp
+     (use-package slime
+       :disabled
+       :commands slime
+       :hook
+       ((lisp-mode . slime-mode)
+        (inferior-lisp-mode . inferior-slime-mode))
+       :custom
+       ;; Set the program used to interact with Common Lisp.
+       (inferior-lisp-program (my/get-inferior-lisp-program))
+       ;; Bring in almost every contributor package
+       ;; (that's what slime-fancy does).
+       (slime-contribs '(slime-fancy)))
+   #+end_src

@@ -30,6 +30,7 @@ project artifacts, etc.
       ("C-c p" . projectile-command-map)
       :bind
       (:map evil-normal-state-map
+            ;; Use C-p to search for files in project
             ([remap evil-paste-pop] . projectile-find-file))
       :config
       ;; Add extra ignored directories here.
