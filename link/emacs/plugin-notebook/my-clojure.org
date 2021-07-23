@@ -21,7 +21,20 @@ world needed another Lisp.
   #+begin_src emacs-lisp
     (use-package cider
       :hook
-      (clojure-mode . cider-mode))
+      (clojure-mode . cider-mode)
+      :custom
+      ;; Set this to t if you want to see all debugging info for communication
+      ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
+      ;; conn-name*. WARNING: This will greatly slow down CIDER!
+      (nrepl-log-messages nil)
+      ;; Colorize defined symbols of the following types:
+      (cider-font-lock-dynamically '(macro core function var))
+      ;; Always show Eldoc documentation for symbol at point
+      (cider-eldoc-display-for-symbol-at-point t)
+      ;; CIDER will try to add expected function arguments based on the current
+      ;; context (for example for the datomic.api/q function where it will show the
+      ;; expected inputs of the query at point) if this is set to t
+      (cider-eldoc-display-context-dependent-info t))
   #+end_src
 
 * clj-refactor

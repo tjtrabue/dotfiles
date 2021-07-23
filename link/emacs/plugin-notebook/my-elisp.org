@@ -7,70 +7,59 @@
 Emacs Lisp is the Emacs Lisp dialect of the age-old Lisp programming language.
 This file contains Emacs plugins and configuration for writin Emacs Lisp.
 
-* Hooks for emacs-lisp-mode
+* ielm [built-in]
+  IELM is the Inferior Emacs Lisp Mode. That is, it is a simple REPL for Emacs
+  Lisp built on COMINT. It comes packaged with Emacs, so no installation is
+  necessary.
+
   #+begin_src emacs-lisp
-    ;; Turn on eldoc-mode for simple documentation
-    (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-    (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+    (use-package ielm
+      :commands ielm)
   #+end_src
 
-* Plugins
-** ielm [built-in]
-   IELM is the Inferior Emacs Lisp Mode. That is, it is a simple REPL for Emacs
-   Lisp built on COMINT. It comes packaged with Emacs, so no installation is
-   necessary.
+* highlight-defined
+  Highlights defined Elisp symbols.
+  Recognizes Lisp function, built-in function, macro, face and variable names.
 
-   #+begin_src emacs-lisp
-     (use-package ielm
-       :commands ielm
-       :hook
-       ;; Turn on eldoc-mode for simple documentation
-       (ielm-mode . eldoc-mode))
-   #+end_src
+  #+begin_src emacs-lisp
+    (use-package highlight-defined
+      :hook
+      (emacs-lisp-mode . highlight-defined-mode))
+  #+end_src
 
-** highlight-defined
-   Highlights defined Elisp symbols.
-   Recognizes Lisp function, built-in function, macro, face and variable names.
+* suggest
+  Discover Emacs Lisp functions that do what you want
 
-   #+begin_src emacs-lisp
-     (use-package highlight-defined
-       :hook
-       (emacs-lisp-mode . highlight-defined-mode))
-   #+end_src
+  #+begin_src emacs-lisp
+    (use-package suggest)
+  #+end_src
 
-** suggest
-   Discover Emacs Lisp functions that do what you want
+* easy-escape
+  Fix escapes in Emacs Lisp regular expressions.
 
-   #+begin_src emacs-lisp
-     (use-package suggest)
-   #+end_src
+  #+begin_src emacs-lisp
+    (use-package easy-escape
+      :hook
+      ((lisp-mode emacs-lisp-mode) . easy-escape-minor-mode))
+  #+end_src
 
-** easy-escape
-   Fix escapes in Emacs Lisp regular expressions.
+* eros
+  Provides a cool overlay when evaluating an Elisp expression that looks like
+  (expr) => output
+  For example,
+  (number-sequence 1 10) => 1 2 3 4 5 6 7 8 9 10
 
-   #+begin_src emacs-lisp
-     (use-package easy-escape
-       :hook
-       ((lisp-mode emacs-lisp-mode) . easy-escape-minor-mode))
-   #+end_src
+  #+begin_src emacs-lisp
+    (use-package eros
+      :hook
+      ((emacs-lisp-mode) . (lambda ()
+                             (eros-mode 1))))
+  #+end_src
 
-** eros
-   Provides a cool overlay when evaluating an Elisp expression that looks like
-   (expr) => output
-   For example,
-   (number-sequence 1 10) => 1 2 3 4 5 6 7 8 9 10
+* elmacro
+  Shows keyboard macros or latest interactive commands as emacs lisp.
+  This package is quite old, so I don't expect it to be updated again.
 
-   #+begin_src emacs-lisp
-     (use-package eros
-       :hook
-       ((emacs-lisp-mode) . (lambda ()
-                              (eros-mode 1))))
-   #+end_src
-
-** elmacro
-   Shows keyboard macros or latest interactive commands as emacs lisp.
-   This package is quite old, so I don't expect it to be updated again.
-
-   #+begin_src emacs-lisp
-     (use-package elmacro)
-   #+end_src
+  #+begin_src emacs-lisp
+    (use-package elmacro)
+  #+end_src
