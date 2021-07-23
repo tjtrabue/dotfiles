@@ -33,7 +33,7 @@ declare DOTFILES_ZDOTDIR
 # Main projects directory
 declare WS="${HOME}/workspace"
 # Practice projects directory
-declare PRAC="${WS}/practice"
+declare PRAC="${HOME}/practice"
 # Directory for installed third-party applications
 declare APPS="${HOME}/applications"
 # Third party archives directory
@@ -337,9 +337,9 @@ prepare_for_os
 
 # Parse CLI Options {{{
 args=$(getopt -o hvfk: \
-       --long help,verbose,force,fake-home: \
-       -n 'install.sh' \
-       -- "$@")
+    --long help,verbose,force,fake-home: \
+    -n 'install.sh' \
+  -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.

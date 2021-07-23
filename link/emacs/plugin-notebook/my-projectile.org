@@ -25,7 +25,7 @@ project artifacts, etc.
       ;; Make projects in workspace discovered automatically.
       ;; The list is a space-separated collection of directory paths
       ;; that projectile should use when searching for projects.
-      (projectile-project-search-path `(,my/workspace-dir))
+      (projectile-project-search-path `(,my/workspace-dir ,my/practice-dir))
       :bind-keymap
       ("C-c p" . projectile-command-map)
       :bind

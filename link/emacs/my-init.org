@@ -69,6 +69,9 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (defvar my/workspace-dir (file-truename
                                 (concat (getenv "HOME") "/workspace"))
         "Directory containig development projects.")
+      (defvar my/practice-dir (file-truename
+                                (concat (getenv "HOME") "/practice"))
+        "Directory containig practice or scratch code.")
       (defvar my/line-width 80 "The width of each line of code.")
       (defvar my/use-helm-gtags t
         "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")

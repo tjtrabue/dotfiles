@@ -11,7 +11,15 @@ world needed another Lisp.
   Major mode for editing Clojure files.
 
   #+begin_src emacs-lisp
-    (use-package clojure-mode)
+    (use-package clojure-mode
+      :straight
+      ;; Default straight recipe only includes the clojure-mode.el file for some
+      ;; reason.
+      (clojure-mode :type git :host github :repo "clojure-emacs/clojure-mode"
+                    :files (:defaults))
+      :config
+      ;; Add extra syntax coloring (imprecise, but pretty)
+      (require 'clojure-mode-extra-font-locking))
   #+end_src
 
 * CIDER

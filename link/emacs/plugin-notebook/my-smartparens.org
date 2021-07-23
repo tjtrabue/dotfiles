@@ -19,8 +19,8 @@ enforce balanced delimiters, whereas =smartparens-strict-mode= does.
 
 #+begin_src emacs-lisp
   (use-package smartparens
-    :demand t
+    :hook
+    (after-init . smartparens-global-mode)
     :config
-    (require 'smartparens-config)
-    (smartparens-global-mode 1))
+    (require 'smartparens-config))
 #+end_src
