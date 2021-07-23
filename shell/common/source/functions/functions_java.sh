@@ -33,7 +33,7 @@ initialize_jenv_for_shell() {
     export PATH="${jenvHome}/bin:${PATH}"
   fi
 
-  log_info "Initializing jenv for shell"
+  log_info "Initializing jenv for shell: $(currentshell)"
   eval "$(jenv init -)"
 }
 
@@ -48,7 +48,7 @@ initialize_sdkman_for_shell() {
   fi
 
   if [ -s "${sdkmanInitScript}" ]; then
-    log_info "Initializing SDKMAN for shell"
+    log_info "Initializing SDKMAN for shell: $(currentshell)"
     . "${sdkmanInitScript}"
   else
     warn "No SDKMAN initialization script found at: ${sdkmanInitScript}"
