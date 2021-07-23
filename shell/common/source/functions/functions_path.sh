@@ -170,6 +170,7 @@ EOF
 __evaluate_paths() {
   local pathFile="${1:-${PATH_FILE}}"
   local binPath
+  local evaluatedPath
 
   # Make sure that paths are evaluated in reverse order from their listing in
   # the .path file since we want more recently added paths to take precedence
@@ -178,7 +179,9 @@ __evaluate_paths() {
   # The awk command at the end removes cuplicates from the listing.
 
   while read -r binPath || [ -n "${binPath}" ]; do
-    eval "printf '%s\n' ${binPath}"
+    # Make sure only to output paths from the file that can be evaluated.
+    evaluatedPath="$(eval "printf '%s\n' ${binPath}")"
+    [ -n "${evaluatedPath}" ] && printf "%s\n" "${evaluatedPath}"
   done <"${pathFile}" | grep -v -E -e "^#.*" -e "^$" | tac | awk '!x[$0]++'
 }
 
