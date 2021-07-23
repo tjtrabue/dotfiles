@@ -54,7 +54,7 @@ to the =my-custom-lsp.el= file.
       ;; one.
       (lsp-idle-delay 0.000)
       ;; Whether to perform code formatting while typing
-      (lsp-enable-on-type-formatting nil)
+      (lsp-enable-on-type-formatting t)
       ;;; bash-language-server
       (lsp-bash-highlight-parsing-errors t)
       ;;; clangd
