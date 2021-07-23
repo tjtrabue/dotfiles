@@ -18,6 +18,7 @@ $HOME/.luarocks/bin
 $HOME/.npm-global/bin
 $HOME/.cargo/bin
 $HOME/.jenv/bin
+$HOME/.sdkman/candidates/*/current/bin
 $HOME/.pyenv/bin
 $HOME/.rvm/bin
 $HOME/.roswell/bin
