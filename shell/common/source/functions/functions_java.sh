@@ -68,4 +68,29 @@ src_java_for_profile() {
   initialize_sdkman_for_shell
 }
 
+# Install JVM-related software with SDKMAN.
+install_sdkman_packages() {
+  local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
+  local sdkmanInitScript="${sdkmanHome}/bin/sdkman-init.sh"
+
+  if [ -z "$(command -v sdk)" ]; then
+    err "sdk function not found in current shell session. Make sure to source" \
+      "the SDKMAN script at: ${GREEN}${sdkmanInitScript}${NC} and try again."
+    return 1
+  fi
+
+  log_info "Installing SDKMAN packages"
+  # Install default Java version
+  # NOTE: You'll want to install a newer one, as well.
+  sdk install java
+  # Install default Groovy version
+  sdk install groovy
+  # Maven is the most popular Java build and dependency management tool.
+  sdk install maven
+  # Gradle is a newer alternative to Maven built on Groovy.
+  sdk install gradle
+  # Install leiningen tool for managing Clojure projects
+  sdk install leiningen
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
