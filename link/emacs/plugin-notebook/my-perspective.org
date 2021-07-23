@@ -65,5 +65,5 @@ different perspective, and many more.
        :bind
        (:map projectile-command-map
              ([remap projectile-switch-project] . projectile-persp-switch-project)
-             ("C-p" . projectile-persp-switch-project)))
+             ("W" . projectile-persp-switch-project)))
    #+end_src
