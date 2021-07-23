@@ -45,6 +45,10 @@ install_clojure_lsp() {
   local installDir="${HOME}/.local/bin"
 
   log_info "Installing Clojure LSP"
+
+  # Make sure our install directory exists before proceeding.
+  mkdir -p "${installDir}"
+
   (
     curl -sLO "${clojureLspDownloadUrl}" &&
     chmod +x "${clojureLspInstaller}" &&
