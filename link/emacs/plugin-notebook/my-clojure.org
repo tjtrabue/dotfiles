@@ -30,6 +30,10 @@ world needed another Lisp.
     (use-package cider
       :hook
       (clojure-mode . cider-mode)
+      :bind
+      (:map cider-mode-map
+            ;; Start CIDER REPL
+            ("C-c C-n" . cider-jack-in))
       :custom
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
