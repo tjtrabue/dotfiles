@@ -1,6 +1,7 @@
 binutils
 broot
 clang-format
+clojure/tools/clojure
 cmatrix
 coreutils
 diffutils
