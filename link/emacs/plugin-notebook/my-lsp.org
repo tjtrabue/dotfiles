@@ -53,6 +53,8 @@ to the =my-custom-lsp.el= file.
       ;; time the variable you want to tweak is company-idle-delay, not this
       ;; one.
       (lsp-idle-delay 0.000)
+      ;; Whether to perform code formatting while typing
+      (lsp-enable-on-type-formatting nil)
       ;;; bash-language-server
       (lsp-bash-highlight-parsing-errors t)
       ;;; clangd

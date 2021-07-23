@@ -1,0 +1,5 @@
+{:cljfmt {
+  :indents {#re ".*" ns [[:inner 0] [:inner 1]]}}
+  :auto-add-ns-to-new-files? false
+  :project-specs [{:project-path "deps.edn"
+                  :classpath-cmd ["clojure" "-A:dev" "-Spath"]}]}

@@ -20,7 +20,7 @@ flexibility in code style over consistency.
       ;; helpful, but it doesn't always play nicely with automatic code
       ;; formatters. It's also far more useful in Lisp modes than it is for editing
       ;; ALGOL-derived languages.
-      ((clojure-mode
+      ((;; clojure-mode
         emacs-lisp-mode
         ielm-mode
         lisp-mode

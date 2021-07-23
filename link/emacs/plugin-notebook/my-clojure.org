@@ -17,9 +17,10 @@ world needed another Lisp.
       ;; reason.
       (clojure-mode :type git :host github :repo "clojure-emacs/clojure-mode"
                     :files (:defaults))
-      :config
-      ;; Add extra syntax coloring (imprecise, but pretty)
-      (require 'clojure-mode-extra-font-locking))
+      ;; :config
+      ;; ;; Add extra syntax coloring (imprecise, but pretty)
+      ;; (require 'clojure-mode-extra-font-locking)
+    )
   #+end_src
 
 * CIDER

@@ -222,6 +222,17 @@ link_config() {
   log_info "Done."
 }
 
+# Link the LSP configuration dir to ~/.lsp
+link_lsp_config() {
+  local lspConfigDir="${DOTFILES_LINK}/lsp"
+  local lspConfigTarget="${HOME}/.lsp"
+
+  if [ -d "${lspConfigTarget}" ]; then
+    rm -rf "${lspConfigTarget}"
+  fi
+  ln -sf "${lspConfigDir}" "${lspConfigTarget}"
+}
+
 # Link the repository itself, if necessary.
 link_repo() {
   log_info "Linking dotfiles repository to: ${DOTFILES_HOME}"
