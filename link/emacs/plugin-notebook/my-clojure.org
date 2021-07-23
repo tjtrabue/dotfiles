@@ -10,19 +10,19 @@ world needed another Lisp.
 * clojure-mode
   Major mode for editing Clojure files.
 
-#+begin_src emacs-lisp
-  (use-package clojure-mode)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package clojure-mode)
+  #+end_src
 
 * CIDER
   An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
   Lisp.
 
-#+begin_src emacs-lisp
-  (use-package cider
-    :hook
-    (clojure-mode . cider-mode))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package cider
+      :hook
+      (clojure-mode . cider-mode))
+  #+end_src
 
 * clj-refactor
   =clj-refactor= provides refactoring support for Clojure projects. It
