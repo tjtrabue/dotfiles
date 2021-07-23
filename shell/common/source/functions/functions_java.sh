@@ -89,6 +89,9 @@ install_sdkman_packages() {
   sdk install maven
   # Gradle is a newer alternative to Maven built on Groovy.
   sdk install gradle
+  # Micronaut is a framework for microservice development in Java. This is its
+  # accompanying CLI tool.
+  sdk install micronaut
   # Install leiningen tool for managing Clojure projects
   sdk install leiningen
 }
