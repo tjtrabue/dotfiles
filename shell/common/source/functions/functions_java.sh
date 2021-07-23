@@ -2,10 +2,10 @@
 
 # Install SDKMan, the manager for Java development SDKs and tools.
 install_sdkman() {
-  log_info "Installing sdkman"
   local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
 
   # Install SDKMAN if we don't already have it installed.
+  log_info "Installing sdkman"
   __install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
     "https://get.sdkman.io"
 }
@@ -13,8 +13,8 @@ install_sdkman() {
 # Install jenv, the Java environment manager. It is a similar tool to pyenv.
 install_jenv() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
-  log_info "Installing JENV"
 
+  log_info "Installing JENV"
   __install_tool_from_git "jenv" "${jenvHome}" \
     "https://github.com/jenv/jenv.git"
 }
@@ -29,9 +29,11 @@ initialize_jenv_for_shell() {
 
   # Make sure jenv is available on $PATH.
   if [ ! -x "$(command -v jenv)" ]; then
+    log_info "Adding jenv binary path to \$PATH"
     export PATH="${jenvHome}/bin:${PATH}"
   fi
 
+  log_info "Initializing jenv for shell"
   eval "$(jenv init -)"
 }
 
@@ -46,7 +48,10 @@ initialize_sdkman_for_shell() {
   fi
 
   if [ -s "${sdkmanInitScript}" ]; then
+    log_info "Initializing SDKMAN for shell"
     . "${sdkmanInitScript}"
+  else
+    warn "No SDKMAN initialization script found at: ${sdkmanInitScript}"
   fi
 }
 
