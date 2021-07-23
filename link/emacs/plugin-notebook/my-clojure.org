@@ -26,6 +26,20 @@ world needed another Lisp.
   An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
   Lisp.
 
+** Functions
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/set-cider-repl-keybindings ()
+      "Hook function for setting keybindings in CIDER nREPL mode.
+    Make sure to only run this function after 'sly-mrepl loads."
+      (with-eval-after-load "cider-repl"
+        ;; Get rid of horrendous "," shortcut
+        (define-key cider-repl-mode-map (kbd ",") nil)
+        ;; Define useful key-chords:
+        (evil-leader/set-key-for-mode 'cider-repl-mode
+          "," #'cider-repl-handle-shortcut)))
+  #+end_src
+
+** use-package specification
   #+begin_src emacs-lisp
     (use-package cider
       :hook
@@ -46,7 +60,9 @@ world needed another Lisp.
       ;; CIDER will try to add expected function arguments based on the current
       ;; context (for example for the datomic.api/q function where it will show the
       ;; expected inputs of the query at point) if this is set to t
-      (cider-eldoc-display-context-dependent-info t))
+      (cider-eldoc-display-context-dependent-info t)
+      :config
+      (my/set-cider-repl-keybindings))
   #+end_src
 
 * clj-refactor
