@@ -9,10 +9,10 @@ cd() {
 
   while getopts ":h" opt; do
     case "${opt}" in
-    h)
-      __cd_help
-      return 0
-      ;;
+      h)
+        __cd_help
+        return 0
+        ;;
     esac
   done
   shift $((OPTIND - 1))
@@ -42,9 +42,9 @@ diralias() {
 
   existingAliasValue="$(
     grep "${dirAlias}=" <"$dirAliasFile" |
-      sed 's/^export\s*//' |
-      sed 's/^.*=//' |
-      sed 's/"//g'
+    sed 's/^export\s*//' |
+    sed 's/^.*=//' |
+    sed 's/"//g'
   )"
 
   # If the alias already exists, get rid of the old one before adding the new
@@ -109,9 +109,9 @@ EOF
 __do_cd() {
   local dirArg="${1}"
 
-  if echo "${dirArg}" | grep -E -q -- "-[1-9][0-9]*"; then
+  if echo "${dirArg}" | grep -E -q -- '^-[1-9][0-9]*$'; then
     __do_cd_history "${dirArg}"
-  elif echo "${dirArg}" | grep -E -q -- "^@$"; then
+  elif echo "${dirArg}" | grep -E -q -- '^@$'; then
     # Use '@' to cd to the root of the current git repository.
     __do_cd_to_git_root
   else
@@ -178,7 +178,7 @@ __write_to_dir_hist() {
   fi
 
   if
-    [ "$(eval "echo ${dirToWrite}")" != "$(eval "echo ${latestDirFromHist}")" ]
+  [ "$(eval "echo ${dirToWrite}")" != "$(eval "echo ${latestDirFromHist}")" ]
   then
     # Write the new directory to the history file.
     printf "%s\n" "${dirToWrite}" >>"${dirHistFile}"
