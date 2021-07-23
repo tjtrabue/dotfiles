@@ -196,6 +196,7 @@ like Vim."
          "sS" 'evil-snipe-S
          ;; Treemacs
          "tm" 'treemacs
+         "tp" 'treemacs-projectile
          ;; undo-tree
          "ut" 'undo-tree-visualize)
        ;; Leader shortcuts for dired-mode.
