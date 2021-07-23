@@ -37,10 +37,20 @@ __install_clojure_cli_tools_linux() {
 
 # Install the Clojure Language Server.
 install_clojure_lsp() {
+  # Where to get the install script
   local clojureLspDownloadUrl="https://raw.githubusercontent.com/clojure-lsp/clojure-lsp/master/install"
+  # The downloaded install script
+  local clojureLspInstaller="$(basename "${clojureLspDownloadUrl}")"
+  # Where we want to install clojure-lsp
+  local installDir="${HOME}/.local/bin"
 
   log_info "Installing Clojure LSP"
-  sudo bash < <(curl -s "${clojureLspDownloadUrl}")
+  (
+    curl -sLO "${clojureLspDownloadUrl}" &&
+    chmod +x "${clojureLspInstaller}" &&
+    ./"${clojureLspInstaller}" --dir "${installDir}" &&
+    rm -f "${clojureLspInstaller}"
+  )
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
