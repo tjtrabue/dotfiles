@@ -49,8 +49,6 @@ for any programming language that supports a formatting tool.")
                                       c++-mode
                                       c-mode
                                       clojure-mode
-                                      clojurec-mode
-                                      clojurescript-mode
                                       cmake-mode
                                       cperl-mode
                                       css-mode
