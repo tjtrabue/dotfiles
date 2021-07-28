@@ -35,10 +35,10 @@ to =nil=, so this may help you.
           (evil-define-operator my-evil-join (beg end)
             "Join the selected lines. Based on blaenk/dots on GitHub.
 
-This custom version of `evil-join' handles joining commented
-lines more handily than evil's default J operator, removing
-leading comment designators. In that sense, it behaves far more
-like Vim."
+    This custom version of `evil-join' handles joining commented
+    lines more handily than evil's default J operator, removing
+    leading comment designators. In that sense, it behaves far more
+    like Vim."
             :motion evil-line
             (let* ((count (count-lines beg end))
                    ;; we join pairs at a time
@@ -214,18 +214,18 @@ like Vim."
    Used to provide default Vim keybindings for all standard Emacs modes.
    #+begin_src emacs-lisp
      (use-package evil-collection
-       :demand t
        :after evil
+       :demand t
        :bind
        (:map evil-normal-state-map
              ;; Unbind some unused mappings
              ("M-." . nil))
-       :init
+       :custom
        ;; Whether or not to use Vim keys in the minibuffer.
-       (setq evil-collection-setup-minibuffer nil)
+       (evil-collection-setup-minibuffer nil)
        :config
        (evil-collection-init)
-       ;; Get rid of troublesome keybindings:
+       ;; Get rid of troublesome keybindings (must come here in the :config block):
        ;; We do not need to kill a line with C-k anymore since we're using
        ;; Vim keys.
        (global-unset-key (kbd "C-k"))
@@ -236,8 +236,9 @@ like Vim."
 ** evil-surround
    #+begin_src emacs-lisp
      (use-package evil-surround
-       :demand t
-       :config (global-evil-surround-mode 1))
+       :after evil-collection
+       :hook
+       (after-init . global-evil-surround-mode))
    #+end_src
 
 ** evil-numbers
@@ -256,46 +257,62 @@ like Vim."
      (use-package evil-commentary
        ;; Disabled in favor of evil-nerd-commenter
        :disabled
-       :demand t
-       :config (evil-commentary-mode t))
+       :after evil-collection
+       :hook
+       (after-init . evil-commentary-mode))
    #+end_src
 
 ** evil-nerd-commenter
-   A very powerful code commenting plugin based on =NerdCommenter= for Vim.
+   A powerful and configurable code commenting plugin based on =NerdCommenter=
+   for Vim. Unlike =evil-commentary=, this plugin does not come with any default
+   keybindings. You must assign them as you see fit, and I just so happen to
+   have my keybindings set up to mirror =evil-commentary='s default
+   configuration.
 
    #+begin_src emacs-lisp
      (use-package evil-nerd-commenter
-       :after evil
+       :after evil-collection
        :bind*
        (:map evil-normal-state-map
-        ("g c c" . evilnc-comment-or-uncomment-lines)
-        ("g c l" . evilnc-quick-comment-or-uncomment-to-the-line)
-        ("g c p" . evilnc-comment-or-uncomment-paragraphs)
-        ("g c r" . comment-or-uncomment-region)
-        :map evil-visual-state-map
-        ("g c" . evilnc-comment-or-uncomment-lines)
-        ("g C" . comment-or-uncomment-region)))
+             ("g c c" . evilnc-comment-or-uncomment-lines)
+             ("g c l" . evilnc-quick-comment-or-uncomment-to-the-line)
+             ("g c p" . evilnc-comment-or-uncomment-paragraphs)
+             ("g c r" . comment-or-uncomment-region)
+             :map evil-visual-state-map
+             ("g c" . evilnc-comment-or-uncomment-lines)
+             ("g C" . comment-or-uncomment-region)))
    #+end_src
 
 ** evil-mark-replace
+   Replace symbol at point in marked area. This plugin is not terribly useful,
+   given the advent of powerful IDE plugins such as =lsp-mode=, but it still may
+   be marginally useful at times.
+
    #+begin_src emacs-lisp
      (use-package evil-mark-replace
+       :disabled
+       :after evil-collection
        :demand t)
    #+end_src
 
 ** evil-matchit
    #+begin_src emacs-lisp
      (use-package evil-matchit
-       :demand t
-       :config (global-evil-matchit-mode t))
+       :after evil-collection
+       :hook
+       (after-init . global-evil-matchit-mode))
    #+end_src
 
 ** evil-exchange
+   Port of =vim-exchange= used to exchange two text selections based on two
+   consecutive motions beginning with =gx=.
+
    #+begin_src emacs-lisp
-     ;; Port of vim-exchange used to exchange two text selections based on two
-     ;; consecutive motions beginning with 'gx'
      (use-package evil-exchange
-       :demand t)
+       :after evil-collection
+       :demand t
+       :config
+       (evil-exchange-install))
    #+end_src
 
 ** evil-extra-operator
@@ -307,7 +324,7 @@ like Vim."
 ** evil-args
    #+begin_src emacs-lisp
      (use-package evil-args
-       :demand t
+       :after evil-collection
        :bind
        (:map evil-inner-text-objects-map
              ("a" . evil-inner-arg)
@@ -325,8 +342,9 @@ like Vim."
 ** evil-visualstar
    #+begin_src emacs-lisp
      (use-package evil-visualstar
-       :demand t
-       :config (global-evil-visualstar-mode t))
+       :after evil-collection
+       :hook
+       (after-init . global-evil-visualstar-mode))
    #+end_src
 
 ** evil-snipe
@@ -335,6 +353,8 @@ like Vim."
 
    #+begin_src emacs-lisp
      (use-package evil-snipe
+       ;; I prefer to use avy instead of snipe.
+       :disabled
        :demand t
        :after (evil-leader evil-collection)
        :hook
@@ -450,9 +470,9 @@ like Vim."
             "gcy" #'lispyville-comment-and-clone-dwim
             ;; Mark symbols with M-m
             (kbd "M-m") #'lispy-mark-symbol
-            ;; Indent operators
-            "<<" #'evil-shift-left-line
-            ">>" #'evil-shift-right-line)
+            ;; Contract/expand current sexp.
+            "<<" #'lispyville-barf
+            ">>" #'lispyville-slurp)
           (evil-define-key '(normal insert) keymap
             ;; Function navigation
             (kbd "M-h") #'lispyville-beginning-of-defun
@@ -460,63 +480,61 @@ like Vim."
           (evil-define-key 'visual keymap
             "gc" #'lispyville-comment-or-uncomment-line
             "gC" #'lispyville-comment-or-uncomment
-            "gy" #'lispyville-comment-and-clone-dwim
-            "<" #'evil-shift-left
-            ">" #'evil-shift-right)
+            "gy" #'lispyville-comment-and-clone-dwim)
           (evil-define-key '(normal insert visual) keymap
             (kbd "M-;") #'lispy-comment)))
     #+end_src
 
 *** use-package specification
-   #+begin_src emacs-lisp
-     (use-package lispyville
-       :after (evil-collection lispy)
-       :hook
-       (lispy-mode . lispyville-mode)
-       :bind
-       (:map evil-collection-lispy-mode-map
-             ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
-             ;; unimpaired bindings.
-             ("<normal-state> [" . nil)
-             ("<normal-state> ]" . nil)
-             ;; Similarly, we may still want to use our indent bindings.
-             ("<normal-state> <" . nil)
-             ("<normal-state> >" . nil))
-       :custom
-       ;; Setting this variable to t means lispyville motion commands, such as (, ),
-       ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
-       (lispyville-motions-put-into-special nil)
-       ;; The preferred state for editing text in lispyville mode.
-       ;; Can be either 'insert or 'emacs.
-       (lispyville-preferred-lispy-state 'insert)
-       :config
-       ;; Change default keybindings for lispyville.
-       (lispyville-set-key-theme '(;; Standard evil operator remappings
-                                   operators
-                                   ;; Safe backward word delete
-                                   c-w
-                                   ;; Safe delete back to indent
-                                   c-u
-                                   ;; Enter normal mode and deactivate region in one
-                                   ;; step.
-                                   escape
-                                   ;; <i and >i insert at beginning and end of sexp
-                                   arrows
-                                   ;; evil-indent now prettifies expressions
-                                   prettify
-                                   ;; Use M-(, M-{, and M-[ to wrap Lisp objects in
-                                   ;; delimiters.
-                                   wrap
-                                   ;; Use W, B, E, and gE to move semantically across
-                                   ;; Lisp objects.
-                                   (atom-movement t)
-                                   ;; Extra text object motions
-                                   text-objects
-                                   ;; Extra bindings
-                                   additional))
-       ;; Only use evil-mode's visual selection instead of lispy marks.
-       (lispyville-enter-visual-when-marking)
-       (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
-       (my/set-lispyville-mode-keys)
-       (my/set-lispyville-leader-keys))
-   #+end_src
+    #+begin_src emacs-lisp
+      (use-package lispyville
+        :after (evil-collection lispy)
+        :hook
+        (lispy-mode . lispyville-mode)
+        :bind
+        (:map evil-collection-lispy-mode-map
+              ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
+              ;; unimpaired bindings.
+              ("<normal-state> [" . nil)
+              ("<normal-state> ]" . nil)
+              ;; Remove default barf/slurp keybindings.
+              ("<normal-state> <" . nil)
+              ("<normal-state> >" . nil))
+        :custom
+        ;; Setting this variable to t means lispyville motion commands, such as (, ),
+        ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
+        (lispyville-motions-put-into-special nil)
+        ;; The preferred state for editing text in lispyville mode.
+        ;; Can be either 'insert or 'emacs.
+        (lispyville-preferred-lispy-state 'insert)
+        :config
+        ;; Change default keybindings for lispyville.
+        (lispyville-set-key-theme '(;; Standard evil operator remappings
+                                    operators
+                                    ;; Safe backward word delete
+                                    c-w
+                                    ;; Safe delete back to indent
+                                    c-u
+                                    ;; Enter normal mode and deactivate region in one
+                                    ;; step.
+                                    escape
+                                    ;; <i and >i insert at beginning and end of sexp
+                                    arrows
+                                    ;; evil-indent now prettifies expressions
+                                    prettify
+                                    ;; Use M-(, M-{, and M-[ to wrap Lisp objects in
+                                    ;; delimiters.
+                                    wrap
+                                    ;; Use W, B, E, and gE to move semantically across
+                                    ;; Lisp objects.
+                                    (atom-movement t)
+                                    ;; Extra text object motions
+                                    text-objects
+                                    ;; Extra bindings
+                                    additional))
+        ;; Only use evil-mode's visual selection instead of lispy marks.
+        (lispyville-enter-visual-when-marking)
+        (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
+        (my/set-lispyville-mode-keys)
+        (my/set-lispyville-leader-keys))
+    #+end_src

@@ -70,7 +70,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
                                 (concat (getenv "HOME") "/workspace"))
         "Directory containig development projects.")
       (defvar my/practice-dir (file-truename
-                                (concat (getenv "HOME") "/practice"))
+                               (concat (getenv "HOME") "/practice"))
         "Directory containig practice or scratch code.")
       (defvar my/line-width 80 "The width of each line of code.")
       (defvar my/use-helm-gtags t
@@ -87,7 +87,12 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (defvar my/org-agenda-dir (file-truename (concat my/org-dir "/agenda"))
         "Directory containing my Org agenda files.")
       (defvar my/lisp-major-modes
-        '(clojure-mode emacs-lisp-mode ielm-mode lisp-mode sly-mrepl-mode)
+        '(clojure-mode
+          emacs-lisp-mode
+          ielm-mode
+          lisp-mode
+          lisp-interaction-mode
+          sly-mrepl-mode)
         "List of important Lisp major modes"))
   #+end_src
 

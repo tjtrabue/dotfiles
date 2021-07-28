@@ -11,9 +11,13 @@ Vim-derived editors. It is newer and more maintained than =ace-jump-mode=,
 however, making =avy= a better, more modern alternative.
 
 * use-package specification
+   *NOTE:* See evil-leader config for other keybindings.
 
 #+begin_src emacs-lisp
-  ;; NOTE: See evil-leader config for keybindings.
   (use-package avy
-    :after (evil-collection evil-snipe))
+    :after evil-collection
+    :bind
+    (:map evil-normal-state-map
+          ("f" . avy-goto-char)
+          ("F" . avy-goto-char-2)))
 #+end_src

@@ -25,6 +25,7 @@ regardless of its particular dialect.
         emacs-lisp-mode
         ielm-mode
         lisp-mode
+        lisp-interaction-mode
         sly-mrepl-mode)
        . lispy-mode))
   #+end_src
@@ -40,7 +41,7 @@ regardless of its particular dialect.
   language, from the user's perspective, at least. The authors wrote the
   original version of this plugin in Emacs Lisp, but after failing to achieve
   the performance they desired, they deprecated the original plugin and created
-  this version written it in Rust, hence the =-rust-= part of the name.
+  this version which is written in Rust, hence the =-rust-= part of the name.
 
 ** *IMPORTANT:* How Parinfer affects your workflow
    Parinfer is quite opinionated, and takes control of several aspects of your
@@ -108,7 +109,12 @@ regardless of its particular dialect.
       :disabled
       :hook
       ;; Automatically activate parinfer-rust-mode in these major modes.
-      (clojure-mode emacs-lisp-mode ielm-mode lisp-mode sly-mrepl-mode)
+      (clojure-mode
+       emacs-lisp-mode
+       ielm-mode
+       lisp-mode
+       lisp-interaction-mode
+       sly-mrepl-mode)
       :custom
       ;; Controls how parinfer behaves. Can be one of "paren", "indent", or
       ;; "smart".
