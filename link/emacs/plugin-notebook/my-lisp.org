@@ -27,7 +27,12 @@ regardless of its particular dialect.
         lisp-mode
         lisp-interaction-mode
         sly-mrepl-mode)
-       . lispy-mode))
+       . lispy-mode)
+      :config
+      ;; Tweak key themes enabled by default.  Since I use lispyville for evil-mode
+      ;; integration, I don't need the annoying "special" mode bindings that lispy
+      ;; likes to use.
+      (lispy-set-key-theme '(lispy c-digits)))
   #+end_src
 
 * parinfer-rust-mode
