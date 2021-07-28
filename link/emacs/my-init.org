@@ -277,6 +277,13 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     (setq minibuffer-prompt-properties
           '(read-only t cursor-intangible t face minibuffer-prompt))
 
+    ;; Display the name of the real file when visiting a symbolic link.
+    (setq find-file-visit-truename t)
+
+    ;; Don’t compact font caches during GC. This can resolve lag issues with
+    ;; doom-modeline and some other plugins.
+    (setq inhibit-compacting-font-caches t)
+
     ;; Emacs 28 variables.
     (when (>= emacs-major-version 28)
       ;; Hide commands in M-x which do not work in the current mode.

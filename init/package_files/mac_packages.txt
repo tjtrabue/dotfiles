@@ -23,9 +23,11 @@ gnu-tar
 gnu-which
 gnutls
 grep
+growlnotify
 gzip
 httpie
 hunspell
+isync
 jq
 kakoune
 kind
@@ -34,6 +36,7 @@ lazygit
 llvm
 mactex
 meld
+mu
 neofetch
 neovim
 openssh

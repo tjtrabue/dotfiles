@@ -14,8 +14,8 @@ modeline from Doom Emacs.
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :after (all-the-icons doom-themes)
-    :demand t
-    :hook (after-init . doom-modeline-mode)
+    :hook
+    (after-init . doom-modeline-mode)
     :custom
     ;; How tall the modeline should be.
     (doom-modeline-height 35)

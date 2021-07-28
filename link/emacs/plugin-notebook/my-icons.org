@@ -11,16 +11,14 @@
   (use-package all-the-icons
     :demand t
     :config
-    (let (
-          (icon-paths (mapcar (lambda (file-name)
-                                  (expand-file-name file-name user-fonts-dir))
+    (let ((icon-paths (mapcar (lambda (file-name)
+                                (expand-file-name file-name user-fonts-dir))
                               '("all-the-icons.ttf"
                                 "material-design-icons.ttf"
                                 "weathericons.ttf"
                                 "octicons.ttf"
                                 "fontawesome.ttf"
-                                "file-icons.ttf")))
-          )
+                                "file-icons.ttf"))))
       ;; If the icons files have not yet been installed, download them.
       ;; If you feel that not all font files are present in the fonts dir, then
       ;; simply type 'C-x C-e' after the (all-the-icons-install-fonts t) sexp

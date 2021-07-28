@@ -10,7 +10,7 @@
 like =gnus=, which get their information from a remote server, =mu4e= relies on
 an offline IMAP sync of the user's email account for reading email.
 
-* Installing mu4e
+* Installing =mu4e=
   Installing =mu4e= is a different creature than most Emacs packages. Instead of
   installing =mu4e= from MELPA, you must install the =mu= or =maildir-utils=
   system utility using your distribution's package manager. =mu4e= is simply a
@@ -31,12 +31,19 @@ an offline IMAP sync of the user's email account for reading email.
    and a compatible version of =mu4e=, removing the hassle of manually
    installing interoperable versions of the two tools.
 
+* Functions
+  #+begin_src emacs-lisp
+    (defun my/use-mu4e-p ()
+      "Return T if the system is configured for `mu4e'. Return NIL otherwise."
+      (and (executable-find "mu") (executable-find "mbsync")))
+  #+end_src
+
 * use-package specification
 
-#+begin_src emacs-lisp
-  ;; Only load mu4e if we have the requisite executables installed.
-  (when (and (executable-find "mu") (executable-find "mbsync"))
+  #+begin_src emacs-lisp
     (use-package mu4e
+      ;; Only load mu4e if we have the requisite executables installed.
+      :if (my/use-mu4e-p)
       ;; Remember: we do not want to use straight.el to install mu4e!
       :ensure nil
       :straight nil
@@ -73,5 +80,23 @@ an offline IMAP sync of the user's email account for reading email.
               (my/remote-mail-sent-dir   . ?s)
               (my/remote-mail-trash-dir  . ?t)
               (my/remote-mail-drafts-dir . ?d)
-              (my/remote-mail-refile-dir . ?a)))))
-#+end_src
+              (my/remote-mail-refile-dir . ?a))))
+  #+end_src
+
+* Plugins
+** mu4e-alert
+   Get desktop notifications for =mu4e=.
+
+   #+begin_src emacs-lisp
+     (use-package mu4e-alert
+       ;; Only load mu4e if we have the requisite executables installed.
+       :if (my/use-mu4e-p)
+       :hook
+       (after-init . mu4e-alert-enable-notifications)
+       :config
+       (if (eq system-type 'darwin)
+           ;; Use growlnotify for macOS
+           (mu4e-alert-set-default-style 'growl)
+         ;; Default to libnotify, otherwise
+         (mu4e-alert-set-default-style 'libnotify)))
+   #+end_src
