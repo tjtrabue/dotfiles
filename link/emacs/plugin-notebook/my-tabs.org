@@ -36,6 +36,8 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
       ;; Only cycle through visible tabs, do not advance to new tab groups.
       (centaur-tabs-cycle-scope 'tabs)
       :config
+      ;; Make the headline face match the centaur-tabs-default face
+      (centaur-tabs-headline-match)
       ;; Enable centaur-tabs-mode universally.
       (centaur-tabs-mode 1)
       ;; Automatically group tabs by Projectile project.
