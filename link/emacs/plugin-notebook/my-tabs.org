@@ -17,7 +17,6 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
   #+begin_src emacs-lisp
     (use-package centaur-tabs
       :after evil-collection
-      :demand t
       :bind*
       (("C-x B" . centaur-tabs-counsel-switch-group)
        :map evil-normal-state-map
@@ -27,11 +26,29 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
        ;; Use ']b' and '[b' to navigate tabs.
        ([remap next-buffer] . centaur-tabs-forward)
        ([remap previous-buffer] . centaur-tabs-backward))
+      :hook
+      ;; Enable centaur-tabs globally
+      (after-init . centaur-tabs-mode)
+      :init
+      ;; Can be necessary for current tab underline to display correctly.
+      ;; Only important if centaur-tabs-set-bar is set to 'under.
+      (setq x-underline-at-descent-line t)
       :custom
-      ;; Use themed icons for tabs.
+      ;; How to style consecutive tabs. Can be one of: "alternate", "bar", "box",
+      ;; "chamfer", "rounded", "slant", "wave", "zigzag".
+      (centaur-tabs-style "bar")
+      ;; Use themed icons for tabs
       (centaur-tabs-set-icons t)
+      ;; Adjust tab height
+      (centaur-tabs-height 32)
+      ;; Gray-out tab icons for unselected buffers
+      (centaur-tabs-gray-out-icons 'buffer)
       ;; Add colored bar to selected tab.
-      (centaur-tabs-set-bar 'left)
+      ;; Can be one of: 'left, 'right, 'over, 'under
+      (centaur-tabs-set-bar 'under)
+      ;; Turn off ido integration to instead opt into completing-read, which is used
+      ;; by Selectrum.
+      (centaur-tabs-enable-ido-completion nil)
       ;; Show marker icon on tabs for modified files.
       (centaur-tabs-set-modified-marker t)
       ;; Only cycle through visible tabs, do not advance to new tab groups.
@@ -39,8 +56,6 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
       :config
       ;; Make the headline face match the centaur-tabs-default face
       (centaur-tabs-headline-match)
-      ;; Enable centaur-tabs-mode universally.
-      (centaur-tabs-mode 1)
       ;; Automatically group tabs by Projectile project.
       (centaur-tabs-group-by-projectile-project))
   #+end_src
