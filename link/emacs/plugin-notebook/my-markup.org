@@ -29,7 +29,6 @@ HTML, TOML, YAML, etc.
   #+begin_src emacs-lisp
     (use-package grip-mode
       :after markdown-mode
-      :demand t
       :bind
       (:map markdown-mode-command-map
             ("g" . grip-mode))
