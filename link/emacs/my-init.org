@@ -282,8 +282,9 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
           '(read-only t cursor-intangible t face minibuffer-prompt))
 
     ;; Display the name of the real file when visiting a symbolic link.
-    ;; DO NOT SET THIS TO T! It messes with straight.el's autoload generation!
-    ;; (setq find-file-visit-truename t)
+    ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
+    ;; generation!
+    ;; (setq find-file-visit-truename nil)
 
     ;; Don’t compact font caches during GC. This can resolve lag issues with
     ;; doom-modeline and some other plugins.
