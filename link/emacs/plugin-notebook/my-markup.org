@@ -4,35 +4,62 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-Plugins for various markup/serialization languages, such as JSON, Markdown, HTML,
-TOML, YAML, etc.
+Plugins for various markup/serialization languages, such as JSON, Markdown,
+HTML, TOML, YAML, etc.
 
 * json-mode
-
-#+begin_src emacs-lisp
-(use-package json-mode)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package json-mode)
+  #+end_src
 
 * markdown-mode
+  #+begin_src emacs-lisp
+    (use-package markdown-mode)
+  #+end_src
 
-#+begin_src emacs-lisp
-(use-package markdown-mode)
-#+end_src
+* grip-mode
+  Instant Github-flavored Markdown/Org preview using Grip (which stands for
+  "GitHub Readme Instant Preview"). The preview can be shown in your configured
+  web browser, or in Emacs itself if you have compiled Emacs with the
+  =--with-xwidgets= option.
+
+  *NOTE:* This package depends on the =grip= Python package, so make sure to
+  =pip install grip= before trying to use this plugin.
+
+  #+begin_src emacs-lisp
+    (use-package grip-mode
+      :after ox-gfm
+      :bind
+      (:map markdown-mode-command-map
+            ("g" . grip-mode))
+      :custom
+      ;; Path to the grip executable.
+      (grip-binary-path (executable-find "grip"))
+      ;; Whether to refresh the preview after a change to the source file.
+      (grip-update-after-change t)
+      ;; The host to use for previewing.
+      (grip-preview-host "localhost")
+      :init
+      (require 'auth-source)
+      ;; Set up list of authinfo files to check.
+      (setq auth-sources my/authinfo-files)
+      ;; Get user's GitHub credentials from ~/.authinfo
+      (let ((credential (auth-source-user-and-password "api.github.com")))
+        (setq grip-github-user (car credential)
+              grip-github-password (cadr credential))))
+  #+end_src
 
 * toml
-
-#+begin_src emacs-lisp
-(use-package toml)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package toml)
+  #+end_src
 
 * toml-mode
-
-#+begin_src emacs-lisp
-(use-package toml-mode)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package toml-mode)
+  #+end_src
 
 * yaml-mode
-
-#+begin_src emacs-lisp
-(use-package yaml-mode)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package yaml-mode)
+  #+end_src

@@ -9,18 +9,23 @@ This file contains plugin specifications for integrating various PDF tools with
 Emacs.
 
 * pdf-tools
+  An extremely powerful suite of tools for working with PDFs in Linux. The catch
+  is the "in Linux" part of that last sentence: as of now, only Linux
+  distributions are covered by this plugin.
 
-#+begin_src emacs-lisp
-  (use-package pdf-tools)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package pdf-tools
+      ;; Only Linux is currently supported
+      :if (memq system-type '(gnu gnu/linux)))
+  #+end_src
 
 * pdf-view-restore
   An add-on to =pdf-tools= that allows users to open PDFs at their last known
   position.
 
-#+begin_src emacs-lisp
-  (use-package pdf-view-restore
-    :after (pdf-tools)
-    :hook
-    (pdf-view-mode . pdf-view-restore-mode))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package pdf-view-restore
+      :after pdf-tools
+      :hook
+      (pdf-view-mode . pdf-view-restore-mode))
+  #+end_src

@@ -93,7 +93,11 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
           lisp-mode
           lisp-interaction-mode
           sly-mrepl-mode)
-        "List of important Lisp major modes"))
+        "List of important Lisp major modes")
+      (defvar my/authinfo-files (mapcar (lambda (file)
+                                          (file-truename (concat (getenv "HOME") "/" file)))
+                                        '(".authinfo.gpg" ".authinfo" ".netrc"))
+        "The user's .authinfo files used to store login credentials."))
   #+end_src
 
 * Language/Encoding

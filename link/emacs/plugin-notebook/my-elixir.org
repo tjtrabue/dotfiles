@@ -11,9 +11,9 @@ Integration with Elixir, a functional, process-oriented programming language.
   font-locking, indentation, and navigation support for the Elixir programming
   language.
 
-#+begin_src emacs-lisp
-  (use-package elixir-mode)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package elixir-mode)
+  #+end_src
 
 * Alchemist
   =alchemist= is a suite of tools for working with Elixir projects, including
@@ -27,6 +27,7 @@ Integration with Elixir, a functional, process-oriented programming language.
   features will find new homes as their own projects on GitHub, so be on the
   lookout!
 
-#+begin_src emacs-lisp
-  (use-package alchemist)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package alchemist
+      :disabled)
+  #+end_src

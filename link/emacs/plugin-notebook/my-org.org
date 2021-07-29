@@ -107,7 +107,19 @@ textual documents and evaluated as needed, or all at once.
        (dired-mode . org-download-enable)
        :init
        (setq-default org-download-image-dir
-         (file-truename (concat (getenv "HOME") "/images/org")))
+                     (file-truename (concat (getenv "HOME") "/images/org")))
        :config
        (make-directory org-download-image-dir t))
+   #+end_src
+
+** ox-gfm
+   This is a small exporter based on the Markdown exporter already existing in
+   Org mode.
+
+   #+begin_src emacs-lisp
+     (use-package ox-gfm
+       :after org
+       :demand t
+       :config
+       (require 'ox-gfm nil t))
    #+end_src
