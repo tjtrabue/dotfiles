@@ -32,6 +32,7 @@ localtunnel
 lua-fmt
 markdownlint
 markdownlint-cli
+node-cljfmt
 npm-check-updates
 prettier
 speed-test

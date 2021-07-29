@@ -8,67 +8,67 @@ Assorted code formatting plugins.
 
 * Variables
 
-#+begin_src emacs-lisp
-  ;; I've commented out several major modes that are either badly supported
-  ;; (like sh-mode) or have better support with lsp-mode.
-  (defvar my/format-all-major-modes '(
-      ;; c-mode
-      ;; c++-mode
-      clojure-mode
-      ;; cmake-mode
-      cperl-mode
-      ;; css-mode
-      ;; elixir-mode
-      emacs-lisp-mode
-      erlang-mode
-      go-mode
-      haskell-mode
-      ;; html-mode
-      ;; java-mode
-      ;; js-mode
-      ;; json-mode
-      ;; LaTeX-mode
-      ;; less-css-mode
-      lisp-mode
-      lisp-data-mode
-      lua-mode
-      ;; markdown-mode
-      ;; nxml-mode
-      ;; objc-mode
-      perl-mode
-      ;; php-mode
-      ;; python-mode
-      ;; scss-mode
-      ;; sgml-mode
-      ;; Do not manage sh-mode since format-all's shfmt code is bunk.
-      ;; We have emacs-shfmt to take care of this instead.
-      ;; sh-mode
-      ;; toml-mode
-      ;; yaml-mode
-    )
-    "List of major modes subject to automatic formatting by `format-all'.")
-#+end_src
+  #+begin_src emacs-lisp
+    ;; I've commented out several major modes that are either badly supported
+    ;; (like sh-mode) or have better support with lsp-mode.
+    (defvar my/format-all-major-modes '(
+                                        ;; c-mode
+                                        ;; c++-mode
+                                        clojure-mode
+                                        ;; cmake-mode
+                                        cperl-mode
+                                        ;; css-mode
+                                        ;; elixir-mode
+                                        emacs-lisp-mode
+                                        erlang-mode
+                                        go-mode
+                                        haskell-mode
+                                        ;; html-mode
+                                        ;; java-mode
+                                        ;; js-mode
+                                        ;; json-mode
+                                        ;; LaTeX-mode
+                                        ;; less-css-mode
+                                        lisp-mode
+                                        lisp-data-mode
+                                        lua-mode
+                                        ;; markdown-mode
+                                        ;; nxml-mode
+                                        ;; objc-mode
+                                        perl-mode
+                                        ;; php-mode
+                                        ;; python-mode
+                                        ;; scss-mode
+                                        ;; sgml-mode
+                                        ;; Do not manage sh-mode since format-all's shfmt code is bunk.
+                                        ;; We have emacs-shfmt to take care of this instead.
+                                        ;; sh-mode
+                                        ;; toml-mode
+                                        ;; yaml-mode
+                                        )
+      "List of major modes subject to automatic formatting by `format-all'.")
+  #+end_src
 
 * Functions
-#+begin_src emacs-lisp
-  (defun my/add-format-all-hooks ()
-    "Add hooks for `format-all-mode' to all major modes listed in
-`my/format-all-major-modes'."
-    (mapc (lambda (mode)
-        (let ((hook-name (concat (symbol-name mode) "-hook")))
-          (add-hook (intern hook-name) #'format-all-mode)))
-      my/format-all-major-modes))
+  #+begin_src emacs-lisp
+    (defun my/add-format-all-hooks ()
+      "Add hooks for `format-all-mode' to all major modes listed in
+    `my/format-all-major-modes'."
+      (mapc (lambda (mode)
+              (let ((hook-name (concat (symbol-name mode) "-hook")))
+                (add-hook (intern hook-name) #'format-all-mode)))
+            my/format-all-major-modes))
 
-  (defun my/remove-editorconfig-format-hooks ()
-    "Get rid of editorconfig code formatting hooks for major modes managed
-by format-all or some other code formatter."
-    (mapc (lambda (mode)
-        (let ((hook-name (concat (symbol-name mode) "-hook")))
-          (add-hook (intern hook-name) (lambda ()
-             (remove-hook 'before-save-hook #'editorconfig-format-buffer
-                                            'local)))))
-      my/format-all-major-modes))
-#+end_src
+    (defun my/remove-editorconfig-format-hooks ()
+      "Get rid of editorconfig code formatting hooks for major modes managed
+    by format-all or some other code formatter."
+      (mapc (lambda (mode)
+              (let ((hook-name (concat (symbol-name mode) "-hook")))
+                (add-hook (intern hook-name) (lambda ()
+                                               (remove-hook 'before-save-hook #'editorconfig-format-buffer
+                                                            'local)))))
+            my/format-all-major-modes))
+  #+end_src
 
 * format-all
   =format-all= is a package for automatically formatting source code files.  It
@@ -76,14 +76,14 @@ by format-all or some other code formatter."
   require third-party plugins to perform its tasks, so be ready to hunt down
   some code formatting software.
 
-#+begin_src emacs-lisp
-  (use-package format-all
-    :demand t
-    :after editorconfig
-    :init
-    (my/remove-editorconfig-format-hooks)
-    (my/add-format-all-hooks))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package format-all
+      :demand t
+      :after editorconfig
+      :init
+      (my/remove-editorconfig-format-hooks)
+      (my/add-format-all-hooks))
+  #+end_src
 
 * reformatter
   This is a fantastic Emacs framework for defining arbitrary code formatters
@@ -91,10 +91,12 @@ by format-all or some other code formatter."
   =dhall= programming language (assuming we have a predefined =dhall-command=
   variable containing the executable command to run), we could write:
 
-  (reformatter-define dhall-format
-    :program dhall-command
-    :args '("format")
-    :lighter " DF")
+  #+begin_src emacs-lisp :tangle no
+    (reformatter-define dhall-format
+      :program dhall-command
+      :args '("format")
+      :lighter " DF")
+  #+end_src
 
   The =reformatter-define= macro will expand our code into three functions:
   =dhall-format-buffer=, =dhall-format-region=, and =dhall-format-on-save-mode=,
@@ -103,25 +105,26 @@ by format-all or some other code formatter."
   Bearing all of this in mind, it is now incredibly easy to fill in the gaps
   where systems like =format-all= fall short. Thanks, Steve!
 
-#+begin_src emacs-lisp
-  (use-package reformatter
-    :hook
-    (python-mode . my-python-format-on-save-mode)
-    :config
-    ;; NOTE: It is very important NOT to use our usual 'my/' prefix for these
-    ;;       functions because reformatter creates tmp files with the names of
-    ;;       our formatter functions, so a slash in the function's name confuses
-    ;;       the location of our tmp file.
-    (reformatter-define my-cmake-format
-      :program "cmake-format"
-      :args (list "--inplace"))
-    (reformatter-define my-python-format
-      :program "black"
-      :args (list "-"))
-    (reformatter-define my-shell-format
-      :program "shfmt"
-      :args (list "-")))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package reformatter
+      :hook
+      (python-mode . my-python-format-on-save-mode)
+      :config
+      ;; NOTE: It is very important NOT to use our usual 'my/' prefix for these
+      ;;       functions because reformatter creates tmp files with the names of our
+      ;;       formatter functions, so a slash in the function's name confuses the
+      ;;       location of our tmp file.
+      (reformatter-define my-cmake-format
+        :program "cmake-format"
+        :args (list "--inplace"))
+      (reformatter-define my-python-format
+        :program "black"
+        :args (list "-"))
+      (reformatter-define my-shell-format
+        :program "shfmt"
+        :args (list "-")))
+  #+end_src
+
 * emacs-shfmt
   This is an Emacs plugin solely for =shfmt=. =format-all= /does/ have =shfmt=
   integration built into it, but it's pretty broken. For instance, due to the
@@ -130,8 +133,8 @@ by format-all or some other code formatter."
   code for =format-all= directly, something I refuse to do. This plugin is much
   nicer for =shfmt= integration with Emacs.
 
-#+begin_src emacs-lisp
-  (use-package shfmt
-    :after (reformatter)
-    :hook (sh-mode . shfmt-on-save-mode))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package shfmt
+      :after reformatter
+      :hook (sh-mode . shfmt-on-save-mode))
+  #+end_src
