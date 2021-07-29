@@ -14,8 +14,26 @@ finding definitions at point. All you must do is add =dumb-jump= to the list of
 After you've set up your =xref= hook, you can find the definition under the
 cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
 
-#+begin_src emacs-lisp
-  (use-package dumb-jump
-    :hook
-    (xref-backend-functions . dumb-jump-xref-activate))
-#+end_src
+* Dependencies
+  These are packages needed by =dumb-jump=.
+
+** xref
+   This is bundled with Emacs 28.1 and newer, but sometimes we don't get access
+   to the latest and greatest, so we can also download it from ELPA.
+
+   #+begin_src emacs-lisp
+     (use-package xref
+       :demand t)
+   #+end_src
+
+* use-package specification
+  #+begin_src emacs-lisp
+    (use-package dumb-jump
+      :after xref
+      :hook
+      (xref-backend-functions . dumb-jump-xref-activate)
+      :custom
+      (dumb-jump-prefer-searcher 'rg)
+      :init
+      (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+  #+end_src
