@@ -49,3 +49,22 @@ here to help you navigate some of the pitfalls you may encounter.
     =straight-pull-recipe-repositories= function that refreshes all of them at
     once. Next, try manually running =M-x straight-rebuild-package= for the
     given package from inside Emacs.
+
+** ...due to a void variable or function which should be there
+*** Problem
+    When activating a plugin, Emacs will bork itself, and you'll see a large
+    stack trace reporting a =void variable= or =void function= at the top.
+    You check the plugin's source code file and, just like Emacs says, you don't
+    find the variable or function. However, you then check the GitHub
+    repository for the plugin, and sure enough, you find the variable or
+    function! How could this be?
+*** Solution
+    The issue is most likely that your local copy of the plugin's repository is
+    behind =master= or =main=. This is a known weakness of =straight.el=, and
+    happens when a plugin you want to use explicitely with a =use-package= macro
+    is also a dependency of another plugin which needs a different version of the
+    same plugin. However, most of the time the newest stable version of teh
+    plugin is good enough for everyone involved. Jump into your local repositoy,
+    check your current branch, and if you're in a detached HEAD state, switch
+    back to =master= (or =main=) and then run =git pull=. Restart Emacs, and
+    see if this fixes your issue.
