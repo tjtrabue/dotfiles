@@ -1,4 +1,4 @@
-#+title:  Dumb Jump: Definition Jumper
+#+title:  Dumb Jump: Better Jump to Definition
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:08:03
@@ -15,7 +15,7 @@ After you've set up your =xref= hook, you can find the definition under the
 cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
 
 * Dependencies
-  These are packages needed by =dumb-jump=.
+  =dumb-jump= requires these packages.
 
 ** xref
    This is bundled with Emacs 28.1 and newer, but sometimes we don't get access
