@@ -558,6 +558,10 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       "Add prompt indicator to `completing-read-multiple'.
     Alternatively try `consult-completing-read-multiple'."
       (cons (concat "[CRM] " (car args)) (cdr args)))
+
+    (defun my/use-mu4e-p ()
+      "Return T if the system is configured for `mu4e'. Return NIL otherwise."
+      (and (executable-find "mu") (executable-find "mbsync")))
   #+end_src
 
 * Advice

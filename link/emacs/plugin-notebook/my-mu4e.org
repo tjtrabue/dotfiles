@@ -31,13 +31,6 @@ an offline IMAP sync of the user's email account for reading email.
    and a compatible version of =mu4e=, removing the hassle of manually
    installing interoperable versions of the two tools.
 
-* Functions
-  #+begin_src emacs-lisp
-    (defun my/use-mu4e-p ()
-      "Return T if the system is configured for `mu4e'. Return NIL otherwise."
-      (and (executable-find "mu") (executable-find "mbsync")))
-  #+end_src
-
 * use-package specification
 
   #+begin_src emacs-lisp

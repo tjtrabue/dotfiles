@@ -25,5 +25,10 @@ modeline from Doom Emacs.
     ;; When in graphical Emacs, use HUD instead of standard bar.
     (doom-modeline-hud (display-graphic-p))
     ;; Display GitHub notifications (requires `ghub' package).
-    (doom-modeline-github t))
+    (doom-modeline-github t)
+    ;; Whether display the indentation information (tabs/spaces and number of
+    ;; each).
+    (doom-modeline-indent-info t)
+    ;; Show mu4e notifications (requires `mu4e-alert')
+    (doom-modeline-mu4e (my/use-mu4e-p)))
 #+end_src
