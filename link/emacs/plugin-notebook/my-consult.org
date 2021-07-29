@@ -88,6 +88,8 @@ built-in Emacs completion system, or any other compatible framework.
       ;; Use Consult to select xref locations with preview
       (setq xref-show-xrefs-function #'consult-xref
             xref-show-definitions-function #'consult-xref)
+      ;; Disable recentf because consult includes superior alternative features.
+      (my/disable-recentf)
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
       :custom

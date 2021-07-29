@@ -97,7 +97,9 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (defvar my/authinfo-files (mapcar (lambda (file)
                                           (file-truename (concat (getenv "HOME") "/" file)))
                                         '(".authinfo.gpg" ".authinfo" ".netrc"))
-        "The user's .authinfo files used to store login credentials."))
+        "The user's .authinfo files used to store login credentials.")
+      (defvar my/recentf-timer nil
+        "Reference to timer for `recentf-save-list' so we can disable it later."))
   #+end_src
 
 * Language/Encoding
@@ -350,7 +352,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     (global-set-key (kbd "C-x C-r") 'recentf-open-files)
     ;; Periodically save recent file list (every 5 minutes) so that we do not lose
     ;; the list if Emacs crashes.
-    (run-at-time nil (* 5 60) 'recentf-save-list)
+    (setq my/recentf-timer (run-at-time nil (* 5 60) 'recentf-save-list))
 
     ;; subword-mode is super handy! It treats parts of camelCase and snake_case
     ;; names as separate words. This enables subword-mode in all buffers.
@@ -568,6 +570,14 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     (defun my/use-mu4e-p ()
       "Return T if the system is configured for `mu4e'. Return NIL otherwise."
       (and (executable-find "mu") (executable-find "mbsync")))
+
+    (defun my/disable-recentf ()
+      "Disable `recentf' configuration. Safe to run multiple times."
+      (interactive)
+      (when my/recentf-timer
+        (cancel-timer my/recentf-timer))
+      (global-unset-key (kbd "C-x C-r"))
+      (recentf-mode -1))
   #+end_src
 
 * Advice

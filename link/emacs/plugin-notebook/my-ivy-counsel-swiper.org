@@ -143,7 +143,10 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        (([remap dired] . counsel-dired))
        :custom
        (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable))
+       (counsel-describe-variable-function #'helpful-variable)
+       :init
+       ;; Disable recentf because counsel includes superior alternative features.
+       (my/disable-recentf))
    #+end_src
 
 ** Plugins
