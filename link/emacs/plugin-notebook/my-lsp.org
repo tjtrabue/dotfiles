@@ -30,7 +30,7 @@ to the =my-custom-lsp.el= file.
 
   #+begin_src emacs-lisp
     (use-package lsp-mode
-      :after (format-all my-custom-lsp)
+      :after format-all
       ;; Commands used to autoload this package.
       :commands (lsp lsp-deferred)
       ;; Here you can change the package's customizable variables.
@@ -94,28 +94,13 @@ to the =my-custom-lsp.el= file.
             ("t s" . lsp-treemacs-symbols)
             ("t t" . lsp-treemacs-type-hierarchy))
       :config
+      (require 'my-custom-lsp)
+      (my-custom-lsp-add-lsp-mode-hooks)
+      (my-custom-lsp-add-dap-mode-tool-hooks)
       (my-custom-lsp-add-language-ids)
       (my-custom-lsp-register-lsp-servers))
   #+end_src
 
-* Custom lsp-mode configuration
-  This is my own package I use to customize =lsp-mode= to my specification.
-  We should load it before we load =lsp-mode= because it contains important
-  configuration functions we'll want to use for =lsp-mode=.
-
-  #+begin_src emacs-lisp
-    (use-package my-custom-lsp
-      ;; This is a local package, so we don't want straight.el to download
-      ;; anything.
-      :straight nil
-      ;; We also don't want package.el to download anything from MELPA.
-      :ensure nil
-      :demand t
-      :config
-      ;; Add hooks to automatically start lsp-mode for certain major modes.
-      (my-custom-lsp-add-lsp-mode-hooks)
-      (my-custom-lsp-add-dap-mode-tool-hooks))
-  #+end_src
 * Plugins
 ** lsp-ui
 

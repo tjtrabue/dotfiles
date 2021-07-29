@@ -30,10 +30,12 @@
 
 ;;; Code:
 
+;; Common Lisp emulation library
 (require 'cl-lib)
+;; lsp-mode libraries
+(require 'lsp-mode)
 
-(defvar my-custom-lsp-format-major-mode-blacklist '(
-                                                    cperl-mode
+(defvar my-custom-lsp-format-major-mode-blacklist '(cperl-mode
                                                     lua-mode
                                                     perl-mode
                                                     python-mode
@@ -45,8 +47,7 @@ formatting, or because their formatters are lacking in features. Thankfully
 the reformatter package provides a generic interface for creating formatters
 for any programming language that supports a formatting tool.")
 
-(defvar my-custom-lsp-enabled-modes '(
-                                      c++-mode
+(defvar my-custom-lsp-enabled-modes '(c++-mode
                                       c-mode
                                       clojure-mode
                                       cmake-mode
@@ -127,7 +128,6 @@ then the final result of this function will only be non-nil if all supplied
 modes are present in `my-enabled-mode-for-lsp'. If ALL is nil, then the result
 of this function will be non-nil if any of the supplied major modes are in the
 list."
-  (require 'cl-lib)
   (if modes
       (let ((full-modes (cons mode modes)))
         (if all
@@ -164,6 +164,7 @@ debugging."
   (setq lsp-language-id-configuration
         (append my-custom-lsp-language-id-configuration
                 lsp-language-id-configuration)))
+
 (provide 'my-custom-lsp)
 
 ;;; my-custom-lsp.el ends here

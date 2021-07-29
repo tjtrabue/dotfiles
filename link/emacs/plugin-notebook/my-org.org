@@ -9,10 +9,10 @@ enables Emacs users to engage in literate programming, a method of software
 development where source code is embedded into explanatory, notebook-like
 textual documents and evaluated as needed, or all at once.
 
-* org-mode
+* org
   The ubiquitous =org-mode=.
 
-  #+begin_src emacs-lisp
+   #+begin_src emacs-lisp
     (use-package org
       :mode ("\\.org\\'" . org-mode)
       :bind
@@ -39,9 +39,10 @@ textual documents and evaluated as needed, or all at once.
       (make-directory my/org-dir t)
       ;; Also create the agenda directory.
       (make-directory my/org-agenda-dir t))
-  #+end_src
+   #+end_src
 
 * Plugins
+
 ** org-bullets
    Use fancy bullets in =org-mode=.
 

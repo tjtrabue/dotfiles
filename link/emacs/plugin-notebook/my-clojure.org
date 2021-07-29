@@ -12,6 +12,7 @@ world needed another Lisp.
 
   #+begin_src emacs-lisp
     (use-package clojure-mode
+      ;; :demand t
       :straight
       ;; Default straight recipe only includes the clojure-mode.el file for some
       ;; reason.
@@ -42,6 +43,7 @@ world needed another Lisp.
 ** use-package specification
   #+begin_src emacs-lisp
     (use-package cider
+      :after evil-collection
       :hook
       (clojure-mode . cider-mode)
       :bind

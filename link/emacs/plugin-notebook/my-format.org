@@ -11,10 +11,9 @@ Assorted code formatting plugins.
   #+begin_src emacs-lisp
     ;; I've commented out several major modes that are either badly supported
     ;; (like sh-mode) or have better support with lsp-mode.
-    (defvar my/format-all-major-modes '(
-                                        ;; c-mode
+    (defvar my/format-all-major-modes '(;; c-mode
                                         ;; c++-mode
-                                        clojure-mode
+                                        ;; clojure-mode
                                         ;; cmake-mode
                                         cperl-mode
                                         ;; css-mode

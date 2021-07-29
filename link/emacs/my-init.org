@@ -203,7 +203,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
     ;; screen with debugging output seems to mess with evil-mode, so I find it
     ;; prudent to turn this variable off until I have a reason to turn it on.
-    (setq debug-on-error nil)
+    (setq debug-on-error t)
     ;; Always follow symlinks
     (setq vc-follow-symlinks t)
     ;; Reduce risk of loading outdated bytecode
@@ -282,7 +282,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
           '(read-only t cursor-intangible t face minibuffer-prompt))
 
     ;; Display the name of the real file when visiting a symbolic link.
-    (setq find-file-visit-truename t)
+    ;; DO NOT SET THIS TO T! It messes with straight.el's autoload generation!
+    ;; (setq find-file-visit-truename t)
 
     ;; Don’t compact font caches during GC. This can resolve lag issues with
     ;; doom-modeline and some other plugins.
@@ -514,7 +515,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (let ((default-directory base-dir))
         (setq load-path
               (append
-               (let ((load-path (copy-sequence load-path))) ;; Shadow
+               (let ((load-path (copy-sequence load-path))) ; Shadow
                  (if subdirs
                      ;; If user supplied list of subdirs, pass it here
                      (normal-top-level-add-to-load-path subdirs)
@@ -758,7 +759,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
          ;; Always use use-package when installing packages, making the ':straight t'
          ;; part of the use-package macro unnecessary.
          (setq straight-use-package-by-default t)
-         ;; Clone the develop branch of straight instead of master.
+         ;; The branch of straight.el to use
          (setq straight-repository-branch "develop")
          (let ((bootstrap-file
                 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -772,11 +773,14 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
                (eval-print-last-sexp)))
            (with-no-warnings
              (load bootstrap-file nil 'nomessage))
+
            ;; Refresh package repositories
            (my/straight-pull-recipe-repositories)
+
            ;; Default mode for loading packages: either defer or demand.
            ;; (setq use-package-always-demand t)
            (setq use-package-always-defer t)
+
            ;; Install use-package via straight.
            ;; After this function runs, use-package will automatically use straight
            ;; to install packages if you specify ':stright t' instead of ':ensure t'.
@@ -788,6 +792,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
             ;; important source files.
             '(use-package :type git :host github :repo "jwiegley/use-package"
                :files (:defaults)))
+
            ;; Also install use-package-chords for key-chord definitions
            (use-package use-package-chords
              :demand t

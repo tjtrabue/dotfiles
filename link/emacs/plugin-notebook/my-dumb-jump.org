@@ -29,7 +29,6 @@ cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package dumb-jump
-      :after xref
       :hook
       (xref-backend-functions . dumb-jump-xref-activate)
       :custom

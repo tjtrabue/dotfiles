@@ -2,7 +2,7 @@
 
 emacs_rm_backups() {
   find -L "$DOTFILES_HOME" -type f -regextype posix-extended \
-       -regex ".*(~)|(.*#.*)$" -delete;
+    -regex ".*(~)|(.*#.*)$" -delete
 }
 
 # Completely clean the ~/.emacs.d/ directory to prepare it for a reset.
@@ -42,8 +42,8 @@ install_info_plus() {
   local emacsLispDir="$EMACS_CONFIG_HOME/lisp"
   local infoPlusGitUrl="https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/info%2B.el"
 
-  mkdir -p "$emacsLispDir";
-  curl -sL "$infoPlusGitUrl" > "${emacsLispDir}/info+.el"
+  mkdir -p "$emacsLispDir"
+  curl -sL "$infoPlusGitUrl" >"${emacsLispDir}/info+.el"
 }
 
 # Start eshell by itslef in current terminal window
@@ -64,6 +64,41 @@ eclient() {
 # Shut down the Emacs server
 shutdown_emacsdaemon() {
   emacsclient -e "(kill-emacs)"
+}
+
+# Checkout master or standard branch for all repos cloned by straight.el if the
+# repos are in a "detached HEAD" state.
+straight_reset_repos() {
+  local straightHome="${HOME}/.emacs.d/straight"
+  local straightRepos="${straightHome}/repos"
+  local standardBranch="master"
+  local branchToSwitchTo="${standardBranch}"
+  local d
+
+  for d in "${straightRepos}"/*; do
+    if [ -d "${d}" ]; then
+      (
+        cd "${d}"
+        log_info "Inside repo: ${BLUE}$(basename "$(pwd)")${NC}"
+        if [ "$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)" \
+          = "HEAD" ]; then
+          branchToSwitchTo="${standardBranch}"
+
+          if ! git rev-parse --verify "${branchToSwitchTo}" \
+            >>/dev/null 2>&1; then
+            # Sometimes the standard branch is called "main" instead of
+            # "master".
+            branchToSwitchTo="main"
+          fi
+
+          # Checkout the specified branch if we are in detached HEAD state.
+          log_info "Switching to ${GREEN}${branchToSwitchTo}${NC} branch"
+          git checkout "${branchToSwitchTo}"
+          git pull
+        fi
+      )
+    fi
+  done
 }
 
 # Modeline for this file (leave it commented!)
