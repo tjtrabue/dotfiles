@@ -72,7 +72,7 @@ to the =my-custom-lsp.el= file.
       ;; I've noticed that version tends to be really slow.
       ;; It's best to install it yourself.
       (lsp-clients-lua-language-server-bin
-        (executable-find "lua-language-server"))
+       (executable-find "lua-language-server"))
       :hook
       ;; NOTE: Language mode hooks are set in the Functions section of this
       ;;       file.
@@ -93,10 +93,14 @@ to the =my-custom-lsp.el= file.
             ("t r" . lsp-treemacs-references)
             ("t s" . lsp-treemacs-symbols)
             ("t t" . lsp-treemacs-type-hierarchy))
-      :config
+      :init
       (require 'my-custom-lsp)
+      ;; Add lsp-mode hooks for major modes.
       (my-custom-lsp-add-lsp-mode-hooks)
+      ;; Set up DAP mode hooks.
       (my-custom-lsp-add-dap-mode-tool-hooks)
+      :config
+      ;; Register extra LSP servers and map them to major modes.
       (my-custom-lsp-add-language-ids)
       (my-custom-lsp-register-lsp-servers))
   #+end_src

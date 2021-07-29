@@ -12,7 +12,7 @@ textual documents and evaluated as needed, or all at once.
 * org
   The ubiquitous =org-mode=.
 
-   #+begin_src emacs-lisp
+  #+begin_src emacs-lisp
     (use-package org
       :mode ("\\.org\\'" . org-mode)
       :bind
@@ -39,7 +39,7 @@ textual documents and evaluated as needed, or all at once.
       (make-directory my/org-dir t)
       ;; Also create the agenda directory.
       (make-directory my/org-agenda-dir t))
-   #+end_src
+  #+end_src
 
 * Plugins
 
@@ -48,6 +48,7 @@ textual documents and evaluated as needed, or all at once.
 
    #+begin_src emacs-lisp
      (use-package org-bullets
+       :after org
        :hook
        (org-mode . (lambda () (org-bullets-mode 1))))
    #+end_src
@@ -63,6 +64,7 @@ textual documents and evaluated as needed, or all at once.
 
    #+begin_src emacs-lisp
      (use-package org-beautify-theme
+       :after org
        :demand t)
    #+end_src
 
@@ -72,6 +74,7 @@ textual documents and evaluated as needed, or all at once.
 
    #+begin_src emacs-lisp
      (use-package org-roam
+       :after org
        :hook
        (after-init . org-roam-mode)
        :init
@@ -95,7 +98,8 @@ textual documents and evaluated as needed, or all at once.
    sections.
 
    #+begin_src emacs-lisp
-     (use-package org-super-agenda)
+     (use-package org-super-agenda
+       :after org)
    #+end_src
 
 ** org-download
@@ -103,6 +107,7 @@ textual documents and evaluated as needed, or all at once.
 
    #+begin_src emacs-lisp
      (use-package org-download
+       :after org
        :hook
        ;; Enable org-download in dired-mode.
        (dired-mode . org-download-enable)
