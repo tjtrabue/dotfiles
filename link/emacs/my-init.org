@@ -576,7 +576,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (interactive)
       (when my/recentf-timer
         (cancel-timer my/recentf-timer))
-      (global-unset-key (kbd "C-x C-r"))
+      (when (eq (key-binding "C-x C-r") 'recentf-open-files)
+        (global-unset-key (kbd "C-x C-r")))
       (recentf-mode -1))
   #+end_src
 
