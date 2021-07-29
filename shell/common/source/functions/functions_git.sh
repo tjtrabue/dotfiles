@@ -13,9 +13,14 @@ remoteurl() {
   git remote -v | egrep '^origin.*push' | awk '{print $2}'
 }
 
-# Returns the main remote branch name for the current repository.
-mainbranch() {
-  git remote show origin | grep 'HEAD branch' | awk '{print $3}'
+# Returns the default remote branch name for a given repository. If no
+# repository is provided, defaults to the current directory.
+defaultbranch() {
+  # The Git repo directory (defaults to the current directory)
+  local gitRepo="${1:-.}"
+
+  git -C "${gitRepo}" symbolic-ref refs/remotes/origin/HEAD |
+  sed 's@^refs/remotes/origin/@@'
 }
 
 # Opens the commit message for the current repo in the configured editor.
@@ -177,7 +182,7 @@ squashfor() {
   currentBranch="$(git rev-parse --abbrev-ref HEAD)"
 
   if [ "${currentBranch}" = "master" ] ||
-    [ "${currentBranch}" = "develop" ]; then
+  [ "${currentBranch}" = "develop" ]; then
     err "Not squashing commits on protected branch: ${currentBranch}"
     return 1
   fi

@@ -72,36 +72,39 @@ shutdown_emacsdaemon() {
 straight_update_repos() {
   local straightHome="${HOME}/.emacs.d/straight"
   local straightRepos="${straightHome}/repos"
-  local standardBranch="master"
-  local branchToSwitchTo="${standardBranch}"
+  local defaultBranch
+  local repo
   local d
 
+  log_info "Updating all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
-    if [ -d "${d}" ]; then
-      (
-        cd "${d}"
-        log_info "Inside repo: ${BLUE}$(basename "$(pwd)")${NC}"
-        if [ "$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)" \
-          = "HEAD" ]; then
-          # If we are in detached HEAD, switch back to master/main. We only
-          # care about detached HEAD state because sometimes we want to remain
-          # on a branch other than master, such as develop.
-          branchToSwitchTo="${standardBranch}"
+    if git -C "${d}" rev-parse >>/dev/null 2>&1; then
+      # If d is a git repo...
+      repo="$(basename "${d}")"
+      log_info "Current repo: ${BLUE}${repo}${NC}"
+      if [ "$(git -C "${d}" rev-parse --abbrev-ref --symbolic-full-name HEAD)" \
+        = "HEAD" ]; then
+        # If we are in detached HEAD, switch back to the default branch. We only
+        # care about detached HEAD state because sometimes we want to remain
+        # on a branch other than the default branch, such as 'develop', which we
+        # specified in our straight.el recipe.
+        defaultBranch="$(defaultbranch "${d}")"
 
-          if ! git rev-parse --verify "${branchToSwitchTo}" \
-            >>/dev/null 2>&1; then
-            # Sometimes the standard branch is called "main" instead of
-            # "master".
-            branchToSwitchTo="main"
-          fi
-
-          # Checkout the specified branch if we are in detached HEAD state.
-          log_info "Switching to ${GREEN}${branchToSwitchTo}${NC} branch"
-          git checkout -f "${branchToSwitchTo}"
+        if ! git -C "${d}" rev-parse --verify "${defaultBranch}" \
+          >>/dev/null 2>&1; then
+          err "Could not determine default branch for repository:" \
+            "${BLUE}${repo}${NC}"
+          continue
         fi
-        # Update the repo regardless of which branch it was previously on.
-        git pull
-      )
+
+        log_info "Default branch: ${MAGENTA}${defaultBranch}${NC}"
+
+        # Checkout the specified branch if we are in detached HEAD state.
+        log_info "Switching to ${GREEN}${defaultBranch}${NC} branch"
+        git -C "${d}" checkout -f "${defaultBranch}"
+      fi
+      # Update the repo regardless of which branch it was previously on.
+      git -C "${d}" pull
     fi
   done
 }
