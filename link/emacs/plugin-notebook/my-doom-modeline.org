@@ -16,8 +16,10 @@ modeline from Doom Emacs.
     :hook
     (after-init . doom-modeline-mode)
     :custom
-    ;; How tall the modeline should be.
+    ;; How tall the modeline should be (GUI only).
     (doom-modeline-height 35)
+    ;; How wide the modeline bar should be (GUI only).
+    (doom-modeline-bar-width 5)
     ;; Use Unicode instead of ASCII as fallback if icons are not found.
     (doom-modeline-unicode-fallback t)
     ;; When in graphical Emacs, use HUD instead of standard bar.
