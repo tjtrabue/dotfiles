@@ -82,6 +82,9 @@ straight_reset_repos() {
         log_info "Inside repo: ${BLUE}$(basename "$(pwd)")${NC}"
         if [ "$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)" \
           = "HEAD" ]; then
+          # If we are in detached HEAD, switch back to master/main. We only
+          # care about detached HEAD state because sometimes we want to remain
+          # on a branch other than master, such as develop.
           branchToSwitchTo="${standardBranch}"
 
           if ! git rev-parse --verify "${branchToSwitchTo}" \
