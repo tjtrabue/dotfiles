@@ -28,6 +28,11 @@ regardless of its particular dialect.
         lisp-interaction-mode
         sly-mrepl-mode)
        . lispy-mode)
+      :bind
+      (:map lispy-mode-map
+            ;; Unbind HORRIFIC keybindings that keep me from inserting characters.
+            ("[" . nil)
+            ("]" . nil))
       :config
       ;; Tweak key themes enabled by default.  Since I use lispyville for evil-mode
       ;; integration, I don't need the annoying "special" mode bindings that lispy

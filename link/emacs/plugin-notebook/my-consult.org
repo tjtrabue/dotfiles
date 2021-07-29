@@ -62,6 +62,8 @@ built-in Emacs completion system, or any other compatible framework.
              ("M-s m" . consult-multi-occur)
              ("M-s k" . consult-keep-lines)
              ("M-s u" . consult-focus-lines)
+             ;; recentf
+             ([remap recentf-open-files] . consult-recent-file)
              ;; Isearch integration
              ("M-s e" . consult-isearch)
              :map isearch-mode-map
