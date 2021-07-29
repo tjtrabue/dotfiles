@@ -78,7 +78,7 @@ straight_update_repos() {
 
   log_info "Updating all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
-    if git -C "${d}" rev-parse >>/dev/null 2>&1; then
+    if isrepo "${d}"; then
       # If d is a git repo...
       repo="$(basename "${d}")"
       log_info "Current repo: ${BLUE}${repo}${NC}"

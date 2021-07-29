@@ -3,9 +3,13 @@
 
 # General {{{
 
-# Determines whether the current working directory is in a Git repository.
+# Determines whether the given directory is in a Git repository.
+# If no repository directory is provided, defaults to the current dir.
+# Return 0 if the directory is a Git repo. Return non-zero otherwise.
 isrepo() {
-  git rev-parse --is-inside-work-tree >>/dev/null 2>&1
+  # The Git repo dir (defaults to the current directory)
+  local repoDir="${1:-.}"
+  git -C "${repoDir}" rev-parse >>/dev/null 2>&1
 }
 
 # Retrieves the Git URL for the current repository.
