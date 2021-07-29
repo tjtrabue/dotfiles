@@ -79,7 +79,6 @@ straight_update_repos() {
   log_info "Updating all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
     if isrepo "${d}"; then
-      # If d is a git repo...
       repo="$(basename "${d}")"
       log_info "Current repo: ${BLUE}${repo}${NC}"
       if [ "$(git -C "${d}" rev-parse --abbrev-ref --symbolic-full-name HEAD)" \
@@ -99,8 +98,8 @@ straight_update_repos() {
 
         log_info "Default branch: ${MAGENTA}${defaultBranch}${NC}"
 
-        # Checkout the specified branch if we are in detached HEAD state.
-        log_info "Switching to ${GREEN}${defaultBranch}${NC} branch"
+        # Checkout the default branch if we are in detached HEAD state.
+        log_info "Switching to branch: ${GREEN}${defaultBranch}${NC}"
         git -C "${d}" checkout -f "${defaultBranch}"
       fi
       # Update the repo regardless of which branch it was previously on.
