@@ -1,4 +1,4 @@
-#+title:  Dumb Jump: Better Jump to Definition
+#+title:  Dumb Jump: Better Jump-to-Definition Tool
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:08:03
