@@ -15,14 +15,14 @@ nothing else. Thus, I think Consult will become the primary completion system
 for Emacs. It's very feature-rich.
 
 * What is Consult really?
-Consult is designed to fulfill the same role for Selectrum and Vertico that
-Counsel does for Ivy. You can think of Selectrum, Consult, and Embark as a
-similar tool suite to Ivy, Counsel, and Swiper, although these triplets do not
-match up one-to-one. The main difference between these two tool suites is that
-Ivy, Counsel, and Swiper are exclusive to one another, and must be used as a
-package deal. Consult is completely agnostic to the narrowing completion UI you
-choose. It could be Selectrum, Vertico, the built-in Emacs completion system, or
-any other compatible framework.
+  Consult is designed to fulfill the same role for Selectrum and Vertico that
+  Counsel does for Ivy. You can think of Selectrum, Consult, and Embark as a
+  similar tool suite to Ivy, Counsel, and Swiper, although these triplets do not
+  match up one-to-one. The main difference between these two tool suites is that
+  Ivy, Counsel, and Swiper are exclusive to one another, and must be used as a
+  package deal. Consult is completely agnostic to the narrowing completion UI
+  you choose. It could be Selectrum, Vertico, the built-in Emacs completion
+  system, or any other compatible framework.
 
 * use-package specification
   #+begin_src emacs-lisp
