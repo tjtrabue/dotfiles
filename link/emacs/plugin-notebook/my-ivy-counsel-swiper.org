@@ -140,13 +140,11 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        :hook
        (after-init . counsel-mode)
        :bind
-       (([remap dired] . counsel-dired))
+       (([remap dired] . counsel-dired)
+        ([remap recentf-open-files] . counsel-recentf))
        :custom
        (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :init
-       ;; Disable recentf because counsel includes superior alternative features.
-       (my/disable-recentf))
+       (counsel-describe-variable-function #'helpful-variable))
    #+end_src
 
 ** Plugins
