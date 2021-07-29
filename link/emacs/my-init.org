@@ -775,7 +775,13 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
              (load bootstrap-file nil 'nomessage))
 
            ;; Refresh package repositories
-           (my/straight-pull-recipe-repositories)
+           (when (not (fboundp 'straight-pull-recipe-repositories))
+             ;; Sometimes straight.el does not include the convenience function
+             ;; `straight-pull-recipe-repositories', in which case we should alias
+             ;; that function to our own custom version.
+             (defalias 'straight-pull-recipe-repositories
+               'my/straight-pull-recipe-repositories))
+           (straight-pull-recipe-repositories)
 
            ;; Default mode for loading packages: either defer or demand.
            ;; (setq use-package-always-demand t)

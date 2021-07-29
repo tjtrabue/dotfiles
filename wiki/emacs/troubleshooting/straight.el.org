@@ -70,6 +70,6 @@ here to help you navigate some of the pitfalls you may encounter.
     Emacs, and see if this fixes your issue.
 
     *UPDATE:* I have written a convenience shell function called
-    =straight_reset_repos= which will perform the above action automatically for
-    each repository =straight.el= has cloned. Running this in your shell session
-    should help resolve your issues quickly.
+    =straight_update_repos= which will perform the above action automatically
+    for each repository =straight.el= has cloned. Running this in your shell
+    session should help resolve your issues quickly.

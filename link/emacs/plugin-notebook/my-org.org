@@ -9,7 +9,7 @@ enables Emacs users to engage in literate programming, a method of software
 development where source code is embedded into explanatory, notebook-like
 textual documents and evaluated as needed, or all at once.
 
-* org
+* use-package specification
   The ubiquitous =org-mode=.
 
   #+begin_src emacs-lisp
@@ -78,6 +78,8 @@ textual documents and evaluated as needed, or all at once.
        :hook
        (after-init . org-roam-mode)
        :init
+       ;; Acknowledge that we've upgraded from v1 to v2.
+       (setq org-roam-v2-ack t)
        ;; Set the path to the org-roam directory and ensure that directory is
        ;; present before loading org-roam.
        (setq org-roam-directory

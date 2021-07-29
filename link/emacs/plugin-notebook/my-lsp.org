@@ -15,11 +15,11 @@ Because it was growing too large, I refactored my custom LSP mode configuration
 to the =my-custom-lsp.el= file.
 
 * Notes about specific LSP servers
-  - *CCLS*: Available as an AUR packge on Arch Linux. This LSP server requires the
-    =ccls= Emacs package from MELPA, as well.
-  - *EmmyLua LanguageServer*: Available as an AUR packge on Arch Linux.
-    Make sure to rename EmmyLua's =.jar= file to =EmmyLua-LS-all.jar= and put it
-    in the =~/.emacs.d/= directory.
+  - *CCLS*: Available as an AUR packge on Arch Linux. This LSP server requires
+    the =ccls= Emacs package from MELPA, as well.
+  - *EmmyLua LanguageServer*: Available as an AUR packge on Arch Linux.  Make
+    sure to rename EmmyLua's =.jar= file to =EmmyLua-LS-all.jar= and put it in
+    the =~/.emacs.d/= directory.
   - *haskell-language-server*: Install with =ghcup=.
 
 * lsp-mode

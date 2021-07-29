@@ -67,8 +67,9 @@ shutdown_emacsdaemon() {
 }
 
 # Checkout master or standard branch for all repos cloned by straight.el if the
-# repos are in a "detached HEAD" state.
-straight_reset_repos() {
+# repos are in a "detached HEAD" state. Regardless of whether or not the repo's
+# branch changed, update the mainline branch for the repository.
+straight_update_repos() {
   local straightHome="${HOME}/.emacs.d/straight"
   local straightRepos="${straightHome}/repos"
   local standardBranch="master"
@@ -96,9 +97,10 @@ straight_reset_repos() {
 
           # Checkout the specified branch if we are in detached HEAD state.
           log_info "Switching to ${GREEN}${branchToSwitchTo}${NC} branch"
-          git checkout "${branchToSwitchTo}"
-          git pull
+          git checkout -f "${branchToSwitchTo}"
         fi
+        # Update the repo regardless of which branch it was previously on.
+        git pull
       )
     fi
   done

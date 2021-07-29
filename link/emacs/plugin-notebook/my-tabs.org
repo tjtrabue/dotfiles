@@ -24,8 +24,8 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
        ("g T" . centaur-tabs-backward)
        :map evil-collection-unimpaired-mode-map
        ;; Use ']b' and '[b' to navigate tabs.
-       ([remap next-buffer] . centaur-tabs-forward)
-       ([remap previous-buffer] . centaur-tabs-backward))
+       ("<normal-state> ] b" . centaur-tabs-forward)
+       ("<normal-state> [ b" . centaur-tabs-backward))
       :hook
       ;; Enable centaur-tabs globally
       (after-init . centaur-tabs-mode)

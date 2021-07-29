@@ -32,14 +32,12 @@
 
 ;; Common Lisp emulation library
 (require 'cl-lib)
-;; lsp-mode libraries
-(require 'lsp-mode)
 
 (defvar my-custom-lsp-format-major-mode-blacklist '(cperl-mode
-                                                    lua-mode
-                                                    perl-mode
-                                                    python-mode
-                                                    sh-mode)
+                                                     lua-mode
+                                                     perl-mode
+                                                     python-mode
+                                                     sh-mode)
 
   "List of major modes to ignore when activating lsp-format hooks, usually
 because the LSP server for these major modes does not yet support document
@@ -48,39 +46,39 @@ the reformatter package provides a generic interface for creating formatters
 for any programming language that supports a formatting tool.")
 
 (defvar my-custom-lsp-enabled-modes '(c++-mode
-                                      c-mode
-                                      clojure-mode
-                                      cmake-mode
-                                      cperl-mode
-                                      css-mode
-                                      dart-mode
-                                      elixir-mode
-                                      go-mode
-                                      haskell-mode
-                                      haskell-literate-mode
-                                      html-mode
-                                      java-mode
-                                      javascript-mode
-                                      js-mode
-                                      json-mode
-                                      LaTeX-mode
-                                      latex-mode
-                                      less-css-mode
-                                      lisp-mode
-                                      lua-mode
-                                      mhtml-mode
-                                      objc-mode
-                                      perl-mode
-                                      php-mode
-                                      python-mode
-                                      ruby-mode
-                                      scss-mode
-                                      sh-mode
-                                      TeX-latex-mode
-                                      tex-mode
-                                      web-mode
-                                      xml-mode
-                                      yaml-mode)
+                                       c-mode
+                                       clojure-mode
+                                       cmake-mode
+                                       cperl-mode
+                                       css-mode
+                                       dart-mode
+                                       elixir-mode
+                                       go-mode
+                                       haskell-mode
+                                       haskell-literate-mode
+                                       html-mode
+                                       java-mode
+                                       javascript-mode
+                                       js-mode
+                                       json-mode
+                                       LaTeX-mode
+                                       latex-mode
+                                       less-css-mode
+                                       lisp-mode
+                                       lua-mode
+                                       mhtml-mode
+                                       objc-mode
+                                       perl-mode
+                                       php-mode
+                                       python-mode
+                                       ruby-mode
+                                       scss-mode
+                                       sh-mode
+                                       TeX-latex-mode
+                                       tex-mode
+                                       web-mode
+                                       xml-mode
+                                       yaml-mode)
   "List of all major modes allowing `lsp-mode' to run as a minor mode.")
 
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
