@@ -6,7 +6,7 @@
 #+tags:
 #+STARTUP: fold
 
-=explain-pause-mode= is a top-like mode for figuring out which processes in
+=explain-pause-mode= is a =top=-like mode for figuring out which processes in
 Emacs are slowing the system down. Very useful for debugging.
 
 * use-package specification
@@ -15,5 +15,6 @@ Emacs are slowing the system down. Very useful for debugging.
       ;; explain-pasue-mode isn't in MELPA yet.
       :straight (explain-pause-mode :type git :host github
                                     :repo "lastquestion/explain-pause-mode")
-      :commands explain-pause-mode)
+      :commands
+      (explain-pause-mode explain-pause-top))
   #+end_src

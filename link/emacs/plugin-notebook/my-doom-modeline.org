@@ -10,25 +10,25 @@
 modeline from Doom Emacs.
 
 * use-package specification
-#+begin_src emacs-lisp
-  (use-package doom-modeline
-    :after (all-the-icons doom-themes)
-    :hook
-    (after-init . doom-modeline-mode)
-    :custom
-    ;; How tall the modeline should be (GUI only).
-    (doom-modeline-height 35)
-    ;; How wide the modeline bar should be (GUI only).
-    (doom-modeline-bar-width 5)
-    ;; Use Unicode instead of ASCII as fallback if icons are not found.
-    (doom-modeline-unicode-fallback t)
-    ;; When in graphical Emacs, use HUD instead of standard bar.
-    (doom-modeline-hud (display-graphic-p))
-    ;; Display GitHub notifications (requires `ghub' package).
-    (doom-modeline-github t)
-    ;; Whether display the indentation information (tabs/spaces and number of
-    ;; each).
-    (doom-modeline-indent-info t)
-    ;; Show mu4e notifications (requires `mu4e-alert')
-    (doom-modeline-mu4e (my/use-mu4e-p)))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package doom-modeline
+      :after (all-the-icons doom-themes)
+      :hook
+      (after-init . doom-modeline-mode)
+      :custom
+      ;; How tall the modeline should be (GUI only).
+      (doom-modeline-height 35)
+      ;; How wide the modeline bar should be (GUI only).
+      (doom-modeline-bar-width 5)
+      ;; Use Unicode instead of ASCII as fallback if icons are not found.
+      (doom-modeline-unicode-fallback t)
+      ;; When in graphical Emacs, use HUD instead of standard bar.
+      (doom-modeline-hud (display-graphic-p))
+      ;; Display GitHub notifications (requires `ghub' package).
+      (doom-modeline-github t)
+      ;; Whether display the indentation information (tabs/spaces and number of
+      ;; each).
+      (doom-modeline-indent-info t)
+      ;; Show mu4e notifications (requires `mu4e-alert')
+      (doom-modeline-mu4e (my/use-mu4e-p)))
+  #+end_src
