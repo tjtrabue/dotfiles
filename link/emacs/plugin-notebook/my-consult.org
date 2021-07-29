@@ -7,19 +7,22 @@
 #+STARTUP: fold
 
 Yet another narrowing completion framework for Emacs. Jeez, you think there
-would be enough of them at this point for people to be satisfied, but no.
-Consult is newer than Helm, Ivy, and Vertico, and integrates with Selectrum.
-Thus, I think Consult will be the future completion system for Emacs, but right
-now I can't be bothered to configure it. It's very feature-rich.
+would be enough of them at this point to satisfy these Emacs sycophants, but no.
+Consult is newer than Helm and Ivy, and integrates nicely with Selectrum and
+Vertico.  Actually, Consult was designed with the same philosophy that guided
+Selectrum and Vertico's development: depend only on =completing-read= and
+nothing else. Thus, I think Consult will become the primary completion system
+for Emacs. It's very feature-rich.
 
 * What is Consult really?
 Consult is designed to fulfill the same role for Selectrum and Vertico that
 Counsel does for Ivy. You can think of Selectrum, Consult, and Embark as a
-similar tool suite to Ivy, Counsel, and Swiper. The main difference between
-these two tool suites is that Ivy, Counsel, and Swiper are exclusive to one
-another, and must be used as a package deal. Consult is completely agnostic to
-the narrowing completion UI you choose. It could be Selectrum, Vertico, the
-built-in Emacs completion system, or any other compatible framework.
+similar tool suite to Ivy, Counsel, and Swiper, although these triplets do not
+match up one-to-one. The main difference between these two tool suites is that
+Ivy, Counsel, and Swiper are exclusive to one another, and must be used as a
+package deal. Consult is completely agnostic to the narrowing completion UI you
+choose. It could be Selectrum, Vertico, the built-in Emacs completion system, or
+any other compatible framework.
 
 * use-package specification
   #+begin_src emacs-lisp
