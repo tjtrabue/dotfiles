@@ -128,3 +128,11 @@ Plugins for extending Emacs with version control capabilities.
   #+begin_src emacs-lisp
     (use-package git-link)
   #+end_src
+
+* ghub
+  =ghub= is an Emacs Lisp library for interacting with GitHub. It is managed by
+  the Magit team as a separate project.
+
+  #+begin_src emacs-lisp
+    (use-package ghub)
+  #+end_src

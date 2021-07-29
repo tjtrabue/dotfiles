@@ -536,5 +536,9 @@ to =nil=, so this may help you.
         (lispyville-enter-visual-when-marking)
         (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
         (my/set-lispyville-mode-keys)
-        (my/set-lispyville-leader-keys))
+        (my/set-lispyville-leader-keys)
+        ;; Add lispyville special mode indicator to modeline.
+        (add-to-list 'mode-line-misc-info
+                     '(:eval (when (featurep 'lispyville)
+                               (lispyville-mode-line-string)))))
     #+end_src

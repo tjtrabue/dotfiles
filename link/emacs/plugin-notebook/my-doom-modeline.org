@@ -9,8 +9,7 @@
 =doom-modeline= allows any Emacs configuration to use the fancy, modular
 modeline from Doom Emacs.
 
-* doom-modeline
-
+* use-package specification
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :after (all-the-icons doom-themes)
@@ -20,5 +19,9 @@ modeline from Doom Emacs.
     ;; How tall the modeline should be.
     (doom-modeline-height 35)
     ;; Use Unicode instead of ASCII as fallback if icons are not found.
-    (doom-modeline-unicode-fallback t))
+    (doom-modeline-unicode-fallback t)
+    ;; When in graphical Emacs, use HUD instead of standard bar.
+    (doom-modeline-hud (display-graphic-p))
+    ;; Display GitHub notifications (requires `ghub' package).
+    (doom-modeline-github t))
 #+end_src
