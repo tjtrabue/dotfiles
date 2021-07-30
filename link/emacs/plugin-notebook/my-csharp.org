@@ -14,8 +14,7 @@ non-Windows programmer.
 
 #+begin_src emacs-lisp
   (use-package csharp-mode
-    ;; :disabled
     :after (tree-sitter tree-sitter-langs)
-    :config
-    (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode)))
+    :mode
+    ("\\.cs\\'" . csharp-tree-sitter-mode))
 #+end_src
