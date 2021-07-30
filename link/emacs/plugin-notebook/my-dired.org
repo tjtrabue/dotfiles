@@ -163,8 +163,7 @@ This is a Perl based tool, and its installation varies from system to system.
     (use-package dired-k
       :hook
       ;; Always activate dired-k when dired buffer opens.
-      ((dired-initial-position . dired-k)
-       (dired-after-readin . dired-k-no-revert)))
+      ((dired-mode . dired-k)))
   #+end_src
 
 * dired+
