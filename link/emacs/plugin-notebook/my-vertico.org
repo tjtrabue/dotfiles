@@ -9,7 +9,11 @@
 =vertico= provides a Helm-like completion UI for several completion frameworks,
 including the built-in Emacs completion system and the =consult=
 framework. Please keep in mind that =vertico= is only the UI. It is not a
-completion framework unto itself.
+completion framework unto itself. The idea is that Vertico is *totally*
+compatible with Emacs' =completing-read= API, meaning that any functions that
+use =completing-read= for completion can benefit from Vertico's sleek narrowing
+search front-end. Thus, Vertico really is a /replacement/ for Emacs' completion
+UI, as well as an enhancement.
 
 * Vertico vs. other narrowing completion UIs
   Vertico is an alternative to completion frameworks such as Selectrum, Ivy,
