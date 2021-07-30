@@ -28,6 +28,16 @@ UI, as well as an enhancement.
       :after evil-collection
       :hook
       (after-init . vertico-mode)
+      :bind*
+      (:map vertico-map
+            ("?" . minibuffer-completion-help)
+            ("C-j" . vertico-next)
+            ("C-k" . vertico-previous)
+            ("C-d" . vertico-scroll-up)
+            ("C-u" . vertico-scroll-down)
+            ("C-o" . vertico-first)
+            ("C-i" . vertico-last)
+            ("C-M-j" . vertico-exit-input))
       :custom
       ;; Whether to grow and shrink vertico buffer dynamically
       ;; Can be t (whichi means grow and shrink), nil, or 'grow-only
