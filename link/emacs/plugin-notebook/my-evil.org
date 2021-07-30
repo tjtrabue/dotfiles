@@ -136,6 +136,8 @@ to =nil=, so this may help you.
    #+begin_src emacs-lisp
      (use-package evil-leader
        :demand t
+       :hook
+       (after-init . global-evil-leader-mode)
        :init
        ;; Set evil-mode variables here.
        ;; These values must be set here because evil-leader loads before evil
@@ -161,12 +163,8 @@ to =nil=, so this may help you.
        (evil-leader/set-key
          "m" 'evil-first-non-blank
          "." 'evil-end-of-line
-         ;; ace-jump-mode (inspired by vim-easymotion)
-         ",w" 'ace-jump-word-mode
-         ",f" 'ace-jump-char-mode
-         ",l" 'ace-jump-line-mode
          ;; Buffer
-         "bb" 'helm-buffers-list
+         "bb" 'counsel-switch-buffer
          "bk" 'kill-this-buffer
          ;; Dired
          "dd" 'counsel-dired
@@ -178,11 +176,8 @@ to =nil=, so this may help you.
          "gtt" 'git-timemachine-toggle
          ;; ace-window
          "jk" 'ace-window
-         ;; avy (buffer navigation plugin)
-         "jj" 'avy-goto-char
-         "jl" 'avy-goto-line
-         "jw" 'avy-goto-word-1
-         "jW" 'avy-goto-word-0
+         ;; Killing buffers
+         "kk" 'kill-buffer
          ;; File
          "lf" 'load-file
          "of" 'org-babel-load-file
@@ -191,12 +186,6 @@ to =nil=, so this may help you.
          "fp" 'flycheck-previous-error
          ;; File searching
          "rg" 'deadgrep
-         ;; evil-snipe
-         "ss" 'evil-snipe-s
-         "sS" 'evil-snipe-S
-         ;; Treemacs
-         "tm" 'treemacs
-         "tp" 'treemacs-projectile
          ;; undo-tree
          "ut" 'undo-tree-visualize)
        ;; Leader shortcuts for dired-mode.
@@ -206,8 +195,7 @@ to =nil=, so this may help you.
          "dM" 'dired-mark-files-regexp
          "dR" 'dired-do-rename-regexp
          "dS" 'dired-do-symlink-regexp
-         "dY" 'dired-do-relsymlink-regexp)
-       (global-evil-leader-mode 1))
+         "dY" 'dired-do-relsymlink-regexp))
    #+end_src
 
 ** evil-collection

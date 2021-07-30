@@ -28,6 +28,7 @@ different perspective, and many more.
 * use-package specification
   #+begin_src emacs-lisp
     (use-package perspective
+      :after evil-collection
       :hook
       (;; Turn on persp-mode globally
        (after-init . persp-mode)
@@ -46,6 +47,21 @@ different perspective, and many more.
       ;; Where perspective.el saves its configuration
       (persp-state-default-file
        (file-truename (concat user-emacs-directory "/persp-state")))
+      :init
+      ;; Set evil-leader keys for perspective.el
+      (evil-leader/set-key
+        "bb" 'persp-counsel-switch-buffer
+        "kk" 'persp-kill-buffer*
+        "pL" 'persp-state-load
+        "pS" 'persp-state-save
+        "pa" 'persp-add-buffer
+        "pc" 'persp-kill
+        "pi" 'persp-import
+        "pk" 'persp-remove-buffer
+        "pn" 'persp-next
+        "pp" 'persp-prev
+        "pr" 'persp-rename
+        "ps" 'persp-switch)
       :config
       ;; Automatically resume the main perspective after x seconds.  The delay is
       ;; necessary to allow Emacs time to initialize before resuming the previous
