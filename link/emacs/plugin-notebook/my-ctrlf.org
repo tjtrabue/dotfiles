@@ -8,9 +8,7 @@
 
 =ctrlf= is an Emacs plugin for fast text searching within a buffer. It brands
 itself as a replacement for =isearch=, but it is also trying to evolve into a
-replacement for plugins like Swiper and Helm Swoop. Currently, however it is not
-as feature-rich as Swiper, and it does behave a little differently, so I
-personally like to use CTRLF alongside Swiper.
+replacement for plugins like Swiper and Helm Swoop.
 
 * use-package specification
   #+begin_src emacs-lisp
@@ -22,7 +20,9 @@ personally like to use CTRLF alongside Swiper.
       (:map evil-normal-state-map
             ;; Remap standard Emacs isearch keybinding
             ("C-s" . ctrlf-forward-default)
-            ;; Remap standard evil-mode search
+            ;; Remap evil-search keys to ctrlf.
+            ;; ctrlf integrates fully with evil-search history,
+            ;; but you must set evil-search-module to 'evil-search
             ("/" . ctrlf-forward-default)
             ("?" . ctrlf-backward-default))
       :custom

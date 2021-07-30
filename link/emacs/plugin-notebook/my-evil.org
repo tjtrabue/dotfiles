@@ -82,7 +82,7 @@ to =nil=, so this may help you.
        (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
    #+end_src
 
-* evil-mode
+* use-package specification
   The Evil mode plugin itself.
 
   *NOTE*: If you want to use =evil-leader=, you need to load =evil-leader=
@@ -106,9 +106,13 @@ to =nil=, so this may help you.
             ("<tab>" . tab-to-tab-stop)
             ;; Get rid of annoying evil-paste-from-register binding.
             ("C-r" . nil))
-      ;; NOTE: We must set all variables for evil-mode in evil-leader's
-      ;;       use-package directive because it loads first, and it in turn
-      ;;       loads evil mode.
+      :custom
+      ;; NOTE: We must set variables for evil-mode's initialization in evil-leader's
+      ;;       use-package directive because it loads first, and it in turn loads
+      ;;       evil mode.
+      ;; Which search library to use for '/' and '?'.
+      ;; Defaults to 'isearch, but 'evil-search is a bit better.
+      (evil-search-module 'evil-search)
       :config
       ;; Enable evil-mode globally
       (evil-mode 1)
