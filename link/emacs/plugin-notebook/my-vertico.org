@@ -37,7 +37,7 @@ completion framework unto itself.
       ;; Can be t (whichi means grow and shrink), nil, or 'grow-only
       (vertico-resize nil)
       ;; Max number of candidates to show
-      (vertico-count 15)
+      (vertico-count 20)
       ;; Enable cycling for vertico-next and vertico-previous
       (vertico-cycle t))
   #+end_src
