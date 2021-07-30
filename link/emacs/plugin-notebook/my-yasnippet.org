@@ -17,14 +17,19 @@ that expands the snippet based on the abbreviation before point.
     (use-package yasnippet
       :commands yas-minor-mode
       :hook
-      ((conf-mode prog-mode text-mode) . yas-minor-mode)
+      (after-init . yas-global-mode)
       :bind
       (:map yas-minor-mode-map
-            ;; Use conditional expansion, falling back on helm-yas-complete if
-            ;; there is no precise snippet name before point.
-            ("C-c y" . yas-expand)
             ("<tab>" . nil)
-            ("TAB" . nil))
+            ("TAB" . nil)
+            ("C-c y e" . yas-expand)
+            ("C-c y i" . yas-insert-snippet)
+            ("C-c y n" . yas-new-snippet))
+      :custom
+      ;; Condition evaluated whenever YAS tries to expand a key.
+      (yas-buffer-local-condition yas-not-string-or-comment-condition)
+      ;; How Yasnippet prompts the user for a snippet
+      (yas-prompt-functions '(yas-completing-prompt))
       :config
       (yas-reload-all))
   #+end_src
