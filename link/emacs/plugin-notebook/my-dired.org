@@ -164,10 +164,11 @@ This is a Perl based tool, and its installation varies from system to system.
       :after evil-collection
       :hook
       ;; Always activate dired-k when dired buffer opens.
-      (dired-mode . dired-k)
+      (dired-mode . dired-k-no-revert)
       :init
       (evil-define-key 'normal dired-mode-map
-        "gK" 'dired-k))
+        ;; Shortcut for updating dired-k
+        "gK" 'dired-k-no-revert))
   #+end_src
 
 * dired+
