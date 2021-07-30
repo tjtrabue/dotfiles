@@ -10,13 +10,11 @@
 fancier, more configurable plugin that builds on the lessons learned from the
 aforementioned three tools.
 
-Currently, =selectrum= and =projectile= just don't play well together. Until the
-=selectrum= boys get some interoperability, I'm sticking with =ivy= as my
-completion framework.
-
 * use-package specification
   #+begin_src emacs-lisp
     (use-package selectrum
+      ;; Disabled in favor of Vertico
+      :disabled
       :after counsel
       :hook
       (after-init . selectrum-mode)
@@ -39,6 +37,8 @@ completion framework.
 
    #+begin_src emacs-lisp
      (use-package selectrum-prescient
+       ;; Disabled in favor of Vertico
+       :disabled
        :after (selectrum prescient)
        :hook
        (selectrum-mode . selectrum-prescient-mode)

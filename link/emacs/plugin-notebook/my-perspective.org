@@ -38,7 +38,7 @@ different perspective, and many more.
       ;; May be necessary to tie keybinding to perspective prefix
       ("C-c j" . perspective-map)
       :bind*
-      (("C-x b" . persp-counsel-switch-buffer)
+      (("C-x b" . persp-switch-to-buffer)
        ("C-x C-b" . persp-list-buffers)
        ("C-x k" . persp-kill-buffer*))
       :custom
@@ -51,7 +51,7 @@ different perspective, and many more.
       ;; Set evil-leader keys for perspective.el
       (evil-leader/set-key
         ;; Remappings of standard evil-leader shortcuts
-        "bb" 'persp-counsel-switch-buffer
+        "bb" 'persp-switch-to-buffer
         "kk" 'persp-kill-buffer*
         ;; Custom perspective evil-leader shortcuts
         "pL" 'persp-state-load

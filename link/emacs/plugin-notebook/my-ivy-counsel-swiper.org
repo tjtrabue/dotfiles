@@ -44,6 +44,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
    #+begin_src emacs-lisp
      (use-package ivy
+       :disabled
        :after evil-collection
        :demand t
        :hook
@@ -90,6 +91,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
     #+begin_src emacs-lisp
       (use-package all-the-icons-ivy
+        :disabled
         :after (all-the-icons ivy)
         :hook
         (after-init . all-the-icons-ivy-setup))
@@ -99,6 +101,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
     #+begin_src emacs-lisp
       (use-package ivy-prescient
+        :disabled
         ;; this plugin MUST be loaded after Counsel, since it has to undo a bunch of
         ;; Counsel's nonsense.
         :after (counsel prescient)
@@ -113,6 +116,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
     #+begin_src emacs-lisp
       (use-package ivy-yasnippet
+        :disabled
         :after (ivy yasnippet)
         :commands ivy-yasnippet
         :custom
@@ -136,6 +140,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 ** use-package specification
    #+begin_src emacs-lisp
      (use-package counsel
+       :disabled
        :after ivy
        :hook
        (after-init . counsel-mode)
@@ -151,6 +156,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 *** counsel-projectile
     #+begin_src emacs-lisp
       (use-package counsel-projectile
+        :disabled
         :after (counsel projectile)
         :hook
         (counsel-mode . counsel-projectile-mode)
@@ -164,6 +170,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 *** counsel-tramp
     #+begin_src emacs-lisp
       (use-package counsel-tramp
+        :disabled
         :bind
         ("M-r" . counsel-tramp))
     #+end_src
@@ -174,6 +181,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
 
   #+begin_src emacs-lisp
     (use-package swiper
+      :disabled
       :after evil-collection
       :commands (swiper swiper-backward)
       :bind

@@ -100,6 +100,7 @@ to =nil=, so this may help you.
             ;; full page.
             ([remap evil-scroll-page-up] . evil-scroll-up)
             ([remap evil-scroll-page-down] . evil-scroll-down)
+            ("C-e" . switch-to-buffer)
             :map evil-insert-state-map
             ;; TAB key should insert spaces to next tab stop, like in Vim.
             ("<tab>" . tab-to-tab-stop)
@@ -164,10 +165,10 @@ to =nil=, so this may help you.
          "m" 'evil-first-non-blank
          "." 'evil-end-of-line
          ;; Buffer
-         "bb" 'counsel-switch-buffer
+         "bb" 'switch-to-buffer
          "bk" 'kill-this-buffer
          ;; Dired
-         "dd" 'counsel-dired
+         "dd" 'dired
          ;; eshell
          "es" 'eshell-below
          ;; Git/Magit
@@ -210,7 +211,7 @@ to =nil=, so this may help you.
              ("M-." . nil))
        :custom
        ;; Whether or not to use Vim keys in the minibuffer.
-       (evil-collection-setup-minibuffer nil)
+       (evil-collection-setup-minibuffer t)
        :config
        (evil-collection-init)
        ;; Get rid of troublesome keybindings (must come here in the :config block):

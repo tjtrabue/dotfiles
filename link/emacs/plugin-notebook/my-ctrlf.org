@@ -21,7 +21,10 @@ personally like to use CTRLF alongside Swiper.
       :bind
       (:map evil-normal-state-map
             ;; Remap standard Emacs isearch keybinding
-            ("C-s" . ctrlf-forward-default))
+            ("C-s" . ctrlf-forward-default)
+            ;; Remap standard evil-mode search
+            ("/" . ctrlf-forward-default)
+            ("?" . ctrlf-backward-default))
       :custom
       ;; Use fuzzy search and regular expressions by default.
       (ctrlf-default-search-style 'fuzzy-regexp)

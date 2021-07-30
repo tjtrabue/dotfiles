@@ -588,7 +588,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 ** completing-read-multiple
    #+begin_src emacs-lisp
      ;; Add prompt indicator to `completing-read-multiple'.
-     (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
+     (advice-add #'consult-completing-read-multiple
+       :filter-args #'my/crm-indicator)
    #+end_src
 
 * Environment Variables
