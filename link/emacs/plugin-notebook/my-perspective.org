@@ -50,11 +50,14 @@ different perspective, and many more.
       :init
       ;; Set evil-leader keys for perspective.el
       (evil-leader/set-key
+        ;; Remappings of standard evil-leader shortcuts
         "bb" 'persp-counsel-switch-buffer
         "kk" 'persp-kill-buffer*
+        ;; Custom perspective evil-leader shortcuts
         "pL" 'persp-state-load
         "pS" 'persp-state-save
         "pa" 'persp-add-buffer
+        "pb" 'persp-switch-to-buffer
         "pc" 'persp-kill
         "pi" 'persp-import
         "pk" 'persp-remove-buffer
