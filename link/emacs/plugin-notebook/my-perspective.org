@@ -39,7 +39,6 @@ different perspective, and many more.
       ("C-c j" . perspective-map)
       :bind*
       (("C-x b" . persp-switch-to-buffer)
-       ("C-x C-b" . persp-list-buffers)
        ("C-x k" . persp-kill-buffer*))
       :custom
       ;; Prefix for all perspective.el commands
