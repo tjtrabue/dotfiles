@@ -61,6 +61,8 @@ it is very simple to do.
                                     (shell-command-to-string "aspell --help"))
                     (add-to-list 'ispell-extra-args "--camel-case" t))
                    (t
+                    ;; Older versions of aspell used --run-together instead of
+                    ;; --camel-case
                     (add-to-list 'ispell-extra-args "--run-together" t)
                     (add-to-list 'ispell-extra-args "--run-together-limit=16" t)))))
       :config
