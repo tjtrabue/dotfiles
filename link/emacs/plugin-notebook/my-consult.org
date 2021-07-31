@@ -29,7 +29,7 @@ myriad systems benefit from Consult's functions.
   completion system, or any other compatible framework.
 
 * Functions
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun my/crm-indicator (args)
       "Add prompt indicator to `completing-read-multiple'.
     Alternatively try `consult-completing-read-multiple'."

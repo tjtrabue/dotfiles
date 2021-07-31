@@ -27,7 +27,7 @@ world needed another Lisp.
   Lisp.
 
 ** Functions
-  #+begin_src emacs-lisp :tangle yes
+  #+begin_src emacs-lisp
     (defun my/set-cider-repl-keybindings ()
       "Hook function for setting keybindings in CIDER nREPL mode.
     Make sure to only run this function after 'sly-mrepl loads."
