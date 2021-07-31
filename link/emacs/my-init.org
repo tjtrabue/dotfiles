@@ -292,6 +292,9 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     ;; doom-modeline and some other plugins.
     (setq inhibit-compacting-font-caches t)
 
+    ;; Whether to cycle completions.
+    (setq completion-cycle-threshold t)
+
     ;; Emacs 28 variables.
     (when (>= emacs-major-version 28)
       ;; Hide commands in M-x which do not work in the current mode.

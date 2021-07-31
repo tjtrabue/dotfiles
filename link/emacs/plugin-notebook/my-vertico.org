@@ -65,6 +65,39 @@ UI, as well as an enhancement.
         (kbd "C-i") 'vertico-last
         ;; Complete current selection
         (kbd "C-l") 'vertico-insert
+        (kbd "<tab>") 'vertico-insert
+        (kbd "M-<tab>") 'minibuffer-complete
         ;; Select currently typed text and exit Vertico
         (kbd "C-M-j") 'vertico-exit-input))
   #+end_src
+
+* Extensions
+** vertico-directory
+   Configure directory extension.
+   *NOTE:* The file =vertico-directory.el= must be installed manually.
+
+   #+begin_src emacs-lisp
+     (use-package vertico-directory
+       :after vertico
+       ;; Vertico extensions are bundled with the Vertico repo.
+       :ensure nil
+       :straight nil
+       :hook
+       ;; Tidy shadowed file names
+       (rfn-eshadow-update-overlay . vertico-directory-tidy))
+   #+end_src
+
+** vertico-mouse
+   Mouse integration for Vertico.
+
+   #+begin_src emacs-lisp
+     (use-package vertico-mouse
+       ;; Does not work with my setup.
+       :disabled
+       :after vertico
+       ;; Vertico extensions are bundled with the Vertico repo.
+       :ensure nil
+       :straight nil
+       :hook
+       (vertico-mode . vertico-mouse-mode))
+   #+end_src
