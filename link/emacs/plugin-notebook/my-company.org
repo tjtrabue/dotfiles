@@ -8,122 +8,128 @@
 =company= is a fantastic alternative to =auto-complete= for as-you-type text
 completion.
 
-* company
-  This is the configuration section for =company= itself.
+*NOTE REGARDING COMPANY-YASNIPPET:* there is a =company-yasnippet= backend for
+company, BUT it should be avoided for the most part. If you add it as a backend
+to company, then snippet completions will shadow any others, which is not what
+you want.
 
-  *NOTE REGARDING YASNIPPET*
-  there is a =company-yasnippet= backend for company, BUT it should be avoided
-  for the most part. If you add it as a backend to company, then snippet
-  completions will shadow any others, which is not what you want.
+* Variables
+  #+begin_src emacs-lisp
+    (defvar my/company-enable-yas t
+      "Whether to enable yasnippet for all backends.")
+  #+end_src
 
-** Functions
-   We have to write a function or two to make =company= do what we want.
-   For some strange reason company does not want to respect our keybindings when
-   we set them in the =:bind= clause of its =use-package= specification.
+* Functions
+  #+begin_src emacs-lisp
+    (defun my/company-backend-with-yas (backend)
+      "Add yasnippet support for company backend BACKEND."
+      (if (or (not my/company-enable-yas)
+              (and (listp backend) (member 'company-yasnippet backend)))
+          backend
+        (append (if (consp backend) backend (list backend))
+                '(:with company-yasnippet))))
 
-   #+begin_src emacs-lisp
-     (defun my/set-company-keybindings ()
-       "Used to get around problem with company keybindings not being set.
+    (defun my/set-company-keybindings ()
+      "Used to get around problem with company keybindings not being set.
      For some horrible, unknown reason, company does not respect keybindings
      that go against its default keybindings in use-package syntax. For
      instance, 'TAB' is already bound to `company-select-next', and as such
      is not allowed to be rebound within a :config block. This function
      circumvents the aforementioned shortcoming by running its body after
      company-mode initializes."
-       (define-key company-active-map (kbd "<tab>") (lambda ()
-                                                      (interactive)
-                                                      (company-complete-common-or-cycle 1)))
-       (define-key company-active-map (kbd "<backtab>") (lambda ()
-                                                          (interactive)
-                                                          (company-complete-common-or-cycle -1)))
-       (define-key company-active-map (kbd "RET") 'company-complete-selection)
-       ;; Re-bind some of evil's keybindings.
-       ;; Use RET to complete company completions
-       (evil-define-key 'insert company-active-map
-         (kbd "RET") #'company-complete-selection)
-       ;; Vim-style keybindings for cycling through matches
-       (define-key company-active-map (kbd "C-j") (lambda ()
-                                                    (interactive)
-                                                    (company-complete-common-or-cycle 1)))
-       (define-key company-active-map (kbd "C-k") (lambda ()
-                                                    (interactive)
-                                                    (company-complete-common-or-cycle -1)))
-       (define-key company-active-map (kbd "C-l") #'company-complete-selection))
+      (define-key company-active-map (kbd "<tab>") (lambda ()
+                                                     (interactive)
+                                                     (company-complete-common-or-cycle 1)))
+      (define-key company-active-map (kbd "<backtab>") (lambda ()
+                                                         (interactive)
+                                                         (company-complete-common-or-cycle -1)))
+      (define-key company-active-map (kbd "RET") 'company-complete-selection)
+      ;; Re-bind some of evil's keybindings.
+      ;; Use RET to complete company completions
+      (evil-define-key 'insert company-active-map
+        (kbd "RET") #'company-complete-selection)
+      ;; Vim-style keybindings for cycling through matches
+      (define-key company-active-map (kbd "C-j") (lambda ()
+                                                   (interactive)
+                                                   (company-complete-common-or-cycle 1)))
+      (define-key company-active-map (kbd "C-k") (lambda ()
+                                                   (interactive)
+                                                   (company-complete-common-or-cycle -1)))
+      (define-key company-active-map (kbd "C-l") #'company-complete-selection))
 
-     (defun my/company-complete-selection--advice-around (fn)
-       "Advice execute around `company-complete-selection' command."
-       (let ((company-dabbrev-downcase t))
-         (call-interactively fn)))
+    (defun my/company-complete-selection--advice-around (fn)
+      "Advice execute around `company-complete-selection' command."
+      (let ((company-dabbrev-downcase t))
+        (call-interactively fn)))
 
-     (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
-       "Helper function that sets my company-backends for a specific mode and
+    (defun my/set-company-backends-for-mode (hook-fn mode &rest modes)
+      "Helper function that sets my company-backends for a specific mode and
      optionally for extra modes"
-       (add-hook 'emacs-lisp-mode-hook (lambda ()
-                                         (setq-local company-backends (cons 'company-elisp company-backends)))))
+      (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                        (setq-local company-backends (cons 'company-elisp company-backends)))))
 
-     (defun my/set-company-backends-elisp ()
-       "Set `company-backends' for `emacs-lisp-mode'."
-       (add-hook 'emacs-lisp-mode-hook (lambda ()
-                                         (setq-local company-backends (cons 'company-elisp company-backends)))))
+    (defun my/set-company-backends-elisp ()
+      "Set `company-backends' for `emacs-lisp-mode'."
+      (add-hook 'emacs-lisp-mode-hook (lambda ()
+                                        (setq-local company-backends (cons 'company-elisp company-backends)))))
 
-     (defun my/set-company-backends-makefile ()
-       "Set `company-backends' for makefile-mode."
-       (add-hook 'makefile-mode-hook (lambda ()
-                                       (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
-                                                                          company-backends)))))
+    (defun my/set-company-backends-makefile ()
+      "Set `company-backends' for makefile-mode."
+      (add-hook 'makefile-mode-hook (lambda ()
+                                      (setq-local company-backends (cons '(company-semantic company-capf company-dabbrev)
+                                                                         company-backends)))))
 
-     (defun my/set-company-backends-scratch ()
-       "Set `company-backends' for the *scratch* buffer."
-       (add-hook 'lisp-interaction-mode-hook (lambda ()
-                                               (setq-local company-backends (cons 'company-elisp company-backends)))))
-   #+end_src
+    (defun my/set-company-backends-scratch ()
+      "Set `company-backends' for the *scratch* buffer."
+      (add-hook 'lisp-interaction-mode-hook (lambda ()
+                                              (setq-local company-backends (cons 'company-elisp company-backends)))))
+  #+end_src
 
-** =use-package= specification
-   #+begin_src emacs-lisp
-     (use-package company
-       :after evil-collection
-       :bind
-       (:map c-mode-map
-             ([(tab)] . company-complete)
-             :map c++-mode-map
-             ([(tab)] . company-complete))
-       :hook
-       (;; Turn on company-mode globally.
-        (after-init . global-company-mode)
-        (company-mode . my/set-company-keybindings))
-       :custom
-       ;; Align annotation to the right side.
-       (company-tooltip-align-annotations t)
-       ;; Never require a match; continue to use cursor as normal
-       (company-require-match nil)
-       ;; Stop eclim auto save.
-       (company-eclim-auto-save nil)
-       ;; Don't make plain text completions lowercase.
-       (company-dabbrev-downcase nil)
-       ;; How long company waits before suggesting completions.
-       ;; WARNING: Setting this value too low could cause a huge performance
-       ;;          bottleneck!
-       (company-idle-delay 0.3)
-       ;; Start suggesting completions after this many characters typed.
-       (company-minimum-prefix-length 2)
-       ;; Change UI appearance of company
-       (company-frontends
-        '(company-pseudo-tooltip-unless-just-one-frontend
-          company-preview-frontend
-          company-echo-metadata-frontend))
-       :config
-       ;; Tweak company backends.
-       ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
-       ;; slow to be anything other than harmful, especially for emacs-lisp-mode.
-       (delete 'company-semantic company-backends)
-       ;; Enable downcase only when completing the completion.
-       (advice-add 'company-complete-selection :around
-                   #'my/company-complete-selection--advice-around)
-       ;; Perform further tweaks for company-backends depending on the major mode.
-       (my/set-company-backends-elisp)
-       (my/set-company-backends-makefile)
-       (my/set-company-backends-scratch))
-   #+end_src
+* =use-package= specification
+  #+begin_src emacs-lisp
+    (use-package company
+      :after evil-collection
+      :demand t
+      :hook
+      (company-mode . my/set-company-keybindings)
+      :custom
+      ;; Align annotation to the right side.
+      (company-tooltip-align-annotations t)
+      ;; Never require a match; continue to use cursor as normal
+      (company-require-match nil)
+      ;; Stop eclim auto save.
+      (company-eclim-auto-save nil)
+      ;; Don't make plain text completions lowercase.
+      (company-dabbrev-downcase nil)
+      ;; How long company waits before suggesting completions.
+      ;; WARNING: Setting this value too low could cause a huge performance
+      ;;          bottleneck!
+      (company-idle-delay 0.3)
+      ;; Start suggesting completions after this many characters typed.
+      (company-minimum-prefix-length 2)
+      ;; Change UI appearance of company
+      (company-frontends
+       '(company-pseudo-tooltip-unless-just-one-frontend
+         company-preview-frontend
+         company-echo-metadata-frontend))
+      :init
+      ;; Turn on company-mode globally.
+      (global-company-mode 1)
+      :config
+      ;; Tweak company backends.
+      ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
+      ;; slow to be anything other than harmful, especially for emacs-lisp-mode.
+      (delete 'company-semantic company-backends)
+      ;; Enable downcase only when completing the completion.
+      (advice-add 'company-complete-selection :around
+                  #'my/company-complete-selection--advice-around)
+      ;; Perform further tweaks for company-backends depending on the major mode.
+      (my/set-company-backends-elisp)
+      (my/set-company-backends-makefile)
+      (my/set-company-backends-scratch)
+      ;; Add yasnippet support for each company backend.
+      (setq company-backends (mapcar #'my/company-backend-with-yas company-backends)))
+  #+end_src
 
 * Plugins
 ** company-c-headers
@@ -267,16 +273,22 @@ completion.
        (company-lsp-enable-snippet t)
        (company-lsp-enable-recompletion t))
    #+end_src
+
 ** company-box
    =company-box= is a company front-end with icons. It provides a great, modern
    looking UI for company completions similar to something like Visual Studio
    Code.
 
+   *NOTE:* =company-box= only works in GUI Emacs.
+
    #+begin_src emacs-lisp
      (use-package company-box
        :after company
-       :hook (company-mode . company-box-mode))
+       :if (display-graphic-p)
+       :hook
+       (company-mode . company-box-mode))
    #+end_src
+
 ** company-prescient
    =prescient= intelligent completion support for =company-mode=.
 
