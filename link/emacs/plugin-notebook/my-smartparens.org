@@ -7,20 +7,24 @@
 #+STARTUP: fold
 
 =smartparens= is a very popular Emacs plugin that automatically inserts closing
-delimiters based on the syntax of the programming language currently in use. It
-is similar to =vim-endwise=.
+delimiters based on the syntax of the programming language currently in
+use. However, =smartparens= can do much more than simply insert closing
+delimiters. It can act as a whole editing environment for Lisp dialects similar
+to ParEdit. You can think of it like =vim-surround= and =vim-endwise= put
+together plus a bunch of language-aware features that neither of the
+aforementioned Vim plugins have.
 
 * Notes on =smartparens-mode= and =smartparens-strict-mode=
-This package contains two minor modes for managing delimiters:
-=smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not
-enforce balanced delimiters, whereas =smartparens-strict-mode= does.
+  This package contains two minor modes for managing delimiters:
+  =smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not
+  enforce balanced delimiters, whereas =smartparens-strict-mode= does.
 
 * =use-package= specification
 
-#+begin_src emacs-lisp
-  (use-package smartparens
-    :hook
-    (after-init . smartparens-global-mode)
-    :config
-    (require 'smartparens-config))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package smartparens
+      :demand t
+      :config
+      (require 'smartparens-config)
+      (smartparens-global-mode))
+  #+end_src
