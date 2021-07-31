@@ -45,7 +45,7 @@ different perspective, and many more.
       (persp-mode-prefix-key (kbd "C-c j"))
       ;; Where perspective.el saves its configuration
       (persp-state-default-file
-       (file-truename (concat user-emacs-directory "/persp-state")))
+       (file-truename (concat user-emacs-directory "/persp-state.el")))
       :init
       ;; Set evil-leader keys for perspective.el
       (evil-leader/set-key
