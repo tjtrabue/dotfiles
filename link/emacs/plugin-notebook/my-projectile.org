@@ -31,7 +31,9 @@ project artifacts, etc.
       ;; when searching for projects.
       (projectile-project-search-path `(,my/workspace-dir ,my/practice-dir))
       :init
-      ;; Enable projectile globally
+      ;; Enable projectile globally.  It's important to keep this here!!! Do not
+      ;; create an after-init-hook for projectile because it doesn't work
+      ;; fully. You'll experience weird errors if you do this.
       (projectile-global-mode +1)
       :config
       ;; Add extra ignored directories here.
