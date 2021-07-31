@@ -5,7 +5,9 @@
 #+STARTUP: fold
 
 Sublime Text-inspired features for Emacs, such as smooth scrolling,
-distraction-free editing, and a minimap feature.
+distraction-free editing, and a minimap feature. In my experience, none of these
+features work very well. Not only that, but Sublimity puts a /lot/ of strain on
+Emacs. Bear this in mind if you decide to use Sublimity.
 
 * use-package specification
   #+begin_src emacs-lisp
