@@ -565,11 +565,6 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (dolist (repo straight-recipe-repositories)
         (straight-pull-package repo)))
 
-    (defun my/crm-indicator (args)
-      "Add prompt indicator to `completing-read-multiple'.
-    Alternatively try `consult-completing-read-multiple'."
-      (cons (concat "[CRM] " (car args)) (cdr args)))
-
     (defun my/use-mu4e-p ()
       "Return T if the system is configured for `mu4e'. Return NIL otherwise."
       (and (executable-find "mu") (executable-find "mbsync")))
@@ -583,17 +578,6 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
         (global-unset-key (kbd "C-x C-r")))
       (recentf-mode -1))
   #+end_src
-
-* Advice
-  Custom advising functions that run before, after, or around other functions to
-  inform their behavior.
-
-** completing-read-multiple
-   #+begin_src emacs-lisp
-     ;; Add prompt indicator to `completing-read-multiple'.
-     (advice-add #'consult-completing-read-multiple
-       :filter-args #'my/crm-indicator)
-   #+end_src
 
 * Environment Variables
   Set additional environment variables not taken care of through the

@@ -24,6 +24,14 @@ for Emacs. It includes a stunning array of useful functions.
   completion UI you choose. It could be Selectrum, Vertico, the built-in Emacs
   completion system, or any other compatible framework.
 
+* Functions
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/crm-indicator (args)
+      "Add prompt indicator to `completing-read-multiple'.
+    Alternatively try `consult-completing-read-multiple'."
+      (cons (concat "[CRM] " (car args)) (cdr args)))
+  #+end_src
+
 * use-package specification
   #+begin_src emacs-lisp
     (use-package consult
@@ -105,7 +113,11 @@ for Emacs. It includes a stunning array of useful functions.
       ;; This adds thin lines, sorting and hides the mode line of the window.
       (advice-add #'register-preview :override #'consult-register-window)
       ;; Optionally replace `completing-read-multiple' with an enhanced version.
-      (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+      (advice-add #'completing-read-multiple
+                  :override #'consult-completing-read-multiple)
+      ;; Add prompt indicator to `completing-read-multiple'.
+      (advice-add #'consult-completing-read-multiple
+                  :filter-args #'my/crm-indicator)
       ;; Use Consult to select xref locations with preview
       (setq xref-show-xrefs-function #'consult-xref
             xref-show-definitions-function #'consult-xref)
@@ -120,6 +132,8 @@ for Emacs. It includes a stunning array of useful functions.
       ;; Optionally configure preview. The default value
       ;; is 'any, such that any key triggers the preview.
       (consult-preview-key (kbd "C-;"))
+      ;; Improve the standard completion in region function
+      (completion-in-region-function #'consult-completion-in-region)
       ;; (consult-preview-key 'any)
       ;; (consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
       :config
