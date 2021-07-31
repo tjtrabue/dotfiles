@@ -302,6 +302,21 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (setq read-extended-command-predicate #'command-completion-default-include-p))
   #+end_src
 
+* Adjust initial frame size
+  In keeping with the spirit of Emacs, there are a plethora of methods for
+  changing the size of the first frame Emacs creates. A frame is basically
+  Emacs' concept of a window in Microsoft Windows or macOS lingo. The method(s)
+  used below are the most portable.
+
+  #+begin_src emacs-lisp
+    (let ((my-frame-height 70)
+          (my-frame-width 220))
+      (when (eq system-type 'darwin)
+        ;; Adjust default frame size on macOS.
+        (setq initial-frame-alist `((height . ,my-frame-height)
+                                    (width . ,my-frame-width)))))
+  #+end_src
+
 * Font Configuration
   Set default font for Emacs.
   *NOTE:* The main font configuration is in =my-font.el=.
@@ -400,16 +415,19 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
    #+begin_src emacs-lisp
      ;; Find file at point ("g f" in evil-mode)
-     ;; (global-set-key (kbd "C-c f p") 'ffap)
+     ;; (global-set-key (kbd "C-c f p") #'ffap)
 
      ;; Change window size (Vim-like bindings)
-     (global-set-key (kbd "S-C-l") 'enlarge-window-horizontally)
-     (global-set-key (kbd "S-C-h") 'shrink-window-horizontally)
-     (global-set-key (kbd "S-C-j") 'enlarge-window)
-     (global-set-key (kbd "S-C-k") 'shrink-window)
+     (global-set-key (kbd "S-C-l") #'enlarge-window-horizontally)
+     (global-set-key (kbd "S-C-h") #'shrink-window-horizontally)
+     (global-set-key (kbd "S-C-j") #'enlarge-window)
+     (global-set-key (kbd "S-C-k") #'shrink-window)
 
      ;; Turns vertically split frame into a horizontal split one.
-     (global-set-key (kbd "C-c w t") 'my-window-toggle-frame-split)
+     (global-set-key (kbd "C-c w t") #'my-window-toggle-frame-split)
+
+     ;; Select a bookmark to delete by means of an interactive menu.
+     (global-set-key (kbd "C-c D") #'bookmark-delete)
    #+end_src
 
 * Email
