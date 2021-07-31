@@ -70,11 +70,17 @@ shutdown_emacsdaemon() {
 # repos are in a "detached HEAD" state. Regardless of whether or not the repo's
 # branch changed, update the mainline branch for the repository.
 straight_update_repos() {
-  local straightHome="${HOME}/.emacs.d/straight"
+  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs}"
+  local straightHome="${emacsHome}/straight"
   local straightRepos="${straightHome}/repos"
   local defaultBranch
   local repo
   local d
+
+  if [ ! -d "${straightHome}" ]; then
+    err "No straight directory found under ${emacsHome}"
+    return 1
+  fi
 
   log_info "Updating all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
