@@ -1,0 +1,34 @@
+#+title:    Wucuo: Fast Spell Checker
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:31
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+=wucuo= is a fast wrapper around =flyspell= designed to keep your workflow
+snappy. =flyspell= can be notoriously sluggish when used in the conventional
+way. =wucuo= gets around =flyspell='s shortcomings by only calling flyspell in
+certain circumstances, such as when a buffer is saved to disk or after a
+specified time interval.
+
+* =use-package= specification
+  #+begin_src emacs-lisp
+    (use-package wucuo
+      :after flyspell
+      :hook
+      ((prog-mode text-mode) . wucuo-start)
+      :custom
+      ;; How wucuo operates.
+      ;; "fast": run `flyspell-region' in `after-save-hook' over visible region.
+      ;; "normal": run `flyspell-buffer' in `after-save-hook'.
+      (wucuo-flyspell-start-mode "fast")
+      ;; How long wucuo waits before spell-checking the visible region.
+      (wucuo-update-interval 2)
+      :init
+      ;; Disabled flyspell-mode before using wucuo
+      (when (bound-and-true-p flyspell-mode)
+        (flyspell-mode -1))
+      (when (bound-and-true-p flyspell-prog-mode)
+        (flyspell-prog-mode -1)))
+  #+end_src

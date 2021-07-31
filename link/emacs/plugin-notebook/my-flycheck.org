@@ -20,18 +20,28 @@ it is very simple to do.
 #+begin_src emacs-lisp
   (use-package flycheck
     :hook
-    ((prog-mode . (lambda ()
-       ;; Enable flycheck mode by default when editing any programming language
-       ;; file.
-       (flycheck-mode)
-       ;; Turn on the flyspell spell-checker for comments and strings.
-       (flyspell-prog-mode)))
-     ;; Check spelling in text documents as you type.
-     (text-mode . flyspell-mode))
-    :init
+    (prog-mode . flycheck-mode)
+    :custom
     ;; The allotted time before displaying errors at point.
-    (setq flycheck-display-errors-delay 0.1))
+    (flycheck-display-errors-delay 0.1))
 #+end_src
+
+* flyspell
+  =flyspell= is =flycheck='s companion spell-checker plugin. Where =flycheck=
+  checks for code correctness, =flyspell= checks spelling in both the
+  traditional and in a more coding-correct sense (i.e., take camel case into
+  account, and so on).
+
+  #+begin_src emacs-lisp
+    (use-package flyspell
+      :after ispell
+      :demand t
+      :custom
+      (ispell-program-name (executable-find "hunspell"))
+      (ispell-dictionary "en_US")
+      :config
+      (ispell-set-spellchecker-params))
+  #+end_src
 
 * Plugins
 ** flycheck-cask
