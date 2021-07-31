@@ -1,0 +1,20 @@
+#+title:    Sublime Text Style Minimap
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:07:31
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+A minimap sidebar inspired by Sublime Text (and Atom, and VisualStudio Code,
+etc.). It looks great, but it is quite slow, so I don't recommend you use it
+even for small buffers.
+
+* use-package specification
+  #+begin_src emacs-lisp
+    (use-package minimap
+      :disabled
+      :demand t
+      :custom
+      (minimap-window-location 'right))
+  #+end_src
