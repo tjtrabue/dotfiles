@@ -23,11 +23,16 @@ you want.
   #+begin_src emacs-lisp
     (defun my/company-backend-with-yas (backend)
       "Add yasnippet support for company backend BACKEND."
-      (if (or (not my/company-enable-yas)
-              (and (listp backend) (member 'company-yasnippet backend)))
+      (if (and (listp backend) (member 'company-yasnippet backend))
           backend
         (append (if (consp backend) backend (list backend))
                 '(:with company-yasnippet))))
+
+    (defun my/set-company-backends-yasnippet ()
+      "Set `company-backends' safely for `yasnippet' support."
+      (when my/company-enable-yas
+        (setq company-backends
+              (mapcar #'my/company-backend-with-yas company-backends))))
 
     (defun my/set-company-keybindings ()
       "Used to get around problem with company keybindings not being set.
@@ -127,8 +132,7 @@ you want.
       (my/set-company-backends-elisp)
       (my/set-company-backends-makefile)
       (my/set-company-backends-scratch)
-      ;; Add yasnippet support for each company backend.
-      (setq company-backends (mapcar #'my/company-backend-with-yas company-backends)))
+      (my/set-company-backends-yasnippet))
   #+end_src
 
 * Plugins
