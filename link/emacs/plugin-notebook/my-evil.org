@@ -414,11 +414,11 @@ to =nil=, so this may help you.
                                                         ("l<" . lispyville-barf)
                                                         ("l>" . lispyville-slurp)
                                                         ("lC" . lispy-convolute-sexp)
-                                                        ("lD" . evil-collection-lispy-delete)
+                                                        ("lD" . lispy-describe-inline)
                                                         ("lO" . lispy-oneline)
                                                         ("lR" . lispyville-raise-list)
                                                         ("lS" . lispy-splice)
-                                                        ("ld" . lispyville-move-down)
+                                                        ("ld" . evil-collection-lispy-delete)
                                                         ("lj" . lispy-join)
                                                         ("lm" . lispy-multiline)
                                                         ("ln" . lispy-left)
@@ -427,7 +427,6 @@ to =nil=, so this may help you.
                                                         ("lr" . lispy-raise-sexp)
                                                         ("ls" . lispy-split)
                                                         ("lt" . transpose-sexps)
-                                                        ("lu" . lispyville-move-up)
                                                         ("ly" . lispy-new-copy))))
                     (mapcar (lambda (element)
                               (let ((key (car element))
@@ -473,8 +472,8 @@ to =nil=, so this may help you.
             (kbd "M-l") #'lispyville-end-of-defun)
           (evil-define-key '(normal visual) keymap
             ;; Move s-exps back and forth
-            (kbd "M-j") #'lispyville-drag-forward
-            (kbd "M-k") #'lispyville-drag-backward)
+            (kbd "M-j") #'lispyville-move-down
+            (kbd "M-k") #'lispyville-move-up)
           (evil-define-key 'visual keymap
             "gc" #'lispyville-comment-or-uncomment-line
             "gC" #'lispyville-comment-or-uncomment
