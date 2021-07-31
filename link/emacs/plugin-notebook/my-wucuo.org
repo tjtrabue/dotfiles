@@ -25,23 +25,23 @@ specified time interval.
       (wucuo-flyspell-start-mode "fast")
       ;; How many seconds wucuo waits before running spell-check.
       (wucuo-update-interval 2)
-      ;; Tell wucuo to ignore certain majore modes.
-      (wucuo-spell-check-buffer-predicate
-       (lambda ()
-         (not (memq major-mode
-                    '(dired-mode
-                      log-edit-mode
-                      compilation-mode
-                      help-mode
-                      profiler-report-mode
-                      speedbar-mode
-                      gud-mode
-                      calc-mode
-                      Info-mode)))))
       :init
       ;; Disable flyspell-mode before using wucuo
       (when (bound-and-true-p flyspell-mode)
         (flyspell-mode -1))
       (when (bound-and-true-p flyspell-prog-mode)
-        (flyspell-prog-mode -1)))
+        (flyspell-prog-mode -1))
+      ;; Tell wucuo to ignore certain majore modes.
+      (setq wucuo-spell-check-buffer-predicate
+            (lambda ()
+              (not (memq major-mode
+                         '(dired-mode
+                           log-edit-mode
+                           compilation-mode
+                           help-mode
+                           profiler-report-mode
+                           speedbar-mode
+                           gud-mode
+                           calc-mode
+                           Info-mode))))))
   #+end_src
