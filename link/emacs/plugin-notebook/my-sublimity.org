@@ -8,13 +8,28 @@ Sublime Text-inspired features for Emacs, such as smooth scrolling,
 distraction-free editing, and a minimap feature.
 
 * use-package specification
-#+begin_src emacs-lisp
-(use-package sublimity
-  :demand t
-  :config
-  (require 'sublimity-scroll)
-  (require 'sublimity-attractive)
-  ;; (require 'sublimity-map) ;; The mini-map is experimental and very slow
-  ;; (sublimity-map-set-delay nil) ;; Make the mini-map update constantly
-  (sublimity-mode t))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package sublimity
+      ;; Sublimity isn't very useful, and it makes Emacs very slow.
+      :disabled
+      :demand t
+      :init
+      ;; Need this to be 0 for sublimity-scroll to work.
+      (setq scroll-margin 0)
+      :custom
+      ;; Larger values mean scroll step sizes are smaller
+      (sublimity-scroll-weight 5)
+      ;; Last n scroll steps are of size 1
+      (sublimity-scroll-drift-length 10)
+      :config
+      (require 'sublimity)
+      (require 'sublimity-scroll)
+      ;; (require 'sublimity-attractive)
+      ;; The mini-map is experimental and very slow
+      ;; (require 'sublimity-map)
+      ;; Make the mini-map update constantly
+      ;; (sublimity-map-set-delay 5)
+      (sublimity-mode 1)
+      (setq auto-hscroll-mode nil)
+      (setq sublimity-auto-hscroll-mode t))
+  #+end_src

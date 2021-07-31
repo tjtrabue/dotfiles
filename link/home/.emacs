@@ -10,40 +10,6 @@
 
 ;;; Code:
 
-;; IMPORTANT: This section should stay on top!
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(TeX-view-program-selection
-   '(((output-dvi has-no-display-manager)
-      "dvi2tty")
-     ((output-dvi style-pstricks)
-      "dvips and gv")
-     (output-dvi "xdvi")
-     (output-pdf "Zathura")
-     (output-html "xdg-open")))
- '(ecb-cache-directory-contents '(("^/\\([^:/]*@\\)?\\([^@:/]*\\):.*" . 0) (".*" . 500)))
- '(ecb-options-version "2.50")
- '(helm-minibuffer-history-key "M-p")
- '(lsp-semantic-tokens-enable t nil nil "Customized with use-package lsp-mode")
- '(minimap-dedicated-window nil)
- '(minimap-hide-scroll-bar t)
- '(minimap-window-location 'right)
- '(org-agenda-files
-   '("~/workspace/dotfiles/link/emacs/plugin-notebook/my-evil.org" "/Users/thomastrabue/.emacs.d/org/agenda/home.org" "/Users/thomastrabue/.emacs.d/org/agenda/work.org"))
- '(send-mail-function 'smtpmail-send-it)
- '(sublimity-mode nil)
- '(warning-suppress-types '((comp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(minimap-active-region-background ((t (:background "#404040")))))
-;; End Custom section
-
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
 ;; They will be reset later on to further optimize our experience.
