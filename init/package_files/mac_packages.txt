@@ -1,3 +1,4 @@
+aspell
 binutils
 broot
 clang-format

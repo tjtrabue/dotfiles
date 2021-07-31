@@ -36,9 +36,25 @@ it is very simple to do.
     (use-package flyspell
       :after ispell
       :demand t
-      :custom
-      (ispell-program-name (executable-find "hunspell"))
-      (ispell-dictionary "en_US")
+      :init
+      (setq ispell-program-name
+            ;; Prefer aspell over hunspell since aspell is faster
+            (if (executable-find "aspell") "aspell" "hunspell"))
+      (cond ((equal ispell-program-name "hunspell")
+             ;; Extra configuration for hunspell.
+             (setq ispell-local-dictionary "en_US")
+             (setq ispell-local-dictionary-alist
+                   ;; Please note the list `("-d" "en_US")` contains ACTUAL
+                   ;; parameters passed to hunspell You could use `("-d"
+                   ;; "en_US,en_US-med")` to check with multiple dictionaries
+                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+             ;; New variable `ispell-hunspell-dictionary-alist' is defined in Emacs.
+             ;; If it's nil, Emacs tries to automatically set up the dictionaries.
+             (when (boundp 'ispell-hunspell-dictionary-alist)
+               (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)))
+            ((equal ispell-program-name "aspell")
+             ;; Extra configuration for aspell.
+             (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))))
       :config
       (ispell-set-spellchecker-params))
   #+end_src
