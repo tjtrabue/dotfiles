@@ -309,12 +309,13 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   used below are the most portable.
 
   #+begin_src emacs-lisp
-    (let ((my-frame-height 70)
-          (my-frame-width 220))
+    (let (;; Get desired frame height and width as fraction of total monitor size.
+          (frame-height-pixels (truncate (* (display-pixel-height) (/ 6.5 8.0))))
+          (frame-width-pixels (truncate (* (display-pixel-width) (/ 7.5 8.0)))))
       (when (eq system-type 'darwin)
         ;; Adjust default frame size on macOS.
-        (setq initial-frame-alist `((height . ,my-frame-height)
-                                    (width . ,my-frame-width)))))
+        (setq initial-frame-alist `((height . (text-pixels . ,frame-height-pixels))
+                                    (width . (text-pixels . ,frame-width-pixels))))))
   #+end_src
 
 * Font Configuration
