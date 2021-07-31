@@ -20,7 +20,12 @@ UI, as well as an enhancement.
   Helm, IDO, =icomplete-vertical=, etc. The main difference is that Vertico aims
   to be as minimal as possible, only providing a pretty UI and deferring the
   completion system to other plugins, such as the built-in Emacs completion
-  system or =orderless=.
+  system or =orderless=. Vertico is probably most similar to IComplete since
+  both are fully compatible with =completing-read=, although Vertico has far
+  more features and looks nicer than IComplete. Selectrum is nearly as pure as
+  Vertico, but does contain some custom filtering logic that keeps it from full
+  =completing-read= compatibility. Vertico is also probably the most flexible
+  completion UI in terms of customization.
 
 * use-package specification
   #+begin_src emacs-lisp

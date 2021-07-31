@@ -6,13 +6,17 @@
 #+tags:
 #+STARTUP: fold
 
-Yet another narrowing completion framework for Emacs. Jeez, you think there
-would be enough of them at this point to satisfy these Emacs sycophants, but no.
-Consult is newer than Helm and Ivy, and integrates nicely with Selectrum and
-Vertico.  Actually, Consult was designed with the same philosophy that guided
-the development of Selectrum and Vertico: depend on =completing-read= and
-nothing else. Thus, I think Consult will become the primary completion system
-for Emacs. It includes a stunning array of useful functions.
+Yet another completion framework for Emacs. Jeez, you think there would be
+enough of them at this point to satisfy these Emacs sycophants, but no.  Consult
+is a bit of a different creature than Helm and Ivy. In fact, Consult is more
+closely a relatively of Counsel than of Ivy, but whereas Counsel is a suite of
+utility functions implemented on Ivy's completion system, Consult is a suite of
+utility functions implemented using only Emacs' built-in =completing-read= API.
+Furthermore, whereas Counsel integrates only with Ivy, Consult integrates with
+any narrowing completion UI that supports =completing-read=, such as the default
+Emacs completion system, =icomplete-vertical=, Selectrum, and Vertico. This
+makes Consult far more flexible and widely usable than Counsel or Helm since a
+myriad systems benefit from Consult's functions.
 
 * What is Consult really?
   Consult is designed to fulfill the same role for Selectrum and Vertico that
