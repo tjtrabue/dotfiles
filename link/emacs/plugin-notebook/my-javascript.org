@@ -19,7 +19,7 @@ Javascript integration.
    server before you can run Indium from Emacs.  You need to run =npm install -g
    indium= to install the Indium server.
 
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package indium)
    #+end_src

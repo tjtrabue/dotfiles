@@ -6,7 +6,7 @@
 
 This is a cool color picker written as an Xwidget.
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
 (use-package webkit-color-picker)
 #+end_src

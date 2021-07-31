@@ -10,7 +10,7 @@ A minimap sidebar inspired by Sublime Text (and Atom, and VisualStudio Code,
 etc.). It looks great, but it is quite slow, so I don't recommend you use it
 even for small buffers.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package minimap
       :disabled

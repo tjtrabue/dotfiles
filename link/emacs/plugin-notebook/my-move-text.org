@@ -6,7 +6,7 @@
 
 Move lines of text up and down with the =move-text= package.
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package move-text
     :after evil

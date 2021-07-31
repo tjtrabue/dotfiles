@@ -102,7 +102,7 @@ functions to provide a single point of theme configuration."
     python3 -m pip install --user --upgrade pywal
   #+end_src
 
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package theme-magic
        :config

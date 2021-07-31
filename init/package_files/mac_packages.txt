@@ -47,6 +47,7 @@ rclone
 ripgrep
 roswell
 screen
+sd
 shellcheck
 streamlink
 texlab

@@ -10,7 +10,7 @@
 Vim-derived editors. It is newer and more maintained than =ace-jump-mode=,
 however, making =avy= a better, more modern alternative.
 
-* use-package specification
+* =use-package= specification
    *NOTE:* See evil-leader config for other keybindings.
 
 #+begin_src emacs-lisp

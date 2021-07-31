@@ -30,7 +30,7 @@ cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
        (xref-show-definitions-function #'xref-show-definitions-completing-read))
    #+end_src
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package dumb-jump
       :after xref

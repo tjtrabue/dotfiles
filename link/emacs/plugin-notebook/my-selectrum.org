@@ -10,7 +10,7 @@
 fancier, more configurable plugin that builds on the lessons learned from the
 aforementioned three tools.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package selectrum
       ;; Disabled in favor of Vertico

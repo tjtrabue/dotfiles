@@ -9,7 +9,7 @@
 This is a minor mode that uniquely colors variable/function names in order to
 easily identify them in a file.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package color-identifiers-mode
       :hook

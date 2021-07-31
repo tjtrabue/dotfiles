@@ -60,7 +60,7 @@ features absent from the majority of such explorers.
                                (treemacs-do-add-project-to-workspace path name)))))
     #+end_src
 
-*** use-package specification
+*** =use-package= specification
     #+begin_src emacs-lisp
       (use-package treemacs-projectile
         :after (evil-collection treemacs projectile)

@@ -19,7 +19,7 @@ The annotations are added based on the completion category. For example
 category. You can cycle between more or less detailed annotators with the
 command =marginalia-cycle=.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package marginalia
       :hook

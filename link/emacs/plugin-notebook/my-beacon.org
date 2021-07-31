@@ -7,7 +7,7 @@
 =beacon= is a global minor-mode for briefly highlighting your cursor as it jumps
 around a window. Very beautiful. Very powerful.
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package beacon
     :demand t

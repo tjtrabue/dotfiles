@@ -58,7 +58,7 @@ the contents of the selected paste register would be pasted at point.
       (my/define-hydra-resize-window))
   #+end_src
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package hydra
       :after evil-collection

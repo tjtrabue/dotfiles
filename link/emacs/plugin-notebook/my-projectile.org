@@ -9,7 +9,7 @@ important coding actions at the project level. Such actions include searching
 for project files, searching for text, renaming files, building and installing
 project artifacts, etc.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package projectile
       ;; perspective.el overwrites projectile's command prefix, so we want to load

@@ -10,7 +10,7 @@
 that you visit -- a slightly different background than those buffers that are
 less "real", such as popups, terminals, sidebars, etc.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package solaire-mode
       :hook

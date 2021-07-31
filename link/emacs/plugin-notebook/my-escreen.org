@@ -20,7 +20,7 @@ your life easier.
   =escreen= is largely unmaintained. =perspective.el= provides a better, more
   modern solution for managing buffers and windows in Emacs.
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package escreen
     ;; perspective.el is a better alternative

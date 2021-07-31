@@ -120,7 +120,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
             "r" #'sly-restart-inferior-lisp)))
     #+end_src
 
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package sly
        :after evil
@@ -237,7 +237,7 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
    class, which answers a common complaint coming from people used to languages
    from the Algol family: the ability to complete the methods of the foo class
    by typing =foo.<TAB>=.
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package slime
        :disabled

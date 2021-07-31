@@ -46,7 +46,7 @@ Emacs.
     (setq wgrep-change-readonly-file t)
   #+end_src
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package wgrep)
   #+end_src

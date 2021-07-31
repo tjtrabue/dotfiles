@@ -27,7 +27,7 @@ UI, as well as an enhancement.
   =completing-read= compatibility. Vertico is also probably the most flexible
   completion UI in terms of customization.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package vertico
       :after evil-collection

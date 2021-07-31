@@ -100,7 +100,7 @@ configurable modeline taken from Doom Emacs.
       (spaceline-highlight-face-default)))
 #+end_src
 
-** use-package specification
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package spaceline
     :disabled

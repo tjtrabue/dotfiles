@@ -9,7 +9,7 @@
 =doom-modeline= allows any Emacs configuration to use the fancy, modular
 modeline from Doom Emacs.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package doom-modeline
       :after (all-the-icons doom-themes)

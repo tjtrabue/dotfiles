@@ -36,7 +36,7 @@ myriad systems benefit from Consult's functions.
       (cons (concat "[CRM] " (car args)) (cdr args)))
   #+end_src
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package consult
       :after (evil-collection projectile)

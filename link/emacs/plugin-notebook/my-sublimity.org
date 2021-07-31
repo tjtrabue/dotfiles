@@ -9,7 +9,7 @@ distraction-free editing, and a minimap feature. In my experience, none of these
 features work very well. Not only that, but Sublimity puts a /lot/ of strain on
 Emacs. Bear this in mind if you decide to use Sublimity.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package sublimity
       ;; Sublimity isn't very useful, and it makes Emacs very slow.

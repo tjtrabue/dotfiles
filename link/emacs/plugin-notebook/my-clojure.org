@@ -39,7 +39,7 @@ world needed another Lisp.
           "," #'cider-repl-handle-shortcut)))
   #+end_src
 
-** use-package specification
+** =use-package= specification
   #+begin_src emacs-lisp
     (use-package cider
       :after evil-collection

@@ -24,7 +24,7 @@ system. However, =prescient= is much faster than =orderless=, and provides
 built-in sorting capabilities which can be very handy if your completion UI does
 not sort matches.
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package prescient
     :hook

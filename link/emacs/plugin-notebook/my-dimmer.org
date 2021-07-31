@@ -20,7 +20,7 @@ active window.
         (dimmer-process-all (not ignore))))
   #+end_src
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package dimmer
       ;; This package is too problematic; too many special cases, too many

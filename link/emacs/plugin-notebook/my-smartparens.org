@@ -15,7 +15,7 @@ This package contains two minor modes for managing delimiters:
 =smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not
 enforce balanced delimiters, whereas =smartparens-strict-mode= does.
 
-* use-package specification
+* =use-package= specification
 
 #+begin_src emacs-lisp
   (use-package smartparens

@@ -8,7 +8,7 @@
 
 =dash= provides modern functions and services for Emacs.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package dash)
   #+end_src

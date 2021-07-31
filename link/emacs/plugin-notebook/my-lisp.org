@@ -113,7 +113,7 @@ regardless of its particular dialect.
    available. You can change the default keymap prefix by changing the binding
    for =parinfer-rust-mode-map=.
 
-** use-package specification
+** =use-package= specification
   #+begin_src emacs-lisp
     (use-package parinfer-rust-mode
       ;; I'm trying not to use parinfer as a crutch while I learn Lispy.

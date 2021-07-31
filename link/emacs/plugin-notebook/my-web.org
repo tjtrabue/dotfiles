@@ -85,7 +85,7 @@
 
    Verb requires at least Emacs version 25 to work.
 
-** use-package specification
+** =use-package= specification
   #+begin_src emacs-lisp
     (use-package verb
       :after org

@@ -271,7 +271,7 @@ to the =my-custom-lsp.el= file.
             (error "ERROR: Not in a projectile project."))))
     #+end_src
 
-*** use-package specification
+*** =use-package= specification
     #+begin_src emacs-lisp
       ;; LSP language clients
       ;; CCLS - For use with C, C++, and Objective C

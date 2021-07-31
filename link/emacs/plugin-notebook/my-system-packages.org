@@ -49,7 +49,7 @@ more.
     (setq system-packages-package-manager 'pacaur)
   #+END_SRC
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package system-packages
       :init

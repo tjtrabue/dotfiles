@@ -27,7 +27,7 @@ If you want a reminder of which actions are available after running =embark-act=
 type =C-h= which will prompt you for an action with completion, and remind you
 of the key bindings.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package embark
       :demand t

@@ -82,7 +82,7 @@ to =nil=, so this may help you.
        (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
    #+end_src
 
-* use-package specification
+* =use-package= specification
   The Evil mode plugin itself.
 
   *NOTE*: If you want to use =evil-leader=, you need to load =evil-leader=
@@ -482,7 +482,7 @@ to =nil=, so this may help you.
             (kbd "M-;") #'lispy-comment)))
     #+end_src
 
-*** use-package specification
+*** =use-package= specification
     #+begin_src emacs-lisp
       (use-package lispyville
         :after (evil-collection lispy)

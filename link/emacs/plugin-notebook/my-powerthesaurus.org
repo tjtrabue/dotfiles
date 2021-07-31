@@ -31,7 +31,7 @@
    point and fetches that word. And if there is nothing appropriate, it asks the
    user to provide a word.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package powerthesaurus)
   #+end_src

@@ -31,7 +31,7 @@ an offline IMAP sync of the user's email account for reading email.
    and a compatible version of =mu4e=, removing the hassle of manually
    installing interoperable versions of the two tools.
 
-* use-package specification
+* =use-package= specification
 
   #+begin_src emacs-lisp
     (use-package mu4e

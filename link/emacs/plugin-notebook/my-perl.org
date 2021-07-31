@@ -115,7 +115,7 @@ such plugins is sure to slow your system down significantly.
         (cperl-get-help))))
 #+end_src
 
-*** use-package specification
+*** =use-package= specification
 #+begin_src emacs-lisp
   (use-package cperl-mode
     :mode

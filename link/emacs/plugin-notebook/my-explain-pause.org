@@ -9,7 +9,7 @@
 =explain-pause-mode= is a =top=-like mode for figuring out which processes in
 Emacs are slowing the system down. Very useful for debugging.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package explain-pause-mode
       ;; explain-pasue-mode isn't in MELPA yet.

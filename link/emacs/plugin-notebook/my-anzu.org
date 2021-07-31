@@ -6,7 +6,7 @@
 
 =anzu= highlights all searches as you type.
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package anzu
     :hook

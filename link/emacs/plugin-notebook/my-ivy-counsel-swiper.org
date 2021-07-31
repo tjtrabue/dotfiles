@@ -34,7 +34,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
          (ivy-mark)))
    #+end_src
 
-** use-package specification
+** =use-package= specification
    *NOTE:* If you want to accept the currently typed name in =ivy-find-file=,
    press =C-M-j=.
 
@@ -133,7 +133,7 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
   *NOTE:* We should start moving away from Counsel and toward Selectrum, which
   is more general and faster.
 
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package counsel
        :disabled

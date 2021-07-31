@@ -36,7 +36,7 @@ Plugins for extending Emacs with version control capabilities.
          (mapc #'kill-buffer buffers)))
    #+end_src
 
-** use-package specification
+** =use-package= specification
   #+begin_src emacs-lisp
     ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
     ;; config section.
@@ -80,7 +80,7 @@ Plugins for extending Emacs with version control capabilities.
 
    After this, you should be able to use =forge= and all of its features.
 
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package forge
        :after (magit))

@@ -78,7 +78,7 @@ completion.
                                                (setq-local company-backends (cons 'company-elisp company-backends)))))
    #+end_src
 
-** use-package specification
+** =use-package= specification
    #+begin_src emacs-lisp
      (use-package company
        :after evil-collection

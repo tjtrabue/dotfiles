@@ -76,7 +76,7 @@ process from has a remote =default-directory=.
      fi
    #+end_src
 
-* use-package specification
+* =use-package= specification
   TRAMP is built-in to Emacs, but it's nice to work with TRAMP in a
   =use-package= specification.
 

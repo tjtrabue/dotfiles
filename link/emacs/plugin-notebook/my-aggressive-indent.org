@@ -12,7 +12,7 @@ aggressive, and as such will not allow you to violate it's consistency
 guidelines as long as the mode is active. This can get annoying if you value
 flexibility in code style over consistency.
 
-* use-package specification
+* =use-package= specification
   #+begin_src emacs-lisp
     (use-package aggressive-indent
       :hook

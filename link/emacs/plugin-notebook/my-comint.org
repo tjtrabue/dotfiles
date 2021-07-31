@@ -19,7 +19,7 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
         (kbd "C-k") #'comint-previous-input))
   #+end_src
 
-* use-package specification
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package comint
     :after evil
