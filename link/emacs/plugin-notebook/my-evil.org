@@ -411,19 +411,19 @@ to =nil=, so this may help you.
                                                         ("l]" . lispyville-wrap-brackets)
                                                         ("l{" . lispyville-wrap-braces)
                                                         ("l}" . lispyville-wrap-braces)
-                                                        ("l<" . lispyville-barf)
-                                                        ("l>" . lispyville-slurp)
+                                                        ("l<" . lispyville-<)
+                                                        ("l>" . lispyville->)
                                                         ("lC" . lispy-convolute-sexp)
                                                         ("lD" . lispy-describe-inline)
-                                                        ("lO" . lispy-oneline)
+                                                        ("lO" . lispy-string-oneline)
                                                         ("lR" . lispyville-raise-list)
                                                         ("lS" . lispy-splice)
+                                                        ("lc" . lispy-clone)
                                                         ("ld" . evil-collection-lispy-delete)
                                                         ("lj" . lispy-join)
                                                         ("lm" . lispy-multiline)
                                                         ("ln" . lispy-left)
-                                                        ("lo" . lispy-string-oneline)
-                                                        ("lp" . lispy-clone)
+                                                        ("lo" . lispy-oneline)
                                                         ("lr" . lispy-raise-sexp)
                                                         ("ls" . lispy-split)
                                                         ("lt" . transpose-sexps)
@@ -469,8 +469,8 @@ to =nil=, so this may help you.
             (kbd "M-l") #'lispyville-end-of-defun)
           (evil-define-key '(normal visual) keymap
             ;; Contract/expand current sexp.
-            "<<" #'lispyville-barf
-            ">>" #'lispyville-slurp
+            "<<" #'lispyville-<
+            ">>" #'lispyville->
             ;; Move s-exps back and forth
             (kbd "M-j") #'lispyville-move-down
             (kbd "M-k") #'lispyville-move-up)
