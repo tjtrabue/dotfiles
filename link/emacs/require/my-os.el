@@ -36,7 +36,7 @@
 If the OS is not a Linux-based system, return nil."
   (interactive)
   (if (eq system-type 'gnu/linux)
-      (shell-command-to-string "lsb_release -sd")
+    (shell-command-to-string "lsb_release -sd")
     nil))
 
 (provide 'my-os)

@@ -205,7 +205,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
     ;; screen with debugging output seems to mess with evil-mode, so I find it
     ;; prudent to turn this variable off until I have a reason to turn it on.
-    (setq debug-on-error nil)
+    (setq debug-on-error t)
     ;; Always follow symlinks
     (setq vc-follow-symlinks t)
     ;; Reduce risk of loading outdated bytecode
