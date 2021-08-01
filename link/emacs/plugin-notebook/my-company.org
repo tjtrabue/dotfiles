@@ -139,6 +139,7 @@ you want.
 
    #+begin_src emacs-lisp
      (use-package company-c-headers
+       :disabled
        ;; We need s.el for trimming strings.
        :after (company s cedet)
        ;; :init
