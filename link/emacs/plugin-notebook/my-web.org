@@ -12,26 +12,26 @@
 
   #+begin_src emacs-lisp
     (use-package web-mode
-      :config
+      :mode
       ;; Automatically start files with the following file extensions in web-mode
       ;; HTML
-      (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-      ;; PHP template files (virtually the same thing as .php files)
-      (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-      ;; Other PHP template files
-      (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-      ;; ASP.NET, Grails, JSP template files
-      (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-      ;; More ASP.NET template files
-      (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-      ;; Ruby Script template
-      (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-      ;; Mustache templating system
-      (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-      ;; Django template
-      (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-      ;; Embedded Elixir template.
-      (add-to-list 'auto-mode-alist '("\.html\\.eex\\'" . web-mode)))
+      (("\\.html?\\'" . web-mode)
+       ;; PHP template files (virtually the same thing as .php files)
+       ("\\.phtml\\'" . web-mode)
+       ;; Other PHP template files
+       ("\\.tpl\\.php\\'" . web-mode)
+       ;; ASP.NET, Grails, JSP template files
+       ("\\.[agj]sp\\'" . web-mode)
+       ;; More ASP.NET template files
+       ("\\.as[cp]x\\'" . web-mode)
+       ;; Ruby Script template
+       ("\\.erb\\'" . web-mode)
+       ;; Mustache templating system
+       ("\\.mustache\\'" . web-mode)
+       ;; Django template
+       ("\\.djhtml\\'" . web-mode)
+       ;; Embedded Elixir template.
+       ("\.html\\.eex\\'" . web-mode)))
   #+end_src
 
 * emmet-mode

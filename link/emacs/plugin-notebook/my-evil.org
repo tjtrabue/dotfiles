@@ -462,15 +462,15 @@ to =nil=, so this may help you.
             "gcC" #'lispyville-comment-or-uncomment
             "gcy" #'lispyville-comment-and-clone-dwim
             ;; Mark symbols with M-m
-            (kbd "M-m") #'lispy-mark-symbol
-            ;; Contract/expand current sexp.
-            "<<" #'lispyville-barf
-            ">>" #'lispyville-slurp)
+            (kbd "M-m") #'lispy-mark-symbol)
           (evil-define-key '(normal insert) keymap
             ;; Function navigation
             (kbd "M-h") #'lispyville-beginning-of-defun
             (kbd "M-l") #'lispyville-end-of-defun)
           (evil-define-key '(normal visual) keymap
+            ;; Contract/expand current sexp.
+            "<<" #'lispyville-barf
+            ">>" #'lispyville-slurp
             ;; Move s-exps back and forth
             (kbd "M-j") #'lispyville-move-down
             (kbd "M-k") #'lispyville-move-up)

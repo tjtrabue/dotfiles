@@ -165,7 +165,8 @@ you want.
        :after company
        :hook
        (company-mode . (lambda ()
-                         (add-to-list 'company-backends 'company-dict)))
+                         (add-to-list 'company-backends
+                                      (my/company-backend-with-yas 'company-dict))))
        :custom
        ;; Where user's custom dictionary files are kept.
        (company-dict-dir (file-truename (concat user-emacs-directory "/dict/"))))
@@ -180,7 +181,7 @@ you want.
        :hook
        (company-mode . company-quickhelp-mode)
        :custom
-       (company-quickhelp-delay 0.3))
+       (company-quickhelp-delay 0.2))
    #+end_src
 
 ** company-statistics
@@ -194,13 +195,15 @@ you want.
 ** company-web
    #+begin_src emacs-lisp
      (use-package company-web
-       :after company)
+       :after (company web-mode)
+       :init
+       (my/add-company-backends-for-mode 'web-mode '(company-web-html)))
    #+end_src
 
 ** company-try-hard
    #+begin_src emacs-lisp
      (use-package company-try-hard
-       :after (company)
+       :after company
        :bind
        (("C-<tab>" . company-try-hard)
         :map company-active-map
