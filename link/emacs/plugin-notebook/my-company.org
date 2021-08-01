@@ -22,17 +22,17 @@ you want.
 * Functions
   #+begin_src emacs-lisp
     (defun my/company-backend-with-yas (backend)
-      "Add yasnippet support for company backend BACKEND."
-      (if (and (listp backend) (member 'company-yasnippet backend))
+      "Add yasnippet support for company BACKEND if `my/company-enable-yas' is non-nil."
+      (if (or (not my/company-enable-yas)
+              (and (listp backend) (member 'company-yasnippet backend)))
           backend
         (append (if (consp backend) backend (list backend))
                 '(:with company-yasnippet))))
 
     (defun my/set-company-backends-yasnippet ()
       "Set `company-backends' safely for `yasnippet' support."
-      (when my/company-enable-yas
-        (setq company-backends
-              (mapcar #'my/company-backend-with-yas company-backends))))
+      (setq company-backends
+            (mapcar #'my/company-backend-with-yas company-backends)))
 
     (defun my/set-company-keybindings ()
       "Used to get around problem with company keybindings not being set.
@@ -76,7 +76,10 @@ you want.
       (let ((backends-with-yas (mapcar #'my/company-backend-with-yas backends)))
         `(lambda ()
            (setq-local company-backends (append (quote ,backends-with-yas)
-                                                company-backends)))))
+                                                company-backends))
+           ;; Because we're not using `add-to-list', we need to manually remove
+           ;; duplicates from the resulting `company-backends' list.
+           (delete-dups company-backends))))
 
     (defun my/add-company-backends-for-mode (mode backends)
       "Add list of BACKENDS to`company-backends' for major mode MODE."
