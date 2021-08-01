@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'cl-lib)
-
 (defvar my-font-font-family "FiraCode Nerd Font"
   "The default font family used throughout Emacs.")
 
@@ -52,9 +50,9 @@ FRAME is not used directly, but its presence is necessary for this function to
 be attached to the 'window-size-change-functions' hook.
 
 Adjust the font size of an Emacs frame based on the monitor's size."
-  (let ((width-px (cl-third (frame-monitor-geometry))) ;; Monitor width
-        (font-point 11) ;; Font point size for standard screen
-        (font-height))
+  (let ((width-px (display-pixel-width)) ; Monitor width
+         (font-point 11) ;; Font point size for standard screen
+         (font-height))
     ;; Select the font point based on the monitor's resolution.
     (when (= width-px 3840) ;; Very Large display
       (setq font-point 20))
