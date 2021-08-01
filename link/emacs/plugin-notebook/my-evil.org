@@ -381,7 +381,6 @@ to =nil=, so this may help you.
    #+end_src
 
 ** kubernetes-evil
-
    #+begin_src emacs-lisp
      (use-package kubernetes-evil
        :demand t
