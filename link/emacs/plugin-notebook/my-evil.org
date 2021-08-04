@@ -388,9 +388,11 @@ to =nil=, so this may help you.
      (use-package evil-mc
        :after evil-collection
        :demand t
+       :custom
+       ;; Override default mode line string
+       (evil-mc-mode-line-prefix "ⓜ")
        :config
-       (global-evil-mc-mode 1)
-       (evil-define-key 'normal 'global
+       (evil-define-key '(normal visual) 'global
          (kbd "C->") #'evil-mc-make-and-goto-next-match
          (kbd "C-<") #'evil-mc-make-and-goto-prev-match)
        ;; Set leader shortcuts
@@ -399,7 +401,8 @@ to =nil=, so this may help you.
          "cU" #'evil-mc-undo-all-cursors
          "cn" #'evil-mc-make-and-goto-next-match
          "cp" #'evil-mc-make-and-goto-prev-match
-         "cu" #'evil-mc-undo-last-added-cursor))
+         "cu" #'evil-mc-undo-last-added-cursor)
+       (global-evil-mc-mode 1))
    #+end_src
 
 ** kubernetes-evil

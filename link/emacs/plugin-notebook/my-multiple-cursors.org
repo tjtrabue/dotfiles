@@ -13,8 +13,8 @@ need to press that key combination more than once).
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package multiple-cursors
-      :after evil-collection
       :disabled
+      :after evil-collection
       :bind
       (("C-S-c C-S-c" . mc/edit-lines)
        ("C->" . mc/mark-next-like-this)
