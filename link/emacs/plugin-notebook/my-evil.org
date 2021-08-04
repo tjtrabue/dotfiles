@@ -418,6 +418,8 @@ to =nil=, so this may help you.
                                                         ("lO" . lispy-string-oneline)
                                                         ("lR" . lispyville-raise-list)
                                                         ("lS" . lispy-splice)
+                                                        ("lU" . lispy-unbind-variable)
+                                                        ("lb" . lispy-bind-variable)
                                                         ("lc" . lispy-clone)
                                                         ("ld" . evil-collection-lispy-delete)
                                                         ("le" . lispy-eval)

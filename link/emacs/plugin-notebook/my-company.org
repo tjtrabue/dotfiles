@@ -129,8 +129,7 @@ you want.
       (my/set-company-backends-yasnippet)
       ;; Add different backends to company-backends for various major modes.
       (my/add-company-backends-for-mode 'emacs-lisp-mode '(company-elisp))
-      (my/add-company-backends-for-mode 'makefile-mode '(company-symantic
-                                                         company-capf
+      (my/add-company-backends-for-mode 'makefile-mode '(company-capf
                                                          company-dabbrev))
       (my/add-company-backends-for-mode 'lisp-interaction-mode '(company-elisp)))
   #+end_src
