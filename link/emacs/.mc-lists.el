@@ -7,6 +7,7 @@
         evil-backward-char
         evil-backward-word-begin
         evil-change
+        evil-delete-backward-char-and-join
         evil-end-of-line
         evil-find-char
         evil-first-non-blank
@@ -16,17 +17,24 @@
         evil-insert
         evil-next-line
         evil-normal-state
+        evil-org-delete
+        evil-org-delete-char
         evil-org-end-of-line
         evil-previous-line
         evil-repeat
+        evil-visual-char
         hydra-multiple-cursors/mc/mark-next-like-this
+        iedit-switch-to-mc-mode
         lispy-braces
         lispy-brackets
+        lispy-cursor-down
         lispy-delete
         lispy-kill
         lispy-parens
         lispy-quotes
+        lispyville-delete
         org-self-insert-command
+        org-shiftcontrolup
         special-digit-argument
         special-end-of-defun
         special-evil-collection-lispy-delete-then-next-sexp
@@ -111,13 +119,8 @@
         special-lispy-widen
         special-lispy-x
         special-pop-tag-mark
-        evil-delete-backward-char-and-join
-        iedit-switch-to-mc-mode
-        lispy-cursor-down
-        org-shiftcontrolup
         ))
 
 (setq mc/cmds-to-run-once
       '(
-
         ))

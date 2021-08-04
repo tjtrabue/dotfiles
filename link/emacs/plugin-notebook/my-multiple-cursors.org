@@ -13,8 +13,18 @@ need to press that key combination more than once).
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package multiple-cursors
+      :after evil-collection
+      :disabled
       :bind
       (("C-S-c C-S-c" . mc/edit-lines)
        ("C->" . mc/mark-next-like-this)
-       ("C-<" . mc/mark-previous-like-this)))
+       ("C-<" . mc/mark-previous-like-this))
+      :init
+      (evil-leader/set-key
+        "ca" #'mc/mark-all-like-this
+        "ce" #'mc/edit-lines
+        "cn" #'mc/mark-next-like-this
+        "cp" #'mc/mark-previous-like-this
+        "cu" #'mc/unmark-next-like-this
+        "cU" #'mc/unmark-previous-like-this))
   #+end_src
