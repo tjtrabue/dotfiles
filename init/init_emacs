@@ -20,25 +20,28 @@ declare EMACS_CONF_ORG_HOME="${EMACS_CONF}/${ORG_CONFIG_FILE_NAME}"
 # Prepare the user's home Emacs config directory.
 init_emacs_d() {
   local d
-  mkdir -p "$EMACS_CONF"
+  mkdir -p "${EMACS_CONF}"
 
   # Clear out any existing config directories and link our dotfiles
   # directories under .emacs.d/
   log_info "Linking directories under ${EMACS_CONF}"
-  find "$DOTFILES_EMACS" -maxdepth 1 -mindepth 1 -type d \
-    -exec ln -sf -t "$EMACS_CONF" '{}' \;
+  find "${DOTFILES_EMACS}" -maxdepth 1 -mindepth 1 -type d \
+    -exec ln -sf -t "${EMACS_CONF}" '{}' \;
 }
 
-# Link the .org config file
-link_org_config() {
-  log_info "Linking ${ORG_CONFIG_FILE_NAME}"
-  ln -sf "$EMACS_CONF_ORG_DOT" "$EMACS_CONF_ORG_HOME"
+# Link all standard configuration files in the ~/.dotfiles/link/emacs directory
+# to ~/.emacs.d/
+link_emacs_config_files() {
+  log_info "Linking emacs config filest to ${EMACS_CONF}"
+  find "${DOTFILES_EMACS}" -maxdepth 1 -mindepth 1 -type f \
+    -exec ln -sf -t "${EMACS_CONF}" '{}' \;
 }
 
+# Main entry point for emacs initialization.
 main() {
   print_header "Initializing Emacs"
   init_emacs_d
-  link_org_config
+  link_emacs_config_files
   log_info "Done"
 }
 # }}}
