@@ -489,8 +489,6 @@ to =nil=, so this may help you.
             "L" #'lispyville-forward-sexp
             ;; Make "J" into the safe join operator in Lisp modes
             "J" #'lispyville-join
-            ;; Kill smallest comment, string, or list including point.
-            "K" #'lispy-kill-at-point
             ;; Adapt ace-style jump commands for lispy.
             "F" #'lispy-ace-paren
             ;; Special comment functions
