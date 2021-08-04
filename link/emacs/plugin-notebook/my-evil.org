@@ -166,41 +166,48 @@ to =nil=, so this may help you.
        (evil-leader/leader ",")
        :config
        (evil-leader/set-key
-         "m" 'evil-first-non-blank
-         "." 'evil-end-of-line
+         "m" #'evil-first-non-blank
+         "." #'evil-end-of-line
          ;; Buffer
-         "bb" 'switch-to-buffer
-         "bk" 'kill-this-buffer
+         "bb" #'switch-to-buffer
+         "bk" #'kill-this-buffer
+         ;; Multiple cursors
+         "ca" #'mc/mark-all-like-this
+         "ce" #'mc/edit-lines
+         "cn" #'mc/mark-next-like-this
+         "cp" #'mc/mark-previous-like-this
+         "cu" #'mc/unmark-next-like-this
+         "cU" #'mc/unmark-previous-like-this
          ;; Dired
-         "dd" 'dired
+         "dd" #'dired
          ;; eshell
-         "es" 'eshell-below
+         "es" #'eshell-below
          ;; Git/Magit
-         "gg" 'magit-status
-         "gd" 'magit-dispatch
-         "gtt" 'git-timemachine-toggle
+         "gg" #'magit-status
+         "gd" #'magit-dispatch
+         "gtt" #'git-timemachine-toggle
          ;; ace-window
-         "jk" 'ace-window
+         "jk" #'ace-window
          ;; Killing buffers
-         "kk" 'kill-buffer
+         "kk" #'kill-buffer
          ;; File
-         "lf" 'load-file
-         "of" 'org-babel-load-file
+         "lf" #'load-file
+         "of" #'org-babel-load-file
          ;; Flycheck
-         "fn" 'flycheck-next-error
-         "fp" 'flycheck-previous-error
+         "fn" #'flycheck-next-error
+         "fp" #'flycheck-previous-error
          ;; File searching
-         "rg" 'deadgrep
+         "rg" #'deadgrep
          ;; undo-tree
-         "ut" 'undo-tree-visualize)
+         "ut" #'undo-tree-visualize)
        ;; Leader shortcuts for dired-mode.
        (evil-leader/set-key-for-mode 'dired-mode
-         "dC" 'dired-do-copy-regexp
-         "dG" 'dired-mark-files-containing-regexp
-         "dM" 'dired-mark-files-regexp
-         "dR" 'dired-do-rename-regexp
-         "dS" 'dired-do-symlink-regexp
-         "dY" 'dired-do-relsymlink-regexp))
+         "dC" #'dired-do-copy-regexp
+         "dG" #'dired-mark-files-containing-regexp
+         "dM" #'dired-mark-files-regexp
+         "dR" #'dired-do-rename-regexp
+         "dS" #'dired-do-symlink-regexp
+         "dY" #'dired-do-relsymlink-regexp))
    #+end_src
 
 ** evil-collection
