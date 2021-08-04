@@ -393,11 +393,6 @@ to =nil=, so this may help you.
        (evil-define-key 'normal 'global
          (kbd "C->") #'evil-mc-make-and-goto-next-match
          (kbd "C-<") #'evil-mc-make-and-goto-prev-match)
-       (evil-define-key 'visual 'global
-         ;; Change visual mode mappings for I and A to insert cursors at the
-         ;; beginning or end of each line.
-         "A" #'evil-mc-make-cursor-in-visual-selection-end
-         "I" #'evil-mc-make-cursor-in-visual-selection-beg)
        ;; Set leader shortcuts
        (evil-leader/set-key
          "cA" #'evil-mc-make-all-cursors
