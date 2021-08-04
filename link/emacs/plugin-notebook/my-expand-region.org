@@ -8,9 +8,11 @@
 textual region to broader and broader scopes as you continue to press the
 prescribed selection key.
 
-#+begin_src emacs-lisp
-  (use-package expand-region
-    :bind
-    ;; Pressing 'C-=' will gradually expand the selection under the cursor.
-    ("C-=" . er/expand-region))
-#+end_src
+* =use-package= specification
+  #+begin_src emacs-lisp
+    (use-package expand-region
+      :bind
+      ;; Pressing 'C-=' will gradually expand the selection under the cursor.
+      ;; Also see the hydra for this plugin.
+      ("C-=" . er/expand-region))
+  #+end_src

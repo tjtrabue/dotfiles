@@ -49,13 +49,27 @@ the contents of the selected paste register would be pasted at point.
          ("l" enlarge-window-horizontally "enlarge horizontally")))
    #+end_src
 
+** hydra-expand-region
+   This hydra expands and contracts the active region by semantic units using
+   the =expand-region= plugin.
+
+   #+begin_src emacs-lisp
+     (defun my/define-hydra-expand-region ()
+       "Wrapper function for defhydra hydra-expand-region."
+       (defhydra hydra-expand-region (evil-normal-state-map "C-=")
+         "Expand/contract visual region."
+         ("=" er/expand-region "Expand region")
+         ("-" er/contract-region "Contract region")))
+   #+end_src
+
 * Activate hydras
   #+begin_src emacs-lisp
     (defun my/define-hydras ()
       "Load custom hydra definitions."
       (interactive)
       (my/define-hydra-zoom)
-      (my/define-hydra-resize-window))
+      (my/define-hydra-resize-window)
+      (my/define-hydra-expand-region))
   #+end_src
 
 * =use-package= specification
