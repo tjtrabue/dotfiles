@@ -10,6 +10,8 @@ around a window. Very beautiful. Very powerful.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package beacon
+    ;; Beacon can be pretty expensive in terms of CPU cycles.
+    :disabled
     :demand t
     ;; Enable beacon globally.
     :hook (after-init . beacon-mode))

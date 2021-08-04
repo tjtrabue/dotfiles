@@ -380,6 +380,27 @@ to =nil=, so this may help you.
        (evil-org-agenda-set-keys))
    #+end_src
 
+** evil-mc
+   Multiple cursors implementation for =evil-mode=. This package does not depend
+   on =multiple-cursors= at all, and is in fact an alternative implementation.
+
+   #+begin_src emacs-lisp
+     (use-package evil-mc
+       ;; The standard multiple-cursors packages is better
+       :disabled
+       :after evil-collection
+       :hook
+       (after-init . global-evil-mc-mode)
+       :init
+       ;; Set leader shortcuts
+       (evil-leader/set-key
+         "cA" #'evil-mc-make-all-cursors
+         "cU" #'evil-mc-undo-all-cursors
+         "cn" #'evil-mc-make-and-goto-next-match
+         "cp" #'evil-mc-make-and-goto-prev-match
+         "cu" #'evil-mc-undo-last-added-cursor))
+   #+end_src
+
 ** kubernetes-evil
    #+begin_src emacs-lisp
      (use-package kubernetes-evil
