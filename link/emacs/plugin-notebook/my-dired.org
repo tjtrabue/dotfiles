@@ -10,180 +10,203 @@ explorer known as =dired=.
 To use =image-dired= mode properly, you must install =exiftool= on your system.
 This is a Perl based tool, and its installation varies from system to system.
 
-* dired-hacks
-  =dired=hacks= is a collection of =dired= enhancements that aims to be more
-  modular and less bulky than =dired+=.
+* =use-package= specification
+  #+begin_src emacs-lisp
+    (use-package dired
+      ;; dired is a built-in package, so we don't want to try to download it.
+      :ensure nil
+      :straight nil
+      :bind
+      (:map dired-mode-map
+            ("<return>" . dired-find-alternate-file))
+      :custom
+      ;; Allow dired to delete or copy dir. 'always means no asking, 'top means ask
+      ;; once
+      (dired-recursive-copies 'always)
+      (dired-recursive-deletes 'top)
+      ;; Copy from one dired buffer to another dired buffer shown
+      ;; in a split window.
+      (dired-dwim-target t)
+      :config
+      ;; Allow using 'a' in dired to find file or directory in same buffer.
+      (put 'dired-find-alternate-file 'disabled nil))
+  #+end_src
 
-  *NOTE:* You *must* require each "hack" plugin individually! You cannot specify
-  a =use-package= macro for the entire =dired-hacks= repository. It was designed
-  this way on purpose.
+* Plugins
+** dired-hacks
+   =dired=hacks= is a collection of =dired= enhancements that aims to be more
+   modular and less bulky than =dired+=.
 
-** dired-hacks-utils
+   *NOTE:* You *must* require each hack plugin individually! You cannot specify
+   a =use-package= macro for the entire =dired-hacks= repository. It was designed
+   this way on purpose.
+
+*** dired-hacks-utils
+    #+begin_src emacs-lisp
+      (use-package dired-hacks-utils)
+    #+end_src
+
+*** dired-filter
+    #+begin_src emacs-lisp
+      (use-package dired-filter
+        :after evil-collection
+        :hook
+        (dired-mode . (lambda ()
+                        (evil-leader/set-key-for-mode 'dired-mode df
+                          dired-filter-map))))
+    #+end_src
+
+*** dired-narrow
+    #+begin_src emacs-lisp
+      (use-package dired-narrow
+        :after evil-collection
+        :hook
+        ((dired-mode . dired-narrow-mode)
+         (dired-mode . (lambda ()
+                         (evil-leader/set-key-for-mode 'dired-mode dn
+                           'dired-narrow-fuzzy)))))
+    #+end_src
+
+*** dired-subtree
+    #+begin_src emacs-lisp
+      (use-package dired-subtree
+        :after evil-collection
+        :bind*
+        (:map dired-mode-map
+              ("<tab>". dired-subtree-toggle)
+              ("<backtab>" . dired-subtree-cycle)))
+    #+end_src
+
+*** dired-avfs
+    #+begin_src emacs-lisp
+      (use-package dired-avfs)
+    #+end_src
+
+*** dired-open
+    #+begin_src emacs-lisp
+      (use-package dired-open)
+    #+end_src
+
+*** dired-rainbow
+    Provides far more customization options for file colors in =dired=.
+
+    #+begin_src emacs-lisp
+      (use-package dired-rainbow
+        :demand t
+        :config
+        (progn
+          (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+          (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm"
+                                                "html" "jhtm" "mht" "eml" "mustache"
+                                                "xhtml"))
+          (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib"
+                                               "json" "msg" "pgn" "rss" "yaml" "yml"
+                                               "rdata"))
+          (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt"
+                                                    "pdb" "pdf" "ps" "rtf" "djvu"
+                                                    "epub" "odp" "ppt" "pptx"))
+          (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md"
+                                                    "mkd" "nfo" "pod" "rst" "tex"
+                                                    "textfile" "txt"))
+          (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db"
+                                                    "mdb" "sqlite" "nc"))
+          (dired-rainbow-define media "#de751f" ("mp3" "mp4" "MP3" "MP4" "avi" "mpeg"
+                                                 "mpg" "flv" "ogg" "mov" "mid" "midi"
+                                                 "wav" "aiff" "flac"))
+          (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg"
+                                                 "jpg" "png" "psd" "eps" "svg"))
+          (dired-rainbow-define log "#c17d11" ("log"))
+          (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh"
+                                                 "vim"))
+          (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t"
+                                                       "msql" "mysql" "pgsql" "sql"
+                                                       "r" "clj" "cljs" "scala" "js"))
+          (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h"
+                                                    "c++" "h++" "hpp" "hxx" "m" "cc"
+                                                    "cs" "cp" "cpp" "go" "f" "for"
+                                                    "ftn" "f90" "f95" "f03" "f08"
+                                                    "s" "rs" "hi" "hs" "pyc" ".java"))
+          (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+          (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz"
+                                                      "gz" "xz" "z" "Z" "jar" "war"
+                                                      "ear" "rar" "sar" "xpi" "apk"
+                                                      "xz" "tar"))
+          (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar"
+                                                    "cab" "pak" "pk3" "vdf" "vpk"
+                                                    "bsp"))
+          (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc"
+                                                     "signature" "sig" "p12" "pem"))
+          (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf"
+                                                 "otf"))
+          (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow"
+                                                     "toast" "vcd" "vmdk" "bak"))
+          (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes"
+                                              "gitmodules"))
+          (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
+    #+end_src
+
+*** dired-ranger
+    Provides welcome additions to =dired= from =ranger=, such as two-stage
+    copy-and-paste and bookmarks.
+
+    #+begin_src emacs-lisp
+      (use-package dired-ranger
+        :bind*
+        (:map dired-mode-map
+              ("C-c C-c" . dired-ranger-copy)
+              ("C-c C-p" . dired-ranger-paste)
+              ("C-c C-m" . dired-ranger-move)
+              ("C-c C-b m" . dired-ranger-bookmark)
+              ("C-c C-b v" . dired-ranger-bookmark-visit)))
+    #+end_src
+
+*** dired-collapse
+    #+begin_src emacs-lisp
+      (use-package dired-collapse
+        :bind
+        (:map dired-mode-map
+              ("C-c C" . dired-collapse-mode)))
+    #+end_src
+
+** peep-dired
+   Preview files if a peep window.
+
    #+begin_src emacs-lisp
-     (use-package dired-hacks-utils)
+     (use-package peep-dired
+       :bind*
+       (:map dired-mode-map
+             ([remap dired-do-print] . peep-dired)))
    #+end_src
 
-** dired-filter
+** dired-k
+   Highlight =dired= buffers with Git information. Inspired by the =k= package
+   for Zsh.
+
    #+begin_src emacs-lisp
-     (use-package dired-filter
+     (use-package dired-k
        :after evil-collection
+       :hook
+       ;; Always activate dired-k when dired buffer opens.
+       (dired-mode . dired-k-no-revert)
+       :init
+       (evil-define-key 'normal dired-mode-map
+         ;; Shortcut for updating dired-k
+         "gK" 'dired-k-no-revert))
+   #+end_src
+
+** dired+
+   Use the improved =dired+= plugin for a better =dired= experience.
+
+   *NOTE:* =dired+= is super slow, so you probably don't want to use
+   it. =dired-hacks= is a more suitable suite of enhancements for most
+   developers.
+
+   #+begin_src emacs-lisp
+     (use-package dired+
+       ;; Too slow to be useful.
+       :disabled
        :hook
        (dired-mode . (lambda ()
-                       (evil-leader/set-key-for-mode 'dired-mode "df"
-                         dired-filter-map))))
+                       ;; Reuse a single dired buffer for each directory visited.
+                       (diredp-toggle-find-file-reuse-dir 1))))
    #+end_src
-
-** dired-narrow
-   #+begin_src emacs-lisp
-     (use-package dired-narrow
-       :after evil-collection
-       :hook
-       ((dired-mode . dired-narrow-mode)
-        (dired-mode . (lambda ()
-                        (evil-leader/set-key-for-mode 'dired-mode "dn"
-                          'dired-narrow-fuzzy)))))
-   #+end_src
-
-** dired-subtree
-   #+begin_src emacs-lisp
-     (use-package dired-subtree
-       :after evil-collection
-       :bind*
-       (:map dired-mode-map
-             ("<tab>". dired-subtree-toggle)
-             ("<backtab>" . dired-subtree-cycle)))
-   #+end_src
-
-** dired-avfs
-   #+begin_src emacs-lisp
-     (use-package dired-avfs)
-   #+end_src
-
-** dired-open
-   #+begin_src emacs-lisp
-     (use-package dired-open)
-   #+end_src
-
-** dired-rainbow
-   Provides far more customization options for file colors in =dired=.
-
-   #+begin_src emacs-lisp
-     (use-package dired-rainbow
-       :demand t
-       :config
-       (progn
-         (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
-         (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm"
-                                               "html" "jhtm" "mht" "eml" "mustache"
-                                               "xhtml"))
-         (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib"
-                                              "json" "msg" "pgn" "rss" "yaml" "yml"
-                                              "rdata"))
-         (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt"
-                                                   "pdb" "pdf" "ps" "rtf" "djvu"
-                                                   "epub" "odp" "ppt" "pptx"))
-         (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md"
-                                                   "mkd" "nfo" "pod" "rst" "tex"
-                                                   "textfile" "txt"))
-         (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db"
-                                                   "mdb" "sqlite" "nc"))
-         (dired-rainbow-define media "#de751f" ("mp3" "mp4" "MP3" "MP4" "avi" "mpeg"
-                                                "mpg" "flv" "ogg" "mov" "mid" "midi"
-                                                "wav" "aiff" "flac"))
-         (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg"
-                                                "jpg" "png" "psd" "eps" "svg"))
-         (dired-rainbow-define log "#c17d11" ("log"))
-         (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh"
-                                                "vim"))
-         (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t"
-                                                      "msql" "mysql" "pgsql" "sql"
-                                                      "r" "clj" "cljs" "scala" "js"))
-         (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h"
-                                                   "c++" "h++" "hpp" "hxx" "m" "cc"
-                                                   "cs" "cp" "cpp" "go" "f" "for"
-                                                   "ftn" "f90" "f95" "f03" "f08"
-                                                   "s" "rs" "hi" "hs" "pyc" ".java"))
-         (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
-         (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz"
-                                                     "gz" "xz" "z" "Z" "jar" "war"
-                                                     "ear" "rar" "sar" "xpi" "apk"
-                                                     "xz" "tar"))
-         (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar"
-                                                   "cab" "pak" "pk3" "vdf" "vpk"
-                                                   "bsp"))
-         (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc"
-                                                    "signature" "sig" "p12" "pem"))
-         (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf"
-                                                "otf"))
-         (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow"
-                                                    "toast" "vcd" "vmdk" "bak"))
-         (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes"
-                                             "gitmodules"))
-         (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
-   #+end_src
-
-** dired-ranger
-   Provides welcome additions to =dired= from =ranger=, such as two-stage
-   copy-and-paste and bookmarks.
-
-   #+begin_src emacs-lisp
-     (use-package dired-ranger
-       :bind*
-       (:map dired-mode-map
-             ("C-c C-c" . dired-ranger-copy)
-             ("C-c C-p" . dired-ranger-paste)
-             ("C-c C-m" . dired-ranger-move)
-             ("C-c C-b m" . dired-ranger-bookmark)
-             ("C-c C-b v" . dired-ranger-bookmark-visit)))
-   #+end_src
-
-** dired-collapse
-   #+begin_src emacs-lisp
-     (use-package dired-collapse
-       :bind
-       (:map dired-mode-map
-             ("C-c C" . dired-collapse-mode)))
-   #+end_src
-
-* peep-dired
-  Preview files if a peep window.
-
-  #+begin_src emacs-lisp
-    (use-package peep-dired
-      :bind*
-      (:map dired-mode-map
-            ([remap dired-do-print] . peep-dired)))
-  #+end_src
-
-* dired-k
-  Highlight =dired= buffers with Git information. Inspired by the =k= package
-  for Zsh.
-
-  #+begin_src emacs-lisp
-    (use-package dired-k
-      :after evil-collection
-      :hook
-      ;; Always activate dired-k when dired buffer opens.
-      (dired-mode . dired-k-no-revert)
-      :init
-      (evil-define-key 'normal dired-mode-map
-        ;; Shortcut for updating dired-k
-        "gK" 'dired-k-no-revert))
-  #+end_src
-
-* dired+
-  Use the improved =dired+= plugin for a better =dired= experience.
-
-  *NOTE:* =dired+= is super slow, so you probably don't want to use
-  it. =dired-hacks= is a more suitable suite of enhancements for most
-  developers.
-
-  #+begin_src emacs-lisp
-    (use-package dired+
-      ;; Too slow to be useful.
-      :disabled
-      :hook
-      (dired-mode . (lambda ()
-                      ;; Reuse a single dired buffer for each directory visited.
-                      (diredp-toggle-find-file-reuse-dir 1))))
-  #+end_src

@@ -441,36 +441,6 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     (setq auto-mode-alist (append '(("/tmp/mutt.*" . message-mode)) auto-mode-alist))
   #+end_src
 
-* Customize Built-in Modes
-  Here we configure built-in major and minor modes to make them more user-friendly.
-
-** dired
-   ~dired~ is Emacs' built in directory editor and file explorer. You invoke the ~dired~
-   command on a directory by using the default key binding ~C-x d~.
-
-   #+begin_src emacs-lisp
-     ;; allow dired to delete or copy dir
-     ;; “always” means no asking
-     ;; “top” means ask once
-     (setq dired-recursive-copies 'always
-           dired-recursive-deletes 'top
-           ;; Copy from one dired buffer to another dired buffer shown
-           ;; in a split window.
-           dired-dwim-target t)
-
-     ;; Allow using 'a' in dired to find file or directory in same buffer.
-     (put 'dired-find-alternate-file 'disabled nil)
-
-     ;; Have 'RET' and '^' open directories in same buffer as current dir by
-     ;; default.
-     ;; This key was dired-advertised-find-file
-     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-     ;; This key was dired-up-directory
-     (define-key dired-mode-map (kbd "^") (lambda ()
-                                            (interactive)
-                                            (find-alternate-file "..")))
-   #+end_src
-
 * Function Definitions
   Custom functions, both standard and interactive.
 
