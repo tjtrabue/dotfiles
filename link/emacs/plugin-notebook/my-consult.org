@@ -117,6 +117,9 @@ myriad systems benefit from Consult's functions.
       ;; Add prompt indicator to `completing-read-multiple'.
       (advice-add #'consult-completing-read-multiple
                   :filter-args #'my/crm-indicator)
+      ;; Set evil-leader shortcuts
+      (evil-leader/set-key
+        "," #'consult-buffer)
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
       :custom
