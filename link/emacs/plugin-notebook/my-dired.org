@@ -52,8 +52,8 @@ This is a Perl based tool, and its installation varies from system to system.
         :after evil-collection
         :hook
         (dired-mode . (lambda ()
-                        (evil-leader/set-key-for-mode 'dired-mode df
-                          dired-filter-map))))
+                        (evil-leader/set-key-for-mode 'dired-mode
+                          "df" dired-filter-map))))
     #+end_src
 
 *** dired-narrow
@@ -63,8 +63,8 @@ This is a Perl based tool, and its installation varies from system to system.
         :hook
         ((dired-mode . dired-narrow-mode)
          (dired-mode . (lambda ()
-                         (evil-leader/set-key-for-mode 'dired-mode dn
-                           'dired-narrow-fuzzy)))))
+                         (evil-leader/set-key-for-mode 'dired-mode
+                           "dn" #'dired-narrow-fuzzy)))))
     #+end_src
 
 *** dired-subtree
