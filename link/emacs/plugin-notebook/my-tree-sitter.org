@@ -40,9 +40,13 @@ highlighting.
 #+end_src
 
 * tree-sitter-indent
-  Indentation support for =tree-sitter=
+  Indentation support for some major modes supported by =tree-sitter=.
 
 #+begin_src emacs-lisp
   (use-package tree-sitter-indent
-    :demand t)
+    :after (tree-sitter tree-sitter-langs)
+    :demand t
+    :hook
+    ;; Turn on tree-sitter-indent in supported major modes.
+    (rust-mode . tree-sitter-indent-mode))
 #+end_src

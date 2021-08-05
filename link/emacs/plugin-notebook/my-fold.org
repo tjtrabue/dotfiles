@@ -28,7 +28,7 @@ category, and it is one of the best representatives.
 
 #+begin_src emacs-lisp
   (use-package vimish-fold
-    :after (evil-collection)
+    :after evil-collection
     :custom
     ;; Where to indicate a fold
     (vimish-fold-indication-mode 'right-fringe)

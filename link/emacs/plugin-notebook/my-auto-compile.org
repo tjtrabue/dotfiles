@@ -4,12 +4,13 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-Automatically compile Emacs Lisp files on save.
+Automatically compile Emacs Lisp files on save and/or load.
 
-* auto-compile
+* =use-package= specification
 
 #+begin_src emacs-lisp
 (use-package auto-compile
+  :demand t
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
