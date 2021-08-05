@@ -23,7 +23,7 @@ it is very simple to do.
       (prog-mode . flycheck-mode)
       :custom
       ;; The allotted time before displaying errors at point.
-      (flycheck-display-errors-delay 0.1)
+      (flycheck-display-errors-delay 0.9)
       ;; How many seconds flycheck waits before checking the buffer.
       ;; Setting this value higher can speed up Emacs.
       (flycheck-idle-change-delay 3)
