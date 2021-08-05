@@ -56,6 +56,7 @@ the_silver_searcher
 tmux
 up
 vlc
+vmtouch
 watch
 wdiff
 wget

@@ -21,4 +21,5 @@ polybar-git
 roswell-git
 transset-df
 up
+vmtouch-git
 yank
