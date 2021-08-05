@@ -21,7 +21,7 @@ This is a Perl based tool, and its installation varies from system to system.
             ("<return>" . dired-find-alternate-file))
       :custom
       ;; Allow dired to delete or copy dir. 'always means no asking, 'top means ask
-      ;; once
+      ;; once.
       (dired-recursive-copies 'always)
       (dired-recursive-deletes 'top)
       ;; Copy from one dired buffer to another dired buffer shown
