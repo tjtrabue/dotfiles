@@ -106,7 +106,7 @@ you want.
       ;; How long company waits before suggesting completions.
       ;; WARNING: Setting this value too low could cause a huge performance
       ;;          bottleneck!
-      (company-idle-delay 0.3)
+      (company-idle-delay 0.2)
       ;; Start suggesting completions after this many characters typed.
       (company-minimum-prefix-length 2)
       ;; Change UI appearance of company
