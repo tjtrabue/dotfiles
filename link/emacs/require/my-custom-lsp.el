@@ -113,6 +113,8 @@ modes, as well as format buffers on save."
                 (setq-local company-minimum-prefix-length 1)
                 ;; Automatically start lsp when you visit a relevant file
                 (lsp-deferred)
+                ;; Enable auto-revert to keep files up to date with filesystem.
+                (auto-revert-mode 1)
                 ;; Format lsp-mode buffers on save.
                 (my-custom-lsp-add-format-on-save-hook mode)))))
     my-custom-lsp-enabled-modes))

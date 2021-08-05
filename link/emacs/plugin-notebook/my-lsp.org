@@ -84,17 +84,6 @@ to the =my-custom-lsp.el= file.
       ;; Redefine lsp command prefix (default is "s-l" which messes with
       ;; most window managers).
       ("C-c l" . lsp-command-map)
-      :bind
-      (:map lsp-command-map
-            ;; Need to bind lsp-treemacs commands here instead of in its own
-            ;; use-package specification because these keybindings do not take
-            ;; if we do that.
-            ("t c" . lsp-treemacs-call-hierarchy)
-            ("t e" . lsp-treemacs-errors-list)
-            ("t i" . lsp-treemacs-implementations)
-            ("t r" . lsp-treemacs-references)
-            ("t s" . lsp-treemacs-symbols)
-            ("t t" . lsp-treemacs-type-hierarchy))
       :init
       (require 'my-custom-lsp)
       ;; Add lsp-mode hooks for major modes.
@@ -167,19 +156,27 @@ to the =my-custom-lsp.el= file.
    #+end_src
 
 ** lsp-treemacs
+   Sync =treemacs= file explorer with the LSP server.
 
    #+begin_src emacs-lisp
      (use-package lsp-treemacs
        :after (lsp-mode treemacs)
-       :commands (lsp-treemacs-errors-list)
+       :commands lsp-treemacs-errors-list
        :hook
-       ((lsp-mode . (lambda ()
-                      ;; Enable bidirectional sync of lsp workspace folders
-                      ;; and treemacs projects.
-                      (lsp-treemacs-sync-mode 1)))
+       ;; Enable bidirectional sync of lsp workspace folders
+       ;; and treemacs projects.
+       ((lsp-mode . lsp-treemacs-sync-mode)
         (java-mode . (lambda ()
                        (define-key lsp-command-map (kbd "t d")
-                         'lsp-treemacs-java-deps-list)))))
+                         'lsp-treemacs-java-deps-list))))
+       :bind
+       (:map lsp-command-map
+             ("t c" . lsp-treemacs-call-hierarchy)
+             ("t e" . lsp-treemacs-errors-list)
+             ("t i" . lsp-treemacs-implementations)
+             ("t r" . lsp-treemacs-references)
+             ("t s" . lsp-treemacs-symbols)
+             ("t t" . lsp-treemacs-type-hierarchy)))
    #+end_src
 
 ** ccls
@@ -320,6 +317,7 @@ to the =my-custom-lsp.el= file.
      (use-package lsp-origami
        :after lsp-mode)
    #+end_src
+
 ** lsp-dart
 
    #+begin_src emacs-lisp
