@@ -89,5 +89,7 @@ world needed another Lisp.
       ;; disable clj-refactor adding ns to blank files.
       ;; This is for interoperability with lsp-mode.
       ;; lsp-mode takes care of this task.
-      (cljr-add-ns-to-blank-clj-files nil))
+      (cljr-add-ns-to-blank-clj-files nil)
+      ;; Whether to warn the user before parsing the AST.
+      (cljr-warn-on-eval nil))
   #+end_src
