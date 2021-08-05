@@ -28,6 +28,9 @@ features absent from the majority of such explorers.
       ;; evil-leader shortcuts
       (evil-leader/set-key
         "tm" 'treemacs)
+      :custom
+      ;; Whether to put an empty line between root nodes.
+      (treemacs-space-between-root-nodes nil)
       :config
       (treemacs-follow-mode t)
       (treemacs-filewatch-mode t)

@@ -102,6 +102,12 @@ to the =my-custom-lsp.el= file.
    #+begin_src emacs-lisp
      (use-package lsp-ui
        :after lsp-mode
+       :hook
+       (lsp-mode .
+                 (lambda ()
+                   (if (bound-and-true-p flycheck-pos-tip-mode)
+                       ;; Turn off flycheck tool tips if they are active.
+                       (flycheck-pos-tip-mode -1))))
        :custom
        ;; How long to wait before showing documentation in a floating window
        (lsp-ui-doc-delay 0.2)
@@ -127,12 +133,7 @@ to the =my-custom-lsp.el= file.
              ("C-j" . lsp-ui-peek--select-next)
              ("C-k" . lsp-ui-peek--select-prev)
              ("M-j" . lsp-ui-peek--select-next-file)
-             ("M-k" . lsp-ui-peek--select-prev-file))
-       :config
-       (add-hook 'lsp-mode-hook (lambda ()
-                                    ;; Turn off flycheck tool tips if they are active.
-                                    (if (bound-and-true-p flycheck-pos-tip-mode)
-                                        (flycheck-pos-tip-mode -1)))))
+             ("M-k" . lsp-ui-peek--select-prev-file)))
    #+end_src
 
 ** lsp-haskell
@@ -150,9 +151,7 @@ to the =my-custom-lsp.el= file.
 
    #+begin_src emacs-lisp
      (use-package lsp-java
-       :after lsp-mode
-       :hook
-       (java-mode . lsp))
+       :after lsp-mode)
    #+end_src
 
 ** lsp-treemacs

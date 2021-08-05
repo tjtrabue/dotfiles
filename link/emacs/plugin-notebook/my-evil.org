@@ -451,14 +451,20 @@ to =nil=, so this may help you.
 
 *** Functions
     #+begin_src emacs-lisp
+      (defun my/lispyville-wrap-round-and-insert (arg)
+        "Call `lispy-parens' with a default ARG of 1 and enter `evil-insert-state'."
+        (interactive "P")
+        (lispy-wrap-round (or arg 1))
+        (evil-insert-state))
+
       (defun my/set-lispyville-leader-keys ()
         "Set `evil-leader' keybindings for all lispy modes."
         (mapcar (lambda (mode)
-                  (let ((evil-leader-lispy-keys-alist '(("l(" . lispyville-wrap-round)
+                  (let ((evil-leader-lispy-keys-alist '(("l(" . lispy-wrap-round)
                                                         ("l)" . lispyville-wrap-round)
-                                                        ("l[" . lispyville-wrap-brackets)
+                                                        ("l[" . lispy-wrap-brackets)
                                                         ("l]" . lispyville-wrap-brackets)
-                                                        ("l{" . lispyville-wrap-braces)
+                                                        ("l{" . lispy-wrap-braces)
                                                         ("l}" . lispyville-wrap-braces)
                                                         ("l<" . lispyville-<)
                                                         ("l>" . lispyville->)
@@ -481,6 +487,7 @@ to =nil=, so this may help you.
                                                         ("lr" . lispy-raise-sexp)
                                                         ("ls" . lispy-split)
                                                         ("lt" . transpose-sexps)
+                                                        ("lw" . my/lispyville-wrap-round-and-insert)
                                                         ("ly" . lispy-new-copy))))
                     (mapcar (lambda (element)
                               (let ((key (car element))
@@ -506,9 +513,6 @@ to =nil=, so this may help you.
             ;; List navigation
             "(" #'lispyville-backward-up-list
             ")" #'lispyville-up-list
-            ;; Use H and L to move across s-exps
-            "H" #'lispyville-backward-sexp
-            "L" #'lispyville-forward-sexp
             ;; Make "J" into the safe join operator in Lisp modes
             "J" #'lispyville-join
             ;; Adapt ace-style jump commands for lispy.
