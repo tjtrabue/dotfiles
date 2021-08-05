@@ -454,7 +454,7 @@ to =nil=, so this may help you.
       (defun my/lispyville-wrap-round-and-insert (arg)
         "Call `lispy-parens' with a default ARG of 1 and enter `evil-insert-state'."
         (interactive "P")
-        (lispy-wrap-round (or arg 1))
+        (lispy-parens (or arg 1))
         (evil-insert-state))
 
       (defun my/set-lispyville-leader-keys ()
