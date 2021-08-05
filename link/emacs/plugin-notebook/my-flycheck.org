@@ -17,14 +17,19 @@ it is very simple to do.
   predictable locations. Run =hunspell -D= to view the path =hunspell= uses to
   find dictionaries, which is different depending on your operating system.
 
-#+begin_src emacs-lisp
-  (use-package flycheck
-    :hook
-    (prog-mode . flycheck-mode)
-    :custom
-    ;; The allotted time before displaying errors at point.
-    (flycheck-display-errors-delay 0.1))
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package flycheck
+      :hook
+      (prog-mode . flycheck-mode)
+      :custom
+      ;; The allotted time before displaying errors at point.
+      (flycheck-display-errors-delay 0.1)
+      ;; How many seconds flycheck waits before checking the buffer.
+      ;; Setting this value higher can speed up Emacs.
+      (flycheck-idle-change-delay 3)
+      ;; Highlight whole line instead of symbol to speed up flycheck.
+      (flycheck-highlighting-mode 'lines))
+  #+end_src
 
 * flyspell
   =flyspell= is =flycheck='s companion spell-checker plugin. Where =flycheck=
@@ -71,91 +76,99 @@ it is very simple to do.
 
 * Plugins
 ** flycheck-cask
-#+begin_src emacs-lisp
-(use-package flycheck-cask
-  :after (flycheck))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-cask
+       :after flycheck
+       :hook
+       (flycheck-mode . flycheck-cask-setup))
+   #+end_src
 
 ** flycheck-clojure
 
-#+begin_src emacs-lisp
-(use-package flycheck-clojure
-  :after flycheck)
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-clojure
+       :after flycheck
+       :hook
+       (clojure-mode . flycheck-clojure-setup))
+   #+end_src
 
 ** flycheck-haskell
-#+begin_src emacs-lisp
-(use-package flycheck-haskell
-  :after flycheck)
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-haskell
+       :after flycheck
+       :hook
+       (haskell-mode . flycheck-haskell-setup))
+   #+end_src
 
 ** flycheck-inline
    Shows Flycheck output inline right beneath their reporting location.  This is
    an alternative to =flycheck-pos-tip=. I tend to like =flycheck-pos-tip=
    better, though.
 
-#+begin_src emacs-lisp
-  ;; (use-package flycheck-inline
-  ;;   :after (flycheck quick-peek)
-  ;;   :hook
-  ;;   (flycheck-mode . flycheck-inline-mode))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-inline
+       :disabled
+       :after (flycheck quick-peek)
+       :hook
+       (flycheck-mode . flycheck-inline-mode))
+   #+end_src
 
 ** flycheck-package
    Check Emacs Lisp packages for common errors.
 
-#+begin_src emacs-lisp
-  (use-package flycheck-package
-    :after flycheck
-    :config
-    (flycheck-package-setup))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-package
+       :after flycheck
+       :config
+       (flycheck-package-setup))
+   #+end_src
 
 ** flycheck-pkg-config
    Allows Flycheck to use =pkg-config= when determining C/C++ library headers.
 
-#+begin_src emacs-lisp
-  (use-package flycheck-pkg-config
-    :after flycheck)
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-pkg-config
+       :after flycheck)
+   #+end_src
 
 ** flycheck-pos-tip
    Shows the error at point in a =pos-tip= graphical popup.
 
-#+begin_src emacs-lisp
-  (use-package flycheck-pos-tip
-    :after flycheck
-    :hook
-    (flycheck-mode . (lambda ()
-     ;; Put errors in tooltips if we're not in lsp-mode, since lsp-mode
-     ;; does its own thing and doing so would cause duplication.
-     (if (not (bound-and-true-p lsp-mode))
-      (flycheck-pos-tip-mode 1)))))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-pos-tip
+       :after flycheck
+       :hook
+       (flycheck-mode . (lambda ()
+                          ;; Put errors in tooltips if we're not in lsp-mode, since
+                          ;; lsp-mode does its own thing and doing so would cause
+                          ;; duplication.
+                          (if (not (bound-and-true-p lsp-mode))
+                              (flycheck-pos-tip-mode 1)))))
+   #+end_src
 
 ** flycheck-relint
    Checks regular expression syntax.
 
-#+begin_src emacs-lisp
-(use-package flycheck-relint
-  :after flycheck
-  :config
-  (flycheck-relint-setup))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-relint
+       :after flycheck
+       :config
+       (flycheck-relint-setup))
+   #+end_src
 
 ** flycheck-rust
 
-#+begin_src emacs-lisp
-(use-package flycheck-rust
-  :after flycheck)
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-rust
+       :after flycheck)
+   #+end_src
 
 ** flycheck-status-emoji
    Replaces standard Flycheck indicators with expressive emojis.
 
-#+begin_src emacs-lisp
-  (use-package flycheck-status-emoji
-    :after flycheck
-    :hook
-    (flycheck-mode . flycheck-status-emoji-mode))
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package flycheck-status-emoji
+       :after flycheck
+       :hook
+       (flycheck-mode . flycheck-status-emoji-mode))
+   #+end_src

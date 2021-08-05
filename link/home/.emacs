@@ -19,6 +19,13 @@
   gc-cons-percentage 0.6
   file-name-handler-alist nil)
 
+;; JIT settings to speed up startup.
+;; https://tychoish.com/post/towards-faster-emacs-start-times/
+(setq jit-lock-stealth-time nil)
+(setq jit-lock-defer-time nil)
+(setq jit-lock-defer-time 0.05)
+(setq jit-lock-stealth-load 200)
+
 ;;; NOTE REGARDING BYTE COMPILING CONFIG FILES:
 ;; In general, I have observed that attempting to load compiled Elisp files is
 ;; much, much slower than simply interpreting their corresponding .el files at
