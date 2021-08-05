@@ -226,6 +226,30 @@ to =nil=, so this may help you.
        (define-key evil-insert-state-map (kbd "C-k") nil))
    #+end_src
 
+** evil-escape
+   Use key sequences to /escape/ from stock evil states and return to evil's
+   normal state. This allows us to do things like typing "jk" to return to
+   evil's normal state from insert state.
+
+   #+begin_src emacs-lisp
+     (use-package evil-escape
+       ;; Using key-chord seems to work better.
+       :disabled
+       :after evil-collection
+       :demand t
+       :init
+       ;; The key sequence used to return to evil's normal state.
+       (setq-default evil-escape-key-sequence "jk")
+       ;; How long after the last key press evil-escape should wait before performing
+       ;; the key's default function.
+       ;; Default: 0.1
+       ;; You should probably set this to 0.2 if your escape key sequence is the same
+       ;; character typed twice in a row.
+       (setq-default evil-escape-delay 0.1)
+       ;; Activate evil-escape globally.
+       (evil-escpae-mode 1))
+   #+end_src
+
 ** evil-surround
    #+begin_src emacs-lisp
      (use-package evil-surround
