@@ -59,8 +59,19 @@ world needed another Lisp.
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
       (nrepl-log-messages nil)
+      ;; Don't use font-locking for REPL input and results.
+      (cider-repl-use-clojure-font-lock nil)
       ;; Colorize defined symbols of the following types:
       (cider-font-lock-dynamically '(macro core function var))
+      ;; Set character size limit after which the REPL buffer will be trimmed.
+      (cider-repl-buffer-size-limit 100000)
+      ;; Wrap around REPL input history.
+      (cider-repl-wrap-history t)
+      ;; Max number of inputs held in history.
+      (cider-repl-history-size 1000)
+      ;; File for storing CIDER REPL history.
+      (cider-repl-history-file
+       (file-truename (concat user-emacs-directory "cider-repl-hist")))
       ;; Turn off hover documentation since lsp-mode provides a better alternative.
       (cider-eldoc-display-for-symbol-at-point nil)
       ;; CIDER will try to add expected function arguments based on the current
