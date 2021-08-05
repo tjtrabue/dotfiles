@@ -237,17 +237,18 @@ to =nil=, so this may help you.
        :disabled
        :after evil-collection
        :demand t
-       :init
+       :custom
        ;; The key sequence used to return to evil's normal state.
-       (setq-default evil-escape-key-sequence "jk")
+       (evil-escape-key-sequence "jk")
        ;; How long after the last key press evil-escape should wait before performing
        ;; the key's default function.
        ;; Default: 0.1
        ;; You should probably set this to 0.2 if your escape key sequence is the same
        ;; character typed twice in a row.
-       (setq-default evil-escape-delay 0.1)
+       (evil-escape-delay 0.1)
+       :config
        ;; Activate evil-escape globally.
-       (evil-escpae-mode 1))
+       (evil-escape-mode +1))
    #+end_src
 
 ** evil-surround
