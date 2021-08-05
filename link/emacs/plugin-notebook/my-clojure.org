@@ -56,8 +56,8 @@ world needed another Lisp.
       (nrepl-log-messages nil)
       ;; Colorize defined symbols of the following types:
       (cider-font-lock-dynamically '(macro core function var))
-      ;; Always show Eldoc documentation for symbol at point
-      (cider-eldoc-display-for-symbol-at-point t)
+      ;; Turn off hover documentation since lsp-mode provides a better alternative.
+      (cider-eldoc-display-for-symbol-at-point nil)
       ;; CIDER will try to add expected function arguments based on the current
       ;; context (for example for the datomic.api/q function where it will show the
       ;; expected inputs of the query at point) if this is set to t
@@ -74,9 +74,15 @@ world needed another Lisp.
   #+begin_src emacs-lisp
     (use-package clj-refactor
       :hook
-      (clojure-mode . (lambda ()
-                        (clj-refactor-mode 1)
-                        ;; This choice of keybinding leaves cider-macroexpand-1
-                        ;; unbound
-                        (cljr-add-keybindings-with-prefix "C-c C-m"))))
+      (clojure-mode .
+                    (lambda ()
+                      (clj-refactor-mode 1)
+                      ;; This choice of keybinding leaves cider-macroexpand-1
+                      ;; unbound
+                      (cljr-add-keybindings-with-prefix "C-c C-m")))
+      :custom
+      ;; disable clj-refactor adding ns to blank files.
+      ;; This is for interoperability with lsp-mode.
+      ;; lsp-mode takes care of this task.
+      (cljr-add-ns-to-blank-clj-files nil))
   #+end_src

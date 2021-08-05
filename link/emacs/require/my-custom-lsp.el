@@ -48,6 +48,8 @@ for any programming language that supports a formatting tool.")
 (defvar my-custom-lsp-enabled-modes '(c++-mode
                                        c-mode
                                        clojure-mode
+                                       clojurec-mode
+                                       clojurescript-mode
                                        cmake-mode
                                        cperl-mode
                                        css-mode
@@ -103,13 +105,17 @@ modes, as well as format buffers on save."
   (mapc (lambda (mode)
           ;; This is necessary for providing closure-like behavior
           (lexical-let ((mode mode)
-                        (hook-name (concat (symbol-name mode) "-hook")))
-            (add-hook (intern hook-name) (lambda ()
-                                           ;; Automatically start lsp when you visit a relevant file
-                                           (lsp-deferred)
-                                           ;; Format lsp-mode buffers on save.
-                                           (my-custom-lsp-add-format-on-save-hook mode)))))
-        my-custom-lsp-enabled-modes))
+                         (hook-name (concat (symbol-name mode) "-hook")))
+            (add-hook (intern hook-name)
+              (lambda ()
+                ;; Shorten company prefix since LSP servers are very
+                ;; efficient backends.
+                (setq-local company-minimum-prefix-length 1)
+                ;; Automatically start lsp when you visit a relevant file
+                (lsp-deferred)
+                ;; Format lsp-mode buffers on save.
+                (my-custom-lsp-add-format-on-save-hook mode)))))
+    my-custom-lsp-enabled-modes))
 
 ;;;###autoload
 (defun my-custom-lsp-check-lsp-enabled-for-mode-p (mode &optional all &rest modes)

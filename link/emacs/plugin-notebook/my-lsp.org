@@ -55,6 +55,8 @@ to the =my-custom-lsp.el= file.
       (lsp-idle-delay 0.000)
       ;; Whether to perform code formatting while typing
       (lsp-enable-on-type-formatting t)
+      ;; Automatically enable lenses if the server supports them.
+      (lsp-lens-enable t)
       ;;; bash-language-server
       (lsp-bash-highlight-parsing-errors t)
       ;;; clangd
