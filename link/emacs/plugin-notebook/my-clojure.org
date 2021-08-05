@@ -34,7 +34,12 @@ world needed another Lisp.
       (with-eval-after-load "cider-repl"
         ;; Get rid of horrendous "," shortcut
         (define-key cider-repl-mode-map (kbd ",") nil)
-        ;; Define useful key-chords:
+        ;; Standard evil-mode shortcuts.
+        (evil-define-key '(normal insert) cider-repl-mode-map
+          ;; Cycle command input history with C-j and C-k.
+          (kbd "C-j") #'cider-repl-next-input
+          (kbd "C-k") #'cider-repl-previous-input)
+        ;; Define useful evil-leader shortcuts.
         (evil-leader/set-key-for-mode 'cider-repl-mode
           "," #'cider-repl-handle-shortcut)))
   #+end_src
