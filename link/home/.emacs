@@ -13,10 +13,11 @@
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
 ;; They will be reset later on to further optimize our experience.
-(defvar last-file-name-handler-alist file-name-handler-alist)
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.6
-      file-name-handler-alist nil)
+(defvar last-file-name-handler-alist file-name-handler-alist
+  "Name of the `file-name-handler-alist' that was set to nil during startup.")
+(setq gc-cons-threshold most-positive-fixnum
+  gc-cons-percentage 0.6
+  file-name-handler-alist nil)
 
 ;;; NOTE REGARDING BYTE COMPILING CONFIG FILES:
 ;; In general, I have observed that attempting to load compiled Elisp files is

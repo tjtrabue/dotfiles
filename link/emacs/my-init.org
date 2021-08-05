@@ -630,13 +630,15 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
    These run after loading init files and handling the command line.
 
    #+begin_src emacs-lisp
-     ;; after startup, it is important you reset this to some reasonable default. A
-     ;; large gc-cons-threshold will cause freezing and stuttering during long-term
-     ;; interactive use. I find these are nice defaults:
-     (add-hook 'emacs-startup-hook (lambda ()
-                                     (setq gc-cons-threshold (* 100 1024 1024)
-                                           gc-cons-percentage 0.1
-                                           file-name-handler-alist last-file-name-handler-alist)))
+     (add-hook 'emacs-startup-hook
+               (lambda ()
+                 ;; After startup, it is important you reset the garbage collector
+                 ;; settings to some reasonable defaults. A large gc-cons-threshold
+                 ;; will cause freezing and stuttering during long-term interactive
+                 ;; use. I find these are nice defaults:
+                 (setq gc-cons-threshold (expt 2 23)
+                       gc-cons-percentage 0.1
+                       file-name-handler-alist last-file-name-handler-alist)))
    #+end_src
 
 ** minibuffer-setup hooks
