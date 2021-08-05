@@ -38,7 +38,9 @@ world needed another Lisp.
         (evil-define-key '(normal insert) cider-repl-mode-map
           ;; Cycle command input history with C-j and C-k.
           (kbd "C-j") #'cider-repl-next-input
-          (kbd "C-k") #'cider-repl-previous-input)
+          (kbd "C-k") #'cider-repl-previous-input
+          ;; Browse REPL input history.
+          (kbd "C-r") #'cider-repl-history)
         ;; Define useful evil-leader shortcuts.
         (evil-leader/set-key-for-mode 'cider-repl-mode
           "," #'cider-repl-handle-shortcut)))
