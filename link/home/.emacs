@@ -47,8 +47,8 @@
 (with-eval-after-load "ob-emacs-lisp"
   ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
   (setq org-babel-default-header-args:emacs-lisp
-        '((:lexical . t)
-          (:tangle . "yes"))))
+    '((:lexical . t)
+       (:tangle . "yes"))))
 
 ;; Define and set variables
 (eval-when-compile
@@ -58,16 +58,16 @@
     "tjtrabue's dotfiles repository directory which houses the primary
   Emacs config.")
   (defconst my/dotfiles-emacs-dir (file-truename (concat my/dotfiles-dir
-                                                         "/link/emacs"))
+                                                   "/link/emacs"))
     "Main Emacs directory in tjtrabue's dotfiles repository.")
   (defconst my/emacsrc (file-truename (concat (getenv "HOME") "/.emacs"))
     "The main Emacs config file in the user's home directory.")
   (defconst my/main-emacs-init-org (file-truename
-                                    (concat my/dotfiles-emacs-dir
-                                            "/my-init.org"))
+                                     (concat my/dotfiles-emacs-dir
+                                       "/my-init.org"))
     "My primary Emacs configuration file in `org-mode' syntax.")
   (defconst my/main-emacs-init-el (car (org-babel-tangle-file
-                                        my/main-emacs-init-org))
+                                         my/main-emacs-init-org))
     "My tangled Emacs configuration file created from `my/main-emacs-init-org'.")
   (defconst my/main-emacs-init-elc (byte-compile-dest-file my/main-emacs-init-el)
     "My compiled Emacs configuration file byte-compiled from
