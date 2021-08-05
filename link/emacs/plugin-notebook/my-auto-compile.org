@@ -12,6 +12,6 @@ Automatically compile Emacs Lisp files on save and/or load.
 (use-package auto-compile
   :demand t
   :config
-  (auto-compile-on-load-mode)
-  (auto-compile-on-save-mode))
+  (auto-compile-on-load-mode 1)
+  (auto-compile-on-save-mode 1))
 #+end_src
