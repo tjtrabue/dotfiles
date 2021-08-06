@@ -76,6 +76,7 @@ straight_update_repos() {
   local defaultBranch
   local repo
   local d
+  local i
 
   if [ ! -d "${straightHome}" ]; then
     err "No straight directory found under ${emacsHome}"
@@ -108,8 +109,19 @@ straight_update_repos() {
         log_info "Switching to branch: ${GREEN}${defaultBranch}${NC}"
         git -C "${d}" checkout -f "${defaultBranch}"
       fi
-      # Update the repo regardless of which branch it was previously on.
-      git -C "${d}" pull
+
+      # Make three attempts to update each repo.
+      # After the third failed attempt, print an error message.
+      for i in 1..3; do
+        # Update the repo regardless of which branch it was previously on.
+        if git -C "${d}" pull; then
+          # If we successfully updated the repo, break out of the loop.
+          break
+        elif [ "$i" -eq 3 ]; then
+          err "Could not update repository: ${BLUE}${repo}${NC}"
+        fi
+        warn "Failed to update repo ${BLUE}${repo}${NC}; trying again..."
+      done
     fi
   done
 }

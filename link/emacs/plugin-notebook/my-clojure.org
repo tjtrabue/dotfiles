@@ -26,6 +26,9 @@ world needed another Lisp.
   An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
   Lisp.
 
+  To start a CIDER REPL session, press =C-c C-x j j= from inside a Clojure
+  buffer.
+
 ** Functions
   #+begin_src emacs-lisp
     (defun my/set-cider-repl-keybindings ()
@@ -52,19 +55,17 @@ world needed another Lisp.
       :after evil-collection
       :hook
       (clojure-mode . cider-mode)
-      :bind
-      (:map cider-mode-map
-            ;; Start CIDER REPL
-            ("C-c C-n" . cider-jack-in))
       :custom
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
-      (nrepl-log-messages nil)
+      (nrepl-log-messages t)
       ;; Don't use font-locking for REPL input and results.
       (cider-repl-use-clojure-font-lock nil)
       ;; Colorize defined symbols of the following types:
-      (cider-font-lock-dynamically '(macro core function var))
+      ;; (cider-font-lock-dynamically '(macro core function var))
+      ;; Whether to pretty-print REPL output
+      (cider-repl-use-pretty-printing t)
       ;; Window startup behavior for the REPL.
       ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
       (cider-repl-pop-to-buffer-on-connect 'display-only)
