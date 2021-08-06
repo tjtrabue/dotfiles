@@ -56,6 +56,16 @@ world needed another Lisp.
       :hook
       (clojure-mode . cider-mode)
       :custom
+      ;; Which printing function CIDER uses under the hood to print output.
+      ;; pprint (default): clojure.pprint/pprint
+      ;; pr:               clojure.core/pr
+      ;; fipp:             Fast Idiomatic Pretty Printer, which is 5-10 times faster
+      ;;                   than pprint.
+      ;; puget:            Puget is canonical serialization of data on top of fipp,
+      ;;                   but is slightly slower.
+      ;; zprint:           Fast and flexible alternative to the libraries mentioned
+      ;;                   above.
+      (cider-print-fn 'fipp)
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
@@ -70,6 +80,8 @@ world needed another Lisp.
       ;; Window startup behavior for the REPL.
       ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
       (cider-repl-pop-to-buffer-on-connect 'display-only)
+      ;; Prefix string for results of REPL evaluation
+      (cider-repl-result-prefix "=>")
       ;; Set character size limit after which the REPL buffer will be trimmed.
       (cider-repl-buffer-size-limit 100000)
       ;; Wrap around REPL input history.
@@ -85,6 +97,14 @@ world needed another Lisp.
       ;; context (for example for the datomic.api/q function where it will show the
       ;; expected inputs of the query at point) if this is set to t
       (cider-eldoc-display-context-dependent-info t)
+      ;; How to go about saving files on an ns refresh.
+      (cider-ns-save-files-on-refresh t)
+      ;; Whether to prefer local resources as opposed to remote, or TRAMP resouces,
+      ;; if local resources are available.
+      (cider-prefer-local-resources t)
+      ;; Whether to save a file when CIDER loads its buffer.
+      ;; 'prompt means to prompt, t means always save, nil means never save.
+      (cider-save-file-on-load t)
       :config
       (my/set-cider-repl-keybindings))
   #+end_src
