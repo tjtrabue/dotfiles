@@ -56,7 +56,9 @@ world needed another Lisp.
 
     (defun my/get-list-as-lein-artifact (lein-artifact-alist)
       "Turn LEIN-ARTIFACT-ALIST into a string representing a lein artifact."
-      (shell-quote-argument (format "[%s %S]" (car lein-artifact-alist) (cdr lein-artifact-alist))))
+      (let ((dep (car lein-artifact-alist))
+            (dep-version (cdr lein-artifact-alist)))
+        (shell-quote-argument (format "[%s %S]" dep dep-version))))
 
     (defun my/get-cider-lein-deps ()
       "Return a shell-quoted string of all extra lein dependencies for CIDER."
@@ -132,7 +134,8 @@ world needed another Lisp.
       ;; Whether to save a file when CIDER loads its buffer.
       ;; 'prompt means to prompt, t means always save, nil means never save.
       (cider-save-file-on-load t)
-      ;; Extra paramters to pass to lein.
+      ;; Extra paramters to pass to lein, such as dependencies and plugins,
+      ;; as well as the final repl command..
       (cider-lein-parameters (my/get-cider-lein-parameters))
       :config
       (my/set-cider-repl-keybindings))
