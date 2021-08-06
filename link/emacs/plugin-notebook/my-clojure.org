@@ -60,13 +60,15 @@ world needed another Lisp.
 
     (defun my/get-cider-lein-deps ()
       "Return a shell-quoted string of all extra lein dependencies for CIDER."
-      (seq-reduce (lambda (acc element)
-                    (concat acc
-                            "update-in :dependencies conj "
-                            (my/get-list-as-lein-artifact element)
-                            " -- "))
-                  my/extra-cider-jack-in-deps
-                  ""))
+      (let ((dep-designator "update-in :dependencies conj ")
+            (arg-separator " -- "))
+        (seq-reduce (lambda (acc element)
+                      (concat acc
+                              dep-designator
+                              (my/get-list-as-lein-artifact element)
+                              arg-separator))
+                    my/extra-cider-jack-in-deps
+                    "")))
 
     (defun my/get-cider-lein-parameters ()
       "Return string of paramters to pass to lein."
