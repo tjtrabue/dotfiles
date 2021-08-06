@@ -5,7 +5,7 @@
 dot="${HOME}/.dotfiles"
 emd="${HOME}/.emacs.d"
 ws="${HOME}/workspace"
-prac="${ws}/practice"
+prac="${HOME}/practice"
 apps="${HOME}/applications"
 arch="${apps}/archives"
 dl="${HOME}/Downloads"
