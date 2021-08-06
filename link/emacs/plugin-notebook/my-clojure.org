@@ -59,7 +59,7 @@ world needed another Lisp.
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
-      (nrepl-log-messages t)
+      (nrepl-log-messages nil)
       ;; Don't use font-locking for REPL input and results.
       (cider-repl-use-clojure-font-lock nil)
       ;; Colorize defined symbols of the following types:

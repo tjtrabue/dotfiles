@@ -374,10 +374,10 @@ tre() {
     # installed.
     treeCmd="colorls --tree --color=always ${*}"
   elif [ -x "$(command -v exa)" ]; then
-    treeCmd="exa --tree -a --color=always --git-ignore -I ${ignorePatterns} ${*}"
+    treeCmd="exa --tree -a --color=always --git-ignore -I '${ignorePatterns}' ${*}"
   elif [ -x "$(command -v tree)" ]; then
     # Use standard tree command
-    treeCmd="tree -aC -I ${ignorePatterns} --dirsfirst ${*}"
+    treeCmd="tree -aC -I '${ignorePatterns}' --dirsfirst ${*}"
   else
     err "No tree command available."
     return 1
