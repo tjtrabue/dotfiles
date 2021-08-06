@@ -60,10 +60,11 @@ world needed another Lisp.
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
       (nrepl-log-messages nil)
-      ;; Don't use font-locking for REPL input and results.
+      ;; Whether to use font-locking for REPL input and results.
       (cider-repl-use-clojure-font-lock nil)
-      ;; Colorize defined symbols of the following types:
+      ;; How to colorize defined symbols of the following types:
       ;; (cider-font-lock-dynamically '(macro core function var))
+      (cider-font-lock-dynamically nil)
       ;; Whether to pretty-print REPL output
       (cider-repl-use-pretty-printing t)
       ;; Window startup behavior for the REPL.
