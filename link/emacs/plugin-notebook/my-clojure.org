@@ -29,6 +29,12 @@ world needed another Lisp.
   To start a CIDER REPL session, press =C-c C-x j j= from inside a Clojure
   buffer.
 
+** Variables
+   #+begin_src emacs-lisp
+     (defvar my/extra-cider-jack-in-deps '(("zprint" . "1.1.2"))
+       "AList of extra dependencies for CIDER to install upon jack-in.")
+   #+end_src
+
 ** Functions
   #+begin_src emacs-lisp
     (defun my/set-cider-repl-keybindings ()
@@ -47,6 +53,25 @@ world needed another Lisp.
         ;; Define useful evil-leader shortcuts.
         (evil-leader/set-key-for-mode 'cider-repl-mode
           "," #'cider-repl-handle-shortcut)))
+
+    (defun my/get-list-as-lein-artifact (lein-artifact-alist)
+      "Turn LEIN-ARTIFACT-ALIST into a string representing a lein artifact."
+      (shell-quote-argument (format "[%s %S]" (car lein-artifact-alist) (cdr lein-artifact-alist))))
+
+    (defun my/get-cider-lein-deps ()
+      "Return a shell-quoted string of all extra lein dependencies for CIDER."
+      (seq-reduce (lambda (acc element)
+                    (concat acc
+                            "update-in :dependencies conj "
+                            (my/get-list-as-lein-artifact element)
+                            " -- "))
+                  my/extra-cider-jack-in-deps
+                  ""))
+
+    (defun my/get-cider-lein-parameters ()
+      "Return string of paramters to pass to lein."
+      (let ((default-params "repl :headless :host localhost"))
+        (concat (my/get-cider-lein-deps) default-params)))
   #+end_src
 
 ** =use-package= specification
@@ -64,14 +89,16 @@ world needed another Lisp.
       ;; puget:            Puget is canonical serialization of data on top of fipp,
       ;;                   but is slightly slower.
       ;; zprint:           Fast and flexible alternative to the libraries mentioned
-      ;;                   above.
-      (cider-print-fn 'fipp)
+      ;;                   above. Highly configurable, but requires you to specify
+      ;;                   zprint as a depdency either in your cider jack-in init
+      ;;                   command, or in your project dependencies file.
+      (cider-print-fn 'zprint)
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
       (nrepl-log-messages nil)
       ;; Whether to use font-locking for REPL input and results.
-      (cider-repl-use-clojure-font-lock nil)
+      (cider-repl-use-clojure-font-lock t)
       ;; How to colorize defined symbols of the following types:
       ;; (cider-font-lock-dynamically '(macro core function var))
       (cider-font-lock-dynamically nil)
@@ -81,7 +108,7 @@ world needed another Lisp.
       ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
       (cider-repl-pop-to-buffer-on-connect 'display-only)
       ;; Prefix string for results of REPL evaluation
-      (cider-repl-result-prefix "=>")
+      (cider-repl-result-prefix " => ")
       ;; Set character size limit after which the REPL buffer will be trimmed.
       (cider-repl-buffer-size-limit 100000)
       ;; Wrap around REPL input history.
@@ -97,14 +124,14 @@ world needed another Lisp.
       ;; context (for example for the datomic.api/q function where it will show the
       ;; expected inputs of the query at point) if this is set to t
       (cider-eldoc-display-context-dependent-info t)
-      ;; How to go about saving files on an ns refresh.
-      (cider-ns-save-files-on-refresh t)
       ;; Whether to prefer local resources as opposed to remote, or TRAMP resouces,
       ;; if local resources are available.
       (cider-prefer-local-resources t)
       ;; Whether to save a file when CIDER loads its buffer.
       ;; 'prompt means to prompt, t means always save, nil means never save.
       (cider-save-file-on-load t)
+      ;; Extra paramters to pass to lein.
+      (cider-lein-parameters (my/get-cider-lein-parameters))
       :config
       (my/set-cider-repl-keybindings))
   #+end_src

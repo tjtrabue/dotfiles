@@ -21,7 +21,8 @@ regardless of its particular dialect.
       :hook
       ;; Load lispyj-mode for any LISP derived major mode.
       ;; IELM is the Emacs Lisp REPL.
-      ((clojure-mode
+      ((cider-repl-mode
+        clojure-mode
         emacs-lisp-mode
         ielm-mode
         lisp-mode
