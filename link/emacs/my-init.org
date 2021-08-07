@@ -310,8 +310,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
   #+begin_src emacs-lisp
     (let (;; Get desired frame height and width as fraction of total monitor size.
-          (frame-height-pixels (truncate (* (display-pixel-height) 0.85)))
-          (frame-width-pixels (truncate (* (display-pixel-width) 0.97))))
+          (frame-height-pixels (truncate (* (display-pixel-height) 0.87)))
+          (frame-width-pixels (truncate (* (display-pixel-width) 0.99))))
       (when (eq system-type 'darwin)
         ;; Adjust default frame size on macOS.
         (setq initial-frame-alist `((height . (text-pixels . ,frame-height-pixels))
