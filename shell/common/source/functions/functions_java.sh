@@ -85,12 +85,15 @@ merge_sdkman_config() {
     return 1
   fi
 
-  # Remove duplicates from the combined contents of both config files and write
-  # the output to a temp file.
+  # It's important to list the dotfiles sdkman config file BEFORE the
+  # ~/.sdkman/etc/config file because the lines of the first file will take
+  # precedence over those of succeeding files.
   cat "${dotfilesSdkConfig}" "${homeSdkConfig}" | rmduplines >"${sdkMergedTmp}"
+
   # Replace the contents of the ~/.sdkman/etc/config file with those of the temp
   # file.
   mv "${sdkMergedTmp}" "${homeSdkConfig}"
+
   # Delete the temp file.
   rm -f "${sdkMergedTmp}"
 }
