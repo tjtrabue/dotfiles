@@ -42,10 +42,16 @@ offering you relevant actions to use on a target determined by the context:
     (use-package embark
       :after evil-collection
       :demand t
+      :hook
+      (embark-collect-mode . (lambda ()
+                               ;; Disable whitespace mode for embark modes
+                               (setq-local show-trailing-whitespace nil)
+                               (whitespace-mode -1)))
       :bind
       (("C-M-k" . embark-act)
        ("C-M-." . embark-dwim)
-       ("C-h E" . embark-bindings)) ;; alternative for `describe-bindings'
+       ;; alternative for `describe-bindings'
+       ("C-h E" . embark-bindings))
       :init
       ;; Optionally replace the key help with a completing-read interface
       (setq prefix-help-command #'embark-prefix-help-command)
@@ -65,7 +71,10 @@ offering you relevant actions to use on a target determined by the context:
       (add-to-list 'display-buffer-alist
                    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                      nil
-                     (window-parameters (mode-line-format . none)))))
+                     (window-parameters (mode-line-format . none))))
+      ;; Take out some commands from the list of commands that require the user to
+      ;; edit and approve the command before embark acts.
+      (delete 'kill-buffer embark-allow-edit-commands))
   #+end_src
 
 * Plugins
