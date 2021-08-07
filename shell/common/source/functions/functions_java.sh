@@ -8,6 +8,10 @@ install_sdkman() {
   log_info "Installing sdkman"
   __install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
     "https://get.sdkman.io"
+
+  # Merge the default configuration file for sdkman with the config file we have
+  # checked in to this repository.
+  merge_sdkman_config
 }
 
 # Install jenv, the Java environment manager. It is a similar tool to pyenv.
