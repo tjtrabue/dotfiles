@@ -52,7 +52,10 @@ world needed another Lisp.
           (kbd "C-r") #'cider-repl-history)
         ;; Define useful evil-leader shortcuts.
         (evil-leader/set-key-for-mode 'cider-repl-mode
-          "," #'cider-repl-handle-shortcut)))
+          "," #'cider-repl-handle-shortcut)
+        ;; Clearing the whole REPL is a useful feature since the REPL gets slower
+        ;; the larger it gets.
+        (define-key cider-repl-mode-map (kbd "C-c M-b") #'cider-repl-clear-buffer)))
 
     (defun my/get-cider-lein-artifact-exclusions (exclusions)
       "Return an exclusions vector described by the elements of EXCLUSIONS."
@@ -98,7 +101,7 @@ world needed another Lisp.
       ;; pprint (default): clojure.pprint/pprint
       ;; pr:               clojure.core/pr
       ;; fipp:             Fast Idiomatic Pretty Printer, which is 5-10 times faster
-      ;;                   than pprint.
+      ;;                   than pprint. Probably the best default choice.
       ;; puget:            Puget is canonical serialization of data on top of fipp,
       ;;                   but is slightly slower.
       ;; zprint:           Fast and flexible alternative to the libraries mentioned
@@ -106,6 +109,8 @@ world needed another Lisp.
       ;;                   zprint as a depdency either in your cider jack-in init
       ;;                   command, or in your project dependencies file.
       (cider-print-fn 'zprint)
+      ;; Whether to show the very large help message when the CIDER REPL opens.
+      (cider-repl-display-help-banner t)
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!

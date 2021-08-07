@@ -80,10 +80,10 @@ install_sdkman_packages() {
   fi
 
   log_info "Installing SDKMAN packages"
-  # Install default Java version
+  # Install default open-source Java distribution.
   # NOTE: You'll want to install a newer one, as well.
   sdk install java
-  # Install default Groovy version
+  # Install default Groovy version.
   sdk install groovy
   # Maven is the most popular Java build and dependency management tool.
   sdk install maven
@@ -92,7 +92,7 @@ install_sdkman_packages() {
   # Micronaut is a framework for microservice development in Java. This is its
   # accompanying CLI tool.
   sdk install micronaut
-  # Install leiningen tool for managing Clojure projects
+  # Install leiningen for managing Clojure projects.
   sdk install leiningen
 }
 
