@@ -68,6 +68,29 @@ src_java_for_profile() {
   initialize_sdkman_for_shell
 }
 
+# Combine the SDKMAN configuration file in the ~/.sdkman directory with the
+# checked-in configuration file in this repository.
+merge_sdkman_config() {
+  local dotfilesSdkConfig="${DOTFILES_LINK}/sdkman/config"
+  local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
+  local homeSdkConfig="${sdkmanHome}/etc/config"
+  local sdkMergedTmp="$(mktemp -u /tmp/sdkman-merged-config-XXXXXXXXXX)"
+
+  if [ ! -f "${homeSdkConfig}" ] && [ ! -h "${homeSdkConfig}" ]; then
+    err "No SDKMAN configuration file found at: ${homeSdkConfig}"
+    return 1
+  fi
+
+  # Remove duplicates from the combined contents of both config files and write
+  # the output to a temp file.
+  cat "${dotfilesSdkConfig}" "${homeSdkConfig}" | rmduplines >"${sdkMergedTmp}"
+  # Replace the contents of the ~/.sdkman/etc/config file with those of the temp
+  # file.
+  mv "${sdkMergedTmp}" "${homeSdkConfig}"
+  # Delete the temp file.
+  rm -f "${sdkMergedTmp}"
+}
+
 # Install JVM-related software with SDKMAN.
 install_sdkman_packages() {
   local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"

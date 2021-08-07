@@ -81,18 +81,24 @@ rmbsyml() {
   find -L "${dir}" -maxdepth 1 -type l -delete
 }
 
-# Remove duplicate lines from a given file.
+# Remove duplicate lines from a given file or stdin if no file provided.
 rmduplines() {
-  local fileToStripDuplicateLinesFrom="${1}"
-  local tempFile="$(mktemp -u ${fileToStripDuplicateLinesFrom}.XXXXXXXXXX)"
+  # Read from stdin if no file argument provided.
+  local fileToStripDuplicateLinesFrom="${1:-/dev/stdin}"
+  # Temporary file to use for storing stripped contents.
+  local tempFile="$(mktemp -u /tmp/rmduplines-XXXXXXXXXX)"
 
-  if [ ! -f "${fileToStripDuplicateLinesFrom}" ]; then
-    err "${fileToStripDuplicateLinesFrom} is not a file."
-    return 1
+  if [ -f "${fileToStripDuplicateLinesFrom}" ]; then
+    # If we're dealing with a standard file, write the stripped contents to a
+    # temp file and then replace the original file with the newly stripped file.
+    awk '!x[$0]++' "${fileToStripDuplicateLinesFrom}" >"${tempFile}" &&
+    mv "${tempFile}" "${fileToStripDuplicateLinesFrom}" &&
+    rm -f "${tempFile}"
+  else
+    # If we're only dealing with contents from stdin, write stipped contents
+    # to stdout.
+    awk '!x[$0]++' "${fileToStripDuplicateLinesFrom}"
   fi
-
-  awk '!x[$0]++' "${fileToStripDuplicateLinesFrom}" >"${tempFile}"
-  mv "${tempFile}" "${fileToStripDuplicateLinesFrom}"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
