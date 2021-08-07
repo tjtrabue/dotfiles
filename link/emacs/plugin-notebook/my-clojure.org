@@ -54,11 +54,20 @@ world needed another Lisp.
         (evil-leader/set-key-for-mode 'cider-repl-mode
           "," #'cider-repl-handle-shortcut)))
 
-    (defun my/get-list-as-lein-artifact (lein-artifact-alist)
-      "Turn LEIN-ARTIFACT-ALIST into a string representing a lein artifact."
+    (defun my/get-cider-lein-artifact-exclusions (exclusions)
+      "Return an exclusions vector described by the elements of EXCLUSIONS."
+      (if exclusions
+          (format " :exclusions [%s]" (mapconcat #'identity exclusions " "))
+        ""))
+
+    (defun my/get-list-as-lein-artifact (lein-artifact-alist &optional exclusions)
+      "Turn LEIN-ARTIFACT-ALIST into a shell-quoted string representing a lein artifact.
+    Can specificy an optional EXCLUSIONS list, as well."
       (let ((dep (car lein-artifact-alist))
             (dep-version (cdr lein-artifact-alist)))
-        (shell-quote-argument (format "[%s %S]" dep dep-version))))
+        (shell-quote-argument
+         (format "[%s %S%s]" dep dep-version
+                 (my/get-cider-lein-artifact-exclusions exclusions)))))
 
     (defun my/get-cider-lein-deps ()
       "Return a shell-quoted string of all extra lein dependencies for CIDER."
