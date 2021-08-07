@@ -37,6 +37,15 @@ offering you relevant actions to use on a target determined by the context:
   keybinding for =embark-act=, and select an action for the candidate, such as
   =kill-buffer=.
 
+* Functions
+  #+begin_src emacs-lisp
+    (defun my/embark-act-noquit ()
+      "Run action but don't quit the minibuffer afterwards."
+      (interactive)
+      (let ((embark-quit-after-action nil))
+        (embark-act)))
+  #+end_src
+
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package embark
@@ -50,6 +59,7 @@ offering you relevant actions to use on a target determined by the context:
       :bind
       (("C-M-k" . embark-act)
        ("C-M-." . embark-dwim)
+       ("C-M-l" . my/embark-act-noquit)
        ;; alternative for `describe-bindings'
        ("C-h E" . embark-bindings))
       :init
@@ -61,7 +71,7 @@ offering you relevant actions to use on a target determined by the context:
       :custom
       ;; When embark is invoked from the minibuffer, this option controls whether or
       ;; not embark dismisses the minibuffer after `embark-act' finishes.
-      (embark-quit-after-action nil)
+      (embark-quit-after-action t)
       ;; How you wish to display the embark-collect view:
       ;; 'list - List view (One row that wraps around if necessary)
       ;; 'grid - Grid view (Multiple columns)
