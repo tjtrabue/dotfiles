@@ -110,7 +110,9 @@ world needed another Lisp.
       ;;                   command, or in your project dependencies file.
       (cider-print-fn 'zprint)
       ;; Whether to show the very large help message when the CIDER REPL opens.
-      (cider-repl-display-help-banner t)
+      ;; Turning it off saves space in the REPL buffer, which could speed up
+      ;; performance in the beginning.
+      (cider-repl-display-help-banner nil)
       ;; Set this to t if you want to see all debugging info for communication
       ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
       ;; conn-name*. WARNING: This will greatly slow down CIDER!
