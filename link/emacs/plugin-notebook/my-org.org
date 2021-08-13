@@ -79,9 +79,10 @@ textual documents and evaluated as needed, or all at once.
    You will need to install the =graphviz= suite of tools in order to use
    =org-roam='s graph functionality.
 
-   Because =org-roam='s nodes are simple Org files, you can check your
-   =org-roam= database into your favorite version control system. [[https://github.com/tjtrabue/roam-notes][I keep mine in
-   GitHub]].
+   Because =org-roam='s nodes are just Org files, you can check your =org-roam=
+   database into your favorite version control system. Once pulled down,
+   =org-roam= will completely recreate your database from the metadata in your
+   repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam database on GitHub]].
 
 *** Variables
     #+begin_src emacs-lisp
