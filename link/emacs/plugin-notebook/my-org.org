@@ -70,7 +70,14 @@ textual documents and evaluated as needed, or all at once.
 
 ** org-roam
    =org-roam= is an amazing plugin that integrates some of Roam's advanced note
-   taking features into =org-mode=.
+   taking features into =org-mode=. =org-roam= depends on a custom SQLite
+   database running behind the scenes to support its intelligent,
+   non-hierarchical note system. However, if you have a standard C compiler
+   installed, such as =gcc= or =clang=, =org-roam= will compile the database
+   automatically.
+
+   You will need to install the =graphviz= suite of tools in order to use
+   =org-roam='s graph functionality.
 
    #+begin_src emacs-lisp
      (use-package org-roam
@@ -79,7 +86,7 @@ textual documents and evaluated as needed, or all at once.
        :bind
        (("C-c n c" . org-roam-capture)
         ("C-c n f" . org-roam-node-find)
-        ("C-c n g" . org-roam-graph)
+        ("C-c n g" . org-roam-graph) ; Need graphviz tools to generate/view graph.
         ("C-c n i" . org-roam-node-insert)
         ("C-c n l" . org-roam-buffer-toggle)
         ;; Dailies
