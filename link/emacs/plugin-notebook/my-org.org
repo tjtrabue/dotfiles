@@ -42,7 +42,6 @@ textual documents and evaluated as needed, or all at once.
   #+end_src
 
 * Plugins
-
 ** org-bullets
    Use fancy bullets in =org-mode=.
 
