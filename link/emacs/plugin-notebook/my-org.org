@@ -103,15 +103,14 @@ textual documents and evaluated as needed, or all at once.
          ;; Dailies
          ("C-c n j" . org-roam-dailies-capture-today))
         :custom
+        ;; Set the path to the org-roam directory.
+        (org-roam-directory my/org-roam-dir)
         ;; Automatically treat completion-at-point candidates as possible org-roam
         ;; node names.
         (org-roam-completion-everywhere t)
         :init
         ;; Acknowledge that we've upgraded from v1 to v2.
         (setq org-roam-v2-ack t)
-        ;; Set the path to the org-roam directory and ensure that directory is
-        ;; present before loading org-roam.
-        (setq org-roam-directory my/org-roam-dir)
         ;; I have my roam-notes directory checked in as a git repository on GitHub.
         ;; (make-directory org-roam-directory t)
         :config
