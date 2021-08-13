@@ -133,8 +133,11 @@ clone_roam_notes() {
   local roamNotesRepoUrl="git@github.com:tjtrabue/roam-notes.git"
   local response=""
 
+  # Make sure the ~/.emacs.d directory is present before proceeding.
+  mkdir -p "${emacsHome}"
+
   if [ -d "${roamNotesHome}" ]; then
-    warn "Roam notes directory exists at: ${BLUE}${roamNotesHome}${NC}." \
+    echoe "WARNIG: Roam notes directory exists at: ${BLUE}${roamNotesHome}${NC}." \
       "Delete it and re-clone the repository? [y/n]"
 
     while echo "${response}" | grep -vq "^[YyNn]$"; do
@@ -149,6 +152,7 @@ clone_roam_notes() {
     fi
   fi
 
+  log_info "Cloning ${GREEN}roam-notes${NC} repository..."
   git clone "${roamNotesRepoUrl}" "${roamNotesHome}"
 }
 

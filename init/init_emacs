@@ -42,6 +42,7 @@ main() {
   print_header "Initializing Emacs"
   init_emacs_d
   link_emacs_config_files
+  clone_roam_notes
   log_info "Done"
 }
 # }}}
