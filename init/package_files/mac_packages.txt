@@ -23,6 +23,7 @@ gnu-sed
 gnu-tar
 gnu-which
 gnutls
+graphviz
 grep
 growlnotify
 gzip
