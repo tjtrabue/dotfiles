@@ -91,6 +91,10 @@ textual documents and evaluated as needed, or all at once.
         ("C-c n l" . org-roam-buffer-toggle)
         ;; Dailies
         ("C-c n j" . org-roam-dailies-capture-today))
+       :custom
+       ;; Automatically treat completion-at-point candidates as possible org-roam
+       ;; node names.
+       (org-roam-completion-everywhere t)
        :init
        ;; Acknowledge that we've upgraded from v1 to v2.
        (setq org-roam-v2-ack t)
