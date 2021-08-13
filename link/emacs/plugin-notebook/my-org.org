@@ -83,35 +83,41 @@ textual documents and evaluated as needed, or all at once.
    =org-roam= database into your favorite version control system. [[https://github.com/tjtrabue/roam-notes][I keep mine in
    GitHub]].
 
-   #+begin_src emacs-lisp
-     (use-package org-roam
-       :after org
-       :demand t
-       :bind
-       (("C-c n c" . org-roam-capture)
-        ("C-c n f" . org-roam-node-find)
-        ("C-c n g" . org-roam-graph) ; Need graphviz tools to generate/view graph.
-        ("C-c n i" . org-roam-node-insert)
-        ("C-c n l" . org-roam-buffer-toggle)
-        ;; Dailies
-        ("C-c n j" . org-roam-dailies-capture-today))
-       :custom
-       ;; Automatically treat completion-at-point candidates as possible org-roam
-       ;; node names.
-       (org-roam-completion-everywhere t)
-       :init
-       ;; Acknowledge that we've upgraded from v1 to v2.
-       (setq org-roam-v2-ack t)
-       ;; Set the path to the org-roam directory and ensure that directory is
-       ;; present before loading org-roam.
-       (setq org-roam-directory
-             (file-truename (concat user-emacs-directory "roam-notes")))
-       ;; I have my roam-notes directory checked in as a git repository on GitHub.
-       ;; (make-directory org-roam-directory t)
-       :config
-       ;; Automatically keep org roam session synchronized.
-       (org-roam-db-autosync-enable))
-   #+end_src
+*** Variables
+    #+begin_src emacs-lisp
+      (defvar my/org-roam-dir (file-truename (concat user-emacs-directory "roam-notes"))
+        "The directory acting as my `org-roam' database.")
+    #+end_src
+
+*** =use-package= specification
+    #+begin_src emacs-lisp
+      (use-package org-roam
+        :after org
+        :demand t
+        :bind
+        (("C-c n c" . org-roam-capture)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph) ; Need graphviz tools to generate/view graph.
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n l" . org-roam-buffer-toggle)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+        :custom
+        ;; Automatically treat completion-at-point candidates as possible org-roam
+        ;; node names.
+        (org-roam-completion-everywhere t)
+        :init
+        ;; Acknowledge that we've upgraded from v1 to v2.
+        (setq org-roam-v2-ack t)
+        ;; Set the path to the org-roam directory and ensure that directory is
+        ;; present before loading org-roam.
+        (setq org-roam-directory my/org-roam-dir)
+        ;; I have my roam-notes directory checked in as a git repository on GitHub.
+        ;; (make-directory org-roam-directory t)
+        :config
+        ;; Automatically keep org roam session synchronized.
+        (org-roam-db-autosync-enable))
+    #+end_src
 
 ** org-super-agenda
    Improved Org agenda that allows you to break your agenda items up into
