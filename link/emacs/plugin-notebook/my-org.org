@@ -7,7 +7,7 @@
 Org is one of Emacs' killer apps: a powerful ORGanizer and much more, Org
 enables Emacs users to engage in literate programming, a method of software
 development where source code is embedded into explanatory, notebook-like
-textual documents and evaluated as needed, or all at once.
+textual documents and evaluated as needed or all at once.
 
 * =use-package= specification
   The ubiquitous =org-mode=.
