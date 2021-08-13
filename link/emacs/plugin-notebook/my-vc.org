@@ -88,7 +88,7 @@ Plugins for extending Emacs with version control capabilities.
 ** =use-package= specification
    #+begin_src emacs-lisp
      (use-package forge
-       :after (magit))
+       :after magit)
    #+end_src
 
 * diff-hl
