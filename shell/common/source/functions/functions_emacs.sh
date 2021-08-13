@@ -126,5 +126,31 @@ straight_update_repos() {
   done
 }
 
+# Clone my personal roam-notes database.
+clone_roam_notes() {
+  local emacsHome="${EMACS_HOME:-${HOME}/.emacs.d}"
+  local roamNotesHome="${emacsHome}/roam-notes"
+  local roamNotesRepoUrl="git@github.com:tjtrabue/roam-notes.git"
+  local response=""
+
+  if [ -d "${roamNotesHome}" ]; then
+    warn "Roam notes directory exists at: ${BLUE}${roamNotesHome}${NC}." \
+      "Delete it and re-clone the repository? [y/n]"
+
+    while echo "${response}" | grep -vq "^[YyNn]$"; do
+      read -r response
+    done
+
+    if [ "${response}" = "y" ] || [ "${response}" = "Y" ]; then
+      rm -rf "${roamNotesHome}"
+    else
+      err "Cancelled by user."
+      return 1
+    fi
+  fi
+
+  git clone "${roamNotesRepoUrl}" "${roamNotesHome}"
+}
+
 # Modeline for this file (leave it commented!)
 # vim:foldenable:foldmethod=syntax:foldnestmax=1
