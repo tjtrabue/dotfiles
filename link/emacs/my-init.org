@@ -156,25 +156,25 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     (if (not (file-exists-p my/emacs-backup-dir))
         (make-directory my/emacs-backup-dir t))
     (setq backup-directory-alist `(("." . ,my/emacs-backup-dir)))
-    (setq make-backup-files t ; backup of a file the first time it is saved.
-          ;; don't clobber symlinks
-          backup-by-copying t
-          ;; version numbers for backup files
-          version-control t
-          ;; delete excess backup files silently
-          delete-old-versions t
-          delete-by-moving-to-trash t
-          ;; oldest versions to keep when new numbered backups created (default 2)
-          kept-old-versions 6
-          ;; newest versions to keep when new numbered backups created (default 2)
-          kept-new-versions 9
-          ;; auto-save every buffer that visits a file
-          auto-save-default t
-          ;; number of seconds idle time before auto-save (default 30)
-          auto-save-timeout 20
-          ;; number of keystrokes between auto-saves (default 300)
-          auto-save-interval 200
-          )
+    ;; Backup of a file the first time it is saved.
+    (setq make-backup-files t)
+    ;; don't clobber symlinks
+    (setq backup-by-copying t)
+    ;; Version numbers for backup files
+    (setq version-control t)
+    ;; Delete excess backup files silently
+    (setq delete-old-versions t)
+    (setq delete-by-moving-to-trash t)
+    ;; Oldest versions to keep when new numbered backups created (default 2)
+    (setq kept-old-versions 6)
+    ;; Newest versions to keep when new numbered backups created (default 2)
+    (setq kept-new-versions 9)
+    ;; Auto-save every buffer that visits a file
+    (setq auto-save-default t)
+    ;; Number of seconds idle time before auto-save (default 30)
+    (setq auto-save-timeout 20)
+    ;; Number of keystrokes between auto-saves (default 300)
+    (setq auto-save-interval 200)
   #+end_src
 
 * Color Configuration
