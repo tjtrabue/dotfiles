@@ -153,7 +153,21 @@ textual documents and evaluated as needed or all at once.
 
 ** ob-mermaid
    Generate mermaid diagrams from =org-babel= source blocks. Adding a source
-   block is easy. Simple guard your mermaid code with the following block.
+   block is easy. Simple guard your mermaid code with a code block similar to
+   this: =#+begin_src mermaid :file output_file.png=
+
+   Supports the following properties:
+
+   - =file= - Output file. It should be either *svg*, *png* or *pdf*.
+   - =width= - Width of the page (Optional).
+   - =height= - Height of the page (Optional).
+   - =theme= - Theme of the chart, could be default, forest, dark or
+     neutral (Optional).
+   - =background-color= - Background color. Example: transparent, red,
+     ‘#F0F0F0’ (Optional).
+   - =mermaid-config-file= - JSON configuration file for mermaid (Optional).
+   - =css-file= - CSS file for the page (Optional).
+   - =pupeteer-config-file= - JSON configuration file for puppeteer (Optional).
 
    #+begin_src emacs-lisp
      (use-package ob-mermaid

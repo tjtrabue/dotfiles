@@ -10,7 +10,8 @@ Here you will find various plugins for generating and interacting with diagrams.
 
 * mermaid-mode
   Major mode for editing buffers written in Mermaid syntax for generating
-  diagram images.
+  diagram images. Requires the =mmdc= CLI executable to be installed, which is a
+  Node.js tool. Check the installation instructions for =mermaid-cli=.
 
   #+begin_src emacs-lisp
     (use-package mermaid-mode
