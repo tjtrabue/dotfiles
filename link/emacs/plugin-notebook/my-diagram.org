@@ -1,0 +1,19 @@
+#+title:    Diagramming Plugins/Configuration
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:08:19
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+Here you will find various plugins for generating and interacting with diagrams.
+
+* mermaid-mode
+  Major mode for editing buffers written in Mermaid syntax for generating
+  diagram images.
+
+  #+begin_src emacs-lisp
+    (use-package mermaid-mode
+      :custom
+      (mermaid-mmdc-location (executable-find "mmdc")))
+  #+end_src

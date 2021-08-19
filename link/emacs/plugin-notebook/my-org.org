@@ -158,8 +158,8 @@ textual documents and evaluated as needed or all at once.
    #+begin_src emacs-lisp
      (use-package ob-mermaid
        :after (htmlize org)
-       :init
-       (setq ob-mermaid-cli-path (executable-find "mmdc")))
+       :custom
+       (ob-mermaid-cli-path (executable-find "mmdc")))
    #+end_src
 
 ** ox-gfm
