@@ -143,6 +143,16 @@ textual documents and evaluated as needed or all at once.
        (make-directory org-download-image-dir t))
    #+end_src
 
+** ob-mermaid
+   Generate mermaid diagrams from =org-babel= source blocks.
+
+   #+begin_src emacs-lisp
+     (use-package ob-mermaid
+       :after org
+       :init
+       (setq ob-mermaid-cli-path (executable-find "mmdc")))
+   #+end_src
+
 ** ox-gfm
    This is a small exporter based on the Markdown exporter already existing in
    Org mode.

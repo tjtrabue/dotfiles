@@ -3,6 +3,7 @@
 @babel/node
 @babel/parser
 @babel/polyfill
+@mermaid-js/mermaid-cli
 babel-eslint
 bash-language-server
 bible
@@ -32,6 +33,7 @@ localtunnel
 lua-fmt
 markdownlint
 markdownlint-cli
+mermaid
 node-cljfmt
 npm-check-updates
 prettier
