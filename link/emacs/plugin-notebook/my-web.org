@@ -4,6 +4,13 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
+* htmlize
+  =htmlize.el= converts a buffer's text and decorations to HTML.
+
+  #+begin_src emacs-lisp
+    (use-package htmlize)
+  #+end_src
+
 * web-mode
   =web-mode= is the godfather of all website code editing modes in Emacs.
   It is mainly for editing web templates, such as =.jsp= or =.php= files.
