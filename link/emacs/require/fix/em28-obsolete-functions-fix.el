@@ -32,7 +32,7 @@
 
 ;;; Commentary:
 
-;; commentary
+;; Advice to fix certain obsolete Emacs function calls in Emacs 28.
 
 ;;; Code:
 
@@ -63,13 +63,18 @@
     (list obsolete-name current-name when)))
 
 (define-advice make-obsolete-variable
-    (:filter-args (ll) em28-fix-make-obsolete-variable)
+  (:filter-args (ll) em28-fix-make-obsolete-variable)
   "Advice to add `when' field to `make-obsolete-variable'."
   (let ((obsolete-name (pop ll))
-        (current-name (pop ll))
-        (when (if ll (pop ll) "1"))
-        (access-type (if ll (pop ll) nil)))
+         (current-name (pop ll))
+         (when (if ll (pop ll) "1"))
+         (access-type (if ll (pop ll) nil)))
     (list obsolete-name current-name when access-type)))
+
+(define-advice org-macro-initialize-templates
+  (:filter-args (ll) em28-fix-org-macro-initialize-templates)
+  "New `org-macro-initialize-templates' doesn't take any arguments."
+  nil)
 
 (provide 'em28-obsolete-functions-fix)
 

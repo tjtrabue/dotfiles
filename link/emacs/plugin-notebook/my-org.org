@@ -143,8 +143,17 @@ textual documents and evaluated as needed or all at once.
        (make-directory org-download-image-dir t))
    #+end_src
 
+** org-preview-html
+   Preview org files in Emacs rendered as HTML.
+
+   #+begin_src emacs-lisp
+     (use-package org-preview-html
+       :after org)
+   #+end_src
+
 ** ob-mermaid
-   Generate mermaid diagrams from =org-babel= source blocks.
+   Generate mermaid diagrams from =org-babel= source blocks. Adding a source
+   block is easy. Simple guard your mermaid code with the following block.
 
    #+begin_src emacs-lisp
      (use-package ob-mermaid

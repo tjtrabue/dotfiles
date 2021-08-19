@@ -144,6 +144,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   #+begin_src emacs-lisp
     ;; Fix `make-obsolete' functions argument list issues.
     (load "fix/em28-obsolete-functions-fix")
+    ;; Fix certain org-mode function argument list issues.
+    (load "fix/org-functions-fix")
   #+end_src
 
 * Configure Backup Dirs/Files
