@@ -192,7 +192,9 @@ to =nil=, so this may help you.
          ;; File searching
          "rg" #'deadgrep
          ;; undo-tree
-         "ut" #'undo-tree-visualize)
+         "ut" #'undo-tree-visualize
+         ;; M-x alias
+         "x" #'execute-extended-command)
        ;; Leader shortcuts for dired-mode.
        (evil-leader/set-key-for-mode 'dired-mode
          "dC" #'dired-do-copy-regexp
