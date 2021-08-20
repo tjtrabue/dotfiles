@@ -70,6 +70,7 @@ HTML, TOML, YAML, etc.
       (let ((credential (auth-source-user-and-password "api.github.com")))
         (setq grip-github-user (car credential)
               grip-github-password (cadr credential)))
+      ;; Set keybindings for functions listed in the :commands block.
       (my/set-grip-keys-for-modes '(markdown-mode org-mode)))
   #+end_src
 
