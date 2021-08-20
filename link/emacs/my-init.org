@@ -409,6 +409,9 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
     ;; Persist command history to disk so that it is saved between restarts.
     (savehist-mode 1)
+
+    ;; Automatically visit image files as images.
+    (auto-image-file-mode 1)
   #+end_src
 
 * Key Bindings

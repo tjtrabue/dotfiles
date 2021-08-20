@@ -16,6 +16,9 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
 
   #+begin_src emacs-lisp
     (use-package mermaid-mode
+      ;; Associate the .mmd and .mermaid extensions with mermaid-mode.
+      :mode
+      ("\\.mmd$" "\\.mermaid$")
       :custom
       (mermaid-mmdc-location (executable-find "mmdc")))
   #+end_src

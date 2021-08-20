@@ -1,0 +1,15 @@
+#+title:    Image Plugins/Configuration
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:08:20
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+Plugins and configuration related to manipulating image files in Emacs.
+
+* Image Hooks
+#+begin_src emacs-lisp
+  ;; Enable auto-revert mode for images
+  (add-hook 'image-mode-hook 'auto-revert-mode)
+#+end_src
