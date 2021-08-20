@@ -26,12 +26,35 @@ HTML, TOML, YAML, etc.
   *NOTE:* This package depends on the =grip= Python package, so make sure to
   =pip install grip= before trying to use this plugin.
 
+** Functions
+   #+begin_src emacs-lisp
+     (defun my/set-grip-keys-for-modes (modes)
+       "Setup `grip' preview keybindings for major modes listed in MODES."
+       (let ((mode-maps (mapcar (lambda (m)
+                                  (intern (concat (symbol-name m) "-map")))
+                                modes))
+             (key-command-alist `((,(kbd "C-c G b") . grip-browse-preview)
+                                  (,(kbd "C-c G r") . grip-restart-preview)
+                                  (,(kbd "C-c G s") . grip-start-preview)
+                                  (,(kbd "C-c G S") . grip-stop-preview))))
+         ;; Assign each binding listed in key-command-alist to each keymap in
+         ;; mode-maps.
+         (mapc (lambda (mode-map)
+                 (mapc (lambda (pair)
+                         (let ((key (car pair))
+                               (func (cdr pair)))
+                           (define-key (symbol-value mode-map) key func)))
+                       key-command-alist))
+               mode-maps)))
+   #+end_src
+
+** =use-package= specification
   #+begin_src emacs-lisp
     (use-package grip-mode
-      :after markdown-mode
-      :bind
-      (:map markdown-mode-command-map
-            ("g" . grip-mode))
+      :after (markdown-mode org)
+      :commands
+      ;; Need to list all grip commands to be autoloaded.
+      (grip-browse-preview grip-restart-preview grip-start-preview grip-stop-preview)
       :custom
       ;; Path to the grip executable.
       (grip-binary-path (executable-find "grip"))
@@ -46,7 +69,8 @@ HTML, TOML, YAML, etc.
       ;; Get user's GitHub credentials from ~/.authinfo
       (let ((credential (auth-source-user-and-password "api.github.com")))
         (setq grip-github-user (car credential)
-              grip-github-password (cadr credential))))
+              grip-github-password (cadr credential)))
+      (my/set-grip-keys-for-modes '(markdown-mode org-mode)))
   #+end_src
 
 * toml
