@@ -10,6 +10,25 @@ explorer known as =dired=.
 To use =image-dired= mode properly, you must install =exiftool= on your system.
 This is a Perl based tool, and its installation varies from system to system.
 
+* Functions
+  #+begin_src emacs-lisp :tangle yes
+    (defun my/set-dired-keybindings ()
+      "Set `evil-mode' keybindings and leader shortcuts for `dired-mode'."
+      (with-eval-after-load "evil-collection"
+        ;; Normal state keys:
+        (evil-define-key 'normal dired-mode-map
+          (kbd "RET") #'dired-find-alternate-file))
+      (with-eval-after-load "evil-leader"
+        ;; Leader shortcuts for dired-mode:
+        (evil-leader/set-key-for-mode 'dired-mode
+          "dC" #'dired-do-copy-regexp
+          "dG" #'dired-mark-files-containing-regexp
+          "dM" #'dired-mark-files-regexp
+          "dR" #'dired-do-rename-regexp
+          "dS" #'dired-do-symlink-regexp
+          "dY" #'dired-do-relsymlink-regexp)))
+  #+end_src
+
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package dired
@@ -18,6 +37,8 @@ This is a Perl based tool, and its installation varies from system to system.
       :straight nil
       :bind
       (:map dired-mode-map
+            ;; Reuse current dired buffer when opening new directories.
+            ("RET" . dired-find-alternate-file)
             ("<return>" . dired-find-alternate-file))
       :custom
       ;; Allow dired to delete or copy dir. 'always means no asking, 'top means ask
@@ -27,6 +48,9 @@ This is a Perl based tool, and its installation varies from system to system.
       ;; Copy from one dired buffer to another dired buffer shown
       ;; in a split window.
       (dired-dwim-target t)
+      :init
+      ;; Set keys for dired mode.
+      (my/set-dired-keybindings)
       :config
       ;; Allow using 'a' in dired to find file or directory in same buffer.
       (put 'dired-find-alternate-file 'disabled nil))

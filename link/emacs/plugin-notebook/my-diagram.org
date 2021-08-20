@@ -6,7 +6,8 @@
 #+tags:
 #+STARTUP: fold
 
-Here you will find various plugins for generating and interacting with diagrams.
+Here you will find various plugins for generating and interacting with diagrams,
+such as UML, sequence diagrams, class relationship diagrams, etc.
 
 * mermaid-mode
   Major mode for editing buffers written in Mermaid syntax for generating

@@ -82,6 +82,20 @@ to =nil=, so this may help you.
        (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
    #+end_src
 
+* Other functions
+  Miscellaneous functions related to =evil-mode=.
+
+  #+begin_src emacs-lisp
+    (defun my/set-evil-keybindings ()
+      "Set VI-like keybindings for various major modes."
+      ;; Use custom "J" command that removes leading comment designators.
+      (define-key evil-normal-state-map [remap evil-join] 'my-evil-join)
+      ;; Evil ":" command minibuffer keys
+      (evil-define-key 'insert evil-ex-completion-map
+        (kbd "<tab>") #'evil-ex-completion
+        (kbd "TAB") #'evil-ex-completion))
+  #+end_src
+
 * =use-package= specification
   The Evil mode plugin itself.
 
@@ -127,8 +141,7 @@ to =nil=, so this may help you.
                           'evil-normal-state))
       (my/define-custom-evil-operators)
       (my/add-evil-advice)
-      ;; Use custom "J" command that removes leading comment designators.
-      (define-key evil-normal-state-map [remap evil-join] 'my-evil-join))
+      (my/set-evil-keybindings))
   #+end_src
 
 * Plugins
@@ -194,15 +207,7 @@ to =nil=, so this may help you.
          ;; undo-tree
          "ut" #'undo-tree-visualize
          ;; M-x alias
-         "x" #'execute-extended-command)
-       ;; Leader shortcuts for dired-mode.
-       (evil-leader/set-key-for-mode 'dired-mode
-         "dC" #'dired-do-copy-regexp
-         "dG" #'dired-mark-files-containing-regexp
-         "dM" #'dired-mark-files-regexp
-         "dR" #'dired-do-rename-regexp
-         "dS" #'dired-do-symlink-regexp
-         "dY" #'dired-do-relsymlink-regexp))
+         "x" #'execute-extended-command))
    #+end_src
 
 ** evil-collection
