@@ -42,12 +42,6 @@ you want.
      is not allowed to be rebound within a :config block. This function
      circumvents the aforementioned shortcoming by running its body after
      company-mode initializes."
-      (define-key company-active-map (kbd "<tab>") (lambda ()
-                                                     (interactive)
-                                                     (company-complete-common-or-cycle 1)))
-      (define-key company-active-map (kbd "<backtab>") (lambda ()
-                                                         (interactive)
-                                                         (company-complete-common-or-cycle -1)))
       (define-key company-active-map (kbd "RET") 'company-complete-selection)
       ;; Re-bind some of evil's keybindings.
       ;; Use RET to complete company completions
@@ -94,6 +88,10 @@ you want.
       :demand t
       :hook
       (company-mode . my/set-company-keybindings)
+      :bind
+      (:map company-active-map
+            ("TAB" . nil)
+            ("<tab>" . nil))
       :custom
       ;; Align annotation to the right side.
       (company-tooltip-align-annotations t)

@@ -30,6 +30,9 @@ that expands the snippet based on the abbreviation before point.
       (yas-buffer-local-condition yas-not-string-or-comment-condition)
       ;; How Yasnippet prompts the user for a snippet
       (yas-prompt-functions '(yas-completing-prompt))
+      :init
+      ;; Integrate yasnippet with hippie-expand
+      (add-to-list 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
       :config
       (yas-reload-all))
   #+end_src

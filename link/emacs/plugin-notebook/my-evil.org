@@ -116,8 +116,9 @@ to =nil=, so this may help you.
             ([remap evil-scroll-page-down] . evil-scroll-down)
             ("C-e" . switch-to-buffer)
             :map evil-insert-state-map
-            ;; TAB key should insert spaces to next tab stop, like in Vim.
-            ("<tab>" . tab-to-tab-stop)
+            ;; TAB should try expanding or fall back on self-insertion.
+            ("TAB" . my-hippie-expand-or-insert-tab)
+            ("<tab>" . my-hippie-expand-or-insert-tab)
             ;; Get rid of annoying evil-paste-from-register binding.
             ("C-r" . nil))
       :custom
@@ -479,6 +480,7 @@ to =nil=, so this may help you.
                                                         ("lD" . lispy-describe-inline)
                                                         ("lE" . lispy-eval-and-insert)
                                                         ("lO" . lispy-string-oneline)
+                                                        ("lQ" . lispy-quotes)
                                                         ("lR" . lispyville-raise-list)
                                                         ("lS" . lispy-splice)
                                                         ("lU" . lispy-unbind-variable)
@@ -491,6 +493,7 @@ to =nil=, so this may help you.
                                                         ("ln" . lispy-left)
                                                         ("lo" . lispy-oneline)
                                                         ("lp" . lispy-tab)
+                                                        ("lq" . lispy-stringify)
                                                         ("lr" . lispy-raise-sexp)
                                                         ("ls" . lispy-split)
                                                         ("lt" . transpose-sexps)
@@ -547,6 +550,11 @@ to =nil=, so this may help you.
             "gy" #'lispyville-comment-and-clone-dwim)
           (evil-define-key '(normal insert visual) keymap
             (kbd "M-;") #'lispy-comment)))
+
+      (defun my/set-lispyville-lispy-keys ()
+        "Use `lispy-define-key' to set extra keybindings for `lispyville'."
+        ;; Use "v" to enter lispy special while in Evil's visual state.
+        (lispy-define-key lispy-mode-map "v" #'lispyville-toggle-mark-type))
     #+end_src
 
 *** =use-package= specification
@@ -601,12 +609,15 @@ to =nil=, so this may help you.
                                     ;; v -> wrapped lispy-mark-symbol
                                     ;; V -> wrapped lispy-mark
                                     ;; C-v -> wrapped lispy-mark
-                                    mark))
+                                    mark
+                                    ;; Use v to toggle mark.
+                                    mark-toggle))
         ;; Only use evil-mode's visual selection instead of lispy marks.
         (lispyville-enter-visual-when-marking)
         (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
         (my/set-lispyville-mode-keys)
         (my/set-lispyville-leader-keys)
+        (my/set-lispyville-lispy-keys)
         ;; Add lispyville special mode indicator to modeline.
         (add-to-list 'mode-line-misc-info
                      '(:eval (when (featurep 'lispyville)
