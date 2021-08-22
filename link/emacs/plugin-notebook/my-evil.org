@@ -595,7 +595,13 @@ to =nil=, so this may help you.
                                     ;; Extra text object motions
                                     text-objects
                                     ;; Extra bindings
-                                    additional))
+                                    additional
+                                    ;; Integrates visual state with lispy-mark
+                                    ;; commands.
+                                    ;; v -> wrapped lispy-mark-symbol
+                                    ;; V -> wrapped lispy-mark
+                                    ;; C-v -> wrapped lispy-mark
+                                    mark))
         ;; Only use evil-mode's visual selection instead of lispy marks.
         (lispyville-enter-visual-when-marking)
         (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
