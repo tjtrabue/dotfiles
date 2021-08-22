@@ -133,6 +133,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
     (require 'my-font)
     ;; My custom window functions.
     (require 'my-window)
+    ;; Functions for interacting with hooks.
+    (require 'my-hook-fns)
     ;; My hippie-expand customizations.
     (require 'my-hippie-expand)
   #+end_src

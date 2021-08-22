@@ -33,6 +33,8 @@
 
 ;;; Code:
 
+(require 'my-hook-fns)
+
 ;; Adjust the list of functions that hippie-expand will try when invoked.
 (setq hippie-expand-try-functions-list
   '(
@@ -50,14 +52,12 @@
 
 (defun my-hippie-expand-set-lisp-hooks ()
   "Create hooks to add `hippie-expand' functions specific to Lisp major modes."
-  (mapc (lambda (mm)
-          (let ((mode-hook (intern (concat (symbol-name mm) "-hook"))))
-            (add-hook mode-hook
-              (lambda ()
-                (setq-local hippie-expand-try-functions-list
-                  (append hippie-expand-try-functions-list
-                    '(try-complete-lisp-symbol-partially
-                       try-complete-lisp-symbol)))))))
+  (my-hook-fns-add-hook-for-major-modes
+    (lambda ()
+      (setq-local hippie-expand-try-functions-list
+        (append hippie-expand-try-functions-list
+          '(try-complete-lisp-symbol-partially
+             try-complete-lisp-symbol))))
     my/lisp-major-modes))
 
 ;; Set up Lisp mode hooks for hippie-expand.
