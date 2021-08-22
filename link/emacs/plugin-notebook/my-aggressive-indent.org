@@ -24,6 +24,7 @@ flexibility in code style over consistency.
         emacs-lisp-mode
         ielm-mode
         lisp-mode
+        lisp-interaction-mode
         sly-mrepl-mode)
        . aggressive-indent-mode))
   #+end_src
