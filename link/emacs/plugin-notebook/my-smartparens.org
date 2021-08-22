@@ -16,26 +16,37 @@ aforementioned Vim plugins have.
 
 * Notes on =smartparens-mode= and =smartparens-strict-mode=
   This package contains two minor modes for managing delimiters:
-  =smartparens-mode= and =smartparens-strict-mode=. =smartparens-mode= does not
-  enforce balanced delimiters, whereas =smartparens-strict-mode= does.
+  =smartparens-mode= and =smartparens-strict-mode=.
+
+  =smartparens-mode= does /not/ enforce balanced delimiters (i.e., you can
+  delete one parenthesis and leave its matching partner dangling).
+
+  =smartparens-strict-mode= /does/ enforce balanced delimiters, meaning that
+  there is no way (usually) to leave a dangling delimiter. This mode is more
+  suited to editing Lisp dialects where each expression is wrapped in
+  delimiters, such as parentheses or brackets, and matching them manually can be
+  very challenging. On the other hand, using =smartparens-strict-mode= in
+  line-oriented languages, like C++, Java, Python, etc. can be quite frustrating
+  since delimiters appear less frequently and are less important to the overall
+  structure of the language. Therefore, I do not advise that you globally enable
+  =smartparens-strict-mode=.
 
 * =use-package= specification
 
   #+begin_src emacs-lisp
     (use-package smartparens
-      :demand t
       :hook
-      ;; Enable strict mode for Lisp dialects.
-      ((cider-repl-mode
-        clojure-mode
-        emacs-lisp-mode
-        ielm-mode
-        lisp-mode
-        lisp-interaction-mode
-        sly-mrepl-mode)
-       . smartparens-strict-mode)
+      ;; Enable smartparens globally.
+      ((after-init . smartparens-global-mode)
+       ;; Enable strict mode for Lisp dialects.
+       ((cider-repl-mode
+         clojure-mode
+         emacs-lisp-mode
+         ielm-mode
+         lisp-mode
+         lisp-interaction-mode
+         sly-mrepl-mode)
+        . smartparens-strict-mode))
       :config
-      (require 'smartparens-config)
-      ;; Always use smartparens.
-      (smartparens-global-mode))
+      (require 'smartparens-config))
   #+end_src
