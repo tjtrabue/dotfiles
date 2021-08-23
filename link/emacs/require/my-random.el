@@ -78,8 +78,6 @@ Version 2018-08-03"
                             random-string)))
     random-string))
 
-(my-random-string)
-
 (provide 'my-random)
 
 ;;; my-random.el ends here
