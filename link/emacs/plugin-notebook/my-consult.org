@@ -119,7 +119,7 @@ myriad systems benefit from Consult's functions.
                   :filter-args #'my/crm-indicator)
       ;; Set evil-leader shortcuts
       (evil-leader/set-key
-        "," #'consult-buffer)
+        "cb" #'consult-buffer)
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
       :custom

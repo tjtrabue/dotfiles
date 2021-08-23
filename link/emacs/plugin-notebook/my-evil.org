@@ -180,6 +180,9 @@ to =nil=, so this may help you.
        (evil-leader/leader ",")
        :config
        (evil-leader/set-key
+         ;; M-x alias
+         "," #'execute-extended-command
+         ;; Evil line navigation
          "m" #'evil-first-non-blank
          "." #'evil-end-of-line
          ;; Buffer
@@ -206,9 +209,8 @@ to =nil=, so this may help you.
          ;; File searching
          "rg" #'deadgrep
          ;; undo-tree
-         "ut" #'undo-tree-visualize
-         ;; M-x alias
-         "x" #'execute-extended-command))
+         ;; "ut" #'undo-tree-visualize
+         ))
    #+end_src
 
 ** evil-collection
@@ -611,6 +613,7 @@ to =nil=, so this may help you.
                                     ;; C-v -> wrapped lispy-mark
                                     mark
                                     ;; Use v to toggle mark.
+                                    ;; NOTE: This will alter the behavior of `mark'.
                                     ;; mark-toggle
                                     ))
         ;; Only use evil-mode's visual selection instead of lispy marks.

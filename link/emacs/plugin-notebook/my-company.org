@@ -11,7 +11,10 @@ completion.
 *NOTE REGARDING COMPANY-YASNIPPET:* there is a =company-yasnippet= backend for
 company, BUT it should be avoided for the most part. If you add it as a backend
 to company, then snippet completions will shadow any others, which is not what
-you want.
+you want. In order to use it properly, you should add it as an accompanying
+backend to each other backend you desire to use. For example, if you want to use
+the =company-elisp= backend and =company-yasnippet=, you would add the following
+to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 
 * Variables
   #+begin_src emacs-lisp
