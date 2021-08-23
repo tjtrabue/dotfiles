@@ -62,6 +62,9 @@ HTML, TOML, YAML, etc.
       (grip-update-after-change t)
       ;; The host to use for previewing.
       (grip-preview-host "localhost")
+      ;; Whether to use embedded webkit to preview.  Requires GNU/Emacs version >=
+      ;; 26 and compiled with `--with-xwidgets` option.
+      (grip-preview-use-webkit (if (functionp 'xwidgetp) t nil))
       :init
       (require 'auth-source)
       ;; Set up list of authinfo files to check.

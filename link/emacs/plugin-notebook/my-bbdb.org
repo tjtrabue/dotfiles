@@ -1,0 +1,17 @@
+#+title:    Big Brother Database: Address Book
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:08:23
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP: fold
+
+The Insidious Big Brother Database is an address book for email and snail mail
+addresses, phone numbers, and more. BBDB works with various Emacs mail clients,
+such as Message mode, Mail mode, Rmail, gnus, Mu4e, VM, and Wanderlust. BBDB is
+fully customizeable.
+
+* =use-package= specification
+#+begin_src emacs-lisp
+  (use-package bbdb)
+#+end_src

@@ -91,9 +91,9 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
   #+begin_src emacs-lisp
     (use-package company
       :after evil-collection
-      :demand t
       :hook
-      (company-mode . my/set-company-keybindings)
+      ((after-init . global-company-mode)
+       (company-mode . my/set-company-keybindings))
       :custom
       ;; Align annotation to the right side.
       (company-tooltip-align-annotations t)
@@ -114,9 +114,6 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
        '(company-pseudo-tooltip-unless-just-one-frontend
          company-preview-frontend
          company-echo-metadata-frontend))
-      :init
-      ;; Turn on company-mode globally.
-      (global-company-mode 1)
       :config
       ;; Tweak company backends.
       ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
@@ -165,6 +162,9 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 
    #+begin_src emacs-lisp
      (use-package company-dict
+       ;; Not terribly useful; if we do want to use it, we'll need to come up with a
+       ;; more sophisticated way of activating it only for appropriate major modes.
+       :disabled
        :after company
        :hook
        (company-mode . (lambda ()
