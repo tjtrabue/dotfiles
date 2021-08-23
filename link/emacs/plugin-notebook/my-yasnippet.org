@@ -23,6 +23,7 @@ that expands the snippet based on the abbreviation before point.
             ("<tab>" . nil)
             ("TAB" . nil)
             ("C-c y e" . yas-expand)
+            ("C-c y f" . yas-visit-snippet-file)
             ("C-c y i" . yas-insert-snippet)
             ("C-c y n" . yas-new-snippet))
       :custom
