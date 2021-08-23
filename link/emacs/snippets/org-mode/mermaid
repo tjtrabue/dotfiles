@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: mermaid
+# key: mmd
+# --
+#+begin_src mermaid :file ${1:test.png}
+  $0
+#+end_src
