@@ -59,13 +59,18 @@ textual documents and evaluated as needed or all at once.
    Remove colors from headings, and instead differentiate them by changing
    their font size.
 
-   *NOTE:* This theme *MUST* be loaded *AFTER* your primary Emacs theme!
+   While very pretty, this theme can greatly slow down Emacs when editing an Org
+   buffer, so use with caution.
+
+   *IMPORTANT:* This theme *MUST* be loaded *AFTER* your primary Emacs theme!
    Otherwise all of your =.org= files will look awful, with each heading
    surrounded by big ugly boxes. See file =my-theme.org= for this theme's
    activation.
 
    #+begin_src emacs-lisp
      (use-package org-beautify-theme
+       ;; This plugin makes Emacs incredibly slow when editing org-mode buffers.
+       :disabled
        :after org
        :demand t)
    #+end_src
