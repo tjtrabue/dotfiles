@@ -52,7 +52,7 @@ textual documents and evaluated as needed or all at once.
      (use-package org-bullets
        :after org
        :hook
-       (org-mode . (lambda () (org-bullets-mode 1))))
+       (org-mode . org-bullets-mode))
    #+end_src
 
 ** org-beautify-theme
