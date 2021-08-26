@@ -17,6 +17,9 @@ replacement for plugins like Swiper and Helm Swoop.
       :hook
       (after-init . ctrlf-mode)
       :general
+      (general-def
+        ;; Remap standard Emacs isearch keybinding
+        "C-s" 'ctrlf-forward-default)
       (general-def 'normal
         ;; Remap standard Emacs isearch keybinding
         "C-s" 'ctrlf-forward-default

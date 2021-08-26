@@ -18,14 +18,15 @@ that expands the snippet based on the abbreviation before point.
       :commands yas-minor-mode
       :hook
       (after-init . yas-global-mode)
-      :bind
-      (:map yas-minor-mode-map
-            ("<tab>" . nil)
-            ("TAB" . nil)
-            ("C-c y e" . yas-expand)
-            ("C-c y f" . yas-visit-snippet-file)
-            ("C-c y i" . yas-insert-snippet)
-            ("C-c y n" . yas-new-snippet))
+      :general
+      (general-unbind yas-minor-mode-map
+        "TAB"
+        "<tab>")
+      (my/user-leader-def yas-minor-mode-map
+        "y e" 'yas-expand
+        "y f" 'yas-visit-snippet-file
+        "y i" 'yas-insert-snippet
+        "y n" 'yas-new-snippet)
       :custom
       ;; Condition evaluated whenever YAS tries to expand a key.
       (yas-buffer-local-condition yas-not-string-or-comment-condition)

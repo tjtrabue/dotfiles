@@ -294,10 +294,10 @@ to =nil=, so this may help you.
      (use-package evil-collection
        :after evil
        :demand t
-       :bind
-       (:map evil-normal-state-map
-             ;; Unbind some unused mappings
-             ("M-." . nil))
+       :general
+       (general-unbind 'normal
+         ;; Unbind some unused mappings
+         "M-.")
        :custom
        ;; Whether or not to use Vim keys in the minibuffer.
        (evil-collection-setup-minibuffer t)
@@ -375,15 +375,15 @@ to =nil=, so this may help you.
    #+begin_src emacs-lisp
      (use-package evil-nerd-commenter
        :after evil-collection
-       :bind*
-       (:map evil-normal-state-map
-             ("g c c" . evilnc-comment-or-uncomment-lines)
-             ("g c l" . evilnc-quick-comment-or-uncomment-to-the-line)
-             ("g c p" . evilnc-comment-or-uncomment-paragraphs)
-             ("g c r" . comment-or-uncomment-region)
-             :map evil-visual-state-map
-             ("g c" . evilnc-comment-or-uncomment-lines)
-             ("g C" . comment-or-uncomment-region)))
+       :general
+       (general-def 'normal 'override
+         "g c c" 'evilnc-comment-or-uncomment-lines
+         "g c l" 'evilnc-quick-comment-or-uncomment-to-the-line
+         "g c p" 'evilnc-comment-or-uncomment-paragraphs
+         "g c r" 'comment-or-uncomment-region)
+       (general-def 'visual 'override
+         "g c" 'evilnc-comment-or-uncomment-lines
+         "g C" 'comment-or-uncomment-region))
    #+end_src
 
 ** evil-mark-replace
@@ -428,18 +428,18 @@ to =nil=, so this may help you.
    #+begin_src emacs-lisp
      (use-package evil-args
        :after evil-collection
-       :bind
-       (:map evil-inner-text-objects-map
-             ("a" . evil-inner-arg)
-             :map evil-outer-text-objects-map
-             ("a" . evil-outer-arg)
-             :map evil-normal-state-map
-             ("C-c a l" . evil-forward-arg)
-             ("C-c a h" . evil-backward-arg)
-             ("C-c a k" . evil-jump-out-arg)
-             :map evil-motion-state-map
-             ("C-c a l" . evil-forward-arg)
-             ("C-c a h" . evil-backward-arg)))
+       :general
+       (general-def 'normal
+         "C-c a l" 'evil-forward-arg
+         "C-c a h" 'evil-backward-arg
+         "C-c a k" 'evil-jump-out-arg)
+       (general-def 'motion
+         "C-c a l" 'evil-forward-arg
+         "C-c a h" 'evil-backward-arg)
+       (general-def evil-inner-text-objects-map
+         "a" 'evil-inner-arg)
+       (general-def evil-outer-text-objects-map
+         "a" 'evil-outer-arg))
    #+end_src
 
 ** evil-visualstar
@@ -640,15 +640,15 @@ to =nil=, so this may help you.
         :after (evil-collection lispy)
         :hook
         (lispy-mode . lispyville-mode)
-        :bind
-        (:map evil-collection-lispy-mode-map
-              ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
-              ;; unimpaired bindings.
-              ("<normal-state> [" . nil)
-              ("<normal-state> ]" . nil)
-              ;; Remove default barf/slurp keybindings.
-              ("<normal-state> <" . nil)
-              ("<normal-state> >" . nil))
+        :general
+        (general-unbind 'normal evil-collection-lispy-mode-map
+          ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
+          ;; unimpaired bindings.
+          "["
+          "]"
+          ;; Remove default barf/slurp keybindings.
+          "<"
+          ">")
         :custom
         ;; Setting this variable to t means lispyville motion commands, such as (, ),
         ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
