@@ -63,19 +63,14 @@ alias -- -="cd -"
 # }}}
 
 # Shortcuts {{{
-alias d="cd ~/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/IntelliJProjects"
-alias h="history"
 alias j="jobs"
 # }}}
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
 alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+alias fgrep='grep -F --color=auto'
+alias egrep='grep -E --color=auto'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
