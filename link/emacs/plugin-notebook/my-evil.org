@@ -616,7 +616,7 @@ to =nil=, so this may help you.
                                     ;; v -> wrapped lispy-mark-symbol
                                     ;; V -> wrapped lispy-mark
                                     ;; C-v -> wrapped lispy-mark
-                                    mark
+                                    ;; mark
                                     ;; Use v to toggle mark.
                                     ;; NOTE: This will alter the behavior of `mark'.
                                     ;; mark-toggle

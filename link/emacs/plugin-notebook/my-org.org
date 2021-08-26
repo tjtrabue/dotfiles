@@ -171,16 +171,15 @@ textual documents and evaluated as needed or all at once.
 
    #+begin_src emacs-lisp
      (use-package org-tree-slide
-       :after (evil-collection org)
-       :hook
+         :hook
        ;; Set the default profile for org-tree-slide-mode
        ;; Pre-defined profiles are simple, presentation, and TODO pursuit with
        ;; narrowing.
        (org-tree-slide-mode . org-tree-slide-presentation-profile)
-       :config
-       (evil-define-key 'normal org-tree-slide-mode-map
-         ">" #'org-tree-slide-move-next-tree
-         "<" #'org-tree-slide-move-previous-tree))
+       :general
+       (general-def 'normal org-tree-slide-mode-map
+         "C->" 'org-tree-slide-move-next-tree
+         "C-<" 'org-tree-slide-move-previous-tree))
    #+end_src
 
 ** ob-mermaid
