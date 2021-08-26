@@ -4,6 +4,11 @@
 init_helm_completions() {
   local userShell="$(basename "${SHELL}")"
 
+  if [ -z "$(command -v helm)" ]; then
+    err "helm command line tool not found on \$PATH"
+    return 1
+  fi
+
   case "${userShell}" in
     "bash")
       __init_helm_completions_bash
