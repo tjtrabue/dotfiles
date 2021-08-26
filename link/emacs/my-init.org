@@ -838,8 +838,13 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
         :demand t
         :config
         ;; Define a shortcut function for defining keys that begin with "C-c"
-        (general-create-definer my/general-leader-def
+        (general-create-definer my/user-leader-def
           :prefix "C-c")
+        ;; Create a replacement macro for `evil-leader'. This completely obsoletes the
+        ;; need to include `evil-leader' in your configuation!
+        (general-create-definer my/evil-leader-def
+          :states 'normal
+          :prefix ",")
         ;; Allows using Vim-style key definers.
         ;; Available definers are:
         ;;   general-imap

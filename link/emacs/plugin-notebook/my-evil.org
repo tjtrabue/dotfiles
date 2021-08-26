@@ -115,6 +115,11 @@ to =nil=, so this may help you.
                           (general-chord "jk") 'evil-normal-state)
       ;; `general-def' if a shorthand macro wrapper for `general-define-key' that
       ;; allows using positional parameters for evil states and keymaps.
+      ;; Its usage is as follows:
+      ;;
+      ;;   (general-def [evil stats] [keymaps] key def ...)
+      ;;
+      ;; where elements in [] are optional but must appear in the specified order.
       (general-def 'normal
         "H" 'evil-window-top
         "L" 'evil-window-bottom
@@ -126,7 +131,7 @@ to =nil=, so this may help you.
         ;; TAB should try expanding or fall back on self-insertion.
         "TAB" 'my-hippie-expand-or-insert-tab
         "<tab>" 'my-hippie-expand-or-insert-tab)
-      ;; This form unbinds keys in given keymaps and/or evil states.
+      ;; This form unbinds keys in given evil states and/or keymaps.
       (general-unbind 'insert
         ;; Get rid of annoying evil-paste-from-register binding.
         "C-r")
