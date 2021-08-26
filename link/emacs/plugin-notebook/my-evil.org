@@ -153,7 +153,7 @@ to =nil=, so this may help you.
       ;; allows using positional parameters for evil states and keymaps.
       ;; Its usage is as follows:
       ;;
-      ;;   (general-def [evil stats] [keymaps] key def ...)
+      ;;   (general-def [evil states] [keymap] key def ...)
       ;;
       ;; where elements in [] are optional but must appear in the specified order.
       (general-def 'normal

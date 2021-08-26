@@ -67,7 +67,10 @@
 (defun my-hippie-expand-or-insert-tab ()
   "Expand text before point or insert a tab if preceding text is blank."
   (interactive)
-  (if (string-match-p "[[:space:]]" (byte-to-string (preceding-char)))
+  (if (or (bolp) (string-match-p "[[:space:]]" (byte-to-string (preceding-char))))
+    ;; If point is at beginning of line or previous character is blank, insert a
+    ;; tab or number of spaces; otherwise, try to expand text with
+    ;; `hippie-expand'.
     (tab-to-tab-stop)
     (call-interactively 'hippie-expand)))
 (provide 'my-hippie-expand)
