@@ -37,18 +37,13 @@ different perspective, and many more.
       :bind-keymap
       ;; May be necessary to tie keybinding to perspective prefix
       ("C-c j" . perspective-map)
-      :bind*
-      (("C-x b" . persp-switch-to-buffer)
-       ("C-x k" . persp-kill-buffer*))
-      :custom
-      ;; Prefix for all perspective.el commands
-      (persp-mode-prefix-key (kbd "C-c j"))
-      ;; Where perspective.el saves its configuration
-      (persp-state-default-file
-       (file-truename (concat user-emacs-directory "/persp-state.el")))
-      :init
+      :general
+      (general-def 'override
+        "C-x b" 'persp-switch-to-buffer
+        "C-x k" 'persp-kill-buffer*
+        "C-e" 'persp-switch-to-buffer)
       ;; Set evil-leader keys for perspective.el
-      (evil-leader/set-key
+      (my/evil-leader-def
         ;; Remappings of standard evil-leader shortcuts
         "bb" 'persp-switch-to-buffer
         "kk" 'persp-kill-buffer*
@@ -64,6 +59,12 @@ different perspective, and many more.
         "pp" 'persp-prev
         "pr" 'persp-rename
         "ps" 'persp-switch)
+      :custom
+      ;; Prefix for all perspective.el commands
+      (persp-mode-prefix-key (kbd "C-c j"))
+      ;; Where perspective.el saves its configuration
+      (persp-state-default-file
+       (file-truename (concat user-emacs-directory "/persp-state.el")))
       :config
       ;; Automatically resume the main perspective after x seconds.  The delay is
       ;; necessary to allow Emacs time to initialize before resuming the previous

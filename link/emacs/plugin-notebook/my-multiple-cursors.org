@@ -14,17 +14,16 @@ need to press that key combination more than once).
   #+begin_src emacs-lisp
     (use-package multiple-cursors
       :disabled
-      :after evil-collection
-      :bind
-      (("C-S-c C-S-c" . mc/edit-lines)
-       ("C->" . mc/mark-next-like-this)
-       ("C-<" . mc/mark-previous-like-this))
-      :init
-      (evil-leader/set-key
-        "ca" #'mc/mark-all-like-this
-        "ce" #'mc/edit-lines
-        "cn" #'mc/mark-next-like-this
-        "cp" #'mc/mark-previous-like-this
-        "cu" #'mc/unmark-next-like-this
-        "cU" #'mc/unmark-previous-like-this))
+      :general
+      (general-def
+        "C-S-c C-S-c" 'mc/edit-lines
+        "C->" 'mc/mark-next-like-this
+        "C-<" 'mc/mark-previous-like-this)
+      (my/evil-leader-def
+        "ca" 'mc/mark-all-like-this
+        "ce" 'mc/edit-lines
+        "cn" 'mc/mark-next-like-this
+        "cp" 'mc/mark-previous-like-this
+        "cu" 'mc/unmark-next-like-this
+        "cU" 'mc/unmark-previous-like-this))
   #+end_src

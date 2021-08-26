@@ -94,17 +94,53 @@ to =nil=, so this may help you.
       (evil-define-key 'insert evil-ex-completion-map
         (kbd "<tab>") #'evil-ex-completion
         (kbd "TAB") #'evil-ex-completion))
+
+    (defun my/set-evil-leader-shortcuts ()
+      "Define leader shortcuts for `evil-mode' similar to Vim's leader feature."
+      (my/evil-leader-def
+        ;; M-x alias
+        "," 'execute-extended-command
+        ;; Evil line navigation
+        "m" 'evil-first-non-blank
+        "." 'evil-end-of-line
+        ;; Buffer
+        "bb" 'switch-to-buffer
+        "bk" 'kill-this-buffer
+        ;; Dired
+        "dd" 'dired
+        ;; eshell
+        "es" 'eshell-below
+        ;; Git/Magit
+        "gg" 'magit-status
+        "gd" 'magit-dispatch
+        "gtt" 'git-timemachine-toggle
+        ;; ace-window
+        "jk" 'ace-window
+        ;; Killing buffers
+        "kk" 'kill-buffer
+        ;; File
+        "lf" 'load-file
+        "of" 'org-babel-load-file
+        ;; Flycheck
+        "fn" 'flycheck-next-error
+        "fp" 'flycheck-previous-error
+        ;; File searching
+        "rg" 'deadgrep
+        ;; undo-tree
+        ;; "ut" #'undo-tree-visualize
+        ))
   #+end_src
 
 * =use-package= specification
   The Evil mode plugin itself.
 
   *NOTE*: If you want to use =evil-leader=, you need to load =evil-leader=
-  /before/ loading =evil=.
+  /before/ loading =evil=. What's more, you need to set all evil variables in
+  =evil-leader='s =use-package= specification instead of =evil='s since
+  =evil-leader= will set them to default values otherwise.
 
   #+begin_src emacs-lisp
     (use-package evil
-      :after evil-leader
       :demand t
       :general
       ;; Use "jk" to escape from insert and replace states.
@@ -121,8 +157,12 @@ to =nil=, so this may help you.
       ;;
       ;; where elements in [] are optional but must appear in the specified order.
       (general-def 'normal
+        ;; Use the good old Vim commands to move the cursor to the top or bottom of
+        ;; the window.
         "H" 'evil-window-top
         "L" 'evil-window-bottom
+        ;; I like this shortcut for switching buffers.
+        "C-e" 'switch-to-buffer
         ;; Only scroll half a page up/down with C-b and C-f instead of a
         ;; full page. I find this gives me more control over page movement.
         [remap evil-scroll-page-up] 'evil-scroll-up
@@ -135,19 +175,40 @@ to =nil=, so this may help you.
       (general-unbind 'insert
         ;; Get rid of annoying evil-paste-from-register binding.
         "C-r")
-      :custom
+      :init
       ;; NOTE: We must set variables for evil-mode's initialization in evil-leader's
       ;;       use-package directive because it loads first, and it in turn loads
-      ;;       evil mode.
+      ;;       evil mode. That is, if we're using `evil-leader'. If not, list them
+      ;;       here.
+
+      ;; Set evil-mode variables here.
+      ;; These values must be set here because evil-leader loads before evil
+      ;; itself. Thus, these variables will have already been set by the time
+      ;; Evil's use-package specification loads, making any variable definitions
+      ;; set there useless.
+      ;;
+      ;; Tell Evil that 'Y' in normal state yanks from point to the end of line
+      ;; as opposed to the entire line like 'yy'.
+      (setq evil-want-Y-yank-to-eol t)
+      ;; Need this for evil-collection; loads evil-integration.el
+      (setq evil-want-integration t)
+      ;; Do not use any default keybinding since evil-collection
+      ;; takes care of that part.
+      (setq evil-want-keybinding nil)
       ;; Which search library to use for '/' and '?'.
       ;; Defaults to 'isearch, but 'evil-search is a bit better.
-      (evil-search-module 'evil-search)
+      (setq evil-search-module 'evil-search)
+      ;; Make '>>' and '<<' commands indent according to Emacs' tab width.
+      (setq-default evil-shift-width tab-width
+                    ;; '>>' and '<<' should round indent to the next nearest tab stop.
+                    evil-shift-round t)
       :config
       ;; Enable evil-mode globally
       (evil-mode 1)
       (my/define-custom-evil-operators)
       (my/add-evil-advice)
-      (my/set-evil-keybindings))
+      (my/set-evil-keybindings)
+      (my/set-evil-leader-shortcuts))
   #+end_src
 
 * Plugins
@@ -157,8 +218,17 @@ to =nil=, so this may help you.
    by an arbitrary succession of additional key strokes to call a predefined
    function. It's similar in nature to Emacs' =key-chord= plugin.
 
+   *NOTE:* =general= provides a better method for defining Emacs keybindings in
+   general (no pun intended), including leader-like keybindings. Not only this,
+   but =evil-leader= is, unfortunately, quite badly documented. =general=, on
+   the other hand, is one of the best documented Emacs plugins I've ever
+   seen. For these reasons, I recommend using =general= and foregoing
+   =evil-leader= altogether.
+
    #+begin_src emacs-lisp
      (use-package evil-leader
+       ;; Disabled in favor of general.
+       :disabled
        :demand t
        :hook
        (after-init . global-evil-leader-mode)
@@ -185,37 +255,37 @@ to =nil=, so this may help you.
        (evil-leader/leader ",")
        :config
        (evil-leader/set-key
-         ;; M-x alias
-         "," #'execute-extended-command
-         ;; Evil line navigation
-         "m" #'evil-first-non-blank
-         "." #'evil-end-of-line
-         ;; Buffer
-         "bb" #'switch-to-buffer
-         "bk" #'kill-this-buffer
-         ;; Dired
-         "dd" #'dired
-         ;; eshell
-         "es" #'eshell-below
-         ;; Git/Magit
-         "gg" #'magit-status
-         "gd" #'magit-dispatch
-         "gtt" #'git-timemachine-toggle
-         ;; ace-window
-         "jk" #'ace-window
-         ;; Killing buffers
-         "kk" #'kill-buffer
-         ;; File
-         "lf" #'load-file
-         "of" #'org-babel-load-file
-         ;; Flycheck
-         "fn" #'flycheck-next-error
-         "fp" #'flycheck-previous-error
-         ;; File searching
-         "rg" #'deadgrep
-         ;; undo-tree
-         ;; "ut" #'undo-tree-visualize
-         ))
+        ;; M-x alias
+        "," #'execute-extended-command
+        ;; Evil line navigation
+        "m" #'evil-first-non-blank
+        "." #'evil-end-of-line
+        ;; Buffer
+        "bb" #'switch-to-buffer
+        "bk" #'kill-this-buffer
+        ;; Dired
+        "dd" #'dired
+        ;; eshell
+        "es" #'eshell-below
+        ;; Git/Magit
+        "gg" #'magit-status
+        "gd" #'magit-dispatch
+        "gtt" #'git-timemachine-toggle
+        ;; ace-window
+        "jk" #'ace-window
+        ;; Killing buffers
+        "kk" #'kill-buffer
+        ;; File
+        "lf" #'load-file
+        "of" #'org-babel-load-file
+        ;; Flycheck
+        "fn" #'flycheck-next-error
+        "fp" #'flycheck-previous-error
+        ;; File searching
+        "rg" #'deadgrep
+        ;; undo-tree
+        ;; "ut" #'undo-tree-visualize
+        ))
    #+end_src
 
 ** evil-collection
@@ -389,7 +459,7 @@ to =nil=, so this may help you.
        ;; I prefer to use avy instead of snipe.
        :disabled
        :demand t
-       :after (evil-leader evil-collection)
+       :after evil-collection
        :hook
        ;; Turn off snipe in magit-mode for compatibility.
        (magit-mode . turn-off-evil-snipe-override-mode)
@@ -428,20 +498,21 @@ to =nil=, so this may help you.
      (use-package evil-mc
        :after evil-collection
        :demand t
+       :general
+       (general-def '(normal visual)
+         "C->" 'evil-mc-make-and-goto-next-match
+         "C-<" 'evil-mc-make-and-goto-prev-match)
+       ;; Set leader shortcuts
+       (my/evil-leader-def
+         "cA" 'evil-mc-make-all-cursors
+         "cU" 'evil-mc-undo-all-cursors
+         "cn" 'evil-mc-make-and-goto-next-match
+         "cp" 'evil-mc-make-and-goto-prev-match
+         "cu" 'evil-mc-undo-last-added-cursor)
        :custom
        ;; Override default mode line string
        (evil-mc-mode-line-prefix "ⓜ")
        :config
-       (evil-define-key '(normal visual) 'global
-         (kbd "C->") #'evil-mc-make-and-goto-next-match
-         (kbd "C-<") #'evil-mc-make-and-goto-prev-match)
-       ;; Set leader shortcuts
-       (evil-leader/set-key
-         "cA" #'evil-mc-make-all-cursors
-         "cU" #'evil-mc-undo-all-cursors
-         "cn" #'evil-mc-make-and-goto-next-match
-         "cp" #'evil-mc-make-and-goto-prev-match
-         "cu" #'evil-mc-undo-last-added-cursor)
        (global-evil-mc-mode 1))
    #+end_src
 
@@ -474,44 +545,43 @@ to =nil=, so this may help you.
 
       (defun my/set-lispyville-leader-keys ()
         "Set `evil-leader' keybindings for all lispy modes."
-        (mapcar (lambda (mode)
-                  (let ((evil-leader-lispy-keys-alist '(("l(" . lispy-wrap-round)
-                                                        ("l)" . lispyville-wrap-round)
-                                                        ("l[" . lispy-wrap-brackets)
-                                                        ("l]" . lispyville-wrap-brackets)
-                                                        ("l{" . lispy-wrap-braces)
-                                                        ("l}" . lispyville-wrap-braces)
-                                                        ("l<" . lispyville-<)
-                                                        ("l>" . lispyville->)
-                                                        ("lC" . lispy-convolute-sexp)
-                                                        ("lD" . lispy-describe-inline)
-                                                        ("lE" . lispy-eval-and-insert)
-                                                        ("lO" . lispy-string-oneline)
-                                                        ("lQ" . lispy-quotes)
-                                                        ("lR" . lispyville-raise-list)
-                                                        ("lS" . lispy-splice)
-                                                        ("lU" . lispy-unbind-variable)
-                                                        ("lb" . lispy-bind-variable)
-                                                        ("lc" . lispy-clone)
-                                                        ("ld" . evil-collection-lispy-delete)
-                                                        ("le" . lispy-eval)
-                                                        ("lj" . lispy-join)
-                                                        ("lm" . lispy-multiline)
-                                                        ("ln" . lispy-left)
-                                                        ("lo" . lispy-oneline)
-                                                        ("lp" . lispy-tab)
-                                                        ("lq" . lispy-stringify)
-                                                        ("lr" . lispy-raise-sexp)
-                                                        ("ls" . lispy-split)
-                                                        ("lt" . transpose-sexps)
-                                                        ("lw" . my/lispyville-wrap-round-and-insert)
-                                                        ("ly" . lispy-new-copy))))
-                    (mapcar (lambda (element)
-                              (let ((key (car element))
-                                    (fun (cdr element)))
-                                (evil-leader/set-key-for-mode mode key fun)))
-                            evil-leader-lispy-keys-alist)))
-                my/lisp-major-modes)
+        (mapc (lambda (mode)
+                (let ((mode-map (intern (concat (symbol-name mode) "-map"))))
+                  ;; Here we use the :keymaps keyword argument because we want to
+                  ;; evaluate `mode-map' before passing it to `my/evil-leader-def'.
+                  (my/evil-leader-def :keymaps mode-map
+                    "l(" 'lispy-wrap-round
+                    "l)" 'lispyville-wrap-round
+                    "l[" 'lispy-wrap-brackets
+                    "l]" 'lispyville-wrap-brackets
+                    "l{" 'lispy-wrap-braces
+                    "l}" 'lispyville-wrap-braces
+                    "l<" 'lispyville-<
+                    "l>" 'lispyville->
+                    "lC" 'lispy-convolute-sexp
+                    "lD" 'lispy-describe-inline
+                    "lE" 'lispy-eval-and-insert
+                    "lO" 'lispy-string-oneline
+                    "lQ" 'lispy-quotes
+                    "lR" 'lispyville-raise-list
+                    "lS" 'lispy-splice
+                    "lU" 'lispy-unbind-variable
+                    "lb" 'lispy-bind-variable
+                    "lc" 'lispy-clone
+                    "ld" 'evil-collection-lispy-delete
+                    "le" 'lispy-eval
+                    "lj" 'lispy-join
+                    "lm" 'lispy-multiline
+                    "ln" 'lispy-left
+                    "lo" 'lispy-oneline
+                    "lp" 'lispy-tab
+                    "lq" 'lispy-stringify
+                    "lr" 'lispy-raise-sexp
+                    "ls" 'lispy-split
+                    "lt" 'transpose-sexps
+                    "lw" 'my/lispyville-wrap-round-and-insert
+                    "ly" 'lispy-new-copy)))
+              my/lisp-major-modes)
         t)
 
       (defun my/set-lispyville-mode-keys ()

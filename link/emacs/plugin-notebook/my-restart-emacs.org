@@ -11,15 +11,14 @@ in the global map.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package restart-emacs
-      :after evil-leader
       :demand t
+      :general
+      ;; Set the key sequence to something we're not bound to type accidentally.
+      (my/evil-leader-def "rere" 'restart-emacs)
       :custom
       ;; Experimental feature: set this to t to restore frames when Emacs
       ;; restarts.
       ;; NOTE: persp-mode does a much better job of this task! Leave this
       ;; feature turned off.
-      (restart-emacs-restore-frames nil)
-      :config
-      ;; Set the key sequence to something we're not bound to type accidentally.
-      (evil-leader/set-key "rere" 'restart-emacs))
+      (restart-emacs-restore-frames nil))
   #+end_src

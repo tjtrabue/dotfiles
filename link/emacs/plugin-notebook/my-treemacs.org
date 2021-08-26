@@ -13,21 +13,21 @@ features absent from the majority of such explorers.
 
   #+begin_src emacs-lisp
     (use-package treemacs
-      :after (all-the-icons evil-collection)
+      :after all-the-icons
       :commands treemacs
-      :bind
-      (("M-0"       . treemacs-select-window)
-       ("C-c t 1"   . treemacs-delete-other-windows)
-       ("C-c t t"   . treemacs)
-       ("C-c t B"   . treemacs-bookmark)
-       ("C-c t C-t" . treemacs-find-file)
-       ("C-c t M-t" . treemacs-find-tag))
+      :general
+      (general-def
+        "M-0" 'treemacs-select-window
+        "C-c t 1" 'treemacs-delete-other-windows
+        "C-c t t" 'treemacs
+        "C-c t B" 'treemacs-bookmark
+        "C-c t C-t" 'treemacs-find-file
+        "C-c t M-t" 'treemacs-find-tag)
+      (my/evil-leader-def
+        "tm" 'treemacs)
       :init
       (with-eval-after-load 'winum
         (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-      ;; evil-leader shortcuts
-      (evil-leader/set-key
-        "tm" 'treemacs)
       :custom
       ;; Whether to put an empty line between root nodes.
       (treemacs-space-between-root-nodes nil)
@@ -68,11 +68,12 @@ features absent from the majority of such explorers.
       (use-package treemacs-projectile
         :after (evil-collection treemacs projectile)
         :commands treemacs-projectile
-        :bind
-        (("C-c t p" . treemacs-projectile))
-        :init
+        :general
+        ;; Automatically prefixed with "C-c"
+        (my/user-leader-def
+          "t p" 'treemacs-projectile)
         ;; evil-leader shortcuts
-        (evil-leader/set-key
+        (my/evil-leader-def
           "tp" 'treemacs-projectile)
         :config
         ;; Make sure to add new projects to treemacs workspace when we switch

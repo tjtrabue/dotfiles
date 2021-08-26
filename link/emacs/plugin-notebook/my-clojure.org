@@ -51,8 +51,8 @@ world needed another Lisp.
           ;; Browse REPL input history.
           (kbd "C-r") #'cider-repl-history)
         ;; Define useful evil-leader shortcuts.
-        (evil-leader/set-key-for-mode 'cider-repl-mode
-          "," #'cider-repl-handle-shortcut)
+        (my/evil-leader-def cider-repl-mode-map
+          "s" 'cider-repl-handle-shortcut)
         ;; Clearing the whole REPL is a useful feature since the REPL gets slower
         ;; the larger it gets.
         (define-key cider-repl-mode-map (kbd "C-c M-b") #'cider-repl-clear-buffer)))

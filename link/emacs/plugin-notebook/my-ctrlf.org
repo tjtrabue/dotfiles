@@ -16,15 +16,15 @@ replacement for plugins like Swiper and Helm Swoop.
       :after evil-collection
       :hook
       (after-init . ctrlf-mode)
-      :bind
-      (:map evil-normal-state-map
-            ;; Remap standard Emacs isearch keybinding
-            ("C-s" . ctrlf-forward-default)
-            ;; Remap evil-search keys to ctrlf.
-            ;; ctrlf integrates fully with evil-search history,
-            ;; but you must set evil-search-module to 'evil-search
-            ("/" . ctrlf-forward-default)
-            ("?" . ctrlf-backward-default))
+      :general
+      (general-def 'normal
+        ;; Remap standard Emacs isearch keybinding
+        "C-s" 'ctrlf-forward-default
+        ;; Remap evil-search keys to ctrlf.
+        ;; ctrlf integrates fully with evil-search history,
+        ;; but you must set evil-search-module to 'evil-search
+        "/" 'ctrlf-forward-default
+        "?" 'ctrlf-backward-default)
       :custom
       ;; Use fuzzy search and regular expressions by default.
       (ctrlf-default-search-style 'fuzzy-regexp)

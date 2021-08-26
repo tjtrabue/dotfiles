@@ -843,7 +843,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
         ;; Create a replacement macro for `evil-leader'. This completely obsoletes the
         ;; need to include `evil-leader' in your configuation!
         (general-create-definer my/evil-leader-def
-          :states 'normal
+          :states '(normal visual)
           :prefix ",")
         ;; Allows using Vim-style key definers.
         ;; Available definers are:

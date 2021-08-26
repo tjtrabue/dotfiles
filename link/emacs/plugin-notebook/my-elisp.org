@@ -11,11 +11,11 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
   Hook functions that run for Emacs Lisp buffers.
 
   #+begin_src emacs-lisp
-    (add-hook 'emacs-lisp-mode-hook
-              (lambda ()
-                ;; Use Common Lisp style indentation instead of standard Emacs Lisp
-                ;; indentation.
-                (setq-local lisp-indent-function #'common-lisp-indent-function)))
+    ;; (add-hook 'emacs-lisp-mode-hook
+    ;;           (lambda ()
+    ;;             ;; Use Common Lisp style indentation instead of standard Emacs Lisp
+    ;;             ;; indentation.
+    ;;             (setq-local lisp-indent-function #'common-lisp-indent-function)))
   #+end_src
 
 * Plugins

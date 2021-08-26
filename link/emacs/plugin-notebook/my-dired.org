@@ -20,13 +20,13 @@ This is a Perl based tool, and its installation varies from system to system.
           (kbd "RET") #'dired-find-alternate-file))
       (with-eval-after-load "evil-leader"
         ;; Leader shortcuts for dired-mode:
-        (evil-leader/set-key-for-mode 'dired-mode
-          "dC" #'dired-do-copy-regexp
-          "dG" #'dired-mark-files-containing-regexp
-          "dM" #'dired-mark-files-regexp
-          "dR" #'dired-do-rename-regexp
-          "dS" #'dired-do-symlink-regexp
-          "dY" #'dired-do-relsymlink-regexp)))
+        (my/evil-leader-def dired-mode-map
+          "dC" 'dired-do-copy-regexp
+          "dG" 'dired-mark-files-containing-regexp
+          "dM" 'dired-mark-files-regexp
+          "dR" 'dired-do-rename-regexp
+          "dS" 'dired-do-symlink-regexp
+          "dY" 'dired-do-relsymlink-regexp)))
   #+end_src
 
 * =use-package= specification
@@ -73,22 +73,19 @@ This is a Perl based tool, and its installation varies from system to system.
 *** dired-filter
     #+begin_src emacs-lisp
       (use-package dired-filter
-        :after evil-collection
-        :hook
-        (dired-mode . (lambda ()
-                        (evil-leader/set-key-for-mode 'dired-mode
-                          "df" dired-filter-map))))
+        :general
+        (my/evil-leader-def dired-mode-map
+          "df" dired-filter-map))
     #+end_src
 
 *** dired-narrow
     #+begin_src emacs-lisp
       (use-package dired-narrow
-        :after evil-collection
         :hook
-        ((dired-mode . dired-narrow-mode)
-         (dired-mode . (lambda ()
-                         (evil-leader/set-key-for-mode 'dired-mode
-                           "dn" #'dired-narrow-fuzzy)))))
+        (dired-mode . dired-narrow-mode)
+        :general
+        (my/evil-leader-def dired-mode-map
+          "dn" 'dired-narrow-fuzzy))
     #+end_src
 
 *** dired-subtree

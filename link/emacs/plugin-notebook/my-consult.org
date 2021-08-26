@@ -101,10 +101,14 @@ myriad systems benefit from Consult's functions.
              ("M-s l" . consult-line)
              :map evil-normal-state-map
              ("C-r" . consult-ripgrep))
+      :general
+      (my/evil-leader-def
+        ;; Open the fancy consult-buffer navigator.
+        "cb" 'consult-buffer)
+      :hook
       ;; Enable automatic preview at point in the *Completions* buffer.
       ;; This is relevant when you use the default completion UI,
       ;; and not necessary for Vertico, Selectrum, etc.
-      :hook
       (completion-list-mode . consult-preview-at-point-mode)
       ;; The :init configuration is always executed (Not lazy)
       :init
@@ -117,9 +121,6 @@ myriad systems benefit from Consult's functions.
       ;; Add prompt indicator to `completing-read-multiple'.
       (advice-add #'consult-completing-read-multiple
                   :filter-args #'my/crm-indicator)
-      ;; Set evil-leader shortcuts
-      (evil-leader/set-key
-        "cb" #'consult-buffer)
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
       :custom

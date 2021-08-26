@@ -171,7 +171,7 @@ textual documents and evaluated as needed or all at once.
 
    #+begin_src emacs-lisp
      (use-package org-tree-slide
-         :hook
+       :hook
        ;; Set the default profile for org-tree-slide-mode
        ;; Pre-defined profiles are simple, presentation, and TODO pursuit with
        ;; narrowing.
