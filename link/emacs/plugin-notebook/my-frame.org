@@ -1,0 +1,34 @@
+#+title:    Frame Management Configuration/Plugins
+#+author:   Tom Trabue
+#+email:    tom.trabue@gmail.com
+#+date:     2021:08:26
+#+property: header-args:emacs-lisp :lexical t
+#+tags:
+#+STARTUP:  fold
+
+A number of frame-related plugins and their associated configuration can be
+found here.
+
+* Moom
+  =moom.el= is a plugin that acts like a tiling window manager layer for
+  Emacs. =moom= was a macOS tool used for easily adjusting GUI windows ala
+  tiling window managers, and this plugin is a port of =moom= to Emacs.
+
+** *NOTE:* You probably don't want =moom= on Linux
+  Because =moom='s purpose is to simply imitate a tiling window manager, this
+  plugin is usually unnecessary on Linux since every Linux power user already
+  makes use of a tiling window manager, and they're more useful than =moom= to
+  begin with. =moom= can be quite useful on macOS computers, though, so I've
+  added some configuration for it. However, macOS computers /do/ have access to
+  even better tiling window managers (or "snap tools"), such as Better Snap
+  Tool, which I recommend using. Thus, =moom= may or may not be useful even on a
+  Mac.
+
+** =use-package= specification
+  #+begin_src emacs-lisp
+    (use-package moom
+      ;; I'd stick with Better Snap Tool or something similar on macOS.
+      :disabled
+      ;; We only want this plugin for Mac computers.
+      :if (eq system-type 'darwin))
+  #+end_src

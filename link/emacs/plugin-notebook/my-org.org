@@ -37,6 +37,9 @@ textual documents and evaluated as needed or all at once.
       ;; Whether to prompt the user for confirmation before evaluating source
       ;; blocks.
       (org-confirm-babel-evaluate nil)
+      ;; Whether to keep images their original size or to shrink them to fit their
+      ;; corresponding Org mode buffer.
+      (org-image-actual-width nil)
       :init
       ;; Make sure the Org notes directory is present.
       (make-directory my/org-dir t)
@@ -157,6 +160,27 @@ textual documents and evaluated as needed or all at once.
    #+begin_src emacs-lisp
      (use-package org-preview-html
        :after org)
+   #+end_src
+
+** org-tree-slide
+   Give beautiful presentations from regular Org mode buffers! This is a
+   must-have plugin for the Org enthusiast.
+
+   To get started, =M-x org-tree-slide-mode=, and then use =C->= and =C-<= to
+   navigate slides.
+
+   #+begin_src emacs-lisp
+     (use-package org-tree-slide
+       :after (evil-collection org)
+       :hook
+       ;; Set the default profile for org-tree-slide-mode
+       ;; Pre-defined profiles are simple, presentation, and TODO pursuit with
+       ;; narrowing.
+       (org-tree-slide-mode . org-tree-slide-presentation-profile)
+       :config
+       (evil-define-key 'normal org-tree-slide-mode-map
+         ">" #'org-tree-slide-move-next-tree
+         "<" #'org-tree-slide-move-previous-tree))
    #+end_src
 
 ** ob-mermaid

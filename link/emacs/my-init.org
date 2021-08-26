@@ -751,67 +751,96 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
 * Package Manager
 ** straight
-   ~straight~ is a newer package manager for Emacs that differs from ~package.el~.
-   It operates by cloning Git repositories for Emacs packages and symlinking them
-   to Emacs' runtime path. ~straight~ is also a purely functional package manager,
-   and integrates nicely with the ~use-package~ macro.
-   *NOTE:* straight requires Emacs version 24.5 or higher to properly function.
+   =straight= is a newer package manager for Emacs that differs from
+   =package.el=.  It operates by cloning Git repositories for Emacs packages and
+   symlinking them to Emacs' runtime path. =straight= is also a purely
+   functional package manager, and integrates nicely with the =use-package=
+   macro.  *NOTE:* straight requires Emacs version 24.5 or higher to properly
+   function.
 
-   To update all packages installed through straight, run ~M-x straight-pull-all~
+   To update all packages installed through straight, run =M-x
+   straight-pull-all=
 
    #+begin_src emacs-lisp
-     (when (>= emacs-major-version 24)
-       (eval-when-compile
-         (defvar bootstrap-version)
-         ;; Always use use-package when installing packages, making the ':straight t'
-         ;; part of the use-package macro unnecessary.
-         (setq straight-use-package-by-default t)
-         ;; The branch of straight.el to use
-         (setq straight-repository-branch "develop")
-         (let ((bootstrap-file
-                (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-               (bootstrap-version 5))
-           (unless (file-exists-p bootstrap-file)
-             (with-current-buffer
-                 (url-retrieve-synchronously
-                  "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-                  'silent 'inhibit-cookies)
-               (goto-char (point-max))
-               (eval-print-last-sexp)))
-           (with-no-warnings
-             (load bootstrap-file nil 'nomessage))
+     (eval-when-compile
+       (defvar bootstrap-version)
+       ;; Always use use-package when installing packages, making the ':straight t'
+       ;; part of the use-package macro unnecessary.
+       (setq straight-use-package-by-default t)
+       ;; The branch of straight.el to use
+       (setq straight-repository-branch "develop")
+       (let ((bootstrap-file
+              (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+             (bootstrap-version 5))
+         (unless (file-exists-p bootstrap-file)
+           (with-current-buffer
+               (url-retrieve-synchronously
+                "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+                'silent 'inhibit-cookies)
+             (goto-char (point-max))
+             (eval-print-last-sexp)))
+         (with-no-warnings
+           (load bootstrap-file nil 'nomessage))
 
-           ;; Refresh package repositories
-           (when (not (fboundp 'straight-pull-recipe-repositories))
-             ;; Sometimes straight.el does not include the convenience function
-             ;; `straight-pull-recipe-repositories', in which case we should alias
-             ;; that function to our own custom version.
-             (defalias 'straight-pull-recipe-repositories
-               'my/straight-pull-recipe-repositories))
-           (straight-pull-recipe-repositories)
+         ;; Refresh package repositories
+         (when (not (fboundp 'straight-pull-recipe-repositories))
+           ;; Sometimes straight.el does not include the convenience function
+           ;; `straight-pull-recipe-repositories', in which case we should alias
+           ;; that function to our own custom version.
+           (defalias 'straight-pull-recipe-repositories
+             'my/straight-pull-recipe-repositories))
+         (straight-pull-recipe-repositories)
 
-           ;; Default mode for loading packages: either defer or demand.
-           ;; (setq use-package-always-demand t)
-           (setq use-package-always-defer t)
+         ;; Default mode for loading packages: either defer or demand.
+         ;; (setq use-package-always-demand t)
+         (setq use-package-always-defer t)
 
-           ;; Install use-package via straight.
-           ;; After this function runs, use-package will automatically use straight
-           ;; to install packages if you specify ':stright t' instead of ':ensure t'.
-           ;; If you have set straight-use-package-by-default to t, this is
-           ;; unnecessary.
-           (straight-use-package
-            ;; Override the MELPA recipe in order to get all Elisp files for
-            ;; use-package. For some reason, the MELPA recipe excludes several
-            ;; important source files.
-            '(use-package :type git :host github :repo "jwiegley/use-package"
-               :files (:defaults)))
-
-           ;; Also install use-package-chords for key-chord definitions
-           (use-package use-package-chords
-             :demand t
-             :config
-             (key-chord-mode 1)))))
+         ;; Install use-package via straight.
+         ;; After this function runs, use-package will automatically use straight
+         ;; to install packages if you specify ':stright t' instead of ':ensure t'.
+         ;; If you have set straight-use-package-by-default to t, this is
+         ;; unnecessary.
+         (straight-use-package
+          ;; Override the MELPA recipe in order to get all Elisp files for
+          ;; use-package. For some reason, the MELPA recipe excludes several
+          ;; important source files.
+          '(use-package :type git :host github :repo "jwiegley/use-package"
+             :files (:defaults)))))
    #+end_src
+
+** Install packages needed from the very start
+   Some packages are important to load right at the get-go, either because we
+   want their functionality right now, or because they provide extra keywords
+   for =use-package= that we want to make use of in our =use-package=
+   statements.
+
+*** use-package-chords
+    Adds =:chords= keyword to =use-package= for defining key-chords.
+
+    #+begin_src emacs-lisp
+      (use-package use-package-chords
+        :demand t
+        :config
+        (key-chord-mode 1))
+    #+end_src
+
+*** general
+    =general.el= is a macro system for managing Emacs keybindings. You can think
+    of it as a wrapper around both standard Emacs keybinding forms, such as
+    =define-key=, =global-set-key=, etc., and third-party keybinding macros,
+    such as =evil-define-key=. Thus, General allows you to define keys in a
+    package-agnostic fashion. General also adds a number of keywords to
+    =use-package=, such as =:general=, =ghook=, and =gfhook= for defining keys
+    and hooks in a way that defers loading the package.
+
+    #+begin_src emacs-lisp
+      (use-package general
+        :demand t
+        :config
+        ;; Define a shortcut macro for defining keys that begin with "C-c"
+        (general-create-definer my/general-define-cc
+          :prefix "C-c"))
+    #+end_src
 
 * Load External Configuration Files
   Load additional Emacs configuration files from my custom plugins directories.
