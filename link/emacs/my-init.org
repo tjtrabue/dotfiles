@@ -837,9 +837,27 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
       (use-package general
         :demand t
         :config
-        ;; Define a shortcut macro for defining keys that begin with "C-c"
-        (general-create-definer my/general-define-cc
-          :prefix "C-c"))
+        ;; Define a shortcut function for defining keys that begin with "C-c"
+        (general-create-definer my/general-leader-def
+          :prefix "C-c")
+        ;; Allows using Vim-style key definers.
+        ;; Available definers are:
+        ;;   general-imap
+        ;;   general-emap
+        ;;   general-nmap
+        ;;   general-vmap
+        ;;   general-omap
+        ;;   general-mmap
+        ;;   general-rmap
+        ;;   general-iemap
+        ;;   general-nvmap
+        ;;   general-otomap
+        ;;   general-itomap
+        ;;   general-tomap
+        ;; If a non-nil argument is passed to `general-evil-setup', you may omit the
+        ;; "general-" prefix for these macros. I find that leaving them in makes your
+        ;; code more descriptive, however.
+        (general-evil-setup))
     #+end_src
 
 * Load External Configuration Files
