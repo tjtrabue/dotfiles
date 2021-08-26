@@ -18,10 +18,10 @@ project artifacts, etc.
       :demand t
       :bind-keymap
       ("C-c p" . projectile-command-map)
-      :bind*
-      (:map evil-normal-state-map
-            ;; Use C-p to search for files in project
-            ("C-p" . projectile-find-file))
+      :general
+      (general-def 'normal 'override
+        ;; Use C-p to search for files in project
+        "C-p" 'projectile-find-file)
       :custom
       ;; Enable caching unconditionally.
       (projectile-enable-caching t)
