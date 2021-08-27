@@ -127,8 +127,7 @@ to =nil=, so this may help you.
         ;; File searching
         "rg" 'deadgrep
         ;; undo-tree
-        ;; "ut" #'undo-tree-visualize
-        ))
+        "ut" #'undo-tree-visualize))
   #+end_src
 
 * =use-package= specification

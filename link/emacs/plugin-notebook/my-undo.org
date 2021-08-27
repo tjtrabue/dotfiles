@@ -4,9 +4,21 @@
 #+date:     2021:07:17
 #+property: header-args:emacs-lisp :lexical t
 #+tags:
-#+STARTUP: fold
+#+STARTUP:  fold
 
 This file adds some enhancements to Emacs' undo functionality.
+
+* undo-tree
+  A visual tree system for fully utilizing Emacs' undo/redo system inspired by
+  Vim. To use =undo-tree=, call =M-x undo-tree-mode= (or
+  =global-undo-tree-mode=), and then use =C-x u= to call =undo-tree-visualize=,
+  the function that displays the tree of edits made to the current buffer.
+
+  #+begin_src emacs-lisp
+    (use-package undo-tree
+      :hook
+      (after-init . global-undo-tree-mode))
+  #+end_src
 
 * undo-fu
   A simple plugin providing linear undo/redo actions. It does not interfere with
@@ -26,7 +38,6 @@ This file adds some enhancements to Emacs' undo functionality.
 
   #+begin_src emacs-lisp
     (use-package undo-fu-session
-      :demand t
-      :config
-      (global-undo-fu-session-mode 1))
+      :hook
+      (after-init . global-undo-fu-session-mode))
   #+end_src
