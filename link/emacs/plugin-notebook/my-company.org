@@ -37,31 +37,6 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
       (setq company-backends
             (mapcar #'my/company-backend-with-yas company-backends)))
 
-    (defun my/set-company-keybindings ()
-      "Used to get around problem with company keybindings not being set.
-     For some horrible, unknown reason, company does not respect keybindings
-     that go against its default keybindings in use-package syntax. For
-     instance, 'TAB' is already bound to `company-select-next', and as such
-     is not allowed to be rebound within a :config block. This function
-     circumvents the aforementioned shortcoming by running its body after
-     company-mode initializes."
-      (define-key company-active-map (kbd "RET") 'company-complete-selection)
-      ;; Re-bind some of evil's keybindings.
-      (evil-define-key 'insert company-active-map
-        ;; Use RET and TAB to complete company completions
-        (kbd "RET") #'company-complete-selection
-        (kbd "TAB") #'company-complete-selection
-        (kbd "<tab>") #'company-complete-selection
-        ;; Vim-style keybindings for cycling through matches
-        (kbd "C-j") (lambda ()
-                      (interactive)
-                      (company-complete-common-or-cycle 1))
-        (kbd "C-k") (lambda ()
-                      (interactive)
-                      (company-complete-common-or-cycle -1)))
-      ;; Also use C-l to complete current selection.
-      (define-key company-active-map (kbd "C-l") #'company-complete-selection))
-
     (defun my/company-complete-selection--advice-around (fn)
       "Advice execute around `company-complete-selection' command."
       (let ((company-dabbrev-downcase t))
@@ -92,8 +67,25 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     (use-package company
       :after evil-collection
       :hook
-      ((after-init . global-company-mode)
-       (company-mode . my/set-company-keybindings))
+      (after-init . global-company-mode)
+      :general
+      (general-def company-active-map
+        "RET" 'company-complete-selection
+        "<return>" 'company-complete-selection
+        "C-l" 'company-complete-selection)
+      (general-def 'insert company-active-map
+        ;; Use RET and TAB to complete company completions
+        "RET" 'company-complete-selection
+        "<return>" 'company-complete-selection
+        "TAB" 'company-complete-selection
+        "<tab>" 'company-complete-selection
+        ;; Vim-style keybindings for cycling through matches
+        "C-j" (lambda ()
+                (interactive)
+                (company-complete-common-or-cycle 1))
+        "C-k" (lambda ()
+                (interactive)
+                (company-complete-common-or-cycle -1)))
       :custom
       ;; Align annotation to the right side.
       (company-tooltip-align-annotations t)
