@@ -17,7 +17,7 @@ category, and it is one of the best representatives.
 #+begin_src emacs-lisp
   (use-package origami
     :hook
-    ((prog-mode conf-mode conf-space-mode) . origami-mode))
+    (after-init . origami-mode))
 #+end_src
 
 * vimish-fold
@@ -28,24 +28,26 @@ category, and it is one of the best representatives.
 
 #+begin_src emacs-lisp
   (use-package vimish-fold
+    :disabled
     :after evil-collection
+    :hook
+    (after-init .
+                (lambda ()
+                  ;; Turn on vimish-fold-mode on the specified major modes
+                  (vimish-fold-mode)
+                  ;; Re-create marked folds every so often to keep them up-to-date.
+                  (run-with-timer 0 5 'vimish-fold-from-marks)))
+    ;; These bindings get in the way of standard folding via origami.
+    :general
+    (general-def 'normal
+      [remap evil-open-fold] 'vimish-fold-unfold
+      [remap evil-close-fold] 'vimish-fold-refold
+      [remap evil-toggle-fold] 'vimish-fold-toggle
+      [remap evil-open-folds] 'vimish-fold-unfold-all
+      [remap evil-close-folds] 'vimish-fold-refold-all)
     :custom
     ;; Where to indicate a fold
     (vimish-fold-indication-mode 'right-fringe)
     ;; Whether to save folds on buffer saving.
-    (vimish-fold-persist-on-saving t)
-    :hook
-    ((prog-mode conf-mode conf-space-mode) . (lambda ()
-        ;; Turn on vimish-fold-mode on the specified major modes
-        (vimish-fold-mode)
-        ;; Re-create marked folds every so often to keep them up-to-date.
-        (run-with-timer 0 5 'vimish-fold-from-marks)))
-    ;; These bindings get in the way of standard folding via origami.
-    ;; :bind (:map evil-normal-state-map
-    ;;  ([remap evil-open-fold] . vimish-fold-unfold)
-    ;;  ([remap evil-close-fold] . vimish-fold-refold)
-    ;;  ([remap evil-toggle-fold] . vimish-fold-toggle)
-    ;;  ([remap evil-open-folds] . vimish-fold-unfold-all)
-    ;;  ([remap evil-close-folds] . vimish-fold-refold-all))
-  )
+    (vimish-fold-persist-on-saving t))
 #+end_src

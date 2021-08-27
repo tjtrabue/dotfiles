@@ -15,11 +15,12 @@ textual documents and evaluated as needed or all at once.
   #+begin_src emacs-lisp
     (use-package org
       :mode ("\\.org\\'" . org-mode)
-      :bind
-      ;; These bindings should be available everywhere.  We'll want to use them
-      ;; outside of org-mode.
-      (("C-c o l" . org-store-link)
-       ("C-c o a" . org-agenda))
+      :general
+      (my/user-leader-def
+        ;; These bindings should be available everywhere.  We'll want to use them
+        ;; outside of org-mode.
+        "C-c o l" 'org-store-link
+        "C-c o a" 'org-agenda)
       :custom
       (org-hide-leading-stars 1)
       ;; Only show headings when visiting a new Org file.
@@ -105,14 +106,15 @@ textual documents and evaluated as needed or all at once.
       (use-package org-roam
         :after org
         :demand t
-        :bind
-        (("C-c n c" . org-roam-capture)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph) ; Need graphviz tools to generate/view graph.
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n l" . org-roam-buffer-toggle)
-         ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
+        :general
+        (my/user-leader-def
+          "n c" 'org-roam-capture
+          "n f" 'org-roam-node-find
+          "n g" 'org-roam-graph   ; Need graphviz tools to generate/view graph.
+          "n i" 'org-roam-node-insert
+          "n l" 'org-roam-buffer-toggle
+          ;; Dailies
+          "n j" 'org-roam-dailies-capture-today)
         :custom
         ;; Set the path to the org-roam directory.
         (org-roam-directory my/org-roam-dir)

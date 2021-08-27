@@ -77,10 +77,11 @@ This is a Perl based tool, and its installation varies from system to system.
     #+begin_src emacs-lisp
       (use-package dired-subtree
         :after evil-collection
-        :bind*
-        (:map dired-mode-map
-              ("<tab>". dired-subtree-toggle)
-              ("<backtab>" . dired-subtree-cycle)))
+        :general
+        (general-def dired-mode-map
+          "TAB" 'dired-subtree-toggle
+          "<tab>" 'dired-subtree-toggle
+          "<backtab>" 'dired-subtree-cycle))
     #+end_src
 
 *** dired-avfs
@@ -157,21 +158,21 @@ This is a Perl based tool, and its installation varies from system to system.
 
     #+begin_src emacs-lisp
       (use-package dired-ranger
-        :bind*
-        (:map dired-mode-map
-              ("C-c C-c" . dired-ranger-copy)
-              ("C-c C-p" . dired-ranger-paste)
-              ("C-c C-m" . dired-ranger-move)
-              ("C-c C-b m" . dired-ranger-bookmark)
-              ("C-c C-b v" . dired-ranger-bookmark-visit)))
+        :general
+        (my/user-leader-def dired-mode-map
+          "C-c" 'dired-ranger-copy
+          "C-p" 'dired-ranger-paste
+          "C-m" 'dired-ranger-move
+          "C-b m" 'dired-ranger-bookmark
+          "C-b v" 'dired-ranger-bookmark-visit))
     #+end_src
 
 *** dired-collapse
     #+begin_src emacs-lisp
       (use-package dired-collapse
-        :bind
-        (:map dired-mode-map
-              ("C-c C" . dired-collapse-mode)))
+        :general
+        (my/user-leader-def dired-mode-map
+          "C" 'dired-collapse-mode))
     #+end_src
 
 ** peep-dired
@@ -179,9 +180,9 @@ This is a Perl based tool, and its installation varies from system to system.
 
    #+begin_src emacs-lisp
      (use-package peep-dired
-       :bind*
-       (:map dired-mode-map
-             ([remap dired-do-print] . peep-dired)))
+       :general
+       (general-def dired-mode-map
+         [remap dired-do-print] 'peep-dired))
    #+end_src
 
 ** dired-k

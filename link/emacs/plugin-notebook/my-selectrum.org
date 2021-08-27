@@ -18,16 +18,17 @@ aforementioned three tools.
       :after counsel
       :hook
       (after-init . selectrum-mode)
+      :general
+      (general-def
+        ;; Pull up selectrum with the previous input already entered
+        "C-x C-z" 'selectrum-repeat)
+      (general-def selectrum-minibuffer-map
+        ;; Selectrum completion buffer navigation
+        "C-j" 'selectrum-next-candidate
+        "C-k" 'selectrum-previous-candidate)
       :custom
       (selectrum-num-candidates-displayed 20)
-      (selectrum-fix-minibuffer-height t)
-      :bind*
-      (;; Pull up selectrum with the previous input already entered
-       ("C-x C-z" . selectrum-repeat)
-       :map selectrum-minibuffer-map
-       ;; Selectrum completion buffer navigation
-       ("C-j" . selectrum-next-candidate)
-       ("C-k" . selectrum-previous-candidate)))
+      (selectrum-fix-minibuffer-height t))
   #+end_src
 
 * Plugins

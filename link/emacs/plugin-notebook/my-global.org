@@ -13,21 +13,21 @@ cross-platform.
 
 #+begin_src emacs-lisp
   (use-package ggtags
-   :bind
-   (:map ggtags-mode-map
-    ("C-c g s" . ggtags-find-other-symbol)
-    ("C-c g h" . ggtags-view-tag-history)
-    ("C-c g r" . ggtags-find-reference)
-    ("C-c g f" . ggtags-find-file)
-    ("C-c g c" . ggtags-create-tags)
-    ("C-c g u" . ggtags-update-tags)
-    ("M-,"     . pop-tag-mark))
-
     :hook
     ;; Start helm-gtags-mode only for specific major modes
     ;; c-mode-common-hook runs for all major modes derived from the C
     ;; programming language.
     (c-mode-common . (lambda ()
-      (when (and (not my/use-helm-gtags) (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode))
-          (ggtags-mode)))))
+                       (when (and (not my/use-helm-gtags) (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode))
+                         (ggtags-mode))))
+    :general
+    (my/user-leader-def ggtags-mode-map
+      "g s" 'ggtags-find-other-symbol
+      "g h" 'ggtags-view-tag-history
+      "g r" 'ggtags-find-reference
+      "g f" 'ggtags-find-file
+      "g c" 'ggtags-create-tags
+      "g u" 'ggtags-update-tags)
+    (general-def ggtags-mode-map
+      "M-," 'pop-tag-mark))
 #+end_src

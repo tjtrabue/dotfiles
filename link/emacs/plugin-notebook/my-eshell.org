@@ -545,7 +545,7 @@ more-helpful local prompt."
             (eshell))))
     #+end_src
 
-** use-package Macro
+** =use-package= specification
    This is where we specify the =use-package= directive for =eshell=, which
    makes use of all the functions we've written above.
 
@@ -556,10 +556,10 @@ more-helpful local prompt."
        (eshell-mode . (lambda ()
                         (set-eshell-env-vars)
                         (set-eshell-aliases)))
-       :bind
-       (:map eshell-proc-mode-map
-             ("M-j" . eshell-next-matching-input-from-input)
-             ("M-k" . eshell-previous-matching-input-from-input))
+       :general
+       (general-def eshell-proc-mode-map
+         "M-j" 'eshell-next-matching-input-from-input
+         "M-k" 'eshell-previous-matching-input-from-input)
        :custom
        ;; eshell-buffer-shorthand t ...  Can't see Bug 19391
        (eshell-scroll-to-bottom-on-input 'all)
