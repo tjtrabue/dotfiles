@@ -199,10 +199,11 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
    #+begin_src emacs-lisp
      (use-package company-try-hard
        :after company
-       :bind
-       (("C-<tab>" . company-try-hard)
-        :map company-active-map
-        ("C-<tab>" . company-try-hard)))
+       :general
+       (general-def 'insert
+         "C-<tab>" 'company-try-hard)
+       (general-def 'insert company-active-map
+         "C-<tab>" 'company-try-hard))
    #+end_src
 
 ** company-ghc
