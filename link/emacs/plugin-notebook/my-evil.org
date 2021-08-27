@@ -499,7 +499,8 @@ to =nil=, so this may help you.
    #+begin_src emacs-lisp
      (use-package evil-mc
        :after evil-collection
-       :demand t
+       :hook
+       (after-init . global-evil-mc-mode)
        :general
        (general-def '(normal visual)
          "C->" 'evil-mc-make-and-goto-next-match
@@ -513,9 +514,7 @@ to =nil=, so this may help you.
          "cu" 'evil-mc-undo-last-added-cursor)
        :custom
        ;; Override default mode line string
-       (evil-mc-mode-line-prefix "ⓜ")
-       :config
-       (global-evil-mc-mode 1))
+       (evil-mc-mode-line-prefix "ⓜ"))
    #+end_src
 
 ** kubernetes-evil

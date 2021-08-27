@@ -35,6 +35,7 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
   ;; Quickly follow links in org-mode, help-mode, info-mode, etc.
   ;; Uses the 'o' key by default to select a link.
   (use-package ace-link
+    :demand t
     :config
     (ace-link-setup-default))
 #+end_src

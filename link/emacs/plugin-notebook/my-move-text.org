@@ -1,22 +1,43 @@
-#+title:  Move Blocks of Text Around
+#+title:  Move Blocks of Text Around the Buffer
 #+author: Tom Trabue
 #+email:  tom.trabue@gmail.com
 #+date:   2020:05:25
 #+STARTUP: fold
 
-Easily move lines of text up and down with the =move-text= package.
+This file contains plugins and configuration for moving words, lines, or regions
+around in Emacs buffers.
 
-* =use-package= specification
+* Drag Stuff
+  This is an alternative to =move-text= with more features, such as the ability
+  to drag words back and forth. It integrates with =evil-mode='s visual
+  selection much better than =move-text=.
+
+  #+begin_src emacs-lisp
+    (use-package drag-stuff
+      :hook
+      (after-init . drag-stuff-global-mode)
+      :general
+      (general-def '(normal visual) '(drag-stuff-mode-map override)
+        "M-k" 'drag-stuff-up
+        "M-j" 'drag-stuff-down
+        "M-h" 'drag-stuff-left
+        "M-l" 'drag-stuff-right))
+  #+end_src
+
+* move-text
+  Easily move lines of text up and down with the =move-text= package. I have
+  found that this plugin does not work well with =evil-mode='s visual line
+  selection, so if you use =evil-mode=, I'd opt for Drag Stuff, instead.
+
 #+begin_src emacs-lisp
   (use-package move-text
-    :after evil-collection
-    :hook
-    (after-init . move-text-default-bindings)
+    ;; Currently using Drag Stuff instead.
+    :disabled
     :general
-    (general-def 'normal
+    (general-def 'normal 'override
       "M-j" 'move-text-down
       "M-k" 'move-text-up)
-    (general-def 'visual
+    (general-def 'visual 'override
       "M-j" 'move-text-region-down
       "M-k" 'move-text-region-up))
 #+end_src

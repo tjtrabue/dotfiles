@@ -37,26 +37,6 @@ world needed another Lisp.
 
 ** Functions
   #+begin_src emacs-lisp
-    (defun my/set-cider-repl-keybindings ()
-      "Hook function for setting keybindings in CIDER nREPL mode.
-    Make sure to only run this function after 'sly-mrepl loads."
-      (with-eval-after-load "cider-repl"
-        ;; Get rid of horrendous "," shortcut
-        (define-key cider-repl-mode-map (kbd ",") nil)
-        ;; Standard evil-mode shortcuts.
-        (evil-define-key '(normal insert) cider-repl-mode-map
-          ;; Cycle command input history with C-j and C-k.
-          (kbd "C-j") #'cider-repl-next-input
-          (kbd "C-k") #'cider-repl-previous-input
-          ;; Browse REPL input history.
-          (kbd "C-r") #'cider-repl-history)
-        ;; Define useful evil-leader shortcuts.
-        (my/evil-leader-def cider-repl-mode-map
-          "s" 'cider-repl-handle-shortcut)
-        ;; Clearing the whole REPL is a useful feature since the REPL gets slower
-        ;; the larger it gets.
-        (define-key cider-repl-mode-map (kbd "C-c M-b") #'cider-repl-clear-buffer)))
-
     (defun my/get-cider-lein-artifact-exclusions (exclusions)
       "Return an exclusions vector described by the elements of EXCLUSIONS."
       (if exclusions
@@ -96,6 +76,19 @@ world needed another Lisp.
       :after evil-collection
       :hook
       (clojure-mode . cider-mode)
+      :general
+      (general-unbind cider-repl-mode-map
+        ",")
+      (general-def '(normal insert) cider-repl-mode-map
+        "C-j" 'cider-repl-next-input
+        "C-k" 'cider-repl-previous-input
+        "C-r" 'cider-repl-history)
+      (my/evil-leader-def cider-repl-mode-map
+        "s" 'cider-repl-handle-shortcut)
+      ;; Clearing the whole REPL is a useful feature since the REPL gets slower
+      ;; the larger it gets.
+      (my/user-leader-def cider-repl-mode-map
+        "M-b" 'cider-repl-clear-buffer)
       :custom
       ;; Which printing function CIDER uses under the hood to print output.
       ;; pprint (default): clojure.pprint/pprint
@@ -154,9 +147,7 @@ world needed another Lisp.
       (cider-save-file-on-load t)
       ;; Extra paramters to pass to lein, such as dependencies and plugins,
       ;; as well as the final repl command..
-      (cider-lein-parameters (my/get-cider-lein-parameters))
-      :config
-      (my/set-cider-repl-keybindings))
+      (cider-lein-parameters (my/get-cider-lein-parameters)))
   #+end_src
 
 * clj-refactor

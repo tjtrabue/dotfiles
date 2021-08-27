@@ -98,27 +98,6 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
                               )))
     #+end_src
 
-*** Set SLY MREPL keybindings
-    #+begin_src emacs-lisp
-      (defun my/set-sly-mrepl-keybindings ()
-        "Hook function for setting keybindings in SLY MREPL mode.
-      Make sure to only run this function after 'sly-mrepl loads."
-        (with-eval-after-load "sly-mrepl"
-          ;; Get rid of horrendous "," shortcut for sly-repl-shortcut.
-          (define-key sly-mrepl-mode-map (kbd ",") nil)
-          ;; History navigation.
-          ;; (evil-define-key '(normal insert) sly-mrepl-mode-map
-          ;;   (kbd "C-r") #'counsel-sly-mrepl-history)
-          (evil-define-key 'insert sly-mrepl-mode-map
-            (kbd "C-j") #'comint-next-input
-            (kbd "C-k") #'comint-previous-input)
-          ;; Define useful key-chords:
-          (my/evil-leader-def sly-mrepl-mode-map
-            "s" 'sly-mrepl-shortcut
-            "p" 'sly-mrepl-set-package
-            "i" 'sly-package-internal-symbols
-            "r" 'sly-restart-inferior-lisp)))
-    #+end_src
 
 ** =use-package= specification
    #+begin_src emacs-lisp
