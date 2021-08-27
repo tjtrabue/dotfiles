@@ -81,8 +81,8 @@ different perspective, and many more.
    #+begin_src emacs-lisp
      (use-package persp-projectile
        :after (perspective projectile)
-       :bind
-       (:map projectile-command-map
-             ([remap projectile-switch-project] . projectile-persp-switch-project)
-             ("," . projectile-persp-switch-project)))
+       :general
+       (general-def projectile-command-map
+         [remap projectile-switch-project] 'projectile-persp-switch-project
+         "," 'projectile-persp-switch-project))
    #+end_src

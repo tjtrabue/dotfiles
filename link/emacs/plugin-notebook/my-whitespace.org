@@ -18,8 +18,8 @@ lines as is necessary, and second, it keeps your code contributions clean.
 
 #+begin_src emacs-lisp
   (use-package whitespace-cleanup-mode
-    :config
-    (global-whitespace-cleanup-mode))
+    :hook
+    (after-init . global-whitespace-cleanup-mode))
 #+end_src
 
 * clean-aindent-mode
@@ -32,24 +32,28 @@ lines as is necessary, and second, it keeps your code contributions clean.
 
 #+begin_src emacs-lisp
   (use-package clean-aindent-mode
-    :bind
-    (("RET" . newline-and-indent))
-    :init
-    (setq clean-aindent-is-simple-indent t)
-    :config
-    ;; Turn off electric-indent-mode, since auto-indent is sufficient.
-    (electric-indent-mode -1)
-    (clean-aindent-mode))
+    ;; Old, unmaintained, unnecessary, a little buggy
+    :disabled
+    :hook
+    (after-init .
+                (lambda ()
+                  ;; Turn off electric-indent-mode, since auto-indent is
+                  ;; sufficient.
+                  (electric-indent-mode -1)
+                  (clean-aindent-mode 1)))
+    :custom
+    (clean-aindent-is-simple-indent t))
 #+end_src
 
 * dtrt-indent
-  =dtrt-indent-mode= guesses the indentation offset for any file in which it is
-  enabled.
+  An Emacs minor mode that guesses the indentation offset originally used for
+  creating source code files and transparently adjusts the corresponding
+  settings in Emacs, making it more convenient to edit foreign files.
 
 #+begin_src emacs-lisp
   (use-package dtrt-indent
-    :init
-    (setq dtrt-indent-verbosity 0)
-    :config
-    (dtrt-indent-mode))
+    :hook
+    (after-init . dtrt-indent-mode)
+    :custom
+    (dtrt-indent-verbosity 0))
 #+end_src

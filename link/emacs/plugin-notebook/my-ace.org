@@ -13,18 +13,21 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
         alternative. See =my-avy= for configuration details.
 
 * Ace Window
+  Quick and easy window navigation, Ace style! This plugin extends the buffer
+  jumping system of =ace-jump-mode= to navigating between windows, as well.
+
 #+begin_src emacs-lisp
-  ;; Quick and easy window navigation with M-o.
   (use-package ace-window
-    :after (evil evil-collection)
-    :bind*
-    ;; Remap C-o to the ace-window function
-    (([remap other-window] . ace-window)
-    ;; Also use C-, to call ace-window
-    ("C-," . ace-window))
-    :config
+    :after evil-collection
+    :general
+    (general-def
+      ;; Remap C-o to the ace-window function
+      [remap other-window] 'ace-window
+      ;; Also use C-, to call ace-window
+      "C-," 'ace-window)
+    :custom
     ;; Set window selection keys to the home row ones.
-    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+    (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 #+end_src
 
 * Ace Link

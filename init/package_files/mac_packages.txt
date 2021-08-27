@@ -35,6 +35,7 @@ kakoune
 kind
 kubectl
 lazygit
+lens
 llvm
 mactex
 meld

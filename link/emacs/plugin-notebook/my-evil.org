@@ -479,12 +479,15 @@ to =nil=, so this may help you.
 ** evil-org
    #+begin_src emacs-lisp
      (use-package evil-org
-       :demand t
        :after (org evil)
        :hook
        ((org-mode . evil-org-mode)
         (evil-org-mode . (lambda ()
                            (evil-org-set-key-theme))))
+       :general
+       (general-def 'insert org-mode-map
+         "RET" 'evil-org-return
+         "<return>" 'evil-org-return)
        :config
        (require 'evil-org-agenda)
        (evil-org-agenda-set-keys))

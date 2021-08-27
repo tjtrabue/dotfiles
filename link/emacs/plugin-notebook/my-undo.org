@@ -15,10 +15,9 @@ This file adds some enhancements to Emacs' undo functionality.
   #+begin_src emacs-lisp
     (use-package undo-fu
       :after evil-collection
-      :bind*
-      (:map evil-normal-state-map
-            ("u" . undo-fu-only-undo)
-            ("C-r" . undo-fu-only-redo)))
+      :general
+      (general-def 'normal
+        "u" 'undo-fu-only-undo))
   #+end_src
 
 * undo-fu-session
