@@ -15,14 +15,15 @@ through an array of standard naming conventions, such as "camelCase", "UPCASE",
   (use-package string-inflection
     :hook
     ((java-mode . (lambda ()
-       (local-set-key (kbd "C-c C-u") 'string-inflection-java-style-cycle)))
+                    (local-set-key (kbd "C-c C-u") 'string-inflection-java-style-cycle)))
      (python-mode . (lambda ()
-       (local-set-key (kbd "C-c C-u") 'string-inflection-python-style-cycle)))
+                      (local-set-key (kbd "C-c C-u") 'string-inflection-python-style-cycle)))
      (ruby-mode . (lambda ()
-       (local-set-key (kbd "C-c C-u") 'string-inflection-ruby-style-cycle))))
-    :bind*
+                    (local-set-key (kbd "C-c C-u") 'string-inflection-ruby-style-cycle))))
+    :general
     ;; The main keybinding:
     ;; test_thing => TEST_THING => TestThing => testThing => test-thing
     ;;            => Test_Thing => test_thing
-    (("C-c C-u" . string-inflection-all-cycle)))
+    (my/user-leader-def
+      "C-u" 'string-inflection-all-cycle))
 #+end_src

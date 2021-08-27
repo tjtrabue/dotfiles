@@ -56,12 +56,13 @@ offering you relevant actions to use on a target determined by the context:
                                ;; Disable whitespace mode for embark modes
                                (setq-local show-trailing-whitespace nil)
                                (whitespace-mode -1)))
-      :bind
-      (("C-M-k" . embark-act)
-       ("C-M-." . embark-dwim)
-       ("C-M-l" . my/embark-act-noquit)
-       ;; alternative for `describe-bindings'
-       ("C-h E" . embark-bindings))
+      :general
+      (general-def
+        "C-M-k" 'embark-act
+        "C-M-." 'embark-dwim
+        "C-M-l" 'my/embark-act-noquit
+        ;; alternative for `describe-bindings'
+        "C-h E" 'embark-bindings)
       :init
       ;; Optionally replace the key help with a completing-read interface
       (setq prefix-help-command #'embark-prefix-help-command)

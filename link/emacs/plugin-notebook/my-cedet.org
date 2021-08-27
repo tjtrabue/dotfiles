@@ -262,21 +262,21 @@ simpler code completion/navigation).
       (use-package srefactor
         :disabled
         :after cedet
-        :bind
-        (:map lisp-mode-map
-              ("M-RET o" . srefactor-lisp-one-line)
-              ("M-RET m" . srefactor-lisp-format-sexp)
-              ("M-RET d" . srefactor-lisp-format-defun)
-              ("M-RET b" . srefactor-lisp-format-buffer)
-              :map emacs-lisp-mode-map
-              ("M-RET o" . srefactor-lisp-one-line)
-              ("M-RET m" . srefactor-lisp-format-sexp)
-              ("M-RET d" . srefactor-lisp-format-defun)
-              ("M-RET b" . srefactor-lisp-format-buffer)
-              :map c-mode-map
-              ("M-RET" . srefactor-refactor-at-point)
-              :map c++-mode-map
-              ("M-RET" . srefactor-refactor-at-point))
+        :general
+        (general-def lisp-mode-map
+          "M-RET o" 'srefactor-lisp-one-line
+          "M-RET m" 'srefactor-lisp-format-sexp
+          "M-RET d" 'srefactor-lisp-format-defun
+          "M-RET b" 'srefactor-lisp-format-buffer)
+        (general-def emacs-lisp-mode-map
+          "M-RET o" 'srefactor-lisp-one-line
+          "M-RET m" 'srefactor-lisp-format-sexp
+          "M-RET d" 'srefactor-lisp-format-defun
+          "M-RET b" 'srefactor-lisp-format-buffer)
+        (general-def c-mode-map
+          "M-RET" 'srefactor-refactor-at-point)
+        (general-def c++-mode-map
+          "M-RET" 'srefactor-refactor-at-point)
         :config
         (require 'srefactor)
         (require 'srefactor-lisp))
@@ -295,15 +295,16 @@ simpler code completion/navigation).
       (use-package function-args
         :disabled
         :after cedet
-        :bind
-        (:map function-args-mode-map
-              ;; Remove mappings from the function-args-mode-map that we wish to use for
-              ;; eassist in CEDET.
-              ("M-o" . nil)
-              ;; Add new bindings for the ones we removed.
-              ("C-c m c" . moo-complete)
-              ;; Change existing bindings
-              ("C-c m s" . fa-show))
+        :general
+        (general-unbind function-args-mode-map
+          ;; Remove mappings from the function-args-mode-map that we wish to use for
+          ;; eassist in CEDET.
+          "M-o")
+        (my/user-leader-def function-args-mode-map
+          ;; Add new bindings for the ones we removed.
+          "m c" 'moo-complete
+          ;; Change existing bindings
+          "m s" 'fa-show)
         :init
         ;; Enable case-insensitive searching.
         (setq-default semantic-case-fold t)
@@ -323,9 +324,10 @@ simpler code completion/navigation).
         :after cedet
         ;; No need to bind keys right now.
         ;; sr-speedbar is unused in favor of treemacs/lsp.
-        ;; :bind
-        ;; (("C-c b t" . sr-speedbar-toggle)
-        ;;  ("C-c b o" . sr-speedbar-select-window))
+        :general
+        (my/user-leader-def
+          "b t" 'sr-speedbar-toggle
+          "b o" 'sr-speedbar-select-window)
         :init
         ;; Do not consider speedbar window when using 'C-x o'
         (setq sr-speedbar-skip-other-window-p t

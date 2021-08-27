@@ -41,40 +41,41 @@ Configuration for all things helm-related, including helm-projectile integration
     ;; based on the number of matches.
     (helm-autoresize-min-height 40)
     (helm-autoresize-max-height 0)
-    :bind
-    ;; Key bindings
-    (;; Main key bindings
-     ;; NOTE: Keybindings unused in favor of ivy
-     ;; ([remap find-file] . helm-find-files)
-     ;; ([remap occur] . helm-occur)
-     ;; Use helm-buffers-list for both 'C-x b' and 'C-x C-b'
-     ;; ([remap list-buffers] . helm-buffers-list)
-     ;; ([remap switch-to-buffer] . helm-buffers-list)
-     ;; ([remap dabbrev-expand] . helm-dabbrev)
-     ;; ([remap execute-extended-command] . helm-M-x)
-     ;; ([remap recentf-open-files] . helm-recentf)
-     ;; Have Helm manage kill ring
-     ;; ("M-y" . helm-show-kill-ring)
-     ;; 'Ctrl-c h' is the starting point for launching a generic helm command.
-     ("C-c h" . helm-command-prefix)
-     ("C-x c" . nil)
-     :map helm-map
-     ;; Rebind tab/C-tab to toggle candidates for performing actions
-     ("<tab>" . helm-toggle-visible-mark-forward)
-     ("<C-tab>" . helm-toggle-visible-mark-backward)
-     ;; C-i executes persistent action (i.e., executes the default action
-     ;; without closing helm)
-     ("C-i" . helm-execute-persistent-action)
-     ;; Navigation keys
-     ("C-j" . helm-next-line)
-     ("C-k" . helm-previous-line)
-     ;; list actions using C-z
-     ("C-z" . helm-select-action)
-     :map evil-normal-state-map
-     ([remap evil-paste-pop-next] . helm-buffers-list)
-     :map helm-buffer-map
-     ;; Kill marked buffers in helm-buffer mode
-     ("C-d" . helm-buffer-run-kill-buffers))
+    :general
+    (my/user-leader-def
+      ;; Main key bindings
+      ;; NOTE: Keybindings unused in favor of ivy
+      ;; ([remap find-file] . helm-find-files)
+      ;; ([remap occur] . helm-occur)
+      ;; Use helm-buffers-list for both 'C-x b' and 'C-x C-b'
+      ;; ([remap list-buffers] . helm-buffers-list)
+      ;; ([remap switch-to-buffer] . helm-buffers-list)
+      ;; ([remap dabbrev-expand] . helm-dabbrev)
+      ;; ([remap execute-extended-command] . helm-M-x)
+      ;; ([remap recentf-open-files] . helm-recentf)
+      ;; Have Helm manage kill ring
+      ;; ("M-y" . helm-show-kill-ring)
+      ;; 'Ctrl-c h' is the starting point for launching a generic helm command.
+      "h" 'helm-command-prefix)
+    (general-def
+      "C-x c" 'nil)
+    (general-def helm-map
+      ;; Rebind tab/C-tab to toggle candidates for performing actions
+      "<tab>" 'helm-toggle-visible-mark-forward
+      "<C-tab>" 'helm-toggle-visible-mark-backward
+      ;; C-i executes persistent action (i.e., executes the default action
+      ;; without closing helm)
+      "C-i" 'helm-execute-persistent-action
+      ;; Navigation keys
+      "C-j" 'helm-next-line
+      "C-k" 'helm-previous-line
+      ;; list actions using C-z
+      "C-z" 'helm-select-action)
+    (general-def 'normal
+      [remap evil-paste-pop-next] 'helm-buffers-list)
+    (general-def helm-buffer-map
+      ;; Kill marked buffers in helm-buffer mode
+      "C-d" 'helm-buffer-run-kill-buffers)
     :preface
     (setq minibuffer-local-must-match-filename-map '())
     :init
@@ -102,8 +103,9 @@ Configuration for all things helm-related, including helm-projectile integration
     :disabled
     :after helm
     :commands helm-rg
-    :bind
-    (("C-c s r" . helm-rg))
+    :general
+    (my/user-leader-def
+      "s r" 'helm-rg)
     :config
     ;; Extra CLI options to pass to ripgrep
     (setq helm-rg-default-extra-args '("--hidden")))
@@ -134,11 +136,11 @@ Configuration for all things helm-related, including helm-projectile integration
 #+begin_src emacs-lisp
   (use-package helm-projectile
     :after (helm projectile ag rg helm-rg helm-ag)
-    :bind
-    (:map projectile-mode-map
-          ;; Use ripgrep instead of standard grep for speed.
-          ([remap projectile-grep] . helm-projectile-rg)
-          ([remap projectile-ag] . helm-projectile-ag)))
+    :general
+    (general-def projectile-mode-map
+      ;; Use ripgrep instead of standard grep for speed.
+      [remap projectile-grep] 'helm-projectile-rg
+      [remap projectile-ag] 'helm-projectile-ag))
 #+end_src
 
 ** helm-swoop
@@ -155,28 +157,29 @@ Configuration for all things helm-related, including helm-projectile integration
 #+begin_src emacs-lisp
   (use-package helm-swoop
     :after projectile
-    :bind
-    (;; Main key bindings
-     ("M-i" . helm-swoop)
-     ("M-I" . helm-swoop-back-to-last-point)
-     ("C-x M-i" . helm-multi-swoop)
-     ("C-c M-i" . helm-multi-swoop-all)
-     :map isearch-mode-map
-     ("M-i" . helm-swoop-from-isearch)
-     :map helm-swoop-map
-     ("M-i" . helm-multi-swoop-all-from-helm-swoop)
-     ;; Instead of helm-multi-swoop-all, you can also use
-     ;; helm-multi-swoop-current-mode
-     ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
-     ;; Move up and down like isearch
-     ("C-r" . helm-previous-line)
-     ("C-s" . helm-next-line)
-     :map helm-multi-swoop-map
-     ("C-r" . helm-previous-line)
-     ("C-s" . helm-next-line)
-     :map projectile-command-map
-     ;; Swoop all open project buffers with C-c p w
-     ("w" . helm-multi-swoop-projectile))
+    :general
+    (general-def
+      ;; Main key bindings
+      "M-i" 'helm-swoop
+      "M-I" 'helm-swoop-back-to-last-point
+      "C-x M-i" 'helm-multi-swoop
+      "C-c M-i" 'helm-multi-swoop-all)
+    (general-def isearch-mode-map
+      "M-i" 'helm-swoop-from-isearch)
+    (general-def helm-swoop-map
+      "M-i" 'helm-multi-swoop-all-from-helm-swoop
+      ;; Instead of helm-multi-swoop-all, you can also use
+      ;; helm-multi-swoop-current-mode
+      "M-m" 'helm-multi-swoop-current-mode-from-helm-swoop
+      ;; Move up and down like isearch
+      "C-r" 'helm-previous-line
+      "C-s" 'helm-next-line)
+    (general-def helm-multi-swoop-map
+      "C-r" 'helm-previous-line
+      "C-s" 'helm-next-line)
+    (general-def projectile-command-map
+      ;; Swoop all open project buffers with C-c p w
+      "w" 'helm-multi-swoop-projectile)
     :custom
     ;; Save buffer when helm-multi-swoop-edit complete
     (helm-multi-swoop-edit-save t)
@@ -237,22 +240,23 @@ Configuration for all things helm-related, including helm-projectile integration
   (use-package helm-gtags
     :disabled
     :after helm
-    :init
-    (setq helm-gtags-prefix-key (kbd "C-c g"))
-    :bind
-    (:map helm-gtags-mode-map
-      ("C-j"                         . helm-gtags-select)
+    :general
+    (general-def helm-gtags-mode-map
+      "C-j" 'helm-gtags-select
       ;; Remapping for M-.
-      ([remap evil-repeat-pop-next]  . helm-gtags-dwim)
+      [remap evil-repeat-pop-next] 'helm-gtags-dwim
       ;; Remapping for M-,
-      ([remap xref-pop-marker-stack] . helm-gtags-pop-stack)
-      ("C-c <"                       . helm-gtags-previous-history)
-      ("C-c >"                       . helm-gtags-next-history))
+      [remap xref-pop-marker-stack] 'helm-gtags-pop-stack)
+    (my/user-leader-def
+      "<" 'helm-gtags-previous-history
+      ">" 'helm-gtags-next-history)
     :hook
     ;; Only start helm-gtags-mode for specific major modes
     ((cperl-mode perl-mode) . (lambda ()
-      (when my/use-helm-gtags
-        (helm-gtags-mode))))
+                                (when my/use-helm-gtags
+                                  (helm-gtags-mode))))
+    :init
+    (setq helm-gtags-prefix-key (kbd "C-c g"))
     :config
     ;; Key mapping of gtags-mode.
     (my/create-helm-gtags-keybindings))
@@ -278,11 +282,12 @@ Configuration for all things helm-related, including helm-projectile integration
     :after (helm escreen)
     :straight (helm-escreen :host github
                             :repo "dmh43/helm-escreen")
-    :bind
-    (("C-c r c" . helm-escreen-create-screen)
-     ("C-c r s" . helm-escreen-select-escreen)
-     ("C-c r k" . helm-escreen-kill-escreen)
-     ("C-c r r" . helm-escreen-prompt-rename)))
+    :general
+    (my/user-leader-def
+      "r c" 'helm-escreen-create-screen
+      "r s" 'helm-escreen-select-escreen
+      "r k" 'helm-escreen-kill-escreen
+      "r r" 'helm-escreen-prompt-rename))
 #+end_src
 
 ** helm-lsp
@@ -293,11 +298,11 @@ Configuration for all things helm-related, including helm-projectile integration
   (use-package helm-lsp
     :disabled
     :after (lsp-mode helm)
-    :bind
-    (:map lsp-mode-map
-     ([remap xref-find-apropos] . helm-lsp-workspace-symbol)
-     ("C-j" . helm-lsp-workspace-symbol))
-    :commands helm-lsp-workspace-symbol)
+    :commands helm-lsp-workspace-symbol
+    :general
+    (general-def lsp-mode-map
+      [remap xref-find-apropos] 'helm-lsp-workspace-symbol
+      "C-j" 'helm-lsp-workspace-symbol))
 #+end_src
 
 ** helm-make
@@ -340,8 +345,9 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-system-packages
-    :bind
-    (("C-c s p" . helm-system-packages)))
+    :general
+    (my/user-leader-def
+      "s p" 'helm-system-packages))
 #+end_src
 
 ** helm-dash
@@ -359,15 +365,15 @@ Configuration for all things helm-related, including helm-projectile integration
   (use-package helm-perldoc
     :disabled
     :after cperl-mode
-    :bind
-    (:map cperl-mode-map
-     ;; Don't just remap cperl-perldoc to helm-perldoc because they are not quite
-     ;; the same thing. cperl-perldoc finds any function, whereas helm-perldoc
-     ;; only seems to find custom installed modules.
-     ("C-c C-h C-p" . helm-perldoc))
+    :general
+    (my/user-leader-def cperl-mode-map
+      ;; Don't just remap cperl-perldoc to helm-perldoc because they are not quite
+      ;; the same thing. cperl-perldoc finds any function, whereas helm-perldoc
+      ;; only seems to find custom installed modules.
+      "C-h C-p" 'helm-perldoc)
     :hook
     ((cperl-mode perl-mode) . (lambda ()
-      (helm-perldoc:setup))))
+                                (helm-perldoc:setup))))
 #+end_src
 
 ** helm-company
@@ -381,11 +387,11 @@ Configuration for all things helm-related, including helm-projectile integration
        ;; hover.
        :disabled
        :after (helm company)
-       :bind
-       (:map company-mode-map
-        ("C-;" . helm-company)
-        :map company-active-map
-        ("C-;" . helm-company)))
+       :general
+       (general-def company-mode-map
+         "C-;" 'helm-company)
+       (general-def company-active-map
+         "C-;" 'helm-company))
    #+end_src
 ** helm-sly
    =helm= integration for =sly=, the newer Common Lisp IDE for Emacs superseding
