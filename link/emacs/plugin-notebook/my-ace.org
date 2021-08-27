@@ -20,7 +20,7 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
   (use-package ace-window
     :after evil-collection
     :general
-    (general-def
+    (general-def 'override
       ;; Remap C-o to the ace-window function
       [remap other-window] 'ace-window
       ;; Also use C-, to call ace-window
