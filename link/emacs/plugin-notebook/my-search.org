@@ -17,8 +17,9 @@ possible.
   #+begin_src emacs-lisp
     (use-package deadgrep
       :commands deadgrep
-      :bind
-      (("C-c S" . deadgrep)))
+      :general
+      (my/user-leader-def
+        "S" 'deadgrep))
   #+end_src
 
 * ripgrep

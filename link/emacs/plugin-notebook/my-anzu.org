@@ -11,12 +11,13 @@
   (use-package anzu
     :hook
     (after-init . global-anzu-mode)
-    :bind
-    (([remap query-replace] . anzu-query-replace)
-     ([remap query-replace-regexp] . anzu-query-replace-regexp)
-     :map isearch-mode-map
-     ([remap isearch-query-replace] . anzu-isearch-query-replace)
-     ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+    :general
+    (general-def
+      [remap query-replace] 'anzu-query-replace
+      [remap query-replace-regexp] 'anzu-query-replace-regexp)
+    (general-def isearch-mode-map
+      [remap isearch-query-replace] 'anzu-isearch-query-replace
+      [remap isearch-query-replace-regexp] 'anzu-isearch-query-replace-regexp)
     :custom
     ;; Turn off anzu's modeline capability so that spaceline will handle anzu
     ;; information instead.

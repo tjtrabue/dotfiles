@@ -228,8 +228,9 @@ such plugins is sure to slow your system down significantly.
 #+begin_src emacs-lisp
   (use-package perl-find-library
     :after cperl-mode
-    :bind
-    (:map cperl-mode-map
-     ("C-c f l" . perl-find-library)
-     ([remap cperl-perldoc] . perldoc)))
+    :general
+    (my/user-leader-def cperl-mode-map
+      "f l" 'perl-find-library)
+    (general-def cperl-mode-map
+      [remap cperl-perldoc] 'perldoc))
 #+end_src

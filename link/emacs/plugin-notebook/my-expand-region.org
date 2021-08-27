@@ -11,8 +11,8 @@ prescribed selection key.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package expand-region
-      :bind
-      ;; Pressing 'C-=' will gradually expand the selection under the cursor.
-      ;; Also see the hydra for this plugin.
-      ("C-=" . er/expand-region))
+      :demand t
+      ;; I defined a hydra for expand-region for convenience..
+      ;; See my-hydra.org for keybindings for my expand-region hydra.
+      )
   #+end_src

@@ -129,14 +129,14 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
        ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
        ((lisp-mode . sly-mode)
         (sly-mrepl-mode . my/set-sly-mrepl-keybindings))
-       :bind
-       (:map sly-prefix-map
-             ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
-             ("C-n" . sly)
-             ("C-h" . sly-documentation)
-             ("C-q l" . sly-quit-lisp)
-             ("C-q s" . sly-quit-sentinel)
-             ("C-q c" . sly-quit-connection-at-point))
+       :general
+       (general-def sly-prefix-map
+         ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
+         "C-n" 'sly
+         "C-h" 'sly-documentation
+         "C-q l" 'sly-quit-lisp
+         "C-q s" 'sly-quit-sentinel
+         "C-q c" 'sly-quit-connection-at-point)
        :custom
        ;; Set the program used to interact with Common Lisp.
        (inferior-lisp-program (my/get-inferior-lisp-program))

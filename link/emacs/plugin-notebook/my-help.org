@@ -14,15 +14,17 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
 
   #+begin_src emacs-lisp
     (use-package helpful
-      :bind*
-      (;; Replace standard help functions with helpful functions.
-       ("C-h f" . helpful-callable)
-       ("C-h v" . helpful-variable)
-       ("C-h k" . helpful-key)
-       ;; Other useful keybindings.
-       ("C-h C" . helpful-command)
-       ("C-h F" . helpful-function)
-       ("C-c C-d" . helpful-at-point)))
+      :general
+      (general-def
+        ;; Replace standard help functions with helpful functions.
+        "C-h f" 'helpful-callable
+        "C-h v" 'helpful-variable
+        "C-h k" 'helpful-key
+        ;; Other useful keybindings.
+        "C-h C" 'helpful-command
+        "C-h F" 'helpful-function)
+      (my/user-leader-def
+        "C-d" 'helpful-at-point))
   #+end_src
 
 * help+
@@ -42,9 +44,10 @@ See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][Emac
    #+begin_src emacs-lisp
      (use-package help-fns+
        :demand t
-       :bind
-       ("C-h M-m" . describe-keymap)
-       ("C-h M-f" . describe-face))
+       :general
+       (general-def
+         "C-h M-m" 'describe-keymap
+         "C-h M-f" 'describe-face))
    #+end_src
 
 *** help-macro+

@@ -479,7 +479,7 @@ to =nil=, so this may help you.
 ** evil-org
    #+begin_src emacs-lisp
      (use-package evil-org
-       :after (org evil)
+       :after (org evil-collection)
        :hook
        ((org-mode . evil-org-mode)
         (evil-org-mode . (lambda ()
