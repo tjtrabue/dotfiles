@@ -166,8 +166,8 @@ to =nil=, so this may help you.
         [remap evil-scroll-page-down] 'evil-scroll-down)
       (general-def 'insert
         ;; TAB should try expanding or fall back on self-insertion.
-        "TAB" 'my-hippie-expand-or-insert-tab
-        "<tab>" 'my-hippie-expand-or-insert-tab)
+        "TAB" 'my-hippie-expand-or-tab
+        "<tab>" 'my-hippie-expand-or-tab)
       ;; This form unbinds keys in given evil states and/or keymaps.
       (general-unbind 'insert
         ;; Get rid of annoying evil-paste-from-register binding.

@@ -64,15 +64,15 @@
 (my-hippie-expand-set-lisp-hooks)
 
 ;;;###autoload
-(defun my-hippie-expand-or-insert-tab ()
-  "Expand text before point or insert a tab if preceding text is blank."
-  (interactive)
+(defun my-hippie-expand-or-tab (arg)
+  "Invoke `tab-to-tab-stop' or `hippie-expand' with the relevant prefix ARG."
+  (interactive "*P")
   (if (or (bolp) (string-match-p "[[:space:]]" (byte-to-string (preceding-char))))
     ;; If point is at beginning of line or previous character is blank, insert a
     ;; tab or number of spaces; otherwise, try to expand text with
     ;; `hippie-expand'.
     (tab-to-tab-stop)
-    (call-interactively 'hippie-expand)))
+    (hippie-expand arg)))
 (provide 'my-hippie-expand)
 
 ;;; my-hippie-expand.el ends here
