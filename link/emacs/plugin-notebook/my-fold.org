@@ -21,56 +21,71 @@ with Emacs, while still others must be installed as third-party plugins.
   folding commands such as =zc= and =zo= work out of the box, no configuration
   necessary.
 
-  #+begin_src emacs-lisp
-    (use-package origami
-      :hook
-      (after-init . global-origami-mode))
-  #+end_src
+** Supported Major Modes
+   =origami= supports the following major modes out of the box:
+
+   - C
+   - C++
+   - Clojure
+   - Go
+   - Java
+   - Javascript
+   - PHP
+   - Perl
+   - Python
+   - elisp
+
+** =use-package= specification
+   #+begin_src emacs-lisp
+     (use-package origami
+       :hook
+       (after-init . global-origami-mode))
+   #+end_src
 
 * vimish-fold
   =vimish-fold= adds Vim's native code folding capabilities to Emacs. My
   personal favorite code folding system.
 
 ** Using =vimish-fold= in addition to other code folding backends
-  =vimish-fold= is /not/ a standard code folding backend for Emacs. That is,
-  unlike =origami=, =vimish-fold= does not implement Emacs' code folding API in
-  such a way that it can be used by standard folding functions, meaning that
-  =vimish-fold= will not integrate with =evil-mode= by default. To get
-  =evil-mode= to respect =vimish-fold= commands you will have to customize
-  evil's keybindings. However, I find that I like to use =origami= as
-  =evil-mode='s primary code folding backend, and use =vimish-fold= as a
-  secondary folding layer. I only ever use =vimish-fold= to fold from mark
-  symbols, and I use =origami= for everything else.
+   =vimish-fold= is /not/ a standard code folding backend for Emacs. That is,
+   unlike =origami=, =vimish-fold= does not implement Emacs' code folding API in
+   such a way that it can be used by standard folding functions, meaning that
+   =vimish-fold= will not integrate with =evil-mode= by default. To get
+   =evil-mode= to respect =vimish-fold= commands you will have to customize
+   evil's keybindings. However, I find that I like to use =origami= as
+   =evil-mode='s primary code folding backend, and use =vimish-fold= as a
+   secondary folding layer. I only ever use =vimish-fold= to fold from mark
+   symbols, and I use =origami= for everything else.
 
 ** =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package vimish-fold
-      :hook
-      ;; Activate vimish-fold mode for all buffers.
-      ((after-init . vimish-fold-global-mode)
-       ;; Re-create folds from mark comments when visiting a file.
-       (find-file . vimish-fold-from-marks))
-      :general
-      (general-def
-        ;; The standard vimish-fold keybinding. I don't tend to use it.
-        "C-`" 'vimish-fold-toggle)
-      (general-def 'normal
-        "zf" 'vimish-fold-avy)
-      (my/evil-leader-def
-        "va" 'vimish-fold-avy
-        "vd" 'vimish-fold-delete
-        "vD" 'vimish-fold-delete-all
-        "vf" 'vimish-fold
-        "vm" 'vimish-fold-from-marks
-        "vr" 'vimish-fold-refold
-        "vR" 'vimish-fold-refold-all
-        "vu" 'vimish-fold-unfold
-        "vU" 'vimish-fold-unfold-all
-        "vv" 'vimish-fold-toggle
-        "vV" 'vimish-fold-toggle-all)
-      :custom
-      ;; Where to indicate a fold
-      (vimish-fold-indication-mode 'right-fringe)
-      ;; Whether to save folds on buffer saving.
-      (vimish-fold-persist-on-saving t))
-  #+end_src
+   #+begin_src emacs-lisp
+     (use-package vimish-fold
+       :hook
+       ;; Activate vimish-fold mode for all buffers.
+       ((after-init . vimish-fold-global-mode)
+        ;; Re-create folds from mark comments when visiting a file.
+        (find-file . vimish-fold-from-marks))
+       :general
+       (general-def
+         ;; The standard vimish-fold keybinding. I don't tend to use it.
+         "C-`" 'vimish-fold-toggle)
+       (general-def 'normal
+         "zf" 'vimish-fold-avy)
+       (my/evil-leader-def
+         "va" 'vimish-fold-avy
+         "vd" 'vimish-fold-delete
+         "vD" 'vimish-fold-delete-all
+         "vf" 'vimish-fold
+         "vm" 'vimish-fold-from-marks
+         "vr" 'vimish-fold-refold
+         "vR" 'vimish-fold-refold-all
+         "vu" 'vimish-fold-unfold
+         "vU" 'vimish-fold-unfold-all
+         "vv" 'vimish-fold-toggle
+         "vV" 'vimish-fold-toggle-all)
+       :custom
+       ;; Where to indicate a fold
+       (vimish-fold-indication-mode 'right-fringe)
+       ;; Whether to save folds on buffer saving.
+       (vimish-fold-persist-on-saving t))
+   #+end_src
