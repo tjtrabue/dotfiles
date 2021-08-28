@@ -22,7 +22,7 @@ with Emacs, while still others must be installed as third-party plugins.
   necessary. It also is capable of folding code between Vim-style ={{{...}}}=
   markings.
 
-** Supported Major Modes
+** Supported major modes
    =origami= supports the following major modes out of the box:
 
    - C
@@ -39,19 +39,21 @@ with Emacs, while still others must be installed as third-party plugins.
    Anything not in this list will be folded using indentation. This works
    surprisingly well for most major-modes and is great for folding text.
 
+** Adding support for new major modes
    It should be trivial to add support for any language that uses braces to
    delimit blocks. Just add to =origami-parser-alist= something like:
    =(mode-name . origami-c-style-parser)=. Adding support for another lisp
    dialect should be almost as simple. You can also easily define a parser for
    anything with start and end delimiters (similar to braces). Use the
    =origami-markers-parser= function for this. There is an example defined for
-   =triple-braces= in =origami-parser-alist=.
+   triple-braces in =origami-parser-alist=.
 
 ** =use-package= specification
    #+begin_src emacs-lisp
      (use-package origami
        :hook
-       (after-init . global-origami-mode))
+       ;; Probably don't want to use origami for text-mode.
+       ((prog-mode conf-mode) . origami-mode))
    #+end_src
 
 * vimish-fold
