@@ -2,7 +2,8 @@
 # the install script)
 .dotfiles_installed
 
-# Ignore files in the backup folder, which are backups made during the initial install.
+# Ignore files in the backup folder, which are backups made during the initial
+# install.
 backup/
 
 # Ignore the test directory, used for developing test scripts:
@@ -190,6 +191,10 @@ link/config/chromium
 # Authy {{{
 # Authy local configuration files
 link/config/Authy\ Desktop
+# }}}
+
+# ExpressVPN {{{
+link/config/expressvpn
 # }}}
 
 # ZSH {{{
