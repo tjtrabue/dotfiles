@@ -12,11 +12,10 @@ supports a number of code folding /backends/, some of which come preinstalled
 with Emacs, while still others must be installed as third-party plugins.
 
 * origami
-  =origami= is a smart code folding plugin for Emacs.
-
-  As a rule, Emacs supports lots of different code folding minor modes, some of
-  which are built-in, some are external plugins. =origami= is of the latter
-  category, and is one of the best representatives.
+  =origami= is a smart code folding plugin for Emacs. As a rule, Emacs supports
+  lots of different code folding minor modes, some of which are built-in, some
+  are external plugins. =origami= is of the latter category, and is one of the
+  best representatives.
 
   =origami= integrates nicely with =evil-mode=, so using standard Vim-like
   folding commands such as =zc= and =zo= work out of the box, no configuration
@@ -32,16 +31,18 @@ with Emacs, while still others must be installed as third-party plugins.
   =vimish-fold= adds Vim's native code folding capabilities to Emacs. My
   personal favorite code folding system.
 
-  Please note that =vimish-fold= is /not/ a standard code folding backend for
-  Emacs. That is, unlike =origami=, =vimish-fold= does not implement Emacs' code
-  folding API in such a way that it can be used by standard folding functions,
-  meaning that =vimish-fold= will not integrate with =evil-mode= by default. To
-  get =evil-mode= to respect =vimish-fold= commands you will have to customize
-  evil's keybindings. However, I find that I like to use =origami= for
-  =evil-mode='s folding backend, and use =vimish-fold= as a secondary folding
-  layer on top of =origami=. I only ever use =vimish-fold= to fold from mark
+** Using =vimish-fold= in addition to other code folding backends
+  =vimish-fold= is /not/ a standard code folding backend for Emacs. That is,
+  unlike =origami=, =vimish-fold= does not implement Emacs' code folding API in
+  such a way that it can be used by standard folding functions, meaning that
+  =vimish-fold= will not integrate with =evil-mode= by default. To get
+  =evil-mode= to respect =vimish-fold= commands you will have to customize
+  evil's keybindings. However, I find that I like to use =origami= as
+  =evil-mode='s primary code folding backend, and use =vimish-fold= as a
+  secondary folding layer. I only ever use =vimish-fold= to fold from mark
   symbols, and I use =origami= for everything else.
 
+** =use-package= specification
   #+begin_src emacs-lisp
     (use-package vimish-fold
       :hook
