@@ -143,11 +143,9 @@ to =nil=, so this may help you.
       :demand t
       :general
       ;; Use "jk" to escape from insert and replace states.
-      ;; We need to use the full `general-define-key' function instead of
-      ;; `general-def' because we want to use the evaluated output of
-      ;; `general-chord' in our key definitions.
-      (general-define-key :states '(insert, replace)
-                          (general-chord "jk") 'evil-normal-state)
+      (general-define-key
+       :states '(insert replace)
+       (general-chord "jk") 'evil-normal-state)
       ;; `general-def' if a shorthand macro wrapper for `general-define-key' that
       ;; allows using positional parameters for evil states and keymaps.
       ;; Its usage is as follows:
@@ -587,50 +585,62 @@ to =nil=, so this may help you.
 
       (defun my/set-lispyville-mode-keys ()
         "Set extra `evil-mode' keybindings for `lispyville-mode'."
-        (let ((keymap lispyville-mode-map))
-          (general-def 'normal keymap
-            ;; slurp: expand current s-exp; barf: Contract current s-exp
-            "-" 'lispyville-slurp
-            "_" 'lispyville-barf
-            ;; Split and join s-exps
-            "\\" 'lispy-split
-            "|" 'lispy-join
-            ;; Delimiter navigation
-            "{" 'lispyville-previous-opening
-            "}" 'lispyville-next-closing
-            ;; List navigation
-            "(" 'lispyville-backward-up-list
-            ")" 'lispyville-up-list
-            ;; Make "J" into the safe join operator in Lisp modes
-            "J" 'lispyville-join
-            ;; Adapt ace-style jump commands for lispy.
-            "F" 'lispy-ace-paren
-            ;; Special comment functions
-            "gcc" 'lispyville-comment-or-uncomment-line
-            "gcC" 'lispyville-comment-or-uncomment
-            "gcy" 'lispyville-comment-and-clone-dwim
-            ;; Mark symbols with M-m
-            "M-m" 'lispy-mark-symbol)
-          (general-def '(normal insert) keymap
-            ;; Function navigation
-            "M-h" 'lispyville-beginning-of-defun
-            "M-l" 'lispyville-end-of-defun)
-          (general-def '(normal visual) keymap
-            ;; Contract/expand current sexp.
-            "<<" 'lispyville-<
-            ">>" 'lispyville->
-            ;; Move s-exps back and forth
-            "M-j" 'lispyville-move-down
-            "M-k" 'lispyville-move-up
-            ;; Mark symbol or list.
-            "gm" 'lispy-mark-symbol
-            "gM" 'lispy-mark)
-          (general-def 'visual keymap
-            "gc" 'lispyville-comment-or-uncomment-line
-            "gC" 'lispyville-comment-or-uncomment
-            "gy" 'lispyville-comment-and-clone-dwim)
-          (general-def '(normal insert visual) keymap
-            "M-;" 'lispy-comment)))
+        (let ((mode-map 'lispyville-mode-map))
+          ;; Wrap our favorite "jk" chord for lispyville mode.
+          ;; (general-define-key
+          ;;  :states '(insert replace)
+          ;;  :keymaps mode-map
+          ;;  (general-chord "jk") 'lispyville-normal-state)
+          (general-define-key
+           :states 'normal
+           :keymaps mode-map
+           ;; slurp: expand current s-exp; barf: Contract current s-exp
+           "-" 'lispyville-slurp
+           "_" 'lispyville-barf
+           ;; Split and join s-exps
+           "\\" 'lispy-split
+           "|" 'lispy-join
+           ;; Delimiter navigation
+           "{" 'lispyville-previous-opening
+           "}" 'lispyville-next-closing
+           ;; List navigation
+           "(" 'lispyville-backward-up-list
+           ")" 'lispyville-up-list
+           ;; Make "J" into the safe join operator in Lisp modes
+           "J" 'lispyville-join
+           ;; Adapt ace-style jump commands for lispy.
+           "F" 'lispy-ace-paren
+           ;; Special comment functions
+           "gcc" 'lispyville-comment-or-uncomment-line
+           "gcC" 'lispyville-comment-or-uncomment
+           "gcy" 'lispyville-comment-and-clone-dwim
+           ;; Mark symbols with M-m
+           "M-m" 'lispy-mark-symbol)
+          (general-define-key
+           :states '(normal insert)
+           :keymaps mode-map
+           ;; Function navigation
+           "M-h" 'lispyville-beginning-of-defun
+           "M-l" 'lispyville-end-of-defun)
+          (general-define-key
+           :states '(normal visual)
+           :keymaps mode-map
+           ;; Contract/expand current sexp.
+           "<<" 'lispyville-<
+           ">>" 'lispyville->
+           ;; Move s-exps back and forth
+           "M-j" 'lispyville-move-down
+           "M-k" 'lispyville-move-up)
+          (general-define-key
+           :states 'visual
+           :keymaps mode-map
+           "gc" 'lispyville-comment-or-uncomment-line
+           "gC" 'lispyville-comment-or-uncomment
+           "gy" 'lispyville-comment-and-clone-dwim)
+          (general-define-key
+           :states '(normal insert visual)
+           :keymaps mode-map
+           "M-;" 'lispy-comment)))
 
       (defun my/set-lispyville-lispy-keys ()
         "Use `lispy-define-key' to set extra keybindings for `lispyville'."
@@ -645,7 +655,8 @@ to =nil=, so this may help you.
         :hook
         (lispy-mode . lispyville-mode)
         :general
-        (general-unbind 'normal evil-collection-lispy-mode-map
+        (general-unbind '(normal visual)
+          '(lispyville-mode-map evil-collection-lispy-mode-map)
           ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
           ;; unimpaired bindings.
           "["
