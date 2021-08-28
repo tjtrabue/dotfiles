@@ -19,7 +19,8 @@ with Emacs, while still others must be installed as third-party plugins.
 
   =origami= integrates nicely with =evil-mode=, so using standard Vim-like
   folding commands such as =zc= and =zo= work out of the box, no configuration
-  necessary.
+  necessary. It also is capable of folding code between Vim-style ={{{...}}}=
+  markings.
 
 ** Supported Major Modes
    =origami= supports the following major modes out of the box:
@@ -35,6 +36,17 @@ with Emacs, while still others must be installed as third-party plugins.
    - Python
    - elisp
 
+   Anything not in this list will be folded using indentation. This works
+   surprisingly well for most major-modes and is great for folding text.
+
+   It should be trivial to add support for any language that uses braces to
+   delimit blocks. Just add to =origami-parser-alist= something like:
+   =(mode-name . origami-c-style-parser)=. Adding support for another lisp
+   dialect should be almost as simple. You can also easily define a parser for
+   anything with start and end delimiters (similar to braces). Use the
+   =origami-markers-parser= function for this. There is an example defined for
+   =triple-braces= in =origami-parser-alist=.
+
 ** =use-package= specification
    #+begin_src emacs-lisp
      (use-package origami
@@ -43,8 +55,19 @@ with Emacs, while still others must be installed as third-party plugins.
    #+end_src
 
 * vimish-fold
-  =vimish-fold= adds Vim's native code folding capabilities to Emacs. My
-  personal favorite code folding system.
+  =vimish-fold= adds Vim's native code folding capabilities to Emacs.
+
+** NOTE: =origami= supports folding Vim-style triple-braces
+   =origami= has built-in supports for folding sections of code such as:
+
+   #+begin_src bash :tangle no
+     # my fold {{{
+     echo "Code within this triple-fold block can be folded by origami."
+     # }}}
+   #+end_src
+
+   Thus, if you only use =vimish-fold= for such markings, =vimish-fold= is
+   probably unnecessary. Just stick with =origami=.
 
 ** Using =vimish-fold= in addition to other code folding backends
    =vimish-fold= is /not/ a standard code folding backend for Emacs. That is,
@@ -54,12 +77,13 @@ with Emacs, while still others must be installed as third-party plugins.
    =evil-mode= to respect =vimish-fold= commands you will have to customize
    evil's keybindings. However, I find that I like to use =origami= as
    =evil-mode='s primary code folding backend, and use =vimish-fold= as a
-   secondary folding layer. I only ever use =vimish-fold= to fold from mark
-   symbols, and I use =origami= for everything else.
+   secondary folding layer.
 
 ** =use-package= specification
    #+begin_src emacs-lisp
      (use-package vimish-fold
+       ;; origami supports Vim-style "{{{...}}}" folding now.
+       :disabled
        :hook
        ;; Activate vimish-fold mode for all buffers.
        ((after-init . vimish-fold-global-mode)
