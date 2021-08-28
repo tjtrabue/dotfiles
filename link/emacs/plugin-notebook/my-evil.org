@@ -588,46 +588,49 @@ to =nil=, so this may help you.
       (defun my/set-lispyville-mode-keys ()
         "Set extra `evil-mode' keybindings for `lispyville-mode'."
         (let ((keymap lispyville-mode-map))
-          (evil-define-key 'normal keymap
+          (general-def 'normal keymap
             ;; slurp: expand current s-exp; barf: Contract current s-exp
-            "-" #'lispyville-slurp
-            "_" #'lispyville-barf
+            "-" 'lispyville-slurp
+            "_" 'lispyville-barf
             ;; Split and join s-exps
-            "\\" #'lispy-split
-            "|" #'lispy-join
+            "\\" 'lispy-split
+            "|" 'lispy-join
             ;; Delimiter navigation
-            "{" #'lispyville-previous-opening
-            "}" #'lispyville-next-closing
+            "{" 'lispyville-previous-opening
+            "}" 'lispyville-next-closing
             ;; List navigation
-            "(" #'lispyville-backward-up-list
-            ")" #'lispyville-up-list
+            "(" 'lispyville-backward-up-list
+            ")" 'lispyville-up-list
             ;; Make "J" into the safe join operator in Lisp modes
-            "J" #'lispyville-join
+            "J" 'lispyville-join
             ;; Adapt ace-style jump commands for lispy.
-            "F" #'lispy-ace-paren
+            "F" 'lispy-ace-paren
             ;; Special comment functions
-            "gcc" #'lispyville-comment-or-uncomment-line
-            "gcC" #'lispyville-comment-or-uncomment
-            "gcy" #'lispyville-comment-and-clone-dwim
+            "gcc" 'lispyville-comment-or-uncomment-line
+            "gcC" 'lispyville-comment-or-uncomment
+            "gcy" 'lispyville-comment-and-clone-dwim
             ;; Mark symbols with M-m
-            (kbd "M-m") #'lispy-mark-symbol)
-          (evil-define-key '(normal insert) keymap
+            "M-m" 'lispy-mark-symbol)
+          (general-def '(normal insert) keymap
             ;; Function navigation
-            (kbd "M-h") #'lispyville-beginning-of-defun
-            (kbd "M-l") #'lispyville-end-of-defun)
-          (evil-define-key '(normal visual) keymap
+            "M-h" 'lispyville-beginning-of-defun
+            "M-l" 'lispyville-end-of-defun)
+          (general-def '(normal visual) keymap
             ;; Contract/expand current sexp.
-            "<<" #'lispyville-<
-            ">>" #'lispyville->
+            "<<" 'lispyville-<
+            ">>" 'lispyville->
             ;; Move s-exps back and forth
-            (kbd "M-j") #'lispyville-move-down
-            (kbd "M-k") #'lispyville-move-up)
-          (evil-define-key 'visual keymap
-            "gc" #'lispyville-comment-or-uncomment-line
-            "gC" #'lispyville-comment-or-uncomment
-            "gy" #'lispyville-comment-and-clone-dwim)
-          (evil-define-key '(normal insert visual) keymap
-            (kbd "M-;") #'lispy-comment)))
+            "M-j" 'lispyville-move-down
+            "M-k" 'lispyville-move-up
+            ;; Mark symbol or list.
+            "gm" 'lispy-mark-symbol
+            "gM" 'lispy-mark)
+          (general-def 'visual keymap
+            "gc" 'lispyville-comment-or-uncomment-line
+            "gC" 'lispyville-comment-or-uncomment
+            "gy" 'lispyville-comment-and-clone-dwim)
+          (general-def '(normal insert visual) keymap
+            "M-;" 'lispy-comment)))
 
       (defun my/set-lispyville-lispy-keys ()
         "Use `lispy-define-key' to set extra keybindings for `lispyville'."

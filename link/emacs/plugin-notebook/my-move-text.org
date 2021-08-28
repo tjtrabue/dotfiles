@@ -20,8 +20,9 @@ around in Emacs buffers.
       (general-def '(normal visual) '(drag-stuff-mode-map override)
         "M-k" 'drag-stuff-up
         "M-j" 'drag-stuff-down
-        "M-h" 'drag-stuff-left
-        "M-l" 'drag-stuff-right))
+        ;; "M-h" 'drag-stuff-left
+        ;; "M-l" 'drag-stuff-right
+        ))
   #+end_src
 
 * move-text
