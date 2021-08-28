@@ -6,20 +6,21 @@
 
 Here you will find plugins that allow Emacs to /fold/, or hide sections of code
 away from sight in order to allow developers a glimpse of the bigger
-picture. Folding sections of a buffer help developers to focus on the parts
-critical to their needs. Emacs supports a number of folding /backends/, many of
-which come preinstalled, while still others must be installed as third-party
-plugins.
+picture. Folding sections of buffers help developers to focus on the parts
+critical to their needs, removing extraneous paragraphs from sight. Emacs
+supports a number of code folding /backends/, some of which come preinstalled
+with Emacs, while still others must be installed as third-party plugins.
 
 * origami
-  =origami= is a smart code-folding plugin for Emacs.
+  =origami= is a smart code folding plugin for Emacs.
 
-  As a rule, Emacs supports lots of different code-folding minor modes, some of
+  As a rule, Emacs supports lots of different code folding minor modes, some of
   which are built-in, some are external plugins. =origami= is of the latter
-  category, and it is one of the best representatives.
+  category, and is one of the best representatives.
 
-  =origami= Integrates nicely with =evil-mode=, so that using standard Vim-like
-  folding commands such as =zc= and =zo= work out of the box with =origami=.
+  =origami= integrates nicely with =evil-mode=, so using standard Vim-like
+  folding commands such as =zc= and =zo= work out of the box, no configuration
+  necessary.
 
   #+begin_src emacs-lisp
     (use-package origami
@@ -28,16 +29,18 @@ plugins.
   #+end_src
 
 * vimish-fold
-  =vimish-fold= adds Vim's native code-folding style to Emacs. My personal
-  favorite code-folding system.
+  =vimish-fold= adds Vim's native code folding capabilities to Emacs. My
+  personal favorite code folding system.
 
-  Please note that =vimish-fold= is /not/ a standard code folding system for
-  Emacs. That is, unlike =origami=, =vimish-fold= does not implement Emacs'
-  code folding API in such a way that it can be used by standard folding
-  functions. This is a good thing. Vim and Emacs have very different
-  understandings of what constitutes a "fold". Having =vimish-fold= behave
-  independently from Emacs' folding specification allows developers to choose
-  which method they wish to use, or even use both simultaneously.
+  Please note that =vimish-fold= is /not/ a standard code folding backend for
+  Emacs. That is, unlike =origami=, =vimish-fold= does not implement Emacs' code
+  folding API in such a way that it can be used by standard folding functions,
+  meaning that =vimish-fold= will not integrate with =evil-mode= by default. To
+  get =evil-mode= to respect =vimish-fold= commands you will have to customize
+  evil's keybindings. However, I find that I like to use =origami= for
+  =evil-mode='s folding backend, and use =vimish-fold= as a secondary folding
+  layer on top of =origami=. I only ever use =vimish-fold= to fold from mark
+  symbols, and I use =origami= for everything else.
 
   #+begin_src emacs-lisp
     (use-package vimish-fold
