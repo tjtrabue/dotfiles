@@ -53,7 +53,7 @@ with Emacs, while still others must be installed as third-party plugins.
      (use-package origami
        :hook
        ;; Probably don't want to use origami for text-mode.
-       ((prog-mode conf-mode) . origami-mode))
+       ((prog-mode conf-mode sgml-mode) . origami-mode))
    #+end_src
 
 * vimish-fold
