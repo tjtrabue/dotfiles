@@ -1,7 +1,8 @@
-#+title: Emacs Initialization File
-#+author: Thomas Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:5:25
+#+title:   Emacs Initialization File
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2020:5:25
+#+STARTUP: fold
 
 This Org document contains my primary Emacs configuration. =~/.emacs= only
 holds custom-set-variables and a few core pieces of code needed to load this
@@ -86,6 +87,8 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
         "My custom directory used by Org to store miscellaneous notes.")
       (defvar my/org-agenda-dir (file-truename (concat my/org-dir "/agenda"))
         "Directory containing my Org agenda files.")
+      (defvar my/org-capture-file (file-truename (concat my/org-dir "/inbox.org"))
+        "File receiving Org captures from other files. A dumping ground for ideas.")
       (defvar my/lisp-major-modes
         '(clojure-mode
           emacs-lisp-mode
