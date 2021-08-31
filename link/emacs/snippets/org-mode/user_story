@@ -2,7 +2,18 @@
 # contributor: tjtrabue <tom.trabue@gmail.com>
 # name: user story
 # key: <us
+# type: command
 # --
 
-* STORY: $1
-  As a ${2:<role>}, I would like to ${3:<feature>}, so that I can ${4:<benefit>}
+;; This Emacs Lisp expression dynamically generates an Org mode snippet for a
+;; user story based on the current indentation level.
+
+(let ((cur-indent (current-indentation))
+      (final-pos))
+  (while (not (bolp))
+    (backward-delete-char-untabify 1))
+  (dotimes (i (1+ (/ cur-indent tab-width)))
+    (insert "*"))
+  (insert " STORY: ")
+  (setq final-pos (point))
+  (goto-char final-pos))
