@@ -64,8 +64,7 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    #+begin_src emacs-lisp
      (use-package eros
        :hook
-       ((emacs-lisp-mode) . (lambda ()
-                              (eros-mode 1))))
+       (emacs-lisp-mode . eros-mode))
    #+end_src
 
 ** elmacro
