@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: tjtrabue <tom.trabue@gmail.com>
+# name: user story
+# key: <us
+# --
+
+* STORY: $1
+  As a ${2:<role>}, I would like to ${3:<feature>}, so that I can ${4:<benefit>}
+
+** As a $2
+
+** I would like to $3
+
+** So that I can $4
