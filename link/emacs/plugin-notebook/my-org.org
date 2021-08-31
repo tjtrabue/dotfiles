@@ -15,6 +15,11 @@ textual documents and evaluated as needed or all at once.
   #+begin_src emacs-lisp
     (use-package org
       :mode ("\\.org\\'" . org-mode)
+      :hook
+      (org-mode .
+                (lambda ()
+                  ;; Disable whitespace mode for org mode.
+                  (whitespace-mode -1)))
       :general
       (my/user-leader-def
         ;; These bindings should be available everywhere.  We'll want to use them
