@@ -138,6 +138,10 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
     (require 'my-window)
     ;; Functions for interacting with hooks.
     (require 'my-hook-fns)
+    ;; GTAGS function library.
+    (require 'my-gtags)
+    ;; straight.el convenience functions.
+    (require 'my-straight-helpers)
     ;; My hippie-expand customizations.
     (require 'my-hippie-expand)
   #+end_src
@@ -486,22 +490,6 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
         (make-directory my/emacs-lisp-dir t)
         (url-copy-file url (file-truename file-path) t)))
 
-    (defun my/gtags-root-dir ()
-      "Returns GTAGS root directory or nil if doesn't exist."
-      (with-temp-buffer
-        (if (zerop (call-process "global" nil t nil "-pr"))
-            (buffer-substring (point-min) (1- (point-max)))
-          nil)))
-
-    (defun my/gtags-update ()
-      "Make GTAGS incremental update"
-      (call-process "global" nil nil nil "-u"))
-
-    (defun my/gtags-update-hook-fn ()
-      "Update GTAGS file whenever an appropriate file is saved."
-      (when (my/gtags-root-dir)
-        (my/gtags-update)))
-
     (defun my/trimmed-shell-result (shell-command-str)
       "Execute a shell command and return the result without leading or
     trailing whitespace.
@@ -552,22 +540,6 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
                                    (file-name-sans-extension file) ".elc"))
                                 org-files)))
         (mapc #'my/create-update-config-artifact elc-files)))
-
-    (defun straight-update-and-freeze ()
-      "Custom function that updates all installed packages and regenerates the
-    lock file."
-      (interactive)
-      (straight-pull-all)
-      (straight-rebuild-all)
-      (straight-freeze-versions t))
-
-    (defun my/straight-pull-recipe-repositories ()
-      "Update all straight.el recipe repositories. This is a custom function that
-        I defined in order to make my life easier.
-        --tjtrabue"
-      (interactive)
-      (dolist (repo straight-recipe-repositories)
-        (straight-pull-package repo)))
 
     (defun my/use-mu4e-p ()
       "Return T if the system is configured for `mu4e'. Return NIL otherwise."
@@ -741,9 +713,10 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
    These hooks run after Emacs saves a file.
 
    #+begin_src emacs-lisp
-     (add-hook 'after-save-hook (lambda ()
-                                  ;; Update any GTAGS files if necessary.
-                                  (my/gtags-update-hook-fn)))
+     (add-hook 'after-save-hook
+               (lambda ()
+                 ;; Update any GTAGS files if necessary.
+                 (my-gtags-update-hook-fn)))
    #+end_src
 
 ** window-size-change hooks
@@ -798,7 +771,7 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
            ;; `straight-pull-recipe-repositories', in which case we should alias
            ;; that function to our own custom version.
            (defalias 'straight-pull-recipe-repositories
-             'my/straight-pull-recipe-repositories))
+             'my-straight-helpers-pull-recipe-repositories))
          (straight-pull-recipe-repositories)
 
          ;; Default mode for loading packages: either defer or demand.
