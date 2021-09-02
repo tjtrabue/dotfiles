@@ -135,7 +135,7 @@ simpler code completion/navigation).
 
      (defun my/semantic-add-gtags-support ()
        "Use GNU Global to support Semantic if available."
-       (when (my/tool-installed-p "global")
+       (when (my-os-tool-installed-p "global")
          (semanticdb-enable-gnu-global-databases 'c-mode)
          (semanticdb-enable-gnu-global-databases 'c++-mode)))
 

@@ -100,9 +100,7 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
       (defvar my/authinfo-files (mapcar (lambda (file)
                                           (file-truename (concat (getenv "HOME") "/" file)))
                                         '(".authinfo.gpg" ".authinfo" ".netrc"))
-        "The user's .authinfo files used to store login credentials.")
-      (defvar my/recentf-timer nil
-        "Reference to timer for `recentf-save-list' so we can disable it later."))
+        "The user's .authinfo files used to store login credentials."))
   #+end_src
 
 * Language/Encoding
@@ -138,6 +136,8 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
     (require 'my-window)
     ;; Functions for interacting with hooks.
     (require 'my-hook-fns)
+    ;; recentf library for managing recently accessed filed.
+    (require 'my-recentf)
     ;; GTAGS function library.
     (require 'my-gtags)
     ;; straight.el convenience functions.
@@ -380,14 +380,9 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
     ;; Open files at last edited position
     (save-place-mode 1)
 
-    ;; Turn on recentf-mode for keeping track of recently opened files.
-    (recentf-mode 1)
-    (setq recentf-max-menu-items 25)
-    (setq recentf-max-saved-items 25)
-    (global-set-key (kbd "C-x C-r") 'recentf-open-files)
-    ;; Periodically save recent file list (every 5 minutes) so that we do not lose
-    ;; the list if Emacs crashes.
-    (setq my/recentf-timer (run-at-time nil (* 5 60) 'recentf-save-list))
+    ;; Use recentf: bind to a keybinding, save recentf list to filesystem every so
+    ;; often.
+    (my-recentf-enable)
 
     ;; subword-mode is super handy! It treats parts of camelCase and snake_case
     ;; names as separate words. This enables subword-mode in all buffers.
@@ -490,19 +485,6 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
         (make-directory my/emacs-lisp-dir t)
         (url-copy-file url (file-truename file-path) t)))
 
-    (defun my/trimmed-shell-result (shell-command-str)
-      "Execute a shell command and return the result without leading or
-    trailing whitespace.
-
-    SHELL-COMMAND-STR is the shell command to execute."
-      (string-trim (shell-command-to-string shell-command-str)))
-
-    (defun my/tool-installed-p (tool)
-      "Determine whether or not a given executable (TOOL) exists
-
-    TOOL is a string corresponding to an executable in the UNIX environment."
-      (not (string= "" (my/trimmed-shell-result (concat "command -v " tool)))))
-
     (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
       "Recursively add directories from a BASE-DIR to load-path.
 
@@ -544,15 +526,6 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
     (defun my/use-mu4e-p ()
       "Return T if the system is configured for `mu4e'. Return NIL otherwise."
       (and (executable-find "mu") (executable-find "mbsync")))
-
-    (defun my/disable-recentf ()
-      "Disable `recentf' configuration. Safe to run multiple times."
-      (interactive)
-      (when my/recentf-timer
-        (cancel-timer my/recentf-timer))
-      (when (eq (key-binding "C-x C-r") 'recentf-open-files)
-        (global-unset-key (kbd "C-x C-r")))
-      (recentf-mode -1))
   #+end_src
 
 * Environment Variables

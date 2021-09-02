@@ -39,6 +39,21 @@ If the OS is not a Linux-based system, return nil."
     (shell-command-to-string "lsb_release -sd")
     nil))
 
+;;;###autoload
+(defun my-os-trimmed-shell-result (shell-command-str)
+  "Execute a shell command and return the result without leading or
+    trailing whitespace.
+
+    SHELL-COMMAND-STR is the shell command to execute."
+  (string-trim (shell-command-to-string shell-command-str)))
+
+;;;###autoload
+(defun my-os-tool-installed-p (tool)
+  "Determine whether or not a given executable (TOOL) exists.
+
+    TOOL is a string corresponding to an executable in the UNIX environment."
+  (not (string= "" (my-os-trimmed-shell-result (concat "command -v " tool)))))
+
 (provide 'my-os)
 
 ;;; my-os.el ends here
