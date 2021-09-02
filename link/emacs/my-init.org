@@ -587,7 +587,9 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
   Set additional environment variables not taken care of through the
   =initial-environment= list of variables.
 
-** Basic
+** Standard
+   Set standard environment variables that affect Emacs as a whole.
+
    #+begin_src emacs-lisp
      ;; Set standard language that Emacs assumes.
      (setenv "LANG" "en_US.UTF-8")
@@ -755,6 +757,9 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
    #+end_src
 
 * Package Manager
+  Configure package managers Emacs leverages to install and configure
+  third-party packages.
+
 ** straight
    =straight= is a newer package manager for Emacs that differs from
    =package.el=.  It operates by cloning Git repositories for Emacs packages and
