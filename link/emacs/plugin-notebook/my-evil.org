@@ -1,7 +1,7 @@
-#+title:  evil-mode Configuration
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:25
+#+title:   evil-mode Configuration
+#+author:  Tom Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2020:05:25
 #+STARTUP: fold
 
 The Extensible VI Layer (AKA evil.  AKA the only way to use Emacs).
@@ -9,12 +9,12 @@ The Extensible VI Layer (AKA evil.  AKA the only way to use Emacs).
 features of Vim at times.
 
 * *Important Note About Occasional Behavior of =d= and =dd= commands
-*If Evil Mode treats 'd' like 'dd', 'c' like 'cc', etc*: You need delete the
-\*Backtrace\* buffer!!! This problem has been plaguing me since day 1 of using
-Evil, and I hate it! If deleting \*Backtrace\* doesn't work, there's probably
-some other buffer you need to delete to get Evil working again. Remember, you
-can turn off automatic error debugging by changing the =debug-on-error= variable
-to =nil=, so this may help you.
+  *If Evil Mode treats 'd' like 'dd', 'c' like 'cc', etc*: You need delete the
+  \*Backtrace\* buffer!!! This problem has been plaguing me since day 1 of using
+  Evil, and I hate it! If deleting \*Backtrace\* doesn't work, there's probably
+  some other buffer you need to delete to get Evil working again. Remember, you
+  can turn off automatic error debugging by changing the =debug-on-error= variable
+  to =nil=, so this may help you.
 
 * Define custom evil operators
   An =evil-operator= is a function that acts on text objects (characters, words,

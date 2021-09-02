@@ -4,9 +4,9 @@
 #+date:    2020:5:25
 #+STARTUP: fold
 
-This Org document contains my primary Emacs configuration. =~/.emacs= only
-holds custom-set-variables and a few core pieces of code needed to load this
-file. The full repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][here]].
+This Org document contains my primary Emacs configuration. =~/.emacs= only holds
+a few core pieces of code needed to prepare and load this file. The full
+repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][here]].
 
 * Require statements
   These are =require= directives used to import Elisp modules used heavily by
@@ -329,6 +329,7 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
 
 * Font Configuration
   Set default font for Emacs.
+
   *NOTE:* The main font configuration is in =my-font.el=.
 
   #+begin_src emacs-lisp
@@ -350,11 +351,13 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   Here we alias existing functions to new names, usually to tell Emacs to run a
   different function whenever it tries to use one we don't like.
 
-  #+begin_src emacs-lisp
-    ;; Turn all "yes or no" prompts into "y or n" single character prompts to make
-    ;; our lives eaiser.
-    (defalias 'yes-or-no-p 'y-or-n-p)
-  #+end_src
+** Change "yes or no" to "y or n"
+   Turn all "yes or no" prompts into "y or n" single character prompts to make
+   our lives easier.
+
+   #+begin_src emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+   #+end_src
 
 * Activate/Deactivate Default Minor Modes
   Turn certain minor modes on or off by default. You can think of a minor mode
@@ -449,7 +452,6 @@ file. The full repository for my dotfiles can be found [[https://github.com/tjtr
   external email programs, such as mutt.
 
   #+begin_src emacs-lisp
-
     ;; Change mode when Emacs is used to edit emails for Mutt
     (setq auto-mode-alist (append '(("/tmp/mutt.*" . message-mode)) auto-mode-alist))
   #+end_src
