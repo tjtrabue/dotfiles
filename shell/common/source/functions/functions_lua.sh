@@ -21,9 +21,52 @@ install_lua_package_for_all_versions() {
   done
 }
 
-install_lua_lsp() {
-  install_lua_package_for_all_versions "lua-lsp" \
-    "--server=http://luarocks.org/dev"
+# Clone, build, and install lua-language-server.
+install_lua_language_server() {
+  local repoUrl="https://github.com/sumneko/lua-language-server.git"
+  local repoName="$(basename "${repoUrl%.git}")"
+  local repoDir="${WS:-${HOME}/workspace}/${repoName}"
+  local executable=""
+  local installPrefix="/usr/local"
+  local execSymlink="${installPrefix}/${repoName}"
+
+  if [ ! -d "${repoDir}" ]; then
+    # Clone the repo if not already present.
+    log_info "Cloning ${GREEN}${repoName}${NC}"
+    git clone "${repoUrl}" "${repoDir}"
+  else
+    log_info "Updating ${GREEN}${repoName}${NC}"
+    # Otherwise, update the existing repo.
+    git -C "${repoDir}" checkout "$(defaultbranch "${repoDir}")"
+    git pull
+  fi
+
+  # Update submodules
+  log_info "Updating git submodules for ${GREEN}${repoName}${NC}"
+  git -C "${repoDir}" submodule update --init --recursive
+
+  # Generate the build files
+  (
+    cd "${repoDir}/3rd/luamake"
+    ./compile/install.sh
+  )
+
+  # Build the project
+  (
+    cd "${repoDir}"
+    ./3rd/luamake/luamake rebuild
+  )
+
+  executable="$(find "${repoDir}" -type f -name "*${repoName}" |
+    head -1)"
+
+  if [ ! -x "${executable}" ]; then
+    err "Could not locate ${repoName} executable."
+    return 1
+  fi
+
+  # Link the built executable to a standard location on PATH.
+  sudo ln -s "${executable}" "${execSymlink}"
 }
 
 install_json4lua() {
@@ -40,7 +83,7 @@ install_lua_packages() {
   done <"$LUA_PACKAGES_FILE"
 
   log_info "Installing special lua packages"
-  install_lua_lsp
+  install_lua_language_server
   install_json4lua
 }
 
@@ -48,9 +91,9 @@ install_lua_packages() {
 __get_lua_versions() {
   # We want to find and filter out our versions of Lua.
   # Versions before 5.3 are not very useful to us.
-  compgen -c | grep '^lua[0-9].[0-9]$' | sort -u | sed 's/^lua//' \
-    | grep -v '5.[1-2]' \
-    | tr '\n' ' '
+  compgen -c | grep '^lua[0-9].[0-9]$' | sort -u | sed 's/^lua//' |
+    grep -v '5.[1-2]' |
+    tr '\n' ' '
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1

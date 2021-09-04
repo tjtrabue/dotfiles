@@ -1,5 +1,18 @@
 #!/bin/sh
 
+# Clean up all swap/backup/undo files for Neovim.
+clean_nvim() {
+  local nvimHome="${NVIM_HOME:-${HOME}/.config/nvim}"
+  local d
+
+  for d in "${nvimHome}"/{backups,swaps,undo}; do
+    if [ -d "${d}" ]; then
+      log_info "Cleaning up directory: ${BLUE}${d}${NC}"
+      rm -f "${d}"/*
+    fi
+  done
+}
+
 # Installs the latest, greatest Neovim from the official site as an
 # appimage, and links the included executable to /usr/local/bin.
 install_neovim_nightly_appimage() {
@@ -19,8 +32,8 @@ install_neovim_nightly_appimage() {
   )
 
   # Ask user before overwriting an existing /usr/local/bin/nvim executable.
-  if [ -x "${nvimSymlinkDest}/nvim" ] && \
-      ! __check_nvim_appimage_link_exists; then
+  if [ -x "${nvimSymlinkDest}/nvim" ] &&
+  ! __check_nvim_appimage_link_exists; then
     if ! __prompt_user_before_overwriting_nvim_link; then
       echoe "Exiting due to user request"
       return 1
@@ -29,19 +42,6 @@ install_neovim_nightly_appimage() {
 
   log_info "Linking new neovim executable to: ${nvimSymlinkDest}/nvim"
   sudo ln -sf -t "${nvimSymlinkDest}" "${appimageRunnable}" >>/dev/null 2>&1
-}
-
-# Clean up all swap/backup/undo files for Neovim.
-clean_nvim() {
-  local nvimHome="${NVIM_HOME:-${HOME}/.config/nvim}"
-  local d
-
-  for d in "${nvimHome}"/{backups,swaps,undo}; do
-    if [ -d "${d}" ]; then
-      log_info "Cleaning up directory: ${BLUE}${d}${NC}"
-      rm -f "${d}"/*
-    fi
-  done
 }
 
 __download_neovim_nightly_appimage() {
@@ -69,7 +69,7 @@ __prompt_user_before_overwriting_nvim_link() {
   local response
   local usrLocalNvim="/usr/local/bin/nvim"
 
-  while ! echo "$response" | grep -q '[YyNn'; do
+  while ! echo "$response" | grep -q '[YyNn]'; do
     echoe "Neovim executable exists at ${usrLocalNvim}. Overwrite this" \
       "executable? [yN]"
     read -r response
@@ -84,8 +84,8 @@ __prompt_user_before_overwriting_nvim_link() {
 __check_nvim_appimage_link_exists() {
   local neovimReleasesDir="${NVIM_HOME:-${HOME}/.config/nvim}/.releases"
 
-  readlink /usr/local/bin/nvim \
-    | grep -q "${neovimReleasesDir}" >>/dev/null 2>&1
+  readlink /usr/local/bin/nvim |
+  grep -q "${neovimReleasesDir}" >>/dev/null 2>&1
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

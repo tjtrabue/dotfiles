@@ -42,7 +42,7 @@ endfunction
 " first loads.
 
 " This should be first, since which key ought to be registered before we make
-" ane leader mappings.
+" any leader mappings.
 call s:SourcePluginConfigFile('vim-which-key.vim')
 
 call s:SourcePluginConfigFile('airline.vim')
