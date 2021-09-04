@@ -159,7 +159,6 @@ set smarttab
 " Draw a vertical ruler at 1 character after textwidth to designate max width
 " for coding
 set colorcolumn=+1
-:highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " Set text width to 80 characters
 set textwidth=80
