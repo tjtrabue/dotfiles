@@ -42,6 +42,7 @@ meld
 mu
 neofetch
 neovim
+ninja
 openssh
 parallel
 pyenv
