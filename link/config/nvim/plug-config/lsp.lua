@@ -207,8 +207,10 @@ else
   print("Unsupported system for sumneko")
 end
 
--- set the path to the sumneko lua-language-server installation
-local sumneko_root_path = os.getenv("HOME") .. "/workspace/lua-language-server"
+-- Set the path to the sumneko lua-language-server installation.
+-- Use the "install_lua_language_server" function to install this LSP to the
+-- standard location this configuration expects.
+local sumneko_root_path = os.getenv("WS") .. "/lua-language-server"
 local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
 
 local runtime_path = vim.split(package.path, ";")
