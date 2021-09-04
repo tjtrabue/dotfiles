@@ -22,6 +22,7 @@ install_lua_package_for_all_versions() {
 }
 
 # Clone, build, and install lua-language-server.
+# Requires ninja and a C++-17 compiler and standard library.
 install_lua_language_server() {
   local repoUrl="https://github.com/sumneko/lua-language-server.git"
   local repoName="$(basename "${repoUrl%.git}")"
