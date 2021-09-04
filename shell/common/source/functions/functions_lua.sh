@@ -28,7 +28,13 @@ install_lua_language_server() {
   local repoDir="${WS:-${HOME}/workspace}/${repoName}"
   local executable=""
   local installPrefix="/usr/local"
-  local execSymlink="${installPrefix}/${repoName}"
+  local installDir="${installPrefix}/bin"
+
+  # Make sure the target directory for the symlink exists.
+  if [ ! -d "${installDir}" ]; then
+    err "${installDir} is not a directory."
+    return 1
+  fi
 
   if [ ! -d "${repoDir}" ]; then
     # Clone the repo if not already present.
@@ -41,22 +47,24 @@ install_lua_language_server() {
     git pull
   fi
 
-  # Update submodules
   log_info "Updating git submodules for ${GREEN}${repoName}${NC}"
   git -C "${repoDir}" submodule update --init --recursive
 
-  # Generate the build files
   (
+    log_info "Generating Make files for ${repoName}"
     cd "${repoDir}/3rd/luamake"
     ./compile/install.sh
   )
 
-  # Build the project
   (
+    log_info "Compiling ${repoName}"
     cd "${repoDir}"
     ./3rd/luamake/luamake rebuild
   )
 
+  # This project puts the compiled executable into a directory named after the
+  # system on which it is installed (i.e. "windows", "macOs", "linux", etc.).
+  # We want to dynamically retrieve the path to the executable here.
   executable="$(find "${repoDir}" -type f -name "*${repoName}" |
     head -1)"
 
@@ -65,8 +73,9 @@ install_lua_language_server() {
     return 1
   fi
 
-  # Link the built executable to a standard location on PATH.
-  sudo ln -s "${executable}" "${execSymlink}"
+  log_info "Linking ${CYAN}${repoName}${NC} executable to" \
+    "${BLUE}${installDir}${NC}"
+  sudo ln -s -f -t "${installDir}" "${executable}"
 }
 
 install_json4lua() {
