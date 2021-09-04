@@ -28,8 +28,9 @@ install_lua_language_server() {
   local repoName="$(basename "${repoUrl%.git}")"
   local repoDir="${WS:-${HOME}/workspace}/${repoName}"
   local executable=""
-  local installPrefix="/usr/local"
+  local installPrefix="${HOME}"
   local installDir="${installPrefix}/bin"
+  local wrapperScript="${installDir}/${repoName}"
 
   # Make sure the target directory for the symlink exists.
   if [ ! -d "${installDir}" ]; then
@@ -74,9 +75,14 @@ install_lua_language_server() {
     return 1
   fi
 
-  log_info "Linking ${CYAN}${repoName}${NC} executable to" \
-    "${BLUE}${installDir}${NC}"
-  sudo ln -s -f -t "${installDir}" "${executable}"
+  log_info "Installing wrapper script"
+  cat <<EOF >"${wrapperScript}"
+#!/bin/sh
+
+exec "${executable}" "${repoDir}/main.lua"
+EOF
+
+  chmod +x "${wrapperScript}"
 }
 
 install_json4lua() {
