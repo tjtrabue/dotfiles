@@ -246,7 +246,8 @@ require "lspconfig".sumneko_lua.setup {
         enable = true
       }
     }
-  }
+  },
+  on_attach = on_attach
 }
 -- }}}
 
@@ -259,7 +260,7 @@ require "lspconfig".perlls.setup {
 }
 -- }}}
 
--- python-language-server {{{
+-- pyright {{{
 require "lspconfig".pyright.setup {
   on_attach = on_attach
 }
