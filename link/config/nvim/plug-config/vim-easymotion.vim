@@ -1,20 +1,13 @@
 " Functions with 'overwin' in the name can move the cursor across windows.
 " They only work in Normal mode, though.
 
-" <Leader>f{char} to move to {char}
-map  <leader>f <Plug>(easymotion-bd-f)
-nmap <leader>f <Plug>(easymotion-overwin-f)
-
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
 
+" Remap 'L' in normal mode to be more useful.
 " Move to line
-map <leader>L <Plug>(easymotion-bd-jk)
-nmap <leader>L <Plug>(easymotion-overwin-line)
-
-" Move to word
-map  <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
+map L <Plug>(easymotion-bd-jk)
+nmap L <Plug>(easymotion-overwin-line)
 
 " Remap 'f' and 'F' in normal mode to be more useful.
 " Move to {char}
