@@ -219,18 +219,25 @@ packer.startup(
       requires = {{"nvim-lua/completion-nvim"}}
     }
     -- Better defaults for nvim-lsp.
-    -- NOTE: Currently using navigator instead.
-    --[[ use {
+    use {
       "RishabhRD/nvim-lsputils",
       requires = {
         {"RishabhRD/popfix"}
       }
-    } ]]
+    }
     -- Patches colorschemes that don't support LSP client syntax for
     -- diagnostics.
     use "folke/lsp-colors.nvim"
     -- Aerial is a code browser sidebar powered by nvim-lsp.
     use "stevearc/aerial.nvim"
+    -- Pretty diagnostic list for Neovim
+    use {
+      "folke/trouble.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        require("trouble").setup()
+      end
+    }
     -- Treesitter-based completion for completion-nvim
     use {
       "nvim-treesitter/completion-treesitter",
@@ -262,10 +269,6 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     use {
       "ray-x/guihua.lua",
       run = "cd lua/fzy && make"
-    }
-    -- Cool code navigator for nvim-lsp
-    use {
-      "ray-x/navigator.lua"
     }
     -- Support signatures in auto-completion.
     use {
@@ -311,6 +314,10 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     }
     -- Allows for LSP refactoring.
     use {"nvim-treesitter/nvim-treesitter-refactor"}
+    -- Use treesitter objects as Vim text objects for selection
+    use {
+      "nvim-treesitter/nvim-treesitter-textobjects"
+    }
     -- }}}
 
     -- Terminal {{{

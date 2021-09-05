@@ -90,11 +90,14 @@ call s:SourcePluginConfigFile('aerial.nvim.lua')
 " Load the LSP configuration file.
 call s:SourcePluginConfigFile('lsp.lua')
 
-" naviagator is a fancy front-end for nvim-lsp. It uses fuzzy searching
-call s:SourcePluginConfigFile('navigator.nvim.lua')
-
 " Better defaults for nvim-lsp.
-" call s:SourcePluginConfigFile('nvim-lsputils.lua')
+call s:SourcePluginConfigFile('nvim-lsputils.lua')
+
+" Trouble is a pretty LSP diagnostic browser for Neovim.
+call s:SourcePluginConfigFile('trouble.nvim.lua')
+
+" Define new textobjects with the help of treesitter and LSP.
+call s:SourcePluginConfigFile('treesitter-textobjs.lua')
 
 " Activate the awesome galaxyline statusbar. This status line must be entirely
 " self-configured. That is, there is no 'default' status line that comes with

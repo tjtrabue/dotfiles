@@ -1,6 +1,10 @@
 -- Configuration for the amazing telescope.nvim plugin.
 
 local actions = require("telescope.actions")
+
+-- Pretty diagnostic browser for LSP
+local trouble = require("trouble.providers.telescope")
+
 require("telescope").setup {
   defaults = {
     vimgrep_arguments = {
@@ -45,9 +49,14 @@ require("telescope").setup {
     -- Override keymappings for when Telescope is active.
     mappings = {
       -- Insert mode mappings from inside telescope buffer
+      n = {
+        ["<C-t>"] = trouble.open_with_trouble
+      },
+      -- Insert mode mappings from inside telescope buffer
       i = {
         ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-t>"] = trouble.open_with_trouble
       }
     }
   }
@@ -55,3 +64,5 @@ require("telescope").setup {
 
 -- Load the fzy native extension to greatly speed up filtering.
 require("telescope").load_extension("fzy_native")
+
+-- vim:foldenable:foldmethod=marker:foldlevel=0
