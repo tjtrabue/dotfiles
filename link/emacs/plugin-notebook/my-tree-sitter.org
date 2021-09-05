@@ -2,9 +2,8 @@
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2020:12:11
-#+property: header-args:emacs-lisp :lexical t
 #+tags:
-#+STARTUP: fold
+#+STARTUP:  fold
 
 =tree-sitter= is an incremental parsing system, and is not specific to Emacs.
 It provides, among other things, an alternative to =font-lock= for syntax
@@ -35,7 +34,6 @@ highlighting.
 
   #+begin_src emacs-lisp
     (use-package tree-sitter-langs
-      :after tree-sitter
       :demand t)
   #+end_src
 
@@ -44,7 +42,6 @@ highlighting.
 
   #+begin_src emacs-lisp
     (use-package tree-sitter-indent
-      :after (tree-sitter tree-sitter-langs)
       :demand t
       :hook
       ;; Turn on tree-sitter-indent in supported major modes.

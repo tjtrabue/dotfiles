@@ -665,7 +665,11 @@ features of Vim at times.
       (use-package lispyville
         :after (evil-collection lispy)
         :hook
-        (lispy-mode . lispyville-mode)
+        (lispy-mode .
+                    (lambda ()
+                      (lispyville-mode 1)
+                      (my/set-lispyville-leader-keys)
+                      (my/set-lispyville-mode-keys)))
         :general
         (general-unbind '(normal visual)
           '(lispyville-mode-map evil-collection-lispy-mode-map)
@@ -721,8 +725,6 @@ features of Vim at times.
         ;; Only use evil-mode's visual selection instead of lispy marks.
         (lispyville-enter-visual-when-marking)
         (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
-        (my/set-lispyville-mode-keys)
-        (my/set-lispyville-leader-keys)
         ;; (my/set-lispyville-lispy-keys)
         ;; Add lispyville special mode indicator to modeline.
         (add-to-list 'mode-line-misc-info
