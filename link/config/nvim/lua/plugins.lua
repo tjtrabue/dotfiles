@@ -218,6 +218,19 @@ packer.startup(
       -- Better autocomplete backend for Neovim.
       requires = {{"nvim-lua/completion-nvim"}}
     }
+    -- Better defaults for nvim-lsp.
+    -- NOTE: Currently using navigator instead.
+    --[[ use {
+      "RishabhRD/nvim-lsputils",
+      requires = {
+        {"RishabhRD/popfix"}
+      }
+    } ]]
+    -- Patches colorschemes that don't support LSP client syntax for
+    -- diagnostics.
+    use "folke/lsp-colors.nvim"
+    -- Aerial is a code browser sidebar powered by nvim-lsp.
+    use "stevearc/aerial.nvim"
     -- Treesitter-based completion for completion-nvim
     use {
       "nvim-treesitter/completion-treesitter",
@@ -245,10 +258,27 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
         {"junegunn/fzf.vim"} -- to enable preview (optional)
       }
     }
+    -- Floating window provider
+    use {
+      "ray-x/guihua.lua",
+      run = "cd lua/fzy && make"
+    }
+    -- Cool code navigator for nvim-lsp
+    use {
+      "ray-x/navigator.lua"
+    }
     -- Support signatures in auto-completion.
-    use {"ray-x/lsp_signature.nvim", config = [[require'lsp_signature'.on_attach()]]}
+    use {
+      "ray-x/lsp_signature.nvim",
+      config = [[
+      require'lsp_signature'.on_attach()
+      ]]
+    }
     -- Use VSCode-like pictograms in auto-completion.
-    use {"onsails/lspkind-nvim", config = [[require'lspkind'.init({})]]}
+    use {
+      "onsails/lspkind-nvim",
+      config = [[require'lspkind'.init({ preset = "codeicons" })]]
+    }
     -- }}}
 
     -- Debugging
@@ -279,6 +309,8 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
       -- We recommend updating the parsers on update}
       run = ":TSUpdate"
     }
+    -- Allows for LSP refactoring.
+    use {"nvim-treesitter/nvim-treesitter-refactor"}
     -- }}}
 
     -- Terminal {{{
