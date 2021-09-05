@@ -108,6 +108,9 @@ call s:SourcePluginConfigFile('galaxyline.vim')
 " These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')
 call s:SourcePluginConfigFile('nvim-web-devicons.lua')
+
+" Org mode configuration
+call s:SourcePluginConfigFile('orgmode.nvim.lua')
 " }}}
 
 " Automatically compile new plugins whenever the plugins.lua file is

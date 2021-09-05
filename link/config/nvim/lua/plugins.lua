@@ -363,13 +363,20 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     use {"b3nj5m1n/kommentary"}
     -- }}}
 
+    -- Org mode {{{
     -- Org mode clone for Neovim
     use {
-      "kristijanhusak/orgmode.nvim",
+      "kristijanhusak/orgmode.nvim"
+    }
+    use {
+      "akinsho/org-bullets.nvim",
       config = function()
-        require("orgmode").setup {}
+        require("org-bullets").setup {
+          symbols = {"◉", "○", "✸", "✿"}
+        }
       end
     }
+    -- }}}
   end
 )
 -- }}}
