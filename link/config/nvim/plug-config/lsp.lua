@@ -219,7 +219,6 @@ end
 -- local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
 
 local sumneko_binary = os_cmd_to_string("command -v lua-language-server")
-
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
@@ -248,10 +247,6 @@ require "lspconfig".sumneko_lua.setup {
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
         enable = false
-      },
-      -- Enable code hints
-      hint = {
-        enable = true
       }
     }
   },

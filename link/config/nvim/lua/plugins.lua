@@ -213,6 +213,14 @@ packer.startup(
       -- Better autocomplete backend for Neovim.
       requires = {{"nvim-lua/completion-nvim"}}
     }
+    -- Treesitter-based completion for completion-nvim
+    use {
+      "nvim-treesitter/completion-treesitter",
+      requires = {
+        {"nvim-treesitter/nvim-treesitter"},
+        {"haorenW1025/completion-nvim"}
+      }
+    }
     -- Extra LSP configuration.
     use {"nvim-lua/lsp_extensions.nvim"}
     -- Integrates LSP features with statusline.

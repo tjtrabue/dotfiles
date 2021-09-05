@@ -81,6 +81,9 @@ call s:SourcePluginConfigFile('telescope.nvim.vim')
 " Load the autocompletion engine
 call s:SourcePluginConfigFile('nvim-compe.lua')
 
+" Load auto-completion configuration
+call s:SourcePluginConfigFile('completion-nvim.vim')
+
 " Load the LSP configuration file.
 call s:SourcePluginConfigFile('lsp.lua')
 
