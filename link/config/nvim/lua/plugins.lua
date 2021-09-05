@@ -362,6 +362,14 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     -- Commenting code {{{
     use {"b3nj5m1n/kommentary"}
     -- }}}
+
+    -- Org mode clone for Neovim
+    use {
+      "kristijanhusak/orgmode.nvim",
+      config = function()
+        require("orgmode").setup {}
+      end
+    }
   end
 )
 -- }}}
