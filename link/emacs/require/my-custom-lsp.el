@@ -54,6 +54,7 @@ for any programming language that supports a formatting tool.")
                                        cperl-mode
                                        css-mode
                                        dart-mode
+                                       dockerfile-mode
                                        elixir-mode
                                        go-mode
                                        haskell-mode
@@ -76,6 +77,7 @@ for any programming language that supports a formatting tool.")
                                        ruby-mode
                                        scss-mode
                                        sh-mode
+                                       terraform-mode
                                        TeX-latex-mode
                                        tex-mode
                                        web-mode

@@ -324,3 +324,17 @@ to the =my-custom-lsp.el= file.
      (use-package lsp-dart
        :after lsp-mode)
    #+end_src
+
+** lsp-pyright
+   =pyright= Python LSP server integration with =lsp-mode=. =pyright= is a
+   static code analysis engine and LSP server for Python that has been gaining
+   traction after =python-language-server= became a bit stagnant.
+
+   #+begin_src emacs-lisp
+     (use-package lsp-pyright
+       :after lsp-mode
+       :hook
+       (python-mode . (lambda ()
+                        (require 'lsp-pyright)
+                        (lsp-deferred))))
+   #+end_src
