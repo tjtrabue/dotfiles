@@ -3,3 +3,5 @@
 
 " Specify the snippet engine to use.
 let g:completion_enable_snippet = 'UltiSnips'
+
+" vim:foldenable:foldmethod=marker:foldlevel=0

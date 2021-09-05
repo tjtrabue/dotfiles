@@ -113,6 +113,11 @@ packer.startup(
     -- Snippets {{{
     use {"SirVer/ultisnips"}
     use {"honza/vim-snippets"}
+    -- LSP snippets from VSCode
+    use {"hrsh7th/vim-vsnip"}
+    use {"hrsh7th/vim-vsnip-integ"}
+    -- Pre-defined snippets for vim-vsnip.
+    use {"rafamadriz/friendly-snippets"}
     -- }}}
 
     use {"haya14busa/incsearch.vim"}
