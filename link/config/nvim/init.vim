@@ -78,11 +78,12 @@ call s:SourcePluginConfigFile('indent-guides.nvim.lua')
 call s:SourcePluginConfigFile('telescope.nvim.lua')
 call s:SourcePluginConfigFile('telescope.nvim.vim')
 
-" Load the autocompletion engine
-call s:SourcePluginConfigFile('nvim-compe.lua')
-
 " Load auto-completion configuration
 call s:SourcePluginConfigFile('completion-nvim.vim')
+
+" Load auto-completion configuration
+" This plugin is an alternative to completion-nvim.
+" call s:SourcePluginConfigFile('nvim-cmp.lua')
 
 " Load Aerial code browser config file
 call s:SourcePluginConfigFile('aerial.nvim.lua')

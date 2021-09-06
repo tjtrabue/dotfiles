@@ -149,8 +149,15 @@ packer.startup(
       config = [[vim.g.undotree_SetFocusWhenToggle = 1]]
     }
 
-    use {"hrsh7th/nvim-compe"}
-
+    -- Better completion engine using Lua.
+    -- If using completion-nvim, this is not necessary.
+    --[[ use {
+      "hrsh7th/nvim-cmp",
+      requires = {
+        "hrsh7th/vim-vsnip",
+        "hrsh7th/cmp-buffer"
+      }
+    } ]]
     use {"sakhnik/nvim-gdb"}
 
     -- Markdown {{{
