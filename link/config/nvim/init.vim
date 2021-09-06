@@ -99,15 +99,18 @@ call s:SourcePluginConfigFile('trouble.nvim.lua')
 " Define new textobjects with the help of treesitter and LSP.
 call s:SourcePluginConfigFile('treesitter-textobjs.lua')
 
+" These should always come last!!!
+call s:SourcePluginConfigFile('colorscheme.vim')
+call s:SourcePluginConfigFile('nvim-web-devicons.lua')
+
 " Activate the awesome galaxyline statusbar. This status line must be entirely
 " self-configured. That is, there is no 'default' status line that comes with
 " galaxyline. However, the repo does contain a few example files that you can
 " use as a starting point for your own custom status lines.
 call s:SourcePluginConfigFile('galaxyline.vim')
 
-" These should always come last!!!
-call s:SourcePluginConfigFile('colorscheme.vim')
-call s:SourcePluginConfigFile('nvim-web-devicons.lua')
+" lualine is a fast, minimal framework for building statuslines.
+" call s:SourcePluginConfigFile('lualine.nvim.lua')
 
 " Org mode configuration
 call s:SourcePluginConfigFile('orgmode.nvim.lua')

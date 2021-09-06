@@ -76,12 +76,15 @@ packer.startup(
 
     use {"glepnir/galaxyline.nvim"}
 
+    use {"hoob3rt/lualine.nvim"}
+
     -- Tab bar {{{
     use {"romgrk/barbar.nvim"}
     -- }}}
 
     -- Colorschemes {{{
     use {"rafi/awesome-vim-colorschemes"}
+    use {"rafamadriz/neon"}
     -- }}}
 
     -- Color support {{{

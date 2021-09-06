@@ -3,7 +3,7 @@
 let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
 " Variable controlling which theme we want to use.
-let s:selected_theme = 'sonokai'
+let s:selected_theme = 'neon'
 
 " For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
 " Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
@@ -77,7 +77,7 @@ if s:selected_theme == 'purify'
         \ gui=NONE term=NONE cterm=NONE
 endif
 " }}}
-"
+
 " Sonokai {{{
 if s:selected_theme == 'sonokai'
   " Can be 'default', 'andromeda', 'atlantis', 'maia', or 'shusia'.
@@ -85,6 +85,31 @@ if s:selected_theme == 'sonokai'
   " Must manually enable italic support.
   let g:sonokai_enable_italic = 1
   colorscheme sonokai
+endif
+" }}}
+
+" Neon {{{
+if s:selected_theme == 'neon'
+  " Which color style to use
+  let g:neon_style = 'doom'
+
+  " Italic text for comment
+  let g:neon_italic_comment = 1
+  " Applies to conditionals and keywords
+  let g:neon_italic_keyword = 1
+  " true and false
+  let g:neon_italic_boolean = 1
+  " Applies to function (calls and definitions), methods (calls and
+  " definitions), and built-in functions.
+  let g:neon_italic_function = 1
+  " Applies to variable names defined by languages, like 'this' or 'self'.
+  let g:neon_italic_variable = 1
+  " Applies to error and warning messages, functions, lsp virtual text, etc.
+  let g:neon_bold = 1
+  " Applies no background color to certain highlight groups.
+  let g:neon_transparent = 0
+
+  colorscheme neon
 endif
 " }}}
 
