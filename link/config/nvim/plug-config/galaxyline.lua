@@ -2,10 +2,27 @@
 -- Credit for starting config goes to glepnir on GitHub.
 
 local gl = require("galaxyline")
-local colors = require("galaxyline.theme").default
 local condition = require("galaxyline.condition")
 local gls = gl.section
 gl.short_line_list = {"NvimTree", "vista", "dbui", "packer"}
+
+-- From the Neom Doom colorscheme for Neovim.
+local doom_colors = {
+  bg = "#282c34",
+  fg = "#bbc2cf",
+  yellow = "#ECBE7B",
+  cyan = "#4db5bd",
+  darkblue = "#5699AF",
+  green = "#a0c980",
+  orange = "#da8548",
+  violet = "#a9a1e1",
+  magenta = "#d38aea",
+  blue = "#6cb6eb",
+  red = "#ec7279"
+}
+
+-- local colors = require("galaxyline.theme").default
+local colors = doom_colors
 
 gls.left[1] = {
   RainbowRed = {
