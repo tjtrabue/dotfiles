@@ -8,9 +8,7 @@ let g:completion_enable_snippet = 'UltiSnips'
 
 " Map the key to use for confirming the completion selection.
 " <CR> by default.
-" let g:completion_confirm_key = "\<C-l>"
-" Settings the confirm function in the Keymappings section.
-let g:completion_confirm_key = ""
+let g:completion_confirm_key = "\<CR>"
 " }}}
 
 " Chain complete {{{
