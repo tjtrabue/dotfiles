@@ -108,7 +108,7 @@ __do_cd() {
   elif echo "${dirArg}" | grep -E -q -- '^@$'; then
     # Use '@' to cd to the root of the current git repository.
     log_debug "cd'ing to git root: ${dirArg}"
-    __do_cd_to_git_root
+    __do_cd_to_vcs_root
   else
     log_debug "cd'ing to directory or alias: ${dirArg}"
     __do_cd_to_dir_or_alias "${dirArg}"
@@ -147,10 +147,10 @@ __do_cd_history() {
   fi
 }
 
-# Return to the root of the current git repository.
-__do_cd_to_git_root() {
-  if ! git rev-parse --is-inside-work-tree >>/dev/null 2>&1; then
-    err "Not inside a git repository."
+# Return to the root of the current VCS repository.
+__do_cd_to_vcs_root() {
+  if ! isrepo; then
+    err "Not inside a VCS repository."
     return 1
   fi
 
