@@ -73,6 +73,7 @@ straight_update_repos() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs}"
   local straightHome="${emacsHome}/straight"
   local straightRepos="${straightHome}/repos"
+  local numRetries=3
   local defaultBranch
   local repo
   local d
@@ -112,7 +113,7 @@ straight_update_repos() {
 
       # Make three attempts to update each repo.
       # After the third failed attempt, print an error message.
-      for i in 1..3; do
+      for i in {1..${numRetries}}; do
         # Update the repo regardless of which branch it was previously on.
         if git -C "${d}" pull; then
           # If we successfully updated the repo, break out of the loop.
