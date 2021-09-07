@@ -6,7 +6,7 @@
 # Determines whether the given directory is in a Git repository.
 # If no repository directory is provided, defaults to the current dir.
 # Return 0 if the directory is a Git repo. Return non-zero otherwise.
-isrepo() {
+isgitrepo() {
   # The Git repo dir (defaults to the current directory)
   local repoDir="${1:-.}"
   git -C "${repoDir}" rev-parse >>/dev/null 2>&1
