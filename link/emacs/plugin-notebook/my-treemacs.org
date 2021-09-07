@@ -22,12 +22,22 @@ features absent from the majority of such explorers.
         "t 1" 'treemacs-delete-other-windows
         "t t" 'treemacs
         "t B" 'treemacs-bookmark
-        "t P" 'treemacs-add-and-display-current-project
+        "t R" 'treemacs-remove-workspace
+        "t a" 'treemacs-add-project-to-workspace
+        "t e" 'treemacs-edit-workspaces
+        "t p" 'treemacs-add-and-display-current-project
+        "t r" 'treemacs-remove-project-from-workspace
+        "t s" 'treemacs-switch-workspace
         "t C-t" 'treemacs-find-file
         "t M-t" 'treemacs-find-tag)
       (my/evil-leader-def
+        "tR" 'treemacs-remove-workspace
+        "ta" 'treemacs-add-project-to-workspace
+        "te" 'treemacs-edit-workspaces
         "tm" 'treemacs
-        "tP" 'treemacs-add-and-display-current-project)
+        "tp" 'treemacs-add-and-display-current-project
+        "tr" 'treemacs-remove-project-from-workspace
+        "ts" 'treemacs-switch-workspace)
       :init
       (with-eval-after-load 'winum
         (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -86,10 +96,59 @@ features absent from the majority of such explorers.
     #+end_src
 
 ** treemacs-perspective
-   Scopes =treemacs= to =perspective.el=.
+   Adds the ='Perspectives= scope for Treemacs.
+
+   *NOTE:* You may need to run =treemacs-edit-workspaces= and manually adjust
+   some of the project names/roots for your perspective.
 
    #+begin_src emacs-lisp
      (use-package treemacs-perspective
-       :after perspective
+       :after (treemacs perspective)
+       :demand t
+       :config
+       (treemacs-set-scope-type 'Perspectives))
+   #+end_src
+
+** treemacs-evil
+   Evil mode compatibility for Treemacs.
+
+   #+begin_src emacs-lisp
+     (use-package treemacs-evil
+       :after (evil-collection treemacs)
        :demand t)
+   #+end_src
+
+** treemacs-icons-dired
+   Display Treemacs icons in =dired-mode= buffers.
+
+   #+begin_src emacs-lisp
+     (use-package treemacs-icons-dired
+       ;; Use all-the-icons-dired instead
+       :disabled
+       :after (treemacs dired)
+       :hook
+       (after-init . treemacs-icons-dired-mode))
+   #+end_src
+
+** treemacs-magit
+   Closing the gaps for filewatch- and git-modes in conjunction with Magit.
+   Specifically this package will hook into Magit so as to artificially produce
+   filewatch events for changes that treemacs would otherwise not catch, namely
+   the committing and (un)staging of files.
+
+   #+begin_src emacs-lisp
+     (use-package treemacs-magit
+       :after (treemacs magit)
+       :demand t)
+   #+end_src
+
+** treemacs-all-the-icons
+   =all-the-icons= integration for Treemacs.
+
+   #+begin_src emacs-lisp
+     (use-package treemacs-all-the-icons
+       :after (treemacs all-the-icons)
+       :demand t
+       :config
+       (treemacs-load-theme 'all-the-icons))
    #+end_src
