@@ -4,20 +4,13 @@
 # to return to the previous directory, or '@' to return to the root of a Git
 # repository.
 cd() {
-  local OPTIND
-  local opt
+  # Print help message if requested.
+  if echo "${1}" | grep -q -E -- "(-h)|(--help)"; then
+    __cd_help
+    return 0
+  fi
 
-  while getopts ":h" opt; do
-    case "${opt}" in
-      h)
-        __cd_help
-        return 0
-        ;;
-    esac
-  done
-  shift $((OPTIND - 1))
-
-  __cd "${@}"
+  __cd "${*}"
 }
 
 # Create an alias for a directory so that a user may easily navigate into it.
@@ -110,11 +103,14 @@ __do_cd() {
   local dirArg="${1}"
 
   if echo "${dirArg}" | grep -E -q -- '^-[1-9][0-9]*$'; then
+    log_debug "cd'ing back into history: ${dirArg}"
     __do_cd_history "${dirArg}"
   elif echo "${dirArg}" | grep -E -q -- '^@$'; then
     # Use '@' to cd to the root of the current git repository.
+    log_debug "cd'ing to git root: ${dirArg}"
     __do_cd_to_git_root
   else
+    log_debug "cd'ing to directory or alias: ${dirArg}"
     __do_cd_to_dir_or_alias "${dirArg}"
   fi
 }
