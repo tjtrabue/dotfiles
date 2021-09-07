@@ -17,14 +17,17 @@ features absent from the majority of such explorers.
       :commands treemacs
       :general
       (general-def
-        "M-0" 'treemacs-select-window
-        "C-c t 1" 'treemacs-delete-other-windows
-        "C-c t t" 'treemacs
-        "C-c t B" 'treemacs-bookmark
-        "C-c t C-t" 'treemacs-find-file
-        "C-c t M-t" 'treemacs-find-tag)
+        "M-0" 'treemacs-select-window)
+      (my/user-leader-def
+        "t 1" 'treemacs-delete-other-windows
+        "t t" 'treemacs
+        "t B" 'treemacs-bookmark
+        "t P" 'treemacs-add-and-display-current-project
+        "t C-t" 'treemacs-find-file
+        "t M-t" 'treemacs-find-tag)
       (my/evil-leader-def
-        "tm" 'treemacs)
+        "tm" 'treemacs
+        "tP" 'treemacs-add-and-display-current-project)
       :init
       (with-eval-after-load 'winum
         (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -66,7 +69,7 @@ features absent from the majority of such explorers.
 *** =use-package= specification
     #+begin_src emacs-lisp
       (use-package treemacs-projectile
-        :after (evil-collection treemacs projectile)
+        :after (treemacs projectile)
         :commands treemacs-projectile
         :general
         ;; Automatically prefixed with "C-c"
