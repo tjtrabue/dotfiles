@@ -73,11 +73,11 @@ functions to provide a single point of theme configuration."
 
 * Theme Packages
   These are some great themes from Emacs contributors. I marked the theme I
-  currently use by appending "(active)" to the end of its =org-mode= heading.
+  currently use by appending =(active)= to the end of its =org-mode= heading.
 
 ** doom-themes
    This is a /huge/ collection of Emacs themes contributed by the very gracious
-   creator of Doom Emacs.
+   creator of Doom Emacs and several others.
 
    #+begin_src emacs-lisp
      (use-package doom-themes
@@ -100,7 +100,7 @@ functions to provide a single point of theme configuration."
   It also depends on =pywal=, so make sure that you have it installed on
   your =PATH=. =pywal= is a Python package, so installing it is easy:
 
-  #+begin_src shell
+  #+begin_src shell :tangle no
     python3 -m pip install --user --upgrade pywal
   #+end_src
 
