@@ -90,6 +90,6 @@ features absent from the majority of such explorers.
 
    #+begin_src emacs-lisp
      (use-package treemacs-perspective
-       :after (treemacs perspective)
+       :after perspective
        :demand t)
    #+end_src
