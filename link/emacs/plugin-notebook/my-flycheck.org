@@ -84,12 +84,28 @@ it is very simple to do.
    #+end_src
 
 ** flycheck-clojure
+   These Clojure linters depend on CIDER running in order to work, so you should
+   make sure to only activate them when the CIDER REPL starts.
 
    #+begin_src emacs-lisp
      (use-package flycheck-clojure
        :after flycheck
        :hook
-       (clojure-mode . flycheck-clojure-setup))
+       (cider-mode . flycheck-clojure-setup))
+   #+end_src
+
+** flycheck-clj-kondo
+   Integrates the =clj-kondo= Clojure linting tool with =flycheck=. =clj-kondo=
+   is pretty wonderful because it is a stand-alone binary, not depending on a
+   running REPL in order to function. That makes =clj-kondo= is a great
+   =flycheck= linter to use if you do not want to use CIDER.
+
+   #+begin_src emacs-lisp
+     (use-package flycheck-clj-kondo
+       :after flycheck
+       :hook
+       (clojure-mode . (lambda ()
+                         (require 'flycheck-clj-kondo))))
    #+end_src
 
 ** flycheck-haskell
