@@ -275,6 +275,10 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
     ;; directories. Always assume "no".
     (setq tags-add-tables nil)
 
+    ;; Try to indent the current line, or complete the thing at point if the code is
+    ;; already properly indented.
+    (setq tab-always-indent 'complete)
+
     ;; Use spaces instead of tabs.
     (setq-default indent-tabs-mode nil)
     ;; Indent in increments of 2 spaces.

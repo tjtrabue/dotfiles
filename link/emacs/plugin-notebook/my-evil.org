@@ -629,6 +629,13 @@ features of Vim at times.
            ;; Mark symbols with M-m
            "M-m" 'lispy-mark-symbol)
           (general-define-key
+           :states 'insert
+           :keymaps mode-map
+           "[" 'lispy-brackets
+           "]" 'lispy-right-nostring
+           "{" 'lispy-braces
+           "}" 'lispy-right-nostring)
+          (general-define-key
            :states '(normal insert)
            :keymaps mode-map
            ;; Function navigation

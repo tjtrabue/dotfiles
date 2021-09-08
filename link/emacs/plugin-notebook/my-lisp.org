@@ -32,10 +32,10 @@ regardless of its particular dialect.
       :general
       (general-unbind lispy-mode-map
         ;; Unbind HORRIFIC keybindings that keep me from inserting characters.
+        "["
         "]"
+        "{"
         "}")
-      (general-def lispy-mode-map
-        "[" 'lispy-brackets)
       :config
       ;; Tweak key themes enabled by default.  Since I use lispyville for evil-mode
       ;; integration, I don't need the annoying "special" mode bindings that lispy

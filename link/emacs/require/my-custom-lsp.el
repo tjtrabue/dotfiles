@@ -168,10 +168,10 @@ debugging."
 
 ;;;###autoload
 (defun my-custom-lsp-add-language-ids ()
-  "Add extra language ID specifications for lsp-mode."
+  "Add extra language ID specifications for `lsp-mode'."
   (setq lsp-language-id-configuration
-        (append my-custom-lsp-language-id-configuration
-                lsp-language-id-configuration)))
+    (append my-custom-lsp-language-id-configuration
+      lsp-language-id-configuration)))
 
 (provide 'my-custom-lsp)
 
