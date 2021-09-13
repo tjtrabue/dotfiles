@@ -7,8 +7,7 @@
 # If no repository directory is provided, defaults to the current dir.
 # Return 0 if the directory is a Git repo. Return non-zero otherwise.
 isgitrepo() {
-  # The Git repo dir (defaults to the current directory)
-  local repoDir="${1:-.}"
+  local repoDir="${1:-$(pwd)}"
 
   git -C "${repoDir}" rev-parse >>/dev/null 2>&1
 }
@@ -18,13 +17,32 @@ remoteurl() {
   git remote -v | egrep '^origin.*push' | awk '{print $2}'
 }
 
+# Return the name of the default configured remote repository for the given Git
+# repository. If no repository path is provided, the current working directory
+# will be used.
+defaultremote() {
+  local gitRepo="${1:-$(pwd)}"
+
+  if ! isgitrepo "${gitRepo}"; then
+    err "${BLUE}${gitRepo}${NC} is not a Git repository."
+    return 1
+  fi
+
+  git -C "${gitRepo}" remote 2>/dev/null
+}
+
 # Returns the default remote branch name for a given repository. If no
 # repository is provided, defaults to the current directory.
 defaultbranch() {
-  # The Git repo directory (defaults to the current directory)
-  local gitRepo="${1:-.}"
+  local gitRepo="${1:-$(pwd)}"
+  local defaultRemote="$(defaultremote "${gitRepo}")"
 
-  git -C "${gitRepo}" remote show origin 2>/dev/null |
+  if ! isgitrepo "${gitRepo}"; then
+    err "${BLUE}${gitRepo}${NC} is not a Git repository."
+    return 1
+  fi
+
+  git -C "${gitRepo}" remote show "${defaultRemote}" 2>/dev/null |
   sed -n '/HEAD branch/s/.*: //p'
 }
 
