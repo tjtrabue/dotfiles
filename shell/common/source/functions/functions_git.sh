@@ -9,6 +9,7 @@
 isgitrepo() {
   # The Git repo dir (defaults to the current directory)
   local repoDir="${1:-.}"
+
   git -C "${repoDir}" rev-parse >>/dev/null 2>&1
 }
 
