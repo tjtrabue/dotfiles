@@ -23,8 +23,8 @@ defaultbranch() {
   # The Git repo directory (defaults to the current directory)
   local gitRepo="${1:-.}"
 
-  git -C "${gitRepo}" symbolic-ref refs/remotes/origin/HEAD |
-  sed 's@^refs/remotes/origin/@@'
+  git -C "${gitRepo}" remote show origin 2>/dev/null |
+  sed -n '/HEAD branch/s/.*: //p'
 }
 
 # Opens the commit message for the current repo in the configured editor.
