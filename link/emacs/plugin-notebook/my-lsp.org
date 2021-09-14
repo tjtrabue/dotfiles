@@ -119,8 +119,8 @@ to the =my-custom-lsp.el= file.
          "M-j" 'lsp-ui-peek--select-next-file
          "M-k" 'lsp-ui-peek--select-prev-file)
        :custom
-       ;; How long to wait before showing documentation in a floating window
-       (lsp-ui-doc-delay 0.2)
+       ;; How long to wait before showing sideline information
+       (lsp-ui-sideline-delay 0.2)
        ;; Show directories of files
        (lsp-ui-peek-show-directory t)
        ;; Customize what gets shown in the sideline
@@ -132,8 +132,16 @@ to the =my-custom-lsp.el= file.
        (lsp-ui-peek-enable t)
        ;; Show documentation for the thing at point
        (lsp-ui-doc-enable t)
+       ;; How long to wait before showing documentation in a floating window
+       (lsp-ui-doc-delay 0.5)
        ;; Where to display the documentation tooltip
-       (lsp-ui-doc-position 'at-point))
+       (lsp-ui-doc-position 'top)
+       ;; Show current symbol's documentation when cursor moves over it.
+       (lsp-ui-doc-show-with-cursor t)
+       ;; Show current symbol's documentation when the mouse pointer moves over it.
+       (lsp-ui-doc-show-with-mouse t)
+       ;; Automatically refresh the menu
+       (lsp-ui-imenu-auto-refresh t))
    #+end_src
 
 ** lsp-haskell
