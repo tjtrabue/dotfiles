@@ -98,6 +98,9 @@ to the =my-custom-lsp.el= file.
 
 * Plugins
 ** lsp-ui
+   =lsp-ui= provides a fancy user interface for LSP's diagnostic and
+   documentation features. It provides documentation on hover in a dedicated
+   floating window, a sidebar for diagnostics and LSP code actions, and more.
 
    #+begin_src emacs-lisp
      (use-package lsp-ui
