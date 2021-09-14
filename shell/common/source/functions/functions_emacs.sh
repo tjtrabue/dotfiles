@@ -97,7 +97,7 @@ straight_update_repos() {
     if [ "${currBranch}" != "${defaultBranch}" ]; then
       log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
       # Reset all changes to make for a clean working tree
-      totalgitreset "${d}"
+      totalgitreset -f "${d}"
       # Checkout the default branch
       git -C "${d}" checkout -f "${defaultBranch}"
     fi

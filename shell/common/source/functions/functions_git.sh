@@ -137,7 +137,7 @@ totalgitreset() {
   local repo="${1:-$(git rev-parse --show-toplevel)}"
   local OPTIND
   local o
-  local force
+  local force=0
   local response
 
   while getopts "f" o; do
