@@ -80,11 +80,13 @@ straight_update_repos() {
   local d
   local currBranch
   local defaultBranch
+  local repoUpdated
 
   log_info "Checking out default branches for all straight repos"
   for d in "${straightRepos}"/*; do
     currBranch="$(git -C "${d}" rev-parse --abbrev-ref HEAD)"
     defaultBranch="$(defaultbranch "${d}")"
+    repoUpdated=0
 
     log_info "In repository: ${BLUE}$(basename "${d}")${NC}"
     if [ "${currBranch}" != "${defaultBranch}" ]; then
@@ -94,14 +96,22 @@ straight_update_repos() {
       git -C "${d}" reset --hard HEAD
       # Checkout the default branch
       git -C "${d}" checkout -f "${defaultBranch}"
-      # Try a few times to update the repository
-      for i in {1..${numRetries}}; do
-        if git -C "${d}" pull; then
-          break
-        else
-          warn "Could not update repo: ${BLUE}$(basename "${d}")${NC}"
-        fi
-      done
+    fi
+
+    # Try a few times to update the repository.
+    for i in {1..${numRetries}}; do
+      if git -C "${d}" pull; then
+        repoUpdated=1
+        break
+      else
+        warn "Did not update repo: ${BLUE}$(basename "${d}")${NC}"
+      fi
+    done
+
+    # Print error message if all update attempts failed.
+    if [ "${repoUpdated}" -eq 0 ]; then
+      err "Could not update repo: ${BLUE}$(basename "${d}")${NC}." \
+        "Try to update it manually."
     fi
   done
 }
