@@ -137,13 +137,13 @@ totalgitreset() {
   local repo="${1:-$(git rev-parse --show-toplevel)}"
   local OPTIND
   local o
-  local force=0
+  local force=false
   local response
 
   while getopts "f" o; do
     case "${o}" in
       f)
-        force=1
+        force=true
         ;;
       *)
         err "Unknown operand"
