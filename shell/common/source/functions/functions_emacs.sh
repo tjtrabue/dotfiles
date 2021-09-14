@@ -66,62 +66,41 @@ shutdown_emacsdaemon() {
   emacsclient -e "(kill-emacs)"
 }
 
-# Checkout master or standard branch for all repos cloned by straight.el if the
-# repos are in a "detached HEAD" state. Regardless of whether or not the repo's
-# branch changed, update the mainline branch for the repository.
+# Checkout the configured default branch for each repository cloned by the
+# straight.el package manager and update each repo. This is useful for when one
+# package that you desire declares another package you want to use as a
+# vdependency, and checks out a specific revision of the second package that
+# messes up your Emacs configuration.
 straight_update_repos() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs}"
   local straightHome="${emacsHome}/straight"
   local straightRepos="${straightHome}/repos"
   local numRetries=3
-  local defaultBranch
-  local repo
-  local d
   local i
+  local d
+  local currBranch
+  local defaultBranch
 
-  if [ ! -d "${straightHome}" ]; then
-    err "No straight directory found under ${emacsHome}"
-    return 1
-  fi
-
-  log_info "Updating all straight.el cloned repositories"
+  log_info "Checking out default branches for all straight repos"
   for d in "${straightRepos}"/*; do
-    if isgitrepo "${d}"; then
-      repo="$(basename "${d}")"
-      log_info "Current repo: ${BLUE}${repo}${NC}"
-      if [ "$(git -C "${d}" rev-parse --abbrev-ref --symbolic-full-name HEAD)" \
-        = "HEAD" ]; then
-        # If we are in detached HEAD, switch back to the default branch. We only
-        # care about detached HEAD state because sometimes we want to remain
-        # on a branch other than the default branch, such as 'develop', which we
-        # specified in our straight.el recipe.
-        defaultBranch="$(defaultbranch "${d}")"
+    currBranch="$(git -C "${d}" rev-parse --abbrev-ref HEAD)"
+    defaultBranch="$(defaultbranch "${d}")"
 
-        if ! git -C "${d}" rev-parse --verify "${defaultBranch}" \
-          >>/dev/null 2>&1; then
-          err "Could not determine default branch for repository:" \
-            "${BLUE}${repo}${NC}"
-          continue
-        fi
-
-        log_info "Default branch: ${MAGENTA}${defaultBranch}${NC}"
-
-        # Checkout the default branch if we are in detached HEAD state.
-        log_info "Switching to branch: ${GREEN}${defaultBranch}${NC}"
-        git -C "${d}" checkout -f "${defaultBranch}"
-      fi
-
-      # Make three attempts to update each repo.
-      # After the third failed attempt, print an error message.
+    log_info "In repository: ${BLUE}$(basename "${d}")${NC}"
+    if [ "${currBranch}" != "${defaultBranch}" ]; then
+      log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
+      # Reset all changes to make for a clean working tree
+      git -C "${d}" clean -fdx
+      git -C "${d}" reset --hard HEAD
+      # Checkout the default branch
+      git -C "${d}" checkout -f "${defaultBranch}"
+      # Try a few times to update the repository
       for i in {1..${numRetries}}; do
-        # Update the repo regardless of which branch it was previously on.
         if git -C "${d}" pull; then
-          # If we successfully updated the repo, break out of the loop.
           break
-        elif [ "$i" -eq 3 ]; then
-          err "Could not update repository: ${BLUE}${repo}${NC}"
+        else
+          warn "Could not update repo: ${BLUE}$(basename "${d}")${NC}"
         fi
-        warn "Failed to update repo ${BLUE}${repo}${NC}; trying again..."
       done
     fi
   done
@@ -158,4 +137,4 @@ clone_roam_notes() {
 }
 
 # Modeline for this file (leave it commented!)
-# vim:foldenable:foldmethod=syntax:foldnestmax=1
+# vim:foldenable:foldmethod=syntax:foldlevel=0:foldnestmax=1
