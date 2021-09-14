@@ -160,7 +160,7 @@ totalgitreset() {
         "[y/n]"
       read -r response
     done
-    if ! echo "${response}" | grep -E -q "^[Nn]$"; then
+    if echo "${response}" | grep -E -q "^[Nn]$"; then
       echoe "Aborted by user."
       return 2
     fi
