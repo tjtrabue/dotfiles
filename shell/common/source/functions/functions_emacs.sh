@@ -104,7 +104,8 @@ straight_update_repos() {
         repoUpdated=1
         break
       else
-        warn "Did not update repo: ${BLUE}$(basename "${d}")${NC}"
+        warn "Did not update repo: ${BLUE}$(basename "${d}")${NC} on attempt" \
+          "${i} of ${numRetries}"
       fi
     done
 
