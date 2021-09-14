@@ -82,7 +82,12 @@ straight_update_repos() {
   local defaultBranch
   local repoUpdated
 
-  log_info "Checking out default branches for all straight repos"
+  if [ ! -d "${straightRepos}" ]; then
+    err "Directory ${straightRepos} does not exist."
+    return 1
+  fi
+
+  log_info "Updating default branches for all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
     currBranch="$(git -C "${d}" rev-parse --abbrev-ref HEAD)"
     defaultBranch="$(defaultbranch "${d}")"
@@ -92,8 +97,7 @@ straight_update_repos() {
     if [ "${currBranch}" != "${defaultBranch}" ]; then
       log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
       # Reset all changes to make for a clean working tree
-      git -C "${d}" clean -fdx
-      git -C "${d}" reset --hard HEAD
+      totalgitreset "${d}"
       # Checkout the default branch
       git -C "${d}" checkout -f "${defaultBranch}"
     fi

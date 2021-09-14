@@ -7,7 +7,7 @@
 # If no repository directory is provided, defaults to the current dir.
 # Return 0 if the directory is a Git repo. Return non-zero otherwise.
 isgitrepo() {
-  local repoDir="${1:-$(pwd)}"
+  local repoDir="${1:-$(git rev-parse --show-toplevel)}"
 
   git -C "${repoDir}" rev-parse >>/dev/null 2>&1
 }
@@ -21,7 +21,7 @@ remoteurl() {
 # repository. If no repository path is provided, the current working directory
 # will be used.
 defaultremote() {
-  local gitRepo="${1:-$(pwd)}"
+  local gitRepo="${1:-$(git rev-parse --show-toplevel)}"
 
   if ! isgitrepo "${gitRepo}"; then
     err "${BLUE}${gitRepo}${NC} is not a Git repository."
@@ -34,7 +34,7 @@ defaultremote() {
 # Returns the default remote branch name for a given repository. If no
 # repository is provided, defaults to the current directory.
 defaultbranch() {
-  local gitRepo="${1:-$(pwd)}"
+  local gitRepo="${1:-$(git rev-parse --show-toplevel)}"
   local defaultRemote="$(defaultremote "${gitRepo}")"
 
   if ! isgitrepo "${gitRepo}"; then
@@ -125,6 +125,19 @@ ucreset() {
   else
     return 1
   fi
+}
+
+# Go nuclear: get rid of ALL uncommitted changes to the current working tree of
+# the provided Git repository (or the repo the current directory belongs to if
+# no repo is given).
+#
+# WARNING: Be VERY careful before you use this function!!!! You cannot undo the
+# changes it makes!
+totalgitreset() {
+  local repo="${1:-$(git rev-parse --show-toplevel)}"
+
+  git -C "${repo}" clean -fdx
+  git -C "${repo}" reset --hard HEAD
 }
 # }}}
 
