@@ -134,7 +134,7 @@ ucreset() {
 # WARNING: Be VERY careful before you use this function!!!! You cannot undo the
 # changes it makes!
 totalgitreset() {
-  local repo="${1:-$(git rev-parse --show-toplevel)}"
+  local repo
   local OPTIND
   local o
   local force=false
@@ -152,6 +152,8 @@ totalgitreset() {
     esac
   done
   shift $((OPTIND - 1))
+
+  repo="${1:-$(git rev-parse --show-toplevel)}"
 
   if ! "${force}"; then
     while ! echo "${response}" | grep -E -q "^[YyNn]$"; do
