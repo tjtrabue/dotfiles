@@ -135,6 +135,36 @@ ucreset() {
 # changes it makes!
 totalgitreset() {
   local repo="${1:-$(git rev-parse --show-toplevel)}"
+  local OPTIND
+  local o
+  local force
+  local response
+
+  while getopts "f" o; do
+    case "${o}" in
+      f)
+        force=1
+        ;;
+      *)
+        err "Unknown operand"
+        return 1
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  if ! "${force}"; then
+    while ! echo "${response}" | grep -E -q "^[YyNn]$"; do
+      echoe "WARNING: Do you really want to revert ALL changes to repo" \
+        "${BLUE}$(basename "${repo}")${NC}? You cannot undo these changes" \
+        "[y/n]"
+      read -r response
+    done
+    if ! echo "${response}" | grep -E -q "^[Nn]$"; then
+      echoe "Aborted by user."
+      return 2
+    fi
+  fi
 
   git -C "${repo}" clean -fdx
   git -C "${repo}" reset --hard HEAD
