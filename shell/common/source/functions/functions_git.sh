@@ -140,13 +140,23 @@ totalgitreset() {
   local force=false
   local response
 
-  while getopts "f" o; do
+  # Usage function for when user enters "-h" option.
+  totalgitreset_usage() {
+    echoe "USAGE: totalgitreset [-fh] [REPO]"
+  }
+
+  while getopts ":fh" o; do
     case "${o}" in
       f)
         force=true
         ;;
+      h)
+        totalgitreset_usage
+        return 0
+        ;;
       *)
         err "Unknown operand"
+        totalgitreset_usage
         return 1
         ;;
     esac
