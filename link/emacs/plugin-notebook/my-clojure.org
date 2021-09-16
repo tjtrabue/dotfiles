@@ -26,8 +26,25 @@ world needed another Lisp.
   An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
   Lisp.
 
-  To start a CIDER REPL session, press =C-c C-x j j= from inside a Clojure
-  buffer.
+  To start the CIDER REPL server, press =C-c C-x j j= or =C-c M-j= from inside a
+  Clojure buffer.
+
+** CIDER's Performance
+   CIDER is a powerful IDE server for Emacs (or potentially any editor that
+   decides to implement CIDER's nREPL specification), but there are situations
+   where it can be sluggish. You know what I mean: either the REPL lags after an
+   input, or a keyboard shortcut that sends new code to CIDER hangs for an
+   extended period of time. These problems are common, but are also quite
+   fixable. Here a few tips for how to speed up CIDER.
+
+*** Update CIDER
+    Make sure you are running the latest version of CIDER. Performance issues
+    are fixed frequently.
+
+*** Wait a while after startup
+    Plain and simple. After CIDER starts up, wait a minute or two before
+    interacting with it. I've found that sometimes CIDER needs a moment to
+    startup fully.
 
 ** Variables
    #+begin_src emacs-lisp
