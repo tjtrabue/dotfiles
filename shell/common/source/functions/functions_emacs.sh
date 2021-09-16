@@ -75,12 +75,7 @@ straight_update_repos() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local straightHome="${emacsHome}/straight"
   local straightRepos="${straightHome}/repos"
-  local numRetries=3
-  local i
   local d
-  local currBranch
-  local defaultBranch
-  local repoUpdated
 
   if [ ! -d "${straightRepos}" ]; then
     err "Directory ${straightRepos} does not exist."
@@ -89,41 +84,53 @@ straight_update_repos() {
 
   log_info "Updating default branches for all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
-    if [ ! -d "${d}" ]; then
-      warn "${BLUE}${d}${NC} is not a directory"
-      continue
-    fi
+    __update_straight_repo "${d}"
+  done
+}
 
-    currBranch="$(git -C "${d}" rev-parse --abbrev-ref HEAD)"
-    defaultBranch="$(defaultbranch "${d}")"
-    repoUpdated=0
+# Update a repository cloned by straight.el.
+__update_straight_repo() {
+  local numRetries=3
+  local repo="${1}"
+  local i
+  local currBranch
+  local defaultBranch
+  local repoUpdated
 
-    log_info "In repository: ${BLUE}$(basename "${d}")${NC}"
-    if [ "${currBranch}" != "${defaultBranch}" ]; then
-      log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
-      # Reset all changes to make for a clean working tree
-      totalgitreset -f "${d}"
-      # Checkout the default branch
-      git -C "${d}" checkout -f "${defaultBranch}"
-    fi
+  if [ ! -d "${repo}" ]; then
+    warn "${BLUE}${repo}${NC} is not a directory"
+    return 1
+  fi
 
-    # Try a few times to update the repository.
-    for i in {1..${numRetries}}; do
-      if git -C "${d}" pull; then
-        repoUpdated=1
-        break
-      else
-        warn "Did not update repo: ${BLUE}$(basename "${d}")${NC} on attempt" \
-          "${i} of ${numRetries}"
-      fi
-    done
+  currBranch="$(git -C "${repo}" rev-parse --abbrev-ref HEAD)"
+  defaultBranch="$(defaultbranch "${repo}")"
+  repoUpdated=0
 
-    # Print error message if all update attempts failed.
-    if [ "${repoUpdated}" -eq 0 ]; then
-      err "Could not update repo: ${BLUE}$(basename "${d}")${NC}." \
-        "Try to update it manually."
+  log_info "Updating repository: ${BLUE}$(basename "${repo}")${NC}"
+  if [ "${currBranch}" != "${defaultBranch}" ]; then
+    log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
+    # Reset all changes to make for a clean working tree
+    totalgitreset -f "${repo}"
+    # Checkout the default branch
+    git -C "${repo}" checkout -f "${defaultBranch}"
+  fi
+
+  # Try a few times to update the repository.
+  for i in {1..${numRetries}}; do
+    if git -C "${repo}" pull; then
+      repoUpdated=1
+      break
+    else
+      warn "Did not update repo: ${BLUE}$(basename "${repo}")${NC} on attempt" \
+        "${i} of ${numRetries}"
     fi
   done
+
+  # Print error message if all update attempts failed.
+  if [ "${repoUpdated}" -eq 0 ]; then
+    err "Could not update repo: ${BLUE}$(basename "${repo}")${NC}." \
+      "Try to update it manually."
+  fi
 }
 
 # Clone my personal roam-notes database.
