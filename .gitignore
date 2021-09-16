@@ -208,7 +208,12 @@ shell/zsh/zdotdir/_git
 shell/zsh/zdotdir/.zsh_history
 # }}}
 
+# FileZilla {{{
+link/config/filezilla/*
+# }}}
+
 # OS X / macOS {{{
+
 # Thumbnail cache files
 ._*
 Thumbs.db
