@@ -72,7 +72,7 @@ shutdown_emacsdaemon() {
 # vdependency, and checks out a specific revision of the second package that
 # messes up your Emacs configuration.
 straight_update_repos() {
-  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs}"
+  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local straightHome="${emacsHome}/straight"
   local straightRepos="${straightHome}/repos"
   local numRetries=3
