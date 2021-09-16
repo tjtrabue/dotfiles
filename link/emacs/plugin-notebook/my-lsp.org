@@ -36,6 +36,8 @@ to the =my-custom-lsp.el= file.
       ;; Here you can change the package's customizable variables.
       :custom
       ;;; General settings
+      ;; Redefine lsp command prefix (default is "s-l" which messes with
+      ;; most window managers).
       (lsp-keymap-prefix "C-c l")
       (lsp-enable-snippet t)
       (lsp-enable-semantic-highlighting t)
@@ -81,8 +83,6 @@ to the =my-custom-lsp.el= file.
       ;; Enable which-key integration for lsp-mode
       (lsp-mode . lsp-enable-which-key-integration)
       :bind-keymap
-      ;; Redefine lsp command prefix (default is "s-l" which messes with
-      ;; most window managers).
       ("C-c l" . lsp-command-map)
       :init
       (require 'my-custom-lsp)

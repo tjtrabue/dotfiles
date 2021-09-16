@@ -89,6 +89,11 @@ straight_update_repos() {
 
   log_info "Updating default branches for all straight.el cloned repositories"
   for d in "${straightRepos}"/*; do
+    if [ ! -d "${d}" ]; then
+      warn "${BLUE}${d}${NC} is not a directory"
+      continue
+    fi
+
     currBranch="$(git -C "${d}" rev-parse --abbrev-ref HEAD)"
     defaultBranch="$(defaultbranch "${d}")"
     repoUpdated=0
