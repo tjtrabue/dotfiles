@@ -90,8 +90,8 @@ straight_update_repos() {
 
 # Update a repository cloned by straight.el.
 __update_straight_repo() {
-  local numRetries=3
   local repo="${1}"
+  local numRetries=3
   local i
   local currBranch
   local defaultBranch
