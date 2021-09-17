@@ -101,7 +101,20 @@ world needed another Lisp.
         "C-k" 'cider-repl-previous-input
         "C-r" 'cider-repl-history)
       (my/evil-leader-def cider-repl-mode-map
-        "s" 'cider-repl-handle-shortcut)
+        "cs" 'cider-repl-handle-shortcut
+        "cH" 'cider-repl-history
+        "cR" 'cider-ns-refresh
+        "cS" 'cider-sideloader-start
+        "cb" 'cider-repl-clear-buffer
+        "cc" 'cider-repl-clear-output
+        "cd" 'cider-doc
+        "ch" 'cider-repl-shortcuts-help
+        "cn" 'cider-repl-set-ns
+        "cr" 'cider-run
+        "cta" 'cider-test-run-loaded-tests
+        "ctn" 'cider-test-run-ns-tests
+        "ctp" 'cider-test-run-project-tests
+        "cu" 'cider-undef)
       ;; Clearing the whole REPL is a useful feature since the REPL gets slower
       ;; the larger it gets.
       (my/user-leader-def cider-repl-mode-map
