@@ -66,6 +66,37 @@ shutdown_emacsdaemon() {
   emacsclient -e "(kill-emacs)"
 }
 
+# Install the native-comp feature branch of Emacs on various systems.
+# This version of Emacs is much more performant than the standard version.
+install_gccemacs() {
+  local os="$(getdistro)"
+
+  case "${os}" in
+    "Darwin")
+      __install_gccemacs_mac
+      ;;
+    *)
+      err "Cannot install gccemacs for OS type: ${MAGENTA}${os}${NC}"
+      return 1
+      ;;
+  esac
+}
+
+__install_gccemacs_mac() {
+  local gccEmacsPackage="$(grep "^emacs-plus" "${BREW_PACKAGES_FILE}")"
+  local installedGccEmacs="$(brew list | grep -E 'emacs-plus')"
+
+  log_info "Installing gccemacs for macOS"
+
+  if [ -n "${installedGccEmacs}" ]; then
+    log_info "Removing old emacs-plus package"
+    brew uninstall "${installedGccEmacs}"
+  fi
+
+  log_info "Installing new emacs-plus package"
+  eval "brew install ${gccEmacsPackage}"
+}
+
 # Checkout the configured default branch for each repository cloned by the
 # straight.el package manager and update each repo. This is useful for when one
 # package that you desire declares another package you want to use as a
