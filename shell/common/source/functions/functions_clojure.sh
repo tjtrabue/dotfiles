@@ -41,10 +41,12 @@ install_clojure_lsp() {
   local clojureLspDownloadUrl="https://raw.githubusercontent.com/clojure-lsp/clojure-lsp/master/install"
   # The downloaded install script
   local clojureLspInstaller="$(basename "${clojureLspDownloadUrl}")"
+  # The parent of the "bin" directory containing the installed binary.
+  local installPrefix="${HOME}/.local"
   # Where we want to install clojure-lsp
-  local installDir="${HOME}/.local/bin"
+  local installDir="${installPrefix}/bin"
 
-  log_info "Installing Clojure LSP"
+  log_info "Installing Clojure LSP to: ${BLUE}${installDir}${NC}"
 
   # Make sure our install directory exists before proceeding.
   mkdir -p "${installDir}"
