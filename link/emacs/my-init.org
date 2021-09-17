@@ -90,7 +90,8 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
       (defvar my/org-capture-file (file-truename (concat my/org-dir "/inbox.org"))
         "File receiving Org captures from other files. A dumping ground for ideas.")
       (defvar my/lisp-major-modes
-        '(clojure-mode
+        '(cider-repl-mode
+          clojure-mode
           emacs-lisp-mode
           ielm-mode
           lisp-mode
