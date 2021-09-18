@@ -1,0 +1,34 @@
+#+title:   Corfu: Completion Overlay Region FUnction
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2021:09:18
+#+tags:
+#+STARTUP: fold
+
+=corfu= is a minimal completion overlay that uses Emacs' built-in =capf=
+capabilities to provide completion candidates. This is in contrast to =company=,
+which uses customized backends which deviate from Emacs' standard completion
+system. You can think of =corfu= as a completion in region counterpart to
+=vertico=, which provides a narrowing completion buffer for Emacs'
+=completing-read= API.
+
+* =use-package= specification
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    ;; This package is not yet up to Company standards
+    :disabled
+    :custom
+    (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)                 ;; Enable auto completion
+    (corfu-commit-predicate nil)   ;; Do not commit selected candidates on next input
+    (corfu-quit-at-boundary t)     ;; Automatically quit at word boundary
+    (corfu-quit-no-match t)        ;; Automatically quit if there is no match
+    (corfu-echo-documentation nil) ;; Do not show documentation in the echo area
+    :general
+    (general-def 'insert corfu-map
+      "C-j" 'corfu-next
+      "C-k" 'corfu-previous)
+    :hook
+    (after-init . corfu-global-mode))
+#+end_src
