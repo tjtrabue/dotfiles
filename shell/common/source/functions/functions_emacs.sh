@@ -123,22 +123,25 @@ straight_update_repos() {
 __update_straight_repo() {
   local repo="${1}"
   local numRetries=3
+  local repoUpdated=0
   local i
-  local currBranch
   local defaultBranch
-  local repoUpdated
 
   if [ ! -d "${repo}" ]; then
     warn "${BLUE}${repo}${NC} is not a directory"
     return 1
   fi
 
-  currBranch="$(git -C "${repo}" rev-parse --abbrev-ref HEAD)"
-  defaultBranch="$(defaultbranch "${repo}")"
-  repoUpdated=0
-
   log_info "Updating repository: ${BLUE}$(basename "${repo}")${NC}"
-  if [ "${currBranch}" != "${defaultBranch}" ]; then
+
+  # Checkout the default branch for the repository if we are in a detached HEAD
+  # state. We don't want to always check out the default branch because we may
+  # have specified a different branch in our straight.el rescipe for this
+  # repository. However, a detached HEAD state indicates that the repository was
+  # cloned as a dependency of another package, and we do want to make sure it
+  # gets updated in that case.
+  if ! git -C "${repo}" symbolic-ref -q HEAD >>/dev/null 2>&1; then
+    defaultBranch="$(defaultbranch "${repo}")"
     log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
     # Reset all changes to make for a clean working tree
     totalgitreset -f "${repo}"
