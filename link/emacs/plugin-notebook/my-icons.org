@@ -49,7 +49,6 @@
       (ibuffer-mode . all-the-icons-ibuffer-mode))
   #+end_src
 
-
 * mode-icons
   Show an icon instead of the major mode name in the modeline.
 
