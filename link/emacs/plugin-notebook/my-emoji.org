@@ -1,0 +1,23 @@
+#+title:   Emoji Support for Emacs
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2021:09:19
+#+tags:
+#+STARTUP: fold
+
+Here you will find plugins and configuration for displaying emojis in Emacs.
+
+* emojify
+  =emojify= is an Emacs extension to display emojis. It can display github style
+  emojis like =:smile:= or plain ASCII ones like =:)=. It tries to be as
+  efficient as possible, while also providing a lot of flexibility.
+
+  #+begin_src emacs-lisp
+    (use-package emojify
+      :hook
+      (after-init . global-emojify-mode)
+      :custom
+      ;; Whether to automatically download required emojis.
+      ;; Can be t, nil, or 'ask.
+      (emojify-download-emojis-p t))
+  #+end_src
