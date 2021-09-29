@@ -85,6 +85,11 @@ world needed another Lisp.
       "Return string of paramters to pass to lein."
       (let ((default-params "repl :headless :host localhost"))
         (concat (my/get-cider-lein-deps) default-params)))
+
+    (defun my/cider-test-prompt-for-filters ()
+      "Interactively prompt user for filters to apply to a test run."
+      (interactive)
+      (cider-test-run-loaded-tests 'prompt-for-filters))
   #+end_src
 
 ** =use-package= specification
@@ -108,6 +113,7 @@ world needed another Lisp.
         "cN" 'cider-ns-reload
         "cR" 'cider-ns-refresh
         "cS" 'cider-sideloader-start
+        "cU" 'cider-repl-require-repl-utils
         "ca" 'cider-restart
         "cb" 'cider-repl-clear-buffer
         "cc" 'cider-repl-clear-output
@@ -118,8 +124,11 @@ world needed another Lisp.
         "cq" 'cider-quit
         "cr" 'cider-run
         "cta" 'cider-test-run-loaded-tests
+        "ctf" 'cider-test-run-ns-tests-with-filters
+        "ctF" 'my/cider-test-prompt-for-filters
         "ctn" 'cider-test-run-ns-tests
         "ctp" 'cider-test-run-project-tests
+        "ctr" 'cider-test-show-report
         "cu" 'cider-undef
         "cv" 'cider-version)
       ;; Clearing the whole REPL is a useful feature since the REPL gets slower
