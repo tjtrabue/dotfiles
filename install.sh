@@ -127,7 +127,7 @@ EOF
     while ! echo "${response}" | grep -q "[YyNn]"; do
       echoe "Would you like to remove it and continue with the installation?" \
         "[y/n]"
-      read -sn1 response
+      read -r response
     done
     echo "${response}" | grep -q "[Nn]" && echoe "Exiting." && exit 1
   else

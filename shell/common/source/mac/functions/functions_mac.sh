@@ -22,18 +22,24 @@ install_homebrew() {
   fi
 }
 
+# Ensure that homebrew knows where to find recipes.
+tap_brew_casks() {
+  log_info "Tapping homebrew casks"
+  brew tap d12frosted/emacs-plus
+}
+
 # Install all homebrew packages
 install_mac_packages() {
   local package
+
+  tap_brew_casks
 
   if [ ! -f "${BREW_PACKAGES_FILE}" ]; then
     err "No homebrew packages file found at: ${BREW_PACKAGES_FILE}"
     return 1
   fi
 
-  while read -r package || [ -n "${package}" ]; do
-    eval "brew install -- ${package}"
-  done <"${BREW_PACKAGES_FILE}"
+  xargs brew install <"${BREW_PACKAGES_FILE}"
 }
 
 # Install the most important GNU tools on macOS.

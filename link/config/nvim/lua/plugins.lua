@@ -150,14 +150,17 @@ packer.startup(
     }
 
     -- Better completion engine using Lua.
-    -- If using completion-nvim, this is not necessary.
-    --[[ use {
+    use {
       "hrsh7th/nvim-cmp",
       requires = {
         "hrsh7th/vim-vsnip",
-        "hrsh7th/cmp-buffer"
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-cmdline"
       }
-    } ]]
+    }
+
     use {"sakhnik/nvim-gdb"}
 
     -- Markdown {{{
@@ -224,9 +227,7 @@ packer.startup(
     -- Language Server Protocol {{{
     -- Base LSP configuration.
     use {
-      "neovim/nvim-lspconfig",
-      -- Better autocomplete backend for Neovim.
-      requires = {{"nvim-lua/completion-nvim"}}
+      "neovim/nvim-lspconfig"
     }
     -- Better defaults for nvim-lsp.
     use {
@@ -276,8 +277,7 @@ packer.startup(
     use {
       "nvim-treesitter/completion-treesitter",
       requires = {
-        {"nvim-treesitter/nvim-treesitter"},
-        {"haorenW1025/completion-nvim"}
+        {"nvim-treesitter/nvim-treesitter"}
       }
     }
     -- Extra LSP configuration.
@@ -312,10 +312,7 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
       ]]
     }
     -- Use VSCode-like pictograms in auto-completion.
-    use {
-      "onsails/lspkind-nvim",
-      config = [[require'lspkind'.init({ preset = "codeicons" })]]
-    }
+    use {"onsails/lspkind-nvim"}
     -- }}}
 
     -- Debugging

@@ -20,6 +20,7 @@ $HOME/.cargo/bin
 $HOME/.jenv/bin
 $HOME/.sdkman/candidates/*/current/bin
 $HOME/.pyenv/bin
+$HOME/.pyenv/shims
 $HOME/.rvm/bin
 $HOME/.roswell/bin
 $HOME/.asdf/bin

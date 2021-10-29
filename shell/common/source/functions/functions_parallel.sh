@@ -18,10 +18,10 @@ __source_parallel_env() {
       log_info "Exporting Bash environment for GNU Parallel"
       . "$(which env_parallel.bash)"
       ;;
-    "fish")
-      log_info "Exporting Fish environment for GNU Parallel"
-      . (which env_parallel.fish)
-      ;;
+#    "fish")
+#      log_info "Exporting Fish environment for GNU Parallel"
+#      . (which env_parallel.fish)
+#      ;;
     "zsh")
       log_info "Exporting Zsh environment for GNU Parallel"
       . "$(which env_parallel.zsh)"
