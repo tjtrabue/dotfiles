@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# Prepare a mac computer for development.
-prepare_mac() {
-  install_mac_developer_tools
-  install_homebrew
-  create_gnu_cli_tool_aliases_for_mac
-}
-
 # Mac operating systems need the user to install a suite of developer tools
 # before any useful software development can be performed.
 install_mac_developer_tools() {
@@ -22,7 +15,7 @@ install_homebrew() {
   fi
 }
 
-# Ensure that homebrew knows where to find recipes.
+# Ensure that homebrew knows where to find extra recipes.
 tap_brew_casks() {
   log_info "Tapping homebrew casks"
   brew tap d12frosted/emacs-plus

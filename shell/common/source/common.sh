@@ -30,7 +30,6 @@ prepare_shell_for_os() {
   case "${os}" in
     "Darwin")
       __src_standard_subdirs_under_dir "${COMMON_SOURCE}/mac"
-      prepare_mac
       ;;
   esac
 }
