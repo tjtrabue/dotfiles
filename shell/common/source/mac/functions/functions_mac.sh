@@ -76,6 +76,9 @@ create_gnu_cli_tool_aliases_for_mac() {
   local brewPrefix="$(brew --prefix)"
   local pathFile="${PATH_FILE:-${HOME}/.path}"
 
+  log_info "Adding GNU CLI tools to \$PATH"
+  log_debug "Updating locate database"
+
   # Update the locate database
   if [ -x "$(command -v gupdatedb)" ]; then
     sudo gupdatedb
@@ -83,6 +86,7 @@ create_gnu_cli_tool_aliases_for_mac() {
     sudo /usr/libexec/locate.updatedb
   fi
 
+  log_debug "Writing gnubin directories to PATH file"
   glocate --regex "^${brewPrefix}.*gnubin\$" >> "${pathFile}"
   spath
   rmduplines "${pathFile}"
