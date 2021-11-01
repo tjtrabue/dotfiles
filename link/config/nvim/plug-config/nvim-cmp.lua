@@ -1,11 +1,14 @@
+-- nvim-cmp is a super flexible and powerful completion plugin for Neovim.
+-- It even completes in the command entry area.
+
 local cmp = require "cmp"
 
--- VSCode-like pictograms
+-- Use VSCode-like pictograms
 local lspkind = require "lspkind"
 
 cmp.setup(
   {
-    -- Currently the plugin is broken. Wait for fix.
+    -- This plugin is currently broken. Wait for fix.
     --[[ formatting = {
       -- Use VSCode-like pictograms in completions
       format = lspkind.cmp_format({with_text = false, maxwidth = 50})
