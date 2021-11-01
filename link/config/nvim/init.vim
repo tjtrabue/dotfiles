@@ -96,6 +96,9 @@ call s:SourcePluginConfigFile('trouble.nvim.lua')
 " Define new textobjects with the help of treesitter and LSP.
 call s:SourcePluginConfigFile('treesitter-textobjs.lua')
 
+" Define treesitter configuration
+call s:SourcePluginConfigFile('nvim-treesitter.conf.lua')
+
 " These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')
 call s:SourcePluginConfigFile('nvim-web-devicons.lua')

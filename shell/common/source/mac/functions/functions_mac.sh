@@ -68,32 +68,25 @@ install_gnu_cli_tools_for_mac() {
 
 # macOS uses BSD versions of UNIX command line tools by default. The GNU
 # versions are much more powerful and up-to-date, so we want to use them
-# instead.
+# instead. The problem is, the GNU CLI tools are all prefixed with "g" on macOS.
+# The non-prefixed versions are available, but not used by default. Thus, we
+# need to add these non-prefixed versions of the tools to our PATH, and give
+# them priority over the BSD tools.
 create_gnu_cli_tool_aliases_for_mac() {
-  local brewPrefix="$(brew --prefix)/opt"
-  local pathToGnubin="libexec/gnubin"
+  local brewPrefix="$(brew --prefix)"
+  local pathFile="${PATH_FILE:-${HOME}/.path}"
 
-  __add_mac_tool_to_path "${brewPrefix}/binutils/bin"
-  __add_mac_tool_to_path "${brewPrefix}/coreutils/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/findutils/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/gawk/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/gnu-sed/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/gnu-getopt/bin"
-  __add_mac_tool_to_path "${brewPrefix}/gnu-indent/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/gnu-tar/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/gnu-which/${pathToGnubin}"
-  __add_mac_tool_to_path "${brewPrefix}/grep/${pathToGnubin}"
-}
-
-# Add a given tool's path to the $PATH environment variable if and only if it is
-# not present on $PATH already.
-__add_mac_tool_to_path() {
-  local pathToToolBinDir="${1}"
-  if ! echo "${PATH}" | grep -q "${pathToToolBinDir}" &&
-  ([ -d "${pathToToolBinDir}" ] || [ -h "${pathToToolBinDir}" ]); then
-    PATH="${pathToToolBinDir}:${PATH}"
-    export PATH
+  # Update the locate database
+  if [ -x "$(command -v gupdatedb)" ]; then
+    sudo gupdatedb
+  elif [ -x "/usr/libexec/locate.updatedb" ]; then
+    sudo /usr/libexec/locate.updatedb
   fi
+
+  glocate --regex "^${brewPrefix}.*gnubin\$" >> "${pathFile}"
+  spath
+  rmduplines "${pathFile}"
+  export_path
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

@@ -273,13 +273,6 @@ packer.startup(
         require("trouble").setup()
       end
     }
-    -- Treesitter-based completion for completion-nvim
-    use {
-      "nvim-treesitter/completion-treesitter",
-      requires = {
-        {"nvim-treesitter/nvim-treesitter"}
-      }
-    }
     -- Extra LSP configuration.
     use {"nvim-lua/lsp_extensions.nvim"}
     -- Integrates LSP features with statusline.
