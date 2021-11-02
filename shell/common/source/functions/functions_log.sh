@@ -4,6 +4,7 @@
 # The environment variable LOG_LEVEL controls the log output verbosity.
 # The table below details the possible values of LOG_LEVEL and their respective
 # output levels.
+#
 # ------------------------------
 # | Level Number | Ouput Level |
 # ------------------------------
@@ -38,6 +39,7 @@ log() {
 # }}}
 
 # Semantic logging functions {{{
+
 # Print error message to log output.
 err() {
   log "ERROR" "$*"
@@ -73,21 +75,21 @@ print_header() {
   local bookend="##"
 
   # Print the top layer of '#'s
-  printf '#%.0s' $(seq -s ' ' 1 "$termwidth")
+  printf '#%.0s' $(seq -s ' ' 1 "${termwidth}")
   printf '\n'
 
   # Print the message, padded by spaces and a '##' on both ends
   printf '%s%0.*s %s %0.*s%s\n' \
-    "$bookend" \
+    "${bookend}" \
     "$(((termwidth - 2 - ${#msg}) / 2 - ${#bookend}))" \
-    "$spacePadding" \
+    "${spacePadding}" \
     "$msg" \
     "$(((termwidth - 1 - ${#msg}) / 2 - ${#bookend}))" \
-    "$spacePadding" \
-    "$bookend"
+    "${spacePadding}" \
+    "${bookend}"
 
   # Print the bottom layer of '#'s
-  printf '#%.0s' $(seq -s ' ' 1 "$termwidth")
+  printf '#%.0s' $(seq -s ' ' 1 "${termwidth}")
   printf '\n'
 }
 # }}}
@@ -210,25 +212,25 @@ __get_log_type_with_color() {
   local logType="$1"
   local color=""
   case "$logType" in
-  "DEBUG")
-    color="${MAGENTA}"
-    ;;
-  "INFO")
-    color="${GREEN}"
-    ;;
-  "WARNING")
-    color="${YELLOW}"
-    ;;
-  "ERROR")
-    color="${RED}"
-    ;;
-  "SUCCESS")
-    color="${GREEN}"
-    ;;
-  *)
-    echo "ERROR: Unknown log type ${logType}" 1>&2
-    return 1
-    ;;
+    "DEBUG")
+      color="${MAGENTA}"
+      ;;
+    "INFO")
+      color="${GREEN}"
+      ;;
+    "WARNING")
+      color="${YELLOW}"
+      ;;
+    "ERROR")
+      color="${RED}"
+      ;;
+    "SUCCESS")
+      color="${GREEN}"
+      ;;
+    *)
+      echo "ERROR: Unknown log type ${logType}" 1>&2
+      return 1
+      ;;
   esac
   echo "${color}${logType}${NC}"
 }
@@ -242,10 +244,10 @@ __log_if_level_acceptable() {
   local logToFile="${LOG_TO_FILE:-""}"
 
   if ([ "${logType}" = "ERROR" ] && [ "${logLevel}" -ge 1 ]) ||
-    ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) ||
-    ([ "${logType}" = "INFO" ] && [ "${logLevel}" -ge 3 ]) ||
-    ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]) ||
-    ([ "${logType}" = "DEBUG" ] && [ "${logLevel}" -ge 4 ]); then
+  ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) ||
+  ([ "${logType}" = "INFO" ] && [ "${logLevel}" -ge 3 ]) ||
+  ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]) ||
+  ([ "${logType}" = "DEBUG" ] && [ "${logLevel}" -ge 4 ]); then
     echoe "${outputColor}"
     if [ -f "${logToFile}" ]; then
       echoe "${output}" >>"${logToFile}"

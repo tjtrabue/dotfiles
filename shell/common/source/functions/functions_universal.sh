@@ -88,9 +88,13 @@ mkbin() {
   chmod 755 "$executableName"
 }
 
-# Return the user's current shell name, such as "bash" or "zsh".
+# Return parent shell interpreter currently running, such as "bash", "zsh",
+# or even "python" or "php".
 currentshell() {
-  basename "${SHELL}"
+  local parentInterpreter="$(ps h -o args='' -p "$$")"
+  # Shave off leading '-' character. We don't want this function to have any
+  # external dependencies on GNU tools, if possible.
+  echo "${parentInterpreter#-}"
 }
 
 # Run a command over multiple lines of input from stdin or from a file
