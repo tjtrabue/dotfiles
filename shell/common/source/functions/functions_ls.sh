@@ -145,11 +145,11 @@ __get_ls_colorflag() {
 
 # Export LS_COLORS with the appropriate color settings for the current shell.
 src_dircolors_for_profile() {
-  local defaultDircolorsFile="tomorrow-night-eighties.dircolors"
+  local defaultDircolorsFile="default.dircolors"
   local dircolorsDir="${DIRCOLORS_DIR:-${DOTFILES_HOME}/link/config/dircolors}"
   local dircolorsFile="${DIRCOLORS_FILE:-${dircolorsDir}/${defaultDircolorsFile}}"
 
-  if [ -f "$dircolorsFile" ]; then
+  if [ -f "${dircolorsFile}" ] || [ -h "${dircolorsFile}" ]; then
     eval "$(dircolors "$dircolorsFile")"
   else
     warn "No dircolors database file found at: ${BLUE}${dircolorsFile}${NC}"
