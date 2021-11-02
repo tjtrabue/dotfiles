@@ -143,17 +143,30 @@ __get_ls_colorflag() {
   echo "${colorflag}"
 }
 
+# Installs a custom ls colors database from the LS_COLORS Git repository.
+install_custom_ls_colors() {
+  local installDir="/tmp/LS_COLORS"
+  local lscolorsScript="${HOME}/.local/share/lscolors.sh"
+  local tarballUrl="https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master"
+
+  log_info "Installing custom LS_COLORS theme at:"\
+    "${GREEN}${lscolorsScript}${NC}"
+
+  mkdir -p "${installDir}"
+  curl -L "${tarballUrl}" | tar xzf - --directory="${installDir}" --strip=1
+  ( cd "${installDir}" && sh install.sh )
+}
+
 # Export LS_COLORS with the appropriate color settings for the current shell.
 src_dircolors_for_profile() {
-  local defaultDircolorsFile="default.dircolors"
-  local dircolorsDir="${DIRCOLORS_DIR:-${DOTFILES_HOME}/link/config/dircolors}"
-  local dircolorsFile="${DIRCOLORS_FILE:-${dircolorsDir}/${defaultDircolorsFile}}"
+  local lscolorsScript="${HOME}/.local/share/lscolors.sh"
 
-  if [ -f "${dircolorsFile}" ] || [ -h "${dircolorsFile}" ]; then
-    eval "$(dircolors "$dircolorsFile")"
-  else
-    warn "No dircolors database file found at: ${BLUE}${dircolorsFile}${NC}"
+  if [ ! -f "${lscolorsScript}" ]; then
+    install_custom_ls_colors
   fi
+
+  log_info "Activating custom LS_COLORS for 'ls' output"
+  . "${lscolorsScript}"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
