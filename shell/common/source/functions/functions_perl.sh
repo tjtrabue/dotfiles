@@ -38,7 +38,7 @@ install_perl_packages() {
   fi
 
   log_info "Installing Perl global packages"
-  while read -r package || [ -n "${package}" ]; do
+  while IFS="" read -r package || [ -n "${package}" ]; do
     cpanm -i --force "${package}"
   done <"${PERL_PACKAGES_FILE}"
 

@@ -5,7 +5,7 @@ install_rust_packages() {
   local package
 
   log_info "Installing Rust Packages"
-  while read -r package || [ -n "${package}" ]; do
+  while IFS="" read -r package || [ -n "${package}" ]; do
     cargo install "${package}"
   done <"${packageFile}"
 }

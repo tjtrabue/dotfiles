@@ -20,7 +20,7 @@ install_packages_from_file_with_tool() {
   fi
 
   log_info "Installing packages with command: ${GREEN}${installCmd}${NC}"
-  while read -r package || [ -n "${package}" ]; do
+  while IFS="" read -r package || [ -n "${package}" ]; do
     # Ignore commented lines.
     if echo "${package}" | grep -v '^#.*' >>/dev/null 2>&1; then
       log_info "Installing package: ${BLUE}${package}${NC}"

@@ -94,9 +94,9 @@ install_lua_packages() {
   local package
 
   log_info "Installing Lua packages from standard respositories"
-  while read -r package || [ -n "$package" ]; do
+  while IFS="" read -r package || [ -n "$package" ]; do
     install_lua_package_for_all_versions "${package}"
-  done <"$LUA_PACKAGES_FILE"
+  done <"${LUA_PACKAGES_FILE}"
 
   log_info "Installing special lua packages"
   install_lua_language_server

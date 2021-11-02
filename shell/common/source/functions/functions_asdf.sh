@@ -42,7 +42,7 @@ add_asdf_plugins() {
   fi
 
   log_info "Adding asdf plugins..."
-  while read -r plugin || [ -n "${plugin}" ]; do
+  while IFS="" read -r plugin || [ -n "${plugin}" ]; do
     log_info "Adding asdf plugin: ${plugin}"
     asdf plugin add "${plugin}"
   done <"${ASDF_PLUGINS_FILE}"

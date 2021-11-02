@@ -13,48 +13,6 @@ cd() {
   __cd "${*}"
 }
 
-# Create an alias for a directory so that a user may easily navigate into it.
-#
-# USAGE:
-#   diralias <alias name> [<target directory>]
-diralias() {
-  local dirAlias="$1"
-  shift
-  local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
-  local existingAliasValue
-  local lastByteOfFile
-  local stringToWrite
-  local targetDir
-
-  if [ -z "$dirAlias" ]; then
-    err "No alias name given to ${FUNCNAME[0]}"
-    return 1
-  fi
-
-  targetDir="${1:-$(pwd)}"
-
-  existingAliasValue="$(
-    grep "${dirAlias}=" <"$dirAliasFile" |
-    sed 's/^export\s*//' |
-    sed 's/^.*=//' |
-    sed 's/"//g'
-  )"
-
-  # If the alias already exists, get rid of the old one before adding the new
-  #one.
-  if [ -n "${existingAliasValue}" ]; then
-    sed -i "/^${dirAlias}=/d" "${dirAliasFile}"
-  fi
-
-  # The diralias line to write to the DIR_ALIAS_FILE.
-  stringToWrite="${dirAlias}=\"${targetDir}\""
-
-  # Remove trailing newline from diralias file if it has one.
-  perl -pi -e 'chomp if eof' "${dirAliasFile}"
-
-  printf "\n%s\n" "${stringToWrite}" >>"${dirAliasFile}"
-}
-
 # Wrapper function for the `cd` builtin that tracks directory history, and
 # understands a few new sigils.
 __cd() {
@@ -215,7 +173,7 @@ __get_directory_for_alias() {
   local line
   local currentAlias
 
-  while read -r line || [ -n "${line}" ]; do
+  while IFS="" read -r line || [ -n "${line}" ]; do
     # Ignore empty or commented lines.
     if echo "${line}" | grep -E -q -e "^#" -e "^$"; then
       continue

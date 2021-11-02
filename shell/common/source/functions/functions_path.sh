@@ -178,7 +178,7 @@ __evaluate_paths() {
   # The grep command is to remove empty and commented lines.
   # The awk command at the end removes cuplicates from the listing.
 
-  while read -r binPath || [ -n "${binPath}" ]; do
+  while IFS="" read -r binPath || [ -n "${binPath}" ]; do
     # Make sure only to output paths from the file that can be evaluated.
     evaluatedPath="$(eval "printf '%s\n' ${binPath}")"
     [ -n "${evaluatedPath}" ] && printf "%s\n" "${evaluatedPath}"
