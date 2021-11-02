@@ -22,8 +22,15 @@ autocmd BufWritePre * :%s/\s+$//e
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
 
+" Add syntax highlighting for additional filetypes {{{
+
+" Interpret the ~/.extra file as shell syntax
+autocmd BufNewFile,BufRead .extra set filetype=sh syntax=sh
+
 " Interpret config files for IDE Vim plugins as Vim syntax
 autocmd BufNewFile,BufRead .vrapperrc set filetype=vim syntax=vim
+autocmd BufNewFile,BufRead .ideavimrc set filetype=vim syntax=vim
+" }}}
 
 " Highlight yanked text {{{
 augroup highlight_yank
