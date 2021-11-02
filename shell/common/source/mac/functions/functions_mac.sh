@@ -32,7 +32,12 @@ install_mac_packages() {
     return 1
   fi
 
-  xargs brew install <"${BREW_PACKAGES_FILE}"
+  if [ -x "$(command -v gxargs)" ]; then
+    # Use GNU xargs if possible
+    gxargs brew install <"${BREW_PACKAGES_FILE}"
+  else
+    xargs brew install <"${BREW_PACKAGES_FILE}"
+  fi
 }
 
 # Install the most important GNU tools on macOS.
