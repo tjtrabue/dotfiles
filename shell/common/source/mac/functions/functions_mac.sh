@@ -91,4 +91,39 @@ create_gnu_cli_tool_aliases_for_mac() {
   export_path
 }
 
+# Clone and import iTerm color schemes.
+install_iterm_themes() {
+  local repoUrl="https://github.com/mbadolato/iTerm2-Color-Schemes.git"
+  local installDir="/tmp/$(basename "${repoUrl%.git}")"
+  local importScript="${installDir}/tools/import-scheme.sh"
+
+  log_info "Installing iTerm color schemes"
+
+  if isgitrepo "${installDir}"; then
+    log_info "Updating existing iTerm color schemes repository"
+    git -C "${installDir}" reset --hard
+    git -C "${installDir}" pull
+  else
+    git clone "${repoUrl}" "${installDir}"
+  fi
+
+  if ! isgitrepo "${installDir}"; then
+    err "iTerm color schemes repo was not cloned correctly"
+    return 1
+  fi
+
+  # Make sure script is executable
+  chmod 755 "${importScript}"
+
+  # Import all color schemes
+  "${importScript}" "${installDir}/schemes"/* &&
+  cat <<EOF
+iTerm color schemes successfully imported! Restart iTerm now, then check:
+
+  Preferences > Profiles > Colors > Color Presets...
+
+in order to setup your profile with the color scheme of your choice.
+EOF
+}
+
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
