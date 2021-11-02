@@ -113,25 +113,35 @@ backup_existing_installation() {
   fi
 }
 
-# Figure out what to do if an existing dotfiles installation is found.
+# Check for an existing dotfiles installation at $DOTFILES_HOME.
 check_existing_installation() {
   log_info "Checking for existing dotfiles installation"
+  test -h "${DOTFILES_HOME}" || test -d "${DOTFILES_HOME}"
+}
+
+# Figure out what to do if an existing dotfiles installation is found.
+remove_existing_installation() {
   local response=""
 
-  if [ -d "${DOTFILES_HOME}" ]; then
-    warn "Existing dotfiles installation found at ${DOTFILES_HOME}!"
-    cat <<EOF
+  cat <<EOF
 An existing dotfiles installation was found at ${DOTFILES_HOME}.
 It must be removed before this installation can progress.
 EOF
-    while ! echo "${response}" | grep -q "[YyNn]"; do
-      echoe "Would you like to remove it and continue with the installation?" \
-        "[y/n]"
-      read -r response
-    done
-    echo "${response}" | grep -q "[Nn]" && echoe "Exiting." && exit 1
+
+  while ! echo "${response}" | grep -q '^[YyNn]$'; do
+    echoe "Remove it and continue with the installation? [y/n]"
+    IFS="" read -r response
+  done
+
+  if echo "${response}" | grep -q '^[Nn]$'; then
+    echoe "Exiting dotfiles installation."
+    exit 1
+  elif [ -h "${DOTFILES_HOME}" ]; then
+    log_info "Removing old dotfiles symlink"
+    rm -f "${DOTFILES_HOME}"
   else
-    log_info "No existing dotfiles installation found."
+    log_info "Removing old dotfiles installation"
+    rm -rf "${DOTFILES_HOME}"
   fi
 }
 
@@ -139,7 +149,7 @@ EOF
 setup() {
   log_info "Setting up..."
   if ! ${FORCE_INSTALL}; then
-    check_existing_installation
+    check_existing_installation && remove_existing_installation
   fi
   backup_existing_installation
   ensure_dirs_present
