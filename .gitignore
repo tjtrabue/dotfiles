@@ -206,6 +206,8 @@ shell/zsh/zdotdir/git-completion.bash
 shell/zsh/zdotdir/_git
 # History file
 shell/zsh/zdotdir/.zsh_history
+# Saved sessions
+shell/zsh/zdotdir/.zsh_sessions
 # }}}
 
 # FileZilla {{{
