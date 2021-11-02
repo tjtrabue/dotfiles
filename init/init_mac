@@ -42,8 +42,12 @@ main() {
   # Make sure the GNU CLI tools are used instead of the terrible BSD versions
   # which are used by default.
   create_gnu_cli_tool_aliases_for_mac
+  # Make sure the GNU CLI tools are available with standard names
+  src
   # Install remaining macOS packages.
   install_mac_packages
+  # Install iTerm color schemes
+  install_iterm_themes
   succ "Done!"
 }
 # }}}
