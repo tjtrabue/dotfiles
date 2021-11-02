@@ -2,14 +2,37 @@
 
 # Activate broot to help navigate directories easily.
 src_broot_for_profile() {
-  local brootHome="${BROOT_HOME:-${HOME}/.config/broot}"
-  local brootLauncher="${brootHome}/launcher/bash/br"
+  # Broot works for bash, zsh, and fish. Possibly more. See `man broot' for more
+  # details.
+  local currentShell="$(currentshell)"
 
-  if [ -x "$(command -v broot)" ] && [ -f "${brootLauncher}" ]; then
-    log_info "Activating broot directory navigation tool."
-    . "${brootLauncher}"
-  else
-    warn "broot not installed correctly. View online documentation for help."
+  # Error conditions
+  __check_broot_installed || return 1
+  __check_broot_supports_shell "${currentShell}" || return 2
+
+  log_info "Activating broot directory navigation tool."
+  . <(broot --print-shell-function "${currentShell}")
+}
+
+__check_broot_installed() {
+  # Error conditions
+  if [ ! -x "$(command -v broot)" ]; then
+    err "broot not installed. View online documentation for help."
+    return 1
+  fi
+}
+
+__check_broot_supports_shell() {
+  local currentShell="${1}"
+
+  if [ -z "${currentShell}" ]; then
+    currentShell="$(currentshell)"
+  fi
+
+  if ! broot --print-shell-function "${currentShell}" >> /dev/null 2>&1; then
+    err "broot does not appear to support shell: ${BLUE}${currentShell}${NC}." \
+      "See 'man broot' for more details."
+    return 1
   fi
 }
 
