@@ -10,7 +10,7 @@ src_broot_for_profile() {
   __check_broot_installed || return 1
   __check_broot_supports_shell "${currentShell}" || return 2
 
-  log_info "Activating broot directory navigation tool."
+  log_info "Activating 'br' function for the broot directory navigation tool."
   . <(broot --print-shell-function "${currentShell}")
 }
 
