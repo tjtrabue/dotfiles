@@ -151,6 +151,8 @@ src_dircolors_for_profile() {
 
   if [ -f "$dircolorsFile" ]; then
     eval "$(dircolors "$dircolorsFile")"
+  else
+    warn "No dircolors database file found at: ${BLUE}${dircolorsFile}${NC}"
   fi
 }
 
