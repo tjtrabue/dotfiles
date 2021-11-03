@@ -38,6 +38,9 @@ install_mac_packages() {
   else
     xargs brew install <"${BREW_PACKAGES_FILE}"
   fi
+
+  # This one is a little harder to install, so I made it its own function.
+  __install_emacs_plus_for_macos
 }
 
 # Install the most important GNU tools on macOS.
@@ -155,6 +158,28 @@ alias_homebrew_gcc_executables() {
   else
     warn "Could not find 'g++' executable under ${gccBaseDir}"
   fi
+}
+
+# This is a full-featured Emacs installation, which can include many features,
+# such as native compilation (gccemacs).
+__install_emacs_plus_for_macos() {
+  local emacsPlusVersion="29"
+  local emacsPlusPackageName="emacs-plus@${emacsPlusVersion}"
+  local brewInstallDir="$(brew --prefix)/opt"
+  local emacsPlusInstallDir="${brewInstallDir}/${emacsPlusPackageName}"
+
+  log_info "Installing emacs-plus package"
+
+  tap_brew_casks
+
+  brew install "${emacsPlusPackageName}" \
+    --with-dbus \
+    --with-debug \
+    --with-mailutils \
+    --with-modern-purple-flat-icon \
+    --with-native-comp \
+    --with-xwidgets &&
+  ln -s "${emacsPlusInstallDir}/Emacs.app" "/Applications/"
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

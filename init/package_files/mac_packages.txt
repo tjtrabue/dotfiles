@@ -8,7 +8,6 @@ coreutils
 diffutils
 docker
 ed
-emacs-plus@29 --with-xwidgets --with-mailutils --with-dbus --with-native-comp --with-debug --with-modern-purple-flat-icon
 exa
 exiftool
 fd
