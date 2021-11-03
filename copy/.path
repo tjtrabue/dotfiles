@@ -8,6 +8,7 @@
 /usr/bin/vendor_perl
 /usr/sbin
 /usr/local/bin
+/usr/local/sbin
 $HOME/bin
 $HOME/.local/bin
 $HOME/.dotfiles/bin

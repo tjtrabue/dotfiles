@@ -17,8 +17,8 @@ export HOMEBREW_CXX="clang++"
 # version of Clang that you use is actually the one that comes with Xcode.
 # If you want to use the version of Clang installed via Homebrew, you need to
 # uncomment the following two lines:
-# export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
-# export CPPFLAGS="-I/usr/local/opt/llvm/include"
+export LDFLAGS="${LDFLAGS} -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+export CPPFLAGS="${CPPFLAGS} -I/usr/local/opt/llvm/include"
 
 # }}}
 # }}}
