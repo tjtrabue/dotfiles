@@ -40,9 +40,11 @@ __backup_user_vars_file() {
 # Inject extra environment variables into the ~/.vars file, if prudent.
 __add_extra_os_vars() {
   local userVars="${1:-${HOME}/.vars}"
-  local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
+  local os="$(getdistro)"
   local dotCopy="${DOTFILES_COPY:-${DOTFILES_HOME}/copy}"
-  local extraVarsLinuxDir="${dotCopy}/var_files/linux"
+  local extraVarsDir="${dotCopy}/var_files"
+  local extraVarsLinuxDir="${extraVarsDir}/linux"
+  local extraVarsMacDir="${extraVarsDir}/mac"
   local markerString="#<additional-vars-insert>"
   local extraVarsFile="NONE"
 
@@ -53,7 +55,10 @@ __add_extra_os_vars() {
       log_info "Injecting Arch Linux vars into ${userVars}"
       extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
       ;;
-
+    "Darwin")
+      log_info "Injecting macOS vars into ${userVars}"
+      extraVarsFile="${extraVarsMacDir}/mac_vars.bash"
+      ;;
     *)
       log_info "No extra vars to add for OS: ${os}"
       ;;

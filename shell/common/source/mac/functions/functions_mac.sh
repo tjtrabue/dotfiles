@@ -141,19 +141,19 @@ alias_homebrew_gcc_executables() {
     -regex '.*/g\+\+-[0-9]\(\.?[0-9]\)+$')"
 
   if [ -x "${gccExec}" ]; then
-    log_debug "Aliasing 'gcc' to: ${GREEN}${gccExec}${NC}"
+    log_debug "Aliasing 'gcc' and 'cc' to: ${GREEN}${gccExec}${NC}"
     alias gcc="${gccExec}"
     alias cc="${gccExec}"
   else
-    warn "Could not find gcc executable under ${gccBaseDir}"
+    warn "Could not find 'gcc' executable under ${gccBaseDir}"
   fi
 
   if [ -x "${gppExec}" ]; then
-    log_debug "Aliasing 'g++' to: ${GREEN}${gppExec}${NC}"
+    log_debug "Aliasing 'g++' and 'c++' to: ${GREEN}${gppExec}${NC}"
     alias g++="${gppExec}"
     alias c++="${gppExec}"
   else
-    warn "Could not find g++ executable under ${gccBaseDir}"
+    warn "Could not find 'g++' executable under ${gccBaseDir}"
   fi
 }
 
