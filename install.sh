@@ -84,7 +84,6 @@ prepare_for_macos() {
   # GNU versions, not the BSD versions which come standard on macOS.
   create_gnu_cli_tool_aliases_for_mac
 }
-
 # }}}
 
 # Setup/Cleanup {{{
