@@ -78,10 +78,6 @@ setopt prompt_subst
 . "${COMMON_SHELL_SOURCE}/common.sh"
 # }}}
 
-# Prepare system for various operating systems, such as macOS, which does not
-# have access to GNU CLI utilities by default.
-prepare_shell_for_os
-
 # Activate custom aliases/functions
 src_all
 

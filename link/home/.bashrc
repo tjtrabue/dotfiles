@@ -27,10 +27,6 @@ export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/grep/libexec/gnubin:/usr/loc
 # Pull in common shell aliases/functions as soon as possible.
 . "${DOTFILES_COMMON}/source/common.sh"
 
-# Prepare system for various operating systems, such as macOS, which does not
-# have access to GNU CLI utilities by default.
-prepare_shell_for_os
-
 # Activate custom aliases/functions
 src_all
 

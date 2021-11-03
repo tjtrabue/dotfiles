@@ -20,20 +20,6 @@ LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 . "${COMMON_SOURCE}/functions/functions_os.sh"
 # }}}
 
-# Make sure preparatory steps are taken before running the main profile sourcing
-# functions. This should be run before the src() or src_all() functions since it
-# takes care of things like setting $PATH correctly on some systems that do not
-# automatically have access to required basic resources like the GNU CLI tools.
-prepare_shell_for_os() {
-  local os="$(getdistro)"
-
-  case "${os}" in
-    "Darwin")
-      __src_standard_subdirs_under_dir "${COMMON_SOURCE}/mac"
-      ;;
-  esac
-}
-
 # Source additional files {{{
 
 # Source files that were transferred from the dotfiles repo, but not linked
@@ -80,6 +66,7 @@ __src_os() {
 
     "Darwin")
       __src_standard_subdirs_under_dir "${macSrcDir}"
+      alias_homebrew_gcc_executables
       ;;
 
     *)

@@ -85,7 +85,7 @@ create_gnu_cli_tool_aliases_for_mac() {
   fi
 
   log_debug "Writing gnubin directories to PATH file"
-  glocate --regex "^${brewPrefix}.*gnubin\$" >> "${pathFile}"
+  glocate --regex "^${brewPrefix}.*gnubin\$" >>"${pathFile}"
   spath
   rmduplines "${pathFile}"
   export_path
@@ -124,6 +124,37 @@ iTerm color schemes successfully imported! Restart iTerm now, then check:
 
 in order to setup your profile with the color scheme of your choice.
 EOF
+}
+
+# FRIG! macOS actually has the nerve to make their 'gcc' executable in /usr/bin
+# a pointer script to Clang! I am not making this up. So, what are we then to do
+# if we, ya know, want to use 'gcc' when we type 'gcc' in the terminal? I'll
+# tell you what we do. Aliases! Homebrew installs 'gcc-<version specifier>'
+# instead of just 'gcc' under /usr/local/bin. I don't know why, but I guess
+# that's just what it does. Same with 'g++' for compiling C++ projects. This
+# function creates those aliases.
+alias_homebrew_gcc_executables() {
+  local gccBaseDir="/usr/local/bin"
+  local gccExec="$(find "${gccBaseDir}" -maxdepth 1 -mindepth 1 \
+    -regex '.*/gcc-[0-9]\(\.?[0-9]\)+$')"
+  local gppExec="$(find "${gccBaseDir}" -maxdepth 1 -mindepth 1 \
+    -regex '.*/g\+\+-[0-9]\(\.?[0-9]\)+$')"
+
+  if [ -x "${gccExec}" ]; then
+    log_debug "Aliasing 'gcc' to: ${GREEN}${gccExec}${NC}"
+    alias gcc="${gccExec}"
+    alias cc="${gccExec}"
+  else
+    warn "Could not find gcc executable under ${gccBaseDir}"
+  fi
+
+  if [ -x "${gppExec}" ]; then
+    log_debug "Aliasing 'g++' to: ${GREEN}${gppExec}${NC}"
+    alias g++="${gppExec}"
+    alias c++="${gppExec}"
+  else
+    warn "Could not find g++ executable under ${gccBaseDir}"
+  fi
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

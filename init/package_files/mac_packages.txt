@@ -53,6 +53,7 @@ roswell
 screen
 sd
 shellcheck
+shfmt
 streamlink
 texlab
 the_silver_searcher
