@@ -490,7 +490,18 @@ features of Vim at times.
          ;; We want to be able to select a date with RET.
          "RET" 'org-calendar-select
          "<return>" 'org-calendar-select)
+       :init
+       ;; TEMP: This will go away once evil-org adds support for new method of
+       ;; binding functions that take a 0 prefix. evil-redirect-digit-argument was a
+       ;; very clunky way of achieving such bindings. evil has since been updated
+       ;; with a better method.
+       (fset 'evil-redirect-digit-argument 'ignore)
        :config
+       ;; TEMP: These two expressions will go away along with the TEMP block in the
+       ;; :init stanza.
+       (add-to-list 'evil-digit-bound-motions 'evil-org-beginning-of-line)
+       (evil-define-key 'motion 'evil-org-mode
+         (kbd "0") 'evil-org-beginning-of-line)
        (require 'evil-org-agenda)
        (evil-org-agenda-set-keys)
        ;; Add key themes for evil org mode integration.
