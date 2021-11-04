@@ -13,7 +13,5 @@ convoluted configuration.
   #+begin_src emacs-lisp
     (use-package esup
       :disabled
-      ;; To use MELPA Stable use ":pin mepla-stable",
-      :pin melpa
       :commands esup)
   #+end_src

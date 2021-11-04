@@ -643,34 +643,3 @@ more-helpful local prompt."
                               (eshell/alias "up" "eshell-up $1")
                               (eshell/alias "pk" "eshell-up-peek $1"))))
    #+end_src
-
-** exec-path-from-shell
-   If I had to pick a single custom plugin to install alongside =eshell=, this
-   would be the one. It's that important. This plugin puts Emacs' own =$PATH=
-   environment variable in sync with the user's =$PATH=, making sure that all
-   external executables available to the user are also within Emacs' reach.
-
-   #+begin_src emacs-lisp
-
-     ;; When launched as a graphical application, Emacs typically inherits a default
-     ;; PATH variable, not the user's.  This can very annoying when it comes to
-     ;; launching external applications from within Emacs.  This plugin solves the
-     ;; problem by manually importing the user's PATH variable and using it as the
-     ;; value of Emacs exec-path variable.
-     (use-package exec-path-from-shell
-       :demand t
-       :config
-       ;; Initialize the plugin, but only for macOS or Linux.
-       (when (memq window-system '(mac ns x))
-         (exec-path-from-shell-initialize)))
-   #+end_src
-
-** fasd
-   This is Emacs =eshell= integration with the =fasd= command line productivity package.
-   It's an opinionated way to quickly operate on files, directories, etc. I
-   refer you to the man pages for further details, as there are quite a few.
-
-   #+begin_src emacs-lisp
-     ;; Emacs eshell integration with the fasd command line productivity booster.
-     (use-package fasd)
-   #+end_src
