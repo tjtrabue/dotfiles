@@ -27,30 +27,36 @@ atp() {
 # one exists.
 # Thus, `shortpath "/home/myname/mydir"` -> "${HOME}/mydir"
 shortpath() {
-  local dir_alias=""
-  local best_var=""
-  local to_replace=""
-  local best_to_replace=""
-  local input_path="$1"
+  local inputPath="$1"
+  local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
+  local bestVar=""
+  local bestToReplace=""
+  local var
+  local varName
+  local varValue
+  local evaluatedPath=""
+  local shortPath=""
 
-  grep -E "^\s*export" "${DIR_ALIAS_FILE}" | sed 's:^ *export *::' | sed 's:=.*::' | {
-    while read -rs var; do
-      dir_alias="$(env | grep -E "^${var}\b")"
-      if [ -n "${dir_alias}" ]; then
-        to_replace="$(echo "${dir_alias}" | sed -e "s:${var}=::" -e 's:"::g')"
-        if [[ "$input_path" =~ ^"${to_replace%/}/".* ]]; then
-          if [ "${#to_replace}" -gt "${#best_to_replace}" ]; then
-            best_to_replace="${to_replace}"
-            best_var="${var}"
-          fi
-        fi
-      fi
-    done
-    if [ -n "${best_to_replace}" ]; then
-      input_path=${input_path//${best_to_replace}/\$${best_var}}
+  while IFS="" read -r var || [ -n "${var}" ]; do
+    if echo "${var}" | grep -q "^\s*#"; then
+      # Ignore commented lines
+      continue
     fi
-    echo "${input_path}"
-  }
+    varName=${var%=*}
+    varValue=${var#*=}
+    evaluatedPath="$(eval "echo \$${varName}" 2>/dev/null)"
+    if [ -d "${evaluatedPath}" ]; then
+      log_debug "\$${varName} is a directory variable"
+      if echo "${inputPath}" | grep -q "^${evaluatedPath}" &&
+      [ "${#varValue}" -ge "${#bestToReplace}" ]; then
+        bestToReplace="${evaluatedPath}"
+        bestVar="${varName}"
+        log_debug "New best to replace: ${varName}=${bestToReplace}"
+        shortPath="${inputPath/${bestToReplace}/\${${bestVar}\}}"
+      fi
+    fi
+  done <"${dirAliasFile}"
+  echo "${shortPath}"
 }
 
 # Read a path file's contents into a path variable, then export the path

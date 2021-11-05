@@ -15,7 +15,7 @@ if [ -z "${SLIM_PROFILE}" ] && [ -d "${DESIRED_ZDOTDIR}" ]; then
   export ZDOTDIR="${DESIRED_ZDOTDIR}"
 else
   # Make sure ZDOTDIR is unset if we want a slim profile.
-  unset ZDOTDIR
+  export ZDOTDIR=""
 fi
 unset DESIRED_ZDOTDIR
 

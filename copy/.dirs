@@ -3,7 +3,9 @@
 # Directory alias file.
 # Aliases are added to this file via the "diralias" command.
 dot="${HOME}/.dotfiles"
+conf="${HOME}/.config"
 emd="${HOME}/.emacs.d"
+nv="${conf}/nvim"
 ws="${HOME}/workspace"
 prac="${HOME}/practice"
 apps="${HOME}/applications"
