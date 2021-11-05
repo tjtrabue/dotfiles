@@ -21,4 +21,9 @@ export LDFLAGS="${LDFLAGS} -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/l
 export CPPFLAGS="${CPPFLAGS} -I/usr/local/opt/llvm/include"
 
 # }}}
+
+# Emacs Plus {{{
+# Which version of emacs-plus you wish to install
+export EMACS_PLUS_VERSION="29"
+# }}}
 # }}}

@@ -40,7 +40,7 @@ install_mac_packages() {
   fi
 
   # This one is a little harder to install, so I made it its own function.
-  __install_emacs_plus_for_macos
+  install_emacs_plus_for_macos
 }
 
 # Install the most important GNU tools on macOS.
@@ -162,11 +162,20 @@ alias_homebrew_gcc_executables() {
 
 # This is a full-featured Emacs installation, which can include many features,
 # such as native compilation (gccemacs).
-__install_emacs_plus_for_macos() {
-  local emacsPlusVersion="29"
+install_emacs_plus_for_macos() {
+  local emacsPlusVersion="${EMACS_PLUS_VERSION}"
   local emacsPlusPackageName="emacs-plus@${emacsPlusVersion}"
   local brewInstallDir="$(brew --prefix)/opt"
   local emacsPlusInstallDir="${brewInstallDir}/${emacsPlusPackageName}"
+
+  # Make sure the emacs-plus version environment variable has been set to an
+  # appropriate value.
+  case "${emacsPlusVersion}" in
+    '' | *[!0-9]*)
+      err "EMACS_PLUS_VERSION environment variable not set to a number."
+      return 1
+      ;;
+  esac
 
   log_info "Installing emacs-plus package"
 
@@ -180,6 +189,27 @@ __install_emacs_plus_for_macos() {
     --with-native-comp \
     --with-xwidgets &&
   ln -s "${emacsPlusInstallDir}/Emacs.app" "/Applications/"
+}
+
+# Delete and re-compile emacs-plus from source.
+upgrade_emacs_plus_for_macos() {
+  local response
+  while ! echo "${response}" | grep -q "[YyNn]"; do
+    cat <<EOF
+WARNING: Upgrading emacs-plus involves deleting your current installation,
+cloning the updated repository, and recompiling emacs-plus from source. This is
+a risky and error-prone process. You should backup any Emacs files you are
+currently working on before proceeding. Do you wish to continue? [y/n]
+EOF
+    read -r response
+  done
+
+  if echo "${response}" | grep -q "[Nn]"; then
+    return 0
+  fi
+
+  brew uninstall emacs-plus
+  install_emacs_plus_for_macos
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
