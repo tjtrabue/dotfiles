@@ -23,9 +23,14 @@ atp() {
   spath "${pathFile}"
 }
 
-# Prefix a given file path with the name of the longest existing alias, if
-# one exists.
-# Thus, `shortpath "/home/myname/mydir"` -> "${HOME}/mydir"
+# Replace a leading portion of a given file path with the diralias corresponding
+# to the longest possible prefix. For instance, if ~/.dirs contains:
+#
+#   dot="/home/me/.dotfiles"
+#
+# then
+#
+#   shortpath "/home/me/.dotfiles/link/emacs" -> ${dot}/link/emacs
 shortpath() {
   local inputPath="$1"
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
@@ -35,20 +40,29 @@ shortpath() {
   local varName
   local varValue
   local evaluatedPath=""
-  local shortPath=""
+  local shortPath="${inputPath}"
+
+  if [ -z "${inputPath}" ]; then
+    err "No file path provided."
+    return 1
+  fi
 
   while IFS="" read -r var || [ -n "${var}" ]; do
     if echo "${var}" | grep -q -e '^\s*#' -e '^$'; then
       # Ignore commented and empty lines
       continue
     fi
+
     varName=${var%=*}
     varValue=${var#*=}
+    # Fully expand the variable's value to remove any environment variables from
+    # the string.
     evaluatedPath="$(eval "echo \$${varName}" 2>/dev/null)"
+
     if [ -d "${evaluatedPath}" ]; then
       log_debug "\$${varName} is a directory variable"
       if echo "${inputPath}" | grep -q "^${evaluatedPath}" &&
-      [ "${#varValue}" -ge "${#bestToReplace}" ]; then
+      [ "${#evaluatedPath}" -ge "${#bestToReplace}" ]; then
         bestToReplace="${evaluatedPath}"
         bestVar="${varName}"
         log_debug "New best to replace: ${varName}=${bestToReplace}"
@@ -56,11 +70,13 @@ shortpath() {
       fi
     fi
   done <"${dirAliasFile}"
+
   echo "${shortPath}"
 }
 
 # Read a path file's contents into a path variable, then export the path
 # variable.
+#
 # @param [$1=~/.path] - The path file to read from
 # @param [$2=PATH]    - The path variable to export
 eval_path_var_from_file() {

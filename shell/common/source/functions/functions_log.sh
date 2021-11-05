@@ -34,6 +34,7 @@ log() {
   local output
   local outputColor
 
+  # Only log output if the LOG_LEVEL permits it.
   if __should_log "${logType}"; then
     info="$(__get_log_message_info)"
     infoColor="$(__get_log_message_info "color")"
@@ -242,8 +243,9 @@ __get_log_type_with_color() {
   echo "${color}${logType}${NC}"
 }
 
-# Predicate function for determining whether a message should be logged,
-# depending on the currently set log level.
+# Predicate function for determining whether a message should be logged
+# depending on the configured log level. The LOG_LEVEL environment variable
+# determines how much logging information is output.
 __should_log() {
   local logType="$1"
   local logLevel="${LOG_LEVEL:-3}"
