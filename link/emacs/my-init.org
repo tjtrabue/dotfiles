@@ -800,11 +800,11 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
         (when (memq window-system '(mac ns x))
           (let ((old-zdotdir (getenv "ZDOTDIR")))
             ;; USE_LEAN_PROFILE is set to make shell startup as minimal as possible.
-            ;; We do not want this plugin to execute a fancy login shell. We
-            ;; only want to get PATH from the environment.
+            ;; We do not want this plugin to execute a fancy login shell. We only want
+            ;; to get PATH from the environment.
             (setenv "USE_LEAN_PROFILE" "true")
-            ;; Also need to make sure ZDOTDIR is not set so that Zsh will not
-            ;; detect my custom environment.
+            ;; Also need to make sure ZDOTDIR is not set so that Zsh will not detect
+            ;; my custom environment.
             (setenv "ZDOTDIR" "")
             (exec-path-from-shell-initialize)
             ;; Remove USE_LEAN_PROFILE environment variable once it has served its
