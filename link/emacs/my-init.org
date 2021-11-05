@@ -799,17 +799,17 @@ repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][
         ;; Initialize the plugin, but only for macOS or Linux.
         (when (memq window-system '(mac ns x))
           (let ((old-zdotdir (getenv "ZDOTDIR")))
-            ;; SLIM_PROFILE is set to make shell startup as minimal as possible.
+            ;; USE_LEAN_PROFILE is set to make shell startup as minimal as possible.
             ;; We do not want this plugin to execute a fancy login shell. We
             ;; only want to get PATH from the environment.
-            (setenv "SLIM_PROFILE" "true")
+            (setenv "USE_LEAN_PROFILE" "true")
             ;; Also need to make sure ZDOTDIR is not set so that Zsh will not
             ;; detect my custom environment.
             (setenv "ZDOTDIR" "")
             (exec-path-from-shell-initialize)
-            ;; Remove SLIM_PROFILE environment variable once it has served its
+            ;; Remove USE_LEAN_PROFILE environment variable once it has served its
             ;; purpose.
-            (setenv "SLIM_PROFILE" nil)
+            (setenv "USE_LEAN_PROFILE" nil)
             ;; Restore ZDOTDIR to its original value.
             (setenv "ZDOTDIR" old-zdotdir))))
     #+end_src

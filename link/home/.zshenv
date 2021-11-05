@@ -5,8 +5,8 @@
 DESIRED_ZDOTDIR="${HOME}/.zsh"
 # We may want to ignore fancy shell settings under certain circumstances,
 # opting instead to start the shell with a minimal environment.
-if [ "${SLIM_PROFILE}" = 1 ] || [ "${SLIM_PROFILE}" = "true" ]; then
-  # Make sure ZDOTDIR is unset if we want a slim profile.
+if [ "${USE_LEAN_PROFILE}" = 1 ] || [ "${USE_LEAN_PROFILE}" = "true" ]; then
+  # Make sure ZDOTDIR is unset if we want a lean profile.
   export ZDOTDIR=""
   # Only pull in basic definitions
   LEAN_PROFILE="${HOME}/.lean_profile"
