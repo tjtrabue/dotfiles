@@ -28,13 +28,20 @@ echoe() {
 log() {
   local logType="$1"
   local msg="$2"
-  local info="$(__get_log_message_info)"
-  local infoColor="$(__get_log_message_info "color")"
-  local logTypeColor="$(__get_log_type_with_color "${logType}")"
-  local output="[${logType}${info}] ${msg}"
-  local outputColor="[${logTypeColor}${infoColor}] ${msg}"
+  local info
+  local infoColor
+  local logTypeColor
+  local output
+  local outputColor
 
-  __log_if_level_acceptable "${logType}" "${output}" "${outputColor}"
+  if __should_log "${logType}"; then
+    info="$(__get_log_message_info)"
+    infoColor="$(__get_log_message_info "color")"
+    logTypeColor="$(__get_log_type_with_color "${logType}")"
+    output="[${logType}${info}] ${msg}"
+    outputColor="[${logTypeColor}${infoColor}] ${msg}"
+    __log "${output}" "${outputColor}"
+  fi
 }
 # }}}
 
@@ -235,23 +242,31 @@ __get_log_type_with_color() {
   echo "${color}${logType}${NC}"
 }
 
-# Only print the logging message if the establish logging level allows.
-__log_if_level_acceptable() {
+# Predicate function for determining whether a message should be logged,
+# depending on the currently set log level.
+__should_log() {
   local logType="$1"
-  local output="$2"
-  local outputColor="$3"
   local logLevel="${LOG_LEVEL:-3}"
-  local logToFile="${LOG_TO_FILE:-""}"
 
   if ([ "${logType}" = "ERROR" ] && [ "${logLevel}" -ge 1 ]) ||
   ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) ||
   ([ "${logType}" = "INFO" ] && [ "${logLevel}" -ge 3 ]) ||
   ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]) ||
   ([ "${logType}" = "DEBUG" ] && [ "${logLevel}" -ge 4 ]); then
-    echoe "${outputColor}"
-    if [ -f "${logToFile}" ]; then
-      echoe "${output}" >>"${logToFile}"
-    fi
+    return 0
+  fi
+  return 1
+}
+
+# Actually do the logging!
+__log() {
+  local output="$1"
+  local outputColor="$2"
+  local logToFile="${LOG_TO_FILE:-""}"
+
+  echoe "${outputColor}"
+  if [ -f "${logToFile}" ]; then
+    echoe "${output}" >>"${logToFile}"
   fi
 }
 

@@ -494,7 +494,8 @@ features of Vim at times.
        ;; TEMP: This will go away once evil-org adds support for new method of
        ;; binding functions that take a 0 prefix. evil-redirect-digit-argument was a
        ;; very clunky way of achieving such bindings. evil has since been updated
-       ;; with a better method.
+       ;; with a better method.  See
+       ;; https://github.com/Somelauw/evil-org-mode/issues/93 for the GitHub issue .
        (fset 'evil-redirect-digit-argument 'ignore)
        :config
        ;; TEMP: These two expressions will go away along with the TEMP block in the

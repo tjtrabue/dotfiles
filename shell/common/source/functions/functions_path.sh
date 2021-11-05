@@ -38,8 +38,8 @@ shortpath() {
   local shortPath=""
 
   while IFS="" read -r var || [ -n "${var}" ]; do
-    if echo "${var}" | grep -q "^\s*#"; then
-      # Ignore commented lines
+    if echo "${var}" | grep -q -e '^\s*#' -e '^$'; then
+      # Ignore commented and empty lines
       continue
     fi
     varName=${var%=*}
