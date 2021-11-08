@@ -62,7 +62,7 @@ emsg() {
 sw() {
   local arg="${1}"
   local ref
-  local histFile="${HOME}/.sw_ref_hist"
+  local histFile="${SW_HISTORY_FILE:-${HOME}/.sw_ref_hist}"
   # We want to write the current branch/commit to history after we switch.
   local currentRef="$(git rev-parse --abbrev-ref HEAD)"
 
@@ -97,7 +97,7 @@ sw() {
 
 __save_ref_to_sw_hist() {
   local ref="${1}"
-  local histFile="${HOME}/.sw_ref_hist"
+  local histFile="${SW_HISTORY_FILE:-${HOME}/.sw_ref_hist}"
   local histTempFile="${histFile}.tmp"
   local numRefsToSave="10"
 
