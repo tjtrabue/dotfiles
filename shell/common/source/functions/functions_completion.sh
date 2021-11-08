@@ -37,7 +37,8 @@ add_bash_completions() {
 #                 such as zplug.
 add_zsh_completions() {
   # Zsh has built-in support for git completions.
-  # __add_zsh_git_completions
+  __add_zsh_git_completions
+  __add_extra_zsh_completions
   __add_asdf_completions_for_bash_zsh
 }
 
@@ -48,7 +49,7 @@ add_fish_completions() {
 
 # Download extra Zsh completions for git.
 __add_zsh_git_completions() {
-  local completionsDir="${ZDOTDIR:-${HOME}/.zsh}"
+  local completionsDir="${ZDOTDIR:-${HOME}/.zsh}/completions"
   local bashCompletionFile="${completionsDir}/git-completion.bash"
   local zshCompletionFile="${completionsDir}/_git"
 
@@ -61,6 +62,32 @@ __add_zsh_git_completions() {
     curl -o "${zshCompletionFile}" \
       "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh"
   fi
+
+  # Add git completions to function path
+  fpath=("${completionsDir}" $fpath)
+
+  zstyle ':completion:*:*:git:*' script "${bashCompletionFile}"
+
+  # __add_custom_zsh_git_completions
+}
+
+# Add Zsh completions for custom Git functions from this repository.
+__add_custom_zsh_git_completions() {
+  zstyle ':completion::complete:git-checkout::' user-commands sw:'switch branch'
+}
+
+# Install additional Zsh command line completions
+__add_extra_zsh_completions() {
+  local repoUrl="git://github.com/zsh-users/zsh-completions.git"
+  local repoDir="${HOME}/.zsh_completions"
+
+  log_info "Adding extra Zsh completions"
+
+  if [ ! -d "${repoDir}" ]; then
+    git clone "${repoUrl}" "${repoDir}"
+  fi
+
+  fpath=("${repoDir}/src" $fpath)
 }
 
 # Source bash completion files installed manually by the user.
@@ -212,8 +239,10 @@ __add_asdf_completions_for_bash_zsh() {
   local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
   local asdfCompletionFile="${asdfDir}/completions/asdf.bash"
 
-  if [ -d "${asdfDir}" ]; then
+  if [ -f "${asdfCompletionFile}" ]; then
     . "${asdfCompletionFile}"
+  else
+    warn "No ASDF completion file found at: ${GREEN}${asdfCompletionFile}${NC}"
   fi
 }
 

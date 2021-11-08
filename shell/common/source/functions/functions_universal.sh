@@ -94,7 +94,7 @@ currentshell() {
   local parentInterpreter="$(ps h -o args='' -p "$$")"
   # Shave off leading '-' character. We don't want this function to have any
   # external dependencies on GNU tools, if possible.
-  echo "${parentInterpreter#-}"
+  echo "${parentInterpreter#-}" | cut -d' ' -f1
 }
 
 # Run a command over multiple lines of input from stdin or from a file
@@ -250,7 +250,7 @@ fi
 # Create a data URL from a file
 dataurl() {
   local mimeType=$(file -b --mime-type "$1")
-  if echo "${mimeType}" | grep -q "^text/.*" ; then
+  if echo "${mimeType}" | grep -q "^text/.*"; then
     mimeType="${mimeType};charset=utf-8"
   fi
   echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"

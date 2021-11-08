@@ -156,6 +156,11 @@ __src_extra_environment_profiles() {
 }
 # }}}
 
+# Source the common.sh file.
+scomm() {
+  . "${COMMON_SOURCE_FILE}"
+}
+
 # Source entire shell environment. This function acts as a single point-of-entry
 # for pulling extra definitions into a shell, and for invoking
 # rvm/nvm/pyenv/jenv. It should work regardless of the shell in use.
@@ -169,6 +174,8 @@ src_all() {
   __src_agents
   # Take care of fixing the SSH authentication socket if logged in over SSH.
   fix_ssh_auth_sock
+  # Add more tab completions to shell environment.
+  add_shell_completions
   # This should come last!!!
   __src_extra_environment_profiles
 }

@@ -34,6 +34,7 @@ kakoune
 kind
 kubectl
 lazygit
+leapp
 lens
 llvm
 mactex

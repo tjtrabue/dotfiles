@@ -52,6 +52,76 @@ emsg() {
 }
 # }}}
 
+# Branching/switching branches {{{
+
+# Switch to a Git branch/commit/tag.
+# Supports history, so we can return to the previously visited ref using
+#   sw -1
+# or even further with, for instance:
+#   sw -4
+sw() {
+  local arg="${1}"
+  local ref
+  local histFile="${HOME}/.sw_ref_hist"
+  # We want to write the current branch/commit to history after we switch.
+  local currentRef="$(git rev-parse --abbrev-ref HEAD)"
+
+  if [ -z "${arg}" ]; then
+    err "No ref provided to switch"
+    return 1
+  fi
+
+  if echo "${arg}" | grep -q '^-[0-9]$'; then
+    # Get nth line from history file if arg is of the form'-<n>' where n is an
+    # integer.
+    ref="$(sed "${arg#-}q;d" "${histFile}")"
+  else
+    # Otherwise, assume arg is the name of the ref we want to checkout.
+    ref="${arg}"
+  fi
+
+  if ! verifyref "${ref}"; then
+    err "${CYAN}${ref}${NC} is not a valid Git ref"
+    return 2
+  fi
+
+  git switch "${ref}" && {
+    if [ "${ref}" != "${currentRef}" ]; then
+      __save_ref_to_sw_hist "${currentRef}"
+    fi
+    } || {
+    err "Could not switch to ref: ${CYAN}${ref}${NC}"
+    return 1
+  }
+}
+
+__save_ref_to_sw_hist() {
+  local ref="${1}"
+  local histFile="${HOME}/.sw_ref_hist"
+  local histTempFile="${histFile}.tmp"
+  local numRefsToSave="10"
+
+  if [ -z "${ref}" ]; then
+    err "No ref provided to save to sw history file"
+    return 1
+  fi
+
+  if [ -f "${histFile}" ]; then
+    log_debug "Writing sw ref to history file: ${GREEN}${histFile}${NC}"
+
+    echo "${ref}" |
+    cat - "${histFile}" |
+    rmduplines |
+    head -n "${numRefsToSave}" >"${histTempFile}"
+
+    mv "${histTempFile}" "${histFile}"
+  else
+    log_debug "Creating new ref history file with entry: ${CYAN}${ref}${NC}"
+    echo "${ref}" >"${histFile}"
+  fi
+}
+# }}}
+
 # Submodules {{{
 # Lists all submodules in a repo
 ls-submods() {
@@ -325,6 +395,19 @@ src_git_for_profile() {
   if [ -f "${WS}/forgit/forgit.plugin.sh" ]; then
     . "${WS}/forgit/forgit.plugin.sh"
   fi
+}
+# }}}
+
+# Verifying refs {{{
+verifyref() {
+  local ref="${1}"
+
+  if [ -z "${ref}" ]; then
+    err "No ref provided"
+    return 1
+  fi
+
+  git rev-parse --verify "${ref}" >>/dev/null 2>&1
 }
 # }}}
 
