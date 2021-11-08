@@ -34,6 +34,20 @@ __src_one_time_transfers() {
   done
 }
 
+# Source shell files local to the machine (i.e., not under version control).
+__src_machine_local_files() {
+  local machineLocalFiles=(
+    "${HOME}/.extra"
+  )
+  local f
+
+  for f in "${machineLocalFiles[@]}"; do
+    if [ -f "${f}" ]; then
+      . "${f}"
+    fi
+  done
+}
+
 # Source all files in a given directory.
 __src_dir() {
   local dir="$1"
@@ -113,6 +127,9 @@ __src() {
 
   # Source .vars and .dirs.
   __src_one_time_transfers
+
+  # Source .extra
+  __src_machine_local_files
 
   # Source all alias/function/other files, both in the common source directory
   # and in current shell's source directory.
