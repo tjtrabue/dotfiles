@@ -85,14 +85,14 @@ sw() {
     return 2
   fi
 
-  git switch "${ref}" && {
-    if [ "${ref}" != "${currentRef}" ]; then
-      __save_ref_to_sw_hist "${currentRef}"
-    fi
-    } || {
+  if ! git switch "${ref}"; then
     err "Could not switch to ref: ${CYAN}${ref}${NC}"
     return 1
-  }
+  fi
+
+  if [ "${ref}" != "${currentRef}" ]; then
+    __save_ref_to_sw_hist "${currentRef}"
+  fi
 }
 
 __save_ref_to_sw_hist() {
