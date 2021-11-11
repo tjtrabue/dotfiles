@@ -20,14 +20,17 @@ trim_trailing_whitespace = true
 [*.{kt,kts}]
 # possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation
 # completely)
+# Default: 4
 indent_size = 4
 # true (recommended) / false
+# Default: true
 insert_final_newline = true
 # Possible values: <number> (e.g. 120) (package name, imports & comments are
 #                                       ignored),
 #                  "off"
 # It's automatically set to 100 on `ktlint --android ...`
 # (per Android Kotlin Style Guide)
+# Default: off
 max_line_length = off
 
 # GNU Makefiles
