@@ -23,14 +23,17 @@ atp() {
   spath "${pathFile}"
 }
 
-# Replace a leading portion of a given file path with the diralias corresponding
-# to the longest possible prefix. For instance, if ~/.dirs contains:
-#
-#   dot="/home/me/.dotfiles"
-#
+# Replace a leading portion of a given file path with a variable name
+# corresponding to the longest possible prefix. For instance, if ~/.dirs
+# contains:
+#   dot="/home/me/.dotfiles",
 # then
-#
 #   shortpath "/home/me/.dotfiles/link/emacs" -> ${dot}/link/emacs
+#
+# Also, if ~/.vars contains:
+#   export JENV_HOME="/home/me/.jenv",
+# then
+#   shortpath "/home/me/.jenv/bin" -> ${JENV_HOME}/bin
 shortpath() {
   local inputPath="$1"
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
