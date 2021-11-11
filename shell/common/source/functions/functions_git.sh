@@ -166,7 +166,7 @@ __save_ref_to_sw_hist() {
 swi() {
   local branch
   local branchListingCommand="git branch -a --format '%(HEAD)%(refname:short)' |
-    grep -v -e '\*' -e 'HEAD' |
+    grep -v -e '^\s*\*' -e 'HEAD' |
     sed -e 's/^\s*//' -e 's/\s*\$//' |
     awk '{print \$1}'"
 
