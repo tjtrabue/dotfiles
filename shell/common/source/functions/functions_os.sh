@@ -35,7 +35,9 @@ getosinfo() {
   fi
 
   # Return the distribution name and version.
-  printf "%s: %s\n%s: %s\n" "Distribution" "${OS}" "Version" "${VER}"
+  printf "%s: %s\n%s: %s\n" \
+    "Distribution" "${OS}" \
+    "Version" "${VER}"
 }
 
 # Retrieves the system package manager for the current operating system.
@@ -69,14 +71,26 @@ getpm() {
   printf "%s\n" "${pm}"
 }
 
-# Gets the Linux distribution name only
+# Retrieve the OS distribution name only
 getdistro() {
-  getosinfo | grep 'Distribution:' | sed -E 's/^\s*Distribution:\s*//'
+  __get_os_field "Distribution"
 }
 
-# Gets the Linux distrubtion version only
+# Retrieve the OS distribution version only
 getosversion() {
-  getosinfo | grep 'Version:' | sed -E 's/^\s*Version:\s*//'
+  __get_os_field "Version"
+}
+
+# Get a field returned from the `getosinfo` function.
+__get_os_field() {
+  local field="${1}"
+
+  if [ -z "${field}" ]; then
+    err "No field name provided"
+    return 1
+  fi
+
+  getosinfo | grep "${field}:" | sed -E "s/^\s*${field}:\s*//"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
