@@ -1,9 +1,13 @@
 # EditorConfig is awesome: https://EditorConfig.org
 
-# top-most EditorConfig file
+# EditorConfig is an editor-agnostic system for defining common editor
+# preferences, such as whether to use tabs or spaces, indentation size, end of
+# line styles, character encoding, and more.
+
+# This is the top-most EditorConfig file
 root = true
 
-# Rules for all filetypes
+# Default rules for all filetypes
 [*]
 charset = utf-8
 indent_style = space
@@ -12,18 +16,36 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# Makefiles must use tab characters instead of spaces for indenting
+# Kotlin
+[*.{kt,kts}]
+# possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation
+# completely)
+indent_size = 4
+# true (recommended) / false
+insert_final_newline = true
+# Possible values: <number> (e.g. 120) (package name, imports & comments are
+#                                       ignored),
+#                  "off"
+# It's automatically set to 100 on `ktlint --android ...`
+# (per Android Kotlin Style Guide)
+max_line_length = off
+
+# GNU Makefiles
 [Makefile]
+# Makefiles must use tab characters instead of spaces for indentation
 indent_style = tab
 
-# 4 spaces per indent in Python code
-[*.py]
-indent_size = 4
-
-# 4 spaces per indent in Perl code
+# Perl
 [*.{pl,plx}]
+# 4 spaces per indent in Perl code
 indent_size = 4
 
-# Indent UltiSnips snippet files with tabs
+# Python
+[*.py]
+# 4 spaces per indent in Python code
+indent_size = 4
+
+# UltiSnips
 [*.snippets]
+# Indent UltiSnips snippet files with tabs
 indent_style = tab
