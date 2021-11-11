@@ -485,6 +485,18 @@ src_git_for_profile() {
 }
 # }}}
 
+# Pushing {{{
+
+# Alias function for "git push origin HEAD".
+gpoh() {
+  local currentRef="$(currentref)"
+  local defaultRemote="$(defaultremote)"
+
+  # Make sure we set the current branch to track the its remote counterpart.
+  git push -u "${defaultRemote}" "${currentRef}"
+}
+# }}}
+
 # Verifying refs {{{
 verifyref() {
   local ref="${1}"

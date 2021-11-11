@@ -40,7 +40,6 @@ alias gaa="git add -A"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
 alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
-alias gpoh="git push origin HEAD"
 # }}}
 
 # Commit log aliases {{{
