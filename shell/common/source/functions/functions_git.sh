@@ -94,7 +94,7 @@ sw() {
 
   if ! __checkout_local_or_remote_branch "${ref}"; then
     err "Could not switch to ref: ${CYAN}${ref}${NC}"
-    return 1
+    return 3
   fi
 
   if [ "${ref}" != "${currentRef}" ]; then
@@ -126,6 +126,7 @@ __checkout_local_or_remote_branch() {
   fi
 }
 
+# Persist most recent ref passed to `sw' to the branch history file.
 __save_ref_to_sw_hist() {
   local ref="${1}"
   local histFile="${SW_HISTORY_FILE:-${HOME}/.sw_ref_hist}"
