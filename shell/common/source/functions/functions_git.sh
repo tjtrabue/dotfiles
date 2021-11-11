@@ -34,7 +34,7 @@ defaultremote() {
 # Returns the default remote branch name for a given repository. If no
 # repository is provided, defaults to the current directory.
 defaultbranch() {
-  local gitRepo="${1:-$(git rev-parse --show-toplevel)}"
+  local gitRepo="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
   local defaultRemote="$(defaultremote "${gitRepo}")"
 
   if ! isgitrepo "${gitRepo}"; then
@@ -43,7 +43,14 @@ defaultbranch() {
   fi
 
   git -C "${gitRepo}" remote show "${defaultRemote}" 2>/dev/null |
-  sed -n '/HEAD branch/s/.*: //p'
+    sed -n '/HEAD branch/s/.*: //p'
+}
+
+# Retrieve the name of the currently checked-out Git ref.
+currentref() {
+  local gitRepo="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+
+  git -C "${gitRepo}" rev-parse --abbrev-ref HEAD 2>/dev/null
 }
 
 # Opens the commit message for the current repo in the configured editor.
@@ -64,7 +71,7 @@ sw() {
   local ref
   local histFile="${SW_HISTORY_FILE:-${HOME}/.sw_ref_hist}"
   # We want to write the current branch/commit to history after we switch.
-  local currentRef="$(git rev-parse --abbrev-ref HEAD)"
+  local currentRef="$(currentref)"
 
   if [ -z "${arg}" ]; then
     err "No ref provided to switch"
@@ -85,13 +92,37 @@ sw() {
     return 2
   fi
 
-  if ! git switch "${ref}"; then
+  if ! __checkout_local_or_remote_branch "${ref}"; then
     err "Could not switch to ref: ${CYAN}${ref}${NC}"
     return 1
   fi
 
   if [ "${ref}" != "${currentRef}" ]; then
     __save_ref_to_sw_hist "${currentRef}"
+  fi
+}
+
+# Intelligently determine whether a local copy of a remote branch exists. If it
+# does not, we must first create a local copy and instruct the branch to track
+# its remote counterpart. If the local copy already exists, we have only to
+# switch to it.
+__checkout_local_or_remote_branch() {
+  local remoteBranch="${1}"
+  local localBranch="$(basename "${remoteBranch}" 2>/dev/null)"
+  local currentRef="$(currentref)"
+
+  if [ -z "${remoteBranch}" ]; then
+    err "No remote branch name provided"
+    return 1
+  elif [ "${localBranch}" = "${currentRef}" ]; then
+    warn "HEAD is already set to ref: ${CYAN}${localBranch}${NC}"
+    return 0
+  fi
+
+  if ! verifyref "${localBranch}"; then
+    git checkout -t "${remoteBranch}"
+  else
+    git checkout "${localBranch}"
   fi
 }
 
@@ -110,15 +141,70 @@ __save_ref_to_sw_hist() {
     log_debug "Writing sw ref to history file: ${GREEN}${histFile}${NC}"
 
     echo "${ref}" |
-    cat - "${histFile}" |
-    rmduplines |
-    head -n "${numRefsToSave}" >"${histTempFile}"
+      cat - "${histFile}" |
+      rmduplines |
+      head -n "${numRefsToSave}" >"${histTempFile}"
 
     mv "${histTempFile}" "${histFile}"
   else
     log_debug "Creating new ref history file with entry: ${CYAN}${ref}${NC}"
     echo "${ref}" >"${histFile}"
   fi
+}
+
+# Interactive branch switching using fuzzy search program.
+swi() {
+  local branch
+  local branchListingCommand="git branch -a |
+    grep -v -e '\*' -e 'HEAD' |
+    sed -e 's/\s*->.*//' -e 's/^\s*//'"
+
+  # Prioritized list of fuzzy search tools used to select the branch.
+  if [ -x "$(command -v fzf)" ]; then
+    branch="$(eval "${branchListingCommand}" | fzf)"
+  elif [ -x "$(command -v fzy)" ]; then
+    branch="$(eval "${branchListingCommand}" | fzy)"
+  else
+    branch="$(eval "${branchListingCommand}" | __swi_default_list_branches)"
+  fi
+
+  if [ -n "${branch}" ]; then
+    sw "${branch}"
+  fi
+}
+
+# Interactive switching program used when no fuzzy finder programs can be found.
+__swi_default_list_branches() {
+  local branches=("$@")
+  local selection
+  local b
+  local i=1
+  local maxValue
+
+  if [ "${#branches[@]}" -eq 0 ]; then
+    branches=()
+    while IFS="" read -r b || [ -n "${b}" ]; do
+      branches+=("${b}")
+    done </dev/stdin
+  fi
+
+  printf "%s\n" "Select a branch index to switch:" 1>&2
+  for b in "${branches[@]}"; do
+    printf "[%-2d] %s\n" "${i}" "${b}" 1>&2
+    ((i += 1))
+  done
+
+  read -r selection </dev/tty
+
+  if [ "${selection}" -le 0 ] || [ "${selection}" -ge "${i}" ]; then
+    err "Invalid branch index"
+    return 1
+  elif [ -z "${selection}" ]; then
+    err "No branch index read"
+    return 2
+  fi
+
+  echo "${branches[${selection}]}"
 }
 # }}}
 
@@ -217,18 +303,18 @@ totalgitreset() {
 
   while getopts ":fh" o; do
     case "${o}" in
-      f)
-        force=true
-        ;;
-      h)
-        totalgitreset_usage
-        return 0
-        ;;
-      *)
-        err "Unknown operand"
-        totalgitreset_usage
-        return 1
-        ;;
+    f)
+      force=true
+      ;;
+    h)
+      totalgitreset_usage
+      return 0
+      ;;
+    *)
+      err "Unknown operand"
+      totalgitreset_usage
+      return 1
+      ;;
     esac
   done
   shift $((OPTIND - 1))
@@ -327,10 +413,10 @@ squashfor() {
   local commitMsg
   local response
 
-  currentBranch="$(git rev-parse --abbrev-ref HEAD)"
+  currentBranch="$(currentref)"
 
   if [ "${currentBranch}" = "master" ] ||
-  [ "${currentBranch}" = "develop" ]; then
+    [ "${currentBranch}" = "develop" ]; then
     err "Not squashing commits on protected branch: ${currentBranch}"
     return 1
   fi
