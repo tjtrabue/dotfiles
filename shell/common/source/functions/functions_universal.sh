@@ -92,6 +92,7 @@ mkbin() {
 # or even "python" or "php".
 currentshell() {
   local parentInterpreter="$(ps h -o args='' -p "$$")"
+
   # Shave off leading '-' character. We don't want this function to have any
   # external dependencies on GNU tools, if possible.
   basename "$(echo "${parentInterpreter#-}" | cut -d' ' -f1)"
