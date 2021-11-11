@@ -165,9 +165,10 @@ __save_ref_to_sw_hist() {
 # Interactive branch switching using fuzzy search program.
 swi() {
   local branch
-  local branchListingCommand="git branch -a |
+  local branchListingCommand="git branch -a --format '%(HEAD)%(refname:short)' |
     grep -v -e '\*' -e 'HEAD' |
-    sed -e 's/\s*->.*//' -e 's/^\s*//'"
+    sed -e 's/^\s*//' -e 's/\s*\$//' |
+    awk '{print \$1}'"
 
   # Prioritized list of fuzzy search tools used to select the branch.
   if [ -x "$(command -v fzf)" ]; then
