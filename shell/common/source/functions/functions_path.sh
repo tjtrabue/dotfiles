@@ -34,6 +34,7 @@ atp() {
 shortpath() {
   local inputPath="$1"
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
+  local varFile="${VAR_FILE:-${HOME}/.vars}"
   local bestVar=""
   local bestToReplace=""
   local var
@@ -53,8 +54,13 @@ shortpath() {
       continue
     fi
 
-    varName=${var%=*}
+    # Turn "export varName=varValue" into "varName"
+    varName=${var#export }
+    varName=${varName%=*}
+
+    # Turn "export varName=varValue" into "varValue"
     varValue=${var#*=}
+
     # Fully expand the variable's value to remove any environment variables from
     # the string.
     evaluatedPath="$(eval "echo \$${varName}" 2>/dev/null)"
@@ -69,7 +75,7 @@ shortpath() {
         shortPath="${inputPath/${bestToReplace}/\${${bestVar}\}}"
       fi
     fi
-  done <"${dirAliasFile}"
+  done < <(cat "${varFile}" "${dirAliasFile}")
 
   echo "${shortPath}"
 }

@@ -42,6 +42,9 @@ diralias() {
   perl -pi -e 'chomp if eof' "${dirAliasFile}"
 
   printf "\n%s\n" "${stringToWrite}" >>"${dirAliasFile}"
+
+  # Make the new alias immediately available to the current shell.
+  . "${dirAliasFile}"
 }
 
 # Alias function for invoking a CLI directory navigation tool the user
