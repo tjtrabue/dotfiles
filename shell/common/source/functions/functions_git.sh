@@ -285,7 +285,8 @@ ggg() {
     return 1
   fi
 
-  git push origin HEAD
+  # Make use of our handy `git push` wrapper.
+  gpoh
 }
 # }}}
 
