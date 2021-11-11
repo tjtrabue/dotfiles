@@ -132,8 +132,8 @@ __checkout_local_or_remote_branch() {
   if ! verifyref "${localBranch}"; then
     git checkout -t "${remoteBranch}"
   else
-    git checkout "${localBranch}"
     git branch -u "${defaultRemote}/${localBranch}" "${localBranch}" 2>/dev/null
+    git checkout "${localBranch}"
   fi
 }
 
