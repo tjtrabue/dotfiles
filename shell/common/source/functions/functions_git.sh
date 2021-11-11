@@ -22,13 +22,22 @@ remoteurl() {
 # will be used.
 defaultremote() {
   local gitRepo="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+  local defaultRemote
 
   if ! isgitrepo "${gitRepo}"; then
     err "${BLUE}${gitRepo}${NC} is not a Git repository."
     return 1
   fi
 
-  git -C "${gitRepo}" remote 2>/dev/null
+  defaultRemote="$(git -C "${gitRepo}" remote 2>/dev/null)"
+
+  if [ -z "${defaultRemote}" ]; then
+    # If we can't intelligently determine the default remote name, assume the
+    # standard remote name of "origin"
+    defaultRemote="origin"
+  fi
+
+  echo "${defaultRemote}"
 }
 
 # Returns the default remote branch name for a given repository. If no
