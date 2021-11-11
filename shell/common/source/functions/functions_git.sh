@@ -21,7 +21,7 @@ remoteurl() {
 # repository. If no repository path is provided, the current working directory
 # will be used.
 defaultremote() {
-  local gitRepo="${1:-$(git rev-parse --show-toplevel)}"
+  local gitRepo="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
 
   if ! isgitrepo "${gitRepo}"; then
     err "${BLUE}${gitRepo}${NC} is not a Git repository."
@@ -209,137 +209,6 @@ __swi_default_list_branches() {
 }
 # }}}
 
-# Submodules {{{
-# Lists all submodules in a repo
-ls-submods() {
-  local repoHome
-
-  if git rev-parse --is-inside-work-tree >>/dev/null; then
-    repoHome="$(dirname "$(git rev-parse --git-dir)")"
-    grep path "$repoHome/.gitmodules" | sed 's/.*= //'
-  else
-    err "Not in a git repository"
-    return 1
-  fi
-}
-
-# Creates a git submodule based on a git url.
-# Alternately deletes a submodule in a repo:
-submod() {
-  if [ "$1" = "-r" ]; then
-    if [ -z "$2" ]; then
-      err "Must enter the path to the submodule"
-      return 1
-    fi
-
-    local submods=($(ls_submods))
-    for sub in "${submods[@]}"; do
-      if [ "$2" = "$sub" ]; then
-        echoe "Removing submodule $2"
-        mv "$2" "$2_tmp"
-        git submodule deinit "$2"
-        git rm --cached "$2"
-        mv "$2_tmp" "$2"
-        rm -rf "$(git rev-parse --git-dir)/modules/$2"
-      fi
-    done
-  else
-    git submodule add "$1"
-  fi
-}
-
-# Update all submodules in the current git repo (requires git version
-# 1.6.1 or later)
-upsubs() {
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    git submodule foreach git pull origin master
-  else
-    err "Not in a git repository"
-    return 1
-  fi
-}
-# }}}
-
-# Reverting/resetting {{{
-# Reverts the current repo to the state of its previous commit:
-creset() {
-  if git rev-parse --is-inside-work-tree >>/dev/null 2>&1; then
-    git reset --soft HEAD~1
-    git reset HEAD "$(git rev-parse --show-toplevel)"
-  else
-    return 1
-  fi
-}
-
-# Resets all uncommitted changes in the current repository
-ucreset() {
-  if git rev-parse --is-inside-work-tree >>/dev/null 2>&1; then
-    # Revert changes to modified files.
-    git reset --hard
-    # Remove all untracked files and directories.
-    # (`-d` is `remove directories`, `-ff` is `force`)
-    git clean -d -ff
-  else
-    return 1
-  fi
-}
-
-# Go nuclear: get rid of ALL uncommitted changes to the current working tree of
-# the provided Git repository (or the repo the current directory belongs to if
-# no repo is given).
-#
-# WARNING: Be VERY careful before you use this function!!!! You cannot undo the
-# changes it makes!
-totalgitreset() {
-  local repo
-  local OPTIND
-  local o
-  local force=false
-  local response
-
-  # Usage function for when user enters "-h" option.
-  totalgitreset_usage() {
-    echoe "USAGE: totalgitreset [-fh] [REPO]"
-  }
-
-  while getopts ":fh" o; do
-    case "${o}" in
-    f)
-      force=true
-      ;;
-    h)
-      totalgitreset_usage
-      return 0
-      ;;
-    *)
-      err "Unknown operand"
-      totalgitreset_usage
-      return 1
-      ;;
-    esac
-  done
-  shift $((OPTIND - 1))
-
-  repo="${1:-$(git rev-parse --show-toplevel)}"
-
-  if ! "${force}"; then
-    while ! echo "${response}" | grep -E -q "^[YyNn]$"; do
-      echoe "WARNING: Do you really want to revert ALL changes to repo" \
-        "${BLUE}$(basename "${repo}")${NC}? You cannot undo these changes" \
-        "[y/n]"
-      read -r response
-    done
-    if echo "${response}" | grep -E -q "^[Nn]$"; then
-      echoe "Aborted by user."
-      return 2
-    fi
-  fi
-
-  git -C "${repo}" clean -fdx
-  git -C "${repo}" reset --hard HEAD
-}
-# }}}
-
 # Committing {{{
 
 # Shortcut for `git commit -m '<msg>'`. No need to put quote marks around your
@@ -393,6 +262,42 @@ gdd() {
     # Revert to plain old `git diff` if no fancy tools are available.
     git diff
   fi
+}
+# }}}
+
+# Macro functions {{{
+
+# These functions run sequences of Git commands in order to make the developer's
+# life easer.
+
+# Run my favorite Git command sequence:
+#   `git add -A`
+#   `git commit -m <msg>`
+#   `git push origin HEAD`
+ggg() {
+  local commitMsg="${*}"
+
+  git add -A
+
+  # Try to commit changes, and return an error if changes could not be
+  # committed.
+  if ! gcm "${commitMsg}"; then
+    return 1
+  fi
+
+  git push origin HEAD
+}
+# }}}
+
+# Pushing {{{
+
+# Alias function for "git push origin HEAD".
+gpoh() {
+  local currentRef="$(currentref)"
+  local defaultRemote="$(defaultremote)"
+
+  # Make sure we set the current branch to track the its remote counterpart.
+  git push -u "${defaultRemote}" "${currentRef}"
 }
 # }}}
 
@@ -450,50 +355,61 @@ EOF
 
 # }}}
 
-# Macro functions {{{
+# Reverting/resetting {{{
 
-# These functions run sequences of Git commands in order to make the developer's
-# life easer.
+# Go nuclear: get rid of ALL uncommitted changes to the current working tree of
+# the provided Git repository (or the repo the current directory belongs to if
+# no repo is given).
+#
+# WARNING: Be VERY careful before you use this function!!!! You cannot undo the
+# changes it makes!
+totalgitreset() {
+  local repo
+  local OPTIND
+  local o
+  local force=false
+  local response
 
-# Run my favorite Git command sequence:
-#   `git add -A`
-#   `git commit -m <msg>`
-#   `git push origin HEAD`
-ggg() {
-  local commitMsg="${*}"
+  # Usage function for when user enters "-h" option.
+  totalgitreset_usage() {
+    echoe "USAGE: totalgitreset [-fh] [REPO]"
+  }
 
-  git add -A
+  while getopts ":fh" o; do
+    case "${o}" in
+    f)
+      force=true
+      ;;
+    h)
+      totalgitreset_usage
+      return 0
+      ;;
+    *)
+      err "Unknown operand"
+      totalgitreset_usage
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
 
-  # Try to commit changes, and return an error if changes could not be
-  # committed.
-  if ! gcm "${commitMsg}"; then
-    return 1
+  repo="${1:-$(git rev-parse --show-toplevel)}"
+
+  if ! "${force}"; then
+    while ! echo "${response}" | grep -E -q "^[YyNn]$"; do
+      echoe "WARNING: Do you really want to revert ALL changes to repo" \
+        "${BLUE}$(basename "${repo}")${NC}? You cannot undo these changes" \
+        "[y/n]"
+      read -r response
+    done
+    if echo "${response}" | grep -E -q "^[Nn]$"; then
+      echoe "Aborted by user."
+      return 2
+    fi
   fi
 
-  git push origin HEAD
-}
-# }}}
-
-# Git environment for shell {{{
-
-# Prepare any extra Git-related shell functions for the current shell.
-src_git_for_profile() {
-  # Source the forgit Git CLI if available.
-  if [ -f "${WS}/forgit/forgit.plugin.sh" ]; then
-    . "${WS}/forgit/forgit.plugin.sh"
-  fi
-}
-# }}}
-
-# Pushing {{{
-
-# Alias function for "git push origin HEAD".
-gpoh() {
-  local currentRef="$(currentref)"
-  local defaultRemote="$(defaultremote)"
-
-  # Make sure we set the current branch to track the its remote counterpart.
-  git push -u "${defaultRemote}" "${currentRef}"
+  git -C "${repo}" clean -fdx
+  git -C "${repo}" reset --hard HEAD
 }
 # }}}
 
@@ -507,6 +423,19 @@ verifyref() {
   fi
 
   git rev-parse --verify "${ref}" >>/dev/null 2>&1
+}
+# }}}
+
+# Git environment for shell {{{
+
+# Prepare any extra Git-related shell functions for the current shell.
+src_git_for_profile() {
+  local workspace="${WS:-${HOME}/workspace}"
+
+  # Source the forgit Git CLI if available.
+  if [ -f "${workspace}/forgit/forgit.plugin.sh" ]; then
+    . "${workspace}/forgit/forgit.plugin.sh"
+  fi
 }
 # }}}
 
