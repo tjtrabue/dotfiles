@@ -128,9 +128,6 @@ __src() {
   # Source .vars and .dirs.
   __src_one_time_transfers
 
-  # Source .extra
-  __src_machine_local_files
-
   # Source all alias/function/other files, both in the common source directory
   # and in current shell's source directory.
   for d in $(find "${COMMON_SOURCE}" "${srcDir}" \
@@ -141,6 +138,9 @@ __src() {
 
   # Source OS-specific aliases and functions.
   __src_os
+
+  # Source .extra
+  __src_machine_local_files
 
   # export the dynamically constructed $PATH variable from the entries in
   # ~/.path.
