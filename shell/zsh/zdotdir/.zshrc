@@ -103,8 +103,8 @@ add_custom_keybindings() {
   # Ctrl-U activates lazygit in the current directory.
   bindkey -s '^U' 'lazygit^M'
 
-  # Ctrl-I interactively prompts user to switch VCS branches.
-  bindkey -s '^I' 'swi^M'
+  # Ctrl-H interactively prompts user to switch VCS branches.
+  bindkey -s '^H' 'swi^M'
 }
 
 # Add FZF completions to Zsh shell.

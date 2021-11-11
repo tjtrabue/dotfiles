@@ -89,5 +89,5 @@ TAB: menu-complete
 # Use Ctrl+l to use fzf's fuzzy search feature for cd.
 "\C-l": "cd \*\*\t"
 
-# Use Ctrl+i to interactively switch VCS branches.
-"\C-i": "swi\n"
+# Use Ctrl+h to interactively switch VCS branches.
+"\C-h": "swi\n"
