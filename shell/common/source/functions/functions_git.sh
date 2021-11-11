@@ -119,9 +119,10 @@ __checkout_local_or_remote_branch() {
   local remoteBranch="${1}"
   local localBranch="$(basename "${remoteBranch}" 2>/dev/null)"
   local currentRef="$(currentref)"
+  local defaultRemote="$(defaultremote)"
 
   if [ -z "${remoteBranch}" ]; then
-    err "No remote branch name provided"
+    err "No branch name provided"
     return 1
   elif [ "${localBranch}" = "${currentRef}" ]; then
     warn "HEAD is already set to ref: ${CYAN}${localBranch}${NC}"
@@ -132,6 +133,7 @@ __checkout_local_or_remote_branch() {
     git checkout -t "${remoteBranch}"
   else
     git checkout "${localBranch}"
+    git branch -u "${defaultRemote}/${localBranch}" "${localBranch}" 2>/dev/null
   fi
 }
 
