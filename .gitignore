@@ -189,6 +189,10 @@ link/config/cmus/lib.pl
 # Ignore chromium config by defaul
 link/config/chromium
 
+# GitHub CLI client {{{
+link/config/gh/hosts.yml
+# }}}
+
 # Authy {{{
 # Authy local configuration files
 link/config/Authy\ Desktop
