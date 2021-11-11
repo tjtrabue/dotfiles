@@ -42,7 +42,6 @@ shortpath() {
   local bestToReplace=""
   local var
   local varName
-  local varValue
   local evaluatedPath=""
   local shortPath="${inputPath}"
 
@@ -53,11 +52,8 @@ shortpath() {
 
   while IFS="" read -r var || [ -n "${var}" ]; do
     # Turn "export varName=varValue" into "varName"
-    varName=${var#export }
-    varName=${varName%=*}
-
-    # Turn "export varName=varValue" into "varValue"
-    varValue=${var#*=}
+    varName="${var#export }"
+    varName="${varName%=*}"
 
     # Fully expand the variable's value to remove any environment variables from
     # the string.
