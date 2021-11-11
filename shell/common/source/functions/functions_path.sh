@@ -52,11 +52,6 @@ shortpath() {
   fi
 
   while IFS="" read -r var || [ -n "${var}" ]; do
-    if echo "${var}" | grep -q -e '^\s*#' -e '^$'; then
-      # Ignore commented and empty lines
-      continue
-    fi
-
     # Turn "export varName=varValue" into "varName"
     varName=${var#export }
     varName=${varName%=*}
@@ -78,7 +73,10 @@ shortpath() {
         shortPath="${inputPath/${bestToReplace}/\${${bestVar}\}}"
       fi
     fi
-  done < <(cat "${varFile}" "${dirAliasFile}")
+    done < <(
+    grep '^\s*export' "${varFile}" | sed 's/^\s*//'
+    grep -v -e '^$' -e '^\s*#' "${dirAliasFile}" | sed 's/^\s*//'
+  )
 
   echo "${shortPath}"
 }
