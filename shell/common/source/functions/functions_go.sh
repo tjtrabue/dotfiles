@@ -2,17 +2,18 @@
 
 # Install packages managed by the go-lang language.
 install_go_packages() {
-  if [ "$(command -v parallel)" != "" ]; then
-    parallel --bar go get :::: "$GO_PACKAGES_FILE"
-  else
-    xargs go get <"$GO_PACKAGES_FILE"
+  local goPackagesFile="${GO_PACKAGES_FILE}"
+
+  if [ ! -f "${goPackagesFile}" ]; then
+    err "No Go URL file found"
+    return 1
   fi
 
-  # These packages may require special variables and settings and as such
-  # are not suitable to placement in a centralized package file.
-
-  # shfmt
-  GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+  if [ -x "$(command -v parallel)" ]; then
+    parallel --bar go install :::: "${goPackagesFile}"
+  else
+    xargs go install <"${goPackagesFile}"
+  fi
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
