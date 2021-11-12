@@ -1,7 +1,7 @@
 #!/bin/sh
 
 emacs_rm_backups() {
-  find -L "$DOTFILES_HOME" -type f -regextype posix-extended \
+  find -L "${DOTFILES_HOME}" -type f -regextype posix-extended \
     -regex ".*(~)|(.*#.*)$" -delete
 }
 
@@ -39,7 +39,7 @@ gnus() {
 # Download the fancy info+.el Emacs package from the GitHub mirror and stick it
 # in our ~/.emacs.d/lisp/ directory.
 install_info_plus() {
-  local emacsLispDir="$EMACS_CONFIG_HOME/lisp"
+  local emacsLispDir="${EMACS_CONFIG_HOME}/lisp"
   local infoPlusGitUrl="https://raw.githubusercontent.com/emacsmirror/emacswiki.org/master/info%2B.el"
 
   mkdir -p "$emacsLispDir"
@@ -94,7 +94,113 @@ __install_gccemacs_mac() {
   fi
 
   log_info "Installing new emacs-plus package"
-  eval "brew install ${gccEmacsPackage}"
+  brew install "${gccEmacsPackage}"
+}
+
+__install_gccemacs_linux__from_source() {
+  local emacsGitUrl="git://git.savannah.gnu.org/emacs.git"
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDestDir="${emacsInstallParentDir}/$(basename "${emacsGitUrl}%.git")"
+
+  __clone_or_update_emacs_source_repo
+  __run_autogen_for_emacs "${emacsDestDir}"
+  __build_gccemacs_linux "${emacsDestDir}"
+  __install_compiled_gccemacs_linux "${emacsDestDir}"
+}
+
+# Compile gccemacs from source
+__build_gccemacs_linux() {
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+  local configurationOptions=(
+    "--prefix=/usr"
+    "--sysconfdir=/etc"
+    "--libexecdir=/usr/lib"
+    "--localstatedir=/var"
+    "--mandir=/usr/share/man"
+    "--with-gameuser=:games"
+    "--with-modules"
+    "--with-x-toolkit=gtk3"
+    "--without-xaw3d"
+    "--with-imagemagick"
+    "--with-json"
+    "--with-native-compilation"
+    "--with-xwidgets"
+    "--with-x"
+    "--enable-autodepend"
+    "--enable-link-time-optimization"
+  )
+
+  if [ ! -d "${emacsDir}" ]; then
+    err "Emacs directory not found at: ${BLUE}${emacsDir}${NC}"
+    return 1
+  fi
+
+  (
+    log_info "Building gccemacs from source" &&
+    cd "${emacsDir}" &&
+    ./configure "${configurationOptions[@]}" &&
+    make -j"$(nproc)" NATIVE_FAST_BOOT=1
+  )
+
+  (
+    log_info "Creating autoloads" &&
+    cd "${emacsDir}/lisp" &&
+    make autoloads
+  )
+
+  (
+    log_info "Generating documentation" &&
+    cd "${emacsDir}" &&
+    make html &&
+    make pdf
+  )
+}
+
+# We only need to run ./autogen.sh once. If we run it again, it breaks
+# incremental compilation.
+__run_autogen_for_emacs() {
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+
+  (
+    cd "${emacsDir}"
+    [ -x configure ] || (./autogen.sh git && autogen.sh autoconf)
+  )
+}
+
+__install_compiled_gccemacs_linux() {
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+
+  (
+    log_info "Installing Emacs" &&
+    cd "${emacsDir}" &&
+    sudo make install
+  )
+
+  (
+    log_info "Installing Emacs documentation" &&
+    cd "${emacsDir}" &&
+    sudo make install-html &
+    sudo make install-pdf
+  )
+}
+
+__clone_or_update_emacs_source_repo() {
+  local emacsGitUrl="git://git.savannah.gnu.org/emacs.git"
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDestDir="${emacsInstallParentDir}/$(basename "${emacsGitUrl%.git}")"
+
+  if [ -d "${emacsDestDir}" ]; then
+    log_info "Updating Emacs source dir"
+    git -C "${emacsDestDir}" reset --hard
+    git -C "${emacsDestDir}" clean -fd
+    git -C "${emacsDestDir}" pull
+  else
+    log_info "Cloning Emacs Git repository to: ${BLUE}${emacsDestDir}${NC}"
+    git clone "${emacsGitUrl}" "${emacsDestDir}"
+  fi
 }
 
 # Checkout the configured default branch for each repository cloned by the
