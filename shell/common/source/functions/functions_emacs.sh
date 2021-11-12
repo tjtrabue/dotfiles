@@ -114,12 +114,12 @@ __build_gccemacs_linux() {
   local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
   local configurationOptions=(
     "--prefix=/usr"
-    "--sysconfdir=/etc"
     "--libexecdir=/usr/lib"
+    "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--mandir=/usr/share/man"
+    "--enable-autodepend"
+    "--enable-link-time-optimization"
     "--with-gameuser=:games"
-    "--with-modules"
     "--with-x-toolkit=gtk3"
     "--without-xaw3d"
     "--with-imagemagick"
@@ -127,8 +127,6 @@ __build_gccemacs_linux() {
     "--with-native-compilation"
     "--with-xwidgets"
     "--with-x"
-    "--enable-autodepend"
-    "--enable-link-time-optimization"
   )
 
   if [ ! -d "${emacsDir}" ]; then
