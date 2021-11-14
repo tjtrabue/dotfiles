@@ -93,8 +93,8 @@ configuration {
 /*	kb-accept-custom: "Control+Return";*/
 /*	kb-accept-alt: "Shift+Return";*/
 /*	kb-delete-entry: "Shift+Delete";*/
-	kb-mode-next: "Control+l,Control+Tab";
-	kb-mode-previous: "Control+h,Control+ISO_Left_Tab";
+	kb-mode-next: "Control+n,Control+Tab";
+	kb-mode-previous: "Control+p,Control+ISO_Left_Tab";
 /*	kb-row-left: "Control+Page_Up";*/
 /*	kb-row-right: "Control+Page_Down";*/
 	kb-row-up: "Control+k,Up,ISO_Left_Tab";

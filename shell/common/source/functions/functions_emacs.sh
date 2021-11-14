@@ -121,12 +121,17 @@ __build_gccemacs_linux() {
     "--enable-link-time-optimization"
     "--with-gameuser=:games"
     "--with-x-toolkit=gtk3"
-    "--without-xaw3d"
     "--with-imagemagick"
     "--with-json"
+    "--with-sound=alsa"
+    "--with-modules"
     "--with-native-compilation"
     "--with-xwidgets"
     "--with-x"
+    "--with-pgtk"
+    "--without-xaw3d"
+    "--without-gconf"
+    "--without-gsettings"
   )
 
   if [ ! -d "${emacsDir}" ]; then
