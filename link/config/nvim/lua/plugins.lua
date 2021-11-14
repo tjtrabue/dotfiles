@@ -365,12 +365,7 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
 
     -- Org mode {{{
     -- Org mode clone for Neovim
-    use {
-      "kristijanhusak/orgmode.nvim",
-      -- NOTE: This branch will soon be merged into master! Remove this branch
-      -- directive as soon as that happens.
-      branch = "tree-sitter"
-    }
+    use {"kristijanhusak/orgmode.nvim"}
     use {
       "akinsho/org-bullets.nvim",
       config = function()

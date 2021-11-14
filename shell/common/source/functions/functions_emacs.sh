@@ -163,7 +163,7 @@ __run_autogen_for_emacs() {
 
   (
     cd "${emacsDir}"
-    [ -x configure ] || (./autogen.sh git && autogen.sh autoconf)
+    [ -x configure ] || (./autogen.sh git && ./autogen.sh autoconf)
   )
 }
 
