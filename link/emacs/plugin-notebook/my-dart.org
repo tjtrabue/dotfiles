@@ -7,8 +7,27 @@
 #+STARTUP: fold
 
 Plugins and configuration for the Dart programming language.
+
 * dart-mode
 
-#+begin_src emacs-lisp
-  (use-package dart-mode)
-#+end_src
+  #+begin_src emacs-lisp
+    (use-package dart-mode)
+  #+end_src
+
+* flutter
+  Flutter is a cross-platform mobile application development kit for the Dart
+  programming language.
+
+  #+begin_src emacs-lisp
+    (use-package flutter
+      :after dart-mode
+      :hook
+      (dart-mode . flutter-test-mode)
+      :general
+      (general-def 'normal dart-mode-map
+        ;; Run or reload Flutter
+        "C-M-x" 'flutter-run-or-hot-reload)
+      :custom
+      ;; The directory containing your Flutter SDK
+      (flutter-sdk-path (file-truename (concat (getenv "HOME") "/workspace/flutter"))))
+  #+end_src

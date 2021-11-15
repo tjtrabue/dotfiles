@@ -330,6 +330,7 @@ to the =my-custom-lsp.el= file.
    #+end_src
 
 ** lsp-dart
+   LSP plugin for the Dart programming language.
 
    #+begin_src emacs-lisp
      (use-package lsp-dart
