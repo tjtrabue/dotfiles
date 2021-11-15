@@ -218,6 +218,10 @@ shell/zsh/zdotdir/.zsh_sessions
 link/config/filezilla/*
 # }}}
 
+# Flutter {{{
+link/config/flutter/tool_state
+# }}}
+
 # OS X / macOS {{{
 
 # Thumbnail cache files
