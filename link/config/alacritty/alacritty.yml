@@ -204,36 +204,35 @@ font:
 #     white:   '0xFAFAFA'
 #   xt_with_bright_colors: true
 
-# Tomorrow Night Eighties Theme
+# Doom One Theme
 colors:
-    selection:
-        text: "0xcccccc"
-        background: "0x515151"
-
-    # Normal colors
-    primary:
-        background: "0x2d2d2d"
-        foreground: "0xcccccc"
-    normal:
-        black: "0x282c34"
-        red: "0xf2777a"
-        green: "0x99cc99"
-        yellow: "0xffcc66"
-        blue: "0x6699cc"
-        magenta: "0xcc99cc"
-        cyan: "0x66cccc"
-        white: "0xcccccc"
-
-    # Bright colors
     bright:
-        black: "0x434956"
-        red: "0xf6a2a3"
-        green: "0xbbddbb"
-        yellow: "0xffdd99"
-        blue: "0x8cb3d9"
-        magenta: "0xddbbdd"
-        cyan: "0x8cd9d9"
-        white: "0xe6e6e6"
+        black: '#000000'
+        blue: '#a9a1e1'
+        cyan: '#51afef'
+        green: '#99bb66'
+        magenta: '#c678dd'
+        red: '#ff6655'
+        white: '#bfbfbf'
+        yellow: '#ecbe7b'
+    cursor:
+        cursor: '#51afef'
+        text: '#1b1b1b'
+    normal:
+        black: '#000000'
+        blue: '#a9a1e1'
+        cyan: '#51afef'
+        green: '#98be65'
+        magenta: '#c678dd'
+        red: '#ff6c6b'
+        white: '#bbc2cf'
+        yellow: '#ecbe7b'
+    primary:
+        background: '#282c34'
+        foreground: '#bbc2cf'
+    selection:
+        background: '#42444b'
+        text: '#bbc2cf'
     xt_with_bright_colors: true
 
 # Visual Bell

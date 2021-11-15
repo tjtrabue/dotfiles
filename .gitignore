@@ -218,6 +218,10 @@ shell/zsh/zdotdir/.zsh_sessions
 link/config/filezilla/*
 # }}}
 
+# Kitty terminal emulator {{{
+link/config/kitty/kitty-themes
+# }}}
+
 # Flutter {{{
 link/config/flutter/tool_state
 # }}}
