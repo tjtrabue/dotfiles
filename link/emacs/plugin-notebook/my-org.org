@@ -10,218 +10,220 @@ development where source code is embedded into explanatory, notebook-like
 textual documents and evaluated as needed or all at once.
 
 * =use-package= specification
-  The ubiquitous =org-mode=.
+The ubiquitous =org-mode=.
 
-  #+begin_src emacs-lisp
-    (use-package org
-      :mode ("\\.org\\'" . org-mode)
-      :hook
-      (org-mode .
-                (lambda ()
-                  ;; Disable whitespace mode for org mode.
-                  (whitespace-mode -1)))
-      :general
-      (my/user-leader-def
-        ;; These bindings should be available everywhere.  We'll want to use them
-        ;; outside of org-mode.
-        "C-c o l" 'org-store-link
-        "C-c o a" 'org-agenda)
-      :custom
-      (org-hide-leading-stars 1)
-      ;; Only show headings when visiting a new Org file.
-      (org-startup-folded 'fold)
-      ;; Directory used by Org only in rare circumstances, such as when filing
-      ;; away remember notes.
-      (org-directory my/org-dir)
-      ;; Pressing return while point is over a hyperlink will open the link in
-      ;; the user's web browser.
-      (org-return-follows-link t)
-      ;; Record a timestamp when a TODO item is marked as done.
-      (org-log-done 'time)
-      ;; Set Org agenda files to a list of files and/or directories.
-      (org-agenda-files `(,my/org-agenda-dir))
-      ;; Whether to prompt the user for confirmation before evaluating source
-      ;; blocks.
-      (org-confirm-babel-evaluate nil)
-      ;; Whether to keep images their original size or to shrink them to fit their
-      ;; corresponding Org mode buffer.
-      (org-image-actual-width nil)
-      :init
-      ;; Make sure the Org notes directory is present.
-      (make-directory my/org-dir t)
-      ;; Also create the agenda directory.
-      (make-directory my/org-agenda-dir t))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package org
+    :mode ("\\.org\\'" . org-mode)
+    :hook
+    (org-mode .
+              (lambda ()
+                ;; Disable whitespace mode for org mode.
+                (whitespace-mode -1)))
+    :general
+    (my/user-leader-def
+      ;; These bindings should be available everywhere.  We'll want to use them
+      ;; outside of org-mode.
+      "C-c o l" 'org-store-link
+      "C-c o a" 'org-agenda)
+    :custom
+    (org-hide-leading-stars t)
+    ;; Only show headings when visiting a new Org file.
+    (org-startup-folded 'fold)
+    ;; Open Org mode buffers with `org-indent-mode' enabled.
+    (org-statup-indented t)
+    ;; Directory used by Org only in rare circumstances, such as when filing
+    ;; away remember notes.
+    (org-directory my/org-dir)
+    ;; Pressing return while point is over a hyperlink will open the link in
+    ;; the user's web browser.
+    (org-return-follows-link t)
+    ;; Record a timestamp when a TODO item is marked as done.
+    (org-log-done 'time)
+    ;; Set Org agenda files to a list of files and/or directories.
+    (org-agenda-files `(,my/org-agenda-dir))
+    ;; Whether to prompt the user for confirmation before evaluating source
+    ;; blocks.
+    (org-confirm-babel-evaluate nil)
+    ;; Whether to keep images their original size or to shrink them to fit their
+    ;; corresponding Org mode buffer.
+    (org-image-actual-width nil)
+    :init
+    ;; Make sure the Org notes directory is present.
+    (make-directory my/org-dir t)
+    ;; Also create the agenda directory.
+    (make-directory my/org-agenda-dir t))
+#+end_src
 
 * Plugins
 ** org-bullets
-   Use fancy bullets in =org-mode=.
+Use fancy bullets in =org-mode=.
 
-   #+begin_src emacs-lisp
-     (use-package org-bullets
-       :after org
-       :hook
-       (org-mode . org-bullets-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :after org
+    :hook
+    (org-mode . org-bullets-mode))
+#+end_src
 
 ** org-beautify-theme
-   Remove colors from headings, and instead differentiate them by changing
-   their font size.
+Remove colors from headings, and instead differentiate them by changing
+their font size.
 
-   While very pretty, this theme can greatly slow down Emacs when editing an Org
-   buffer, so use with caution.
+While very pretty, this theme can greatly slow down Emacs when editing an Org
+buffer, so use with caution.
 
-   *IMPORTANT:* This theme *MUST* be loaded *AFTER* your primary Emacs theme!
-   Otherwise all of your =.org= files will look awful, with each heading
-   surrounded by big ugly boxes. See file =my-theme.org= for this theme's
-   activation.
+*IMPORTANT:* This theme *MUST* be loaded *AFTER* your primary Emacs theme!
+Otherwise all of your =.org= files will look awful, with each heading
+surrounded by big ugly boxes. See file =my-theme.org= for this theme's
+activation.
 
-   #+begin_src emacs-lisp
-     (use-package org-beautify-theme
-       ;; This plugin makes Emacs incredibly slow when editing org-mode buffers.
-       :disabled
-       :after org
-       :demand t)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package org-beautify-theme
+    ;; This plugin makes Emacs incredibly slow when editing org-mode buffers.
+    :disabled
+    :after org
+    :demand t)
+#+end_src
 
 ** org-roam
-   =org-roam= is an amazing plugin that integrates some of Roam's advanced note
-   taking features into =org-mode=. =org-roam= depends on a custom SQLite
-   database running behind the scenes to support its intelligent,
-   non-hierarchical note system. However, if you have a standard C compiler
-   installed, such as =gcc= or =clang=, =org-roam= will compile the database
-   automatically.
+=org-roam= is an amazing plugin that integrates some of Roam's advanced note
+taking features into =org-mode=. =org-roam= depends on a custom SQLite
+database running behind the scenes to support its intelligent,
+non-hierarchical note system. However, if you have a standard C compiler
+installed, such as =gcc= or =clang=, =org-roam= will compile the database
+automatically.
 
-   You will need to install the =graphviz= suite of tools in order to use
-   =org-roam='s graph functionality.
+You will need to install the =graphviz= suite of tools in order to use
+=org-roam='s graph functionality.
 
-   Because =org-roam='s nodes are just Org files, you can check your =org-roam=
-   database into your favorite version control system. Once pulled down,
-   =org-roam= will completely recreate your database from the metadata in your
-   repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam database on GitHub]].
+Because =org-roam='s nodes are just Org files, you can check your =org-roam=
+database into your favorite version control system. Once pulled down,
+=org-roam= will completely recreate your database from the metadata in your
+repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam database on GitHub]].
 
 *** Variables
-    #+begin_src emacs-lisp
-      (defvar my/org-roam-dir (file-truename (concat user-emacs-directory "roam-notes"))
-        "The directory acting as my `org-roam' database.")
-    #+end_src
+#+begin_src emacs-lisp
+  (defvar my/org-roam-dir (file-truename (concat user-emacs-directory "roam-notes"))
+    "The directory acting as my `org-roam' database.")
+#+end_src
 
 *** =use-package= specification
-    #+begin_src emacs-lisp
-      (use-package org-roam
-        :after org
-        :demand t
-        :general
-        (my/user-leader-def
-          "n c" 'org-roam-capture
-          "n f" 'org-roam-node-find
-          "n g" 'org-roam-graph   ; Need graphviz tools to generate/view graph.
-          "n i" 'org-roam-node-insert
-          "n l" 'org-roam-buffer-toggle
-          ;; Dailies
-          "n j" 'org-roam-dailies-capture-today)
-        :custom
-        ;; Set the path to the org-roam directory.
-        (org-roam-directory my/org-roam-dir)
-        ;; Automatically treat completion-at-point candidates as possible org-roam
-        ;; node names.
-        (org-roam-completion-everywhere t)
-        :init
-        ;; Acknowledge that we've upgraded from v1 to v2.
-        (setq org-roam-v2-ack t)
-        ;; I have my roam-notes directory checked in as a git repository on GitHub.
-        ;; (make-directory org-roam-directory t)
-        :config
-        ;; Automatically keep org roam session synchronized.
-        (org-roam-db-autosync-enable))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :after org
+    :demand t
+    :general
+    (my/user-leader-def
+      "n c" 'org-roam-capture
+      "n f" 'org-roam-node-find
+      "n g" 'org-roam-graph   ; Need graphviz tools to generate/view graph.
+      "n i" 'org-roam-node-insert
+      "n l" 'org-roam-buffer-toggle
+      ;; Dailies
+      "n j" 'org-roam-dailies-capture-today)
+    :custom
+    ;; Set the path to the org-roam directory.
+    (org-roam-directory my/org-roam-dir)
+    ;; Automatically treat completion-at-point candidates as possible org-roam
+    ;; node names.
+    (org-roam-completion-everywhere t)
+    :init
+    ;; Acknowledge that we've upgraded from v1 to v2.
+    (setq org-roam-v2-ack t)
+    ;; I have my roam-notes directory checked in as a git repository on GitHub.
+    ;; (make-directory org-roam-directory t)
+    :config
+    ;; Automatically keep org roam session synchronized.
+    (org-roam-db-autosync-enable))
+#+end_src
 
 ** org-super-agenda
-   Improved Org agenda that allows you to break your agenda items up into
-   sections.
+Improved Org agenda that allows you to break your agenda items up into
+sections.
 
-   #+begin_src emacs-lisp
-     (use-package org-super-agenda
-       :after org)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package org-super-agenda
+    :after org)
+#+end_src
 
 ** org-download
-   Utility for moving downloaded images into Org buffers.
+Utility for moving downloaded images into Org buffers.
 
-   #+begin_src emacs-lisp
-     (use-package org-download
-       :after org
-       :hook
-       ;; Enable org-download in dired-mode.
-       (dired-mode . org-download-enable)
-       :init
-       (setq-default org-download-image-dir
-                     (file-truename (concat (getenv "HOME") "/images/org")))
-       :config
-       (make-directory org-download-image-dir t))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package org-download
+    :after org
+    :hook
+    ;; Enable org-download in dired-mode.
+    (dired-mode . org-download-enable)
+    :init
+    (setq-default org-download-image-dir
+                  (file-truename (concat (getenv "HOME") "/images/org")))
+    :config
+    (make-directory org-download-image-dir t))
+#+end_src
 
 ** org-preview-html
-   Preview org files in Emacs rendered as HTML.
+Preview org files in Emacs rendered as HTML.
 
-   #+begin_src emacs-lisp
-     (use-package org-preview-html
-       :after org)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package org-preview-html
+    :after org)
+#+end_src
 
 ** org-tree-slide
-   Give beautiful presentations from regular Org mode buffers! This is a
-   must-have plugin for the Org enthusiast.
+Give beautiful presentations from regular Org mode buffers! This is a
+must-have plugin for the Org enthusiast.
 
-   To get started, =M-x org-tree-slide-mode=, and then use =C->= and =C-<= to
-   navigate slides.
+To get started, =M-x org-tree-slide-mode=, and then use =C->= and =C-<= to
+navigate slides.
 
-   #+begin_src emacs-lisp
-     (use-package org-tree-slide
-       :hook
-       ;; Set the default profile for org-tree-slide-mode
-       ;; Pre-defined profiles are simple, presentation, and TODO pursuit with
-       ;; narrowing.
-       (org-tree-slide-mode . org-tree-slide-presentation-profile)
-       :general
-       (general-def 'normal org-tree-slide-mode-map
-         "C->" 'org-tree-slide-move-next-tree
-         "C-<" 'org-tree-slide-move-previous-tree))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package org-tree-slide
+    :hook
+    ;; Set the default profile for org-tree-slide-mode
+    ;; Pre-defined profiles are simple, presentation, and TODO pursuit with
+    ;; narrowing.
+    (org-tree-slide-mode . org-tree-slide-presentation-profile)
+    :general
+    (general-def 'normal org-tree-slide-mode-map
+      "C->" 'org-tree-slide-move-next-tree
+      "C-<" 'org-tree-slide-move-previous-tree))
+#+end_src
 
 ** ob-mermaid
-   Generate mermaid diagrams from =org-babel= source blocks. Adding a source
-   block is easy. Simple guard your mermaid code with a code block similar to
-   this: =#+begin_src mermaid :file output_file.png=
+Generate mermaid diagrams from =org-babel= source blocks. Adding a source
+block is easy. Simple guard your mermaid code with a code block similar to
+this: =#+begin_src mermaid :file output_file.png=
 
-   Supports the following properties:
+Supports the following properties:
 
-   - =file= - Output file. It should be either *svg*, *png* or *pdf*.
-   - =width= - Width of the page (Optional).
-   - =height= - Height of the page (Optional).
-   - =theme= - Theme of the chart, could be default, forest, dark or
-     neutral (Optional).
-   - =background-color= - Background color. Example: transparent, red,
-     ‘#F0F0F0’ (Optional).
-   - =mermaid-config-file= - JSON configuration file for mermaid (Optional).
-   - =css-file= - CSS file for the page (Optional).
-   - =pupeteer-config-file= - JSON configuration file for puppeteer (Optional).
+  - =file= - Output file. It should be either *svg*, *png* or *pdf*.
+  - =width= - Width of the page (Optional).
+  - =height= - Height of the page (Optional).
+  - =theme= - Theme of the chart, could be default, forest, dark or
+    neutral (Optional).
+  - =background-color= - Background color. Example: transparent, red,
+    ‘#F0F0F0’ (Optional).
+  - =mermaid-config-file= - JSON configuration file for mermaid (Optional).
+  - =css-file= - CSS file for the page (Optional).
+  - =pupeteer-config-file= - JSON configuration file for puppeteer (Optional).
 
-   #+begin_src emacs-lisp
-     (use-package ob-mermaid
-       :after (htmlize org)
-       :custom
-       (ob-mermaid-cli-path (executable-find "mmdc")))
-   #+end_src
+    #+begin_src emacs-lisp
+      (use-package ob-mermaid
+        :after (htmlize org)
+        :custom
+        (ob-mermaid-cli-path (executable-find "mmdc")))
+    #+end_src
 
 ** ox-gfm
-   This is a small exporter based on the Markdown exporter already existing in
-   Org mode.
+This is a small exporter based on the Markdown exporter already existing in
+Org mode.
 
-   #+begin_src emacs-lisp
-     (use-package ox-gfm
-       :after org
-       :demand t
-       :config
-       (require 'ox-gfm nil t))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package ox-gfm
+    :after org
+    :demand t
+    :config
+    (require 'ox-gfm nil t))
+#+end_src
