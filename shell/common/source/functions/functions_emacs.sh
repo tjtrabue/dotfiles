@@ -149,7 +149,6 @@ __configure_gccemacs_linux() {
     "--with-modules"
     "--with-native-compilation"
     "--with-xwidgets"
-    "--with-x"
     "--with-pgtk"
     "--without-xaw3d"
     "--without-gconf"
