@@ -6,6 +6,8 @@ install_ruby_packages() {
   while IFS='' read -r line || [ -n "${line}" ]; do
     gem install "${line}"
   done <"${RUBY_PACKAGES_FILE}"
+
+  add_gem_bin_dirs_to_path
 }
 
 add_gem_bin_dirs_to_path() {

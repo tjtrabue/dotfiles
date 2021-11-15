@@ -121,7 +121,10 @@ construct_path() {
   local pathFile="${1:-${binPathFile}}"
 
   log_debug "Constructing path variable from file: ${GREEN}${pathFile}${NC}"
-  __evaluate_paths "${pathFile}" | tr '\n' ':' | sed 's/:$//'
+  __evaluate_paths "${pathFile}" |
+  sed "s|${HOME}|\${HOME}|" |
+  tr '\n' ':' |
+  sed 's/:$//'
 }
 
 # Source the LuaRocks module path.
