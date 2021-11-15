@@ -24,4 +24,23 @@ install_or_update_flutter_sdk() {
   "${destDir}/bin/flutter" doctor
 }
 
+# Flutter sometimes needs extra dependencies that `flutter doctor` cannot
+# automatically install. This function tries to take care of this shortcoming.
+install_flutter_deps() {
+  local os="$(getdistro)"
+
+  log_info "Looking for extra dependencies needed by Flutter"
+  case "${os}" in
+    "Darwin")
+      __install_flutter_deps_mac
+      ;;
+  esac
+}
+
+# Need a few extra dependencies on macOS that `flutter doctor` does not provide.
+__install_flutter_deps_mac() {
+  log_info "Installing Flutter dependencies for macOS"
+  gem install cocoapods
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
