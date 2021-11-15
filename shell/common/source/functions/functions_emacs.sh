@@ -75,6 +75,9 @@ install_gccemacs() {
     "Darwin")
       __install_gccemacs_mac
       ;;
+    *Linux*)
+      __install_gccemacs_linux__from_source
+      ;;
     *)
       err "Cannot install gccemacs for OS type: ${MAGENTA}${os}${NC}"
       return 1
@@ -82,19 +85,35 @@ install_gccemacs() {
   esac
 }
 
+# Install the native-comp feature branch of Emacs on various systems.
+# This version of Emacs is much more performant than the standard version.
 __install_gccemacs_mac() {
-  local gccEmacsPackage="$(grep "^emacs-plus" "${BREW_PACKAGES_FILE}")"
-  local installedGccEmacs="$(brew list | grep -E 'emacs-plus')"
+  local emacsPlusVersion="${EMACS_PLUS_VERSION}"
+  local emacsPlusPackageName="emacs-plus@${emacsPlusVersion}"
+  local brewInstallDir="$(brew --prefix)/opt"
+  local emacsPlusInstallDir="${brewInstallDir}/${emacsPlusPackageName}"
 
-  log_info "Installing gccemacs for macOS"
+  # Make sure the emacs-plus version environment variable has been set to an
+  # appropriate value.
+  case "${emacsPlusVersion}" in
+    '' | *[!0-9]*)
+      err "EMACS_PLUS_VERSION environment variable not set to a number."
+      return 1
+      ;;
+  esac
 
-  if [ -n "${installedGccEmacs}" ]; then
-    log_info "Removing old emacs-plus package"
-    brew uninstall "${installedGccEmacs}"
-  fi
+  log_info "Installing emacs-plus package"
 
-  log_info "Installing new emacs-plus package"
-  brew install "${gccEmacsPackage}"
+  tap_brew_casks
+
+  brew install "${emacsPlusPackageName}" \
+    --with-dbus \
+    --with-debug \
+    --with-mailutils \
+    --with-modern-purple-flat-icon \
+    --with-native-comp \
+    --with-xwidgets &&
+  ln -s "${emacsPlusInstallDir}/Emacs.app" "/Applications/"
 }
 
 __install_gccemacs_linux__from_source() {
@@ -104,12 +123,15 @@ __install_gccemacs_linux__from_source() {
 
   __clone_or_update_emacs_source_repo
   __run_autogen_for_emacs "${emacsDestDir}"
+  __configure_gccemacs_linux "${emacsDestDir}"
   __build_gccemacs_linux "${emacsDestDir}"
+  __generate_gccemacs_documentation_linux "${emacsDestDir}"
   __install_compiled_gccemacs_linux "${emacsDestDir}"
+  __install_gccemacs_documentation_linux "${emacsDestDir}"
 }
 
-# Compile gccemacs from source
-__build_gccemacs_linux() {
+# Customize gccemacs with optional features before compiling.
+__configure_gccemacs_linux() {
   local emacsInstallParentDir="${WS:-${HOME}/workspace}"
   local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
   local configurationOptions=(
@@ -140,10 +162,26 @@ __build_gccemacs_linux() {
   fi
 
   (
+    log_info "Configuring gccemacs build" &&
+    cd "${emacsDir}" &&
+    ./configure "${configurationOptions[@]}"
+  )
+}
+
+# Compile gccemacs from source
+__build_gccemacs_linux() {
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+
+  if [ ! -d "${emacsDir}" ]; then
+    err "Emacs directory not found at: ${BLUE}${emacsDir}${NC}"
+    return 1
+  fi
+
+  (
     log_info "Building gccemacs from source" &&
     cd "${emacsDir}" &&
-    ./configure "${configurationOptions[@]}" &&
-    make -j"$(nproc)" NATIVE_FAST_BOOT=1
+    make -j"$(nproc)"
   )
 
   (
@@ -160,11 +198,33 @@ __build_gccemacs_linux() {
   )
 }
 
+__generate_gccemacs_documentation_linux() {
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+
+  if [ ! -d "${emacsDir}" ]; then
+    err "Emacs directory not found at: ${BLUE}${emacsDir}${NC}"
+    return 1
+  fi
+
+  (
+    log_info "Generating documentation" &&
+    cd "${emacsDir}" &&
+    make html &&
+    make pdf
+  )
+}
+
 # We only need to run ./autogen.sh once. If we run it again, it breaks
 # incremental compilation.
 __run_autogen_for_emacs() {
   local emacsInstallParentDir="${WS:-${HOME}/workspace}"
   local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+
+  if [ ! -d "${emacsDir}" ]; then
+    err "Emacs directory not found at: ${BLUE}${emacsDir}${NC}"
+    return 1
+  fi
 
   (
     cd "${emacsDir}"
@@ -176,11 +236,33 @@ __install_compiled_gccemacs_linux() {
   local emacsInstallParentDir="${WS:-${HOME}/workspace}"
   local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
 
+  if [ ! -d "${emacsDir}" ]; then
+    err "Emacs directory not found at: ${BLUE}${emacsDir}${NC}"
+    return 1
+  fi
+
   (
     log_info "Installing Emacs" &&
     cd "${emacsDir}" &&
     sudo make install
   )
+
+  (
+    log_info "Installing Emacs documentation" &&
+    cd "${emacsDir}" &&
+    sudo make install-html &
+    sudo make install-pdf
+  )
+}
+
+__install_gccemacs_documentation_linux() {
+  local emacsInstallParentDir="${WS:-${HOME}/workspace}"
+  local emacsDir="${1:-${emacsInstallParentDir}/emacs}"
+
+  if [ ! -d "${emacsDir}" ]; then
+    err "Emacs directory not found at: ${BLUE}${emacsDir}${NC}"
+    return 1
+  fi
 
   (
     log_info "Installing Emacs documentation" &&

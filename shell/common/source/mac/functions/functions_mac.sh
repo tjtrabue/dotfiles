@@ -160,37 +160,6 @@ alias_homebrew_gcc_executables() {
   fi
 }
 
-# This is a full-featured Emacs installation, which can include many features,
-# such as native compilation (gccemacs).
-install_emacs_plus_for_macos() {
-  local emacsPlusVersion="${EMACS_PLUS_VERSION}"
-  local emacsPlusPackageName="emacs-plus@${emacsPlusVersion}"
-  local brewInstallDir="$(brew --prefix)/opt"
-  local emacsPlusInstallDir="${brewInstallDir}/${emacsPlusPackageName}"
-
-  # Make sure the emacs-plus version environment variable has been set to an
-  # appropriate value.
-  case "${emacsPlusVersion}" in
-    '' | *[!0-9]*)
-      err "EMACS_PLUS_VERSION environment variable not set to a number."
-      return 1
-      ;;
-  esac
-
-  log_info "Installing emacs-plus package"
-
-  tap_brew_casks
-
-  brew install "${emacsPlusPackageName}" \
-    --with-dbus \
-    --with-debug \
-    --with-mailutils \
-    --with-modern-purple-flat-icon \
-    --with-native-comp \
-    --with-xwidgets &&
-  ln -s "${emacsPlusInstallDir}/Emacs.app" "/Applications/"
-}
-
 # Delete and re-compile emacs-plus from source.
 upgrade_emacs_plus_for_macos() {
   local response
