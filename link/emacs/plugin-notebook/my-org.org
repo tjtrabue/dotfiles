@@ -31,7 +31,7 @@ The ubiquitous =org-mode=.
     ;; Only show headings when visiting a new Org file.
     (org-startup-folded 'fold)
     ;; Open Org mode buffers with `org-indent-mode' enabled.
-    (org-statup-indented t)
+    (org-startup-indented t)
     ;; Directory used by Org only in rare circumstances, such as when filing
     ;; away remember notes.
     (org-directory my/org-dir)
