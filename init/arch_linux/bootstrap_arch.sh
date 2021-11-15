@@ -66,7 +66,6 @@ declare UEFI_ENABLED=""
 # }}}
 # }}}
 
-
 # Helper functions {{{
 # Logging functions {{{
 log() {
@@ -289,7 +288,7 @@ info_log "Configuring host/locale information"
 genfstab -U "${MOUNT_ROOT}" >>"${MOUNT_ROOT}/etc/fstab"
 echo "${USER_HOSTNAME}" >"${MOUNT_ROOT}/etc/hostname"
 
-arch-chroot "${MOUNT_ROOT}" ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
+arch-chroot "${MOUNT_ROOT}" ln -sf /usr/share/zoneinfo/US/Central /etc/localtime
 arch-chroot "${MOUNT_ROOT}" hwclock --systohc
 arch-chroot "${MOUNT_ROOT}" sed -i -E 's/#(en_US\.UTF-8\sUTF-8)/\1/' /etc/locale.gen
 arch-chroot "${MOUNT_ROOT}" locale-gen
@@ -406,6 +405,9 @@ arch-chroot "$MOUNT_ROOT" grub-mkconfig -o /boot/grub/grub.cfg
 # Enable other services {{{
 # CUPS for printer integration
 arch-chroot "${MOUNT_ROOT}" systemctl enable cups
+
+# Enable Network Time Protocol daemon
+arch-chroot "${MOUNT_ROOT}" systemctl enable ntpd
 # }}}
 
 # Enable magic SysRq shorcuts {{{

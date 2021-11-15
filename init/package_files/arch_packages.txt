@@ -109,6 +109,7 @@ noto-fonts
 noto-fonts-extra
 npm
 ntfs-3g
+ntp
 numlockx
 openjdk-doc
 openjdk8-doc
