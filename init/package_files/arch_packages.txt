@@ -189,6 +189,7 @@ xorg-xinput
 xscreensaver
 xsel
 xterm
+yq
 zathura
 zathura-pdf-poppler
 zsh
