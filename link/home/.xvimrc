@@ -1,5 +1,35 @@
 " Configuration file for the XVim/XVim2 Vim emulator plugins for Apple Xcode.
 
+" Settings {{{
+
+" Line numbers
+set number
+set relativenumber
+
+" Wrap next/previous search around once the last/first term has been reached.
+set wrapscan
+" Assume case insensitive search unless an upper case letter is typed.
+set smartcase
+" Highlight search terms
+set hlsearch
+" Highlight incremental search term in buffer as it is typed
+set incsearch
+
+" Replace tabs with spaces
+set expandtab
+
+" Make cursor blink
+set blinkcursor
+
+" GUI Options:
+" r : Show vertical scrollbar
+" b : Show horizontal scrollbar
+set guioptions=r
+
+" Time in milliseconds to wait for a mapped key sequence to complete.
+set timeoutlen=500
+" }}}
+
 " Mappings {{{
 inoremap jk <Esc>
 " }}}
