@@ -27,9 +27,7 @@ change_alacritty_theme() {
   # Allow the user to select a theme with a fuzzy finder program if they did not
   # supply a theme name on the command line.
   if [ -z "${themeName}" ]; then
-    themeName="$(fd -t f --exec echo '{/.}' \; '.' "${alacrittyThemesDir}" |
-      sort |
-      fzf)"
+    themeName="$(__fuzzy_select_theme_from_dir "${alacrittyThemesDir}")"
   fi
 
   # If themeName is still empty after prompting the user, assume the user wants
@@ -53,6 +51,38 @@ change_alacritty_theme() {
   select(fileIndex==0)' \
     "${alacrittyConfigFile}" \
     "${newThemeFile}"
+}
+
+change_kitty_theme() {
+  local themeName="${1}"
+  local kittyThemesDir="${WS}/iTerm2-Color-Schemes/kitty"
+  local kittyThemeFile="${USER_CONF:-${HOME}/.config}/kitty/theme.conf"
+  local newThemeFile
+
+  if [ ! -d "${kittyThemesDir}" ]; then
+    err "Kitty themes dir not found at: ${BLUE}${kittyThemesDir}${NC}"
+    return 1
+  fi
+
+  if [ -z "${themeName}" ]; then
+    themeName="$(__fuzzy_select_theme_from_dir "${kittyThemesDir}")"
+  fi
+
+  # If themeName is still empty after prompting the user, assume the user wants
+  # to exit the program.
+  if [ -z "${themeName}" ]; then
+    return 0
+  fi
+
+  newThemeFile="${kittyThemesDir}/${themeName}.conf"
+
+  if [ ! -f "${newThemeFile}" ]; then
+    err "Theme file ${BLUE}${newThemeFile}${NC} not found"
+    return 2
+  fi
+
+  # Copy the selected theme file to ~/.config/kitty/theme.conf
+  cp -f "${newThemeFile}" "${kittyThemeFile}"
 }
 
 __clone_iterm2_color_schemes() {
@@ -102,6 +132,19 @@ __iterm2_color_schemes_dir_exists() {
       "${BLUE}${iterm2ColorSchemesDir}${NC}"
     return 1
   fi
+}
+
+__fuzzy_select_theme_from_dir() {
+  local themeDir="${1}"
+
+  if [ ! -d "${themeDir}" ]; then
+    err "No theme directory found at: ${BLUE}${themeDir}${NC}"
+    return 1
+  fi
+
+  fd -t f --exec echo '{/.}' \; '.' "${themeDir}" |
+  sort |
+  fzf
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
