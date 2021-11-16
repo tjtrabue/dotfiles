@@ -53,6 +53,8 @@ change_alacritty_theme() {
     "${newThemeFile}"
 }
 
+# Change the content of ~/.config/kitty/theme.conf to that of the given theme
+# name.
 change_kitty_theme() {
   local themeName="${1}"
   local kittyThemesDir="${WS}/iTerm2-Color-Schemes/kitty"
