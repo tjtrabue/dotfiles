@@ -15,16 +15,19 @@ change_alacritty_theme() {
   local alacrittyThemesDir="${WS}/iTerm2-Color-Schemes/alacritty"
   local newThemeFile="${alacrittyThemesDir}/${themeName}.yml"
 
-  if [ -z "${themeName}" ]; then
-    err "No theme name provided"
+  if [ ! -x "$(command -v yq)" ]; then
+    err "yq command line tool not found on PATH"
     return 1
+  elif [ -z "${themeName}" ]; then
+    err "No theme name provided"
+    return 2
   elif [ ! -d "${alacrittyThemesDir}" ]; then
     err "Could not find alacritty themes dir at:" \
       "${BLUE}${alacrittyThemesDir}${NC}"
-    return 2
+    return 3
   elif [ ! -f "${newThemeFile}" ]; then
     err "Theme file ${BLUE}${newThemeFile}${NC} not found"
-    return 3
+    return 4
   fi
 
   # Update the alacritty.yml file's "colors" attribute.
