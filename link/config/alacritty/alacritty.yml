@@ -204,8 +204,8 @@ font:
 #     white:   '0xFAFAFA'
 #   xt_with_bright_colors: true
 
-# Doom One Theme
 colors:
+    # Doom One colors
     bright:
         black: '#000000'
         blue: '#a9a1e1'

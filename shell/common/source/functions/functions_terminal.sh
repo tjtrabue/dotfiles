@@ -8,6 +8,32 @@ init_terminal_themes() {
   __link_iterm2_color_schemes_to_other_terminal_theme_dirs
 }
 
+# Update the alacritty.yml file's colors based on a given theme name.
+change_alacritty_theme() {
+  local themeName="${1}"
+  local alacrittyConfigFile="${USER_CONF:-${HOME}/.config}/alacritty/alacritty.yml"
+  local alacrittyThemesDir="${WS}/iTerm2-Color-Schemes/alacritty"
+  local newThemeFile="${alacrittyThemesDir}/${themeName}.yml"
+
+  if [ -z "${themeName}" ]; then
+    err "No theme name provided"
+    return 1
+  elif [ ! -d "${alacrittyThemesDir}" ]; then
+    err "Could not find alacritty themes dir at:" \
+      "${BLUE}${alacrittyThemesDir}${NC}"
+    return 2
+  elif [ ! -f "${newThemeFile}" ]; then
+    err "Theme file ${BLUE}${newThemeFile}${NC} not found"
+    return 3
+  fi
+
+  # Update the alacritty.yml file's "colors" attribute.
+  yq eval-all -i 'select(fileIndex==0).colors = select(fileIndex==1) |
+  select(fileIndex==0)' \
+    "${alacrittyThemesDir}" \
+    "${newThemeFile}"
+}
+
 __clone_iterm2_color_schemes() {
   local gitUrl="https://github.com/mbadolato/iTerm2-Color-Schemes.git"
   local destDir="${WS:-${HOME}/workspace}/$(basename "${gitUrl%.git}")"
