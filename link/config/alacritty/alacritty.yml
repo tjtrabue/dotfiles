@@ -77,164 +77,119 @@
 # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
 # Set this to `None` to use the default theme variant.
 #gtk_theme_variant: None
-
 scrolling:
-    # Maximum number of lines in the scrollback buffer.
-    # Specifying '0' will disable scrolling.
-    history: 10000
-
-    # Number of lines the viewport will move for every line scrolled when
-    # scrollback is enabled (history > 0).
-    #multiplier: 3
-    # Scroll to the bottom when new text is written to the terminal.
-    #auto_scroll: false
-
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 10000
+  # Number of lines the viewport will move for every line scrolled when
+  # scrollback is enabled (history > 0).
+  #multiplier: 3
+  # Scroll to the bottom when new text is written to the terminal.
+  #auto_scroll: false
 # NOTE: tabspace option has been removed (it is now always equal to 8)
 
 # Font configuration
 font:
-    # Normal (roman) font face
-    normal:
-        # Font family
-        #
-        # Default:
-        #   - (macOS) Menlo
-        #   - (Linux/BSD) monospace
-        #   - (Windows) Consolas
-        family: "Hasklug Nerd Font"
-
-        # The `style` can be specified to pick a specific face.
-        style: "Semibold"
-
-    # Bold font face
-    bold:
-        # Font family
-        #
-        # If the bold family is not specified, it will fall back to the
-        # value specified for the normal font.
-        family: "Hasklug Nerd Font"
-
-        # The `style` can be specified to pick a specific face.
-        style: "Bold"
-
-    # Italic font face
-    italic:
-        # Font family
-        #
-        # If the italic family is not specified, it will fall back to the
-        # value specified for the normal font.
-        family: "Hasklug Nerd Font"
-
-        # The `style` can be specified to pick a specific face.
-        style: "Italic"
-
-    # Bold italic font face
-    bold_italic:
-        # Font family
-        #
-        # If the bold italic family is not specified, it will fall back to the
-        # value specified for the normal font.
-        family: "Hasklug Nerd Font"
-
-        # The `style` can be specified to pick a specific face.
-        style: "Semibold Italic"
-
-    # Point size
-    size: 7.5
-
-    # Offset is the extra space around each character. `offset.y` can be thought of
-    # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
-    #offset:
-    #  x: 0
-    #  y: 0
-    # Glyph offset determines the locations of the glyphs within their cells with
-    # the default being at the bottom. Increasing `x` moves the glyph to the right,
-    # increasing `y` moves the glyph upwards.
-    #glyph_offset:
-    #  x: 0
-    #  y: 0
-    # Thin stroke font rendering (macOS only)
+  # Normal (roman) font face
+  normal:
+    # Font family
     #
-    # Thin strokes are suitable for retina displays, but for non-retina screens
-    # it is recommended to set `use_thin_strokes` to `false`
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    family: "Hasklug Nerd Font"
+    # The `style` can be specified to pick a specific face.
+    style: "Semibold"
+  # Bold font face
+  bold:
+    # Font family
     #
-    # macOS >= 10.14.x:
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: "Hasklug Nerd Font"
+    # The `style` can be specified to pick a specific face.
+    style: "Bold"
+  # Italic font face
+  italic:
+    # Font family
     #
-    # If the font quality on non-retina display looks bad then set
-    # `use_thin_strokes` to `true` and enable font smoothing by running the
-    # following command:
-    #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
+    # If the italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: "Hasklug Nerd Font"
+    # The `style` can be specified to pick a specific face.
+    style: "Italic"
+  # Bold italic font face
+  bold_italic:
+    # Font family
     #
-    # This is a global setting and will require a log out or restart to take
-    # effect.
-    #use_thin_strokes: true
-
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: "Hasklug Nerd Font"
+    # The `style` can be specified to pick a specific face.
+    style: "Semibold Italic"
+  # Point size
+  size: 7.5
+  # Offset is the extra space around each character. `offset.y` can be thought of
+  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+  #offset:
+  #  x: 0
+  #  y: 0
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increasing `x` moves the glyph to the right,
+  # increasing `y` moves the glyph upwards.
+  #glyph_offset:
+  #  x: 0
+  #  y: 0
+  # Thin stroke font rendering (macOS only)
+  #
+  # Thin strokes are suitable for retina displays, but for non-retina screens
+  # it is recommended to set `use_thin_strokes` to `false`
+  #
+  # macOS >= 10.14.x:
+  #
+  # If the font quality on non-retina display looks bad then set
+  # `use_thin_strokes` to `true` and enable font smoothing by running the
+  # following command:
+  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
+  #
+  # This is a global setting and will require a log out or restart to take
+  # effect.
+  #use_thin_strokes: true
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_te# Selection colors
 
-# Purify theme
-# colors:
-#   selection:
-#     text:       '0xFAFAFA'
-#     background: '0x252834'
-
-#   # Normal colors
-#   primary:
-#     background: '0x313440'
-#     foreground: '0xFAFAFA'
-#   normal:
-#     black:   '0x282C34'
-#     red:     '0xFF6059'
-#     green:   '0x5FFF87'
-#     yellow:  '0xFFFF87'
-#     blue:    '0x5FAFFF'
-#     magenta: '0xAF87FF'
-#     cyan:    '0x5FAFFF'
-#     white:   '0xFAFAFA'
-
-#   # Bright colors
-#   bright:
-#     black:   '0x282C34'
-#     red:     '0xFF6059'
-#     green:   '0x5FFF87'
-#     yellow:  '0xFFFF87'
-#     blue:    '0x5FAFFF'
-#     magenta: '0xAF87FF'
-#     cyan:    '0x5FAFFF'
-#     white:   '0xFAFAFA'
-#   xt_with_bright_colors: true
-
 colors:
-    # Doom One colors
+  # Colors (DoomOne)
+  colors:
     bright:
-        black: '#000000'
-        blue: '#a9a1e1'
-        cyan: '#51afef'
-        green: '#99bb66'
-        magenta: '#c678dd'
-        red: '#ff6655'
-        white: '#bfbfbf'
-        yellow: '#ecbe7b'
+      black: '#000000'
+      blue: '#a9a1e1'
+      cyan: '#51afef'
+      green: '#99bb66'
+      magenta: '#c678dd'
+      red: '#ff6655'
+      white: '#bfbfbf'
+      yellow: '#ecbe7b'
     cursor:
-        cursor: '#51afef'
-        text: '#1b1b1b'
+      cursor: '#51afef'
+      text: '#1b1b1b'
     normal:
-        black: '#000000'
-        blue: '#a9a1e1'
-        cyan: '#51afef'
-        green: '#98be65'
-        magenta: '#c678dd'
-        red: '#ff6c6b'
-        white: '#bbc2cf'
-        yellow: '#ecbe7b'
+      black: '#000000'
+      blue: '#a9a1e1'
+      cyan: '#51afef'
+      green: '#98be65'
+      magenta: '#c678dd'
+      red: '#ff6c6b'
+      white: '#bbc2cf'
+      yellow: '#ecbe7b'
     primary:
-        background: '#282c34'
-        foreground: '#bbc2cf'
+      background: '#282c34'
+      foreground: '#bbc2cf'
     selection:
-        background: '#42444b'
-        text: '#bbc2cf'
-    xt_with_bright_colors: true
-
+      background: '#42444b'
+      text: '#bbc2cf'
+  xt_with_bright_colors: true
 # Visual Bell
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once

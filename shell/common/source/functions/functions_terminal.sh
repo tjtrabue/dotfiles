@@ -13,7 +13,7 @@ change_alacritty_theme() {
   local themeName="${1}"
   local alacrittyConfigFile="${USER_CONF:-${HOME}/.config}/alacritty/alacritty.yml"
   local alacrittyThemesDir="${WS}/iTerm2-Color-Schemes/alacritty"
-  local newThemeFile="${alacrittyThemesDir}/${themeName}.yml"
+  local newThemeFile
 
   if [ ! -x "$(command -v yq)" ]; then
     err "yq command line tool not found on PATH"
@@ -38,6 +38,9 @@ change_alacritty_theme() {
     return 0
   fi
 
+  # Put together the full path to the theme file
+  newThemeFile="${alacrittyThemesDir}/${themeName}.yml"
+
   if [ ! -f "${newThemeFile}" ]; then
     err "Theme file ${BLUE}${newThemeFile}${NC} not found"
     return 3
@@ -46,7 +49,7 @@ change_alacritty_theme() {
   # Update the alacritty.yml file's "colors" attribute.
   yq eval-all -i 'select(fileIndex==0).colors = select(fileIndex==1) |
   select(fileIndex==0)' \
-    "${alacrittyThemesDir}" \
+    "${alacrittyConfigFile}" \
     "${newThemeFile}"
 }
 
