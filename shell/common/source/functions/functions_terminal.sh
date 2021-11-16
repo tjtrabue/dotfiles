@@ -46,6 +46,8 @@ change_alacritty_theme() {
     return 3
   fi
 
+  log_info "Updating Alacritty theme to: ${CYAN}${themeName}${NC}"
+
   # Update the alacritty.yml file's "colors" attribute.
   yq eval-all -i 'select(fileIndex==0).colors = select(fileIndex==1) |
   select(fileIndex==0)' \
