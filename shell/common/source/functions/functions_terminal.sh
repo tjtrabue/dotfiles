@@ -138,15 +138,29 @@ __iterm2_color_schemes_dir_exists() {
 
 __fuzzy_select_theme_from_dir() {
   local themeDir="${1}"
+  local fuzzyFindCmd
+  local fileSearchCmd
+  local finalSelectCmd
 
   if [ ! -d "${themeDir}" ]; then
     err "No theme directory found at: ${BLUE}${themeDir}${NC}"
     return 1
   fi
 
-  fd -t f --exec echo '{/.}' \; '.' "${themeDir}" |
-  sort |
-  fzf
+  if [ -x "$(command -v fzf)" ]; then
+    fuzzyFindCmd="fzf"
+  else
+    fuzzyFindCmd="fzy"
+  fi
+
+  if [ -x "$(command -v fd)" ]; then
+    fileSearchCmd="fd -t f --exec echo '{/.}' \; '.' ${themeDir}"
+  else
+    fileSearchCmd="find ${themeDir} -type f -exec basename '{}' \; | sed 's/\..*\$//'"
+  fi
+
+  finalSelectCmd="${fileSearchCmd} | sort | ${fuzzyFindCmd}"
+  eval "${finalSelectCmd}"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
