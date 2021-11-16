@@ -18,10 +18,12 @@ change_alacritty_theme() {
   if [ ! -x "$(command -v yq)" ]; then
     err "yq command line tool not found on PATH"
     return 1
-  elif [ ! -d "${alacrittyThemesDir}" ]; then
-    err "Could not find alacritty themes dir at:" \
+  fi
+
+  if [ ! -d "${alacrittyThemesDir}" ]; then
+    warn "alacritty themes directory not found at at:" \
       "${BLUE}${alacrittyThemesDir}${NC}"
-    return 2
+    init_terminal_themes
   fi
 
   # Allow the user to select a theme with a fuzzy finder program if they did not
@@ -62,8 +64,8 @@ change_kitty_theme() {
   local newThemeFile
 
   if [ ! -d "${kittyThemesDir}" ]; then
-    err "Kitty themes dir not found at: ${BLUE}${kittyThemesDir}${NC}"
-    return 1
+    warn "Kitty themes directory not found at: ${BLUE}${kittyThemesDir}${NC}"
+    init_terminal_themes
   fi
 
   if [ -z "${themeName}" ]; then
