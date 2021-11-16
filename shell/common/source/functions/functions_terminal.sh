@@ -18,16 +18,29 @@ change_alacritty_theme() {
   if [ ! -x "$(command -v yq)" ]; then
     err "yq command line tool not found on PATH"
     return 1
-  elif [ -z "${themeName}" ]; then
-    err "No theme name provided"
-    return 2
   elif [ ! -d "${alacrittyThemesDir}" ]; then
     err "Could not find alacritty themes dir at:" \
       "${BLUE}${alacrittyThemesDir}${NC}"
-    return 3
-  elif [ ! -f "${newThemeFile}" ]; then
+    return 2
+  fi
+
+  # Allow the user to select a theme with a fuzzy finder program if they did not
+  # supply a theme name on the command line.
+  if [ -z "${themeName}" ]; then
+    themeName="$(fd -t f --exec echo '{/.}' \; '.' "${alacrittyThemesDir}" |
+      sort |
+      fzf)"
+  fi
+
+  # If themeName is still empty after prompting the user, assume the user wants
+  # to exit the program.
+  if [ -z "${themeName}" ]; then
+    return 0
+  fi
+
+  if [ ! -f "${newThemeFile}" ]; then
     err "Theme file ${BLUE}${newThemeFile}${NC} not found"
-    return 4
+    return 3
   fi
 
   # Update the alacritty.yml file's "colors" attribute.
