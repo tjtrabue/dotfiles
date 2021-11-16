@@ -27,8 +27,8 @@ cmp.setup(
       ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
       -- Use C-j and C-k to cycle forward or backward through completion
       -- candidates.
-      ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
-      ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
+      ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "c", "s"}),
+      ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "c", "s"}),
       ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), {"i", "c"}),
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), {"i", "c"}),
       ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
