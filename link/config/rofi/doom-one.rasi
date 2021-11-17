@@ -16,9 +16,9 @@
   /* selection */
 	base02: #282c34;
   /* current line */
-	base03: #bbc2cf;
+	base03: #3f444a;
   /* comment */
-	base04: #51afef;
+	base04: #3f444a;
   /* foreground */
 	base05: #bbc2cf;
 	base06: #bbc2cf;
@@ -43,8 +43,9 @@
 
 	spacing: 0;
 	background-color: transparent;
+	text-color: @base05;
 
-	font: "Roboto Mono 13";
+	font: "NotoSansDisplay Nerd Font 13";
 }
 
 window {
