@@ -1,4 +1,4 @@
-// For documentation on .rasi syntax, look at 'man rofi-theme'
+// FdotfilesPathFileor documentation on .rasi syntax, look at 'man rofi-theme'
 // RASI = Rofi Advanced Style Information
 
 // Comments are C/C++ style: either // or /**/ style.
@@ -57,7 +57,7 @@ configuration {
 /*	window-format: "{w}    {c}   {t}";*/
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
-	theme: "tomorrow-night-eighties";
+	theme: "slate";
 /*	color-normal: ;*/
 /*	color-urgent: ;*/
 /*	color-active: ;*/
