@@ -36,7 +36,7 @@ add_bash_completions() {
 # NOTE ABOUT ZSH: Install and activate Zsh completions with a plugin manager,
 #                 such as zplug.
 add_zsh_completions() {
-  # Zsh has built-in support for git completions.
+  __init_zsh_completions
   __add_zsh_git_completions
   __add_extra_zsh_completions
   __add_asdf_completions_for_bash_zsh
@@ -45,6 +45,13 @@ add_zsh_completions() {
 # Add extra Fish shell completions.
 add_fish_completions() {
   __add_asdf_completions_for_fish
+}
+
+# Initialize the Zsh completion system manually. This is sometimes necessary, as
+# Zsh does not automatically activate its completions at first.
+__init_zsh_completions() {
+  autoload -Uz compinit
+  compinit
 }
 
 # Download extra Zsh completions for git.
@@ -68,12 +75,13 @@ __add_zsh_git_completions() {
 
   zstyle ':completion:*:*:git:*' script "${bashCompletionFile}"
 
-  # __add_custom_zsh_git_completions
+  __add_custom_zsh_git_completions
 }
 
 # Add Zsh completions for custom Git functions from this repository.
 __add_custom_zsh_git_completions() {
-  zstyle ':completion::complete:git-checkout::' user-commands sw:'switch branch'
+  # We want `sw` to autocomplete Git refs, such as branches and tags.
+  compdef _git sw=git-branch
 }
 
 # Install additional Zsh command line completions

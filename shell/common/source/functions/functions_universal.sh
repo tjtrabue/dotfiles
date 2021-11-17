@@ -177,6 +177,17 @@ EOF
   done
 }
 
+# Test if a given name is a registered function in the current shell.
+isfunc() {
+  local funcName="${1}"
+
+  if typeset -f "${funcName}" >>/dev/null 2>&1; then
+    return 0
+  fi
+
+  return 1
+}
+
 ################################################################################
 ##                             Functions taken from                           ##
 ##                            mathiasbynens/dotfiles                          ##
