@@ -4,6 +4,7 @@ alacritty
 alsa-firmware
 alsa-plugins
 alsa-utils
+android-tools
 arandr
 arc-gtk-theme
 arc-icon-theme

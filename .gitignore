@@ -226,6 +226,11 @@ link/config/kitty/kitty-themes
 link/config/flutter/tool_state
 # }}}
 
+# Android Development Environment {{{
+link/config/Android\ Open\ Source\ Project
+link/config/Google
+# }}}
+
 # OS X / macOS {{{
 
 # Thumbnail cache files
