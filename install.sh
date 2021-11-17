@@ -277,8 +277,11 @@ link_zdotdir() {
 
 # Copy one-time transfer files.
 copy_dotfiles() {
-  log_info "Copying dotfiles"
-  find "${DOTFILES_COPY}" -maxdepth 1 -mindepth 1 -type f \
+  local oneTimeTransfersDir="${DOTFILES_COPY}/dotfiles_to_copy"
+
+  log_info "Copying dotfiles from: ${BLUE}${oneTimeTransfersDir}${NC}"
+
+  find "${oneTimeTransfersDir}" -maxdepth 1 -mindepth 1 -type f \
     -exec cp -f '{}' "${TARGET_HOME}/" \;
   log_info "Copying complete"
 }

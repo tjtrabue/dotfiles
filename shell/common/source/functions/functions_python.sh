@@ -65,12 +65,23 @@ __python3_pip_installed() {
   python3 -m pip --version >>/dev/null 2>&1
 }
 
-# Install pyenv for managing python environments.
-install_pyenv() {
-  local pyenvHome="${PYENV_DIR:-${HOME}/.pyenv}"
+# Install or update pyenv for managing python versions.
+install_or_update_pyenv() {
+  local pyenvDir="${PYENV_DIR:-${HOME}/.pyenv}"
+  if [ -d "${pyenvDir}" ]; then
+    __update_pyenv
+  else
+    __install_pyenv
+  fi
+}
 
-  __install_tool_from_url_and_script "pyenv" "${pyenvHome}" \
-    "https://pyenv.run"
+# Install the latest version of Python with pyenv.
+install_latest_python() {
+  local latestPythonVersion="$(pyenv install --list |
+  sed 's/^\s*//' | grep '^3' | tail -1)"
+
+  pyenv install "${latestPythonVersion}"
+  pyenv global "${latestPythonVersion}"
 }
 
 # Prepare Python environment for the current shell.
@@ -78,7 +89,8 @@ src_python_for_profile() {
   local pyenvHome="${PYENV_ROOT:-${HOME}/.pyenv}"
 
   if ! __tool_installed "pyenv" "${pyenvHome}"; then
-    install_pyenv
+    install_or_update_pyenv
+    install_latest_python
   fi
 
   if [ "$(command -v pyenv)" != "" ]; then
@@ -95,6 +107,19 @@ get_python2_version() {
 
 get_python3_version() {
   python3 --version 2>&1 | awk '{print $2}'
+}
+
+# Install pyenv for managing python environments.
+__install_pyenv() {
+  local pyenvHome="${PYENV_DIR:-${HOME}/.pyenv}"
+
+  __install_tool_from_url_and_script "pyenv" "${pyenvHome}" \
+    "https://pyenv.run"
+}
+
+__update_pyenv() {
+  log_info "Updating pyenv to latest version"
+  pyenv update
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
