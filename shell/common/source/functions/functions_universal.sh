@@ -10,21 +10,6 @@ func() {
   fi
 }
 
-# Exit with 0 status if input name is a shell function.
-# Otherwise, exit with nonzero status.
-funcp() {
-  local LC_ALL=C
-  local funcName="${1}"
-
-  if [ -z "${funcName}" ]; then
-    err "No function name provided."
-    return 1
-  fi
-  {
-    type -t "${funcName}" | grep -q "function"
-  } &>/dev/null
-}
-
 # Returns the index of an array element
 # Syntax: get_index array_name (no $ in front of array name) $element
 get_index() {
@@ -177,9 +162,16 @@ EOF
   done
 }
 
-# Test if a given name is a registered function in the current shell.
+# Test if a given name is a registered function in the current shell. Should
+# work for any POSIX shell.
+# Return 0 is {funcName} is a function name. Return 1 otherwise.
 isfunc() {
   local funcName="${1}"
+
+  if [ -z "${funcName}" ]; then
+    err "No function name provided"
+    return 2
+  fi
 
   if typeset -f "${funcName}" >>/dev/null 2>&1; then
     return 0

@@ -27,6 +27,7 @@ add_bash_completions() {
 
   # Add extra completions to special command aliases
   __add_git_alias_completions
+  __add_custom_zsh_git_completions
   __add_docker_alias_completions
   __add_sdkman_completions
   __add_asdf_completions_for_bash_zsh
@@ -118,7 +119,7 @@ __add_git_alias_completions() {
   __add_completions_to_command_alias "git" "g"
 
   # Add more specific git alias completions
-  if funcp "__git_complete"; then
+  if isfunc "__git_complete"; then
     __add_git_command_alias_completions "add" "ga" "_git_add"
     __add_git_command_alias_completions "branch" "gb" "_git_branch"
     __add_git_command_alias_completions "commit" "gc" "_git_commit"
@@ -153,6 +154,13 @@ __add_git_command_alias_completions() {
 
   eval "alias ${cmdAlias}='git ${cmd}'"
   eval "__git_complete ${cmdAlias} ${completionFunc}"
+}
+
+# Here we add Bash completions for custom Git functions that we have written.
+__add_custom_bash_git_completions() {
+  if isfunc "__git_complete"; then
+    __git_complete sw _git_branch
+  fi
 }
 
 # Add lots of cool docker completions to aliased docker commands.
@@ -218,7 +226,7 @@ __add_completions_to_command_alias() {
   # Actually create the alias before we add completions.
   eval "alias ${cmdAlias}='${cmd}'"
 
-  if funcp "_completion_loader"; then
+  if isfunc "_completion_loader"; then
     # Use the dynamic completion loader function included with bash-completion
     # if available.
     _completion_loader "${cmd}"
