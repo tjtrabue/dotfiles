@@ -158,6 +158,7 @@ add_extra_paths_to_path_file() {
 # repository.
 pathsync() {
   local pathFile="${1:-${PATH_FILE}}"
+  local dotPath="${DOTFILES_COPY}/dotfiles_to_copy/.path"
 
   # Backup the current path file just in case.
   if [ -f "${pathFile}" ]; then
@@ -165,7 +166,7 @@ pathsync() {
     cp "${pathFile}"{,.bak}
   fi
 
-  cat "${DOTFILES_COPY}/.path" >>"${pathFile}"
+  cat "${dotPath}" >>"${pathFile}"
   add_extra_paths_to_path_file
   rmduplines "${pathFile}"
 }

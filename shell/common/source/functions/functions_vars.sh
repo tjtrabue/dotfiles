@@ -10,7 +10,7 @@
 # settings if need be.
 varsync() {
   local dotCopy="${DOTFILES_COPY:-${DOTFILES_HOME}/copy}"
-  local dotVars="${dotCopy}/.vars"
+  local dotVars="${dotCopy}/dotfiles_to_copy/.vars"
   local userVars="${HOME}/.vars"
 
   if [ ! -f "${dotVars}" ]; then
