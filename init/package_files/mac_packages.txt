@@ -48,6 +48,7 @@ parallel
 pyenv
 ranger
 rclone
+rectangle
 ripgrep
 roswell
 screen
