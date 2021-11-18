@@ -135,8 +135,11 @@ set ignorecase
 
 " Turn on case-sensitivity if user types an upper-case letter
 set smartcase
+
+" Make searches wrap around the end of file
+set wrapscan
 " }}}
-"
+
 " Tabs and Spaces {{{
 " Translate tabs to spaces
 set expandtab
