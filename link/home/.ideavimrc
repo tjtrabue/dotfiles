@@ -385,7 +385,7 @@ nmap gf <Action>(Forward)
 " }}}
 
 " NERDTree {{{
-nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>nt :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFocus<CR>
 nnoremap <leader>ns :NERDTreeFind<CR>
 nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
