@@ -315,7 +315,6 @@ nnoremap <leader>a :action GotoAction<CR>
 nnoremap <leader>b :action ShowNavBar<CR>
 nnoremap <leader>f :action GotoFile<CR>
 nnoremap <leader>h :action CallHierarchy<CR>
-nnoremap <leader>o :action GotoSymbol<CR>
 nnoremap <leader>s :action GotoRelated<CR>
 nnoremap <leader>u :action FindUsages<CR>
 nnoremap <c-s> :action FileStructurePopup<CR>
