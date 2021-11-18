@@ -323,6 +323,8 @@ nnoremap gV `[v`]
 " vim - use Vim handler
 " }}}
 
+sethandler <C-n> i:ide n-v:vim
+sethandler <C-p> i:ide n-v:vim
 sethandler <C-j> i:ide n-v:vim
 sethandler <C-k> i:ide n-v:vim
 " }}}
@@ -364,7 +366,7 @@ nmap <leader>o <Action>(OptimizeImports)
 " Searching and Source Code Navigation {{{
 nmap <C-/> <Action>(FindInPath)
 nmap <C-a> <Action>(GotoAction)
-nmap <C-f> <Action>(GotoFile)
+nmap <C-p> <Action>(GotoFile)
 nmap <leader>a <Action>(GotoAction)
 nmap <leader>b <Action>(ShowNavBar)
 nmap <leader>f <Action>(GotoFile)
