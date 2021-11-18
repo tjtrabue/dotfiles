@@ -298,6 +298,35 @@ nnoremap k gk
 nnoremap gV `[v`]
 " }}}
 
+" sethandler {{{
+
+" Description of sethandler {{{
+" IdeaVim allows defining handlers for the shortcuts that exist for both IDE
+" and Vim (e.g. <C-C>).
+"
+" This option consist of an optional shortcut and a list of space separated
+" list of handlers:
+"   key mode-list:handler mode-list:handler ...
+"
+" The mode-list is a dash separated list of modes that is similar to guicursor
+" notation and defines the following modes:
+"
+" n - normal mode
+" i - insert mode
+" x - visual mode
+" v - visual and select modes
+" a - all modes
+"
+" The handler is an argument that may accept the following values:
+"
+" ide - use IDE handler
+" vim - use Vim handler
+" }}}
+
+sethandler <C-j> i:ide n-v:vim
+sethandler <C-k> i:ide n-v:vim
+" }}}
+
 " Normal Mode Mappings {{{
 
 " Editing and Reloading the ~/.ideavimrc file
@@ -368,6 +397,15 @@ inoremap jk <ESC>
 " Move lines with Alt-j and Alt-k
 inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
+
+" Cycle completion
+
+" NOTE: Broken in IntelliJ 2020
+"       Now you have to go to: Settings > Keymap, and map C-j and C-k to Down
+"       and Up, respectively. You also need to make sure that C-j and C-k are
+"       handled by the IDE in insert mode, instead of being handled by Vim.
+" imap <C-j> <Action>(HippieCompletion)
+" imap <C-k> <Action>(HippieBackwardCompletion)
 " }}}
 
 " Visual Mode Mappings {{{
