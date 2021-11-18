@@ -11,6 +11,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'kana/vim-textobj-entire'
 Plug 'machakann/vim-highlightedyank'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'preservim/nerdtree'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-commentary'
@@ -61,7 +62,22 @@ set hidden
 " Remember info about open buffers on close
 set viminfo^=%
 
+" Time in milliseconds to wait for a key sequence to complete.
+set timeoutlen=800
+" }}}
+
+" IntelliJ specific settings {{{
+
+" Make the IDE perform the join command.
 set ideajoin
+
+" Define the mode that would be enabled during the refactoring
+" (renaming, live template, introduce variable, etc).
+"
+" Use one of the following values:
+"   keep  - keep the mode that was enabled before starting a refactoring
+"   select - start refactoring in select mode
+"   visual - start refactoring in visual mode
 set idearefactormode=keep
 " }}}
 
@@ -211,6 +227,9 @@ set ignorecase
 
 " Turn on case-sensitivity if user types an upper-case letter
 set smartcase
+
+" Searches wrap around the end of file.
+set wrapscan
 " }}}
 
 " Tabs and Spaces {{{
@@ -283,10 +302,7 @@ nnoremap gV `[v`]
 
 " Editing and Reloading the ~/.ideavimrc file
 nnoremap <leader>e :e ~/.ideavimrc<CR>
-nnoremap <leader>R :action IdeaVim.ReloadVimRc.reload<CR>
-
-" Use 'ZC' to enter command mode
-nnoremap ZC :
+nnoremap <leader>R :source ~/.ideavimrc<CR>
 
 " Move lines with Alt-j and Alt-k
 nnoremap <A-j> :m .+1<CR>==
@@ -296,38 +312,53 @@ nnoremap <A-k> :m .-2<CR>==
 " This makes 'Y' behave more like other 'capital letter' commands.
 nnoremap Y y$
 
-" Navigate IntelliJ editor tabs with vim-unimpaired style bindings.
-nnoremap [b :action PreviousTab<CR>
-nnoremap ]b :action NextTab<CR>
+" Navigate IntelliJ editor tabs with vim-unimpaired style bindings
+nmap [b <Action>(PreviousTab)
+nmap ]b <Action>(NextTab)
 
-" Method navigation
-nnoremap [[ :action MethodUp<CR>
-nnoremap ]] :action MethodDown<CR>
+" Terminal {{{
+nmap <C-t> <Action>(ActivateTerminalToolWindow)
+nmap <leader>t <Action>(Terminal.OpenInTerminal)
+" }}}
 
-" Refactoring/Optimizing
-nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>= :action ReformatCode<CR>
-nnoremap <leader>o :action OptimizeImports<CR>
+" Method navigation {{{
+nnoremap [[ <Action>(MethodUp)
+nnoremap ]] <Action>(MethodDown)
+" }}}
 
-" Searching and Source Code Navigation
-nnoremap <c-/> :action FindInPath<CR>
-nnoremap <c-a> :action GotoAction<CR>
-nnoremap <c-f> :action GotoFile<CR>
-nnoremap <leader>a :action GotoAction<CR>
-nnoremap <leader>b :action ShowNavBar<CR>
-nnoremap <leader>f :action GotoFile<CR>
-nnoremap <leader>h :action CallHierarchy<CR>
-nnoremap <leader>s :action GotoRelated<CR>
-nnoremap <leader>u :action FindUsages<CR>
-nnoremap <c-s> :action FileStructurePopup<CR>
-nnoremap <c-o> :action GotoSymbol<CR>
-nnoremap gc :action GotoClass<CR>
-nnoremap gi :action GotoImplementation<CR>
-nnoremap gd :action GotToDeclaration<CR>
-nnoremap gp :action GotToSuperMethod<CR>
-nnoremap gt :action GotoTest<CR>
-nnoremap gb :action Back<CR>
-nnoremap gf :action Forward<CR>
+" Refactoring/Optimizing {{{
+nmap <leader>r <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>= <Action>(ReformatCode)
+nmap <leader>o <Action>(OptimizeImports)
+" }}}
+
+" Searching and Source Code Navigation {{{
+nmap <C-/> <Action>(FindInPath)
+nmap <C-a> <Action>(GotoAction)
+nmap <C-f> <Action>(GotoFile)
+nmap <leader>a <Action>(GotoAction)
+nmap <leader>b <Action>(ShowNavBar)
+nmap <leader>f <Action>(GotoFile)
+nmap <leader>h <Action>(CallHierarchy)
+nmap <leader>s <Action>(GotoRelated)
+nmap <leader>u <Action>(FindUsages)
+nmap <C-s> <Action>(FileStructurePopup)
+nmap <C-o> <Action>(GotoSymbol)
+nmap gc <Action>(GotoClass)
+nmap gi <Action>(GotoImplementation)
+nmap gd <Action>(GotToDeclaration)
+nmap gp <Action>(GotToSuperMethod)
+nmap gt <Action>(GotoTest)
+nmap gb <Action>(Back)
+nmap gf <Action>(Forward)
+" }}}
+
+" NERDTree {{{
+nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFocus<CR>
+nnoremap <leader>ns :NERDTreeFind<CR>
+nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
+" }}}
 " }}}
 
 " Insert Mode Mappings {{{
