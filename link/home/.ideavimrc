@@ -1,15 +1,28 @@
 " Configuration file for IdeaVim plugin for IntelliJ IDEA.
 
+" Emulated Plugins {{{
+" These plugins are based on popular Vim plugins, and must be activated
+" specially.
+
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-commentary'
+Plug 'tommcdo/vim-exchange'
+Plug 'machakann/vim-highlightedyank'
+Plug 'kana/vim-textobj-entire'
+Plug 'dbakker/vim-paragraph-motion'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'vim-matchit'
+" }}}
+
 " General {{{
 " Make Vim more useful
 set nocompatible
 
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-" NOTE: tmux interferes with the unnamed register, so it may be beneficial
-" to disable this feature when using tmux.
-"if !exists('$TMUX')
-set clipboard=unnamedplus
-"endif
+" Use system clipboard from IdeaVim and vice versa.
+set clipboard+=unnamed
+set clipboard+=ideaput
 
 " Allow backspace in insert mode
 set backspace=indent,eol,start
@@ -38,24 +51,28 @@ set autoread
 " current directory (**)
 set path=.,,**
 
-" Turn on spell checking for many document types
-autocmd BufRead,BufNewFile *.tex,*.html,*.txt,*.md
-    \ set spelllang=en_us spell
+" Hide old buffers instead of close them when editing a new one. That is, allow
+" the user to have unsaved changes in a buffer and still be able to open a new
+" one.
+set hidden
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+set ideajoin
+set idearefactormode=keep
+" }}}
+
+" Mapleader {{{
+
+" Mapleader is a special key that, when pressed in normal mode, acts as a
+" prefix for launching special editor actions. This is where we define the key
+" to act as the mapleader. Later on, any normal mode mapping that includes
+" <leader> will refer to this binding.
+let mapleader=","
 " }}}
 
 " Backups {{{
-" Centralize backups, swapfiles and undo history
-set backup
-set writebackup
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
-if exists('&undodir')
-    set undodir=~/.vim/undo
-endif
-
-" Don’t create backups when editing files in certain directories
-set backupskip=/tmp/*,/private/tmp/*
-
 " Set lines of history for Vim to remember to 700
 set history=700
 
@@ -217,12 +234,6 @@ set smarttab
 set autoindent
 filetype indent plugin on
 set smartindent
-
-" Emulate TextMate's shift left/right key commands
-nmap <D-[> <<
-nmap <D-]> >>
-vmap <D-[> <gv
-vmap <D-]> >gv
 " }}}
 
 " Folding {{{
@@ -267,11 +278,13 @@ nnoremap gV `[v`]
 " }}}
 
 " Normal Mode Mappings {{{
-" Use 'QQ' to exit without saving
-noremap QQ :qa!<CR>
+
+" Editing and Reloading the ~/.ideavimrc file
+nnoremap <leader>e :e ~/.ideavimrc<CR>
+nnoremap <leader>R :action IdeaVim.ReloadVimRc.reload<CR>
 
 " Use 'ZC' to enter command mode
-noremap ZC :
+nnoremap ZC :
 
 " Move lines with Alt-j and Alt-k
 nnoremap <A-j> :m .+1<CR>==
@@ -280,6 +293,40 @@ nnoremap <A-k> :m .-2<CR>==
 " Make 'Y' yank to the end of the current line.
 " This makes 'Y' behave more like other 'capital letter' commands.
 nnoremap Y y$
+
+" Navigate IntelliJ editor tabs with vim-unimpaired style bindings.
+nnoremap [b :action PreviousTab<CR>
+nnoremap ]b :action NextTab<CR>
+
+" Method navigation
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+" Refactoring/Optimizing
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>= :action ReformatCode<CR>
+nnoremap <leader>o :action OptimizeImports<CR>
+
+" Searching and Source Code Navigation
+nnoremap <c-/> :action FindInPath<CR>
+nnoremap <c-a> :action GotoAction<CR>
+nnoremap <c-f> :action GotoFile<CR>
+nnoremap <leader>a :action GotoAction<CR>
+nnoremap <leader>b :action ShowNavBar<CR>
+nnoremap <leader>f :action GotoFile<CR>
+nnoremap <leader>h :action CallHierarchy<CR>
+nnoremap <leader>o :action GotoSymbol<CR>
+nnoremap <leader>s :action GotoRelated<CR>
+nnoremap <leader>u :action FindUsages<CR>
+nnoremap <c-s> :action FileStructurePopup<CR>
+nnoremap <c-o> :action GotoSymbol<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotToDeclaration<CR>
+nnoremap gp :action GotToSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gb :action Back<CR>
+nnoremap gf :action Forward<CR>
 " }}}
 
 " Insert Mode Mappings {{{
@@ -291,67 +338,29 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 " }}}
 
-" Terminal Mode Mappings {{{
-" Use Esc to exit terminal mode
-tnoremap <Esc> <C-\><C-n>
-" Also use Alt+[ to exit terminal mode
-tnoremap <A-[> <Esc>
-" }}}
-
 " Visual Mode Mappings {{{
 " Move lines with Alt-j and Alt-k
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-" }}}
 
-" Tab Configuration {{{
-" Basic commands:
-"   Swtich to next tab     : gt
-"   Switch to previous tab : gT
+vnoremap < <gv
+vnoremap > >gv
 
-" Useful mappings for managing tabs
-map <C-i>n :tabnew<CR>
-map <C-i>o :tabonly<CR>
-map <C-i>c :tabclose<CR>
-map <C-i>m :tabmove<CR>
+" Pressing * or # searches for the current visual selection
+vnoremap <silent> * :call setreg("/",
+    \ substitute(<SID>GetSelectedText(),
+    \ '\_s\+',
+    \ '\\_s\\+', 'g')
+    \ )<Cr>n
 
-" Tab navigation mappings
-map <C-i>h :tabprevious<CR>
-map <C-i>j :tabrewind<CR>
-map <C-i>k :tablast<CR>
-map <C-i>l :tabnext<CR>
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <C-i>e :tabedit <C-r>=expand("%:p:h")<CR>/
+vnoremap <silent> # :call setreg("?",
+    \ substitute(<SID>GetSelectedText(),
+    \ '\_s\+',
+    \ '\\_s\\+', 'g')
+    \ )<Cr>n
 " }}}
 
 " Buffer Configuration {{{
-" Hide old buffers instead of close them when editing a new one. That is, allow
-" the user to have unsaved changes in a buffer and still be able to open a new
-" one.
-set hidden
-
-" Remember info about open buffers on close
-set viminfo^=%
-
-" Use ',bl' to list other buffers
-nnoremap <leader>bl :CtrlPBuffer<CR>
-
-" Use ',p' to switch between last two open buffers
-map <leader>p :b#<CR>
-
-" Next buffer
-map gb :bnext<CR>
-
-" Previous buffer
-map gB :bprev<CR>
-
-" Close the current buffer with ',db'
-nmap <silent> <leader>bd :bd<CR>
-
-" Close all the buffers with ',ba'
-map <leader>ba :1,1000 bd!<cr>
 
 " Jump to buffer number 1-9 with ',<N>' or 1-99 with '<N>gb'
 let c = 1
@@ -372,6 +381,7 @@ endtry
 " }}}
 
 " Autocommands {{{
+
 " EVERY auto command in this section should be inside of the enclosing 'if'
 " statement to avoid compatibility issues with versions of Vim that do not have
 " autocmd functions.
@@ -400,21 +410,6 @@ if has('autocmd')
     " Interpret config files for IDE Vim plugins as Vim syntax
     autocmd BufNewFile,BufRead .vrapperrc set filetype=vim syntax=vim
 endif
-" }}}
-
-" Visual Mode {{{
-" Pressing * or # searches for the current visual selection
-vnoremap <silent> * :call setreg("/",
-    \ substitute(<SID>GetSelectedText(),
-    \ '\_s\+',
-    \ '\\_s\\+', 'g')
-    \ )<Cr>n
-
-vnoremap <silent> # :call setreg("?",
-    \ substitute(<SID>GetSelectedText(),
-    \ '\_s\+',
-    \ '\\_s\\+', 'g')
-    \ )<Cr>n
 " }}}
 
 " vim:foldenable:foldmethod=marker
