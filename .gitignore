@@ -136,6 +136,11 @@ link/emacs/straight/modified
 link/emacs/straight/repos
 # }}}
 
+# sw {{{
+# sw is my own custom git branch switching function.
+link/config/sw
+# }}}
+
 # ccls
 .ccls-cache
 

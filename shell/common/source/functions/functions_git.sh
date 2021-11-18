@@ -62,6 +62,12 @@ currentref() {
   git -C "${gitRepo}" rev-parse --abbrev-ref HEAD 2>/dev/null
 }
 
+# Report the name of the given (or current) Git repository.
+reponame() {
+  local gitRepo="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+  basename "${gitRepo}"
+}
+
 # Opens the commit message for the current repo in the configured editor.
 emsg() {
   edit "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
@@ -87,6 +93,8 @@ sw() {
     return 1
   fi
 
+  __init_sw_config
+
   if echo "${arg}" | grep -q '^-[0-9]$'; then
     # Get nth line from history file if arg is of the form'-<n>' where n is an
     # integer.
@@ -107,8 +115,22 @@ sw() {
   fi
 
   if [ "${ref}" != "${currentRef}" ]; then
-    __save_ref_to_sw_hist "${currentRef}"
+    __save_ref_to_sw_hist_for_repo "${currentRef}"
   fi
+}
+
+# Initialize sw configuration necessary for its operations, such as making its
+# configuration directories.
+__init_sw_config() {
+  local dirsToCreate=(
+    "${SW_CONFIG_DIR}"
+    "${SW_HISTORY_DIR}"
+  )
+  local d
+
+  for d in "${dirsToCreate[@]}"; do
+    [ ! -d "${d}" ] && mkdir -p "${d}"
+  done
 }
 
 # Intelligently determine whether a local copy of a remote branch exists. If it
@@ -137,11 +159,12 @@ __checkout_local_or_remote_branch() {
   fi
 }
 
-# Persist most recent ref passed to `sw' to the branch history file.
-__save_ref_to_sw_hist() {
+# Persist most recent ref passed to `sw' to the history file for that Git
+# repository.
+__save_ref_to_sw_hist_for_repo() {
   local ref="${1}"
-  local histFile="${SW_HISTORY_FILE:-${HOME}/.sw_ref_hist}"
-  local histTempFile="${histFile}.tmp"
+  local histFile
+  local histTempFile
   local numRefsToSave="10"
 
   if [ -z "${ref}" ]; then
@@ -149,8 +172,17 @@ __save_ref_to_sw_hist() {
     return 1
   fi
 
+  if [ ! -d "${SW_HISTORY_DIR}" ]; then
+    warn "sw history directory does not exist; not writing ref"
+    return 0
+  fi
+
+  histFile="$(__get_sw_hist_file_name_for_repo)"
+  histTempFile="${histFile}.tmp"
+
   if [ -f "${histFile}" ]; then
-    log_debug "Writing sw ref to history file: ${GREEN}${histFile}${NC}"
+    log_debug "Writing sw ref ${CYAN}${ref}${NC} to history file:" \
+      "${GREEN}${histFile}${NC}"
 
     echo "${ref}" |
       cat - "${histFile}" |
@@ -162,6 +194,29 @@ __save_ref_to_sw_hist() {
     log_debug "Creating new ref history file with entry: ${CYAN}${ref}${NC}"
     echo "${ref}" >"${histFile}"
   fi
+}
+
+# Try to make the sw history file for each Git repository as unique as possible
+# by appending a unique identifier to the end of each history file name.
+# This avoids collisions where multiple repositories have the same base
+# directory name, but are located in different parent directories.
+__get_sw_hist_file_name_for_repo() {
+  local repoPath="$(git rev-parse --show-toplevel 2>/dev/null)"
+  local repoName="$(basename "${repoPath}")"
+  local histFile="${SW_HISTORY_DIR}/${repoName}"
+
+  # Append a hash digest of the complete directory path to the Git repo, if
+  # possible.
+  if [ -x "$(command -v sha256sum)" ]; then
+    histFile="${histFile}-$(echo -n "${repoPath}" | sha256sum | awk '{print $1}')"
+  elif [ -x "$(command -v sha1sum)" ]; then
+    histFile="${histFile}-$(echo -n "${repoPath}" | sha1sum | awk '{print $1}')"
+  elif [ -x "$(command -v md5sum)" ]; then
+    histFile="${histFile}-$(echo -n "${repoPath}" | md5sum | awk '{print $1}')"
+  fi
+
+  histFile="${histFile}.txt"
+  echo "${histFile}"
 }
 
 # Interactive branch switching using fuzzy search program.
