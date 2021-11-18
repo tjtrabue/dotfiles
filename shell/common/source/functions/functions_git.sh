@@ -84,7 +84,6 @@ emsg() {
 sw() {
   local arg="${1}"
   local ref
-  local histFile="${SW_HISTORY_FILE:-${HOME}/.sw_ref_hist}"
   # We want to write the current branch/commit to history after we switch.
   local currentRef="$(currentref)"
 
@@ -98,7 +97,7 @@ sw() {
   if echo "${arg}" | grep -q '^-[0-9]$'; then
     # Get nth line from history file if arg is of the form'-<n>' where n is an
     # integer.
-    ref="$(sed "${arg#-}q;d" "${histFile}")"
+    ref="$(__get_sw_numeric_ref_from_hist_file "${arg}")"
   else
     # Otherwise, assume arg is the name of the ref we want to checkout.
     ref="${arg}"
@@ -131,6 +130,25 @@ __init_sw_config() {
   for d in "${dirsToCreate[@]}"; do
     [ ! -d "${d}" ] && mkdir -p "${d}"
   done
+}
+
+# Get nth line from history file if arg is of the form'-<n>' where n is an
+# integer.
+__get_sw_numeric_ref_from_hist_file() {
+  local arg="${1}"
+  local histFile="$(__get_sw_hist_file_name_for_repo)"
+
+  if [ ! -f "${histFile}" ]; then
+    err "Could not find sw history file for ${BLUE}$(reponame)${NC}"
+    return 1
+  fi
+
+  if ! echo "${arg}" | grep -q '^-[0-9]$'; then
+    err "arg is not of the form -<n>, where n is an integer"
+    return 2
+  fi
+
+  sed "${arg#-}q;d" "${histFile}"
 }
 
 # Intelligently determine whether a local copy of a remote branch exists. If it
