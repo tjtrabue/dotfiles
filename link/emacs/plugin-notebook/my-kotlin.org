@@ -12,6 +12,6 @@ but it has other uses, too.
 * kotlin-mode
 Major mode for editing Kotlin source files.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package kotlin-mode)
 #+end_src

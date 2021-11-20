@@ -7,43 +7,60 @@
 =LaTeX= plugins and configuration for Emacs.
 
 * auctex
-  AucTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
-  integration systems of all time. Its features are too numerous to mention
-  here, but I highly recommend you peruse the online documentation, and maybe
-  work through a tutorial or two.
+AucTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
+integration systems of all time. Its features are too numerous to mention
+here, but I highly recommend you peruse the online documentation, and maybe
+work through a tutorial or two.
 
-  #+begin_src emacs-lisp
-    (use-package auctex
-      :defer t
-      :defines (latex-help-cmd-alist latex-help-file)
-      :mode ("\\.tex\\'" . TeX-latex-mode)
-      :hook
-      (TeX-latex-mode . (lambda ()
-                          (visual-line-mode 1)
-                          (flyspell-mode 1)
-                          (reftex-mode 1)))
-      :init
-      (setq TeX-auto-save t
-            TeX-parse-self t
-            ;; Compile to PDF by default
-            TeX-PDF-mode t
-            ;; Do not ask for permission before saving TeX files when compiling
-            TeX-save-query nil)
-      ;; Allow AUCTeX to work with multiple files like a project
-      (setq-default TeX-master nil)
-      ;; Revert pdf-view after compilation
-      (add-hook 'TeX-after-compilation-finished-functions
-                #'TeX-revert-document-buffer))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package auctex
+    :defer t
+    :defines (latex-help-cmd-alist latex-help-file)
+    :mode ("\\.tex\\'" . TeX-latex-mode)
+    :hook
+    (TeX-latex-mode . (lambda ()
+                        (visual-line-mode 1)
+                        (flyspell-mode 1)
+                        (reftex-mode 1)))
+    :init
+    (setq TeX-auto-save t
+          TeX-parse-self t
+          ;; Compile to PDF by default
+          TeX-PDF-mode t
+          ;; Do not ask for permission before saving TeX files when compiling
+          TeX-save-query nil)
+    ;; Allow AUCTeX to work with multiple files like a project
+    (setq-default TeX-master nil)
+    ;; Revert pdf-view after compilation
+    (add-hook 'TeX-after-compilation-finished-functions
+              #'TeX-revert-document-buffer))
+#+end_src
 
 * auctex-lua
 
-  #+begin_src emacs-lisp
-    (use-package auctex-lua)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package auctex-lua)
+#+end_src
 
 * auctex-latexmk
 
-  #+begin_src emacs-lisp
-    (use-package auctex-latexmk)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package auctex-latexmk)
+#+end_src
+
+* math-preview
+Preview LaTeX math equations inline.
+
+** math-preview npm package installation
+This plugin requires the external =math-preview= Node.js package in order to
+function. Install it with the following command:
+
+#+begin_src sh :tangle no
+  npm install -g git+https://gitlab.com/matsievskiysv/math-preview
+#+end_src
+
+** use-package specification
+
+#+begin_src emacs-lisp
+  (use-package math-preview)
+#+end_src
