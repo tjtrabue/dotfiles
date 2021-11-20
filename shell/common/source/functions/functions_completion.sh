@@ -59,24 +59,24 @@ __init_zsh_completions() {
 __add_zsh_git_completions() {
   # Zsh provides Git completions by default, so this is no longer necesary.
 
-  # local completionsDir="${ZDOTDIR:-${HOME}/.zsh}/completions"
-  # local bashCompletionFile="${completionsDir}/git-completion.bash"
-  # local zshCompletionFile="${completionsDir}/_git"
+  local completionsDir="${ZDOTDIR:-${HOME}/.zsh}/completions"
+  local bashCompletionFile="${completionsDir}/git-completion.bash"
+  local zshCompletionFile="${completionsDir}/_git"
 
-  # mkdir -p "${completionsDir}"
-  # if [ ! -f "${bashCompletionFile}" ]; then
-  #   curl -o "${bashCompletionFile}" \
-    #     "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
-  # fi
-  # if [ ! -f "${zshCompletionFile}" ]; then
-  #   curl -o "${zshCompletionFile}" \
-    #     "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh"
-  # fi
+  mkdir -p "${completionsDir}"
+  if [ ! -f "${bashCompletionFile}" ]; then
+    curl -o "${bashCompletionFile}" \
+      "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
+  fi
+  if [ ! -f "${zshCompletionFile}" ]; then
+    curl -o "${zshCompletionFile}" \
+      "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh"
+  fi
 
   # Add git completions to function path
-  # fpath=("${completionsDir}" $fpath)
+  fpath=("${completionsDir}" $fpath)
 
-  # zstyle ':completion:*:*:git:*' script "${bashCompletionFile}"
+  zstyle ':completion:*:*:git:*' script "${bashCompletionFile}"
 
   __add_custom_zsh_git_completions
 }
