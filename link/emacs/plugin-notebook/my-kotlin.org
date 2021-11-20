@@ -1,0 +1,17 @@
+#+title:   Kotlin Configuration/Plugins
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2021:11:19
+#+tags:    kotlin android
+#+STARTUP: fold
+
+Kotlin is a strong, statically typed, multi-paradigm programming language built
+on the JVM. It was primarily designed to facilitate Android app development,
+but it has other uses, too.
+
+* kotlin-mode
+Major mode for editing Kotlin source files.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package kotlin-mode)
+#+end_src
