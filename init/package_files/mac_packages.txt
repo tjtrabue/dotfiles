@@ -32,6 +32,7 @@ isync
 jq
 kakoune
 kind
+kite
 kubectl
 lazygit
 leapp
