@@ -84,7 +84,7 @@ __add_zsh_git_completions() {
 # Add Zsh completions for custom Git functions from this repository.
 __add_custom_zsh_git_completions() {
   # We want `sw` to autocomplete Git refs, such as branches and tags.
-  compdef __git_complete_refs sw
+  compdef _git sw=git-branch
 }
 
 # Install additional Zsh command line completions
