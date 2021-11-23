@@ -306,7 +306,7 @@ nnoremap gV `[v`]
 "
 " This option consist of an optional shortcut and a list of space separated
 " list of handlers:
-"   key mode-list:handler mode-list:handler ...
+"   sethandler <key> <mode-list:handler> [<mode-list:handler> ...]
 "
 " The mode-list is a dash separated list of modes that is similar to guicursor
 " notation and defines the following modes:
@@ -323,10 +323,10 @@ nnoremap gV `[v`]
 " vim - use Vim handler
 " }}}
 
-sethandler <C-n> i:ide n-v:vim
-sethandler <C-p> i:ide n-v:vim
-sethandler <C-j> i:ide n-v:vim
-sethandler <C-k> i:ide n-v:vim
+sethandler <C-n> i:ide
+sethandler <C-p> i:ide
+sethandler <C-j> i:ide
+sethandler <C-k> i:ide
 " }}}
 
 " Normal Mode Mappings {{{
@@ -382,13 +382,6 @@ nmap gp <Action>(GotToSuperMethod)
 nmap gt <Action>(GotoTest)
 nmap gb <Action>(Back)
 nmap gf <Action>(Forward)
-" }}}
-
-" NERDTree {{{
-nnoremap <leader>nt :NERDTree<CR>
-nnoremap <leader>nf :NERDTreeFocus<CR>
-nnoremap <leader>ns :NERDTreeFind<CR>
-nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
 " }}}
 " }}}
 
@@ -482,6 +475,32 @@ if has('autocmd')
     " Interpret config files for IDE Vim plugins as Vim syntax
     autocmd BufNewFile,BufRead .vrapperrc set filetype=vim syntax=vim
 endif
+" }}}
+
+" Plugin Configuration {{{
+
+" NERDTree {{{
+nnoremap <leader>nt :NERDTree<CR>
+nnoremap <leader>nf :NERDTreeFocus<CR>
+nnoremap <leader>ns :NERDTreeFind<CR>
+nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
+" }}}
+
+" multiple cursors {{{
+" Don't use defualt mappings
+let g:multi_cursor_use_default_mapping=0
+
+" Custom mapping
+let g:multi_cursor_start_word_key      = '<C-.>'
+let g:multi_cursor_select_all_word_key = '<C-;>'
+let g:multi_cursor_start_key           = 'g<C-.>'
+let g:multi_cursor_select_all_key      = 'g<C-;>'
+let g:multi_cursor_next_key            = '<C-.>'
+let g:multi_cursor_prev_key            = '<C-,>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+" }}}
+
 " }}}
 
 " vim:foldenable:foldmethod=marker
