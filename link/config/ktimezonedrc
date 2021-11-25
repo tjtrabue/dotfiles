@@ -1,0 +1,4 @@
+[TimeZones]
+LocalZone=US/Eastern
+ZoneinfoDir=/usr/share/zoneinfo
+Zonetab=/usr/share/zoneinfo/zone.tab
