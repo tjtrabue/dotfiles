@@ -20,7 +20,6 @@ neovim-nightly-bin
 optimus-manager
 polybar-git
 roswell-git
-transset-df
 up
 vmtouch-git
 yank
