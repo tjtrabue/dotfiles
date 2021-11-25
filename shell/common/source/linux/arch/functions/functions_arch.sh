@@ -36,9 +36,9 @@ _prepare_and_build_package() {
 
   {
     makepkg -sic --noconfirm &&
-    [ $hasStashedChanges ] &&
-    git stash pop || :
-    } || {
+      [ $hasStashedChanges ] &&
+      git stash pop || :
+  } || {
     err "Problem building package $(basename "$(pwd)")"
     return 1
   }
@@ -192,7 +192,7 @@ aur-update-all() {
 
   log_info "Updating all installed AUR packages"
   aur-update-packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
-  sed 's|.*/||' | tr '\n' ' ')
+    sed 's|.*/||' | tr '\n' ' ')
 }
 
 aur-update() {
@@ -241,20 +241,20 @@ EOF
   eval set -- "$options"
   while true; do
     case "$1" in
-      -h | --help)
-        _aur_help
-        return 0
-        ;;
+    -h | --help)
+      _aur_help
+      return 0
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        err "Unknown argument $1 to ${FUNCNAME[0]}"
-        return 2
-        ;;
+    *)
+      err "Unknown argument $1 to ${FUNCNAME[0]}"
+      return 2
+      ;;
     esac
   done
 
@@ -262,23 +262,23 @@ EOF
   aurCommand="$1"
   shift
   case "$aurCommand" in
-    "get")
-      aur-get "$@"
-      ;;
-    "install")
-      aur-get "$@" &&
+  "get")
+    aur-get "$@"
+    ;;
+  "install")
+    aur-get "$@" &&
       aur-install "$@"
-      ;;
-    "update")
-      aur-update "$@"
-      ;;
-    "remove" | "uninstall")
-      aur-remove "$@"
-      ;;
-    *)
-      err "Unknown AUR command $aurCommand. Should be one of: install, update, remove."
-      return 1
-      ;;
+    ;;
+  "update")
+    aur-update "$@"
+    ;;
+  "remove" | "uninstall")
+    aur-remove "$@"
+    ;;
+  *)
+    err "Unknown AUR command $aurCommand. Should be one of: install, update, remove."
+    return 1
+    ;;
   esac
 }
 
@@ -329,6 +329,22 @@ remove_orphans() {
   sudo pacman -Rns - <<<"$(pacman -Qtdq)"
 }
 
+# Re-initialize the Arch Linux GPG trust keyring. This is sometimes necessary
+# after a long period of inactivity on an Arch Linux installation when keys
+# become stale and untrusted.
+arch_rekey() {
+  local archGnupgDir="/etc/pacman.d/gnupg"
+
+  if [ -d "${archGnupgDir}" ]; then
+    log_info "Removing Arch Linux GPG directory: ${BLUE}${archGnupgDir}${NC}"
+    sudo rm -rf "${archGnupgDir}"
+  fi
+
+  log_info "Re-initializing Arch Linux GPG keyring"
+  sudo pacman-key --init
+  sudo pacman-key --populate archlinux
+}
+
 # Set the Arch repository mirror list to only US sites
 set_mirrorlist() {
   local mirrorlist="/etc/pacman.d/mirrorlist"
@@ -340,7 +356,7 @@ set_mirrorlist() {
   fi
 
   grep -A 1 "## United States" <"$mirrorlist" |
-  sed '/^## United States/d;/--/d' >"$tempfile"
+    sed '/^## United States/d;/--/d' >"$tempfile"
 
   sudo mv "$mirrorlist"{,.bak}
   sudo cp "$tempfile" "$mirrorlist"
