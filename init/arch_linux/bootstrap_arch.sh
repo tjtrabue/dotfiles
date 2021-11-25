@@ -332,9 +332,9 @@ EOF
 
 # Install additional packages {{{
 info_log "Installing additional packages"
-# Grab packages file from github repo
-arch-chroot "${MOUNT_ROOT}" pacman -Sy --needed \
-  --noconfirm - <<<"$(curl -sL "${PACKAGE_URL}")"
+# Grab packages file from dotfiles GitHub repository
+arch-chroot "${MOUNT_ROOT}" pacman -Sy --needed --noconfirm - \
+  <<<"$(curl -sL "${PACKAGE_URL}" | grep -E -v -e '^\s*#' -e '^$')"
 # }}}
 
 # Sound configuration {{{

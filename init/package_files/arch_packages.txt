@@ -1,3 +1,6 @@
+# Arch Linux packages that should be installed by default.
+# Any lines empty lines, or beginning with '#' will be ignored.
+
 ack
 acpi
 alacritty

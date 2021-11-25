@@ -1,78 +1,5 @@
 #!/bin/sh
 
-_prepare_aur_environment() {
-  if [ -z "$AUR_HOME" ]; then
-    export AUR_HOME="$HOME/.aur"
-  fi
-}
-
-_check_aur_provided() {
-  if [ "$#" -lt 1 ]; then
-    err "No AUR package(s) provided."
-    return 1
-  fi
-}
-
-_check_aur_installed() {
-  local package="$1"
-
-  if [ ! -d "${AUR_HOME}/${package}" ]; then
-    warn "Package ${package} not found; skipping"
-    return 1
-  fi
-}
-
-# Clean package directory and run the makepkg command.
-_prepare_and_build_package() {
-  local hasStashedChanges=false
-
-  git clean -f &>/dev/null
-  git reset HEAD . &>/dev/null
-  if ! git diff-index --quiet HEAD --; then
-    git stash save &>/dev/null
-    hasStashedChanges=true
-  fi
-  git pull &>/dev/null
-
-  {
-    makepkg -sic --noconfirm &&
-      [ $hasStashedChanges ] &&
-      git stash pop || :
-  } || {
-    err "Problem building package $(basename "$(pwd)")"
-    return 1
-  }
-}
-
-_print_final_effect_msg() {
-  local effect="$1"
-  shift
-  local -a packages=("$@")
-
-  if [ "${#packages[@]}" -gt 0 ]; then
-    echoe ""
-    succ "${effect}: ${packages[*]}"
-  fi
-}
-
-# Filters a list of requested packages based on whether or not they are already
-# present in the AUR_HOME directory.
-_get_list_of_new_packages() {
-  local -a aurPackages=("$@")
-  local -a newPackages=()
-  local package
-
-  for package in "${aurPackages[@]}"; do
-    if [ ! -d "${AUR_HOME}/${package}" ]; then
-      newPackages+=("$package")
-    else
-      log_info "Package $package already present in ${AUR_HOME}; skipping"
-    fi
-  done
-
-  echo "${newPackages[@]}"
-}
-
 # Download an AUR package but do not build/install
 aur-get() {
   # Get args from stdin if none are passed as args
@@ -287,7 +214,8 @@ EOF
 install_arch_packages() {
   local archPackagesFile="${DOTFILES_HOME}/init/package_files/arch_packages.txt"
 
-  grep -E -v "^\s*#" "${archPackagesFile}" | sudo pacman -S --needed -
+  grep -E -v -e '^\s*#' -e '^$' "${archPackagesFile}" |
+    sudo pacman -S --needed -
 }
 
 # Install an AUR package manager for the Arch Linux User Repository.
@@ -409,6 +337,79 @@ install_optimus_manager() {
   sudo cp "/usr/share/optimus-manager.conf" "/etc/optimus-manager/"
   # Enable the service
   sudo systemctl enable --now optimus-manager
+}
+
+_prepare_aur_environment() {
+  if [ -z "$AUR_HOME" ]; then
+    export AUR_HOME="$HOME/.aur"
+  fi
+}
+
+_check_aur_provided() {
+  if [ "$#" -lt 1 ]; then
+    err "No AUR package(s) provided."
+    return 1
+  fi
+}
+
+_check_aur_installed() {
+  local package="$1"
+
+  if [ ! -d "${AUR_HOME}/${package}" ]; then
+    warn "Package ${package} not found; skipping"
+    return 1
+  fi
+}
+
+# Clean package directory and run the makepkg command.
+_prepare_and_build_package() {
+  local hasStashedChanges=false
+
+  git clean -f &>/dev/null
+  git reset HEAD . &>/dev/null
+  if ! git diff-index --quiet HEAD --; then
+    git stash save &>/dev/null
+    hasStashedChanges=true
+  fi
+  git pull &>/dev/null
+
+  {
+    makepkg -sic --noconfirm &&
+      [ $hasStashedChanges ] &&
+      git stash pop || :
+  } || {
+    err "Problem building package $(basename "$(pwd)")"
+    return 1
+  }
+}
+
+_print_final_effect_msg() {
+  local effect="$1"
+  shift
+  local -a packages=("$@")
+
+  if [ "${#packages[@]}" -gt 0 ]; then
+    echoe ""
+    succ "${effect}: ${packages[*]}"
+  fi
+}
+
+# Filters a list of requested packages based on whether or not they are already
+# present in the AUR_HOME directory.
+_get_list_of_new_packages() {
+  local -a aurPackages=("$@")
+  local -a newPackages=()
+  local package
+
+  for package in "${aurPackages[@]}"; do
+    if [ ! -d "${AUR_HOME}/${package}" ]; then
+      newPackages+=("$package")
+    else
+      log_info "Package $package already present in ${AUR_HOME}; skipping"
+    fi
+  done
+
+  echo "${newPackages[@]}"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
