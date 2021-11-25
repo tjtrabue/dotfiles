@@ -3,7 +3,7 @@
 # Automatic AUR interaction.
 #
 # This is a thin, flimsy convenience function that should only be used to
-# install a real AUR helper, such as 'paru' or 'aura'. They handly installation,
+# install a real AUR helper, such as 'paru' or 'aura'. They handle installation,
 # upgrading, downgrading, and dependency resolution MUCH better than this
 # function.
 aur() {
@@ -64,27 +64,49 @@ EOF
   shift
   case "$aurCommand" in
     "get")
-      aur-get "$@"
+      _aur_get "$@"
       ;;
     "install")
-      aur-get "$@" &&
-      aur-install "$@"
+      _aur_get "$@" &&
+      _aur_install "$@"
       ;;
     "update")
-      aur-update "$@"
+      _aur_update "$@"
       ;;
     "remove" | "uninstall")
-      aur-remove "$@"
+      _aur_remove "$@"
       ;;
     *)
-      err "Unknown AUR command $aurCommand. Should be one of: install, update, remove."
+      err "Unknown AUR command ${RED}${aurCommand}${NC}. Should be one of:" \
+        "install, update, remove."
       return 1
       ;;
   esac
 }
 
+# Install an AUR package manager for the Arch Linux User Repository.
+install_aur_helper() {
+  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
+    aur install "${AUR_HELPER}"
+  else
+    warn "AUR helper ${BLUE}${AUR_HELPER}${NC} already installed."
+  fi
+}
+
+# Install all AUR packages
+install_aur_packages() {
+  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
+    install_aur_helper
+  fi
+  aurhinc $(grep -E -v "^\s*#" "${AUR_PACKAGES_FILE}" | tr '\n' ' ')
+}
+
+get_aur_packages() {
+  aur get <"${AUR_PACKAGES_FILE:?}"
+}
+
 # Download an AUR package but do not build/install
-aur-get() {
+_aur_get() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
   echoe "Have $# requests: $*"
@@ -123,7 +145,7 @@ aur-get() {
 }
 
 # Installs one or more Arch Linux packages from the AUR.
-aur-install() {
+_aur_install() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
 
@@ -147,7 +169,7 @@ aur-install() {
 }
 
 # Remove one or more installed AUR packages.
-aur-remove() {
+_aur_remove() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
 
@@ -172,7 +194,7 @@ aur-remove() {
   _print_final_effect_msg "Removed" "${removedPackages[@]}"
 }
 
-aur-update-packages() {
+_aur_update_packages() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
 
@@ -198,42 +220,21 @@ aur-update-packages() {
   _print_final_effect_msg "Updated" "${updatedPackages[@]}"
 }
 
-aur-update-all() {
+_aur_update_all() {
 
   log_info "Updating all installed AUR packages"
-  aur-update-packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
+  _aur_update_packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
   sed 's|.*/||' | tr '\n' ' ')
 }
 
-aur-update() {
+_aur_update() {
   local packageName="$*"
 
   if [ "$(echo "$packageName" | tr '[:upper:]' '[:lower:]')" == "all" ]; then
-    aur-update-all
+    _aur_update_all
   else
-    aur-update-packages "$packageName"
+    _aur_update_packages "$packageName"
   fi
-}
-
-# Install an AUR package manager for the Arch Linux User Repository.
-install_aur_helper() {
-  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
-    aur install "${AUR_HELPER}"
-  else
-    warn "AUR helper ${BLUE}${AUR_HELPER}${NC} already installed."
-  fi
-}
-
-# Install all AUR packages
-install_aur_packages() {
-  if [ ! -x "$(command -v "${AUR_HELPER}")" ]; then
-    install_aur_helper
-  fi
-  aurhinc $(grep -E -v "^\s*#" "${AUR_PACKAGES_FILE}" | tr '\n' ' ')
-}
-
-get_aur_packages() {
-  aur get <"$DOTFILES_HOME/init/package_files/aur_packages.txt"
 }
 
 _prepare_aur_environment() {
