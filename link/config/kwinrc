@@ -8,3 +8,10 @@ OpenGLIsUnsafe=false
 Id_1=d39dde34-073a-4733-9f39-ee9c52b95c1a
 Number=1
 Rows=1
+
+[Plugins]
+desktopchangeosdEnabled=false
+kwin-script-tilingEnabled=true
+minimizeallEnabled=false
+synchronizeskipswitcherEnabled=false
+videowallEnabled=false

@@ -24,6 +24,9 @@ display=Display\tMeta+P,Display\tMeta+P,Switch Display
 
 [khotkeys]
 _k_friendly_name=Custom Shortcuts Service
+{001f11af-25a6-4d96-baf6-751bc08f4872}=none,none,New Action
+{507c951d-8c0c-42d0-bae0-7404e17e6f02}=none,none,New Action
+{c4d70dbf-6b3c-44dc-b2be-215de930654a}=Meta+E,none,Emacs
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=,none,Search
 
 [kmix]
@@ -102,6 +105,33 @@ Switch to Screen 4=none,none,Switch to Screen 4
 Switch to Screen 5=none,none,Switch to Screen 5
 Switch to Screen 6=none,none,Switch to Screen 6
 Switch to Screen 7=none,none,Switch to Screen 7
+TILING-I3: Set Normal Mode=none,none,TILING-I3: Set Normal Mode
+TILING-I3: Set Wrap Horizontal Mode=none,none,TILING-I3: Set Wrap Horizontal Mode
+TILING-I3: Set Wrap Vertical Mode=none,none,TILING-I3: Set Wrap Vertical Mode
+TILING: Cycle Rotations=Meta+Shift+R,none,TILING: Cycle Rotations
+TILING: Decrease Number Of Masters=Meta+_,none,TILING: Decrease Number Of Masters
+TILING: Dump Clients=Meta+Shift+Esc,none,TILING: Dump Clients
+TILING: Focus next tile=Meta+J,none,TILING: Focus next tile
+TILING: Focus previous tile=Meta+K,none,TILING: Focus previous tile
+TILING: Increase Number Of Masters=,none,TILING: Increase Number Of Masters
+TILING: Move Window Down=Meta+Shift+J,none,TILING: Move Window Down
+TILING: Move Window Left=Meta+Shift+H,none,TILING: Move Window Left
+TILING: Move Window Right=Meta+Shift+L,none,TILING: Move Window Right
+TILING: Move Window To New Desktop=Meta+Shift+D,none,TILING: Move Window To New Desktop
+TILING: Move Window Up=Meta+Shift+K,none,TILING: Move Window Up
+TILING: Next Tiling Layout=Meta+Shift+PgDown,none,TILING: Next Tiling Layout
+TILING: Previous Tiling Layout=Meta+Shift+PgUp,none,TILING: Previous Tiling Layout
+TILING: Resize Active Window To The Bottom=Meta+Alt+J,none,TILING: Resize Active Window To The Bottom
+TILING: Resize Active Window To The Left=Meta+Alt+H,none,TILING: Resize Active Window To The Left
+TILING: Resize Active Window To The Right=Meta+Alt+L,none,TILING: Resize Active Window To The Right
+TILING: Resize Active Window To The Top=Meta+Alt+K,none,TILING: Resize Active Window To The Top
+TILING: Swap Window With Master=Meta+Shift+M,none,TILING: Swap Window With Master
+TILING: Swap with next tile=none,none,TILING: Swap with next tile
+TILING: Swap with previous tile=none,none,TILING: Swap with previous tile
+TILING: Tile now=none,none,TILING: Tile now
+TILING: Toggle Border for all=none,none,TILING: Toggle Border for all
+TILING: Toggle Floating=Meta+F,none,TILING: Toggle Floating
+TILING: Toggle Tiling=Meta+Shift+F11,none,TILING: Toggle Tiling
 Toggle Night Color=none,none,Toggle Night Color
 Toggle Window Raise/Lower=none,none,Toggle Window Raise/Lower
 ToggleMouseClick=Meta+*,Meta+*,Toggle Mouse Click Effect

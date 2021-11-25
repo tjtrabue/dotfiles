@@ -35,6 +35,14 @@ tags.temp
 *.so
 *.a
 
+# Image files
+.bmp
+.gif
+.jpg
+.jpeg
+.png
+.svg
+
 # broot {{{
 # Don't ignore the config file, but ignore everything else
 link/config/broot/*
@@ -234,6 +242,10 @@ link/config/flutter/tool_state
 # Android Development Environment {{{
 link/config/Android\ Open\ Source\ Project
 link/config/Google
+# }}}
+
+# GTK {{{
+link/config/gtk-*
 # }}}
 
 # OS X / macOS {{{
