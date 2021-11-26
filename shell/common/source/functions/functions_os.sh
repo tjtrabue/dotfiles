@@ -40,6 +40,24 @@ getosinfo() {
     "Version" "${VER}"
 }
 
+# Determine which OS family is currently in use.
+# Output can be one of:
+#   Linux
+#   Darwin
+#   Cygwin
+getostype() {
+  local osType
+
+  if [ -x "$(command -v uname)" ]; then
+    osType="$(uname -s)"
+  else
+    err "Could not determine OS type"
+    return 1
+  fi
+
+  echo "${osType}"
+}
+
 # Retrieves the system package manager for the current operating system.
 getpm() {
   local distId

@@ -65,24 +65,35 @@ __src_dir() {
   fi
 }
 
-# Source additional OS-specific files
+# Source OS-specific function/alias files.
 __src_os() {
   local archSrcDir="${LINUX_SOURCE_DIR}/arch"
   local macSrcDir="${COMMON_SOURCE}/mac"
+  local osType
   local os
 
+  osType="$(getostype)"
   os="$(getdistro)"
 
-  case "${os}" in
-    "Arch Linux")
-      __src_standard_subdirs_under_dir "${archSrcDir}"
+  case "${osType}" in
+    "Linux")
+      __src_standard_subdirs_under_dir "${LINUX_SOURCE_DIR}"
       ;;
-
     "Darwin")
       __src_standard_subdirs_under_dir "${macSrcDir}"
       alias_homebrew_gcc_executables
       ;;
+    *)
+      # This warning will quickly become annoying, but is sometimes useful.
+      # echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
+      ;;
+  esac
 
+  # Source distribution-specific Linux function/alias files.
+  case "${os}" in
+    "Arch Linux")
+      __src_standard_subdirs_under_dir "${archSrcDir}"
+      ;;
     *)
       # This warning will quickly become annoying, but is sometimes useful.
       # echo "WARNING: Unknown OS for sourcing: ${os}" 1>&2
