@@ -5,6 +5,8 @@ init_kde() {
   install_kwin_tiling
 }
 
+# Install the KWin Tiling plasmoid script to provide tiling window manager
+# suppport for Plasma.
 install_kwin_tiling() {
   __clone_or_update_kwin_tiling_repo
   __install_kwin_tiling_script
@@ -29,11 +31,16 @@ __clone_or_update_kwin_tiling_repo() {
 __install_kwin_tiling_script() {
   local kwinTilingDir="${WS}/kwin-tiling"
 
-  (
-    log_info "Installing KWin Tiling script"
-    cd "${kwinTilingDir}"
-    plasmapkg2 --type kwinscript -i .
-  )
+  if [ -d "${kwinTilingDir}" ]; then
+    (
+      log_info "Installing KWin Tiling script"
+      cd "${kwinTilingDir}"
+      plasmapkg2 --type kwinscript -i .
+    )
+  else
+    err "No KWin Tiling repository found at: ${BLUE}${kwinTilingDir}${NC}"
+    return 1
+  fi
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

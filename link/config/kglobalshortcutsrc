@@ -26,8 +26,10 @@ display=Display\tMeta+P,Display\tMeta+P,Switch Display
 _k_friendly_name=Custom Shortcuts Service
 {001f11af-25a6-4d96-baf6-751bc08f4872}=none,none,New Action
 {507c951d-8c0c-42d0-bae0-7404e17e6f02}=none,none,New Action
+{8d11b5b5-a8c6-4d49-907f-e2c071027ae2}=none,none,New Action
 {c4d70dbf-6b3c-44dc-b2be-215de930654a}=Meta+E,none,Emacs
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=,none,Search
+{d0b5c30d-2ab5-4898-b6b3-3555f55fa89e}=Meta+Return,none,Terminal
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -155,10 +157,10 @@ Window Fullscreen=none,none,Make Window Fullscreen
 Window Grow Horizontal=none,none,Pack Grow Window Horizontally
 Window Grow Vertical=none,none,Pack Grow Window Vertically
 Window Lower=none,none,Lower Window
-Window Maximize=Meta+PgUp,Meta+PgUp,Maximize Window
+Window Maximize=Meta+Alt+M,Meta+PgUp,Maximize Window
 Window Maximize Horizontal=none,none,Maximize Window Horizontally
 Window Maximize Vertical=none,none,Maximize Window Vertically
-Window Minimize=Meta+PgDown,Meta+PgDown,Minimize Window
+Window Minimize=Meta+Alt+N,Meta+PgDown,Minimize Window
 Window Move=none,none,Move Window
 Window No Border=none,none,Hide Window Border
 Window On All Desktops=none,none,Keep Window on All Desktops
