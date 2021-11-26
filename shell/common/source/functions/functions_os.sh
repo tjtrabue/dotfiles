@@ -42,19 +42,39 @@ getosinfo() {
 
 # Determine which OS family is currently in use.
 # Output can be one of:
-#   Linux
-#   Darwin
 #   Cygwin
+#   Darwin
+#   Linux
+#   MinGw
+#   unknown
 getostype() {
   local osType
+  local osString
 
   if [ -x "$(command -v uname)" ]; then
-    osType="$(uname -s)"
-  else
-    err "Could not determine OS type"
-    return 1
+    osString="$(uname -s)"
   fi
 
+  log_debug "OS String: ${osString}"
+  case "${osString}" in
+    CYGWIN*)
+      osType="Cygwin"
+      ;;
+    Darwin*)
+      osType="Darwin"
+      ;;
+    Linux*)
+      osType="Linux"
+      ;;
+    MINGW*)
+      osType="MinGw"
+      ;;
+    *)
+      osType="unknown"
+      ;;
+  esac
+
+  log_debug "OS Type: ${osType}"
   echo "${osType}"
 }
 
