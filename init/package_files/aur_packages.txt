@@ -6,7 +6,7 @@ elixir-ls-git
 emacs-native-comp-git-enhanced
 findimagedupes
 flat-remix
-glow
+glow-bin
 icons-in-terminal
 jdtls
 lazygit-git
