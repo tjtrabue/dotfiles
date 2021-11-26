@@ -166,7 +166,8 @@ pathsync() {
     cp "${pathFile}"{,.bak}
   fi
 
-  cat "${dotPath}" >>"${pathFile}"
+  # Write non-commented, non-empty lines to ~/.path
+  grep -E -v -e '^\s*#' -e '^$' "${dotPath}" >>"${pathFile}"
   add_extra_paths_to_path_file
   rmduplines "${pathFile}"
 }
