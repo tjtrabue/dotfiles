@@ -1,5 +1,12 @@
 [activities]
+01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=android_dev
 ce5d68ce-61d5-4292-beef-a32ac5b215c7=Default
+
+[activities-descriptions]
+01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=Development environment for Android apps.
+
+[activities-icons]
+01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=activities
 
 [main]
 currentActivity=ce5d68ce-61d5-4292-beef-a32ac5b215c7
