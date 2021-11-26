@@ -248,6 +248,12 @@ link/config/Google
 link/config/gtk-*
 # }}}
 
+# KDE {{{
+# KDE is a desktop environment for Linux.
+
+link/config/kactivitymanagerd-switcher
+# }}}
+
 # OS X / macOS {{{
 
 # Thumbnail cache files
