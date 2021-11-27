@@ -9,7 +9,7 @@ findfont() {
 
 # Install or update the amazing Nerd Fonts repository.
 sync_nerd_fonts() {
-  local nerdFontsDestDir="${WS}/nerd-fonts"
+  local nerdFontsDestDir="${WS:-${HOME}/workspace}/nerd-fonts"
 
   __clone_fresh_nerd_fonts_repo
 
@@ -26,7 +26,7 @@ sync_nerd_fonts() {
 
 __clone_fresh_nerd_fonts_repo() {
   local nerdFontsGitUrl="https://github.com/ryanoasis/nerd-fonts.git"
-  local nerdFontsDestDir="${WS}/nerd-fonts"
+  local nerdFontsDestDir="${WS:-${HOME}/workspace}/nerd-fonts"
 
   if [ -d "${nerdFontsDestDir}" ]; then
     log_info "Removing old Nerd Fonts repository"
