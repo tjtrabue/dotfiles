@@ -140,6 +140,9 @@ Name=Breeze Light
 shadeSortColumn=true
 widgetStyle=Breeze
 
+[Icons]
+Theme=Papirus
+
 [KDE]
 ColorScheme=BreezeLight
 LookAndFeelPackage=org.kde.breezedark.desktop
