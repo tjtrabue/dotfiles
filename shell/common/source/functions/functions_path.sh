@@ -146,6 +146,9 @@ add_extra_paths_to_path_file() {
       log_info "Adding extra executable paths for macOS."
       extraPathsFile="${extraPathFilesDir}/mac_path"
       ;;
+    *)
+      log_info "No extra executable paths found."
+      ;;
   esac
 
   if [ -f "${extraPathsFile}" ]; then
@@ -162,8 +165,8 @@ pathsync() {
 
   # Backup the current path file just in case.
   if [ -f "${pathFile}" ]; then
-    log_info "Backing up path file: ${pathFile}"
-    cp "${pathFile}"{,.bak}
+    log_debug "Backing up path file ${pathFile} to ${pathFile}.bak"
+    cp -f "${pathFile}"{,.bak}
   fi
 
   # Write non-commented, non-empty lines to ~/.path
