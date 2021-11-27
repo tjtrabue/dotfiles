@@ -62,7 +62,7 @@ immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][2][Applets][5][Configuration][General]
-launchers=applications:systemsettings.desktop,applications:org.kde.discover.desktop,preferred://filemanager,preferred://browser,applications:kitty.desktop,applications:emacs.desktop,file:///usr/sbin/thunderbird-nightly,applications:authy.desktop
+launchers=applications:systemsettings.desktop,applications:org.kde.discover.desktop,preferred://filemanager,preferred://browser,applications:kitty.desktop,applications:emacs.desktop,applications:authy.desktop,applications:thunderbird-beta-bin.desktop
 
 [Containments][2][Applets][6]
 immutability=1
