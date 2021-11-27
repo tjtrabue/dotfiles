@@ -91,6 +91,18 @@ wallpaperplugin=org.kde.image
 [Containments][22][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/wallpapers/Next/contents/images/1920x1080.png
 
+[Containments][23]
+activityId=3316c754-4851-486a-b608-6f6640fe2c7b
+formfactor=0
+immutability=1
+lastScreen=0
+location=0
+plugin=org.kde.plasma.folder
+wallpaperplugin=org.kde.image
+
+[Containments][23][Wallpaper][org.kde.image][General]
+Image=file:///usr/share/wallpapers/Next/contents/images/1920x1080.png
+
 [Containments][8]
 activityId=
 formfactor=2

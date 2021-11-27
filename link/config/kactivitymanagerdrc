@@ -1,12 +1,15 @@
 [activities]
 01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=android_dev
+3316c754-4851-486a-b608-6f6640fe2c7b=mail_chat
 ce5d68ce-61d5-4292-beef-a32ac5b215c7=Default
 
 [activities-descriptions]
 01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=Development environment for Android apps.
+3316c754-4851-486a-b608-6f6640fe2c7b=Emai and chatl screen
 
 [activities-icons]
 01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=activities
+3316c754-4851-486a-b608-6f6640fe2c7b=thunderbird-nightly
 
 [main]
 currentActivity=ce5d68ce-61d5-4292-beef-a32ac5b215c7

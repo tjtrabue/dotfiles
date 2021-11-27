@@ -1,6 +1,7 @@
 [ActivityManager]
 _k_friendly_name=Plasma
 switch-to-activity-01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=none,none,Switch to activity "android_dev"
+switch-to-activity-3316c754-4851-486a-b608-6f6640fe2c7b=none,none,Switch to activity "mail_chat"
 switch-to-activity-ce5d68ce-61d5-4292-beef-a32ac5b215c7=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
@@ -247,7 +248,7 @@ Turn Off Screen=none,none,Turn Off Screen
 _k_friendly_name=Power Management
 
 [plasmashell]
-_k_friendly_name=Plasma
+_k_friendly_name=Activity switching
 activate task manager entry 1=Meta+1,Meta+1,Activate Task Manager Entry 1
 activate task manager entry 10=,Meta+0,Activate Task Manager Entry 10
 activate task manager entry 2=Meta+2,Meta+2,Activate Task Manager Entry 2
@@ -265,8 +266,8 @@ cycleNextAction=none,none,Next History Item
 cyclePrevAction=none,none,Previous History Item
 edit_clipboard=none,none,Edit Contents…
 manage activities=Meta+Q,Meta+Q,Show Activity Switcher
-next activity=Meta+Tab,none,Walk through activities
-previous activity=Meta+Shift+Tab,none,Walk through activities (Reverse)
+next activity=Meta+Tab,Meta+Tab,Walk through activities
+previous activity=Meta+Shift+Tab,Meta+Shift+Tab,Walk through activities (Reverse)
 repeat_action=Ctrl+Alt+R,Ctrl+Alt+R,Manually Invoke Action on Current Clipboard
 show dashboard=Ctrl+F12,Ctrl+F12,Show Desktop
 show-barcode=none,none,Show Barcode…
