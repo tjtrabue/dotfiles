@@ -1,3 +1,6 @@
+[$Version]
+update_info=spectacle_shortcuts.upd:spectacle-migrate-shortcuts
+
 [ColorEffects:Disabled]
 ChangeSelectionColor[$d]
 Color[$d]

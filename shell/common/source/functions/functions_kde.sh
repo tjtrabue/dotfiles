@@ -1,7 +1,26 @@
 #!/bin/sh
 
+install_kde() {
+  local os="$(getdistro)"
+
+  log_info "Beginning KDE installation"
+  case "${os}" in
+    "Arch Linux")
+      __install_kde_arch
+      ;;
+
+    *)
+      err "Could not install KDE for OS: ${MAGENTA}${os}${NC}"
+      return 1
+      ;;
+  esac
+
+  init_kde
+}
+
 # Initialize KDE Plasma with my default configuration.
 init_kde() {
+  log_info "Initializing KDE configuration"
   install_kwin_tiling
 }
 
@@ -41,6 +60,14 @@ __install_kwin_tiling_script() {
     err "No KWin Tiling repository found at: ${BLUE}${kwinTilingDir}${NC}"
     return 1
   fi
+}
+
+# Get KDE ready on Arch Linux.
+__install_kde_arch() {
+  log_info "Installing KDE desktop environment for Arch Linux"
+  sudo pacman -Syyu --noconfirm
+  sudo pacman -S --noconfirm plasma-meta
+  sudo pacman -S --noconfirm kde-applications
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
