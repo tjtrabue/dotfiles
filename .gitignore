@@ -246,7 +246,8 @@ link/config/Google
 # KDE {{{
 # KDE is a desktop environment for Linux.
 
-link/config/kactivitymanagerd-switcher
+# The activity manager changes too frequently, and is not useful for sharing.
+link/config/kactivitymanagerd*
 # }}}
 
 # OS X / macOS {{{
