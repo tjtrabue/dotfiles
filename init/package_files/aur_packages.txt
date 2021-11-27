@@ -20,6 +20,7 @@ neovim-nightly-bin
 optimus-manager
 polybar-git
 roswell-git
+thunderbird-nightly-bin
 up
 vmtouch-git
 yank
