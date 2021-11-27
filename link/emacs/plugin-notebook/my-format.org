@@ -137,3 +137,15 @@ Assorted code formatting plugins.
       :after reformatter
       :hook (sh-mode . shfmt-on-save-mode))
   #+end_src
+
+* Apheleia
+Apheleia is a wicked fast code auto-formatter plugin for Emacs. It is only
+configured with support for a few formatters by default, such as Black,
+Prettier, and Gofmt. You must set all other formatters manually using the
+=apheleia-formatters= alist variable. Check the docstring for more details.
+
+#+begin_src emacs-lisp
+  (use-package apheleia
+    :hook
+    (after-init . apheleia-global-mode))
+#+end_src
