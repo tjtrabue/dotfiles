@@ -1,0 +1,16 @@
+[HTML Settings]
+AutomaticDetectionLanguage=1
+
+[MainWindow]
+State=AAAA/wAAAAD9AAAAAAAAA4QAAAOMAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
+ToolBarsMovable=Disabled
+eDP2 Height 1920x1080=1007
+eDP2 Width 1920x1080=900
+eDP2 XPosition 1920x1080=0
+eDP2 YPosition 1920x1080=29
+
+[MainWindowState]
+Splitter=247,652
+
+[Search]
+ScopeSelection=0

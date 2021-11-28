@@ -94,9 +94,6 @@ for any programming language that supports a formatting tool.")
 MODE that runs `lsp-format-buffer' before saving the buffer's file."
   ;; Ignore major-modes listed in the blacklist variable.
   (unless (member mode my-custom-lsp-format-major-mode-blacklist)
-    ;; Make sure to take out the format-all hook so that we don't use
-    ;; two different formatting systems for the same buffer.
-    (remove-hook 'before-save-hook #'format-all-buffer--from-hook 'local)
     (add-hook 'before-save-hook #'lsp-format-buffer 0 'local)))
 
 ;;;###autoload

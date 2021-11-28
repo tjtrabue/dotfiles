@@ -150,5 +150,16 @@ Prettier, and Gofmt. You must set all other formatters manually using the
   (use-package apheleia
     :after editorconfig
     :hook
-    (after-init . apheleia-global-mode))
+    (after-init . apheleia-global-mode)
+    :config
+    ;; Add extra apheleia formatters
+    (add-to-list 'apheleia-formatters
+                 '(shfmt . ("beautysh"
+                            "-filename" filepath
+                            (when-let ((indent (bound-and-true-p sh-basic-offset)))
+                              (list "--indent-size" (number-to-string indent)))
+                            (when indent-tabs-mode "--tab")
+                            "-")))
+    ;; Associate those new formatters with relevant major modes.
+    (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt)))
 #+end_src

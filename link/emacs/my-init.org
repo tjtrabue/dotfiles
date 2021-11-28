@@ -797,7 +797,7 @@ user are also within Emacs' reach.
     (exec-path-from-shell-warn-duration-millis 500)
     :config
     ;; Initialize the plugin, but only for macOS or Linux.
-    (when (memq window-system '(mac ns x))
+    (when (memq system-type '(gnu gnu/linux darwin cygwin))
       (let ((old-zdotdir (getenv "ZDOTDIR")))
         ;; USE_LEAN_PROFILE is set to make shell startup as minimal as possible.
         ;; We do not want this plugin to execute a fancy login shell. We only want

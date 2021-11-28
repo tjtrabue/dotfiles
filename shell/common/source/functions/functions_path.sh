@@ -182,7 +182,10 @@ export_path() {
   local binPathFile=${PATH_FILE:-${HOME}/.path}
   local pathFile="${1:-${binPathFile}}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
-  local rcFiles=("${LEAN_PROFILE:-${HOME}/.lean_profile}")
+  local rcFiles=(
+    "${HOME}/.profile"
+    "${LEAN_PROFILE:-${HOME}/.lean_profile}"
+  )
   local pathValue
   local f
 
