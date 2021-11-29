@@ -14,7 +14,8 @@ atp() {
   if ! __evaluate_paths | grep -Fxq "$(eval echo "${pathToAdd}")"; then
     log_debug "Adding path ${CYAN}${pathToAdd}${NC} to file" \
       "${GREEN}${pathFile}${NC}"
-    printf "%s\n" "${pathToAdd}" >>"${pathFile}"
+    printf "\n%s\n" "${pathToAdd}" >>"${pathFile}"
+    rmblanklines "${pathFile}"
   fi
 
   # Regenerate the static path file.

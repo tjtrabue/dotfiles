@@ -89,8 +89,13 @@ export_nvm_default_node_path() {
   log_info "Writing default node path: ${BLUE}${defaultNodeBinPath}${NC} to" \
     "path file: ${BLUE}${pathFile}${NC}"
 
-  sed -E -i "s|.*\.nvm.*versions.*bin/?\$|${defaultNodeBinPath}|" \
-    "${pathFile}"
+  if grep -q '.*\.nvm.*versions.*bin' "${pathFile}"; then
+    sed -E -i "s|.*\.nvm.*versions.*bin/?\$|${defaultNodeBinPath}|" \
+      "${pathFile}"
+  else
+    printf "\n%s\n" "${defaultNodeBinPath}" >>"${pathFile}"
+    rmblanklines "${pathFile}"
+  fi
 }
 
 # Install Node Version Manager (nvm)

@@ -101,4 +101,17 @@ rmduplines() {
   fi
 }
 
+# Remove empty lines from a file or stdin if no filename given. Note that this
+# function considers lines containing only whitespace to be empty, also.
+rmblanklines() {
+  # Read from stdin if no file argument provided.
+  local fileDescriptor="${1:-/dev/stdin}"
+
+  if [ -f "${fileDescriptor}" ]; then
+    sed -i '/^[[:space:]]*$/d' "${fileDescriptor}"
+  else
+    sed '/^[[:space:]]*$/d' "${fileDescriptor}"
+  fi
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
