@@ -154,14 +154,20 @@ and filetypes. Check their docstrings for more details.
     :hook
     (after-init . apheleia-global-mode)
     :config
-    ;; Add extra apheleia formatters
-    (add-to-list 'apheleia-formatters
-                 '(shfmt . ("beautysh"
-                            ;; "-filename" filepath
-                            (when-let ((indent (bound-and-true-p sh-basic-offset)))
-                              (list "--indent-size" (number-to-string indent)))
-                            (when indent-tabs-mode "--tab")
-                            "-")))
-    ;; Associate those new formatters with relevant major modes.
-    (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt)))
+    (let ((extra-mode-formatters-alist
+           ;; Alist mapping major modes to custom defined apheleia formatters.
+           '((sh-mode . (beautysh . ("beautysh"
+                                     (when-let ((indent (bound-and-true-p sh-basic-offset)))
+                                       (list "--indent-size" (number-to-string indent)))
+                                     (when indent-tabs-mode "--tab")
+                                     "-"))))))
+      (dolist (mode-formatter-pair extra-mode-formatters-alist)
+        (let* ((mode (car mode-formatter-pair))
+               (formatter (cdr mode-formatter-pair))
+               (formatter-name (car formatter)))
+          ;; Add extra apheleia formatters
+          (add-to-list 'apheleia-formatters formatter)
+          ;; Associate new formatters with relevant major modes.
+          (add-to-list 'apheleia-mode-alist
+                       `(,mode . ,formatter-name))))))
 #+end_src
