@@ -41,7 +41,7 @@ install_latest_node() {
   # Also set latest node as default and install latest npm, as well.
   nvm install --default --latest-npm node &&
   log_info "Writing path to latest node bin dir to: ${BLUE}${pathFile}${NC}" &&
-  atp '${HOME}/.nvm/versions/node/$(nvm version node)/bin'
+  export_nvm_default_node_path
 }
 
 # Install global NPM packages for the currently selected Node.js version.
@@ -69,6 +69,28 @@ install_or_update_nvm() {
   else
     __install_nvm
   fi
+}
+
+# Writes the default node version installed with nvm to the ~/.path file.
+export_nvm_default_node_path() {
+  local pathFile="${PATH_FILE:-${HOME}/.path}"
+  local defaultNodeVersion
+  local defaultNodeBinPath
+
+  defaultNodeVersion="$(nvm version node 2>/dev/null)"
+
+  if [ -z "${defaultNodeVersion}" ]; then
+    err "Could not determine default node version with nvm"
+    return 1
+  fi
+
+  defaultNodeBinPath="\${HOME}/.nvm/versions/node/${defaultNodeVersion}/bin"
+
+  log_info "Writing default node path: ${BLUE}${defaultNodeBinPath}${NC} to" \
+    "path file: ${BLUE}${pathFile}${NC}"
+
+  sed -E -i "s|.*\.nvm.*versions.*bin/?\$|${defaultNodeBinPath}|" \
+    "${pathFile}"
 }
 
 # Install Node Version Manager (nvm)
