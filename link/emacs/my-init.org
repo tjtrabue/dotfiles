@@ -796,7 +796,7 @@ user are also within Emacs' reach.
     ;; How long to wait before warning about long startup time for shell.
     (exec-path-from-shell-warn-duration-millis 500)
     :config
-    ;; Initialize the plugin, but only for macOS or Linux.
+    ;; Only run this plugin for macOS, Linux, or Cygwin systems.
     (when (member system-type '(gnu gnu/linux darwin cygwin))
       ;; Make sure to use the lean version of our login shell profile to
       ;; avoid timing out or excessive memory consumption.
