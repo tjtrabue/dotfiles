@@ -6,7 +6,13 @@
 
 Assorted code formatting plugins.
 
-* Variables
+* format-all
+=format-all= is a package for automatically formatting source code files.  It
+supports most popular programming and markup languages, although it will often
+require third-party plugins to perform its tasks, so be ready to hunt down
+some code formatting software.
+
+** Variables
 
 #+begin_src emacs-lisp
   ;; I've commented out several major modes that are either badly supported
@@ -48,7 +54,7 @@ Assorted code formatting plugins.
     "List of major modes subject to automatic formatting by `format-all'.")
 #+end_src
 
-* Functions
+** Functions
 #+begin_src emacs-lisp
   (defun my/add-format-all-hooks ()
     "Add hooks for `format-all-mode' to all major modes listed in
@@ -69,14 +75,10 @@ Assorted code formatting plugins.
           my/format-all-major-modes))
 #+end_src
 
-* format-all
-=format-all= is a package for automatically formatting source code files.  It
-supports most popular programming and markup languages, although it will often
-require third-party plugins to perform its tasks, so be ready to hunt down
-some code formatting software.
-
+** use-package specification
 #+begin_src emacs-lisp
   (use-package format-all
+    ;; Disabled in favor of apheleia.
     :disabled
     :demand t
     :after editorconfig
@@ -107,6 +109,7 @@ where systems like =format-all= fall short. Thanks, Steve!
 
 #+begin_src emacs-lisp
   (use-package reformatter
+    ;; Disabled in favor of apheleia.
     :disabled
     :hook
     (python-mode . my-python-format-on-save-mode)
@@ -126,20 +129,6 @@ where systems like =format-all= fall short. Thanks, Steve!
       :args (list "-")))
 #+end_src
 
-* emacs-shfmt
-This is an Emacs plugin solely for =shfmt=. =format-all= /does/ have =shfmt=
-integration built into it, but it's pretty broken. For instance, due to the
-CLI options passed to =shfmt= by =format-all=, spaces will always be replaced
-with tabs, and there is no way to change this behavior aside from editing the
-code for =format-all= directly, something I refuse to do. This plugin is much
-nicer for =shfmt= integration with Emacs.
-
-#+begin_src emacs-lisp
-  (use-package shfmt
-    :after reformatter
-    :hook (sh-mode . shfmt-on-save-mode))
-#+end_src
-
 * Apheleia
 Apheleia is a wicked fast code auto-formatter plugin for Emacs. Apheleia's main
 selling point is that all formatting is done without moving point. Only a few
@@ -157,7 +146,11 @@ and filetypes. Check their docstrings for more details.
                    (when indent-tabs-mode "--tab")
                    "-"))
       (shfmt . ("shfmt" "-s" "-")))
-    "Alist associating a name with each custom apheleia formatter.")
+    "Alist that maps names to custom apheleia formatters.
+  It is perfectly acceptable to define formatters for executables
+  that may or may not be installed on the filesystem. They will not
+  be called unless the formatter name is listed in
+  `apheleia-mode-alist'.")
 
   (defvar my/apheleia-mode-formatters-alist
     '((sh-mode . beautysh))
