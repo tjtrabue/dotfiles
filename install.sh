@@ -61,12 +61,12 @@ prepare_for_os() {
   local osName="$(uname -s)"
 
   case "${osName}" in
-    "Darwin")
-      prepare_for_macos
-      ;;
-    *)
-      log_info "No preparation function found for OS type: ${osName}"
-      ;;
+  "Darwin")
+    prepare_for_macos
+    ;;
+  *)
+    log_info "No preparation function found for OS type: ${osName}"
+    ;;
   esac
 }
 
@@ -297,13 +297,13 @@ add_extra_os_vars() {
   log_info "Injecting additional OS variables into ${TARGET_HOME}/.vars"
 
   case "${os}" in
-    "Arch Linux")
-      extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
-      ;;
+  "Arch Linux")
+    extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
+    ;;
 
-    *)
-      log_info "No extra vars to add for OS: ${os}"
-      ;;
+  *)
+    log_info "No extra vars to add for OS: ${os}"
+    ;;
   esac
 
   if [ -f "${extraVarsFile}" ]; then
@@ -360,51 +360,51 @@ prepare_for_os
 
 # Parse CLI Options {{{
 args=$(getopt -o hvfk: \
-    --long help,verbose,force,fake-home: \
-    -n 'install.sh' \
+  --long help,verbose,force,fake-home: \
+  -n 'install.sh' \
   -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-    -h | --help)
-      _help
-      shift
-      exit 0
-      ;;
+  -h | --help)
+    _help
+    shift
+    exit 0
+    ;;
 
-    -v | --verbose)
-      ((LOG_LEVEL += 1))
-      shift
-      ;;
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
 
-    -f | --force)
-      FORCE_INSTALL=true
-      shift
-      ;;
+  -f | --force)
+    FORCE_INSTALL=true
+    shift
+    ;;
 
-    -k | --fake-home)
-      case "$2" in
-        "")
-          shift 2
-          ;;
-        *)
-          TARGET_HOME="${2}"
-          shift 2
-          ;;
-      esac
+  -k | --fake-home)
+    case "$2" in
+    "")
+      shift 2
       ;;
-
-    --)
-      shift
-      break
-      ;;
-
     *)
-      err "Unknown option $1 to ${THIS_EXEC}"
-      exit 2
+      TARGET_HOME="${2}"
+      shift 2
       ;;
+    esac
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
   esac
 done
 # }}}

@@ -150,35 +150,42 @@ and filetypes. Check their docstrings for more details.
 
 ** Variables
 #+begin_src emacs-lisp
+  (defvar my/apheleia-custom-formatters
+    '((beautysh . ("beautysh"
+                   (when-let ((indent (bound-and-true-p sh-basic-offset)))
+                     (list "--indent-size" (number-to-string indent)))
+                   (when indent-tabs-mode "--tab")
+                   "-"))
+      (shfmt . ("shfmt" "-s" "-")))
+    "Alist associating a name with each custom apheleia formatter.")
+
   (defvar my/apheleia-mode-formatters-alist
-    '((sh-mode . (beautysh . ("beautysh"
-                              (when-let ((indent (bound-and-true-p sh-basic-offset)))
-                                (list "--indent-size" (number-to-string indent)))
-                              (when indent-tabs-mode "--tab")
-                              "-"))))
+    '((sh-mode . beautysh))
     "Alist mapping major modes to custom formatter specifications for apheleia.
-  The car of each cons cell can either be a single major mode
-  symbol, or a list of major mode symbols, in which case the
-  associated formatter will be applied to each major mode in the
-  list.")
+  The car of each alist cons cell can either be a single symbol or
+  string, or a list of symbols or strings. If the car is a list,
+  each symbol or string in the list will be interpretted as a major
+  mode or file name pattern to associate with the cdr, which is a
+  formatter name.")
 #+end_src
 
 ** Functions
 #+begin_src emacs-lisp
-  (defun my/apheleia-add-formatters (mode-formatters-alist)
-    "Add apheleia formatters based on MODE-FORMATTERS-ALIST.
+  (defun my/apheleia-add-formatters (formatter-name-alist)
+    "Add apheleia formatters based on FORMATTER-NAME-ALIST.
 
-  MODE-FORMATTERS-ALIST maps major modes or strings representing
-  file patterns to custom formatters, which are themselves alists
-  mapping a formatter name to a formatter specification. See
-  `apheleia-formatters' for more details on how to construct custom
-  formatter specifications."
-    (dolist (mode-formatter-pair mode-formatters-alist)
+  FORMATTER-NAME-ALIST associates names to custom apheleia
+  formatter specifications. See `apheleia-formatters' for more
+  details on how to construct custom formatter specifications."
+    (dolist (mode-formatter-pair formatter-name-alist)
+      ;; Add custom apheleia formatters to the formatters alist.
+      (add-to-list 'apheleia-formatters mode-formatter-pair)))
+
+  (defun my/apheleia-map-modes-to-formatters (mode-formatter-alist)
+    "Use MODE-FORMATTER-ALIST to map major modes to custom apheleia formatters."
+    (dolist (mode-formatter-pair mode-formatter-alist)
       (let* ((mode (car mode-formatter-pair))
-             (formatter (cdr mode-formatter-pair))
-             (formatter-name (car formatter)))
-        ;; Add custom apheleia formatters to the formatters alist.
-        (add-to-list 'apheleia-formatters formatter)
+             (formatter-name (cdr mode-formatter-pair)))
         ;; Associate those new formatters with relevant major modes.
         (if (listp mode)
             ;; If the car of the alist is a list, associate the formatter with
@@ -188,6 +195,12 @@ and filetypes. Check their docstrings for more details.
                            `(,m . ,formatter-name)))
           ;; Otherwise, just associate the one major mode with the formatter.
           (add-to-list 'apheleia-mode-alist `(,mode . ,formatter-name))))))
+
+  (defun my/apheleia-override-formatters ()
+    "Give certain formatters precedence over others."
+    ;; Prefer shfmt when it is available.
+    (when (executable-find "shfmt")
+      (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))))
 #+end_src
 
 ** use-package specification
@@ -196,5 +209,7 @@ and filetypes. Check their docstrings for more details.
     :hook
     (after-init . apheleia-global-mode)
     :config
-    (my/apheleia-add-formatters my/apheleia-mode-formatters-alist))
+    (my/apheleia-add-formatters my/apheleia-custom-formatters)
+    (my/apheleia-map-modes-to-formatters my/apheleia-mode-formatters-alist)
+    (my/apheleia-override-formatters))
 #+end_src
