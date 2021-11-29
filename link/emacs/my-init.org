@@ -797,21 +797,15 @@ user are also within Emacs' reach.
     (exec-path-from-shell-warn-duration-millis 500)
     :config
     ;; Initialize the plugin, but only for macOS or Linux.
-    (when (memq system-type '(gnu gnu/linux darwin cygwin))
-      (let ((old-zdotdir (getenv "ZDOTDIR")))
-        ;; USE_LEAN_PROFILE is set to make shell startup as minimal as possible.
-        ;; We do not want this plugin to execute a fancy login shell. We only want
-        ;; to get PATH from the environment.
-        (setenv "USE_LEAN_PROFILE" "true")
-        ;; Also need to make sure ZDOTDIR is not set so that Zsh will not detect
-        ;; my custom environment.
-        (setenv "ZDOTDIR" "")
-        (exec-path-from-shell-initialize)
-        ;; Remove USE_LEAN_PROFILE environment variable once it has served its
-        ;; purpose.
-        (setenv "USE_LEAN_PROFILE" nil)
-        ;; Restore ZDOTDIR to its original value.
-        (setenv "ZDOTDIR" old-zdotdir))))
+    (when (member system-type '(gnu gnu/linux darwin cygwin))
+      ;; Make sure to use the lean version of our login shell profile to
+      ;; avoid timing out or excessive memory consumption.
+      (setenv "USE_LEAN_PROFILE" "true")
+      ;; Set $PATH by running the user's login shell.
+      (exec-path-from-shell-initialize)
+      ;; Remove USE_LEAN_PROFILE environment variable once it has served its
+      ;; purpose.
+      (setenv "USE_LEAN_PROFILE" nil)))
 #+end_src
 
 *** use-package-chords

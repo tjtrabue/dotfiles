@@ -3,6 +3,7 @@
 # Conditionally set $ZDOTDIR {{{
 # Where we want to look for our Zsh dotfiles.
 DESIRED_ZDOTDIR="${HOME}/.zsh"
+
 # We may want to ignore fancy shell settings under certain circumstances,
 # opting instead to start the shell with a minimal environment.
 if [ "${USE_LEAN_PROFILE}" = 1 ] || [ "${USE_LEAN_PROFILE}" = "true" ]; then
@@ -17,6 +18,7 @@ elif [ -d "${DESIRED_ZDOTDIR}" ] || [ -h "${DESIRED_ZDOTDIR}" ]; then
   # such as .zprofile, .zshrc, etc.
   export ZDOTDIR="${DESIRED_ZDOTDIR}"
 fi
+
 unset DESIRED_ZDOTDIR
 # }}}
 

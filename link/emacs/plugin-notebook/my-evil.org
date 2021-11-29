@@ -574,7 +574,7 @@ main features of =lispyville=:
                 "lE" 'lispy-eval-and-insert
                 "lO" 'lispy-string-oneline
                 "lQ" 'lispy-quotes
-                "lR" 'lispyville-raise-list
+                "lR" 'lispy-raise-some
                 "lS" 'lispy-splice
                 "lU" 'lispy-unbind-variable
                 "lb" 'lispy-bind-variable
@@ -582,6 +582,7 @@ main features of =lispyville=:
                 "ld" 'evil-collection-lispy-delete
                 "le" 'lispy-eval
                 "lj" 'lispy-join
+                "ll" 'lispyville-raise-list
                 "lm" 'lispy-multiline
                 "ln" 'lispy-left
                 "lo" 'lispy-oneline

@@ -141,10 +141,12 @@ nicer for =shfmt= integration with Emacs.
 #+end_src
 
 * Apheleia
-Apheleia is a wicked fast code auto-formatter plugin for Emacs. It is only
-configured with support for a few formatters by default, such as Black,
-Prettier, and Gofmt. You must set all other formatters manually using the
-=apheleia-formatters= alist variable. Check the docstring for more details.
+Apheleia is a wicked fast code auto-formatter plugin for Emacs. Apheleia's main
+selling point is that all formatting is done without moving point. Only a few
+formatters come pre-configured, such as Black, Prettier, and Gofmt. You must set
+all other formatters manually using the =apheleia-formatters= alist and
+=apheleia-mode-alist= to automatically activate these formatters for major modes
+and filetypes. Check their docstrings for more details.
 
 #+begin_src emacs-lisp
   (use-package apheleia
@@ -155,7 +157,7 @@ Prettier, and Gofmt. You must set all other formatters manually using the
     ;; Add extra apheleia formatters
     (add-to-list 'apheleia-formatters
                  '(shfmt . ("beautysh"
-                            "-filename" filepath
+                            ;; "-filename" filepath
                             (when-let ((indent (bound-and-true-p sh-basic-offset)))
                               (list "--indent-size" (number-to-string indent)))
                             (when indent-tabs-mode "--tab")
