@@ -148,26 +148,53 @@ all other formatters manually using the =apheleia-formatters= alist and
 =apheleia-mode-alist= to automatically activate these formatters for major modes
 and filetypes. Check their docstrings for more details.
 
+** Variables
+#+begin_src emacs-lisp
+  (defvar my/apheleia-mode-formatters-alist
+    '((sh-mode . (beautysh . ("beautysh"
+                              (when-let ((indent (bound-and-true-p sh-basic-offset)))
+                                (list "--indent-size" (number-to-string indent)))
+                              (when indent-tabs-mode "--tab")
+                              "-"))))
+    "Alist mapping major modes to custom formatter specifications for apheleia.
+  The car of each cons cell can either be a single major mode
+  symbol, or a list of major mode symbols, in which case the
+  associated formatter will be applied to each major mode in the
+  list.")
+#+end_src
+
+** Functions
+#+begin_src emacs-lisp
+  (defun my/apheleia-add-formatters (mode-formatters-alist)
+    "Add apheleia formatters based on MODE-FORMATTERS-ALIST.
+
+  MODE-FORMATTERS-ALIST maps major modes or strings representing
+  file patterns to custom formatters, which are themselves alists
+  mapping a formatter name to a formatter specification. See
+  `apheleia-formatters' for more details on how to construct custom
+  formatter specifications."
+    (dolist (mode-formatter-pair mode-formatters-alist)
+      (let* ((mode (car mode-formatter-pair))
+             (formatter (cdr mode-formatter-pair))
+             (formatter-name (car formatter)))
+        ;; Add custom apheleia formatters to the formatters alist.
+        (add-to-list 'apheleia-formatters formatter)
+        ;; Associate those new formatters with relevant major modes.
+        (if (listp mode)
+            ;; If the car of the alist is a list, associate the formatter with
+            ;; each major mode in the list.
+            (dolist (m mode)
+              (add-to-list 'apheleia-mode-alist
+                           `(,m . ,formatter-name)))
+          ;; Otherwise, just associate the one major mode with the formatter.
+          (add-to-list 'apheleia-mode-alist `(,mode . ,formatter-name))))))
+#+end_src
+
+** use-package specification
 #+begin_src emacs-lisp
   (use-package apheleia
-    :after editorconfig
     :hook
     (after-init . apheleia-global-mode)
     :config
-    (let ((extra-mode-formatters-alist
-           ;; Alist mapping major modes to custom defined apheleia formatters.
-           '((sh-mode . (beautysh . ("beautysh"
-                                     (when-let ((indent (bound-and-true-p sh-basic-offset)))
-                                       (list "--indent-size" (number-to-string indent)))
-                                     (when indent-tabs-mode "--tab")
-                                     "-"))))))
-      (dolist (mode-formatter-pair extra-mode-formatters-alist)
-        (let* ((mode (car mode-formatter-pair))
-               (formatter (cdr mode-formatter-pair))
-               (formatter-name (car formatter)))
-          ;; Add extra apheleia formatters
-          (add-to-list 'apheleia-formatters formatter)
-          ;; Associate new formatters with relevant major modes.
-          (add-to-list 'apheleia-mode-alist
-                       `(,mode . ,formatter-name))))))
+    (my/apheleia-add-formatters my/apheleia-mode-formatters-alist))
 #+end_src

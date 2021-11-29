@@ -43,8 +43,9 @@ so that each time they are saved they are formatted"
 #+begin_src emacs-lisp
   (use-package editorconfig
     :demand t
-    :init
-    (my/add-editorconfig-hooks)
+    ;; :init
+    ;; NOTE: Currently not adding format hooks. Using apheleia for formatting.
+    ;; (my/add-editorconfig-hooks)
     :config
     (editorconfig-mode))
 #+end_src
