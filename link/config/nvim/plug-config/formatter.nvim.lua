@@ -4,7 +4,7 @@
 local function formatter_shfmt()
   return {
     exe = "shfmt",
-    args = {"-"},
+    args = {"-s", "-"},
     stdin = true
   }
 end
