@@ -500,15 +500,23 @@ totalgitreset() {
 # }}}
 
 # Verifying refs {{{
+# Check if a ref name exists locally or in the remote repository.
+# Usage:
+#   verifyref REF [GIT_REPO_PATH]
 verifyref() {
   local ref="${1}"
+  # Defaults to git repository of cwd.
+  local repo="${2:-$(git rev-parse --show-toplevel)}"
 
   if [ -z "${ref}" ]; then
     err "No ref provided"
     return 1
   fi
 
-  git rev-parse --verify "${ref}" >>/dev/null 2>&1
+  # Check for both local and remote refs matching the given name.
+  git -C "${repo}" rev-parse --verify "${ref}" >>/dev/null 2>&1 ||
+    git -C "${repo}" ls-remote --exit-code "$(defaultremote "${repo}")" \
+      "${ref}" >>/dev/null 2>&1
 }
 # }}}
 
