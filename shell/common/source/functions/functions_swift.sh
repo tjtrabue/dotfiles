@@ -14,7 +14,7 @@ install_or_update_swift_format() {
 
 # Print the semantic version of our Swift installation.
 get_swift_version() {
-  swift -version 2>&1 | grep -i -o 'Apple Swift version [0-9]\.[0-9]\.[0-9]' |
+  swift -version 2>&1 | grep -i -o 'swift version [0-9]\.[0-9]\.[0-9]' |
     awk '{print $4}'
 }
 
@@ -50,13 +50,18 @@ __clone_swift_format() {
 # Compile and install the swift-format tool.
 __build_swift_format() {
   local swiftFormatDir="${1:-${WS}/swift-format}"
+  local swiftFormatReleaseDir="${swiftFormatDir}/.build/release"
+  local installPrefix="/usr/local"
+  local installDir="${installPrefix}/bin"
 
-  __checkout_correct_swift_format_ref "${swiftFormatDir}"
+  mkdir -p "${installDir}"
 
-  log_info "Installing swift-format from ref: ${versionRef}"
+  log_info "Installing swift-format from source"
   (
-    cd "${swiftFormatDir}"
-    swift build -c release
+    cd "${swiftFormatDir}" &&
+      __checkout_correct_swift_format_ref "${swiftFormatDir}" &&
+      swift build -c release &&
+      install -m 755 -t "${installDir}" "${swiftFormatReleaseDir}/swift-format"
   )
 }
 
