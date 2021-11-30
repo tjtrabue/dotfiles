@@ -1,0 +1,28 @@
+#+title:   Swift Programming Language Configuration/Plugins
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2021:11:30
+#+tags:    swift apple macos
+#+STARTUP: fold
+
+Swift is Apple's flagship programming language, and the spiritual successor to
+Objective C. It borrows many of the benefits of Objective C while overcoming
+many of its problems, such as weak typing and dangerous memory manipulation.
+
+* swift-mode
+Major mode for editing Swift source code files.
+
+#+begin_src emacs-lisp
+  (use-package swift-mode)
+#+end_src
+
+* swift-playground-mode
+Minor mode providing the incredible Swift Playground feature for
+Emacs. Playgrounds are one of the killer features of XCode, so having them in
+Emacs greatly bridges the divide between the two editors.
+
+#+begin_src emacs-lisp
+  (use-package swift-playground-mode
+    :hook
+    (swift-mode . swift-playground-global-mode))
+#+end_src

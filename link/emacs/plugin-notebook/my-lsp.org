@@ -349,3 +349,16 @@ to the =my-custom-lsp.el= file.
                         (require 'lsp-pyright)
                         (lsp-deferred))))
    #+end_src
+
+** lsp-sourcekit
+Lsp-SourceKit is Apple's LSP provider for Swift, Objective C, and other
+languages. This plugin not only provides
+
+#+begin_src emacs-lisp
+  (use-package lsp-sourcekit
+    ;; sourcekit-lsp is only available on macOS currently.
+    :if (eq system-type 'darwin)
+    :after lsp-mode
+    :custom
+    (lsp-sourcekit-executable (string-trim (shell-command-to-string "xcrun --find sourcekit-lsp"))))
+#+end_src
