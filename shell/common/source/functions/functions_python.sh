@@ -4,7 +4,7 @@
 src_python_for_profile() {
   local pyenvHome="${PYENV_ROOT:-${HOME}/.pyenv}"
 
-  if ! __tool_installed "pyenv" "${pyenvHome}"; then
+  if ! tool_installed "pyenv" "${pyenvHome}"; then
     install_or_update_pyenv
     install_latest_python
   fi
@@ -53,11 +53,11 @@ install_or_update_pyenv() {
 # Install the latest version of Python with pyenv.
 install_latest_python() {
   local latestPythonVersion="$(pyenv install --list |
-  sed 's/^\s*//' | grep '^3' | tail -1)"
+    sed 's/^\s*//' | grep '^3' | tail -1)"
 
   log_info "Installing ${YELLOW}Python ${latestPythonVersion}${NC} with pyenv"
   pyenv install -s "${latestPythonVersion}" &&
-  pyenv global "${latestPythonVersion}"
+    pyenv global "${latestPythonVersion}"
 }
 
 get_python2_version() {
@@ -72,7 +72,7 @@ get_python3_version() {
 __install_pyenv() {
   local pyenvHome="${PYENV_DIR:-${HOME}/.pyenv}"
 
-  __install_tool_from_url_and_script "pyenv" "${pyenvHome}" \
+  install_tool_from_url_and_script "pyenv" "${pyenvHome}" \
     "https://pyenv.run"
 }
 
@@ -104,13 +104,13 @@ __install_python3_packages() {
 __update_python2_packages() {
   log_info "Updating Python 2.x packages"
   pip2 freeze --local | grep -v '^\-e' |
-  cut -d = -f 1 | xargs -n1 pip2 install --user --upgrade
+    cut -d = -f 1 | xargs -n1 pip2 install --user --upgrade
 }
 
 __update_python3_packages() {
   log_info "Updating Python 3 packages"
   python3 -m pip list --outdated --format=freeze | grep -v '^\-e' |
-  cut -d = -f 1 | xargs -n1 python3 -m pip install --user --upgrade
+    cut -d = -f 1 | xargs -n1 python3 -m pip install --user --upgrade
 }
 
 # Return 0 if PIP installed for Python 2.X

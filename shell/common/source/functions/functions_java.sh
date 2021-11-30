@@ -6,7 +6,7 @@ install_sdkman() {
 
   # Install SDKMAN if we don't already have it installed.
   log_info "Installing sdkman"
-  __install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
+  install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
     "https://get.sdkman.io"
 
   # Merge the default configuration file for sdkman with the config file we have
@@ -19,7 +19,7 @@ install_jenv() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
 
   log_info "Installing JENV"
-  __install_tool_from_git "jenv" "${jenvHome}" \
+  install_tool_from_git "jenv" "${jenvHome}" \
     "https://github.com/jenv/jenv.git"
 }
 
@@ -27,13 +27,13 @@ install_jenv() {
 initialize_jenv_for_shell() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
 
-  if ! __tool_installed "jenv" "${jenvHome}"; then
+  if ! tool_installed "jenv" "${jenvHome}"; then
     install_jenv
   fi
 
   # Make sure jenv is available on $PATH.
   if [ ! -x "$(command -v jenv)" ]; then
-    log_info "Adding jenv binary path to \$PATH"
+    log_info 'Adding jenv binary path to $PATH'
     export PATH="${jenvHome}/bin:${PATH}"
   fi
 
@@ -47,7 +47,7 @@ initialize_sdkman_for_shell() {
   local sdkmanInitScript="${sdkmanHome}/bin/sdkman-init.sh"
 
   # Make sure sdkman is installed.
-  if ! __tool_installed "sdk" "${sdkmanHome}"; then
+  if ! tool_installed "sdk" "${sdkmanHome}"; then
     install_sdkman
   fi
 

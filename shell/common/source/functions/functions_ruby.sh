@@ -25,7 +25,7 @@ add_gem_bin_dirs_to_path() {
 install_rvm() {
   local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
 
-  __install_tool_from_url_and_script "rvm" "${rvmHome}" \
+  install_tool_from_url_and_script "rvm" "${rvmHome}" \
     "https://get.rvm.io"
 }
 
@@ -34,7 +34,7 @@ install_latest_ruby() {
   local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
   local rvmScriptsDir="${rvmHome}/scripts"
 
-  if ! __tool_installed "rvm" "${rvmHome}"; then
+  if ! tool_installed "rvm" "${rvmHome}"; then
     # Install rvm if necessary.
     install_rvm
     . "${rvmScriptsDir}/rvm"
@@ -56,7 +56,7 @@ src_ruby_for_profile() {
   local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
 
   # Install rvm if we do not yet have it installed.
-  if ! __tool_installed "rvm" "${rvmHome}"; then
+  if ! tool_installed "rvm" "${rvmHome}"; then
     install_rvm
     install_latest_ruby
   fi

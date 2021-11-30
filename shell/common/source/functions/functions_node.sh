@@ -7,7 +7,7 @@ src_node_for_profile() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
 
   # Install nvm if we do not yet have it installed.
-  if ! __tool_installed "nvm" "${nvmDir}"; then
+  if ! tool_installed "nvm" "${nvmDir}"; then
     install_or_update_nvm
     install_latest_node
   fi
@@ -27,7 +27,7 @@ install_latest_node() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
   local pathFile="${PATH_FILE:-${HOME}/.path}"
 
-  if ! __tool_installed "nvm" "${nvmDir}"; then
+  if ! tool_installed "nvm" "${nvmDir}"; then
     install_or_update_nvm
     . "${nvmDir}/nvm.sh"
   elif [ "$(command -v nvm)" = "" ]; then
@@ -40,8 +40,8 @@ install_latest_node() {
   # Install latest Node.js and set it as the currently used version.
   # Also set latest node as default and install latest npm, as well.
   nvm install --default --latest-npm node &&
-  log_info "Writing path to latest node bin dir to: ${BLUE}${pathFile}${NC}" &&
-  export_nvm_default_node_path
+    log_info "Writing path to latest node bin dir to: ${BLUE}${pathFile}${NC}" &&
+    export_nvm_default_node_path
 }
 
 # Install global NPM packages for the currently selected Node.js version.
@@ -110,8 +110,8 @@ __install_nvm() {
       git checkout "$(git describe --abbrev=0 --tags --match "v[0-9]*" \
         "$(git rev-list --tags --max-count=1)")"
     ) && \. "${nvmDir}/nvm.sh" &&
-    __link_nvm_default_packages_file &&
-    log_info "Done!"
+      __link_nvm_default_packages_file &&
+      log_info "Done!"
   else
     warn "${nvmDir} already exists"
   fi

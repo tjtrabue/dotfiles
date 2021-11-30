@@ -5,7 +5,7 @@
 # Checks to see if a generic tool is installed on the local file system.
 # Takes the tool's command and home directory as its arguments.
 # Returns 0 if the tool is installed. Returns non-zero otherwise.
-__tool_installed() {
+tool_installed() {
   local toolCmd="$1"
   local toolHomeDir="$2"
 
@@ -28,7 +28,7 @@ __tool_installed() {
 # many different "install_x" type functions. Each of those functions operated
 # on a tool's name, home directory, and a url. Thus, it was easy to capture all
 # of their common logic in a single function.
-__install_tool_from_url_and_script() {
+install_tool_from_url_and_script() {
   local toolCmd="$1"
   local toolHomeDir="$2"
   local installerUrl="$3"
@@ -37,9 +37,9 @@ __install_tool_from_url_and_script() {
     "curl -sSL \"${installerUrl}\" | bash"
 }
 
-# This function is similar to __install_tool_from_url_and_script, only it clones
+# This function is similar to install_tool_from_url_and_script, only it clones
 # a git repository instead of running an installer script through bash.
-__install_tool_from_git() {
+install_tool_from_git() {
   local toolCmd="$1"
   local toolHomeDir="$2"
   local gitRepoUrl="$3"
@@ -54,7 +54,7 @@ __install_tool_generic() {
   local toolHomeDir="$2"
   local installCmdString="$3"
 
-  if ! __tool_installed "${toolCmd}" "${toolHomeDir}"; then
+  if ! tool_installed "${toolCmd}" "${toolHomeDir}"; then
     eval "${installCmdString}"
   else
     warn "${toolCmd} is already installed. Check ${toolHomeDir}"
