@@ -5,6 +5,11 @@
 install_or_update_swift_format() {
   local swiftFormatDir="${WS}/swift-format"
 
+  if ! __swift_installed; then
+    err "swift executable not found"
+    return 1
+  fi
+
   if [ -d "${swiftFormatDir}" ]; then
     __update_swift_format "${swiftFormatDir}"
   else
@@ -16,6 +21,10 @@ install_or_update_swift_format() {
 get_swift_version() {
   swift -version 2>&1 | grep -i -o 'swift version [0-9]\.[0-9]\.[0-9]' |
     awk '{print $4}'
+}
+
+__swift_installed() {
+  test -x "$(command -v swift)"
 }
 
 __update_swift_format() {
