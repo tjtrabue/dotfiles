@@ -56,6 +56,7 @@ screen
 sd
 shellcheck
 shfmt
+sourcekitten
 streamlink
 texlab
 the_silver_searcher
