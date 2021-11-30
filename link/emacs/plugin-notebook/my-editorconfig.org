@@ -7,7 +7,7 @@
 =editorconfig= is a simple specification for telling editors how to perform
 basic operations on different file types, such as indenting with spaces rather
 than tabs in all files except for Makefiles, or automatically wrapping text
-after a certain number of columns have been typed.
+after typing a certain number of characters.
 
 * Variables
 #+begin_src emacs-lisp
@@ -42,10 +42,6 @@ so that each time they are saved they are formatted"
 * editorconfig
 #+begin_src emacs-lisp
   (use-package editorconfig
-    :demand t
-    ;; :init
-    ;; NOTE: Currently not adding format hooks. Using apheleia for formatting.
-    ;; (my/add-editorconfig-hooks)
-    :config
-    (editorconfig-mode))
+    :hook
+    (after-init . editorconfig-mode))
 #+end_src

@@ -63,14 +63,14 @@ shortpath() {
     if [ -d "${evaluatedPath}" ]; then
       log_debug "\$${varName} is a directory variable"
       if echo "${inputPath}" | grep -q "^${evaluatedPath}" &&
-      [ "${#evaluatedPath}" -ge "${#bestToReplace}" ]; then
+        [ "${#evaluatedPath}" -ge "${#bestToReplace}" ]; then
         bestToReplace="${evaluatedPath}"
         bestVar="${varName}"
         log_debug "New best to replace: ${varName}=${bestToReplace}"
         shortPath="${inputPath/${bestToReplace}/\${${bestVar}\}}"
       fi
     fi
-    done < <(
+  done < <(
     grep '^\s*export' "${varFile}" | sed 's/^\s*//'
     grep -v -e '^$' -e '^\s*#' "${dirAliasFile}" | sed 's/^\s*//'
   )
@@ -123,9 +123,9 @@ construct_path() {
 
   log_debug "Constructing path variable from file: ${GREEN}${pathFile}${NC}"
   __evaluate_paths "${pathFile}" |
-  sed "s|${HOME}|\${HOME}|" |
-  tr '\n' ':' |
-  sed 's/:$//'
+    sed "s|${HOME}|\${HOME}|" |
+    tr '\n' ':' |
+    sed 's/:$//'
 }
 
 # Source the LuaRocks module path.
@@ -141,15 +141,15 @@ add_extra_paths_to_path_file() {
   local os="$(uname -s)"
   local extraPathsFile
 
-  log_info "Looking for extra executable paths to add to \$PATH..."
+  log_info 'Looking for extra executable paths to add to $PATH...'
   case "${os}" in
-    "Darwin")
-      log_info "Adding extra executable paths for macOS."
-      extraPathsFile="${extraPathFilesDir}/mac_path"
-      ;;
-    *)
-      log_info "No extra executable paths found."
-      ;;
+  "Darwin")
+    log_info "Adding extra executable paths for macOS."
+    extraPathsFile="${extraPathFilesDir}/mac_path"
+    ;;
+  *)
+    log_info "No extra executable paths found."
+    ;;
   esac
 
   if [ -f "${extraPathsFile}" ]; then
@@ -177,14 +177,14 @@ pathsync() {
 }
 
 # Write the dynamically generated $PATH variable to a static file for ease of
-# exporting within a shell session. Evaluating a dynamic path every time a shell
-# starts is slow and unnecessary, since the path file in question rarely changes.
+# sourcing within a shell session. Evaluating $PATH dynamically every time a
+# shell starts is slow and unnecessary, since the path file in question rarely
+# changes.
 export_path() {
   local binPathFile=${PATH_FILE:-${HOME}/.path}
   local pathFile="${1:-${binPathFile}}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
   local rcFiles=(
-    "${HOME}/.profile"
     "${LEAN_PROFILE:-${HOME}/.lean_profile}"
   )
   local pathValue
@@ -209,9 +209,13 @@ EOF
   # Replace all 'export PATH' directives in shell relevant initialization files
   # with updated $PATH value.
   for f in "${rcFiles[@]}"; do
-    log_debug "Exporting PATH to shell init file: ${BLUE}${f}${NC}"
-    sed -E -i --follow-symlinks \
-      "s|^(\s*export PATH=).*|\1\"${pathValue}\"|" "${f}"
+    if [ -f "${f}" ]; then
+      log_debug "Exporting PATH to shell init file: ${BLUE}${f}${NC}"
+      sed -E -i --follow-symlinks \
+        "s|^(\s*export PATH=).*|\1\"${pathValue}\"|" "${f}"
+    else
+      warn "Shell file ${BLUE}${f}${NC} does not exist"
+    fi
   done
 }
 

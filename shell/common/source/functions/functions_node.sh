@@ -54,7 +54,7 @@ update_node_packages() {
   local packagesToUpdate="$(ncu -gu 2>/dev/null | grep '^npm' | sed '/^$/d')"
 
   if [ -n "$packagesToUpdate" ]; then
-    eval "npm install -g" "$packagesToUpdate"
+    eval "npm install -g" "${packagesToUpdate}"
   else
     log_info "No packages to update."
   fi
@@ -96,6 +96,8 @@ export_nvm_default_node_path() {
     printf "\n%s\n" "${defaultNodeBinPath}" >>"${pathFile}"
     rmblanklines "${pathFile}"
   fi
+
+  export_path
 }
 
 # Install Node Version Manager (nvm)
@@ -143,6 +145,11 @@ __link_nvm_default_packages_file() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
   local nvmDefaultPackagesFile="${nvmDir}/default-packages"
   local nodePackagesFile="${NODE_PACKAGES_FILE}"
+
+  if [ ! -f "${nodePackagesFile}" ]; then
+    err "No node packages file at: ${BLUE}${nodePackagesFile}${NC}"
+    return 1
+  fi
 
   log_info "Linking ${BLUE}${nodePackagesFile}${NC} to" \
     "${CYAN}${nvmDefaultPackagesFile}${NC}"
