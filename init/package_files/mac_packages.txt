@@ -58,6 +58,7 @@ shellcheck
 shfmt
 sourcekitten
 streamlink
+swiftformat
 texlab
 the_silver_searcher
 tmux
