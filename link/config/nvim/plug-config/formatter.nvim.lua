@@ -1,121 +1,112 @@
--- Configure formatters for each filetype.
+-- Define formatter functions for easy reuse.
+
+-- shfmt
+local function formatter_shfmt()
+  return {
+    exe = "shfmt",
+    args = {"-"},
+    stdin = true
+  }
+end
+
+-- beautysh
+local function formatter_beautysh()
+  return {
+    exe = "beautysh",
+    args = {"--indent-size", "2", "-"},
+    stdin = true
+  }
+end
+
+-- clang-format
+local function formatter_clang_format()
+  return {
+    exe = "clang-format",
+    stdin = true
+  }
+end
+
+-- prettier
+local function formatter_prettier()
+  return {
+    exe = "prettier",
+    args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+    stdin = true
+  }
+end
+
+-- luafmt
+local function formatter_luafmt()
+  return {
+    exe = "luafmt",
+    args = {"--indent-count", 2, "--stdin"},
+    stdin = true
+  }
+end
+
+-- perltidy
+local function formatter_perltidy()
+  return {
+    exe = "perltidy",
+    args = {"--standard-output"},
+    stdin = true
+  }
+end
+
+-- yapf
+local function formatter_yapf()
+  return {
+    exe = "yapf",
+    args = {"--parallel"},
+    stdin = true
+  }
+end
+
+-- rustfmt
+local function formatter_rustfmt()
+  return {
+    exe = "rustfmt",
+    args = {"--emit=stdout"},
+    stdin = true
+  }
+end
+
+-- Assign formatters for each filetype
 require("formatter").setup(
   {
     logging = false,
     filetype = {
       bash = {
-        -- shfmt
-        function()
-          return {
-            exe = "shfmt",
-            -- args = {},
-            stdin = true
-          }
-        end,
-        -- beautysh
-        function()
-          return {
-            exe = "beautysh",
-            args = {"--indent-size", "2", "-"},
-            stdin = true
-          }
-        end
+        -- formatter_beautysh,
+        formatter_shfmt
       },
       c = {
-        -- clang-format
-        function()
-          return {
-            exe = "clang-format",
-            stdin = true
-          }
-        end
+        formatter_clang_format
       },
       cpp = {
-        -- clang-format
-        function()
-          return {
-            exe = "clang-format",
-            stdin = true
-          }
-        end
+        formatter_clang_format
       },
       javascript = {
-        -- prettier
-        function()
-          return {
-            exe = "prettier",
-            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
-            stdin = true
-          }
-        end
+        formatter_prettier
       },
       lua = {
-        -- luafmt
-        function()
-          return {
-            exe = "luafmt",
-            args = {"--indent-count", 2, "--stdin"},
-            stdin = true
-          }
-        end
+        formatter_luafmt
       },
       markdown = {
-        -- prettier
-        function()
-          return {
-            exe = "prettier",
-            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
-            stdin = true
-          }
-        end
+        formatter_prettier
       },
       perl = {
-        -- perltidy
-        function()
-          return {
-            exe = "perltidy",
-            args = {"--standard-output"},
-            stdin = true
-          }
-        end
+        formatter_perltidy
       },
       python = {
-        -- yapf
-        function()
-          return {
-            exe = "yapf",
-            args = {"--parallel"},
-            stdin = true
-          }
-        end
+        formatter_yapf
       },
       rust = {
-        -- Rustfmt
-        function()
-          return {
-            exe = "rustfmt",
-            args = {"--emit=stdout"},
-            stdin = true
-          }
-        end
+        formatter_rustfmt
       },
       sh = {
-        -- shfmt
-        function()
-          return {
-            exe = "shfmt",
-            -- args = {},
-            stdin = true
-          }
-        end,
-        -- beautysh
-        function()
-          return {
-            exe = "beautysh",
-            args = {"--indent-size", "2", "-"},
-            stdin = true
-          }
-        end
+        -- formatter_beautysh,
+        formatter_shfmt
       }
     }
   }
