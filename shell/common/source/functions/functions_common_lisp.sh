@@ -7,15 +7,15 @@ install_roswell() {
   local os="$(getdistro)"
 
   case "${os}" in
-    "Darwin")
-      __install_roswell_mac
-      ;;
-    "Arch Linux")
-      __install_roswell_arch_linux
-      ;;
-    *)
-      __install_roswell_generic
-      ;;
+  "Darwin")
+    __install_roswell_mac
+    ;;
+  "Arch Linux")
+    __install_roswell_arch_linux
+    ;;
+  *)
+    __install_roswell_generic
+    ;;
   esac
 
 }
@@ -44,11 +44,11 @@ install_common_lisp_packages() {
       install_roswell
     fi
   } &&
-  {
-    log_info "Installing Common Lisp packages..."
-    install_packages_from_file_with_tool "ros install" \
-      "${COMMON_LISP_PACKAGES_FILE}"
-  }
+    {
+      log_info "Installing Common Lisp packages..."
+      install_packages_from_file_with_tool "ros install" \
+        "${COMMON_LISP_PACKAGES_FILE}"
+    }
 }
 
 # Install roswell with homebrew.
@@ -80,11 +80,11 @@ __install_roswell_generic() {
 
   (
     cd "${roswellRepo}" &&
-    sh bootstrap &&
-    ./configure --prefix="${roswellInstallPrefix}/" &&
-    make &&
-    make install &&
-    ros setup
+      sh bootstrap &&
+      ./configure --prefix="${roswellInstallPrefix}/" &&
+      make &&
+      make install &&
+      ros setup
   )
 }
 

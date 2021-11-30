@@ -8,28 +8,27 @@
 
 # Full help message
 function calc_help() {
-    echo "calc is a powerful command line calculator that can compute not only sums, differences," 1>&2
-    echo "products, and quotients, but also square roots, exponentiation, and much more." 1>&2
-    echo "You may use parentheses to group operands, but you must escape them with a backslash." 1>&2
-    echo "NOTE: Always separate arguments and operators with spaces, or you will not get the" 1>&2
-    echo "      output you expect." 1>&2
-    calc_usage
+  echo "calc is a powerful command line calculator that can compute not only sums, differences," 1>&2
+  echo "products, and quotients, but also square roots, exponentiation, and much more." 1>&2
+  echo "You may use parentheses to group operands, but you must escape them with a backslash." 1>&2
+  echo "NOTE: Always separate arguments and operators with spaces, or you will not get the" 1>&2
+  echo "      output you expect." 1>&2
+  calc_usage
 }
 
 # Usage message
 function calc_usage() {
-    echo "Usage:" 1>&2
-    echo "    calc <arg1> + <arg2> | calc <arg1> add <arg2>" 1>&2
-    echo "    calc <arg1> - <arg2> | calc <arg1> sub <arg2>" 1>&2
-    echo "    calc <arg1> x <arg2> | calc <arg1> mul <arg2>" 1>&2
-    echo "    calc <arg1> / <arg2> | calc <arg1> div <arg2>" 1>&2
-    echo "    calc ** <arg>" 1>&2
-    echo "    calc sqrt <arg>" 1>&2
-    echo "    calc <arg1> ^ <arg2> | calc <arg1> pow <arg2>" 1>&2
-    echo "    calc <arg1> % <arg2> | calc <arg1> mod <arg2>" 1>&2
-    echo "Options:" 1>&2
+  echo "Usage:" 1>&2
+  echo "    calc <arg1> + <arg2> | calc <arg1> add <arg2>" 1>&2
+  echo "    calc <arg1> - <arg2> | calc <arg1> sub <arg2>" 1>&2
+  echo "    calc <arg1> x <arg2> | calc <arg1> mul <arg2>" 1>&2
+  echo "    calc <arg1> / <arg2> | calc <arg1> div <arg2>" 1>&2
+  echo "    calc ** <arg>" 1>&2
+  echo "    calc sqrt <arg>" 1>&2
+  echo "    calc <arg1> ^ <arg2> | calc <arg1> pow <arg2>" 1>&2
+  echo "    calc <arg1> % <arg2> | calc <arg1> mod <arg2>" 1>&2
+  echo "Options:" 1>&2
 }
-
 
 ################################################################################
 ##                                                                            ##
@@ -38,21 +37,20 @@ function calc_usage() {
 ################################################################################
 
 # Exit the program if the user requests the help message:
-function exit_if_help_requested () {
-    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-        calc_help
-        exit 0
-    fi
+function exit_if_help_requested() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    calc_help
+    exit 0
+  fi
 }
 
 # Exit the program if the user enters input incorrectly
-function exit_if_input_incorrect () {
-    if [[ "$#" -lt 2 ]]; then
-        echoe "Insufficient number of operands/operators"
-        exit 1
-    fi
+function exit_if_input_incorrect() {
+  if [[ "$#" -lt 2 ]]; then
+    echoe "Insufficient number of operands/operators"
+    exit 1
+  fi
 }
-
 
 ################################################################################
 ##                                                                            ##
@@ -65,110 +63,98 @@ function exit_if_input_incorrect () {
 # Usage: stack_new name
 #
 # Example: stack_new x
-function stack_new
-{
-    : ${1?'Missing stack name'}
-    if stack_exists $1
-    then
-        echo "Stack already exists -- $1" >&2
-        return 1
-    fi
+function stack_new {
+  : ${1?'Missing stack name'}
+  if stack_exists $1; then
+    echo "Stack already exists -- $1" >&2
+    return 1
+  fi
 
-    eval "declare -ag _stack_$1"
-    eval "declare -ig _stack_$1_i"
-    eval "let _stack_$1_i=0"
-    return 0
+  eval "declare -ag _stack_$1"
+  eval "declare -ig _stack_$1_i"
+  eval "let _stack_$1_i=0"
+  return 0
 }
 
 # Destroy a stack
 #
 # Usage: stack_destroy name
-function stack_destroy
-{
-    : ${1?'Missing stack name'}
-    eval "unset _stack_$1 _stack_$1_i"
-    return 0
+function stack_destroy {
+  : ${1?'Missing stack name'}
+  eval "unset _stack_$1 _stack_$1_i"
+  return 0
 }
 
 # Push one or more items onto a stack.
 #
 # Usage: stack_push stack item ...
-function stack_push
-{
-    : ${1?'Missing stack name'}
-    : ${2?'Missing item(s) to push'}
+function stack_push {
+  : ${1?'Missing stack name'}
+  : ${2?'Missing item(s) to push'}
 
-    if no_such_stack $1
-    then
-        echo "No such stack -- $1" >&2
-        return 1
-    fi
+  if no_such_stack $1; then
+    echo "No such stack -- $1" >&2
+    return 1
+  fi
 
-    stack=$1
+  stack=$1
+  shift 1
+
+  while (($# > 0)); do
+    eval '_i=$'"_stack_${stack}_i"
+    eval "_stack_${stack}[$_i]='$1'"
+    eval "let _stack_${stack}_i+=1"
     shift 1
+  done
 
-    while (( $# > 0 ))
-    do
-        eval '_i=$'"_stack_${stack}_i"
-        eval "_stack_${stack}[$_i]='$1'"
-        eval "let _stack_${stack}_i+=1"
-        shift 1
-    done
-
-    unset _i
-    return 0
+  unset _i
+  return 0
 }
 
 # Print a stack to stdout.
 #
 # Usage: stack_print name
-function stack_print
-{
-    : ${1?'Missing stack name'}
+function stack_print {
+  : ${1?'Missing stack name'}
 
-    if no_such_stack $1
-    then
-        echo "No such stack -- $1" >&2
-        return 1
-    fi
+  if no_such_stack $1; then
+    echo "No such stack -- $1" >&2
+    return 1
+  fi
 
-    tmp=""
-    eval 'let _i=$'_stack_$1_i
-    while (( $_i > 0 ))
-    do
-        let _i=${_i}-1
-        eval 'e=$'"{_stack_$1[$_i]}"
-        tmp="$tmp $e"
-    done
-    echo "(" $tmp ")"
+  tmp=""
+  eval 'let _i=$'_stack_$1_i
+  while (($_i > 0)); do
+    let _i=${_i}-1
+    eval 'e=$'"{_stack_$1[$_i]}"
+    tmp="$tmp $e"
+  done
+  echo "(" $tmp ")"
 }
 
 # Returns the topmost element on the stack without popping it off
 #
 # Usage: stack_peek name var
 # echo "The topmost element on name is $var"
-function stack_peek
-{
-    : ${1?'Missing stack name'}
-    : ${2?'Missing name of variable for stack peek result'}
+function stack_peek {
+  : ${1?'Missing stack name'}
+  : ${2?'Missing name of variable for stack peek result'}
 
-    eval 'let _i=$'"_stack_$1_i"
+  eval 'let _i=$'"_stack_$1_i"
 
-    if no_such_stack $1
-    then
-        echo "No such stack -- $1" >&2
-        return 1
-    fi
+  if no_such_stack $1; then
+    echo "No such stack -- $1" >&2
+    return 1
+  fi
 
-    if [[ "$_i" -eq 0 ]]
-    then
-        echo "Empty stack -- $1" >&2
-        return 2
-    fi
+  if [[ "$_i" -eq 0 ]]; then
+    echo "Empty stack -- $1" >&2
+    return 2
+  fi
 
-    eval 'let _i=$'_stack_$1_i
-    let _i=${_i}-1
-    eval "$2"='$'"{_stack_$1[$_i]}"
+  eval 'let _i=$'_stack_$1_i
+  let _i=${_i}-1
+  eval "$2"='$'"{_stack_$1[$_i]}"
 }
 
 # Get the size of a stack
@@ -178,16 +164,14 @@ function stack_peek
 # Example:
 #    stack_size mystack n
 #    echo "Size is $n"
-function stack_size
-{
-    : ${1?'Missing stack name'}
-    : ${2?'Missing name of variable for stack size result'}
-    if no_such_stack $1
-    then
-        echo "No such stack -- $1" >&2
-        return 1
-    fi
-    eval "$2"='$'"{#_stack_$1[*]}"
+function stack_size {
+  : ${1?'Missing stack name'}
+  : ${2?'Missing name of variable for stack size result'}
+  if no_such_stack $1; then
+    echo "No such stack -- $1" >&2
+    return 1
+  fi
+  eval "$2"='$'"{#_stack_$1[*]}"
 }
 
 # Pop the top element from the stack.
@@ -197,53 +181,47 @@ function stack_size
 # Example:
 #    stack_pop mystack top
 #    echo "Got $top"
-function stack_pop
-{
-    : ${1?'Missing stack name'}
-    : ${2?'Missing name of variable for popped result'}
+function stack_pop {
+  : ${1?'Missing stack name'}
+  : ${2?'Missing name of variable for popped result'}
 
-    eval 'let _i=$'"_stack_$1_i"
-    if no_such_stack $1
-    then
-        echo "No such stack -- $1" >&2
-        return 1
-    fi
+  eval 'let _i=$'"_stack_$1_i"
+  if no_such_stack $1; then
+    echo "No such stack -- $1" >&2
+    return 1
+  fi
 
-    if [[ "$_i" -eq 0 ]]
-    then
-        echo "Empty stack -- $1" >&2
-        return 2
-    fi
+  if [[ "$_i" -eq 0 ]]; then
+    echo "Empty stack -- $1" >&2
+    return 2
+  fi
 
-    let _i-=1
-    eval "$2"='$'"{_stack_$1[$_i]}"
-    eval "unset _stack_$1[$_i]"
-    eval "_stack_$1_i=$_i"
-    unset _i
+  let _i-=1
+  eval "$2"='$'"{_stack_$1[$_i]}"
+  eval "unset _stack_$1[$_i]"
+  eval "_stack_$1_i=$_i"
+  unset _i
+  return 0
+}
+
+function no_such_stack {
+  : ${1?'Missing stack name'}
+  stack_exists $1
+  ret=$?
+  declare -i x
+  let x="1-$ret"
+  return $x
+}
+
+function stack_exists {
+  : ${1?'Missing stack name'}
+
+  eval '_i=$'"_stack_$1_i"
+  if [[ -z "$_i" ]]; then
+    return 1
+  else
     return 0
-}
-
-function no_such_stack
-{
-    : ${1?'Missing stack name'}
-    stack_exists $1
-    ret=$?
-    declare -i x
-    let x="1-$ret"
-    return $x
-}
-
-function stack_exists
-{
-    : ${1?'Missing stack name'}
-
-    eval '_i=$'"_stack_$1_i"
-    if [[ -z "$_i" ]]
-    then
-        return 1
-    else
-        return 0
-    fi
+  fi
 }
 
 ################################################################################
@@ -254,103 +232,103 @@ function stack_exists
 
 # Adds two real numbers
 function add() {
-    : ${1?'Missing the first argument'}
-    : ${2?'Missing the second argument'}
+  : ${1?'Missing the first argument'}
+  : ${2?'Missing the second argument'}
 
-    if [[ "$#" -ne 2 ]]; then
-        echoe "Incorrect number of arguments to function ${BLUE}add${NC}"
-        return 1
-    fi
-    local arg1="$1"
-    local arg2="$2"
-    echo "$arg1 + $arg2" | bc -l
+  if [[ "$#" -ne 2 ]]; then
+    echoe "Incorrect number of arguments to function ${BLUE}add${NC}"
+    return 1
+  fi
+  local arg1="$1"
+  local arg2="$2"
+  echo "$arg1 + $arg2" | bc -l
 }
 
 # Subtracts two real numbers
 function subtract() {
-    : ${1?'Missing the first argument'}
-    : ${2?'Missing the second argument'}
+  : ${1?'Missing the first argument'}
+  : ${2?'Missing the second argument'}
 
-    if [[ "$#" -ne 2 ]]; then
-        echoe "Incorrect number of arguments to function ${BLUE}subtract${NC}"
-        return 1
-    fi
-    local arg1="$1"
-    local arg2="$2"
-    echo "$arg1 - $arg2" | bc -l
+  if [[ "$#" -ne 2 ]]; then
+    echoe "Incorrect number of arguments to function ${BLUE}subtract${NC}"
+    return 1
+  fi
+  local arg1="$1"
+  local arg2="$2"
+  echo "$arg1 - $arg2" | bc -l
 }
 
 # Multiplies two real numbers
 function multiply() {
-    : ${1?'Missing the first argument'}
-    : ${2?'Missing the second argument'}
+  : ${1?'Missing the first argument'}
+  : ${2?'Missing the second argument'}
 
-    if [[ "$#" -ne 2 ]]; then
-        echoe "Incorrect number of arguments to function ${BLUE}multiply${NC}"
-        return 1
-    fi
-    local arg1="$1"
-    local arg2="$2"
-    echo "$arg1 * $arg2" | bc -l
+  if [[ "$#" -ne 2 ]]; then
+    echoe "Incorrect number of arguments to function ${BLUE}multiply${NC}"
+    return 1
+  fi
+  local arg1="$1"
+  local arg2="$2"
+  echo "$arg1 * $arg2" | bc -l
 }
 
 # Divides two real numbers
 function divide() {
-    : ${1?'Missing the first argument'}
-    : ${2?'Missing the second argument'}
+  : ${1?'Missing the first argument'}
+  : ${2?'Missing the second argument'}
 
-    if [[ "$#" -ne 2 ]]; then
-        echoe "Incorrect number of arguments to function ${BLUE}divide${NC}"
-        return 1
-    elif [[ "$2" -eq 0 ]]; then
-        echoe "Cannot divide by 0"
-        return 2
-    fi
-    local arg1="$1"
-    local arg2="$2"
-    echo "$arg1 / $arg2" | bc -l
+  if [[ "$#" -ne 2 ]]; then
+    echoe "Incorrect number of arguments to function ${BLUE}divide${NC}"
+    return 1
+  elif [[ "$2" -eq 0 ]]; then
+    echoe "Cannot divide by 0"
+    return 2
+  fi
+  local arg1="$1"
+  local arg2="$2"
+  echo "$arg1 / $arg2" | bc -l
 }
 
 # Calculates the square root of a positive real number
 function square_root() {
-    : ${1?'Missing the argument'}
+  : ${1?'Missing the argument'}
 
-    if [[ "$#" -ne 1 ]]; then
-        echoe "No arguement given to function ${BLUE}sqrt${NC}"
-        return 1
-    elif [[ "$1" -lt 0 ]]; then
-        echoe "Cannot calculate the square root of a negative number"
-        return 2
-    fi
-    echo "sqrt ($1)" | bc -l
+  if [[ "$#" -ne 1 ]]; then
+    echoe "No arguement given to function ${BLUE}sqrt${NC}"
+    return 1
+  elif [[ "$1" -lt 0 ]]; then
+    echoe "Cannot calculate the square root of a negative number"
+    return 2
+  fi
+  echo "sqrt ($1)" | bc -l
 }
 
 # Caclulates one number raised to the power of another
 function power() {
-    : ${1?'Missing the first argument'}
-    : ${2?'Missing the second argument'}
+  : ${1?'Missing the first argument'}
+  : ${2?'Missing the second argument'}
 
-    if [[ "$#" -ne 2 ]]; then
-        echoe "Incorrect number of arguments to function ${BLUE}power${NC}"
-        return 1
-    fi
-    local arg1="$1"
-    local arg2="$2"
-    echo "$1 ^ $2" | bc -l
+  if [[ "$#" -ne 2 ]]; then
+    echoe "Incorrect number of arguments to function ${BLUE}power${NC}"
+    return 1
+  fi
+  local arg1="$1"
+  local arg2="$2"
+  echo "$1 ^ $2" | bc -l
 }
 
 # Takes the modulus of one integer by another
 function mod() {
-    : ${1?'Missing the first argument'}
-    : ${2?'Missing the second argument'}
+  : ${1?'Missing the first argument'}
+  : ${2?'Missing the second argument'}
 
-    if [[ "$#" -ne 2 ]]; then
-        echoe "Incorrect number of arguments to function ${BLUE}mod${NC}"
-        return 1
-    fi
-    local arg1="$1"
-    local arg2="$2"
-    echo "$1 % $2" | bc
+  if [[ "$#" -ne 2 ]]; then
+    echoe "Incorrect number of arguments to function ${BLUE}mod${NC}"
+    return 1
+  fi
+  local arg1="$1"
+  local arg2="$2"
+  echo "$1 % $2" | bc
 }
 
 ################################################################################
@@ -361,184 +339,185 @@ function mod() {
 
 # Parse user input entered in the form of a mathematical expression to be evaluated
 function parse_user_input() {
-    local input_string="$@"
-    local token
-    for token in $input_string; do
-        token="$(echo "$token")"
-        # echo "Token: $token" 1>&2
-        case "$token" in
-            [0-9]*)
-                # echo "Pushing $token onto operands stack" 1>&2
-                stack_push "operands" "$token" &> /dev/null
-                ;;
-            '(')
-                # echo "Found opening parenthesis" 1>&2
-                stack_push "operators" "$token" &> /dev/null
-                ;;
-            ')')
-                # echo "Found closing parenthesis" 1>&2
-                local peek_var
-                stack_peek "operators" peek_var &> /dev/null
-                while [[ "$peek_var" != "(" ]]; do
-                    local operator val1 val2
-                    stack_pop "operators" operator &> /dev/null
-                    stack_pop "operands" val2 &> /dev/null
-                    stack_pop "operands" val1 &> /dev/null
-                    local result=$(do_binary $operator $val1 $val2)
-                    stack_push "operands" "$result" &> /dev/null
-                    stack_peek "operators" peek_var &> /dev/null
-                done
-                local left_parenthesis
-                stack_pop "operators" left_parenthesis &> /dev/null
-                ;;
-            # '+' | '-' | '*' | '/' | '^' | 'pow' | '%')
-            '+' | 'add' | '-' | 'sub' | 'x' | 'mul' | '/' | 'div' | '^' | 'pow' | '%' | 'mod')
-                # echo "Found a binary operator" 1>&2
-                local size=""
-                local peek_var=""
-                local token_precedence=""
-                local peek_precedence=""
-                stack_size "operators" size &> /dev/null
-                stack_peek "operators" peek_var &> /dev/null
-                if [[ "$size" != "" ]]; then
-                    token_precedence="${operator_precedence["$token"]}"
-                    # echo "Token precedence: $token_precedence" 1>&2
-                fi
-                if [[ "$peek_var" != "" ]]; then
-                    peek_precedence="${operator_precedence["$peek_var"]}"
-                    # echo "Peek precedence: $peek_precedence" 1>&2
-                fi
-                while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
-                    local operator val1 val2
-                    stack_pop "operators" operator &> /dev/null
-                    stack_pop "operands" val2 &> /dev/null
-                    stack_pop "operands" val1 &> /dev/null
-                    local result=$(do_binary $operator $val1 $val2)
-                    stack_push "operands" "$result" &> /dev/null
+  local input_string="$@"
+  local token
+  for token in $input_string; do
+    token="$(echo "$token")"
+    # echo "Token: $token" 1>&2
+    case "$token" in
+    [0-9]*)
+      # echo "Pushing $token onto operands stack" 1>&2
+      stack_push "operands" "$token" &>/dev/null
+      ;;
+    '(')
+      # echo "Found opening parenthesis" 1>&2
+      stack_push "operators" "$token" &>/dev/null
+      ;;
+    ')')
+      # echo "Found closing parenthesis" 1>&2
+      local peek_var
+      stack_peek "operators" peek_var &>/dev/null
+      while [[ "$peek_var" != "(" ]]; do
+        local operator val1 val2
+        stack_pop "operators" operator &>/dev/null
+        stack_pop "operands" val2 &>/dev/null
+        stack_pop "operands" val1 &>/dev/null
+        local result=$(do_binary $operator $val1 $val2)
+        stack_push "operands" "$result" &>/dev/null
+        stack_peek "operators" peek_var &>/dev/null
+      done
+      local left_parenthesis
+      stack_pop "operators" left_parenthesis &>/dev/null
+      ;;
+      # '+' | '-' | '*' | '/' | '^' | 'pow' | '%')
+    '+' | 'add' | '-' | 'sub' | 'x' | 'mul' | '/' | 'div' | '^' | 'pow' | '%' | 'mod')
+      # echo "Found a binary operator" 1>&2
+      local size=""
+      local peek_var=""
+      local token_precedence=""
+      local peek_precedence=""
+      stack_size "operators" size &>/dev/null
+      stack_peek "operators" peek_var &>/dev/null
+      if [[ "$size" != "" ]]; then
+        token_precedence="${operator_precedence["$token"]}"
+        # echo "Token precedence: $token_precedence" 1>&2
+      fi
+      if [[ "$peek_var" != "" ]]; then
+        peek_precedence="${operator_precedence["$peek_var"]}"
+        # echo "Peek precedence: $peek_precedence" 1>&2
+      fi
+      while [[ "$size" -ne 0 && $peek_precedence -ge $token_precedence ]]; do
+        local operator val1 val2
+        stack_pop "operators" operator &>/dev/null
+        stack_pop "operands" val2 &>/dev/null
+        stack_pop "operands" val1 &>/dev/null
+        local result=$(do_binary $operator $val1 $val2)
+        stack_push "operands" "$result" &>/dev/null
 
-                    # Update the sentinel values:
-                    stack_size "operators" size &> /dev/null
-                    stack_peek "operators" peek_var &> /dev/null
-                    peek_precedence="${operator_precedence["$peek_var"]}"
-                done
-                stack_push "operators" "$token" &> /dev/null
-                ;;
-            '**' | 'sqrt')
-                # echo "Found a unary operator" 1>&2
-                echow "Unary operations currently unsupported"
-                ;;
-            *)
-                echoe "Unknown token $token in input"
-                exit 3
-                ;;
-        esac
-    done
+        # Update the sentinel values:
+        stack_size "operators" size &>/dev/null
+        stack_peek "operators" peek_var &>/dev/null
+        peek_precedence="${operator_precedence["$peek_var"]}"
+      done
+      stack_push "operators" "$token" &>/dev/null
+      ;;
+    '**' | 'sqrt')
+      # echo "Found a unary operator" 1>&2
+      echow "Unary operations currently unsupported"
+      ;;
+    *)
+      echoe "Unknown token $token in input"
+      exit 3
+      ;;
+    esac
+  done
 }
 
 # Finish up remaining calculations
 function finish_remaining_operations() {
-    local operator size val val1 val2 result
-    stack_size "operators" size 2> /dev/null
-    while [[ "$size" -gt 0 ]]; do
-        stack_pop "operators" operator &> /dev/null
-        if is_binary_operator $operator; then
-            stack_pop "operands" val2 &> /dev/null
-            stack_pop "operands" val1 &> /dev/null
-            result=$(do_binary $operator $val1 $val2)
-            stack_push "operands" $result &> /dev/null
-        elif is_unary_operator $operator; then
-            stack_pop "operands" val &> /dev/null
-            result=$(do_unary $operator $val)
-            stack_push "operands" $result &> /dev/null
-        else
-            echoe "Illegal operator $operator in finish_remaining_operations"
-            return 1
-        fi
-        stack_size "operators" size 2> /dev/null
-    done
+  local operator size val val1 val2 result
+  stack_size "operators" size 2>/dev/null
+  while [[ "$size" -gt 0 ]]; do
+    stack_pop "operators" operator &>/dev/null
+    if is_binary_operator $operator; then
+      stack_pop "operands" val2 &>/dev/null
+      stack_pop "operands" val1 &>/dev/null
+      result=$(do_binary $operator $val1 $val2)
+      stack_push "operands" $result &>/dev/null
+    elif is_unary_operator $operator; then
+      stack_pop "operands" val &>/dev/null
+      result=$(do_unary $operator $val)
+      stack_push "operands" $result &>/dev/null
+    else
+      echoe "Illegal operator $operator in finish_remaining_operations"
+      return 1
+    fi
+    stack_size "operators" size 2>/dev/null
+  done
 }
 
 # Returns true for binary and false for anything else
 # Usage: is_binary_operator op
 function is_binary_operator() {
-    : ${1?'Missing the operator'}
-    if [[ "${binary_operator_list[@]}" =~ "${1}" ]]; then
-        return 0
-    else
-        return 1
-    fi
+  : ${1?'Missing the operator'}
+  if [[ "${binary_operator_list[@]}" =~ "${1}" ]]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 # Returns true for unary and false for anything else
 # Usage: is_unary_operator op
 function is_unary_operator() {
-    : ${1?'Missing the operator'}
-    if [[ "${unary_operator_list[@]}" =~ "${1}" ]]; then
-        return 0
-    else
-        return 1
-    fi
+  : ${1?'Missing the operator'}
+  if [[ "${unary_operator_list[@]}" =~ "${1}" ]]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 # Decide which binary operation to perform and then do it
 # Usage: operator val1 val2
 # operator in: +, -, x, /, ^, %
 function do_binary() {
-    : ${1?'Missing the operator'}
-    : ${2?'Missing the first operand'}
-    : ${3?'Missing the second operand'}
+  : ${1?'Missing the operator'}
+  : ${2?'Missing the first operand'}
+  : ${3?'Missing the second operand'}
 
-    local result
-    case "$1" in
-        '+' | 'add')
-            result=$(add $2 $3)
-            ;;
-        '-' | 'sub')
-            result=$(subtract $2 $3)
-            ;;
-        # '*')
-        'x' | 'mul')
-            result=$(multiply $2 $3)
-            ;;
-        '/' | 'div')
-            result=$(divide $2 $3)
-            ;;
-        '^' | 'pow')
-            result=$(power $2 $3)
-            ;;
-        '%' | 'mod')
-            result=$(mod $2 $3)
-            ;;
-        *)
-            echoe "Unknown operator passed to function do_binary: $1"
-            return 1
-   esac
+  local result
+  case "$1" in
+  '+' | 'add')
+    result=$(add $2 $3)
+    ;;
+  '-' | 'sub')
+    result=$(subtract $2 $3)
+    ;;
+    # '*')
+  'x' | 'mul')
+    result=$(multiply $2 $3)
+    ;;
+  '/' | 'div')
+    result=$(divide $2 $3)
+    ;;
+  '^' | 'pow')
+    result=$(power $2 $3)
+    ;;
+  '%' | 'mod')
+    result=$(mod $2 $3)
+    ;;
+  *)
+    echoe "Unknown operator passed to function do_binary: $1"
+    return 1
+    ;;
+  esac
 
-   echo $result
+  echo $result
 }
 
 # Decide which unary operation to perform and then do it
 # Usage: do_unary operation val
 # operator in: **, sqrt
 function do_unary() {
-    : ${1?'Missing the operator'}
-    : ${2?'Missing the operand'}
+  : ${1?'Missing the operator'}
+  : ${2?'Missing the operand'}
 
-    local result
-    case "$1" in
-        '**')
-            result=$(power $val 2)
-            ;;
-        'sqrt')
-            result=$(square_root $val)
-            ;;
-        *)
-            echoe "Unkown operator passed to function do_unary: $2"
-            return 1
-            ;;
-    esac
+  local result
+  case "$1" in
+  '**')
+    result=$(power $val 2)
+    ;;
+  'sqrt')
+    result=$(square_root $val)
+    ;;
+  *)
+    echoe "Unkown operator passed to function do_unary: $2"
+    return 1
+    ;;
+  esac
 
-    echo $result
+  echo $result
 }
 
 # Make sure that any *'s read in from command line are escaped
@@ -549,25 +528,25 @@ function do_unary() {
 
 # Prompts the user for input if they didn't enter an expression
 function prompt_for_input() {
-    local response=""
-    while [[ $response == "" ]]; do
-        echo "Enter an arithmetic expression to evaluate. Allowed operations are addition," 1>&2
-        echo "subtraction, multiplication, division, evaluating a square root, and raising a" 1>&2
-        echo "number to a power. You may use parentheses, but they have to be escaped with" 1>&2
-        echo "backslashes. Type QUIT to exit:" 1>&2
-        read -r response
-    done
-    if [[ "$response" =~ [Qq][Uu][Ii][Tt] ]]; then
-        exit 0
-    fi
-    parse_user_input "$response"
+  local response=""
+  while [[ $response == "" ]]; do
+    echo "Enter an arithmetic expression to evaluate. Allowed operations are addition," 1>&2
+    echo "subtraction, multiplication, division, evaluating a square root, and raising a" 1>&2
+    echo "number to a power. You may use parentheses, but they have to be escaped with" 1>&2
+    echo "backslashes. Type QUIT to exit:" 1>&2
+    read -r response
+  done
+  if [[ "$response" =~ [Qq][Uu][Ii][Tt] ]]; then
+    exit 0
+  fi
+  parse_user_input "$response"
 }
 
 # Used for printing errors:
-function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2; }
 
 # Used for printing warnings:
-function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2; }
 
 ################################################################################
 ##                                                                            ##
@@ -577,41 +556,41 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 # Test the math functions by printing out some test calculations
 function test_math_funcs() {
-    echo "10 + 5 = $(add 10 5)" 1>&2
-    echo "10 - 5 = $(subtract 10 5)" 1>&2
-    echo "10 x 5 = $(multiply 10 5)" 1>&2
-    echo "10 / 5 = $(divide 10 5)" 1>&2
-    echo "10 ^ 5 = $(power 10 5)" 1>&2
-    echo "3 % 2 = $(mod 3 2)" 1>&2
-    echo "** 3 = $(power 3 2)" 1>&2
-    echo "sqrt 10 = $(square_root 10)" 1>&2
+  echo "10 + 5 = $(add 10 5)" 1>&2
+  echo "10 - 5 = $(subtract 10 5)" 1>&2
+  echo "10 x 5 = $(multiply 10 5)" 1>&2
+  echo "10 / 5 = $(divide 10 5)" 1>&2
+  echo "10 ^ 5 = $(power 10 5)" 1>&2
+  echo "3 % 2 = $(mod 3 2)" 1>&2
+  echo "** 3 = $(power 3 2)" 1>&2
+  echo "sqrt 10 = $(square_root 10)" 1>&2
 }
 
 # Test the stack functions
 function test_stack_funcs() {
-    local test_stack
-    local size_var
-    local peek_var
-    local elem1
-    local elem2
-    stack_new test_stack &> /dev/null
-    stack_size test_stack size_var &> /dev/null
-    echo "Original size of test_stack: $size_var" 1>&2
-    stack_push test_stack "first" &> /dev/null
-    stack_push test_stack "second" &> /dev/null
-    stack_size test_stack size_var &> /dev/null
-    echo "Size of test_stack after two things pushed: $size_var" 1>&2
-    echo "This is the entire stack: $(stack_print test_stack)" 1>&2
-    stack_peek test_stack peek_var &> /dev/null
-    echo "Now, let's peek at the top of the stack (should be 'second'): $peek_var" 1>&2
-    stack_pop test_stack elem2 &> /dev/null
-    echo "Now let's pop it off! We just popped this off: $elem2" 1>&2
-    stack_size test_stack size_var &> /dev/null
-    echo "After popping, the size of test_stack is: $size_var" 1>&2
-    stack_pop test_stack elem1 &> /dev/null
-    echo "This is the second thing we popped off: $elem1" 1>&2
-    stack_size test_stack size_var &> /dev/null
-    echo "Now the size of the stack is: $size_var" 1>&2
+  local test_stack
+  local size_var
+  local peek_var
+  local elem1
+  local elem2
+  stack_new test_stack &>/dev/null
+  stack_size test_stack size_var &>/dev/null
+  echo "Original size of test_stack: $size_var" 1>&2
+  stack_push test_stack "first" &>/dev/null
+  stack_push test_stack "second" &>/dev/null
+  stack_size test_stack size_var &>/dev/null
+  echo "Size of test_stack after two things pushed: $size_var" 1>&2
+  echo "This is the entire stack: $(stack_print test_stack)" 1>&2
+  stack_peek test_stack peek_var &>/dev/null
+  echo "Now, let's peek at the top of the stack (should be 'second'): $peek_var" 1>&2
+  stack_pop test_stack elem2 &>/dev/null
+  echo "Now let's pop it off! We just popped this off: $elem2" 1>&2
+  stack_size test_stack size_var &>/dev/null
+  echo "After popping, the size of test_stack is: $size_var" 1>&2
+  stack_pop test_stack elem1 &>/dev/null
+  echo "This is the second thing we popped off: $elem1" 1>&2
+  stack_size test_stack size_var &>/dev/null
+  echo "Now the size of the stack is: $size_var" 1>&2
 }
 
 ################################################################################
@@ -625,7 +604,7 @@ stack_new "operands"
 stack_new "operators"
 binary_operator_list=('+' 'add' '-' 'sub' 'x' 'mul' '/' 'div' '^' 'pow' '%' 'mod')
 unary_operator_list=('**' 'sqrt')
-declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
+declare -A operator_precedence=(["+"]=1 ["-"]=1 ["x"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3)
 # declare -A operator_precedence=( ["+"]=1 ["-"]=1 ["*"]=2 ["/"]=2 ["%"]=2 ["^"]=3 ["pow"]=3 ["**"]=3 )
 declare final_result
 
@@ -643,9 +622,9 @@ declare final_result
 exit_if_help_requested "$@"
 
 if [[ "$#" -eq 0 ]]; then
-    prompt_for_input
+  prompt_for_input
 else
-    parse_user_input "$@"
+  parse_user_input "$@"
 fi
 finish_remaining_operations
 stack_pop "operands" final_result

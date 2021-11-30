@@ -13,13 +13,12 @@
 
 # make sure that cursor is returned to normal when script exits:
 function cleanup() {
-   tput cnorm
-   trap - EXIT
+  tput cnorm
+  trap - EXIT
 }
 trap cleanup EXIT
 
 [[ $# -lt 1 ]] && exit 2 # no menu items, at least 1 required
-
 
 ################################################################################
 ##                                                                            ##
@@ -49,78 +48,77 @@ lower_index=1
 # The amount of space between the item number and the item itself:
 spacer=10
 
-
 ################################################################################
 ##                                                                            ##
 ##                                Main Program                                ##
 ##                                                                            ##
 ################################################################################
 
-{ # capture stdout to stderr
-   tput civis # hide cursor
-   cp=1 # current position
-   end=false
+{            # capture stdout to stderr
+  tput civis # hide cursor
+  cp=1       # current position
+  end=false
 
-   while ! $end; do
-      for i in $(seq "$lower_index" "$upper_index"); do
-         item=$(eval "echo -n \"\${$i}\"")
-         space_padding=$(printf %$((line_length - ${#item} - $spacer))s)
-         [[ $cp == "$i" ]] && echo -n "$cr" || echo -n "$cn"
-         eval "printf \"%-${spacer}s%s%s\n\" \"[\$i]\" \"\${$i}\" \"\$space_padding\""
-      done
+  while ! $end; do
+    for i in $(seq "$lower_index" "$upper_index"); do
+      item=$(eval "echo -n \"\${$i}\"")
+      space_padding=$(printf %$((line_length - ${#item} - $spacer))s)
+      [[ $cp == "$i" ]] && echo -n "$cr" || echo -n "$cn"
+      eval "printf \"%-${spacer}s%s%s\n\" \"[\$i]\" \"\${$i}\" \"\$space_padding\""
+    done
 
-      read -rsn 1 key
-      [[ "$key" == "$ec" ]] &&
+    read -rsn 1 key
+    [[ "$key" == "$ec" ]] &&
       {
-         read -rsn 2 k2
-         key="$key$k2"
+        read -rsn 2 k2
+        key="$key$k2"
       }
 
-      case "$key" in
-         "$au")
-            cp=$((cp - 1))
-            if [[ $cp -gt 0 && $cp -eq $((lower_index - 1)) ]]; then
-               lower_index=$((lower_index - 1))
-               upper_index=$((upper_index - 1))
-            fi
-            if [[ $cp -eq 0 ]]; then
-               lower_index=$((tn - num_rows + 1))
-               upper_index=$tn
-               cp=$tn
-            fi
-            ;;
+    case "$key" in
+    "$au")
+      cp=$((cp - 1))
+      if [[ $cp -gt 0 && $cp -eq $((lower_index - 1)) ]]; then
+        lower_index=$((lower_index - 1))
+        upper_index=$((upper_index - 1))
+      fi
+      if [[ $cp -eq 0 ]]; then
+        lower_index=$((tn - num_rows + 1))
+        upper_index=$tn
+        cp=$tn
+      fi
+      ;;
 
-         "$ad")
-            cp=$((cp + 1))
-            if [[ $cp -lt $((tn - num_rows + 2)) ]]; then
-               lower_index=$((lower_index + 1))
-               upper_index=$((upper_index + 1))
-            fi
-            if [[ $cp -eq $((tn + 1)) ]]; then
-               lower_index=1
-               upper_index=$num_rows
-               cp=1
-            fi
-            ;;
+    "$ad")
+      cp=$((cp + 1))
+      if [[ $cp -lt $((tn - num_rows + 2)) ]]; then
+        lower_index=$((lower_index + 1))
+        upper_index=$((upper_index + 1))
+      fi
+      if [[ $cp -eq $((tn + 1)) ]]; then
+        lower_index=1
+        upper_index=$num_rows
+        cp=1
+      fi
+      ;;
 
-         "$nl")
-            si=true
-            end=true
-            ;;
+    "$nl")
+      si=true
+      end=true
+      ;;
 
-         "q")
-            si=false
-            end=true
-            ;;
-      esac
+    "q")
+      si=false
+      end=true
+      ;;
+    esac
 
-      tput cuu "$tn"
-   done
+    tput cuu "$tn"
+  done
 
-   tput cud $(( upper_index - 1 ))
-   tput cnorm # unhide cursor
-   echo "$cn" # normal colors
-} >&2 # end capture
+  tput cud $((upper_index - 1))
+  tput cnorm # unhide cursor
+  echo "$cn" # normal colors
+} >&2        # end capture
 
 $si && eval "echo \${$cp} | tr -dc [:print:]"
 # eof

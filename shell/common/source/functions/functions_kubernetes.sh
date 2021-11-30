@@ -10,12 +10,12 @@ init_helm_completions() {
   fi
 
   case "${userShell}" in
-    "bash")
-      __init_helm_completions_bash
-      ;;
-    "zsh")
-      __init_helm_completions_zsh
-      ;;
+  "bash")
+    __init_helm_completions_bash
+    ;;
+  "zsh")
+    __init_helm_completions_zsh
+    ;;
   esac
 }
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Variables {{{
-declare WS="${HOME}/Workspace";
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
-declare UNCRUSTIFY_GIT_URL="https://github.com/uncrustify/uncrustify.git";
-declare UNCRUSTIFY_INSTALL_DIR="${WS}/uncrustify";
-declare UNCRUSTIFY_BUILD_DIR="${UNCRUSTIFY_INSTALL_DIR}/build";
+declare WS="${HOME}/Workspace"
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare UNCRUSTIFY_GIT_URL="https://github.com/uncrustify/uncrustify.git"
+declare UNCRUSTIFY_INSTALL_DIR="${WS}/uncrustify"
+declare UNCRUSTIFY_BUILD_DIR="${UNCRUSTIFY_INSTALL_DIR}/build"
 # }}}
 
 # Imports {{{
@@ -15,37 +15,37 @@ declare UNCRUSTIFY_BUILD_DIR="${UNCRUSTIFY_INSTALL_DIR}/build";
 # Functions {{{
 clone_uncrustify() {
   if [[ ! -d "$UNCRUSTIFY_INSTALL_DIR" ]]; then
-    git clone "$UNCRUSTIFY_GIT_URL" "$UNCRUSTIFY_INSTALL_DIR";
+    git clone "$UNCRUSTIFY_GIT_URL" "$UNCRUSTIFY_INSTALL_DIR"
   else
-    warn "uncrustify directory already installed at ${UNCRUSTIFY_INSTALL_DIR}.";
+    warn "uncrustify directory already installed at ${UNCRUSTIFY_INSTALL_DIR}."
   fi
 }
 
 update_uncrustify_repo() {
-  pushd "$UNCRUSTIFY_INSTALL_DIR" &> /dev/null;
-  git checkout master &> /dev/null;
-  git pull;
-  popd &> /dev/null;
+  pushd "$UNCRUSTIFY_INSTALL_DIR" &>/dev/null
+  git checkout master &>/dev/null
+  git pull
+  popd &>/dev/null
 }
 
 build_uncrustify() {
-  pushd "$UNCRUSTIFY_INSTALL_DIR" &> /dev/null;
-  [[ -d "$UNCRUSTIFY_BUILD_DIR" ]] && rm -rf "$UNCRUSTIFY_BUILD_DIR";
-  mkdir -p "$UNCRUSTIFY_BUILD_DIR";
-  pushd "$UNCRUSTIFY_BUILD_DIR" &> /dev/null;
-  cmake ..;
-  cmake --build .;
-  popd &> /dev/null;
-  popd &> /dev/null;
+  pushd "$UNCRUSTIFY_INSTALL_DIR" &>/dev/null
+  [[ -d "$UNCRUSTIFY_BUILD_DIR" ]] && rm -rf "$UNCRUSTIFY_BUILD_DIR"
+  mkdir -p "$UNCRUSTIFY_BUILD_DIR"
+  pushd "$UNCRUSTIFY_BUILD_DIR" &>/dev/null
+  cmake ..
+  cmake --build .
+  popd &>/dev/null
+  popd &>/dev/null
 }
 
 main() {
-  clone_uncrustify;
-  update_uncrustify_repo;
-  build_uncrustify;
+  clone_uncrustify
+  update_uncrustify_repo
+  build_uncrustify
 }
 # }}}
 
-main;
+main
 
 # vim:foldenable:foldmethod=marker:

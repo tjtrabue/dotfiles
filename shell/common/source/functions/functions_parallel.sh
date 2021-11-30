@@ -14,22 +14,22 @@ __source_parallel_env() {
   local currShell="$(currentshell)"
 
   case "${currShell}" in
-    "bash")
-      log_info "Exporting Bash environment for GNU Parallel"
-      . "$(which env_parallel.bash)"
-      ;;
-#    "fish")
-#      log_info "Exporting Fish environment for GNU Parallel"
-#      . (which env_parallel.fish)
-#      ;;
-    "zsh")
-      log_info "Exporting Zsh environment for GNU Parallel"
-      . "$(which env_parallel.zsh)"
-      ;;
-    *)
-      err "Unknown shell for Parallel: ${MAGENTA}${currShell}${NC}"
-      return 1
-      ;;
+  "bash")
+    log_info "Exporting Bash environment for GNU Parallel"
+    . "$(which env_parallel.bash)"
+    ;;
+    #    "fish")
+    #      log_info "Exporting Fish environment for GNU Parallel"
+    #      . (which env_parallel.fish)
+    #      ;;
+  "zsh")
+    log_info "Exporting Zsh environment for GNU Parallel"
+    . "$(which env_parallel.zsh)"
+    ;;
+  *)
+    err "Unknown shell for Parallel: ${MAGENTA}${currShell}${NC}"
+    return 1
+    ;;
   esac
 }
 

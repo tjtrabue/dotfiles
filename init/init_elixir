@@ -4,8 +4,8 @@
 
 # Variable Definitions {{{
 # Directories
-declare DOTFILES_HOME="$HOME/.dotfiles";
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
+declare DOTFILES_HOME="$HOME/.dotfiles"
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # }}}
 
@@ -52,6 +52,6 @@ main() {
 }
 # }}}
 
-main;
+main
 
 # vim:foldenable:foldmethod=marker

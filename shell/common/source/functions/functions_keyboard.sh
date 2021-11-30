@@ -19,12 +19,12 @@ install_zsa_wally() {
 
   (
     cd "${wallyDestDir}" &&
-    log_info "Adding go.sum entry to wally project for wails" &&
-    go mod download github.com/wailsapp/wails &&
-    log_info "Building wally executable" &&
-    wails build &&
-    log_info "Installing wally executable to: ${BLUE}${installDir}${NC}" &&
-    install -m 755 -t "${installDir}" "${wallyArtifact}"
+      log_info "Adding go.sum entry to wally project for wails" &&
+      go mod download github.com/wailsapp/wails &&
+      log_info "Building wally executable" &&
+      wails build &&
+      log_info "Installing wally executable to: ${BLUE}${installDir}${NC}" &&
+      install -m 755 -t "${installDir}" "${wallyArtifact}"
   )
 }
 

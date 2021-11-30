@@ -8,38 +8,37 @@
 
 # Full help message
 function fr_help() {
-    echo "fr is a find/replace tool that uses a combination of find and sed in order" 1>&2
-    echo "to replace string patterns with new ones in files." 1>&2
-    fr_usage
+  echo "fr is a find/replace tool that uses a combination of find and sed in order" 1>&2
+  echo "to replace string patterns with new ones in files." 1>&2
+  fr_usage
 }
 
 # Usage message
 function fr_usage() {
-    echo "Usage:" 1>&2
-    echo "    fr [options] [search pattern] [replace pattern]" 1>&2
-    echo "Options:" 1>&2
-    echo "    --dir | -d <directory path> " 1>&2
-    echo "        the base directory to search in" 1>&2
-    echo "    --file-pattern | -f <pattern>" 1>&2
-    echo "        a file pattern to narrow down search results" 1>&2
-    echo "    --search | -s <pattern>" 1>&2
-    echo "        the pattern to search for in the file heirarchy" 1>&2
-    echo "        (can also be entered as the first argument after all options)" 1>&2
-    echo "    --replace | -r <string>" 1>&2
-    echo "        the string to replace all matches with in the file heirarchy" 1>&2
-    echo "        (can also be entered as the second argument after all options)" 1>&2
-    echo "    --whole-word | -w" 1>&2
-    echo "        match whole words instead of a pattern" 1>&2
-    echo "    --non-recursive | -n" 1>&2
-    echo "        tell fr to only check the working directory for matches" 1>&2
-    echo "    --max-depth | -M <int>        " 1>&2
-    echo "        the maximum level of directories to recurse down when searching" 1>&2
-    echo "    --min-depth | -m <int>        " 1>&2
-    echo "        the minimum level of directories to recurse down when searching" 1>&2
-    echo "    --help | -h                   " 1>&2
-    echo "        print help message and exit" 1>&2
+  echo "Usage:" 1>&2
+  echo "    fr [options] [search pattern] [replace pattern]" 1>&2
+  echo "Options:" 1>&2
+  echo "    --dir | -d <directory path> " 1>&2
+  echo "        the base directory to search in" 1>&2
+  echo "    --file-pattern | -f <pattern>" 1>&2
+  echo "        a file pattern to narrow down search results" 1>&2
+  echo "    --search | -s <pattern>" 1>&2
+  echo "        the pattern to search for in the file heirarchy" 1>&2
+  echo "        (can also be entered as the first argument after all options)" 1>&2
+  echo "    --replace | -r <string>" 1>&2
+  echo "        the string to replace all matches with in the file heirarchy" 1>&2
+  echo "        (can also be entered as the second argument after all options)" 1>&2
+  echo "    --whole-word | -w" 1>&2
+  echo "        match whole words instead of a pattern" 1>&2
+  echo "    --non-recursive | -n" 1>&2
+  echo "        tell fr to only check the working directory for matches" 1>&2
+  echo "    --max-depth | -M <int>        " 1>&2
+  echo "        the maximum level of directories to recurse down when searching" 1>&2
+  echo "    --min-depth | -m <int>        " 1>&2
+  echo "        the minimum level of directories to recurse down when searching" 1>&2
+  echo "    --help | -h                   " 1>&2
+  echo "        print help message and exit" 1>&2
 }
-
 
 ################################################################################
 ##                                                                            ##
@@ -49,19 +48,19 @@ function fr_usage() {
 
 # Exit the program if the user requests help
 function exit_if_help_requested() {
-    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        fr_help
-        exit 0
-    fi
+  if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    fr_help
+    exit 0
+  fi
 }
 
 # Exit program if user doesn't supply correct input
 function exit_if_input_incorrect() {
-    if [[ "$search" == "" || "$replace" == "" ]]; then
-        echoe "You must supply a search pattern and a replace string"
-        fr_usage
-        exit 1
-    fi
+  if [[ "$search" == "" || "$replace" == "" ]]; then
+    echoe "You must supply a search pattern and a replace string"
+    fr_usage
+    exit 1
+  fi
 }
 
 ################################################################################
@@ -70,12 +69,11 @@ function exit_if_input_incorrect() {
 ##                                                                            ##
 ################################################################################
 
-
 # Used for printing errors:
-function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2; }
 
 # Used for printing warnings:
-function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2; }
 
 ################################################################################
 ##                                                                            ##
@@ -101,61 +99,62 @@ find_args=""
 
 # Parse user input:
 for arg in "$@"; do
-    case "$arg" in
-        --dir | -d)
-            dir_path="$2"
-            shift 2
-            ;;
-        --file-pattern | -f)
-            file_pattern="-iname \"$2\""
-            shift 2
-            ;;
-        --search | -s)
-            search="$2"
-            shift 2
-            ;;
-        --replace | -r)
-            replace="$2"
-            shift 2
-            ;;
-        --whole-word | -w)
-            whole_word=true
-            shift 1
-            ;;
-        --non-recursive | -n)
-            max_depth="-maxdepth 1"
-            min_depth=""
-            shift 1
-            ;;
-        --max-depth | -M)
-            max_depth="-maxdepth $2"
-            shift 2
-            ;;
-        --min-depth | -m)
-            min_depth="-mindepth $2"
-            shift 2
-            ;;
-        --* | -*)
-            echoe "Unknown argument '$arg' to fr"
-            fr_usage
-            exit 2
-    esac
+  case "$arg" in
+  --dir | -d)
+    dir_path="$2"
+    shift 2
+    ;;
+  --file-pattern | -f)
+    file_pattern="-iname \"$2\""
+    shift 2
+    ;;
+  --search | -s)
+    search="$2"
+    shift 2
+    ;;
+  --replace | -r)
+    replace="$2"
+    shift 2
+    ;;
+  --whole-word | -w)
+    whole_word=true
+    shift 1
+    ;;
+  --non-recursive | -n)
+    max_depth="-maxdepth 1"
+    min_depth=""
+    shift 1
+    ;;
+  --max-depth | -M)
+    max_depth="-maxdepth $2"
+    shift 2
+    ;;
+  --min-depth | -m)
+    min_depth="-mindepth $2"
+    shift 2
+    ;;
+  --* | -*)
+    echoe "Unknown argument '$arg' to fr"
+    fr_usage
+    exit 2
+    ;;
+  esac
 done
 
 # If the user enters the find and replace strings as regular arguments,
 # parse them here:
 if [[ "$1" != "" ]]; then
-    search="$1"
-    shift 1
+  search="$1"
+  shift 1
 fi
 if [[ "$1" != "" ]]; then
-    replace="$1"
-    shift 1
+  replace="$1"
+  shift 1
 fi
 
 # Match whole words if the user specifies:
-if $whole_word ; then
-    search="\<$search\>"
+if $whole_word; then
+  search="\<$search\>"
 fi
 
 # Exit conditions:
@@ -165,9 +164,9 @@ exit_if_input_incorrect
 # Put the find arguments together to be evaluated:
 find_args="$dir_path -type f"
 for param in "$file_pattern" "$max_depth" "$min_depth"; do
-    if [[ "$param" != "" ]]; then
-        find_args="$find_args $param"
-    fi
+  if [[ "$param" != "" ]]; then
+    find_args="$find_args $param"
+  fi
 done
 find_args="$find_args -print0"
 

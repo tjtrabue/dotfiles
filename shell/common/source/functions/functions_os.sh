@@ -57,21 +57,21 @@ getostype() {
 
   log_debug "OS String: ${osString}"
   case "${osString}" in
-    CYGWIN*)
-      osType="Cygwin"
-      ;;
-    Darwin*)
-      osType="Darwin"
-      ;;
-    Linux*)
-      osType="Linux"
-      ;;
-    MINGW*)
-      osType="MinGw"
-      ;;
-    *)
-      osType="unknown"
-      ;;
+  CYGWIN*)
+    osType="Cygwin"
+    ;;
+  Darwin*)
+    osType="Darwin"
+    ;;
+  Linux*)
+    osType="Linux"
+    ;;
+  MINGW*)
+    osType="MinGw"
+    ;;
+  *)
+    osType="unknown"
+    ;;
   esac
 
   log_debug "OS Type: ${osType}"
@@ -87,22 +87,22 @@ getpm() {
   distId="$(getdistro)"
 
   case "${distId}" in
-    "Arch Linux")
-      pm="pacman"
-      ;;
-    "CentOS" | "RedHat")
-      pm="yum"
-      ;;
-    "Darwin")
-      pm="brew"
-      ;;
-    "Ubuntu")
-      pm="apt-get"
-      ;;
-    *)
-      err "Unknown OS: ${BLUE}${distId}${NC}"
-      return 1
-      ;;
+  "Arch Linux")
+    pm="pacman"
+    ;;
+  "CentOS" | "RedHat")
+    pm="yum"
+    ;;
+  "Darwin")
+    pm="brew"
+    ;;
+  "Ubuntu")
+    pm="apt-get"
+    ;;
+  *)
+    err "Unknown OS: ${BLUE}${distId}${NC}"
+    return 1
+    ;;
   esac
 
   # Return the name of the package manager:

@@ -8,24 +8,24 @@
 
 # Full help message
 function matrix_menu_help() {
-    echo "A two-dimensional selection menu that the user can navigate" 1>&2
-    echo "with the arrow keys. Note that this is NOT the binary that should" 1>&2
-    echo "be called by the end user. They should use matrix_menu instead," 1>&2
-    echo "which is used the exact same way." 1>&2
-    matrix_menu_usage
+  echo "A two-dimensional selection menu that the user can navigate" 1>&2
+  echo "with the arrow keys. Note that this is NOT the binary that should" 1>&2
+  echo "be called by the end user. They should use matrix_menu instead," 1>&2
+  echo "which is used the exact same way." 1>&2
+  matrix_menu_usage
 }
 
 # Usage message
 function matrix_menu_usage() {
-    echo "Usage:" 1>&2
-    echo "This binary is used by calling matrix_menu and one or more --row (or -r) flags with the data" 1>&2
-    echo "for each row after each flag:" 1>&2
-    echo "    matrix_menu --row [row1_option1 [row1_option2 ...] --row [row2_option1 ...]], OR" 1>&2
-    echo "    matrix_menu -r [row1_option1 [row1_option2 ...] -r [row2_option1 ...]]" 1>&2
-    echo "Options:" 1>&2
-    echo "    --help | -h" 1>&2
-    echo "Print the help message" 1>&2
-    echo "NOTE: you may type 'q' to exit the menu and return to the terminal." 1>&2
+  echo "Usage:" 1>&2
+  echo "This binary is used by calling matrix_menu and one or more --row (or -r) flags with the data" 1>&2
+  echo "for each row after each flag:" 1>&2
+  echo "    matrix_menu --row [row1_option1 [row1_option2 ...] --row [row2_option1 ...]], OR" 1>&2
+  echo "    matrix_menu -r [row1_option1 [row1_option2 ...] -r [row2_option1 ...]]" 1>&2
+  echo "Options:" 1>&2
+  echo "    --help | -h" 1>&2
+  echo "Print the help message" 1>&2
+  echo "NOTE: you may type 'q' to exit the menu and return to the terminal." 1>&2
 }
 
 ################################################################################
@@ -35,32 +35,32 @@ function matrix_menu_usage() {
 ################################################################################
 
 # Exit the program if the user requests the help message:
-function exit_if_help_requested () {
-    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-        matrix_menu_help
-        exit 0
-    fi
+function exit_if_help_requested() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    matrix_menu_help
+    exit 0
+  fi
 }
 
 # Exit the program if the user enters input incorrectly:
-function exit_if_input_incorrect () {
-    if [[ "$#" -eq 0 ]]; then
-        echoe "Need one or more rows of data"
-        matrix_menu_usage
-        exit 2
-    fi
+function exit_if_input_incorrect() {
+  if [[ "$#" -eq 0 ]]; then
+    echoe "Need one or more rows of data"
+    matrix_menu_usage
+    exit 2
+  fi
 
-    if [[ "$1" != "-r" && "$1" != "--row" ]]; then
-        echoe "Must provide one or more rows of data."
-        echo "Each row must be prefixed with either --row or -r."
-        exit 3
-    fi
+  if [[ "$1" != "-r" && "$1" != "--row" ]]; then
+    echoe "Must provide one or more rows of data."
+    echo "Each row must be prefixed with either --row or -r."
+    exit 3
+  fi
 }
 
 # make sure that cursor is returned to normal when script exits:
 function cleanup() {
-   tput cnorm
-   trap - EXIT
+  tput cnorm
+  trap - EXIT
 }
 trap cleanup EXIT
 
@@ -73,120 +73,120 @@ trap cleanup EXIT
 # Parse the user's input, determine the number of rows and columns, and
 # initialize the matrix with the user's data:
 function parse_input_and_init_matrix() {
-    local input="$@"
-    local token
-    local current_row=0
-    local current_column=0
-    for token in $input; do
-        if [[ "$token" == "-r" || "$token" == "--row" ]]; then
-            if [[ "$current_column" -ne 0 ]]; then
-                option_counts+=("$current_column")
-            fi
-            (( num_rows+=1 ))
-            (( current_row+=1 ))
-            current_column=0
-        else
-            (( current_column+=1 ))
-            if [[ "$current_column" -gt "$num_columns" ]]; then
-                (( num_columns+=1 ))
-            fi
-            matrix[$current_row,$current_column]="$token"
-        fi
-    done
-    option_counts+=("$current_column")
+  local input="$@"
+  local token
+  local current_row=0
+  local current_column=0
+  for token in $input; do
+    if [[ "$token" == "-r" || "$token" == "--row" ]]; then
+      if [[ "$current_column" -ne 0 ]]; then
+        option_counts+=("$current_column")
+      fi
+      ((num_rows += 1))
+      ((current_row += 1))
+      current_column=0
+    else
+      ((current_column += 1))
+      if [[ "$current_column" -gt "$num_columns" ]]; then
+        ((num_columns += 1))
+      fi
+      matrix[$current_row, $current_column]="$token"
+    fi
+  done
+  option_counts+=("$current_column")
 }
 
 # Initialize the display style variables
 function init_display_vars() {
-    option_spacer=5
-    column_spacer=$((${#num_rows}+1))
+  option_spacer=5
+  column_spacer=$((${#num_rows} + 1))
 }
 
 # Print the 2D matrix menu:
 function print_menu() {
-    local i j
-    for (( j = 1; j <= num_rows; j++ )) do
-        for (( i = 1; i <= num_columns; i++ )) do
-            if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
-                eval "printf \"%${option_spacer}s${color_reverse}%s${color_normal}\" \"\" \"\${matrix[$j,$i]}\""
-            else
-                eval "printf \"%${option_spacer}s%s\" \"\" \"\${matrix[$j,$i]}\""
-            fi
-        done
-        echo 1>&2
+  local i j
+  for ((j = 1; j <= num_rows; j++)); do
+    for ((i = 1; i <= num_columns; i++)); do
+      if [[ $cursor_x == "$i" && $cursor_y == "$j" ]]; then
+        eval "printf \"%${option_spacer}s${color_reverse}%s${color_normal}\" \"\" \"\${matrix[$j,$i]}\""
+      else
+        eval "printf \"%${option_spacer}s%s\" \"\" \"\${matrix[$j,$i]}\""
+      fi
     done
+    echo 1>&2
+  done
 }
 
 # Get the user's keyboard input and act accordingly:
 function get_user_input() {
-    local key k2
-    local lowest_y_index=$num_rows;
-    read -rsn 1 key
-    [[ "$key" == "$escape" ]] &&
+  local key k2
+  local lowest_y_index=$num_rows
+  read -rsn 1 key
+  [[ "$key" == "$escape" ]] &&
     {
-       read -rsn 2 k2
-       key="$key$k2"
+      read -rsn 2 k2
+      key="$key$k2"
     }
-    
-    if [[ ${option_counts[$num_rows]} -lt $lowest_y_index ]]; then
-        (( lowest_y_index-=1 ));
-    fi
 
-    case "$key" in
-        "$arrow_up")
-            if [[ $cursor_y -gt 1 && $cursor_x -le $(( ${option_counts[$cursor_y - 2]} )) ]]; then
-                (( cursor_y-=1 ))
-            elif [[ $cursor_y -eq 1 ]]; then
-                cursor_y=$num_rows;
-            fi
-            ;;
-        "$arrow_down")
-            if [[ $cursor_y -lt "$num_rows" && $cursor_x -le $(( ${option_counts[$cursor_y]} )) ]]; then
-                (( cursor_y+=1 ))
-            elif [[ $cursor_y -eq $num_rows ]]; then
-                cursor_y=1;
-            fi
-            ;;
-        "$arrow_right")
-            if [[ $cursor_x -lt $(( ${option_counts[$cursor_y - 1]} )) ]]; then
-                (( cursor_x+=1 ))
-            elif [[ $cursor_x -eq ${option_counts[$cursor_y - 1]} ]]; then
-                cursor_x=1;
-            fi
-            ;;
-        "$arrow_left")
-            if [[ $cursor_x -gt 1 ]]; then
-                (( cursor_x-=1 ))
-            elif [[ $cursor_x -eq 1 ]]; then
-                cursor_x=${option_counts[$cursor_y - 1]};
-            fi
-            ;;
-        "$newline")
-            end=true
-            made_selection=true
-            ;;
-        "q")
-            end=true
-            made_selection=false
-            ;;
-    esac
+  if [[ ${option_counts[$num_rows]} -lt $lowest_y_index ]]; then
+    ((lowest_y_index -= 1))
+  fi
+
+  case "$key" in
+  "$arrow_up")
+    if [[ $cursor_y -gt 1 && $cursor_x -le $((${option_counts[$cursor_y - 2]})) ]]; then
+      ((cursor_y -= 1))
+    elif [[ $cursor_y -eq 1 ]]; then
+      cursor_y=$num_rows
+    fi
+    ;;
+  "$arrow_down")
+    if [[ $cursor_y -lt "$num_rows" && $cursor_x -le $((${option_counts[$cursor_y]})) ]]; then
+      ((cursor_y += 1))
+    elif [[ $cursor_y -eq $num_rows ]]; then
+      cursor_y=1
+    fi
+    ;;
+  "$arrow_right")
+    if [[ $cursor_x -lt $((${option_counts[$cursor_y - 1]})) ]]; then
+      ((cursor_x += 1))
+    elif [[ $cursor_x -eq ${option_counts[$cursor_y - 1]} ]]; then
+      cursor_x=1
+    fi
+    ;;
+  "$arrow_left")
+    if [[ $cursor_x -gt 1 ]]; then
+      ((cursor_x -= 1))
+    elif [[ $cursor_x -eq 1 ]]; then
+      cursor_x=${option_counts[$cursor_y - 1]}
+    fi
+    ;;
+  "$newline")
+    end=true
+    made_selection=true
+    ;;
+  "q")
+    end=true
+    made_selection=false
+    ;;
+  esac
 }
 
 # Return the user's selected option (if they made a selection):
 function return_selection() {
-    if $made_selection; then
-        # Note that x and y are flipped here, since x increases as it moves to
-        # the left and y increases downward, with the origin at the top left
-        # corner of the matrix.
-        echo "${matrix[$cursor_y,$cursor_x]}"
-    fi
+  if $made_selection; then
+    # Note that x and y are flipped here, since x increases as it moves to
+    # the left and y increases downward, with the origin at the top left
+    # corner of the matrix.
+    echo "${matrix[$cursor_y, $cursor_x]}"
+  fi
 }
 
 # Used for printing errors:
-function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2; }
 
 # Used for printing warnings:
-function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2; }
 
 ################################################################################
 ##                                                                            ##
@@ -196,28 +196,28 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 # Print the variable values
 function print_variables() {
-    echo "end: $end" 1>&2
-    echo "rum_rows: $num_rows" 1>&2
-    echo "num_columns: $num_columns" 1>&2
+  echo "end: $end" 1>&2
+  echo "rum_rows: $num_rows" 1>&2
+  echo "num_columns: $num_columns" 1>&2
 
-    local i j
-    echo -e "\nMenu:" 1>&2
-    printf "%${column_spacer}s" ''
-    for ((i=1; i<=num_columns; i++)) do
-        printf "%${option_spacer}s%${option_spacer}s" "" "$i"
+  local i j
+  echo -e "\nMenu:" 1>&2
+  printf "%${column_spacer}s" ''
+  for ((i = 1; i <= num_columns; i++)); do
+    printf "%${option_spacer}s%${option_spacer}s" "" "$i"
+  done
+  echo
+
+  for ((j = 1; j <= num_rows; j++)); do
+    printf "%${column_spacer}s" $j
+    for ((i = 1; i <= num_columns; i++)); do
+      printf "%${option_spacer}s%${option_spacer}s" "" "${matrix[$j, $i]}"
     done
     echo
+  done
 
-    for ((j=1; j<=num_rows; j++)) do
-        printf "%${column_spacer}s" $j
-        for ((i=1; i<=num_columns; i++)) do
-            printf "%${option_spacer}s%${option_spacer}s" "" "${matrix[$j,$i]}"
-        done
-        echo
-    done
-
-    echo -e "\nOption Counts:" 1>&2
-    echo "${option_counts[@]}" 1>&2
+  echo -e "\nOption Counts:" 1>&2
+  echo "${option_counts[@]}" 1>&2
 }
 
 ################################################################################
@@ -278,23 +278,23 @@ exit_if_input_incorrect "$@"
 
 # Begin capture stdout to stderr
 {
-    # Figure out option rows based on user input
-    parse_input_and_init_matrix "$@"
+  # Figure out option rows based on user input
+  parse_input_and_init_matrix "$@"
 
-    # Initialize the variables used to format the rows/columns of the menu
-    init_display_vars
+  # Initialize the variables used to format the rows/columns of the menu
+  init_display_vars
 
-    # Begin main program loop:
-    while ! $end; do
-        tput civis # hide cursor
-        print_menu
-        get_user_input
-        tput cuu "$num_rows"
-    done # End main program loop
+  # Begin main program loop:
+  while ! $end; do
+    tput civis # hide cursor
+    print_menu
+    get_user_input
+    tput cuu "$num_rows"
+  done # End main program loop
 
-    tput cud $(( num_rows - 1 ))
-    tput cnorm # unhide cursor
-    echo 1>&2
+  tput cud $((num_rows - 1))
+  tput cnorm # unhide cursor
+  echo 1>&2
 } >&2 # End capture stdout to stderr
 
 # Return the user's selection:

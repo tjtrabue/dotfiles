@@ -42,20 +42,20 @@ EOF
   eval set -- "$options"
   while true; do
     case "$1" in
-      -h | --help)
-        _aur_help
-        return 0
-        ;;
+    -h | --help)
+      _aur_help
+      return 0
+      ;;
 
-      --)
-        shift
-        break
-        ;;
+    --)
+      shift
+      break
+      ;;
 
-      *)
-        err "Unknown argument $1 to ${FUNCNAME[0]}"
-        return 2
-        ;;
+    *)
+      err "Unknown argument $1 to ${FUNCNAME[0]}"
+      return 2
+      ;;
     esac
   done
 
@@ -63,24 +63,24 @@ EOF
   aurCommand="$1"
   shift
   case "$aurCommand" in
-    "get")
-      _aur_get "$@"
-      ;;
-    "install")
-      _aur_get "$@" &&
+  "get")
+    _aur_get "$@"
+    ;;
+  "install")
+    _aur_get "$@" &&
       _aur_install "$@"
-      ;;
-    "update")
-      _aur_update "$@"
-      ;;
-    "remove" | "uninstall")
-      _aur_remove "$@"
-      ;;
-    *)
-      err "Unknown AUR command ${RED}${aurCommand}${NC}. Should be one of:" \
-        "install, update, remove."
-      return 1
-      ;;
+    ;;
+  "update")
+    _aur_update "$@"
+    ;;
+  "remove" | "uninstall")
+    _aur_remove "$@"
+    ;;
+  *)
+    err "Unknown AUR command ${RED}${aurCommand}${NC}. Should be one of:" \
+      "install, update, remove."
+    return 1
+    ;;
   esac
 }
 
@@ -224,7 +224,7 @@ _aur_update_all() {
 
   log_info "Updating all installed AUR packages"
   _aur_update_packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
-  sed 's|.*/||' | tr '\n' ' ')
+    sed 's|.*/||' | tr '\n' ' ')
 }
 
 _aur_update() {
@@ -273,9 +273,9 @@ _prepare_and_build_package() {
 
   {
     makepkg -sic --noconfirm &&
-    [ $hasStashedChanges ] &&
-    git stash pop || :
-    } || {
+      [ $hasStashedChanges ] &&
+      git stash pop || :
+  } || {
     err "Problem building package $(basename "$(pwd)")"
     return 1
   }

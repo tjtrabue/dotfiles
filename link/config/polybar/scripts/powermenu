@@ -21,50 +21,49 @@ options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
 
 chosen="$(echo -e "$options" | $rofi_command -p "UP - $uptime" -dmenu -selected-row 0)"
 case $chosen in
-    $shutdown)
-		ans=$($HOME/.config/openbox/bin/confirm.sh)
-		if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-        systemctl poweroff
-		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
-        exit
-        else
-        rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
-        fi
-        ;;
-    $reboot)
-		ans=$($HOME/.config/openbox/bin/confirm.sh)
-		if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-        systemctl reboot
-		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
-        exit
-        else
-        rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
-        fi
-        ;;
-    $lock)
-        i3lock
-        ;;
-    $suspend)
-		ans=$($HOME/.config/openbox/bin/confirm.sh)
-		if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-        mpc -q pause
-        amixer set Master mute
-        systemctl suspend
-		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
-        exit
-        else
-        rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
-        fi
-        ;;
-    $logout)
-		ans=$($HOME/.config/openbox/bin/confirm.sh)
-		if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-        openbox --exit
-		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
-        exit
-        else
-        rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
-        fi
-        ;;
+$shutdown)
+  ans=$($HOME/.config/openbox/bin/confirm.sh)
+  if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    systemctl poweroff
+  elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    exit
+  else
+    rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
+  fi
+  ;;
+$reboot)
+  ans=$($HOME/.config/openbox/bin/confirm.sh)
+  if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    systemctl reboot
+  elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    exit
+  else
+    rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
+  fi
+  ;;
+$lock)
+  i3lock
+  ;;
+$suspend)
+  ans=$($HOME/.config/openbox/bin/confirm.sh)
+  if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    mpc -q pause
+    amixer set Master mute
+    systemctl suspend
+  elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    exit
+  else
+    rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
+  fi
+  ;;
+$logout)
+  ans=$($HOME/.config/openbox/bin/confirm.sh)
+  if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
+    openbox --exit
+  elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+    exit
+  else
+    rofi -theme ~/.config/openbox/bin/askpass.rasi -e "Available Options  -  yes / y / no / n"
+  fi
+  ;;
 esac
-

@@ -132,7 +132,7 @@ __write_to_dir_hist() {
   fi
 
   if
-  [ "$(eval "echo ${dirToWrite}")" != "$(eval "echo ${latestDirFromHist}")" ]
+    [ "$(eval "echo ${dirToWrite}")" != "$(eval "echo ${latestDirFromHist}")" ]
   then
     # Write the new directory to the history file.
     printf "%s\n" "${dirToWrite}" >>"${dirHistFile}"

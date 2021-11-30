@@ -72,16 +72,16 @@ install_gccemacs() {
   local os="$(getdistro)"
 
   case "${os}" in
-    "Darwin")
-      __install_gccemacs_mac
-      ;;
-    *Linux*)
-      __install_gccemacs_linux__from_source
-      ;;
-    *)
-      err "Cannot install gccemacs for OS type: ${MAGENTA}${os}${NC}"
-      return 1
-      ;;
+  "Darwin")
+    __install_gccemacs_mac
+    ;;
+  *Linux*)
+    __install_gccemacs_linux__from_source
+    ;;
+  *)
+    err "Cannot install gccemacs for OS type: ${MAGENTA}${os}${NC}"
+    return 1
+    ;;
   esac
 }
 
@@ -96,10 +96,10 @@ __install_gccemacs_mac() {
   # Make sure the emacs-plus version environment variable has been set to an
   # appropriate value.
   case "${emacsPlusVersion}" in
-    '' | *[!0-9]*)
-      err "EMACS_PLUS_VERSION environment variable not set to a number."
-      return 1
-      ;;
+  '' | *[!0-9]*)
+    err "EMACS_PLUS_VERSION environment variable not set to a number."
+    return 1
+    ;;
   esac
 
   log_info "Installing emacs-plus package"
@@ -113,7 +113,7 @@ __install_gccemacs_mac() {
     --with-modern-purple-flat-icon \
     --with-native-comp \
     --with-xwidgets &&
-  ln -s "${emacsPlusInstallDir}/Emacs.app" "/Applications/"
+    ln -s "${emacsPlusInstallDir}/Emacs.app" "/Applications/"
 }
 
 __install_gccemacs_linux__from_source() {
@@ -162,8 +162,8 @@ __configure_gccemacs_linux() {
 
   (
     log_info "Configuring gccemacs build" &&
-    cd "${emacsDir}" &&
-    ./configure "${configurationOptions[@]}"
+      cd "${emacsDir}" &&
+      ./configure "${configurationOptions[@]}"
   )
 }
 
@@ -179,21 +179,21 @@ __build_gccemacs_linux() {
 
   (
     log_info "Building gccemacs from source" &&
-    cd "${emacsDir}" &&
-    make -j"$(nproc)"
+      cd "${emacsDir}" &&
+      make -j"$(nproc)"
   )
 
   (
     log_info "Creating autoloads" &&
-    cd "${emacsDir}/lisp" &&
-    make autoloads
+      cd "${emacsDir}/lisp" &&
+      make autoloads
   )
 
   (
     log_info "Generating documentation" &&
-    cd "${emacsDir}" &&
-    make html &&
-    make pdf
+      cd "${emacsDir}" &&
+      make html &&
+      make pdf
   )
 }
 
@@ -208,9 +208,9 @@ __generate_gccemacs_documentation_linux() {
 
   (
     log_info "Generating documentation" &&
-    cd "${emacsDir}" &&
-    make html &&
-    make pdf
+      cd "${emacsDir}" &&
+      make html &&
+      make pdf
   )
 }
 
@@ -242,14 +242,14 @@ __install_compiled_gccemacs_linux() {
 
   (
     log_info "Installing Emacs" &&
-    cd "${emacsDir}" &&
-    sudo make install
+      cd "${emacsDir}" &&
+      sudo make install
   )
 
   (
     log_info "Installing Emacs documentation" &&
-    cd "${emacsDir}" &&
-    sudo make install-html &
+      cd "${emacsDir}" &&
+      sudo make install-html &
     sudo make install-pdf
   )
 }
@@ -265,8 +265,8 @@ __install_gccemacs_documentation_linux() {
 
   (
     log_info "Installing Emacs documentation" &&
-    cd "${emacsDir}" &&
-    sudo make install-html &
+      cd "${emacsDir}" &&
+      sudo make install-html &
     sudo make install-pdf
   )
 }

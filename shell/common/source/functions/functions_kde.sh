@@ -5,14 +5,14 @@ install_kde() {
 
   log_info "Beginning KDE installation"
   case "${os}" in
-    "Arch Linux")
-      __install_kde_arch
-      ;;
+  "Arch Linux")
+    __install_kde_arch
+    ;;
 
-    *)
-      err "Could not install KDE for OS: ${MAGENTA}${os}${NC}"
-      return 1
-      ;;
+  *)
+    err "Could not install KDE for OS: ${MAGENTA}${os}${NC}"
+    return 1
+    ;;
   esac
 
   init_kde

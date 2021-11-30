@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Variables {{{
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
-declare DOTFILES_XMONAD="${DOTFILES_REPO}/link/xmonad";
-declare XMONAD_CONF="${HOME}/.xmonad";
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare DOTFILES_XMONAD="${DOTFILES_REPO}/link/xmonad"
+declare XMONAD_CONF="${HOME}/.xmonad"
 # }}}
 
 # Imports {{{
@@ -12,23 +12,23 @@ declare XMONAD_CONF="${HOME}/.xmonad";
 
 # Functions {{{
 init_xmonad_config() {
-  local d;
-  mkdir -p "$XMONAD_CONF";
+  local d
+  mkdir -p "$XMONAD_CONF"
 
   # Clear out any existing config directories and link our dotfiles
   # directories under ~/.xmonad
-  log_info "Linking directories under ${XMONAD_CONF}";
+  log_info "Linking directories under ${XMONAD_CONF}"
   find "$DOTFILES_XMONAD" -maxdepth 1 -mindepth 1 -type d \
     -exec ln -sf -t "$XMONAD_CONF" '{}' \;
 }
 
 main() {
-  log_info "Initializing Xmonad";
-  init_xmonad_config;
-  log_info "Done";
+  log_info "Initializing Xmonad"
+  init_xmonad_config
+  log_info "Done"
 }
 # }}}
 
-main;
+main
 
 # vim:foldenable:foldmethod=marker:

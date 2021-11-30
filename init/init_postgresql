@@ -44,8 +44,8 @@ change_postgres_user_password() {
   local defaultPostgresPassword="postgres"
 
   log_info "Setting postgres user's password to: ${defaultPostgresPassword}"
-  printf "%s\n%s\n" "${defaultPostgresPassword}" "${defaultPostgresPassword}" \
-    | sudo passwd postgres
+  printf "%s\n%s\n" "${defaultPostgresPassword}" "${defaultPostgresPassword}" |
+    sudo passwd postgres
 }
 
 # Enable and start the PostgreSQL SystemD service.

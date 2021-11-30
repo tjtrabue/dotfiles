@@ -120,7 +120,7 @@ install_iterm_themes() {
 
   # Import all color schemes
   "${importScript}" "${installDir}/schemes"/* &&
-  cat <<EOF
+    cat <<EOF
 iTerm color schemes successfully imported! Restart iTerm now, then check:
 
   Preferences > Profiles > Colors > Color Presets...

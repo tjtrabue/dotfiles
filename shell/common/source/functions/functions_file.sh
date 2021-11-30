@@ -92,8 +92,8 @@ rmduplines() {
     # If we're dealing with a standard file, write the stripped contents to a
     # temp file and then replace the original file with the newly stripped file.
     awk '!x[$0]++' "${fileToStripDuplicateLinesFrom}" >"${tempFile}" &&
-    mv "${tempFile}" "${fileToStripDuplicateLinesFrom}" &&
-    rm -f "${tempFile}"
+      mv "${tempFile}" "${fileToStripDuplicateLinesFrom}" &&
+      rm -f "${tempFile}"
   else
     # If we're only dealing with contents from stdin, write stipped contents
     # to stdout.

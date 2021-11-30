@@ -4,8 +4,8 @@
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
-declare VERBOSE=false;
-declare FORCE=false;
+declare VERBOSE=false
+declare FORCE=false
 
 # The home directory for all custom xrandr configuration.
 declare XRANDR_HOME="${HOME}/.xrandr"
@@ -77,32 +77,32 @@ args=$(getopt -o hvf --long help,verbose,force -n 'init_xrandr' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
-while true ; do
+while true; do
   case "$1" in
-    -v | --verbose)
-      VERBOSE=true
-      shift
-      ;;
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
 
-    -h | --help)
-      _help
-      exit 0
-      ;;
+  -h | --help)
+    _help
+    exit 0
+    ;;
 
-    -f | --force)
-      FORCE=true
-      shift
-      ;;
+  -f | --force)
+    FORCE=true
+    shift
+    ;;
 
-    --)
-      shift
-      break
-      ;;
+  --)
+    shift
+    break
+    ;;
 
-    *)
-      err "Unknown option $1 to ${THIS_EXEC}"
-      exit 2
-      ;;
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
   esac
 done
 # }}}

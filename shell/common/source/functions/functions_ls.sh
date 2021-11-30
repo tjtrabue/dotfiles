@@ -149,12 +149,12 @@ install_custom_ls_colors() {
   local lscolorsScript="${HOME}/.local/share/lscolors.sh"
   local tarballUrl="https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master"
 
-  log_info "Installing custom LS_COLORS theme at:"\
+  log_info "Installing custom LS_COLORS theme at:" \
     "${GREEN}${lscolorsScript}${NC}"
 
   mkdir -p "${installDir}"
   curl -L "${tarballUrl}" | tar xzf - --directory="${installDir}" --strip=1
-  ( cd "${installDir}" && sh install.sh )
+  (cd "${installDir}" && sh install.sh)
 }
 
 # Export LS_COLORS with the appropriate color settings for the current shell.

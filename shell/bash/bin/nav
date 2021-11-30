@@ -8,22 +8,22 @@
 
 # Full help message:
 function nav_help() {
-    echo "nav presents the user with a rectangular grid of directories in the current directory" 1>&2
-    echo "to which they can navigate. The user can use the arrow keys to select the directory" 1>&2
-    echo "they want, press 'd' to finish selecting, or press 'q' to cancel out of the menu. " 1>&2
-    echo "Once they make a selection, they will then see all directories in the previously selected" 1>&2
-    echo "directory and can make another selection." 1>&2
+  echo "nav presents the user with a rectangular grid of directories in the current directory" 1>&2
+  echo "to which they can navigate. The user can use the arrow keys to select the directory" 1>&2
+  echo "they want, press 'd' to finish selecting, or press 'q' to cancel out of the menu. " 1>&2
+  echo "Once they make a selection, they will then see all directories in the previously selected" 1>&2
+  echo "directory and can make another selection." 1>&2
 }
 
 # Usage message:
 function nav_usage() {
-    echo "Usage:" 1>&2
-    echo "     nav [-s|--show-hidden]" 1>&2
-    echo "Options:" 1>&2
-    echo "    -s | --show-hidden:" 1>&2
-    echo "Display all directories in the present dir, including hidden ones." 1>&2
-    echo "    -h | --help:" 1>&2
-    echo "Print the usage message." 1>&2
+  echo "Usage:" 1>&2
+  echo "     nav [-s|--show-hidden]" 1>&2
+  echo "Options:" 1>&2
+  echo "    -s | --show-hidden:" 1>&2
+  echo "Display all directories in the present dir, including hidden ones." 1>&2
+  echo "    -h | --help:" 1>&2
+  echo "Print the usage message." 1>&2
 }
 
 ################################################################################
@@ -33,11 +33,11 @@ function nav_usage() {
 ################################################################################
 
 # Exit the program if the user requests the help message:
-function exit_if_help_requested () {
-    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-        nav_help
-        exit 0
-    fi
+function exit_if_help_requested() {
+  if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    nav_help
+    exit 0
+  fi
 }
 
 ################################################################################
@@ -48,36 +48,39 @@ function exit_if_help_requested () {
 
 # Parse user input and get options:
 function get_options() {
-    # read the options
-    local args=$(getopt -o s --long show-hidden -n 'nav' -- "$@")
-    eval set -- "$args"
+  # read the options
+  local args=$(getopt -o s --long show-hidden -n 'nav' -- "$@")
+  eval set -- "$args"
 
-    # extract options and their arguments into variables.
-    while true ; do
-        case "$1" in
-            -s | --show-hidden)
-                shift
-                show_hidden=true
-                ;;
-            -h | --help)
-                shift
-                nav_help
-                break
-                ;;
-            --) shift ; break ;;
-            *)
-                echoe "Unknown option $1 to nav"
-                exit 2
-                ;;
-        esac
-    done
+  # extract options and their arguments into variables.
+  while true; do
+    case "$1" in
+    -s | --show-hidden)
+      shift
+      show_hidden=true
+      ;;
+    -h | --help)
+      shift
+      nav_help
+      break
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      echoe "Unknown option $1 to nav"
+      exit 2
+      ;;
+    esac
+  done
 }
 
 # Used for printing errors:
-function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2; }
 
 # Used for printing warnings:
-function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
+function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2; }
 
 ################################################################################
 ##                                                                            ##
@@ -87,18 +90,18 @@ function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
 
 # Test the get_options function by giving it all possible options:
 function test_get_options() {
-    echo "Variable values before:" 1>&2
-    echo "    show_hidden: $show_hidden" 1>&2
+  echo "Variable values before:" 1>&2
+  echo "    show_hidden: $show_hidden" 1>&2
 
-    get_options -s
+  get_options -s
 
-    echo -e "\nVariable values with short options:" 1>&2
-    echo "    show_hidden: $show_hidden" 1>&2
+  echo -e "\nVariable values with short options:" 1>&2
+  echo "    show_hidden: $show_hidden" 1>&2
 
-    get_options --show-hidden
+  get_options --show-hidden
 
-    echo -e "\nVariable values with long options:" 1>&2
-    echo "    show_hidden: $show_hidden" 1>&2
+  echo -e "\nVariable values with long options:" 1>&2
+  echo "    show_hidden: $show_hidden" 1>&2
 }
 
 ################################################################################

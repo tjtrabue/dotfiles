@@ -7,9 +7,9 @@ install_elixir_ls() {
   local installPrefix="${1:-${HOME}}"
 
   __check_elixir_installed &&
-  __clone_elixir_ls &&
-  __build_elixir_ls &&
-  __install_elixir_ls "${installPrefix}"
+    __clone_elixir_ls &&
+    __build_elixir_ls &&
+    __install_elixir_ls "${installPrefix}"
 }
 
 # Make sure we have the correct executables before proceeding.

@@ -29,7 +29,7 @@ __check_broot_supports_shell() {
     currentShell="$(currentshell)"
   fi
 
-  if ! broot --print-shell-function "${currentShell}" >> /dev/null 2>&1; then
+  if ! broot --print-shell-function "${currentShell}" >>/dev/null 2>&1; then
     err "broot does not appear to support shell: ${BLUE}${currentShell}${NC}." \
       "See 'man broot' for more details."
     return 1

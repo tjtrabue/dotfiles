@@ -4,9 +4,9 @@
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
-declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)";
-declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")";
-declare VERBOSE=false;
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+declare VERBOSE=false
 
 declare WALLY_BIN_URL="https://configure.ergodox-ez.com/wally"
 declare WALLY_BIN_URL_LINUX="${WALLY_BIN_URL}/linux"
@@ -34,11 +34,11 @@ OPTIONS:
   -v | --verbose
     Run with extra logging output.
 EOF
-exit 0;
+  exit 0
 }
 
 create_udev_rule_for_wally() {
-  sudo tee /etc/udev/rules.d/50-wally.rules &> /dev/null <<EOF
+  sudo tee /etc/udev/rules.d/50-wally.rules &>/dev/null <<EOF
 # Teensy rules for the Ergodox EZ Original / Shine / Glow
 ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
@@ -64,7 +64,7 @@ download_wally() {
 }
 
 main() {
-  print_header "Initializing Keyboard Software";
+  print_header "Initializing Keyboard Software"
   download_wally
   init_keyboard_linux
   succ "Done."
@@ -76,32 +76,32 @@ args=$(getopt -o hvf --long help,verbose,full-install -n 'init_arch' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
-while true ; do
+while true; do
   case "$1" in
-    -v | --verbose)
-      VERBOSE=true;
-      shift;
-      ;;
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
 
-    -h | --help)
-      _help;
-      shift;
-      break;
-      ;;
+  -h | --help)
+    _help
+    shift
+    break
+    ;;
 
-    --)
-      shift;
-      break
-      ;;
+  --)
+    shift
+    break
+    ;;
 
-    *)
-      err "Unknown option $1 to ${THIS_EXEC}"
-      exit 2
-      ;;
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
   esac
 done
 # }}}
 
-main;
+main
 
 # vim:foldenable:foldmethod=marker:

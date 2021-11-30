@@ -1,45 +1,45 @@
 #!/bin/bash
 
 usage() {
-	echo "Add all of the UC Gerrit projects from the specified modules directory to the"
-	echo "IntelliJ project in the given project directory. This also adds the ant build"
-	echo "file and version control repository associated with each gerrit project."
-	echo
-	echo "This will not work properly if the project is open in IntelliJ."
-	echo
-	echo "Usage: `basename "$0"` [options]"
-	echo "Options:"
-	echo "  -q : Quiet mode (only print error messages). Also skips warning messages."
-	echo "  -m <modules_dir>"
-	echo "    Specify the directory that contains all of the UC Gerrit project checkouts."
-	echo "    [Default: current directory]"
-	echo "  -p <project_dir>"
-	echo "    Specify the directory that houses the IntelliJ project to be fixed."
-	echo "    [Default: current directory]"
+  echo "Add all of the UC Gerrit projects from the specified modules directory to the"
+  echo "IntelliJ project in the given project directory. This also adds the ant build"
+  echo "file and version control repository associated with each gerrit project."
+  echo
+  echo "This will not work properly if the project is open in IntelliJ."
+  echo
+  echo "Usage: $(basename "$0") [options]"
+  echo "Options:"
+  echo "  -q : Quiet mode (only print error messages). Also skips warning messages."
+  echo "  -m <modules_dir>"
+  echo "    Specify the directory that contains all of the UC Gerrit project checkouts."
+  echo "    [Default: current directory]"
+  echo "  -p <project_dir>"
+  echo "    Specify the directory that houses the IntelliJ project to be fixed."
+  echo "    [Default: current directory]"
 }
 
 if [[ $1 == "--help" ]]; then
-	usage
-	exit 0
+  usage
+  exit 0
 fi
 
 echo_progress() {
-	if [[ $quiet -eq 0 ]]; then
-		echo "$@"
-	fi
+  if [[ $quiet -eq 0 ]]; then
+    echo "$@"
+  fi
 }
 
 warn() {
-	tput bold # use bold text
-	echo_progress "$@" >&2
-	tput sgr 0 # reset text formatting
-	sleep 3
+  tput bold # use bold text
+  echo_progress "$@" >&2
+  tput sgr 0 # reset text formatting
+  sleep 3
 }
 
 create_file() {
-	local file="$1"
-	mkdir -p "`dirname "$file"`"
-	touch "$file"
+  local file="$1"
+  mkdir -p "$(dirname "$file")"
+  touch "$file"
 }
 
 escape_pattern() { sed -e 's:\$:\\$:g' -e 's:/:\\/:g'; }
@@ -55,305 +55,309 @@ resolve_project_dir() { sed 's:\$PROJECT_DIR\$:'"$PROJECT_DIR:"; }
 resolve_module_dir() { sed 's:\$MODULE_DIR\$:'"$1:"; }
 
 list_nonexistent_entries() {
-	# the file that contains all of the entries in question
-	local file="$1"
-	# grep_pattern is the pattern that matches the line for the start of an entry
-	# this line must also contain the entry path
-	local grep_pattern="$2"
-	# command that reads stdin, parses the path associated with the entry and prints it to stdout
-	local substitution_command="$3"
+  # the file that contains all of the entries in question
+  local file="$1"
+  # grep_pattern is the pattern that matches the line for the start of an entry
+  # this line must also contain the entry path
+  local grep_pattern="$2"
+  # command that reads stdin, parses the path associated with the entry and prints it to stdout
+  local substitution_command="$3"
 
-	IFS=$'\n'
-	local line
-	for line in `grep "$grep_pattern" "$file"`; do
-		# some paths reference $PROJECT_DIR$ as a variable
-		local path="$(echo "$line" \
-			| $substitution_command \
-			| resolve_project_dir \
-			| resolve_module_dir "`dirname "$file"`")"
+  IFS=$'\n'
+  local line
+  for line in $(grep "$grep_pattern" "$file"); do
+    # some paths reference $PROJECT_DIR$ as a variable
+    local path="$(echo "$line" |
+      $substitution_command |
+      resolve_project_dir |
+      resolve_module_dir "$(dirname "$file")")"
 
-		if [[ ! -e "$path" ]]; then
-			# escape the line so that it can be used in a sed pattern
-			echo "$line" | escape_line_pattern
-		fi
-	done
+    if [[ ! -e "$path" ]]; then
+      # escape the line so that it can be used in a sed pattern
+      echo "$line" | escape_line_pattern
+    fi
+  done
 }
 
 remove_nonexistent_module_entries() {
-	# first remove entries that reference a non-existent IML file
-	IFS=$'\n'
-	local line_pattern
-	for line_pattern in `list_nonexistent_entries "$PROJECT_MODULES_FILE" '<module ' module_iml_entry_path`; do
-		sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$PROJECT_MODULES_FILE"
-	done
+  # first remove entries that reference a non-existent IML file
+  IFS=$'\n'
+  local line_pattern
+  for line_pattern in $(list_nonexistent_entries "$PROJECT_MODULES_FILE" '<module ' module_iml_entry_path); do
+    sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$PROJECT_MODULES_FILE"
+  done
 
-	# then remove entries for modules that don't have any existing content roots
-	IFS=$'\n'
-	local line
-	for line in `grep '<module ' "$PROJECT_MODULES_FILE"`; do
-		local iml_file="`echo "$line" | module_iml_entry_path | resolve_project_dir`"
+  # then remove entries for modules that don't have any existing content roots
+  IFS=$'\n'
+  local line
+  for line in $(grep '<module ' "$PROJECT_MODULES_FILE"); do
+    local iml_file="$(echo "$line" | module_iml_entry_path | resolve_project_dir)"
 
-		# parse the module's IML file for all existing content roots
-		# if the specified file for grep's "-f" option is an empty file, then nothing gets matched
-		local existing_content_roots="`grep '<content' "$iml_file" \
-			| grep -vf <(list_nonexistent_entries "$iml_file" '<content' content_root_entry_path; echo '^$')`"
+    # parse the module's IML file for all existing content roots
+    # if the specified file for grep's "-f" option is an empty file, then nothing gets matched
+    local existing_content_roots="$(grep '<content' "$iml_file" |
+      grep -vf <(
+        list_nonexistent_entries "$iml_file" '<content' content_root_entry_path
+        echo '^$'
+      ))"
 
-		if [[ -z $existing_content_roots ]]; then
-			line_pattern="`echo "$line" | escape_line_pattern`"
+    if [[ -z $existing_content_roots ]]; then
+      line_pattern="$(echo "$line" | escape_line_pattern)"
 
-			# remove the module entry
-			sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$PROJECT_MODULES_FILE"
+      # remove the module entry
+      sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$PROJECT_MODULES_FILE"
 
-			# also remove the iml file
-			rm -f "$iml_file"
-		fi
-	done
+      # also remove the iml file
+      rm -f "$iml_file"
+    fi
+  done
 }
 
 remove_nonexistent_ant_file_entries() {
-	IFS=$'\n'
-	local line_pattern
-	for line_pattern in `list_nonexistent_entries "$PROJECT_ANT_FILE" '<buildFile' ant_file_entry_path`; do
-		sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/,/<\\/buildFile>/{ /.*/d; }" "$PROJECT_ANT_FILE"
-	done
+  IFS=$'\n'
+  local line_pattern
+  for line_pattern in $(list_nonexistent_entries "$PROJECT_ANT_FILE" '<buildFile' ant_file_entry_path); do
+    sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/,/<\\/buildFile>/{ /.*/d; }" "$PROJECT_ANT_FILE"
+  done
 }
 
 remove_nonexistent_vcs_entries() {
-	IFS=$'\n'
-	local line_pattern
-	for line_pattern in `list_nonexistent_entries "$PROJECT_VCS_FILE" '<mapping' vcs_entry_path`; do
-		sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$PROJECT_VCS_FILE"
-	done
+  IFS=$'\n'
+  local line_pattern
+  for line_pattern in $(list_nonexistent_entries "$PROJECT_VCS_FILE" '<mapping' vcs_entry_path); do
+    sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$PROJECT_VCS_FILE"
+  done
 }
 
 remove_nonexistent_lib_entries() {
-	IFS=$'\n'
-	local lib_file
-	for lib_file in `find "$PROJECT_LIB_DIR" -type f -iname '*.xml'`; do
-		local line_pattern
-		for line_pattern in `list_nonexistent_entries "$lib_file" '<root' lib_entry_path`; do
-			sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$lib_file"
-		done
-	done
+  IFS=$'\n'
+  local lib_file
+  for lib_file in $(find "$PROJECT_LIB_DIR" -type f -iname '*.xml'); do
+    local line_pattern
+    for line_pattern in $(list_nonexistent_entries "$lib_file" '<root' lib_entry_path); do
+      sed $SED_EXT_RE $SED_IN_PLACE "/$line_pattern/d" "$lib_file"
+    done
+  done
 }
 
 list_src_directories() {
-	local module_dir="$1"
-	find $FIND_DASH_E "$module_dir" -type d $FIND_REGEXTYPE $FIND_REGEXTYPE_ARG \( \
-		-iregex '.*/(src|source)/.*(java|groovy)' \
-		-and \
-		-not -iregex '.*/(src|source)/.*test.*' \)
+  local module_dir="$1"
+  find $FIND_DASH_E "$module_dir" -type d $FIND_REGEXTYPE $FIND_REGEXTYPE_ARG \( \
+    -iregex '.*/(src|source)/.*(java|groovy)' \
+    -and \
+    -not -iregex '.*/(src|source)/.*test.*' \)
 }
 
 list_test_directories() {
-	local module_dir="$1"
-	find $FIND_DASH_E "$module_dir" -type d $FIND_REGEXTYPE $FIND_REGEXTYPE_ARG \( \
-		-iregex '.*/(src|source)/.*test.*/(java|groovy|j?unit(-?test)?)' \
-		-and \
-		-not -iregex '.*/com/.*' \)
+  local module_dir="$1"
+  find $FIND_DASH_E "$module_dir" -type d $FIND_REGEXTYPE $FIND_REGEXTYPE_ARG \( \
+    -iregex '.*/(src|source)/.*test.*/(java|groovy|j?unit(-?test)?)' \
+    -and \
+    -not -iregex '.*/com/.*' \)
 }
 
 list_ant_files() {
-	IFS=$'\n'
-	local line
-	for line in `grep '<buildFile' "$PROJECT_ANT_FILE"`; do
-		echo "$line" | ant_file_entry_path
-	done
+  IFS=$'\n'
+  local line
+  for line in $(grep '<buildFile' "$PROJECT_ANT_FILE"); do
+    echo "$line" | ant_file_entry_path
+  done
 }
 
 get_module_path() {
-	local module="$1"
-	find $FIND_DASH_E "$MODULES_DIR" -type d $FIND_REGEXTYPE $FIND_REGEXTYPE_ARG -iregex ".*/$module/.git" -print -quit | xargs dirname
+  local module="$1"
+  find $FIND_DASH_E "$MODULES_DIR" -type d $FIND_REGEXTYPE $FIND_REGEXTYPE_ARG -iregex ".*/$module/.git" -print -quit | xargs dirname
 }
 
 get_module_iml_path() {
-	local module="$1"
-	echo "$PROJECT_DIR/.modules/$module.iml"
+  local module="$1"
+  echo "$PROJECT_DIR/.modules/$module.iml"
 }
 
 add_module_to_project() {
-	local module="$1"
-	local group="$2"
-	local iml_file="`get_module_iml_path "$module" | sed "s:$PROJECT_DIR:\\\$PROJECT_DIR$:"`"
+  local module="$1"
+  local group="$2"
+  local iml_file="$(get_module_iml_path "$module" | sed "s:$PROJECT_DIR:\$PROJECT_DIR$:")"
 
-	write_module_iml_file "$module"
+  write_module_iml_file "$module"
 
-	# peel off the relevant closing xml tags
-	sed $SED_EXT_RE $SED_IN_PLACE '/<\/(project|component|modules)>/d' "$PROJECT_MODULES_FILE"
+  # peel off the relevant closing xml tags
+  sed $SED_EXT_RE $SED_IN_PLACE '/<\/(project|component|modules)>/d' "$PROJECT_MODULES_FILE"
 
-	# remove any old references to this module
-	local iml_pattern="(`echo "$iml_file" | escape_pattern`|`get_module_iml_path "$module" | escape_pattern`)"
-	sed $SED_EXT_RE $SED_IN_PLACE "/.*<module.*filepath=\"$iml_pattern\"/d" "$PROJECT_MODULES_FILE"
+  # remove any old references to this module
+  local iml_pattern="($(echo "$iml_file" | escape_pattern)|$(get_module_iml_path "$module" | escape_pattern))"
+  sed $SED_EXT_RE $SED_IN_PLACE "/.*<module.*filepath=\"$iml_pattern\"/d" "$PROJECT_MODULES_FILE"
 
-	# add an entry for the module's IML file
-	if [[ -n $group ]]; then
-		group="group=\"$group\""
-	fi
-	echo "      <module fileurl=\"file://$iml_file\" filepath=\"$iml_file\" $group />" >> "$PROJECT_MODULES_FILE"
+  # add an entry for the module's IML file
+  if [[ -n $group ]]; then
+    group="group=\"$group\""
+  fi
+  echo "      <module fileurl=\"file://$iml_file\" filepath=\"$iml_file\" $group />" >>"$PROJECT_MODULES_FILE"
 
-	# add the relevant closing xml tags back to the end of the file
-	echo '    </modules>' >> "$PROJECT_MODULES_FILE"
-	echo '  </component>' >> "$PROJECT_MODULES_FILE"
-	echo '</project>' >> "$PROJECT_MODULES_FILE"
+  # add the relevant closing xml tags back to the end of the file
+  echo '    </modules>' >>"$PROJECT_MODULES_FILE"
+  echo '  </component>' >>"$PROJECT_MODULES_FILE"
+  echo '</project>' >>"$PROJECT_MODULES_FILE"
 }
 
 write_module_iml_file() {
-	local module="$1"
-	local module_dir="`get_module_path "$module"`"
-	local iml_file="`get_module_iml_path "$module"`"
+  local module="$1"
+  local module_dir="$(get_module_path "$module")"
+  local iml_file="$(get_module_iml_path "$module")"
 
-	# create and clear the IML file
-	if [[ ! -f "$iml_file" ]]; then
-		create_file "$iml_file"
-	fi
-	: > "$iml_file"
+  # create and clear the IML file
+  if [[ ! -f "$iml_file" ]]; then
+    create_file "$iml_file"
+  fi
+  : >"$iml_file"
 
-	echo '<?xml version="1.0" encoding="UTF-8"?>' >> "$iml_file"
-	echo '<module type="JAVA_MODULE" version="4">' >> "$iml_file"
-	echo '  <component name="NewModuleRootManager" inherit-compiler-output="true">' >> "$iml_file"
-	echo '    <exclude-output />' >> "$iml_file"
-	echo '    <content url="file://'$module_dir'">' >> "$iml_file"
+  echo '<?xml version="1.0" encoding="UTF-8"?>' >>"$iml_file"
+  echo '<module type="JAVA_MODULE" version="4">' >>"$iml_file"
+  echo '  <component name="NewModuleRootManager" inherit-compiler-output="true">' >>"$iml_file"
+  echo '    <exclude-output />' >>"$iml_file"
+  echo '    <content url="file://'$module_dir'">' >>"$iml_file"
 
-	# add source and test directories
-	IFS=$'\n'
-	local src_dir
-	for src_dir in `list_src_directories "$module_dir"`; do
-		echo '      <sourceFolder url="file://'$src_dir'" isTestSource="false" />' >> "$iml_file"
-	done
-	for src_dir in `list_test_directories "$module_dir"`; do
-		echo '      <sourceFolder url="file://'$src_dir'" isTestSource="true" />' >> "$iml_file"
-	done
+  # add source and test directories
+  IFS=$'\n'
+  local src_dir
+  for src_dir in $(list_src_directories "$module_dir"); do
+    echo '      <sourceFolder url="file://'$src_dir'" isTestSource="false" />' >>"$iml_file"
+  done
+  for src_dir in $(list_test_directories "$module_dir"); do
+    echo '      <sourceFolder url="file://'$src_dir'" isTestSource="true" />' >>"$iml_file"
+  done
 
-	# add excluded directories
-	IFS=$'\n '
-	local exclude_dir
-	for exclude_dir in .idea build dist lib patches `find "$module_dir" -maxdepth 1 -type d -iname '.*'`; do
-		exclude_dir="${exclude_dir#$module_dir/}"
-		echo '      <excludeFolder url="file://'$module_dir/$exclude_dir'" />' >> "$iml_file"
-	done
+  # add excluded directories
+  IFS=$'\n '
+  local exclude_dir
+  for exclude_dir in .idea build dist lib patches $(find "$module_dir" -maxdepth 1 -type d -iname '.*'); do
+    exclude_dir="${exclude_dir#$module_dir/}"
+    echo '      <excludeFolder url="file://'$module_dir/$exclude_dir'" />' >>"$iml_file"
+  done
 
-	echo '    </content>' >> "$iml_file"
+  echo '    </content>' >>"$iml_file"
 
-	# add dependencies
-	local dependencies_xml_file="$module_dir/dependencies.xml"
-	echo '    <orderEntry type="inheritedJdk" />' >> "$iml_file"
-	echo '    <orderEntry type="sourceFolder" forTests="false" />' >> "$iml_file"
-	if [[ -f "$dependencies_xml_file" ]]; then
-		echo '    <orderEntry type="module-library">' >> "$iml_file"
-		echo '      <library>' >> "$iml_file"
-		echo '        <CLASSES>' >> "$iml_file"
-		echo '          <root url="file://'$module_dir/lib'" />' >> "$iml_file"
-		echo '        </CLASSES>' >> "$iml_file"
-		echo '        <JAVADOC />' >> "$iml_file"
-		echo '        <SOURCES>' >> "$iml_file"
-		echo "$ALL_SRC_DIRS" \
-			| grep -v "^$module_dir" \
-			| sed -e 's:^:<root url="file\://:' -e 's:$:" />:' \
-			| tr '\n' '\0' \
-			| xargs -0L 1 echo '          ' >> "$iml_file"
-		echo '        </SOURCES>' >> "$iml_file"
-		echo '        <jarDirectory url="file://'$module_dir/lib'" recursive="true" />' >> "$iml_file"
-		echo '      </library>' >> "$iml_file"
-		echo '    </orderEntry>' >> "$iml_file"
-	fi
-	echo '  </component>' >> "$iml_file"
-	echo '</module>' >> "$iml_file"
+  # add dependencies
+  local dependencies_xml_file="$module_dir/dependencies.xml"
+  echo '    <orderEntry type="inheritedJdk" />' >>"$iml_file"
+  echo '    <orderEntry type="sourceFolder" forTests="false" />' >>"$iml_file"
+  if [[ -f "$dependencies_xml_file" ]]; then
+    echo '    <orderEntry type="module-library">' >>"$iml_file"
+    echo '      <library>' >>"$iml_file"
+    echo '        <CLASSES>' >>"$iml_file"
+    echo '          <root url="file://'$module_dir/lib'" />' >>"$iml_file"
+    echo '        </CLASSES>' >>"$iml_file"
+    echo '        <JAVADOC />' >>"$iml_file"
+    echo '        <SOURCES>' >>"$iml_file"
+    echo "$ALL_SRC_DIRS" |
+      grep -v "^$module_dir" |
+      sed -e 's:^:<root url="file\://:' -e 's:$:" />:' |
+      tr '\n' '\0' |
+      xargs -0L 1 echo '          ' >>"$iml_file"
+    echo '        </SOURCES>' >>"$iml_file"
+    echo '        <jarDirectory url="file://'$module_dir/lib'" recursive="true" />' >>"$iml_file"
+    echo '      </library>' >>"$iml_file"
+    echo '    </orderEntry>' >>"$iml_file"
+  fi
+  echo '  </component>' >>"$iml_file"
+  echo '</module>' >>"$iml_file"
 }
 
 add_module_ant_file() {
-	local module="$1"
-	local module_dir="`get_module_path "$module"`"
-	local module_ant_file="$module_dir/build.xml"
+  local module="$1"
+  local module_dir="$(get_module_path "$module")"
+  local module_ant_file="$module_dir/build.xml"
 
-	# peel off the relevant closing xml tags
-	sed $SED_EXT_RE $SED_IN_PLACE '/<\/(project|component)>/d' "$PROJECT_ANT_FILE"
+  # peel off the relevant closing xml tags
+  sed $SED_EXT_RE $SED_IN_PLACE '/<\/(project|component)>/d' "$PROJECT_ANT_FILE"
 
-	# remove any old references to this module's build file
-	local file_pattern="`echo "$module_ant_file" | escape_pattern`"
-	sed $SED_EXT_RE $SED_IN_PLACE \
-		"/.*<buildFile.*url=\"file:..$file_pattern\"/,/^.*<\\/buildFile>/{ /.*/d; }" \
-		"$PROJECT_ANT_FILE"
+  # remove any old references to this module's build file
+  local file_pattern="$(echo "$module_ant_file" | escape_pattern)"
+  sed $SED_EXT_RE $SED_IN_PLACE \
+    "/.*<buildFile.*url=\"file:..$file_pattern\"/,/^.*<\\/buildFile>/{ /.*/d; }" \
+    "$PROJECT_ANT_FILE"
 
-	# add the ant build file for the specified module
-	echo '    <buildFile url="file://'$module_ant_file'">' >> "$PROJECT_ANT_FILE"
-	echo '      <properties>' >> "$PROJECT_ANT_FILE"
-	echo '        <property name="dojo.build.no" value="y" />' >> "$PROJECT_ANT_FILE"
-	echo '      </properties>' >> "$PROJECT_ANT_FILE"
-	echo '    </buildFile>' >> "$PROJECT_ANT_FILE"
+  # add the ant build file for the specified module
+  echo '    <buildFile url="file://'$module_ant_file'">' >>"$PROJECT_ANT_FILE"
+  echo '      <properties>' >>"$PROJECT_ANT_FILE"
+  echo '        <property name="dojo.build.no" value="y" />' >>"$PROJECT_ANT_FILE"
+  echo '      </properties>' >>"$PROJECT_ANT_FILE"
+  echo '    </buildFile>' >>"$PROJECT_ANT_FILE"
 
-	# add the relevant closing xml tags back to the end of the file
-	echo '  </component>' >> "$PROJECT_ANT_FILE"
-	echo '</project>' >> "$PROJECT_ANT_FILE"
+  # add the relevant closing xml tags back to the end of the file
+  echo '  </component>' >>"$PROJECT_ANT_FILE"
+  echo '</project>' >>"$PROJECT_ANT_FILE"
 }
 
 add_module_vcs_directory() {
-	local module="$1"
-	local module_dir="`get_module_path "$module"`"
+  local module="$1"
+  local module_dir="$(get_module_path "$module")"
 
-	# peel off the relevant closing xml tags
-	sed $SED_EXT_RE $SED_IN_PLACE '/<\/(project|component)>/d' "$PROJECT_VCS_FILE"
+  # peel off the relevant closing xml tags
+  sed $SED_EXT_RE $SED_IN_PLACE '/<\/(project|component)>/d' "$PROJECT_VCS_FILE"
 
-	# remove any old references to this module
-	local pattern="`echo "$module_dir" | escape_pattern`"
-	sed $SED_EXT_RE $SED_IN_PLACE "/.*<mapping.*directory=\"$pattern\"/d" "$PROJECT_VCS_FILE"
+  # remove any old references to this module
+  local pattern="$(echo "$module_dir" | escape_pattern)"
+  sed $SED_EXT_RE $SED_IN_PLACE "/.*<mapping.*directory=\"$pattern\"/d" "$PROJECT_VCS_FILE"
 
-	# add the module's directory as a repository root
-	echo '    <mapping directory="'$module_dir'" vcs="Git" />' >> "$PROJECT_VCS_FILE"
+  # add the module's directory as a repository root
+  echo '    <mapping directory="'$module_dir'" vcs="Git" />' >>"$PROJECT_VCS_FILE"
 
-	# add the relevant closing xml tags back to the end of the file
-	echo '  </component>' >> "$PROJECT_VCS_FILE"
-	echo '</project>' >> "$PROJECT_VCS_FILE"
+  # add the relevant closing xml tags back to the end of the file
+  echo '  </component>' >>"$PROJECT_VCS_FILE"
+  echo '</project>' >>"$PROJECT_VCS_FILE"
 }
 
 add_module_to_src_lib() {
-	local module="$1"
-	local module_dir="`get_module_path "$module"`"
+  local module="$1"
+  local module_dir="$(get_module_path "$module")"
 
-	# peel off the relevant closing xml tags
-	sed $SED_EXT_RE $SED_IN_PLACE '/<\/(component|library|SOURCES)>/d' "$SOURCE_LIB_FILE"
+  # peel off the relevant closing xml tags
+  sed $SED_EXT_RE $SED_IN_PLACE '/<\/(component|library|SOURCES)>/d' "$SOURCE_LIB_FILE"
 
-	# remove any old references to this module's source directories
-	local pattern="`echo "$module_dir/" | escape_pattern`"
-	sed $SED_EXT_RE $SED_IN_PLACE "/.*<root.*url=\"file:..$pattern/d" "$SOURCE_LIB_FILE"
+  # remove any old references to this module's source directories
+  local pattern="$(echo "$module_dir/" | escape_pattern)"
+  sed $SED_EXT_RE $SED_IN_PLACE "/.*<root.*url=\"file:..$pattern/d" "$SOURCE_LIB_FILE"
 
-	# add the specified module's source directories
-	IFS=$'\n'
-	local src_dir
-	for src_dir in `list_src_directories "$module_dir"`; do
-		echo '      <root url="file://'$src_dir'" />' >> "$SOURCE_LIB_FILE"
-	done
+  # add the specified module's source directories
+  IFS=$'\n'
+  local src_dir
+  for src_dir in $(list_src_directories "$module_dir"); do
+    echo '      <root url="file://'$src_dir'" />' >>"$SOURCE_LIB_FILE"
+  done
 
-	# add the relevant closing xml tags back to the end of the file
-	echo '    </SOURCES>' >> "$SOURCE_LIB_FILE"
-	echo '  </library>' >> "$SOURCE_LIB_FILE"
-	echo '</component>' >> "$SOURCE_LIB_FILE"
+  # add the relevant closing xml tags back to the end of the file
+  echo '    </SOURCES>' >>"$SOURCE_LIB_FILE"
+  echo '  </library>' >>"$SOURCE_LIB_FILE"
+  echo '</component>' >>"$SOURCE_LIB_FILE"
 }
 
 update_resolve_all_configuration() {
-	local line
-	local file
+  local line
+  local file
 
-	# remove any old references
-	sed $SED_EXT_RE $SED_IN_PLACE \
-		"/.*<configuration.*name=\"Resolve all modules\"/,/^.*<\\/configuration>/{ /.*/d; }" \
-		"$PROJECT_WORKSPACE_FILE"
+  # remove any old references
+  sed $SED_EXT_RE $SED_IN_PLACE \
+    "/.*<configuration.*name=\"Resolve all modules\"/,/^.*<\\/configuration>/{ /.*/d; }" \
+    "$PROJECT_WORKSPACE_FILE"
 
-	IFS=$'\n'
-	local targets="$(
-		for file in `list_ant_files | tail -n +2`; do
-			local dependencies_xml_file="`dirname "$file"`/dependencies.xml"
-			if [[ -f "$dependencies_xml_file" ]]; then
-				echo 'c\'
-				echo '\        <option name=\"AntTarget\" enabled=\"true\" antfile=\"file://'$file'\" target=\"resolve\" />'
-			fi
-		done)"
+  IFS=$'\n'
+  local targets="$(
+    for file in $(list_ant_files | tail -n +2); do
+      local dependencies_xml_file="$(dirname "$file")/dependencies.xml"
+      if [[ -f "$dependencies_xml_file" ]]; then
+        echo 'c\'
+        echo '\        <option name=\"AntTarget\" enabled=\"true\" antfile=\"file://'$file'\" target=\"resolve\" />'
+      fi
+    done
+  )"
 
-	sed $SED_EXT_RE $SED_IN_PLACE "/<component name=\"RunManager\"/{
+  sed $SED_EXT_RE $SED_IN_PLACE "/<component name=\"RunManager\"/{
 		p;
 		c\\
 \    <configuration default=\"false\" name=\"Resolve all modules\" type=\"AntRunConfiguration\" factoryName=\"Ant Target\">
 		c\\
-\      <antsettings antfile=\"file://`list_ant_files | head -1`\" target=\"resolve\" />
+\      <antsettings antfile=\"file://$(list_ant_files | head -1)\" target=\"resolve\" />
 		c\\
 \      <method>
 		c\\
@@ -367,66 +371,66 @@ $targets
 }
 
 create_project_modules_file() {
-	create_file "$PROJECT_MODULES_FILE"
-	echo '<?xml version="1.0" encoding="UTF-8"?>' >> "$PROJECT_MODULES_FILE"
-	echo '<project version="4">' >> "$PROJECT_MODULES_FILE"
-	echo '  <component name="ProjectModuleManager">' >> "$PROJECT_MODULES_FILE"
-	echo '    <modules>' >> "$PROJECT_MODULES_FILE"
-	echo '    </modules>' >> "$PROJECT_MODULES_FILE"
-	echo '  </component>' >> "$PROJECT_MODULES_FILE"
-	echo '</project>' >> "$PROJECT_MODULES_FILE"
+  create_file "$PROJECT_MODULES_FILE"
+  echo '<?xml version="1.0" encoding="UTF-8"?>' >>"$PROJECT_MODULES_FILE"
+  echo '<project version="4">' >>"$PROJECT_MODULES_FILE"
+  echo '  <component name="ProjectModuleManager">' >>"$PROJECT_MODULES_FILE"
+  echo '    <modules>' >>"$PROJECT_MODULES_FILE"
+  echo '    </modules>' >>"$PROJECT_MODULES_FILE"
+  echo '  </component>' >>"$PROJECT_MODULES_FILE"
+  echo '</project>' >>"$PROJECT_MODULES_FILE"
 }
 
 create_project_ant_file() {
-	create_file "$PROJECT_ANT_FILE"
-	echo '<?xml version="1.0" encoding="UTF-8"?>' >> "$PROJECT_ANT_FILE"
-	echo '<project version="4">' >> "$PROJECT_ANT_FILE"
-	echo '  <component name="AntConfiguration">' >> "$PROJECT_ANT_FILE"
-	echo '  </component>' >> "$PROJECT_ANT_FILE"
-	echo '</project>' >> "$PROJECT_ANT_FILE"
+  create_file "$PROJECT_ANT_FILE"
+  echo '<?xml version="1.0" encoding="UTF-8"?>' >>"$PROJECT_ANT_FILE"
+  echo '<project version="4">' >>"$PROJECT_ANT_FILE"
+  echo '  <component name="AntConfiguration">' >>"$PROJECT_ANT_FILE"
+  echo '  </component>' >>"$PROJECT_ANT_FILE"
+  echo '</project>' >>"$PROJECT_ANT_FILE"
 }
 
 create_vcs_file() {
-	create_file "$PROJECT_VCS_FILE"
-	echo '<?xml version="1.0" encoding="UTF-8"?>' >> "$PROJECT_VCS_FILE"
-	echo '<project version="4">' >> "$PROJECT_VCS_FILE"
-	echo '  <component name="VcsDirectoryMappings">' >> "$PROJECT_VCS_FILE"
-	echo '  </component>' >> "$PROJECT_VCS_FILE"
-	echo '</project>' >> "$PROJECT_VCS_FILE"
+  create_file "$PROJECT_VCS_FILE"
+  echo '<?xml version="1.0" encoding="UTF-8"?>' >>"$PROJECT_VCS_FILE"
+  echo '<project version="4">' >>"$PROJECT_VCS_FILE"
+  echo '  <component name="VcsDirectoryMappings">' >>"$PROJECT_VCS_FILE"
+  echo '  </component>' >>"$PROJECT_VCS_FILE"
+  echo '</project>' >>"$PROJECT_VCS_FILE"
 }
 
 create_source_lib_file() {
-	create_file "$SOURCE_LIB_FILE"
-	echo '<component name="libraryTable">' >> "$SOURCE_LIB_FILE"
-	echo '  <library name="sources">' >> "$SOURCE_LIB_FILE"
-	echo '    <CLASSES />' >> "$SOURCE_LIB_FILE"
-	echo '    <JAVADOC />' >> "$SOURCE_LIB_FILE"
-	echo '    <SOURCES>' >> "$SOURCE_LIB_FILE"
-	echo '    </SOURCES>' >> "$SOURCE_LIB_FILE"
-	echo '  </library>' >> "$SOURCE_LIB_FILE"
-	echo '</component>' >> "$SOURCE_LIB_FILE"
+  create_file "$SOURCE_LIB_FILE"
+  echo '<component name="libraryTable">' >>"$SOURCE_LIB_FILE"
+  echo '  <library name="sources">' >>"$SOURCE_LIB_FILE"
+  echo '    <CLASSES />' >>"$SOURCE_LIB_FILE"
+  echo '    <JAVADOC />' >>"$SOURCE_LIB_FILE"
+  echo '    <SOURCES>' >>"$SOURCE_LIB_FILE"
+  echo '    </SOURCES>' >>"$SOURCE_LIB_FILE"
+  echo '  </library>' >>"$SOURCE_LIB_FILE"
+  echo '</component>' >>"$SOURCE_LIB_FILE"
 }
 
 # OS-specific stuff
 if [[ "$OSTYPE" =~ [Dd]arwin ]]; then
-	readonly FIND_DASH_E="-E"
-	readonly SED_IN_PLACE='-i ""'
-	readonly SED_EXT_RE="-E"
+  readonly FIND_DASH_E="-E"
+  readonly SED_IN_PLACE='-i ""'
+  readonly SED_EXT_RE="-E"
 
-	# fullpath: get the absolute path of something
-	fullpath() {
-		realpath "$*"
-	}
+  # fullpath: get the absolute path of something
+  fullpath() {
+    realpath "$*"
+  }
 else
-	readonly FIND_REGEXTYPE=-regextype
-	readonly FIND_REGEXTYPE_ARG=posix-extended
-	readonly SED_IN_PLACE='-i'
-	readonly SED_EXT_RE="-r"
+  readonly FIND_REGEXTYPE=-regextype
+  readonly FIND_REGEXTYPE_ARG=posix-extended
+  readonly SED_IN_PLACE='-i'
+  readonly SED_EXT_RE="-r"
 
-	# fullpath: get the absolute path of something
-	fullpath() {
-		readlink -f "$*"
-	}
+  # fullpath: get the absolute path of something
+  fullpath() {
+    readlink -f "$*"
+  }
 fi
 
 # default options
@@ -434,23 +438,27 @@ quiet=0
 
 # parse options
 while getopts ":qm:p:" opt; do
-	case $opt in
-		q) quiet=1 ;;
-		m) MODULES_DIR="`fullpath "$OPTARG"`" ;;
-		p) PROJECT_DIR="`fullpath "$OPTARG"`" ;;
-		\?)
-			echo "Invalid Option: -$OPTARG" >&2
-			usage >&2; exit 1 ;;
-		:)
-			echo "Option -$OPTARG requires an additional argument" >&2
-			usage >&2; exit 1 ;;
-	esac
+  case $opt in
+  q) quiet=1 ;;
+  m) MODULES_DIR="$(fullpath "$OPTARG")" ;;
+  p) PROJECT_DIR="$(fullpath "$OPTARG")" ;;
+  \?)
+    echo "Invalid Option: -$OPTARG" >&2
+    usage >&2
+    exit 1
+    ;;
+  :)
+    echo "Option -$OPTARG requires an additional argument" >&2
+    usage >&2
+    exit 1
+    ;;
+  esac
 done
 
 # constants
-readonly SCRIPT_DIR="$(dirname "`fullpath "$0"`")"
-readonly MODULES_DIR="${MODULES_DIR:-`pwd`}" # the directory in which all of the modules exist
-readonly PROJECT_DIR="${PROJECT_DIR:-`pwd`}"
+readonly SCRIPT_DIR="$(dirname "$(fullpath "$0")")"
+readonly MODULES_DIR="${MODULES_DIR:-$(pwd)}" # the directory in which all of the modules exist
+readonly PROJECT_DIR="${PROJECT_DIR:-$(pwd)}"
 readonly PROJECT_IDEA_DIR="$PROJECT_DIR/.idea"
 readonly PROJECT_MODULES_FILE="$PROJECT_IDEA_DIR/modules.xml"
 readonly PROJECT_ANT_FILE="$PROJECT_IDEA_DIR/ant.xml"
@@ -461,25 +469,25 @@ readonly SOURCE_LIB_FILE="$PROJECT_LIB_DIR/sources.xml"
 
 # check for user error
 if [[ ! -d "$PROJECT_IDEA_DIR" ]]; then
-	echo "Error: Cannot find '$PROJECT_IDEA_DIR'. Are you sure you have the right project directory?" >&2
-	exit 1
+  echo "Error: Cannot find '$PROJECT_IDEA_DIR'. Are you sure you have the right project directory?" >&2
+  exit 1
 fi
 if [[ ! -f "$PROJECT_WORKSPACE_FILE" ]]; then
-	echo "Error: Cannot find '$PROJECT_WORKSPACE_FILE'. Are you sure you have the right project directory?" >&2
-	exit 1
+  echo "Error: Cannot find '$PROJECT_WORKSPACE_FILE'. Are you sure you have the right project directory?" >&2
+  exit 1
 fi
 
 warn "Warning: If you have the target IntelliJ project open while running this, you can break things."
 
 # make sure the required project files exist
 if [[ ! -f "$PROJECT_MODULES_FILE" ]]; then
-	create_project_modules_file
+  create_project_modules_file
 fi
 if [[ ! -f "$PROJECT_ANT_FILE" ]]; then
-	create_project_ant_file
+  create_project_ant_file
 fi
 if [[ ! -f "$PROJECT_VCS_FILE" ]]; then
-	create_vcs_file
+  create_vcs_file
 fi
 
 echo_progress "Removing non-existent module entries"
@@ -489,31 +497,31 @@ remove_nonexistent_ant_file_entries
 echo_progress "Removing non-existent VCS entries"
 remove_nonexistent_vcs_entries
 
-readonly MODULES="`find "$MODULES_DIR" -type d -iname .git | grep -v "^$MODULES_DIR$"`"
+readonly MODULES="$(find "$MODULES_DIR" -type d -iname .git | grep -v "^$MODULES_DIR$")"
 
 IFS=$'\n'
 ALL_SRC_DIRS=""
 for module in $MODULES; do
-	module="${module%/.git}"
-	ALL_SRC_DIRS="$(echo "$ALL_SRC_DIRS
-`list_src_directories "$module"`" | grep -v '^$')"
+  module="${module%/.git}"
+  ALL_SRC_DIRS="$(echo "$ALL_SRC_DIRS
+$(list_src_directories "$module")" | grep -v '^$')"
 done
 
 for module in $MODULES; do
-	module="${module%/.git}"
-	echo_progress "Fixing module: `basename "$module"`"
+  module="${module%/.git}"
+  echo_progress "Fixing module: $(basename "$module")"
 
-	module="${module#$MODULES_DIR/}"
-	group="`dirname "$module"`"
-	module="`basename "$module"`"
+  module="${module#$MODULES_DIR/}"
+  group="$(dirname "$module")"
+  module="$(basename "$module")"
 
-	if [[ $group == "." ]]; then
-		group=''
-	fi
+  if [[ $group == "." ]]; then
+    group=''
+  fi
 
-	add_module_to_project "$module" "$group"
-	add_module_ant_file "$module"
-	add_module_vcs_directory "$module"
+  add_module_to_project "$module" "$group"
+  add_module_ant_file "$module"
+  add_module_vcs_directory "$module"
 done
 
 echo_progress "Updating 'Resolve All' run configuration"

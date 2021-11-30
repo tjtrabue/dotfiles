@@ -24,9 +24,9 @@ diralias() {
 
   existingAliasValue="$(
     grep "${dirAlias}=" <"${dirAliasFile}" |
-    sed 's/^export\s*//' |
-    sed 's/^.*=//' |
-    sed 's/"//g'
+      sed 's/^export\s*//' |
+      sed 's/^.*=//' |
+      sed 's/"//g'
   )"
 
   # If the alias already exists, get rid of the old one before adding the new

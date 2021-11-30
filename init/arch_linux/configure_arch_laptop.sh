@@ -15,7 +15,7 @@ set_touchpad_options() {
   local touchpadConfFile="${xorgConfDir}/90-touchpad.conf"
 
   sudo mkdir -p "$xorgConfDir"
-  sudo tee $touchpadConfFile <<EOF > /dev/null
+  sudo tee $touchpadConfFile <<EOF >/dev/null
 Section "InputClass"
   Identifier "touchpad"
   MatchIsTouchpad "on"
@@ -44,5 +44,5 @@ main() {
   enable_services
 }
 
-main;
+main
 # vim:foldenable:foldmethod=marker:

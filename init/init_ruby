@@ -45,27 +45,27 @@ args=$(getopt -o hv --long help,verbose -n 'init_<name_here>' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
-while true ; do
+while true; do
   case "$1" in
-    -v | --verbose)
-      VERBOSE=true
-      shift
-      ;;
+  -v | --verbose)
+    VERBOSE=true
+    shift
+    ;;
 
-    -h | --help)
-      _help
-      exit 0
-      ;;
+  -h | --help)
+    _help
+    exit 0
+    ;;
 
-    --)
-      shift
-      break
-      ;;
+  --)
+    shift
+    break
+    ;;
 
-    *)
-      err "Unknown option $1 to ${THIS_EXEC}"
-      exit 2
-      ;;
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
   esac
 done
 # }}}

@@ -6,7 +6,7 @@ install_arch_packages() {
   local archPackagesFile="${DOTFILES_HOME}/init/package_files/arch_packages.txt"
 
   grep -E -v -e '^\s*#' -e '^$' "${archPackagesFile}" |
-  sudo pacman -S --needed -
+    sudo pacman -S --needed -
 }
 
 # Arch Linux implementation for "system_update" function
@@ -54,7 +54,7 @@ set_mirrorlist() {
   fi
 
   grep -A 1 "## United States" <"$mirrorlist" |
-  sed '/^## United States/d;/--/d' >"$tempfile"
+    sed '/^## United States/d;/--/d' >"$tempfile"
 
   sudo mv "$mirrorlist"{,.bak}
   sudo cp "$tempfile" "$mirrorlist"

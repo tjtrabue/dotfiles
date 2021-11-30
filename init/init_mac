@@ -59,20 +59,20 @@ eval set -- "${args}"
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-    -h | --help)
-      _help
-      exit 0
-      ;;
+  -h | --help)
+    _help
+    exit 0
+    ;;
 
-    --)
-      shift
-      break
-      ;;
+  --)
+    shift
+    break
+    ;;
 
-    *)
-      err "Unknown option $1 to ${THIS_EXEC}"
-      exit 2
-      ;;
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
   esac
 done
 # }}}

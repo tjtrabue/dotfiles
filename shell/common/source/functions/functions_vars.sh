@@ -51,17 +51,17 @@ __add_extra_os_vars() {
   log_info "Injecting additional OS variables into ${userVars}"
 
   case "${os}" in
-    "Arch Linux")
-      log_info "Injecting Arch Linux vars into ${userVars}"
-      extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
-      ;;
-    "Darwin")
-      log_info "Injecting macOS vars into ${userVars}"
-      extraVarsFile="${extraVarsMacDir}/mac_vars.bash"
-      ;;
-    *)
-      log_info "No extra vars to add for OS: ${os}"
-      ;;
+  "Arch Linux")
+    log_info "Injecting Arch Linux vars into ${userVars}"
+    extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
+    ;;
+  "Darwin")
+    log_info "Injecting macOS vars into ${userVars}"
+    extraVarsFile="${extraVarsMacDir}/mac_vars.bash"
+    ;;
+  *)
+    log_info "No extra vars to add for OS: ${os}"
+    ;;
   esac
 
   if [ -f "${extraVarsFile}" ]; then

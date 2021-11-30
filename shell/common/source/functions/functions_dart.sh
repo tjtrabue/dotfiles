@@ -31,9 +31,9 @@ install_flutter_deps() {
 
   log_info "Looking for extra dependencies needed by Flutter"
   case "${os}" in
-    "Darwin")
-      __install_flutter_deps_mac
-      ;;
+  "Darwin")
+    __install_flutter_deps_mac
+    ;;
   esac
 }
 

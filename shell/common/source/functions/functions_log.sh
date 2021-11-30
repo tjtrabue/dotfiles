@@ -220,25 +220,25 @@ __get_log_type_with_color() {
   local logType="$1"
   local color=""
   case "$logType" in
-    "DEBUG")
-      color="${MAGENTA}"
-      ;;
-    "INFO")
-      color="${GREEN}"
-      ;;
-    "WARNING")
-      color="${YELLOW}"
-      ;;
-    "ERROR")
-      color="${RED}"
-      ;;
-    "SUCCESS")
-      color="${GREEN}"
-      ;;
-    *)
-      echo "ERROR: Unknown log type ${logType}" 1>&2
-      return 1
-      ;;
+  "DEBUG")
+    color="${MAGENTA}"
+    ;;
+  "INFO")
+    color="${GREEN}"
+    ;;
+  "WARNING")
+    color="${YELLOW}"
+    ;;
+  "ERROR")
+    color="${RED}"
+    ;;
+  "SUCCESS")
+    color="${GREEN}"
+    ;;
+  *)
+    echo "ERROR: Unknown log type ${logType}" 1>&2
+    return 1
+    ;;
   esac
   echo "${color}${logType}${NC}"
 }
@@ -251,10 +251,10 @@ __should_log() {
   local logLevel="${LOG_LEVEL:-3}"
 
   if ([ "${logType}" = "ERROR" ] && [ "${logLevel}" -ge 1 ]) ||
-  ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) ||
-  ([ "${logType}" = "INFO" ] && [ "${logLevel}" -ge 3 ]) ||
-  ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]) ||
-  ([ "${logType}" = "DEBUG" ] && [ "${logLevel}" -ge 4 ]); then
+    ([ "${logType}" = "WARNING" ] && [ "${logLevel}" -ge 2 ]) ||
+    ([ "${logType}" = "INFO" ] && [ "${logLevel}" -ge 3 ]) ||
+    ([ "${logType}" = "SUCCESS" ] && [ "${logLevel}" -ge 3 ]) ||
+    ([ "${logType}" = "DEBUG" ] && [ "${logLevel}" -ge 4 ]); then
     return 0
   fi
   return 1

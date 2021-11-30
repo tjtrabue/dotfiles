@@ -33,7 +33,7 @@ install_neovim_nightly_appimage() {
 
   # Ask user before overwriting an existing /usr/local/bin/nvim executable.
   if [ -x "${nvimSymlinkDest}/nvim" ] &&
-  ! __check_nvim_appimage_link_exists; then
+    ! __check_nvim_appimage_link_exists; then
     if ! __prompt_user_before_overwriting_nvim_link; then
       echoe "Exiting due to user request"
       return 1
@@ -85,7 +85,7 @@ __check_nvim_appimage_link_exists() {
   local neovimReleasesDir="${NVIM_HOME:-${HOME}/.config/nvim}/.releases"
 
   readlink /usr/local/bin/nvim |
-  grep -q "${neovimReleasesDir}" >>/dev/null 2>&1
+    grep -q "${neovimReleasesDir}" >>/dev/null 2>&1
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

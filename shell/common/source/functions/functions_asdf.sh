@@ -63,19 +63,19 @@ __src_asdf() {
   log_info "Sourcing asdf for shell: ${currentShell}"
 
   case "${currentShell}" in
-    "bash")
-      . "${asdfSourceFile}"
-      ;;
-    "zsh")
-      . "${asdfSourceFile}"
-      ;;
-    "fish")
-      source "${asdfSourceFileFish}"
-      ;;
-    *)
-      err "Shell ${currentShell} not supported by asdf."
-      return 1
-      ;;
+  "bash")
+    . "${asdfSourceFile}"
+    ;;
+  "zsh")
+    . "${asdfSourceFile}"
+    ;;
+  "fish")
+    source "${asdfSourceFileFish}"
+    ;;
+  *)
+    err "Shell ${currentShell} not supported by asdf."
+    return 1
+    ;;
   esac
 }
 

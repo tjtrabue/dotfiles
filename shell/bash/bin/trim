@@ -3,7 +3,6 @@
 # Trims trailing/beginning white space from a string. Can also trim characters
 # from the beginning or end of the string.
 
-
 ################################################################################
 ##                                                                            ##
 ##                           Supporting Functions                             ##
@@ -11,21 +10,20 @@
 ################################################################################
 
 function trim_usage() {
-    echo "Trims beginning/trailing white space from a string. Can also" 1>&2
-    echo "trim characters from the beginning or end of the string." 1>&2
-    echo "USAGE:" 1>&2
-    echo "trim [-b n -e n] FILE" 1>&2
-    echo "OPTIONS:" 1>&2
-    echo "  -b <number of chars to trim> : trims the FIRST n chars from the string" 1>&2
-    echo "  -e <number of chars to trim> : trims the LAST n chars from the string" 1>&2
+  echo "Trims beginning/trailing white space from a string. Can also" 1>&2
+  echo "trim characters from the beginning or end of the string." 1>&2
+  echo "USAGE:" 1>&2
+  echo "trim [-b n -e n] FILE" 1>&2
+  echo "OPTIONS:" 1>&2
+  echo "  -b <number of chars to trim> : trims the FIRST n chars from the string" 1>&2
+  echo "  -e <number of chars to trim> : trims the LAST n chars from the string" 1>&2
 }
 
 # Used for printing errors:
-function echoe () { echo -e "${RED}ERROR${NC}: $@" 1>&2 ; }
+function echoe() { echo -e "${RED}ERROR${NC}: $@" 1>&2; }
 
 # Used for printing warnings:
-function echow () { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2 ; }
-
+function echow() { echo -e "${BROWN_ORANGE}WARNING${NC}: $@" 1>&2; }
 
 ################################################################################
 ##                                                                            ##
@@ -37,7 +35,6 @@ num_chars_to_trim_from_front=0
 num_chars_to_trim_from_end=0
 trimmed_string=""
 
-
 ################################################################################
 ##                                                                            ##
 ##                                Main Program                                ##
@@ -45,44 +42,44 @@ trimmed_string=""
 ################################################################################
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    trim_usage
-    exit 1
+  trim_usage
+  exit 1
 fi
 
 while getopts ":b:e:" o; do
-    case "${o}" in
-        b)
-            num_chars_to_trim_from_front="${OPTARG}"
-            ;;
-        e)
-            num_chars_to_trim_from_end="${OPTARG}"
-            ;;
-        *)
-            echoe "Unknown operand"
-            trim_usage
-            exit 1
-            ;;
-    esac
+  case "${o}" in
+  b)
+    num_chars_to_trim_from_front="${OPTARG}"
+    ;;
+  e)
+    num_chars_to_trim_from_end="${OPTARG}"
+    ;;
+  *)
+    echoe "Unknown operand"
+    trim_usage
+    exit 1
+    ;;
+  esac
 done
 shift $((OPTIND - 1))
 
 if [[ "$#" -ne 0 ]]; then
-    echo "$1" 1>&2
-    trimmed_string="$(echo "$1" | sed "s/^[ ]*//" | sed "s/[ ]*$//")"
+  echo "$1" 1>&2
+  trimmed_string="$(echo "$1" | sed "s/^[ ]*//" | sed "s/[ ]*$//")"
 
-    # Optionally trim chars from front of string:
-    if [[ "$num_chars_to_trim_from_front" -gt 0 ]]; then
-        trimmed_string="$(echo "$trimmed_string" | sed "s/^.{$num_chars_to_trim_from_front}//")"
-    fi
+  # Optionally trim chars from front of string:
+  if [[ "$num_chars_to_trim_from_front" -gt 0 ]]; then
+    trimmed_string="$(echo "$trimmed_string" | sed "s/^.{$num_chars_to_trim_from_front}//")"
+  fi
 
-    # Optionally trim chars from end of string:
-    if [[ "$num_chars_to_trim_from_end" -gt 0 ]]; then
-        trimmed_string="$(echo "$trimmed_string" | sed "s/.{$num_chars_to_trim_from_end}$//")"
-    fi
+  # Optionally trim chars from end of string:
+  if [[ "$num_chars_to_trim_from_end" -gt 0 ]]; then
+    trimmed_string="$(echo "$trimmed_string" | sed "s/.{$num_chars_to_trim_from_end}$//")"
+  fi
 
-    echo "$trimmed_string"
+  echo "$trimmed_string"
 else
-    echoe "No string provided"
-    trim_usage
-    exit 2
+  echoe "No string provided"
+  trim_usage
+  exit 2
 fi

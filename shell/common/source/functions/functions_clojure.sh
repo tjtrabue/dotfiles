@@ -6,12 +6,12 @@ install_clojure_cli_tools() {
 
   log_info "Installing Clojure CLI tools"
   case "${os}" in
-    "Darwin")
-      __install_clojure_cli_tools_mac
-      ;;
-    *)
-      __install_clojure_cli_tools_linux
-      ;;
+  "Darwin")
+    __install_clojure_cli_tools_mac
+    ;;
+  *)
+    __install_clojure_cli_tools_linux
+    ;;
   esac
 }
 
@@ -29,9 +29,9 @@ __install_clojure_cli_tools_linux() {
   log_info "Installing Clojure CLI tools for Linux"
   {
     curl -O "${clojureCliDownloadUrl}" &&
-    chmod +x "${clojureCliInstaller}" &&
-    sudo ./"${clojureCliInstaller}" &&
-    rm -f "${clojureCliInstaller}"
+      chmod +x "${clojureCliInstaller}" &&
+      sudo ./"${clojureCliInstaller}" &&
+      rm -f "${clojureCliInstaller}"
   }
 }
 
@@ -53,9 +53,9 @@ install_clojure_lsp() {
 
   (
     curl -sLO "${clojureLspDownloadUrl}" &&
-    chmod +x "${clojureLspInstaller}" &&
-    ./"${clojureLspInstaller}" --dir "${installDir}" &&
-    rm -f "${clojureLspInstaller}"
+      chmod +x "${clojureLspInstaller}" &&
+      ./"${clojureLspInstaller}" --dir "${installDir}" &&
+      rm -f "${clojureLspInstaller}"
   )
 }
 
