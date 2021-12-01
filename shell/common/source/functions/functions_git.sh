@@ -292,6 +292,12 @@ __swi_default_list_branches() {
 
   echo "${branches[${selection}]}"
 }
+
+# Lists all branch names, local and remote, for the given repo.
+gbl() {
+  git branch -a --color=never --format="%(refname:lstrip=-1)" |
+    grep -v '^HEAD$' | sort -u
+}
 # }}}
 
 # Committing {{{
