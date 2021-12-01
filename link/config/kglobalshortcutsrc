@@ -1,6 +1,5 @@
 [ActivityManager]
 _k_friendly_name=System Settings
-switch-to-activity-01f362b5-5cba-4f89-a9fc-88c3abfbd1ea=none,none,Switch to activity "android_dev"
 switch-to-activity-16bc1e7a-47df-4834-b0c3-1efaf8bce328=none,none,Switch to activity "edit"
 switch-to-activity-3316c754-4851-486a-b608-6f6640fe2c7b=none,none,Switch to activity "mail_chat"
 switch-to-activity-c91ba4fd-e7f1-4f77-8765-b58d45c39260=none,none,Switch to activity "www"

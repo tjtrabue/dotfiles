@@ -73,23 +73,11 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=55
+PreloadWeight=65
 SystrayContainmentId=8
 
 [Containments][2][General]
 AppletOrder=3;4;5;6;7;18;19
-
-[Containments][22]
-activityId=01f362b5-5cba-4f89-a9fc-88c3abfbd1ea
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][22][Wallpaper][org.kde.image][General]
-Image=file:///usr/share/wallpapers/Next/contents/images/1920x1080.png
 
 [Containments][23]
 activityId=3316c754-4851-486a-b608-6f6640fe2c7b
@@ -175,6 +163,9 @@ plugin=org.kde.plasma.battery
 [Containments][8][Applets][21]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
+
+[Containments][8][Applets][21][Configuration]
+PreloadWeight=60
 
 [Containments][8][Applets][9]
 immutability=1
