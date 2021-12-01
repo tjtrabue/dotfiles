@@ -59,22 +59,22 @@ EOF
     esac
   done
 
-  _prepare_aur_environment
+  __prepare_aur_environment
   aurCommand="$1"
   shift
   case "$aurCommand" in
   "get")
-    _aur_get "$@"
+    __aur_get "$@"
     ;;
   "install")
-    _aur_get "$@" &&
-      _aur_install "$@"
+    __aur_get "$@" &&
+      __aur_install "$@"
     ;;
   "update")
     _aur_update "$@"
     ;;
   "remove" | "uninstall")
-    _aur_remove "$@"
+    __aur_remove "$@"
     ;;
   *)
     err "Unknown AUR command ${RED}${aurCommand}${NC}. Should be one of:" \
@@ -106,17 +106,17 @@ get_aur_packages() {
 }
 
 # Download an AUR package but do not build/install
-_aur_get() {
+__aur_get() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
   echoe "Have $# requests: $*"
 
-  local -a newPackages=($(_get_list_of_new_packages "$@"))
+  local -a newPackages=($(__get_list_of_new_packages "$@"))
   local aurBaseUrl="https://aur.archlinux.org"
   local package
   local newPackageCount
 
-  _check_aur_provided "$@" || return 1
+  __check_aur_provided "$@" || return 1
 
   [ ! -d "$AUR_HOME" ] && mkdir -p "$AUR_HOME"
 
@@ -132,7 +132,7 @@ _aur_get() {
           rm -rf "${AUR_HOME:?}/$package"
         fi
       done
-      _print_final_effect_msg "Got AUR packages" "${newPackages[@]}"
+      __print_final_effect_msg "Got AUR packages" "${newPackages[@]}"
     else
       err "Could not download all repositories"
       return 2
@@ -145,31 +145,31 @@ _aur_get() {
 }
 
 # Installs one or more Arch Linux packages from the AUR.
-_aur_install() {
+__aur_install() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
 
   local -a aurPackages=("$@")
   local package
 
-  _check_aur_provided "${aurPackages[@]}" || return 1
+  __check_aur_provided "${aurPackages[@]}" || return 1
 
   # Build packages one at a time, since pacman can only handle one build at once.
   log_info "Building packages..."
   for package in "${aurPackages[@]}"; do
     (
       cd "${AUR_HOME}/$package"
-      if _prepare_and_build_package; then
+      if __prepare_and_build_package; then
         rm -rf "${AUR_HOME:?}/$package"
       fi
     )
   done
 
-  _print_final_effect_msg "Installed" "${aurPackages[@]}"
+  __print_final_effect_msg "Installed" "${aurPackages[@]}"
 }
 
 # Remove one or more installed AUR packages.
-_aur_remove() {
+__aur_remove() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
 
@@ -177,10 +177,10 @@ _aur_remove() {
   local -a removedPackages=()
   local package
 
-  _check_aur_provided "${aurPackages[@]}" || return 1
+  __check_aur_provided "${aurPackages[@]}" || return 1
 
   for package in "${aurPackages[@]}"; do
-    if ! _check_aur_installed "$package"; then
+    if ! __check_aur_installed "$package"; then
       continue
     fi
 
@@ -191,10 +191,10 @@ _aur_remove() {
     removedPackages+=("$package")
   done
 
-  _print_final_effect_msg "Removed" "${removedPackages[@]}"
+  __print_final_effect_msg "Removed" "${removedPackages[@]}"
 }
 
-_aur_update_packages() {
+__aur_update_packages() {
   # Get args from stdin if none are passed as args
   set -- ${*:-$(</dev/stdin)}
 
@@ -203,27 +203,27 @@ _aur_update_packages() {
   local -a updatedPackages=()
   local package
 
-  _check_aur_provided "${aurPackages[@]}" || return 1
+  __check_aur_provided "${aurPackages[@]}" || return 1
 
   [ -z "$AUR_HOME" ] && AUR_HOME="$HOME/.aur"
 
   for package in "${aurPackages[@]}"; do
-    [ "$(_check_aur_installed "$package")" == true ] || continue
+    [ "$(__check_aur_installed "$package")" == true ] || continue
 
     log_info "Updating AUR: $package"
     (
       cd "${AUR_HOME}/${package}"
-      _prepare_and_build_package && updatedPackages+=("$package")
+      __prepare_and_build_package && updatedPackages+=("$package")
     )
   done
 
-  _print_final_effect_msg "Updated" "${updatedPackages[@]}"
+  __print_final_effect_msg "Updated" "${updatedPackages[@]}"
 }
 
-_aur_update_all() {
+__aur_update_all() {
 
   log_info "Updating all installed AUR packages"
-  _aur_update_packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
+  __aur_update_packages $(find "$AUR_HOME" -maxdepth 1 -mindepth 1 -type d |
     sed 's|.*/||' | tr '\n' ' ')
 }
 
@@ -231,26 +231,26 @@ _aur_update() {
   local packageName="$*"
 
   if [ "$(echo "$packageName" | tr '[:upper:]' '[:lower:]')" == "all" ]; then
-    _aur_update_all
+    __aur_update_all
   else
-    _aur_update_packages "$packageName"
+    __aur_update_packages "$packageName"
   fi
 }
 
-_prepare_aur_environment() {
+__prepare_aur_environment() {
   if [ -z "$AUR_HOME" ]; then
     export AUR_HOME="$HOME/.aur"
   fi
 }
 
-_check_aur_provided() {
+__check_aur_provided() {
   if [ "$#" -lt 1 ]; then
     err "No AUR package(s) provided."
     return 1
   fi
 }
 
-_check_aur_installed() {
+__check_aur_installed() {
   local package="$1"
 
   if [ ! -d "${AUR_HOME}/${package}" ]; then
@@ -260,7 +260,7 @@ _check_aur_installed() {
 }
 
 # Clean package directory and run the makepkg command.
-_prepare_and_build_package() {
+__prepare_and_build_package() {
   local hasStashedChanges=false
 
   git clean -f &>/dev/null
@@ -281,7 +281,7 @@ _prepare_and_build_package() {
   }
 }
 
-_print_final_effect_msg() {
+__print_final_effect_msg() {
   local effect="$1"
   shift
   local -a packages=("$@")
@@ -294,7 +294,7 @@ _print_final_effect_msg() {
 
 # Filters a list of requested packages based on whether or not they are already
 # present in the AUR_HOME directory.
-_get_list_of_new_packages() {
+__get_list_of_new_packages() {
   local -a aurPackages=("$@")
   local -a newPackages=()
   local package
