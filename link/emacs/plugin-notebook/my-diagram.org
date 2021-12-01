@@ -20,5 +20,7 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
       :mode
       ("\\.mmd$" "\\.mermaid$")
       :custom
-      (mermaid-mmdc-location (executable-find "mmdc")))
+      (mermaid-mmdc-location (executable-find "mmdc"))
+      (mermaid-flags (concat "-t dark -b "
+                             (face-attribute 'default :background))))
   #+end_src
