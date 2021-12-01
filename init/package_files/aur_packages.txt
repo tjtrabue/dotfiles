@@ -1,4 +1,5 @@
 android-studio
+arc-kde-git
 authy
 brave-bin
 drive-git
