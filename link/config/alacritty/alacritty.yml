@@ -98,7 +98,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: "Hasklug Nerd Font"
+    family: "FiraCode Nerd Font"
     # The `style` can be specified to pick a specific face.
     style: "Semibold"
   # Bold font face
@@ -107,7 +107,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: "Hasklug Nerd Font"
+    family: "FiraCode Nerd Font"
     # The `style` can be specified to pick a specific face.
     style: "Bold"
   # Italic font face
@@ -116,7 +116,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: "Hasklug Nerd Font"
+    family: "FiraCode Nerd Font"
     # The `style` can be specified to pick a specific face.
     style: "Italic"
   # Bold italic font face
@@ -125,7 +125,7 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: "Hasklug Nerd Font"
+    family: "FiraCode Nerd Font"
     # The `style` can be specified to pick a specific face.
     style: "Semibold Italic"
   # Point size
@@ -160,29 +160,29 @@ font:
 #draw_bold_te# Selection colors
 
 colors:
-  # Colors (DoomOne)
+  # Colors (Doom Vibrant theme, based on hlissner/emacs-doom-themes)
   colors:
     bright:
       black: '#000000'
-      blue: '#a9a1e1'
-      cyan: '#51afef'
-      green: '#99bb66'
-      magenta: '#c678dd'
-      red: '#ff6655'
-      white: '#bfbfbf'
-      yellow: '#ecbe7b'
+      blue: '#51afef'
+      cyan: '#5cEfFF'
+      green: '#7bc275'
+      magenta: '#c57bdb'
+      red: '#ff665c'
+      white: '#bbc2cf'
+      yellow: '#fcce7b'
     cursor:
       cursor: '#51afef'
       text: '#1b1b1b'
     normal:
       black: '#000000'
-      blue: '#a9a1e1'
-      cyan: '#51afef'
-      green: '#98be65'
-      magenta: '#c678dd'
-      red: '#ff6c6b'
+      blue: '#1f5582'
+      cyan: '#6A8FBF'
+      green: '#4db5bd'
+      magenta: '#a991f1'
+      red: '#e69055'
       white: '#bbc2cf'
-      yellow: '#ecbe7b'
+      yellow: '#e69055'
     primary:
       background: '#282c34'
       foreground: '#bbc2cf'
