@@ -360,5 +360,6 @@ languages. This plugin not only provides
     :if (eq system-type 'darwin)
     :after lsp-mode
     :custom
-    (lsp-sourcekit-executable (string-trim (shell-command-to-string "xcrun --find sourcekit-lsp"))))
+    (lsp-sourcekit-executable
+     (string-trim (shell-command-to-string "xcrun --find sourcekit-lsp"))))
 #+end_src

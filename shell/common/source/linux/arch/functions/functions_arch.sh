@@ -9,26 +9,13 @@ install_arch_packages() {
     sudo pacman -S --needed -
 }
 
-# Arch Linux implementation for "system_update" function
-system_update() {
-  local response=""
-  while [[ ! "$response" =~ [YyNn] ]]; do
-    echoe "Are you sure you wish to perform a full system update? [y/n]"
-    read -sn1 response
-  done
-  [[ "$response" =~ [Nn] ]] && return 1
-
-  sudo pacman -Syyu --noconfirm
-  [[ "$(command -v npm)" != "" ]] && npm update -g
-}
-
 # Orphan = unused package
 remove_orphans() {
-  sudo pacman -Rns - <<<"$(pacman -Qtdq)"
+  pacman -Qtdq | sudo pacman -Rns -
 }
 
 # Re-initialize the Arch Linux GPG trust keyring. This is sometimes necessary
-# after a long period of inactivity on an Arch Linux installation when keys
+# after a long period of inactivity on an Arch Linux installation, as keys can
 # become stale and untrusted.
 arch_rekey() {
   local archGnupgDir="/etc/pacman.d/gnupg"

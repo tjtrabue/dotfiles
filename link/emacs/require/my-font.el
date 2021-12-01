@@ -30,14 +30,14 @@
 
 ;;; Code:
 
-(defvar my-font-font-family "FiraCode Nerd Font"
+(defvar my-font-family "FiraCode Nerd Font"
   "The default font family used throughout Emacs.")
 
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set the default font for all of Emacs."
   (set-face-attribute 'default nil
-    :family my-font-font-family ;; The font's name
+    :family my-font-family ;; The font's name
     :height 105 ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
     :weight 'semi-bold ;; Style
     :width 'normal))
