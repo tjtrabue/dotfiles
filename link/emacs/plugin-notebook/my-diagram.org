@@ -14,6 +14,30 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
   diagram images. Requires the =mmdc= CLI executable to be installed, which is a
   Node.js tool. Check the installation instructions for =mermaid-cli=.
 
+** Functions
+
+#+begin_src emacs-lisp
+  (defun my/mermaid-get-bg-color ()
+    "Get background color for Mermaid diagrams."
+    ;; Use the main editor's default background color for Mermaid diagrams.
+    (face-attribute 'default :background))
+
+  (defun my/mermaid-determine-theme ()
+    "Determine whether to use a light or dark theme for Mermaid diagrams."
+    (let* ((theme "neutral")
+           (bg (my/mermaid-get-bg-color))
+           (luma (/ (+ (* (string-to-number (substring bg 1 2) 16) 299)
+                       (* (string-to-number (substring bg 3 4) 16) 587)
+                       (* (string-to-number (substring bg 5 6) 16) 114))
+                    1000)))
+      (print (format "luma: %d" luma))
+      (if (< luma 128)
+          "dark"
+        "default")))
+#+end_src
+
+** use-package specification
+
   #+begin_src emacs-lisp
     (use-package mermaid-mode
       :mode
@@ -26,6 +50,6 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
       ;; Should be ".png", ".pdf", or ".svg"
       (mermaid-output-format ".png")
       ;; Extra CLI flags to pass to mmdc.
-      (mermaid-flags (concat "-t dark -b "
-                             (face-attribute 'default :background))))
+      (mermaid-flags (concat "-t " (my/mermaid-determine-theme)
+                             " -b " (my/mermaid-get-bg-color))))
   #+end_src
