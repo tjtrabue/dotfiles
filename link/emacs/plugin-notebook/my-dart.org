@@ -37,6 +37,9 @@ programming language.
 =hover.el= allows you to run Flutter mobile apps on a desktop without the need
 for an emulator.
 
+Hover is an /alternative/ to =flutter.el=, which requires an emulator in order
+to work. You probably do not want to use both plugins at the same time.
+
 #+begin_src emacs-lisp
   (use-package hover
     :after dart-mode
