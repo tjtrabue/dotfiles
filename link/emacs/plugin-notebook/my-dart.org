@@ -9,25 +9,44 @@
 Plugins and configuration for the Dart programming language.
 
 * dart-mode
+Major mode for editing Dart source code files.
 
-  #+begin_src emacs-lisp
-    (use-package dart-mode)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package dart-mode)
+#+end_src
 
 * flutter
-  Flutter is a cross-platform mobile application development kit for the Dart
-  programming language.
+Flutter is a cross-platform mobile application development kit for the Dart
+programming language.
 
-  #+begin_src emacs-lisp
-    (use-package flutter
-      :after dart-mode
-      :hook
-      (dart-mode . flutter-test-mode)
-      :general
-      (general-def 'normal dart-mode-map
-        ;; Run or reload Flutter
-        "C-M-x" 'flutter-run-or-hot-reload)
-      :custom
-      ;; The directory containing your Flutter SDK
-      (flutter-sdk-path (file-truename (concat (getenv "HOME") "/workspace/flutter"))))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package flutter
+    :after dart-mode
+    :hook
+    (dart-mode . flutter-test-mode)
+    :general
+    (general-def 'normal dart-mode-map
+      ;; Run or reload Flutter
+      "C-M-x" 'flutter-run-or-hot-reload)
+    :custom
+    ;; The directory containing your Flutter SDK
+    (flutter-sdk-path (file-truename (concat (getenv "HOME") "/workspace/flutter"))))
+#+end_src
+
+* hover
+=hover.el= allows you to run Flutter mobile apps on a desktop without the need
+for an emulator.
+
+#+begin_src emacs-lisp
+  (use-package hover
+    :after dart-mode
+    :general
+    (general-def dart-mode-map
+      "C-M-z" 'hover-run-or-hot-reload
+      "C-M-x" 'hover-run-or-hot-restart
+      "C-M-p" 'hover-take-screenshot)
+    (my/evil-leader-def dart-mode-map
+      "hr" 'hover-run-or-hot-reload
+      "hR" 'hover-run-or-hot-restart
+      "hS" 'hover-take-screenshot))
+#+end_src

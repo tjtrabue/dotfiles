@@ -43,10 +43,6 @@ max_line_length = off
 # Makefiles must use tab characters instead of spaces for indentation
 indent_style = tab
 
-# Mermaid diagram files
-[*.{mmd,mermaid}]
-indent_size = 4
-
 # Perl
 [*.{pl,plx}]
 # 4 spaces per indent in Perl code
