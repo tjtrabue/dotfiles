@@ -52,7 +52,10 @@ The ubiquitous =org-mode=.
     ;; Make sure the Org notes directory is present.
     (make-directory my/org-dir t)
     ;; Also create the agenda directory.
-    (make-directory my/org-agenda-dir t))
+    (make-directory my/org-agenda-dir t)
+    :config
+    ;; Register PlantUML as an Org-compatible language for source blocks.
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
 #+end_src
 
 * Plugins

@@ -51,3 +51,20 @@ Node.js tool. Check the installation instructions for =mermaid-cli=.
     (mermaid-flags (concat "-b " (my/mermaid-get-bg-color)
                            " -t " (my/mermaid-determine-theme))))
 #+end_src
+
+* plantuml-mode
+PlantUML is a DSL for designing UML diagrams and much more. It is a mature
+project, and has support for creating a multitude of diagram types.
+
+#+begin_src emacs-lisp
+  (use-package plantuml-mode
+    ;; Activate plantuml-mode for files ending in .plantuml
+    :mode "\\.plantuml\\'"
+    :custom
+    ;; Sample jar configuration:
+    ;; (plantuml-jar-path "/path/to/your/copy/of/plantuml.jar")
+    ;; (plantuml-default-exec-mode 'jar)
+    ;; Sample executable configuration:
+    (plantuml-executable-path (executable-find "plantuml"))
+    (plantuml-default-exec-mode 'executable))
+#+end_src
