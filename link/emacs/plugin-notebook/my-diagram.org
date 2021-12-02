@@ -10,9 +10,9 @@ Here you will find various plugins for generating and interacting with diagrams,
 such as UML, sequence diagrams, class relationship diagrams, etc.
 
 * mermaid-mode
-  Major mode for editing buffers written in Mermaid syntax for generating
-  diagram images. Requires the =mmdc= CLI executable to be installed, which is a
-  Node.js tool. Check the installation instructions for =mermaid-cli=.
+Major mode for editing buffers written in Mermaid syntax for generating
+diagram images. Requires the =mmdc= CLI executable to be installed, which is a
+Node.js tool. Check the installation instructions for =mermaid-cli=.
 
 ** Functions
 
@@ -37,18 +37,18 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
 
 ** use-package specification
 
-  #+begin_src emacs-lisp
-    (use-package mermaid-mode
-      :mode
-      ;; Associate the .mmd and .mermaid extensions with mermaid-mode.
-      ("\\.mmd$" "\\.mermaid$")
-      :custom
-      ;; Where to find the mmdc, the mermaid command line tool.
-      ;; You must have mmdc installed in order for mermaid-mode to work.
-      (mermaid-mmdc-location (executable-find "mmdc"))
-      ;; Should be ".png", ".pdf", or ".svg"
-      (mermaid-output-format ".png")
-      ;; Extra CLI flags to pass to mmdc.
-      (mermaid-flags (concat "-b " (my/mermaid-get-bg-color)
-                             " -t " (my/mermaid-determine-theme))))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package mermaid-mode
+    :mode
+    ;; Associate the .mmd and .mermaid extensions with mermaid-mode.
+    ("\\.mmd$" "\\.mermaid$")
+    :custom
+    ;; Where to find the mmdc, the mermaid command line tool.
+    ;; You must have mmdc installed in order for mermaid-mode to work.
+    (mermaid-mmdc-location (executable-find "mmdc"))
+    ;; Should be ".png", ".pdf", or ".svg"
+    (mermaid-output-format ".png")
+    ;; Extra CLI flags to pass to mmdc.
+    (mermaid-flags (concat "-b " (my/mermaid-get-bg-color)
+                           " -t " (my/mermaid-determine-theme))))
+#+end_src

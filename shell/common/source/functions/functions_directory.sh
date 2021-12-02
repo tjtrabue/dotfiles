@@ -47,6 +47,10 @@ diralias() {
   . "${dirAliasFile}"
 }
 
+currdir() {
+  dirname "$0"
+}
+
 # Alias function for invoking a CLI directory navigation tool the user
 # specifies.
 dirnav() {
