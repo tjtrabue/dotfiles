@@ -117,11 +117,53 @@ THEME-ALIST, then use that nested SUBLIST as the main theme alist."
 (defun my-colors-set-ecb-colors-for-theme ()
   "Make some of the faces in ECB cohesive with our color theme."
   (set-face-attribute 'ecb-default-highlight-face nil
-                      :foreground (alist-get 'alt-background
-                                             my-colors-color-theme-alist)
-                      :background (alist-get 'orange my-colors-color-theme-alist)
-                      :weight 'extra-bold))
+    :foreground (alist-get 'alt-background
+                  my-colors-color-theme-alist)
+    :background (alist-get 'orange my-colors-color-theme-alist)
+    :weight 'extra-bold))
 
+(defun my-colors--calc-luma-for-rgb-value-list (rgb)
+  "Return luma for RGB, a list of three color values."
+  (when (/= (length rgb) 3)
+    (error "RGB list must be in '(r g b) format."))
+  (/ (+
+       (* (nth 0 rgb) 299)
+       (* (nth 1 rgb) 587)
+       (* (nth 2 rgb) 114))
+    1000))
+
+(defun my-colors--calc-luma-hex (hexcode)
+  "Calculate luma for a color based on HEXCODE."
+  (when (/= (length hexcode) 7)
+    (error "Hex code must be in '#xxxxxx' format."))
+  (my-colors--calc-luma-for-rgb-value-list
+    ;; First, we must turn hex string into list of RGB values
+    ;; for the calculation.
+    (list (string-to-number (substring hexcode 1 3) 16)
+      (string-to-number (substring hexcode 3 5) 16)
+      (string-to-number (substring hexcode 5 7) 16))))
+
+(defun my-colors--calc-luma-rgb (rgb)
+  "Calculate luma for a color based on RGB list."
+  (my-colors--calc-luma-for-rgb-value-list rgb))
+
+;;;###autoload
+(defun my-colors-calc-luma (color-code)
+  "Calculate the luma (perceived brightness) of a color from COLOR-CODE.
+
+COLOR-CODE can be a string representing a hexadecimal color code, or
+a list representing an RGB triplet.
+
+The return value (the luma) is an integer between 0 and 255
+representing the brightness of the RGB triplet, with 0 being the
+darkest possible value."
+  (interactive "P")
+  (let ((luma
+          (cond
+            ((stringp color-code) (my-colors--calc-luma-hex color-code))
+            ((listp color-code) (my-colors--calc-luma-rgb color-code))
+            (t nil))))
+    luma))
 
 ;; Export this module
 (provide 'my-colors)
