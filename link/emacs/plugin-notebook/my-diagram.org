@@ -49,6 +49,6 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
       ;; Should be ".png", ".pdf", or ".svg"
       (mermaid-output-format ".png")
       ;; Extra CLI flags to pass to mmdc.
-      (mermaid-flags (concat "-t " (my/mermaid-determine-theme)
-                             " -b " (my/mermaid-get-bg-color))))
+      (mermaid-flags (concat "-b " (my/mermaid-get-bg-color)
+                             " -t " (my/mermaid-determine-theme))))
   #+end_src
