@@ -16,11 +16,16 @@ such as UML, sequence diagrams, class relationship diagrams, etc.
 
   #+begin_src emacs-lisp
     (use-package mermaid-mode
-      ;; Associate the .mmd and .mermaid extensions with mermaid-mode.
       :mode
+      ;; Associate the .mmd and .mermaid extensions with mermaid-mode.
       ("\\.mmd$" "\\.mermaid$")
       :custom
+      ;; Where to find the mmdc, the mermaid command line tool.
+      ;; You must have mmdc installed in order for mermaid-mode to work.
       (mermaid-mmdc-location (executable-find "mmdc"))
+      ;; Should be ".png", ".pdf", or ".svg"
+      (mermaid-output-format ".png")
+      ;; Extra CLI flags to pass to mmdc.
       (mermaid-flags (concat "-t dark -b "
                              (face-attribute 'default :background))))
   #+end_src
