@@ -1,5 +1,53 @@
 #!/bin/sh
 
+# Pull Dart configuration into the current shell profile.
+src_dart_for_profile() {
+  local dvmHome="${HOME}/.dvm"
+
+  if [ ! -d "${dvmHome}" ]; then
+    install_or_update_dvm
+  fi
+
+  __src_dvm_for_profile
+}
+
+# Install or update the dart version manager (dvm).
+install_or_update_dvm() {
+  local dvmHome="${HOME}/.dvm"
+
+  if [ -d "${dvmHome}" ]; then
+    __update_dvm
+  else
+    __install_dvm
+  fi
+}
+
+__install_dvm() {
+  local dvmHome="${HOME}/.dvm"
+
+  log_info "Installing DVM"
+  install_tool_from_git "dvm" "${dvmHome}" \
+    "https://github.com/cbracken/dvm.git"
+}
+
+__update_dvm() {
+  local dvmHome="${HOME}/.dvm"
+
+  update_tool_from_git "${dvmHome}"
+}
+
+# Use DVM in the current shell.
+__src_dvm_for_profile() {
+  local dvmHome="${HOME}/.dvm"
+  local dvmScript="${dvmHome}/scripts/dvm"
+
+  if [ -f "${dvmScript}" ]; then
+    . "${dvmScript}"
+  else
+    warn "DVM shell script not found at: ${BLUE}${dvmScript}${BLUE}"
+  fi
+}
+
 # Install the Flutter SDK to a predictable location on the file system.
 install_or_update_flutter_sdk() {
   local gitUrl="https://github.com/flutter/flutter.git"

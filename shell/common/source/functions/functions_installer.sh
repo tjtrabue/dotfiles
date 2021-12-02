@@ -48,6 +48,21 @@ install_tool_from_git() {
     "git clone \"${gitRepoUrl}\" ${toolHomeDir}"
 }
 
+# Pull updates for the git-installed tool.
+update_tool_from_git() {
+  local toolHomeDir="$1"
+
+  if [ ! -d "${toolHomeDir}" ]; then
+    err "Tool home directory not found at: ${BLUE}${toolCmd}${NC}"
+    return 1
+  fi
+
+  log_info "Updating tool at: ${BLUE}${toolHomeDir}${NC}"
+  git -C "${toolHomeDir}" clean -df
+  git -C "${toolHomeDir}" reset --hard
+  git -C "${toolHomeDir}" pull
+}
+
 # Generic code for installing from an installer URL or a Git repository.
 __install_tool_generic() {
   local toolCmd="$1"

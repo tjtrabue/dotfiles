@@ -170,6 +170,7 @@ __src_agents() {
 # overwritten.
 __src_extra_environment_profiles() {
   src_dircolors_for_profile
+  src_dvm_for_profile
   src_git_for_profile
   src_java_for_profile
   src_node_for_profile

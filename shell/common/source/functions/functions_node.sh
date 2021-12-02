@@ -22,6 +22,19 @@ src_node_for_profile() {
   fi
 }
 
+# Either install or update node version manager (nvm).
+install_or_update_nvm() {
+  local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
+
+  if [ -d "${nvmDir}" ]; then
+    __update_nvm
+  else
+    __install_nvm
+  fi
+
+  __link_nvm_default_packages_file
+}
+
 # Use nvm to install the latest version of Node.js.
 install_latest_node() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
@@ -58,19 +71,6 @@ update_node_packages() {
   else
     log_info "No packages to update."
   fi
-}
-
-# Either install or update node version manager (nvm).
-install_or_update_nvm() {
-  local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
-
-  if [ -d "${nvmDir}" ]; then
-    __update_nvm
-  else
-    __install_nvm
-  fi
-
-  __link_nvm_default_packages_file
 }
 
 # Writes the default node version installed with nvm to the ~/.path file.
