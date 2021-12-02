@@ -55,7 +55,8 @@ The ubiquitous =org-mode=.
     (make-directory my/org-agenda-dir t)
     :config
     ;; Register PlantUML as an Org-compatible language for source blocks.
-    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
 #+end_src
 
 * Plugins
