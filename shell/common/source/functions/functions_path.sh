@@ -9,9 +9,15 @@ atp() {
   local binPathFile=${PATH_FILE:-${HOME}/.path}
   local pathToAdd="${1:-$(pwd)}"
   local pathFile="${2:-${binPathFile}}"
+  local evaluatedPathToAdd="$(eval echo "${pathToAdd}")"
   pathToAdd="$(shortpath "${pathToAdd}")"
 
-  if ! __evaluate_paths | grep -Fxq "$(eval echo "${pathToAdd}")"; then
+  if [ ! -d "${evaluatedPathToAdd}" ]; then
+    err "Path ${BLUE}${pathToAdd}${NC} is not a directory"
+    return 1
+  fi
+
+  if ! __evaluate_paths | grep -Fxq "${evaluatedPathToAdd}"; then
     log_debug "Adding path ${CYAN}${pathToAdd}${NC} to file" \
       "${GREEN}${pathFile}${NC}"
     printf "\n%s\n" "${pathToAdd}" >>"${pathFile}"

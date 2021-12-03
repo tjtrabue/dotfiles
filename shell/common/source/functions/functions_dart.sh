@@ -30,8 +30,22 @@ install_latest_dart() {
   fi
 
   __src_dvm_for_profile
-  dvm install latest --default
+  dvm install latest
   __add_latest_dart_to_path
+  __use_latest_dart_in_dvm
+}
+
+__use_latest_dart_in_dvm() {
+  local dvmRoot="${DVM_ROOT:-${HOME}/.dvm}"
+  local latestDartVersion="$(dvm list | sort -Vu | tail -1)"
+
+  if [ ! -d "${dvmRoot}/darts/${latestDartVersion}" ]; then
+    err "Could not find Dart version: ${YELLOW}${latestDartVersion}${NC}"
+    return 1
+  fi
+
+  log_info "Using Dart version ${YELLOW}${latestDartVersion}${NC}"
+  dvm use "${latestDartVersion}" --default
 }
 
 __add_latest_dart_to_path() {
@@ -39,15 +53,15 @@ __add_latest_dart_to_path() {
   local dvmDefaultEnv="${dvmRoot}/environments/default"
   local latestDartVersion
 
-  latestDartVersion="$(grep 'PATH' "${dvmDefaultEnv}" |
-    grep -E -o '[0-9]+\.[0-9]+\.[0-9]+')"
+  latestDartVersion="$(dvm list | sort -Vu | tail -1)"
 
   if ! dvm list | grep -q -o "^${latestDartVersion}\$"; then
-    err "Could not detect dart version ${latestDartVersion} installed by dvm"
+    err "Could not detect Dart version ${YELLOW}${latestDartVersion}${NC}" \
+      "installed by dvm"
     return 1
   fi
 
-  log_info "Adding dart version ${latestDartVersion} to PATH"
+  log_info "Adding dart version ${YELLOW}${latestDartVersion}${NC} to PATH"
   atp "${dvmRoot}/darts/${latestDartVersion}/bin"
 }
 
