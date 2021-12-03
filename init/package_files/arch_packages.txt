@@ -123,6 +123,7 @@ pass
 pdfjam
 perl-image-exiftool
 picom
+plantuml
 postgresql
 pulseaudio
 pulseaudio-alsa

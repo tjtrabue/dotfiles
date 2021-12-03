@@ -46,6 +46,7 @@ neovim --HEAD
 ninja
 openssh
 parallel
+plantuml
 pyenv
 ranger
 rclone
