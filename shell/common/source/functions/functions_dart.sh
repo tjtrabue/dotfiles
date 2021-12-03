@@ -166,6 +166,16 @@ __prep_flutter_dev_environment_arch() {
   # ~/.path.
   export ANDROID_SDK_ROOT="${androidSdk}"
   add_android_sdk_to_path
+
+  cat <<EOF
+Congrats! You're almost done setting up your Flutter development environment!
+
+FINAL STEPS:
+- Restart your system so that the privilages of your new user groups will take
+  effect.
+- Run these commands:
+  - install_android_image_and_avd
+EOF
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
