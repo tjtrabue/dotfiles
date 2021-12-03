@@ -53,8 +53,19 @@ Node.js tool. Check the installation instructions for =mermaid-cli=.
 #+end_src
 
 * plantuml-mode
-PlantUML is a DSL for designing UML diagrams and much more. It is a mature
-project, and has support for creating a multitude of diagram types.
+PlantUML plain-text specification for generating UML diagrams and much more. It
+is a mature project, and has support for creating a multitude of diagram
+types. Some of its supported diagram formats include:
+
+- Sequence diagram
+- Usecase diagram
+- Class diagram
+- Object diagram
+- Activity diagram
+- Component diagram
+- Deployment diagram
+- State diagram
+- Timing diagram
 
 #+begin_src emacs-lisp
   (use-package plantuml-mode

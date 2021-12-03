@@ -132,4 +132,33 @@ __install_flutter_deps_mac() {
   gem install cocoapods
 }
 
+prep_flutter_dev_environment() {
+  local os="$(getdistro)"
+
+  case "${os}" in
+  "Arch Linux")
+    __prep_flutter_dev_environment_arch
+    ;;
+  esac
+}
+
+__prep_flutter_dev_environment_arch() {
+  log_info "Preparing Flutter development environment for Arch Linux"
+
+  aurhi flutter
+
+  sudo groupadd flutterusers
+  sudo gpasswd -a "${USER}" flutterusers
+  sudo chown -R :flutterusers /opt/flutter
+  sudo chmod -R g+w /opt/flutter/
+
+  aurhi android-sdk android-sdk-platform-tools android-sdk-build-tools
+  aurhi android-platform
+
+  sudo groupadd android-sdk
+  sudo gpasswd -a "${USER}" android-sdk
+  sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
+  sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

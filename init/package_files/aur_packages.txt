@@ -1,3 +1,7 @@
+android-platform
+android-sdk
+android-sdk-build-tools
+android-sdk-platform-tools
 android-studio
 arc-kde-git
 authy
@@ -7,6 +11,7 @@ elixir-ls-git
 emacs-native-comp-git-enhanced
 findimagedupes
 flat-remix
+flutter-git
 glow-bin
 icons-in-terminal
 jdtls
