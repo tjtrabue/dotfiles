@@ -143,22 +143,29 @@ prep_flutter_dev_environment() {
 }
 
 __prep_flutter_dev_environment_arch() {
-  log_info "Preparing Flutter development environment for Arch Linux"
+  local androidSdk="/opt/android-sdk"
+  local flutterSdk="/opt/flutter"
 
+  log_info "Preparing Flutter development environment for Arch Linux"
   aurhi flutter
 
   sudo groupadd flutterusers
   sudo gpasswd -a "${USER}" flutterusers
-  sudo chown -R :flutterusers /opt/flutter
-  sudo chmod -R g+w /opt/flutter/
+  sudo chown -R :flutterusers "${flutterSdk}"
+  sudo chmod -R g+w "${flutterSdk}"
 
   aurhi android-sdk android-sdk-platform-tools android-sdk-build-tools
   aurhi android-platform
 
   sudo groupadd android-sdk
   sudo gpasswd -a "${USER}" android-sdk
-  sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
-  sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+  sudo setfacl -R -m g:android-sdk:rwx "${androidSdk}"
+  sudo setfacl -d -m g:android-sdk:rwX "${androidSdk}"
+
+  # Make sure the ANDROID_SDK_ROOT is set properly before adding SDK paths to
+  # ~/.path.
+  export ANDROID_SDK_ROOT="${androidSdk}"
+  add_android_sdk_to_path
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
