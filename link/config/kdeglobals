@@ -140,6 +140,9 @@ Name=Breeze Light
 shadeSortColumn=true
 widgetStyle=Breeze
 
+[Icons]
+Theme=Papirus-Dark
+
 [KDE]
 ColorScheme=BreezeLight
 LookAndFeelPackage=com.github.varlesh.arc-dark

@@ -1,6 +1,0 @@
-[Windows]
-Placement=Smart
-
-[org.kde.kdecoration2]
-library=org.kde.breeze
-theme=__aurorae__svg__Arc-Dark
