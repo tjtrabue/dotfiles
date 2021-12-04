@@ -132,6 +132,9 @@ __install_flutter_deps_mac() {
   gem install cocoapods
 }
 
+# Prepare Flutter development environment. This requires that you have already
+# set up an Android development environment.
+# See functions_android.sh for more information.
 prep_flutter_dev_environment() {
   local os="$(getdistro)"
 
@@ -139,11 +142,14 @@ prep_flutter_dev_environment() {
   "Arch Linux")
     __prep_flutter_dev_environment_arch
     ;;
+  *)
+    err "Could not setup Flutter for os: ${GREEN}${os}${NC}"
+    return 1
+    ;;
   esac
 }
 
 __prep_flutter_dev_environment_arch() {
-  local androidSdk="/opt/android-sdk"
   local flutterSdk="/opt/flutter"
 
   log_info "Preparing Flutter development environment for Arch Linux"
@@ -153,29 +159,6 @@ __prep_flutter_dev_environment_arch() {
   sudo gpasswd -a "${USER}" flutterusers
   sudo chown -R :flutterusers "${flutterSdk}"
   sudo chmod -R g+w "${flutterSdk}"
-
-  aurhi android-sdk android-sdk-platform-tools android-sdk-build-tools
-  aurhi android-platform
-
-  sudo groupadd android-sdk
-  sudo gpasswd -a "${USER}" android-sdk
-  sudo setfacl -R -m g:android-sdk:rwx "${androidSdk}"
-  sudo setfacl -d -m g:android-sdk:rwX "${androidSdk}"
-
-  # Make sure the ANDROID_SDK_ROOT is set properly before adding SDK paths to
-  # ~/.path.
-  export ANDROID_SDK_ROOT="${androidSdk}"
-  add_android_sdk_to_path
-
-  cat <<EOF
-Congrats! You're almost done setting up your Flutter development environment!
-
-FINAL STEPS:
-- Restart your system so that the privilages of your new user groups will take
-  effect.
-- Run these commands:
-  - install_android_image_and_avd
-EOF
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
