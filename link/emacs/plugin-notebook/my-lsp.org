@@ -189,9 +189,6 @@ your file system.
 
 *** =use-package= specification
 #+begin_src emacs-lisp
-  ;; LSP language clients
-  ;; CCLS - For use with C, C++, and Objective C
-  ;;
   ;; NOTE: If a C/C++ file is opened in Emacs and CCLS fails to
   ;;       provide its services automatically then most likely CCLS
   ;;       cannot find the project's root directory (or has been confused
@@ -280,11 +277,12 @@ traction after =python-language-server= became a bit stagnant.
 
 ** lsp-sourcekit
 Lsp-SourceKit is Apple's LSP provider for Swift, Objective C, and other
-languages. This plugin not only provides
+languages. This plugin not only provides an LSP implementation, but additional
+features such as semantic highlighting.
 
 #+begin_src emacs-lisp
   (use-package lsp-sourcekit
-    ;; sourcekit-lsp is only available on macOS currently.
+    ;; sourcekit-lsp appears to only be available on macOS as of now.
     :if (eq system-type 'darwin)
     :after lsp-mode
     :custom
