@@ -1,15 +1,5 @@
 #!/bin/sh
 
-# Prep shell environment for Android development.
-src_android_for_profile() {
-  if android_cmdline_tools_installed; then
-    log_info "Sourcing Android development profile for shell: $(currentshell)"
-    create_android_emulator_aliases
-  else
-    warn "Android development tools/platform not installed"
-  fi
-}
-
 # Install Android SDKs, images, and virtual devices, and set up environment
 # variables for Android development.
 prep_android_dev_environment() {
@@ -112,17 +102,23 @@ add_android_sdk_to_path() {
 # Dynamically create shell alaises for running installed Android emulators.
 create_android_emulator_aliases() {
   local avdName
+  local extraDotfiles="${EXTRA_DOTFILES:-${HOME}/.extra}"
+  local emulatorAliasFile="${extraDotfiles}/emulator_aliases.sh"
+
+  mkdir -p "${extraDotfiles}"
 
   if [ ! -x "$(command -v avdmanager)" ]; then
     warn 'Could not find avdmanager command on $PATH'
     return 0
   fi
 
+  rm -f "${emulatorAliasFile}"
+
   for avdName in $(avdmanager list avd 2>/dev/null |
     grep "Name:" |
     awk '{print $2}'); do
-    eval "alias run_${avdName}='emulator @${avdName} -no-boot-anim" \
-      "-netdelay none -no-snapshot -wipe-data &'"
+    echo "alias run_${avdName}='emulator @${avdName} -no-boot-anim" \
+      "-netdelay none -no-snapshot -wipe-data &'" >>"${emulatorAliasFile}"
   done
 }
 

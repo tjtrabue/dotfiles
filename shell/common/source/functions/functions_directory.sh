@@ -47,10 +47,6 @@ diralias() {
   . "${dirAliasFile}"
 }
 
-currdir() {
-  dirname "$0"
-}
-
 # Alias function for invoking a CLI directory navigation tool the user
 # specifies.
 dirnav() {
@@ -62,6 +58,14 @@ dirnav() {
   fi
 
   eval "${dirNavTool}"
+}
+
+# Reports whether a given directory is empty. Return 0 for nonempty, non-zero
+# otherwise.
+dirnonempty() {
+  local dir="${1}"
+
+  [ -d "${dir}" ] && [ -n "$(command ls -A "${dir}")" ]
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

@@ -36,16 +36,19 @@ __src_one_time_transfers() {
 
 # Source shell files local to the machine (i.e., not under version control).
 __src_machine_local_files() {
-  local machineLocalFiles=(
-    "${HOME}/.extra"
-  )
+  local machineLocalFilesDir="${HOME}/.extra"
   local f
 
-  for f in "${machineLocalFiles[@]}"; do
-    if [ -f "${f}" ]; then
-      . "${f}"
-    fi
-  done
+  # This test is necessary for determining whether the ~/.extra directory is
+  # empty. If it is empty, we want to ignore this sourcing step altogether
+  # because that would break our workflwo.
+  [ -d "${machineLocalFilesDir}" ] &&
+    [ $(command ls -A "${machineLocalFilesDir}") ] &&
+    for f in "${machineLocalFilesDir}"/*; do
+      if [ -f "${f}" ]; then
+        . "${f}"
+      fi
+    done
 }
 
 # Source all files in a given directory.
@@ -150,7 +153,7 @@ __src() {
   # Source OS-specific aliases and functions.
   __src_os
 
-  # Source .extra
+  # Source files in ~/.extra/
   __src_machine_local_files
 
   # export the dynamically constructed $PATH variable from the entries in
@@ -181,7 +184,6 @@ __src_extra_environment_profiles() {
   src_thef_for_profile
   src_broot_for_profile
   src_parallel_for_profile
-  src_android_for_profile
   src_prompt_for_profile
 }
 # }}}
