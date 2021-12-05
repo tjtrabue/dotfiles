@@ -43,7 +43,7 @@ __src_machine_local_files() {
   # empty. If it is empty, we want to ignore this sourcing step altogether
   # because that would break our workflwo.
   [ -d "${machineLocalFilesDir}" ] &&
-    [ $(command ls -A "${machineLocalFilesDir}") ] &&
+    [ -n "$(command ls -A "${machineLocalFilesDir}")" ] &&
     for f in "${machineLocalFilesDir}"/*; do
       if [ -f "${f}" ]; then
         . "${f}"
