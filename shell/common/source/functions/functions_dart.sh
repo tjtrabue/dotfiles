@@ -153,7 +153,7 @@ __prep_flutter_dev_environment_arch() {
   local flutterSdk="/opt/flutter"
 
   log_info "Preparing Flutter development environment for Arch Linux"
-  aurhi flutter
+  aurhi flutter-git
 
   sudo groupadd flutterusers
   sudo gpasswd -a "${USER}" flutterusers
