@@ -1,19 +1,13 @@
 #!/bin/sh
 
-# Add android SDK binary paths to ~/.path
-add_android_sdk_to_path() {
-  local pathFile="${PATH_FILE}"
-
-  if [ ! -d "${ANDROID_SDK_ROOT}" ]; then
-    err "Variable ANDROID_SDK_ROOT is not set to a directory"
-    return 1
+# Prep shell environment for Android development.
+src_android_for_profile() {
+  if android_cmdline_tools_installed; then
+    log_info "Sourcing Android development profile for shell: $(currentshell)"
+    create_android_emulator_aliases
+  else
+    warn "Android development tools/platform not installed"
   fi
-
-  log_info "Adding Android SDK paths to ${BLUE}${pathFile}${NC}"
-  atp '\${ANDROID_SDK_ROOT}/platform-tools/'
-  atp '\${ANDROID_SDK_ROOT}/tools/bin/'
-  atp '\${ANDROID_SDK_ROOT}/emulator'
-  atp '\${ANDROID_SDK_ROOT}/tools/'
 }
 
 # Install Android SDKs, images, and virtual devices, and set up environment
@@ -97,6 +91,45 @@ __prep_android_dev_environment_arch() {
   # ~/.path.
   export ANDROID_SDK_ROOT="${androidSdk}"
   add_android_sdk_to_path
+}
+
+# Add android SDK binary paths to ~/.path
+add_android_sdk_to_path() {
+  local pathFile="${PATH_FILE}"
+
+  if [ ! -d "${ANDROID_SDK_ROOT}" ]; then
+    err "Variable ANDROID_SDK_ROOT is not set to a directory"
+    return 1
+  fi
+
+  log_info "Adding Android SDK paths to ${BLUE}${pathFile}${NC}"
+  atp '\${ANDROID_SDK_ROOT}/platform-tools/'
+  atp '\${ANDROID_SDK_ROOT}/tools/bin/'
+  atp '\${ANDROID_SDK_ROOT}/emulator'
+  atp '\${ANDROID_SDK_ROOT}/tools/'
+}
+
+# Dynamically create shell alaises for running installed Android emulators.
+create_android_emulator_aliases() {
+  local avdName
+
+  if [ ! -x "$(command -v avdmanager)" ]; then
+    warn 'Could not find avdmanager command on $PATH'
+    return 0
+  fi
+
+  for avdName in $(avdmanager list avd 2>/dev/null |
+    grep "Name:" |
+    awk '{print $2}'); do
+    eval "alias run_${avdName}='emulator @${avdName} -no-boot-anim" \
+      "-netdelay none -no-snapshot -wipe-data &'"
+  done
+}
+
+# Predicate function for determining whether all relevant Android command line
+# developer tools are properly installed.
+android_cmdline_tools_installed() {
+  [ -x "$(command -v avdmanager)" ] && [ -x "$(command -v sdkmanager)" ]
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
