@@ -363,6 +363,11 @@ nmap <leader>= <Action>(ReformatCode)
 nmap <leader>o <Action>(OptimizeImports)
 " }}}
 
+" Project Build/Test/Run {{{
+nmap <leader>pb <Action>(Compile)
+nmap <leader>pr <Action>(Run)
+"}
+
 " Searching and Source Code Navigation {{{
 nmap <C-/> <Action>(FindInPath)
 nmap <C-a> <Action>(GotoAction)
