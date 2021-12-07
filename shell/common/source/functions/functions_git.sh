@@ -7,7 +7,7 @@
 # If no repository directory is provided, defaults to the current dir.
 # Return 0 if the directory is a Git repo. Return non-zero otherwise.
 isgitrepo() {
-  local repoDir="${1:-$(git rev-parse --show-toplevel)}"
+  local repoDir="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
 
   git -C "${repoDir}" rev-parse >>/dev/null 2>&1
 }
