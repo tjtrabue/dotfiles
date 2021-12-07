@@ -485,12 +485,18 @@ __construct_project_commit_msg() {
   local commitMsg="${2}"
   local projectIdentifier="${3}"
   local projectMsgStyle="${PROJECT_MSG_STYLE:-colon}"
+  local formatString="%s-%s: %s"
 
-  if [ "${projectMsgStyle}" = "braces" ]; then
-    printf "[%s-%s] %s" "${projectIdentifier}" "${itemNumber}" "${commitMsg}"
-  else
-    printf "%s-%s: %s" "${projectIdentifier}" "${itemNumber}" "${commitMsg}"
-  fi
+  case "${projectMsgStyle}" in
+  "braces")
+    formatString="[%s-%s] %s"
+    ;;
+  *)
+    formatString="%s-%s: %s"
+    ;;
+  esac
+
+  printf "${formatString}" "${projectIdentifier}" "${itemNumber}" "${commitMsg}"
 }
 
 # Attempt to get project environment variables from the .git_project.sh file at
