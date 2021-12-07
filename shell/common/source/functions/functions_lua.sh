@@ -76,7 +76,7 @@ install_lua_language_server() {
   fi
 
   log_info "Installing wrapper script"
-  cat <<EOF >"${wrapperScript}"
+  command cat <<EOF >"${wrapperScript}"
 #!/bin/sh
 
 exec "${executable}" "${repoDir}/main.lua"

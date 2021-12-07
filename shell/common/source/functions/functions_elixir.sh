@@ -74,7 +74,7 @@ __install_elixir_ls() {
 
     install -dm0755 "${installBin}"
     # Create an executable script to launch the language server
-    cat <<EOF >"${installBin}/elixir-ls"
+    command cat <<EOF >"${installBin}/elixir-ls"
 #!/bin/sh
 
 exec ${installLib}/${elixirLsName}/language_server.sh
@@ -82,7 +82,7 @@ EOF
     chmod 755 "${installBin}/elixir-ls"
 
     # Create an executable script to launch a debugger program for the LS.
-    cat <<EOF >"${installBin}/elixir-ls-debug"
+    command cat <<EOF >"${installBin}/elixir-ls-debug"
 #!/bin/sh
 
 exec ${installLib}/${elixirLsName}/debugger.sh

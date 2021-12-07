@@ -7,7 +7,7 @@ declare CONTENTS=""
 
 # Help function {{{
 clipboard__help() {
-  cat <<EOF
+  command cat <<EOF
 clipboard - dynamic wrapper around CLI clipboard programs
 
 Use the clipboard program to pipe the output of a text-yielding command to the
@@ -46,7 +46,7 @@ clipboard__check_clipboard_program_exists() {
   local clipboardExecutable="$(echo "${CLIPBOARD_CMD}" | awk '{print $1}')"
 
   if [ -z "$(command -v "${clipboardExecutable}")" ]; then
-    cat <<EOF
+    command cat <<EOF
 Error: clipboard program "${clipboardExecutable}" not found on \$PATH. It may
 not be installed. Please ensure this program is installed and on your \$PATH and
 try again.

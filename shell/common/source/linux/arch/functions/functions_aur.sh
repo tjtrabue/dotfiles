@@ -11,7 +11,7 @@ aur() {
   local options
 
   _aur_help() {
-    cat <<EOF
+    command cat <<EOF
 ${FUNCNAME[1]} - Manage packages from the Arch User Repositories \(AUR\)
 
 'aur' is a CLI tool for interacting with the AUR. You may use 'aur' to  install,

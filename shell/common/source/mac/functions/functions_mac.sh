@@ -77,7 +77,7 @@ create_gnu_cli_tool_aliases_for_mac() {
   local brewPrefix="$(brew --prefix)"
   local pathFile="${PATH_FILE:-${HOME}/.path}"
 
-  log_info "Adding GNU CLI tools to \$PATH"
+  log_info 'Adding GNU CLI tools to $PATH'
   log_debug "Updating locate database"
 
   # Update the locate database
@@ -120,7 +120,7 @@ install_iterm_themes() {
 
   # Import all color schemes
   "${importScript}" "${installDir}/schemes"/* &&
-    cat <<EOF
+    command cat <<EOF
 iTerm color schemes successfully imported! Restart iTerm now, then check:
 
   Preferences > Profiles > Colors > Color Presets...
@@ -164,7 +164,7 @@ alias_homebrew_gcc_executables() {
 upgrade_emacs_plus_for_macos() {
   local response
   while ! echo "${response}" | grep -q "[YyNn]"; do
-    cat <<EOF
+    command cat <<EOF
 WARNING: Upgrading emacs-plus involves deleting your current installation,
 cloning the updated repository, and recompiling emacs-plus from source. This is
 a risky and error-prone process. You should backup any Emacs files you are

@@ -26,7 +26,7 @@ __cd() {
 }
 
 __cd_help() {
-  cat <<EOF
+  command cat <<EOF
 cd - Special 'cd' wrapper function defined in ${DOTFILES_HOME}
 
 USAGE:

@@ -199,7 +199,7 @@ export_path() {
   pathValue="$(construct_path "${pathFile}")"
 
   log_debug "Generating static path file: ${MAGENTA}${staticPathFile}${NC}"
-  cat <<EOF >"${staticPathFile}"
+  command cat <<EOF >"${staticPathFile}"
 #!/bin/sh
 
 # This file was automatically generated from the entries in '${pathFile}'.

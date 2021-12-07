@@ -17,7 +17,7 @@ prep_android_dev_environment() {
     ;;
   esac
 
-  cat <<EOF
+  command cat <<EOF
 Congrats! You're almost done setting up your Flutter development environment!
 
 FINAL STEPS:

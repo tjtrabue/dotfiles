@@ -99,7 +99,7 @@ __create_new_ssh_agent() {
   if [ ! -f "${createSshAgentLockFile}" ]; then
     log_debug "Creating SSH agent lock file:" \
       "${MAGENTA}${createSshAgentLockFile}${NC}"
-    cat <<EOF >"${createSshAgentLockFile}"
+    command cat <<EOF >"${createSshAgentLockFile}"
 Delete this file! Its presence precludes the sshagent function from
 creating new SSH agents automatically! This file only exists to preclude
 multiple processes from creating SSH agents at the same time.
@@ -150,7 +150,7 @@ __remove_other_ssh_agents() {
 
 __print_error_message_could_not_start_ssh_agent() {
   err "Could not start SSH agent."
-  cat <<EOF
+  command cat <<EOF
 Try manually starting the agent by running these commands:
   eval \$(ssh-agent)
   ssh-add
