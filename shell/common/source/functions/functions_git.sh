@@ -456,6 +456,18 @@ OPTIONS:
                          the PROJECT_IDENTIFIER environment variable, and,
                          failing that, the user will be prompted for the value
                          of the project ID interactively.
+
+ENVIRONMENT VARIABLES:
+  Each of these environment variables may be placed in a per-project file named
+  '${PROJECT_ENV_FILE_NAME}' located in the project's root directory.
+
+  PROJECT_IDENTIFIER: The project ID string to use for the current project. It's
+                      value should look like 'PROJ'.
+
+  PROJECT_MSG_STYLE: Should be one of 'colon', or 'braces.' This variable
+                     determines how the commit message string will be formatted.
+                     If this environment variable is not set, 'colon' will be
+                     used by default.
 EOF
 }
 
