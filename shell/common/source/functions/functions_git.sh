@@ -436,7 +436,7 @@ EOF
     return 5
   fi
 
-  gcm "${finalCommitMsg}"
+  git commit -m "${finalCommitMsg}"
 }
 
 __pcm_usage() {
