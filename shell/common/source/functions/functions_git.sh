@@ -348,7 +348,7 @@ pcm() {
   if [ -z "${itemNumber}" ]; then
     err "No work item number provided"
     return 2
-  elif ! echo "${itemNumber}" | grep -E -q '^[0-9]+$'; then
+  elif ! __validate_item_number "${itemNumber}"; then
     err "Item number must be a string of integers"
     return 3
   fi
@@ -382,12 +382,22 @@ EOF
   gcm "${finalCommitMsg}"
 }
 
+# Attempt to get project environment variables from the .git_project.sh file at
+# the root of the project.
 __src_project_vars_for_git_project() {
   local projectRoot="$(git rev-parse --show-toplevel)"
-  local gitProjectShellFile="${projectRoot}/.git_project.sh"
+  local gitProjectShellFile="${projectRoot}/${PROJECT_ENV_FILE_NAME}"
 
   if [ -f "${gitProjectShellFile}" ]; then
     . "${gitProjectShellFile}"
+  fi
+}
+
+__validate_item_number() {
+  local itemNumber="${1}"
+
+  if ! echo "${itemNumber}" | grep -E -q '^[0-9]+$'; then
+    return 1
   fi
 }
 
