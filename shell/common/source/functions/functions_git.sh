@@ -350,7 +350,7 @@ pcm() {
   while getopts ":hm:n:p:f:" o; do
     case "${o}" in
     h)
-      __pcm_usage
+      __pcm_help
       return 0
       ;;
     m)
@@ -446,6 +446,12 @@ USAGE:
        -f MSG_FORMAT]
 
   pcm [ITEM_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
+EOF
+}
+
+__pcm_help() {
+  __pcm_usage
+  command cat <<EOF
 
 OPTIONS:
   -h: Print the help message (this message) and exit.
