@@ -476,10 +476,7 @@ EOF
 
 # Prints commit messages in a variety of established formats, determined by the
 # PROJECT_MSG_STYLE environment variable.
-#
-# Formats:
-#   colon - 'PROJ-1234: this is my commit message'
-#   braces - '[PROJ-1234] this is my commit message'
+# See 'pcm -h' for more information on acceptable formats.
 __construct_project_commit_msg() {
   local itemNumber="${1}"
   local commitMsg="${2}"
