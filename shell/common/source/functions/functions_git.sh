@@ -434,7 +434,7 @@ __pcm_usage() {
   command cat <<EOF
 USAGE:
   pcm [-h | -m COMMIT_MSG | -n ITEM_NUMBER | -p PROJECT_IDENTIFIER]
-      ITEM_NUMBER [COMMIT_MSG] [PROJECT_IDENTIFIER]
+      [ITEM_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
 
 OPTIONS:
   -h: Print the help message (this message) and exit.
@@ -453,7 +453,9 @@ OPTIONS:
                          omitted, the user may supply the project ID as a
                          positional parameter. If no other value for
                          this parameter is supplied, its value will be read from
-                         the PROJECT_IDENTIFIER environment variable.
+                         the PROJECT_IDENTIFIER environment variable, and,
+                         failing that, the user will be prompted for the value
+                         of the project ID interactively.
 EOF
 }
 
