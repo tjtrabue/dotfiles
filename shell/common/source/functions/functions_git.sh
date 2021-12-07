@@ -341,6 +341,11 @@ pcm() {
   local OPTIND
   local o
 
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
   while getopts ":hm:n:p:" o; do
     case "${o}" in
     h)
@@ -375,11 +380,6 @@ pcm() {
 
   if [ -z "${projectIdentifier}" ]; then
     projectIdentifier="${3}"
-  fi
-
-  if ! isgitrepo; then
-    err "Not in a Git repository"
-    return 1
   fi
 
   # Read work item interactively if it was not supplied on the command line.
