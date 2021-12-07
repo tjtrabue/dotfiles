@@ -328,7 +328,7 @@ gcm() {
 # Project commit function.
 pcm() {
   local commitMsg="${1}"
-  local projectIdentifier="${2:-${PROJECT_IDENTIFIER}}"
+  local projectIdentifier="${2}"
   local finalCommitMsg
 
   if ! isgitrepo; then
