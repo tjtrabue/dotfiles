@@ -404,7 +404,9 @@ __validate_item_number() {
 __validate_project_commit_msg() {
   local commitMsg="${1}"
 
-  if ! echo "${commitMsg}" | grep -E -q '^[A-Z]+-[0-9]+:\s+.*$'; then
+  if ! echo "${commitMsg}" | grep -E -q \
+    -e '^\[[A-Z]+-[0-9]+\]\s+.*$' \
+    -e '^[A-Z]+-[0-9]+:\s+.*$'; then
     return 1
   fi
 }
