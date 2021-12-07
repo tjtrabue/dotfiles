@@ -359,6 +359,7 @@ nnoremap ]] <Action>(MethodDown)
 
 " Refactoring/Optimizing {{{
 nmap <leader>r <Action>(Refactorings.QuickListPopupAction)
+vmap <leader>r <Action>(Refactorings.QuickListPopupAction)
 nmap <leader>= <Action>(ReformatCode)
 nmap <leader>o <Action>(OptimizeImports)
 " }}}

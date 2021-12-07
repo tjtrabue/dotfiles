@@ -324,6 +324,47 @@ gcm() {
 
   git commit -m "${message}"
 }
+
+# Project commit function.
+pcm() {
+  local commitMsg="${1}"
+  local projectIdentifier="${2:-${PROJECT_IDENTIFIER}}"
+  local finalCommitMsg
+
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
+  if [ -z "${projectIdentifier}" ]; then
+    __src_project_vars_for_git_project
+    projectIdentifier="${PROJECT_IDENTIFIER}"
+  fi
+
+  if [ -z "${projectIdentifier}" ]; then
+    err '$PROJECT_IDENTIFIER environment variable not set'
+    return 2
+  fi
+
+  while [ -z "${commitMsg}" ]; do
+    cat <<EOF
+Enter commit message:
+EOF
+    read -er commitMsg
+  done
+
+  finalCommitMsg="${projectIdentifier}: ${commitMsg}"
+  gcm "${finalCommitMsg}"
+}
+
+__src_project_vars_for_git_project() {
+  local projectRoot="$(git rev-parse --show-toplevel)"
+  local gitProjectShellFile="${projectRoot}/.git_project.sh"
+
+  if [ -f "${gitProjectShellFile}" ]; then
+    . "${gitProjectShellFile}"
+  fi
+}
 # }}}
 
 # Diff {{{
