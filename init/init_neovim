@@ -16,7 +16,7 @@ declare VERBOSE=false
 
 # Functions {{{
 _help() {
-  cat <<EOF
+  command cat <<EOF
 ${THIS_EXEC}
 
 Initializes Neovim with necessary configuration.

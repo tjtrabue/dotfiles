@@ -15,7 +15,7 @@ declare LOG_LEVEL=3
 
 # Functions {{{
 _help() {
-  cat <<EOF
+  command cat <<EOF
 ${THIS_EXEC}
 
 Initialize Vim/Neovim on a new machine.

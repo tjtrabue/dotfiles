@@ -122,7 +122,7 @@ check_existing_installation() {
 remove_existing_installation() {
   local response=""
 
-  cat <<EOF
+  command cat <<EOF
 An existing dotfiles installation was found at ${DOTFILES_HOME}.
 It must be removed before this installation can progress.
 EOF
@@ -158,7 +158,7 @@ setup() {
 # Help {{{
 
 _help() {
-  cat <<EOF
+  command cat <<EOF
 ${THIS_EXEC}
 
 Install tjtrabue's dotfiles on the current system.  For the most part, this

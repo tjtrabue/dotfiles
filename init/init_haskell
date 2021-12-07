@@ -18,7 +18,7 @@ declare GHCUP_ENV="$GHCUP_HOME/env"
 
 # Functions {{{
 _help() {
-  cat <<EOF
+  command cat <<EOF
 ${THIS_EXEC}
 
 Prepares the Haskell development environment.

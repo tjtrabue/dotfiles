@@ -14,7 +14,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
 # Functions {{{
 _help() {
-  cat <<EOF
+  command cat <<EOF
 ${THIS_EXEC}
 
 Set up maildir configuration on a new system.

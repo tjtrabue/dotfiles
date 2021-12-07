@@ -25,7 +25,7 @@ declare JAVA_VERSIONS_TO_INSTALL=(
 
 # Functions {{{
 _help() {
-  cat <<EOF
+  command cat <<EOF
 ${THIS_EXEC}
 
 Initialize the Java development environment in a platform-neutral way.

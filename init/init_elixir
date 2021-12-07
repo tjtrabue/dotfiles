@@ -18,7 +18,7 @@ declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 exit_if_elixir_not_installed() {
   if [ ! -x "$(command -v iex)" ]; then
     err "No Elixir installation detected."
-    cat <<EOF
+    command cat <<EOF
 Please see the installation instructions for your platform in the Elixir
 documentation.
 EOF
