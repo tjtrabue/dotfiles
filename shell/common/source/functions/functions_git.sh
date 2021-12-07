@@ -464,13 +464,14 @@ ENVIRONMENT VARIABLES:
   PROJECT_IDENTIFIER: The project ID string to use for the current project. It's
                       value should look like 'PROJ'.
 
-  PROJECT_MSG_STYLE: Should be one of 'colon', or 'braces'. This variable
-                     determines how the commit message string will be formatted.
-                     If this environment variable is not set, 'colon' will be
-                     used by default.
+  PROJECT_MSG_STYLE: Should be one of the strings listed in the examples section
+                     below. This variable determines how the commit message
+                     string will be formatted. If this environment variable is
+                     not set, 'colon' will be used by default.
                      Examples:
                        colon -> "PROJ-1234: This is the commit message"
                        braces -> "[PROJ-1234] This is the commit message"
+                       nopunct -> "PROJ-1234 This is the commit message"
 EOF
 }
 
@@ -482,11 +483,14 @@ __construct_project_commit_msg() {
   local commitMsg="${2}"
   local projectIdentifier="${3}"
   local projectMsgStyle="${PROJECT_MSG_STYLE:-colon}"
-  local formatString="%s-%s: %s"
+  local formatString
 
   case "${projectMsgStyle}" in
   "braces")
     formatString="[%s-%s] %s"
+    ;;
+  "nopunct")
+    formatString="%s-%s %s"
     ;;
   *)
     formatString="%s-%s: %s"
