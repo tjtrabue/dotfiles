@@ -337,7 +337,7 @@ pcm() {
   local itemNumber
   local commitMsg
   local projectIdentifier
-  local commitMsgFormat="colon"
+  local commitMsgFormat="${PROJECT_MSG_STYLE}"
   local finalCommitMsg
   local OPTIND
   local o
