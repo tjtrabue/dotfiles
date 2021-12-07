@@ -325,15 +325,33 @@ gcm() {
   git commit -m "${message}"
 }
 
-# Project commit function.
+# Commit for project.
+#
+# Usage:
+#   pcm ITEM_NUMBER [COMMIT_MSG] [PROJECT_IDENTIFIER]
+# Where:
+#   ITEM_NUMBER: The JIRA ticket number worked
+#   COMMIT_MSG: Commit message (should be wrapped in quotes)
+#   PROJECT_IDENTIFIER: Project ID string for JIRA, i.e., 'PROJ'
 pcm() {
-  local commitMsg="${1}"
-  local projectIdentifier="${2}"
+  local itemNumber="${1}"
+  local commitMsg="${2}"
+  local projectIdentifier="${3}"
   local finalCommitMsg
 
   if ! isgitrepo; then
     err "Not in a Git repository"
     return 1
+  fi
+
+  if [ -z "${itemNumber}" ]; then
+    err "No work item number provided"
+    return 2
+  fi
+
+  if ! echo "${itemNumber}" | grep -E -q '^[0-9]+$'; then
+    err "Item number must be a string of integers"
+    return 3
   fi
 
   if [ -z "${projectIdentifier}" ]; then
@@ -343,7 +361,7 @@ pcm() {
 
   if [ -z "${projectIdentifier}" ]; then
     err '$PROJECT_IDENTIFIER environment variable not set'
-    return 2
+    return 4
   fi
 
   while [ -z "${commitMsg}" ]; do
@@ -353,7 +371,13 @@ EOF
     read -er commitMsg
   done
 
-  finalCommitMsg="${projectIdentifier}: ${commitMsg}"
+  finalCommitMsg="${projectIdentifier}-${itemNumber}: ${commitMsg}"
+
+  if ! echo "${finalCommitMsg}" | grep -E -q '^[A-Z]+-[0-9]+:\s+.*$'; then
+    err "Commit message regex validation failed"
+    return 5
+  fi
+
   gcm "${finalCommitMsg}"
 }
 
