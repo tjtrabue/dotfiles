@@ -372,7 +372,8 @@ EOF
     read -er commitMsg
   done
 
-  finalCommitMsg="${projectIdentifier}-${itemNumber}: ${commitMsg}"
+  finalCommitMsg="$(__construct_project_commit_msg \
+    "${itemNumber}" "${commitMsg}" "${projectIdentifier}")"
 
   if ! __validate_project_commit_msg "${finalCommitMsg}"; then
     err "Commit message regex validation failed"
@@ -380,6 +381,19 @@ EOF
   fi
 
   gcm "${finalCommitMsg}"
+}
+
+__construct_project_commit_msg() {
+  local itemNumber="${1}"
+  local commitMsg="${2}"
+  local projectIdentifier="${3}"
+  local projectMsgStyle="${PROJECT_MSG_STYLE:-colon}"
+
+  if [ "${projectMsgStyle}" = "braces" ]; then
+    printf "[%s-%s] %s" "${projectIdentifier}" "${itemNumber}" "${commitMsg}"
+  else
+    printf "%s-%s: %s" "${projectIdentifier}" "${itemNumber}" "${commitMsg}"
+  fi
 }
 
 # Attempt to get project environment variables from the .git_project.sh file at
