@@ -464,7 +464,7 @@ ENVIRONMENT VARIABLES:
   PROJECT_IDENTIFIER: The project ID string to use for the current project. It's
                       value should look like 'PROJ'.
 
-  PROJECT_MSG_STYLE: Should be one of 'colon', or 'braces.' This variable
+  PROJECT_MSG_STYLE: Should be one of 'colon', or 'braces'. This variable
                      determines how the commit message string will be formatted.
                      If this environment variable is not set, 'colon' will be
                      used by default.
