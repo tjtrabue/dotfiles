@@ -337,6 +337,7 @@ pcm() {
   local itemNumber
   local commitMsg
   local projectIdentifier
+  local commitMsgFormat="colon"
   local finalCommitMsg
   local OPTIND
   local o
@@ -346,7 +347,7 @@ pcm() {
     return 1
   fi
 
-  while getopts ":hm:n:p:" o; do
+  while getopts ":hm:n:p:f:" o; do
     case "${o}" in
     h)
       __pcm_usage
@@ -360,6 +361,9 @@ pcm() {
       ;;
     p)
       projectIdentifier="${OPTARG}"
+      ;;
+    f)
+      commitMsgFormat="${OPTARG}"
       ;;
     *)
       err "Unknown operand"
@@ -419,8 +423,13 @@ EOF
     read -r commitMsg
   done
 
-  finalCommitMsg="$(__construct_project_commit_msg \
-    "${itemNumber}" "${commitMsg}" "${projectIdentifier}")"
+  finalCommitMsg="$(
+    __construct_project_commit_msg \
+      "${itemNumber}" \
+      "${commitMsg}" \
+      "${projectIdentifier}" \
+      "${commitMsgFormat}"
+  )"
 
   if ! __validate_project_commit_msg "${finalCommitMsg}"; then
     err "Commit message regex validation failed"
@@ -433,8 +442,10 @@ EOF
 __pcm_usage() {
   command cat <<EOF
 USAGE:
-  pcm [-h | -m COMMIT_MSG | -n ITEM_NUMBER | -p PROJECT_IDENTIFIER]
-      [ITEM_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
+  pcm [-h | -m COMMIT_MSG | -n ITEM_NUMBER | -p PROJECT_IDENTIFIER |
+       -f MSG_FORMAT]
+
+  pcm [ITEM_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
 
 OPTIONS:
   -h: Print the help message (this message) and exit.
@@ -456,6 +467,10 @@ OPTIONS:
                          the PROJECT_IDENTIFIER environment variable, and,
                          failing that, the user will be prompted for the value
                          of the project ID interactively.
+
+  -f MSG_FORMAT: The format for the commit message. See the docs for
+                 PROJECT_MSG_STYLE below for more details. The value of this
+                 variable can be any valid value for PROJECT_MSG_STYLE.
 
 ENVIRONMENT VARIABLES:
   Each of these environment variables may be placed in a per-project file named
@@ -482,18 +497,22 @@ __construct_project_commit_msg() {
   local itemNumber="${1}"
   local commitMsg="${2}"
   local projectIdentifier="${3}"
-  local projectMsgStyle="${PROJECT_MSG_STYLE:-colon}"
+  local commitMsgFormat="${4:-${PROJECT_MSG_STYLE}}"
   local formatString
 
-  case "${projectMsgStyle}" in
-  "braces")
-    formatString="[%s-%s] %s"
+  if [ -z "${commitMsgFormat}" ]; then
+    commitMsgFormat="colon"
+  fi
+
+  case "${commitMsgFormat}" in
+  'braces')
+    formatString='[%s-%s] %s'
     ;;
-  "nopunct")
-    formatString="%s-%s %s"
+  'nopunct')
+    formatString='%s-%s %s'
     ;;
   *)
-    formatString="%s-%s: %s"
+    formatString='%s-%s: %s'
     ;;
   esac
 
@@ -524,6 +543,7 @@ __validate_project_commit_msg() {
 
   if ! echo "${commitMsg}" | grep -E -q \
     -e '^[A-Z]+-[0-9]+:\s+.*$' \
+    -e '^[A-Z]+-[0-9]+\s+.*$' \
     -e '^\[[A-Z]+-[0-9]+\]\s+.*$'; then
     return 1
   fi
