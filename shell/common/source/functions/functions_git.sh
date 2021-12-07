@@ -468,9 +468,9 @@ OPTIONS:
                          failing that, the user will be prompted for the value
                          of the project ID interactively.
 
-  -f MSG_FORMAT: The format for the commit message. See the docs for
-                 PROJECT_MSG_STYLE below for more details. The value of this
-                 variable can be any valid value for PROJECT_MSG_STYLE.
+  -f MSG_FORMAT: The format for the commit message. The value of this variable
+                 can be any value that is valid for PROJECT_MSG_STYLE. See the
+                 section on PROJECT_MSG_STYLE below for more details.
 
 ENVIRONMENT VARIABLES:
   Each of these environment variables may be placed in a per-project file named
