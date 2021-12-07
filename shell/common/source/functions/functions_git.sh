@@ -658,7 +658,7 @@ squashfor() {
   done
 
   while ! echo "${response}" | grep -q "[YyNn]"; do
-    cat <<EOF
+    command cat <<EOF
 Do you wish to squash all commits on ${curentBranch} with message:
 '${commitMsg}'? [y/n]
 EOF

@@ -125,7 +125,7 @@ runinit() {
   local initTopic
 
   runinit_usage() {
-    cat <<EOF
+    command cat <<EOF
 USAGE:
   ${funcName} TOPIC [...]
 
