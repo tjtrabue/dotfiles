@@ -468,6 +468,9 @@ ENVIRONMENT VARIABLES:
                      determines how the commit message string will be formatted.
                      If this environment variable is not set, 'colon' will be
                      used by default.
+                     Examples:
+                       colon -> "PROJ-1234: This is the commit message"
+                       braces -> "[PROJ-1234] This is the commit message"
 EOF
 }
 
