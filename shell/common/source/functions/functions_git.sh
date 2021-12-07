@@ -366,10 +366,10 @@ pcm() {
   fi
 
   while [ -z "${commitMsg}" ]; do
-    cat <<EOF
+    command cat <<EOF
 Enter commit message:
 EOF
-    read -er commitMsg
+    read -r commitMsg
   done
 
   finalCommitMsg="$(__construct_project_commit_msg \
