@@ -334,21 +334,64 @@ gcm() {
 #   COMMIT_MSG: Commit message (should be wrapped in quotes)
 #   PROJECT_IDENTIFIER: Project ID string for JIRA, i.e., 'PROJ'
 pcm() {
-  local itemNumber="${1}"
-  local commitMsg="${2}"
-  local projectIdentifier="${3}"
+  local itemNumber
+  local commitMsg
+  local projectIdentifier
   local finalCommitMsg
+  local OPTIND
+  local o
+
+  while getopts ":hm:n:p:" o; do
+    case "${o}" in
+    h)
+      __pcm_usage
+      return 0
+      ;;
+    m)
+      commitMsg="${OPTARG}"
+      ;;
+    n)
+      itemNumber="${OPTARG}"
+      ;;
+    p)
+      projectIdentifier="${OPTARG}"
+      ;;
+    *)
+      err "Unknown operand"
+      __pcm_usage
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  if [ -z "${itemNumber}" ]; then
+    itemNumber="${1}"
+  fi
+
+  if [ -z "${commitMsg}" ]; then
+    commitMsg="${2}"
+  fi
+
+  if [ -z "${projectIdentifier}" ]; then
+    projectIdentifier="${3}"
+  fi
 
   if ! isgitrepo; then
     err "Not in a Git repository"
     return 1
   fi
 
+  # Read work item interactively if it was not supplied on the command line.
+  while ! __validate_item_number "${itemNumber}"; do
+    command cat <<EOF
+Enter item number:
+EOF
+    read -r itemNumber
+  done
+
   # Item number validation
-  if [ -z "${itemNumber}" ]; then
-    err "No work item number provided"
-    return 2
-  elif ! __validate_item_number "${itemNumber}"; then
+  if ! __validate_item_number "${itemNumber}"; then
     err "Item number must be a string of integers"
     return 3
   fi
@@ -365,6 +408,8 @@ pcm() {
     return 4
   fi
 
+  # Read commit message interactively if it was not supplied on the command
+  # line.
   while [ -z "${commitMsg}" ]; do
     command cat <<EOF
 Enter commit message:
@@ -381,6 +426,31 @@ EOF
   fi
 
   gcm "${finalCommitMsg}"
+}
+
+__pcm_usage() {
+  command cat <<EOF
+USAGE:
+  pcm [-h | -m COMMIT_MSG | -n ITEM_NUMBER | -p PROJECT_IDENTIFIER]
+      ITEM_NUMBER [COMMIT_MSG] [PROJECT_IDENTIFIER]
+
+OPTIONS:
+  -h: Print the help message (this message) and exit.
+
+  -m COMMIT_MSG: Supply the commit message as an optional argument.
+                 If this option is omitted, the user may supply the commit
+                 message as a positional parameter. Otherwise, the user will be
+                 prompted to enter the commit message interactively.
+
+  -n ITEM_NUMBER: Supply the item number. If this option is omitted, the user
+                  may supply the item number as a positional parameter.
+                  Otherwise, the user will be prompted to enter the item number
+                  interactively.
+
+  -p PROJECT_IDENTIFIER: Supply the project ID string. If no other value for
+                         this parameter is supplied, its value will be read from
+                         the PROJECT_IDENTIFIER environment variable.
+EOF
 }
 
 # Prints commit messages in a variety of established formats, determined by the
