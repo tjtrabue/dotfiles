@@ -393,7 +393,7 @@ EOF
   # Item number validation
   if ! __validate_item_number "${itemNumber}"; then
     err "Item number must be a string of integers"
-    return 3
+    return 2
   fi
 
   # Attempt to get project identifier from .git_project.sh file, and then
@@ -403,10 +403,12 @@ EOF
     projectIdentifier="${PROJECT_IDENTIFIER}"
   fi
 
-  if [ -z "${projectIdentifier}" ]; then
-    err '$PROJECT_IDENTIFIER environment variable not set'
-    return 4
-  fi
+  while [ -z "${projectIdentifier}" ]; do
+    command cat <<EOF
+Enter project ID string:
+EOF
+    read -r projectIdentifier
+  done
 
   # Read commit message interactively if it was not supplied on the command
   # line.
@@ -447,7 +449,9 @@ OPTIONS:
                   Otherwise, the user will be prompted to enter the item number
                   interactively.
 
-  -p PROJECT_IDENTIFIER: Supply the project ID string. If no other value for
+  -p PROJECT_IDENTIFIER: Supply the project ID string. If this option is
+                         omitted, the user may supply the project ID as a
+                         positional parameter. If no other value for
                          this parameter is supplied, its value will be read from
                          the PROJECT_IDENTIFIER environment variable.
 EOF
