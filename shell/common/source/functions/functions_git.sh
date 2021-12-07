@@ -344,16 +344,17 @@ pcm() {
     return 1
   fi
 
+  # Item number validation
   if [ -z "${itemNumber}" ]; then
     err "No work item number provided"
     return 2
-  fi
-
-  if ! echo "${itemNumber}" | grep -E -q '^[0-9]+$'; then
+  elif ! echo "${itemNumber}" | grep -E -q '^[0-9]+$'; then
     err "Item number must be a string of integers"
     return 3
   fi
 
+  # Attempt to get project identifier from .git_project.sh file, and then
+  # finally from the parent environment if that file is not set.
   if [ -z "${projectIdentifier}" ]; then
     __src_project_vars_for_git_project
     projectIdentifier="${PROJECT_IDENTIFIER}"
@@ -373,7 +374,7 @@ EOF
 
   finalCommitMsg="${projectIdentifier}-${itemNumber}: ${commitMsg}"
 
-  if ! echo "${finalCommitMsg}" | grep -E -q '^[A-Z]+-[0-9]+:\s+.*$'; then
+  if ! __validate_project_commit_msg "${finalCommitMsg}"; then
     err "Commit message regex validation failed"
     return 5
   fi
@@ -387,6 +388,14 @@ __src_project_vars_for_git_project() {
 
   if [ -f "${gitProjectShellFile}" ]; then
     . "${gitProjectShellFile}"
+  fi
+}
+
+__validate_project_commit_msg() {
+  local commitMsg="${1}"
+
+  if ! echo "${commitMsg}" | grep -E -q '^[A-Z]+-[0-9]+:\s+.*$'; then
+    return 1
   fi
 }
 # }}}
