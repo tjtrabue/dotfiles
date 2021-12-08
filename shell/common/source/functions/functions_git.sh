@@ -442,8 +442,7 @@ EOF
     return 5
   fi
 
-  # git commit -m "${finalCommitMsg}"
-  echoe "${finalCommitMsg}"
+  git commit -m "${finalCommitMsg}"
 }
 
 __pcm_usage() {
