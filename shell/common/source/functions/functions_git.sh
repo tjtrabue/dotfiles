@@ -326,15 +326,8 @@ gcm() {
 }
 
 # Commit for project.
-#
-# Usage:
-#   pcm ITEM_NUMBER [COMMIT_MSG] [PROJECT_IDENTIFIER]
-# Where:
-#   ITEM_NUMBER: The JIRA ticket number worked
-#   COMMIT_MSG: Commit message (should be wrapped in quotes)
-#   PROJECT_IDENTIFIER: Project ID string for JIRA, i.e., 'PROJ'
 pcm() {
-  local itemNumber
+  local taskNumber
   local commitMsg
   local projectIdentifier
   local commitMsgFormat="${PROJECT_MSG_STYLE}"
@@ -357,7 +350,7 @@ pcm() {
       commitMsg="${OPTARG}"
       ;;
     n)
-      itemNumber="${OPTARG}"
+      taskNumber="${OPTARG}"
       ;;
     p)
       projectIdentifier="${OPTARG}"
@@ -374,29 +367,42 @@ pcm() {
   done
   shift $((OPTIND - 1))
 
-  if [ -z "${itemNumber}" ]; then
-    itemNumber="${1}"
+  if [ -z "${taskNumber}" ] && [ -n "${1}" ]; then
+    taskNumber="${1}"
+    shift
+  fi
+  # If we did not get the task number as a positional parameter, try to parse
+  # it from the current branch name.
+  if [ -z "${taskNumber}" ]; then
+    taskNumber="$(__parse_branch_for_task_number)"
   fi
 
-  if [ -z "${commitMsg}" ]; then
-    commitMsg="${2}"
+  if [ -z "${commitMsg}" ] && [ -n "${1}" ]; then
+    commitMsg="${1}"
+    shift
   fi
 
+  if [ -z "${projectIdentifier}" ] && [ -n "${1}" ]; then
+    projectIdentifier="${1}"
+    shift
+  fi
+  # If we did not get the project ID as a positional parameter, try to parse it
+  # from the current branch name.
   if [ -z "${projectIdentifier}" ]; then
-    projectIdentifier="${3}"
+    projectIdentifier="$(__parse_branch_for_project_id)"
   fi
 
-  # Read work item interactively if it was not supplied on the command line.
-  while ! __validate_item_number "${itemNumber}"; do
+  # Read task number interactively if it could not be deduced elsewhere.
+  while ! __validate_task_number "${taskNumber}"; do
     command cat <<EOF
-Enter item number:
+Enter task number:
 EOF
-    read -r itemNumber
+    read -r taskNumber
   done
 
-  # Item number validation
-  if ! __validate_item_number "${itemNumber}"; then
-    err "Item number must be a string of integers"
+  # Task number validation
+  if ! __validate_task_number "${taskNumber}"; then
+    err "Task number must be a string of integers"
     return 2
   fi
 
@@ -425,7 +431,7 @@ EOF
 
   finalCommitMsg="$(
     __construct_project_commit_msg \
-      "${itemNumber}" \
+      "${taskNumber}" \
       "${commitMsg}" \
       "${projectIdentifier}" \
       "${commitMsgFormat}"
@@ -442,10 +448,10 @@ EOF
 __pcm_usage() {
   command cat <<EOF
 USAGE:
-  pcm [-h | -m COMMIT_MSG | -n ITEM_NUMBER | -p PROJECT_IDENTIFIER |
+  pcm [-h | -m COMMIT_MSG | -n TASK_NUMBER | -p PROJECT_IDENTIFIER |
        -f MSG_FORMAT]
 
-  pcm [ITEM_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
+  pcm [TASK_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
 EOF
 }
 
@@ -459,11 +465,11 @@ OPTIONS:
   -m COMMIT_MSG: Supply the commit message as an optional argument.
                  If this option is omitted, the user may supply the commit
                  message as a positional parameter. Otherwise, the user will be
-                 prompted to enter the commit message interactively.
+                 prompted to enter the it interactively.
 
-  -n ITEM_NUMBER: Supply the item number. If this option is omitted, the user
-                  may supply the item number as a positional parameter.
-                  Otherwise, the user will be prompted to enter the item number
+  -n TASK_NUMBER: Supply the task number. If this option is omitted, the user
+                  may supply the task number as a positional parameter.
+                  Otherwise, the user will be prompted to enter the it
                   interactively.
 
   -p PROJECT_IDENTIFIER: Supply the project ID string. If this option is
@@ -496,11 +502,23 @@ ENVIRONMENT VARIABLES:
 EOF
 }
 
+__parse_branch_for_project_id() {
+  local branchName="$(currentref)"
+
+  echo "${branchName}" | grep -E --color=never -o '^[A-Z]+'
+}
+
+__parse_branch_for_task_number() {
+  local branchName="$(currentref)"
+
+  echo "${branchName}" | grep -E --color=never -o '[0-9]+'
+}
+
 # Prints commit messages in a variety of established formats, determined by the
 # PROJECT_MSG_STYLE environment variable.
 # See 'pcm -h' for more information on acceptable formats.
 __construct_project_commit_msg() {
-  local itemNumber="${1}"
+  local taskNumber="${1}"
   local commitMsg="${2}"
   local projectIdentifier="${3}"
   local commitMsgFormat="${4:-${PROJECT_MSG_STYLE}}"
@@ -522,7 +540,7 @@ __construct_project_commit_msg() {
     ;;
   esac
 
-  printf "${formatString}" "${projectIdentifier}" "${itemNumber}" "${commitMsg}"
+  printf "${formatString}" "${projectIdentifier}" "${taskNumber}" "${commitMsg}"
 }
 
 # Attempt to get project environment variables from the .git_project.sh file at
@@ -536,10 +554,10 @@ __src_project_vars_for_git_project() {
   fi
 }
 
-__validate_item_number() {
-  local itemNumber="${1}"
+__validate_task_number() {
+  local taskNumber="${1}"
 
-  if ! echo "${itemNumber}" | grep -E -q '^[0-9]+$'; then
+  if ! echo "${taskNumber}" | grep -E -q '^[0-9]+$'; then
     return 1
   fi
 }
