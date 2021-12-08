@@ -298,6 +298,61 @@ gbl() {
   git branch -a --color=never --format="%(refname:lstrip=-1)" |
     grep -v '^HEAD$' | sort -u
 }
+
+# Pabst Blue Ribbon...
+# Nah, it's "project branch".
+pbr() {
+  local taskNumber="${1}"
+  shift
+  local description="${1}"
+  shift
+  local projectIdentifier="${1}"
+  shift
+  local projectBranchName
+
+  while ! __validate_task_number "${taskNumber}"; do
+    command cat <<EOF
+Enter task number:
+EOF
+    read -r taskNumber
+  done
+
+  if [ -z "${projectIdentifier}" ]; then
+    __src_project_vars_for_git_project
+    projectIdentifier="${PROJECT_IDENTIFIER}"
+  fi
+  while [ -z "${projectIdentifier}" ]; do
+    command cat <<EOF
+Enter project ID:
+EOF
+    read -r projectIdentifier
+  done
+
+  while [ -z "${description}" ]; do
+    command cat <<EOF
+Enter branch description:
+EOF
+    read -r description
+  done
+
+  projectBranchName="$(__construct_project_branch "${taskNumber}" \
+    "${description}" \
+    "${projectIdentifier}")"
+
+  git checkout -b "${projectBranchName}"
+}
+
+__construct_project_branch() {
+  local taskNumber="${1}"
+  local description="${2}"
+  local projectIdentifier="${3}"
+  local formatString="%s-%s.%s"
+
+  printf "${formatString}" \
+    "${projectIdentifier}" \
+    "${taskNumber}" \
+    "${description}"
+}
 # }}}
 
 # Committing {{{
