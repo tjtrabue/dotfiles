@@ -14,27 +14,32 @@ highlighting.
     (use-package tree-sitter
       :demand t
       :hook
-      ((after-init . global-tree-sitter-mode)
-       ((prog-mode
-         conf-mode
-         text-mode)
-        . (lambda ()
-            ;; Activate tree-sitter's improved syntax
-            ;; highlighting only if we are using a
-            ;; major-mode that has a compatible
-            ;; tree-sitter syntax parser
-            (if (and (boundp 'tree-sitter-major-mode-language-alist)
-                     (assq major-mode tree-sitter-major-mode-language-alist))
-                (tree-sitter-hl-mode))))))
+      (after-init . global-tree-sitter-mode)
+      :config
+      (require 'tree-sitter))
   #+end_src
 
 * tree-sitter-langs
-  This is a bundle of pre-defined =tree-sitter= programming languages syntax
+  This is a bundle of predefined =tree-sitter= programming languages syntax
   packs.
 
   #+begin_src emacs-lisp
     (use-package tree-sitter-langs
-      :demand t)
+      :after tree-sitter
+      :hook
+      ((prog-mode
+        conf-mode
+        text-mode) .
+        (lambda ()
+          ;; Activate tree-sitter's improved syntax
+          ;; highlighting only if we are using a
+          ;; major-mode that has a compatible
+          ;; tree-sitter syntax parser
+          (if (and (boundp 'tree-sitter-major-mode-language-alist)
+                   (assq major-mode tree-sitter-major-mode-language-alist))
+              (tree-sitter-hl-mode))))
+      :config
+      (require 'tree-sitter-langs))
   #+end_src
 
 * tree-sitter-indent
@@ -42,6 +47,7 @@ highlighting.
 
   #+begin_src emacs-lisp
     (use-package tree-sitter-indent
+      :after tree-sitter
       :demand t
       :hook
       ;; Turn on tree-sitter-indent in supported major modes.
