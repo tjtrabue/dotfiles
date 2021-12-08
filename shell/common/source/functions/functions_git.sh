@@ -442,7 +442,8 @@ EOF
     return 5
   fi
 
-  git commit -m "${finalCommitMsg}"
+  # git commit -m "${finalCommitMsg}"
+  echoe "${finalCommitMsg}"
 }
 
 __pcm_usage() {
@@ -502,16 +503,34 @@ ENVIRONMENT VARIABLES:
 EOF
 }
 
+# Try to get the project ID string from the current branch name.
+# For example:
+#   PROJ-1234 -> PROJ
 __parse_branch_for_project_id() {
   local branchName="$(currentref)"
 
-  echo "${branchName}" | grep -E --color=never -o '^[A-Z]+'
+  if __validate_project_branch "${branchName}"; then
+    echo "${branchName}" | grep -E --color=never -o '^[A-Z]+'
+  fi
 }
 
+# Try to get the task number from the current branch name.
+# For example:
+#   PROJ-1234 -> 1234
 __parse_branch_for_task_number() {
   local branchName="$(currentref)"
 
-  echo "${branchName}" | grep -E --color=never -o '[0-9]+'
+  if __validate_project_branch "${branchName}"; then
+    echo "${branchName}" | grep -E --color=never -o '[0-9]+'
+  fi
+}
+
+# Return 0 if input branch name is of the form 'PROJ-1234...'.
+# Return an error code, otherwise.
+__validate_project_branch() {
+  local branchName="${1}"
+
+  echo "${branchName}" | grep -E -q -o '[A-Z]+-[0-9]+.*'
 }
 
 # Prints commit messages in a variety of established formats, determined by the
