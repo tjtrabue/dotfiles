@@ -374,7 +374,7 @@ pcm() {
   # If we did not get the task number as a positional parameter, try to parse
   # it from the current branch name.
   if [ -z "${taskNumber}" ]; then
-    taskNumber="$(__parse_branch_for_task_number)"
+    taskNumber="$(__parse_branch_for_task_number "$(currentref)")"
   fi
 
   if [ -z "${commitMsg}" ] && [ -n "${1}" ]; then
@@ -389,7 +389,7 @@ pcm() {
   # If we did not get the project ID as a positional parameter, try to parse it
   # from the current branch name.
   if [ -z "${projectIdentifier}" ]; then
-    projectIdentifier="$(__parse_branch_for_project_id)"
+    projectIdentifier="$(__parse_branch_for_project_id "$(currentref)")"
   fi
 
   # Read task number interactively if it could not be deduced elsewhere.
@@ -506,7 +506,7 @@ EOF
 # For example:
 #   PROJ-1234 -> PROJ
 __parse_branch_for_project_id() {
-  local branchName="$(currentref)"
+  local branchName="${1}"
 
   if __validate_project_branch "${branchName}"; then
     echo "${branchName}" | grep -E --color=never -o '^[A-Z]+'
@@ -517,7 +517,7 @@ __parse_branch_for_project_id() {
 # For example:
 #   PROJ-1234 -> 1234
 __parse_branch_for_task_number() {
-  local branchName="$(currentref)"
+  local branchName="${1}"
 
   if __validate_project_branch "${branchName}"; then
     echo "${branchName}" | grep -E --color=never -o '[0-9]+'
