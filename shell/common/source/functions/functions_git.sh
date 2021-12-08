@@ -302,13 +302,25 @@ gbl() {
 # Pabst Blue Ribbon...
 # Nah, it's "project branch".
 pbr() {
-  local taskNumber="${1}"
-  shift
-  local description="${1}"
-  shift
-  local projectIdentifier="${1}"
-  shift
+  local taskNumber
+  local description
+  local projectIdentifier
   local projectBranchName
+
+  if [ -z "${taskNumber}" ] && [ -n "${1}" ]; then
+    taskNumber="${1}"
+    shift
+  fi
+
+  if [ -z "${description}" ] && [ -n "${1}" ]; then
+    description="${1}"
+    shift
+  fi
+
+  if [ -z "${projectIdentifier}" ] && [ -n "${1}" ]; then
+    projectIdentifier="${1}"
+    shift
+  fi
 
   while ! __validate_task_number "${taskNumber}"; do
     command cat <<EOF
@@ -347,11 +359,13 @@ __construct_project_branch() {
   local description="${2}"
   local projectIdentifier="${3}"
   local formatString="%s-%s.%s"
+  local formattedDescription="$(echo "${description}" |
+    sed -E 's/\s+/./g')"
 
   printf "${formatString}" \
     "${projectIdentifier}" \
     "${taskNumber}" \
-    "${description}"
+    "${formattedDescription}"
 }
 # }}}
 
