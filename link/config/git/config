@@ -62,7 +62,7 @@
   error = red
 
 [color "push"]
-  error = true
+  error = red
 
 [color "status"]
   header = yellow
