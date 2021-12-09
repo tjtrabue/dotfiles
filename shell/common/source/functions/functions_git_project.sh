@@ -99,10 +99,13 @@ EOF
     refexists "${defaultRemote}/${projectBranchName}"; then
     log_info "Branch ${CYAN}${projectBranchName}${NC} already exists;" \
       "switching to it"
-    git checkout "${projectBranchName}"
+    # Want to use `sw` to make use of its history tracking capabilties.
+    sw "${projectBranchName}"
   else
     log_info "Creating new project branch: ${CYAN}${projectBranchName}${NC}"
-    git checkout -b "${projectBranchName}"
+    git branch "${projectBranchName}"
+    # Want to use `sw` to make use of its history tracking capabilties.
+    sw "${projectBranchName}"
   fi
 }
 
