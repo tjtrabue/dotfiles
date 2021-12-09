@@ -301,6 +301,9 @@ gbl() {
 
 # Pabst Blue Ribbon...
 # Nah, it's "project branch".
+#
+# Usage:
+#   pbr TASK_NUMBER [DESC] [PROJECT_ID]
 pbr() {
   local taskNumber
   local description
