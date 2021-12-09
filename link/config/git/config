@@ -1,3 +1,14 @@
+# This is the top-level Git configuration file for the user, and goes in:
+#   ${XDG_CONFIG_HOME:-${HOME}/.config}/git/
+#
+# NOTE: Older versions of Git may not recognize this file, in which case only
+# ~/.gitconfig should be used.
+#
+# Any options present in this file will be overridden by values specified in
+# ~/.gitconfig, allowing this file to be kept in version control as a collection
+# of machine-independent Git settings, and ~/.gitconfig to exist for the sole
+# purpose of overriding values in this file locally.
+
 # User {{{
 [user]
   email = tom.trabue@gmail.com
