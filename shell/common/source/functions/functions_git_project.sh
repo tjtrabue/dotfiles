@@ -103,6 +103,8 @@ EOF
 
 __pbr_usage() {
   command cat <<EOF
+pbr - Create and switch to Git branches for current software project
+
 USAGE:
   pbr [TASK_NUMBER] [DESCRIPTION]
       [-h]
@@ -291,11 +293,15 @@ EOF
 
 __pcm_usage() {
   command cat <<EOF
-USAGE:
-  pcm [-h | -m COMMIT_MSG | -n TASK_NUMBER | -p PROJECT_IDENTIFIER |
-       -f MSG_FORMAT]
+pcm - Create Git commits for current software project
 
+USAGE:
   pcm [TASK_NUMBER] [COMMIT_MSG]
+      [-h]
+      [-m COMMIT_MSG]
+      [-n TASK_NUMBER]
+      [-p PROJECT_IDENTIFIER]
+      [-f MSG_FORMAT]
 EOF
 }
 
@@ -304,41 +310,43 @@ __pcm_help() {
   command cat <<EOF
 
 OPTIONS:
-  -h: Print the help message (this message) and exit.
+  -h
+    Print the help message (this message) and exit.
 
-  -m COMMIT_MSG: Supply the commit message as an optional argument.
-                 If this option is omitted, the user may supply the commit
-                 message as a positional parameter. Otherwise, the user will be
-                 prompted to enter the it interactively.
+  -m COMMIT_MSG
+    Supply the commit message as an optional argument. If this option is
+    omitted, the user may supply the commit message as a positional parameter.
+    Otherwise, the user will be prompted to enter the it interactively.
 
-  -n TASK_NUMBER: Supply the task number. If this option is omitted, the user
-                  may supply the task number as a positional parameter. The
-                  branch name will also be parsed for a possible task number.
-                  In all other cases, the user will be prompted to enter the the
-                  task number interactively.
+  -n TASK_NUMBER
+    Supply the task number. If this option is omitted, the user may supply the
+    task number as a positional parameter. The branch name will also be parsed
+    for a possible task number. In all other cases, the user will be prompted
+    to enter the the task number interactively.
 
-  -p PROJECT_IDENTIFIER: Supply the project ID string. If no other value for
-                         this parameter is supplied, its value will be read from
-                         the PROJECT_IDENTIFIER environment variable, then the
-                         branch name will be parsed and, failing those, the
-                         user will be prompted for the value of the project ID
-                         interactively.
+  -p PROJECT_IDENTIFIER
+    Supply the project ID string. If no other value for this parameter is
+    supplied, its value will be read from the PROJECT_IDENTIFIER environment
+    variable, then the branch name will be parsed and, failing those, the user
+    will be prompted for the value of the project ID interactively.
 
-  -f MSG_FORMAT: The format for the commit message. The value of this variable
-                 can be any value that is valid for PROJECT_MSG_STYLE. See the
-                 section on PROJECT_MSG_STYLE below for more details.
+  -f MSG_FORMAT
+    The format for the commit message. The value of this variable can be any
+    value that is valid for PROJECT_MSG_STYLE. See the section on
+    PROJECT_MSG_STYLE below for more details.
 
 ENVIRONMENT VARIABLES:
   Each of these environment variables may be placed in a per-project file named
   '${PROJECT_ENV_FILE_NAME}' located in the project's root directory.
 
-  PROJECT_IDENTIFIER: The project ID string to use for the current project. It's
-                      value should look like 'PROJ'.
+  PROJECT_IDENTIFIER
+    The project ID string to use for the current project. It's value should look
+    like 'PROJ'.
 
-  PROJECT_MSG_STYLE: Should be one of the strings listed in the examples section
-                     below. This variable determines how the commit message
-                     string will be formatted. If this environment variable is
-                     not set, 'colon' will be used by default.
+  PROJECT_MSG_STYLE
+    Should be one of the strings listed in the examples section below. This
+    variable determines how the commit message string will be formatted. If
+    this environment variable is not set, 'colon' will be used by default.
                      Examples:
                        colon -> "PROJ-1234: This is the commit message"
                        braces -> "[PROJ-1234] This is the commit message"
