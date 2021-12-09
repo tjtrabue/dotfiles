@@ -254,9 +254,9 @@ swi() {
 
   # Prioritized list of fuzzy search tools used to select the branch.
   if [ -x "$(command -v fzf)" ]; then
-    branch="$(eval "${branchListingCommand}" | fzf)"
+    branch="$(eval "${branchListingCommand}" | sort -u | fzf)"
   elif [ -x "$(command -v fzy)" ]; then
-    branch="$(eval "${branchListingCommand}" | fzy)"
+    branch="$(eval "${branchListingCommand}" | sort -u | fzy)"
   else
     branch="$(eval "${branchListingCommand}" | __swi_default_list_branches)"
   fi
