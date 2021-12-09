@@ -62,7 +62,9 @@ EOF
     "${description}" \
     "${projectIdentifier}")"
 
-  if refexists "${projectBranchName}" ||
+  if [ "$(currentref)" = "${projectBranchName}" ]; then
+    warn "Already on branch ${CYAN}${projectBranchName}${NC}"
+  elif refexists "${projectBranchName}" ||
     refexists "${defaultRemote}/${projectBranchName}"; then
     log_info "Branch ${CYAN}${projectBranchName}${NC} already exists;" \
       "switching to it"
