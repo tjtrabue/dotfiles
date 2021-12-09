@@ -62,12 +62,10 @@ EOF
     "${description}" \
     "${projectIdentifier}")"
 
-  if refexists "${projectBranchName}"; then
-    err "Branch ${CYAN}${projectBranchName}${NC} already exists"
-    return 2
-  elif refexists "${defaultRemote}/${projectBranchName}"; then
-    log_info "Branch ${CYAN}${projectBranchName}${NC} already exists in" \
-      "remote; switching to it"
+  if refexists "${projectBranchName}" ||
+    refexists "${defaultRemote}/${projectBranchName}"; then
+    log_info "Branch ${CYAN}${projectBranchName}${NC} already exists;" \
+      "switching to it"
     git checkout "${projectBranchName}"
   else
     log_info "Creating new project branch: ${CYAN}${projectBranchName}${NC}"
