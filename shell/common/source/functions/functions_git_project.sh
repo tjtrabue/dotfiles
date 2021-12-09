@@ -50,13 +50,18 @@ pbr() {
   done
   shift $((OPTIND - 1))
 
-  if [ -z "${taskNumber}" ] && [ -n "${1}" ]; then
+  if [ -z "${taskNumber}" ] && [ -n "${1}" ] &&
+    echo "${1}" | grep -E -q '^[0-9]+$'; then
     taskNumber="${1}"
+    log_debug "Got task number from positional parameter:" \
+      "${YELLOW}${taskNumber}${NC}"
     shift
   fi
 
   if [ -z "${description}" ] && [ -n "${*}" ]; then
     description="${*}"
+    log_debug "Got description from command line:" \
+      "'${YELLOW}${description}${NC}'"
   fi
 
   while ! __validate_task_number "${taskNumber}"; do
@@ -228,22 +233,29 @@ pcm() {
   if [ -z "${taskNumber}" ] && [ -n "${1}" ] &&
     echo "${1}" | grep -E -q '^[0-9]+$'; then
     taskNumber="${1}"
+    log_debug "Got task number as positional parameter:" \
+      "${YELLOW}${taskNumber}${NC}"
     shift
   fi
   # If we did not get the task number as a positional parameter, try to parse
   # it from the current branch name.
   if [ -z "${taskNumber}" ]; then
+    log_debug "Trying to get task number from branch name..."
     taskNumber="$(__parse_branch_for_task_number "$(currentref)")"
+    log_debug "Task number is now: ${YELLOW}${taskNumber}${NC}"
   fi
 
   if [ -z "${commitMsg}" ] && [ -n "${*}" ]; then
+    log_debug "Getting commit message from command line"
     commitMsg="${*}"
   fi
 
   # If we did not get the project ID another way, try to parse it from the
   # current branch name.
   if [ -z "${projectIdentifier}" ]; then
+    log_debug "Trying to get project ID from branch name..."
     projectIdentifier="$(__parse_branch_for_project_id "$(currentref)")"
+    log_debug "Project ID is now: ${YELLOW}${projectIdentifier}${NC}"
   fi
 
   # Read task number interactively if it could not be deduced elsewhere.
@@ -296,6 +308,7 @@ EOF
     return 5
   fi
 
+  log_debug "Final commit message: '${GREEN}${finalCommitMsg}${NC}'"
   git commit -m "${finalCommitMsg}"
 }
 
