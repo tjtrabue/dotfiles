@@ -310,19 +310,18 @@ pbr() {
   local projectIdentifier
   local projectBranchName
 
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
   if [ -z "${taskNumber}" ] && [ -n "${1}" ]; then
     taskNumber="${1}"
     shift
   fi
 
-  if [ -z "${description}" ] && [ -n "${1}" ]; then
-    description="${1}"
-    shift
-  fi
-
-  if [ -z "${projectIdentifier}" ] && [ -n "${1}" ]; then
-    projectIdentifier="${1}"
-    shift
+  if [ -z "${description}" ] && [ -n "${*}" ]; then
+    description="${*}"
   fi
 
   while ! __validate_task_number "${taskNumber}"; do
