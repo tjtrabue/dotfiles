@@ -223,7 +223,10 @@ pcm() {
   done
   shift $((OPTIND - 1))
 
-  if [ -z "${taskNumber}" ] && [ -n "${1}" ]; then
+  # Try to get task number as first positional parameter if the first positional
+  # parameter is a number.
+  if [ -z "${taskNumber}" ] && [ -n "${1}" ] &&
+    echo "${1}" | grep -E -q '^[0-9]+$'; then
     taskNumber="${1}"
     shift
   fi
