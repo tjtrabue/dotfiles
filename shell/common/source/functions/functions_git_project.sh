@@ -140,19 +140,22 @@ ENVIRONMENT VARIABLES:
     upper-case letters, such as 'PROJ'.
 
   PROJECT_FIELD_SEPARATOR
-    The character separating primary fields in a project branch.
+    The character separating primary fields in a project-task item.
 
-    Example: PROJ-1234.add.cool.feature
+    Example from branch name: PROJ-1234.add.cool.feature
+    Example from commit message: PROJ-1234: Added a cool feature
 
-    The field separator is '-' since it delineates the primary aspects of the
-    branch name.
+    The field separator here is '-' since it delineates the primary aspects of
+    the project task under development.
 
   PROJECT_WORD_SEPARATOR
-    The character separating word fields in the project branch description.
+    The character separating word fields in the description part of the project
+    branch name.
 
-    Example: PROJ-1234.add.cool.feature
+    Example from branch name: PROJ-1234.add.cool.feature
 
-    The word separator is '.' since it separates the words in the description.
+    The word separator here is '.' since it separates the words in the
+    description.
 EOF
 }
 
@@ -351,6 +354,15 @@ ENVIRONMENT VARIABLES:
                        colon -> "PROJ-1234: This is the commit message"
                        braces -> "[PROJ-1234] This is the commit message"
                        nopunct -> "PROJ-1234 This is the commit message"
+
+  PROJECT_FIELD_SEPARATOR
+    The character separating primary fields in a project-task item.
+
+    Example from branch name: PROJ-1234.add.cool.feature
+    Example from commit message: PROJ-1234: Added a cool feature
+
+    The field separator here is '-' since it delineates the primary aspects of
+    the project task under development.
 EOF
 }
 
@@ -380,8 +392,10 @@ __parse_branch_for_task_number() {
 # Return an error code, otherwise.
 __validate_project_branch() {
   local branchName="${1}"
+  local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
 
-  echo "${branchName}" | grep -E -q -o '[A-Z]+-[0-9]+.*'
+  echo "${branchName}" |
+    grep -E -q -o "[A-Z]+${projectFieldSep}[0-9]+.*"
 }
 
 # Prints commit messages in a variety of established formats, determined by the
@@ -435,11 +449,12 @@ __validate_task_number() {
 
 __validate_project_commit_msg() {
   local commitMsg="${1}"
+  local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
 
   if ! echo "${commitMsg}" | grep -E -q \
-    -e '^[A-Z]+-[0-9]+:\s+.*$' \
-    -e '^[A-Z]+-[0-9]+\s+.*$' \
-    -e '^\[[A-Z]+-[0-9]+\]\s+.*$'; then
+    -e "^[A-Z]+${projectFieldSep}[0-9]+:\s+.*\$" \
+    -e "^[A-Z]+${projectFieldSep}[0-9]+\s+.*\$" \
+    -e "^\[[A-Z]+${projectFieldSep}[0-9]+\]\s+.*\$"; then
     return 1
   fi
 }
