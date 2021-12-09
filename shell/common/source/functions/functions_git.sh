@@ -250,13 +250,14 @@ swi() {
   local branchListingCommand="git branch -a --format '%(HEAD)%(refname:short)' |
     grep -v -e '^\s*\*' -e 'HEAD' |
     sed -e 's/^\s*//' -e 's/\s*\$//' |
-    awk '{print \$1}'"
+    awk '{print \$1}' |
+    sort -u"
 
   # Prioritized list of fuzzy search tools used to select the branch.
   if [ -x "$(command -v fzf)" ]; then
-    branch="$(eval "${branchListingCommand}" | sort -u | fzf)"
+    branch="$(eval "${branchListingCommand}" | fzf)"
   elif [ -x "$(command -v fzy)" ]; then
-    branch="$(eval "${branchListingCommand}" | sort -u | fzy)"
+    branch="$(eval "${branchListingCommand}" | fzy)"
   else
     branch="$(eval "${branchListingCommand}" | __swi_default_list_branches)"
   fi
