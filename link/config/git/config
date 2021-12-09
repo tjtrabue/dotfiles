@@ -10,33 +10,6 @@
 # of machine-independent Git settings, and ~/.gitconfig to exist for the sole
 # purpose of overriding values in this file locally.
 
-# User {{{
-[user]
-  email = tom.trabue@gmail.com
-  name = Tom Trabue
-
-[github]
-  user = tjtrabue
-# }}}
-
-# Core {{{
-[core]
-  autocrlf = input
-  whitespace = fix,space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
-  editor = nvim
-  pager = "less -XF"
-  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
-  precomposeunicode = false
-  # Speed up commands involving untracked files, such as `git status`.
-  untrackedCache = true
-# }}}
-
-# Apply {{{
-[apply]
-  whitespace = fix
-# }}}
-
-# Aliases {{{
 [alias]
   br = branch
   ci = commit
@@ -49,9 +22,10 @@
   rv = review
   st = status
   ksdiff = difftool -y -t Kaleidoscope
-# }}}
 
-# Branch {{{
+[apply]
+  whitespace = fix
+
 [branch]
   # Show most recently changed branches first.
   sort = -committerdate
@@ -59,26 +33,7 @@
 [branch "master"]
   remote = origin
   merge = refs/heads/master
-# }}}
 
-# Pull {{{
-[pull]
-  # Always rebase current branch on top of the pulled remote tracking branch.
-  rebase = true
-# }}}
-
-# Push {{{
-[push]
-  # Use Git 1.x.x default to avoid errors on machines with old Git
-  # installations. To use `simple` instead, add this to one of your ~/.extra/
-  # files:
-  #   `git config --global push.default simple`.
-  default = matching
-  # Make `git push` push relevant annotated tags when pushing branches out.
-  followTags = true
-# }}}
-
-# Colors {{{
 [color]
   branch = auto
   diff = auto
@@ -106,7 +61,7 @@
   help = blue
   error = red
 
-[colo "push"]
+[color "push"]
   error = true
 
 [color "status"]
@@ -119,23 +74,39 @@
   nobranch = red reverse
   localBranch = yellow reverse
   remoteBranch = blue reverse
-# }}}
 
-# Help {{{
-[help]
-  # Automatically correct and execute mistyped commands
-  autocorrect = 1
-# }}}
+[core]
+  autocrlf = input
+  whitespace = fix,space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
+  editor = nvim
+  pager = "less -XF"
+  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+  precomposeunicode = false
+  # Speed up commands involving untracked files, such as `git status`.
+  untrackedCache = true
 
-# Diff {{{
 [diff]
   tool = meld
 
 [difftool]
   prompt = false
-# }}}
 
-# Merge {{{
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
+[github]
+  user = tjtrabue
+
+[help]
+  # Automatically correct and execute mistyped commands
+  autocorrect = 1
+
+[init]
+  # Always name the default branch "master" when creating a new git repo.
+  defaultBranch = master
+
 [merge]
   log = true
   # Use meld as default mergetool
@@ -148,14 +119,23 @@
   # Automatically merge non-conflicting parts, highlight conflicting parts, and
   # wait for user decision.
   useAutoMerge = true
-# }}}
 
-# rerere {{{
+[pull]
+  # Always rebase current branch on top of the pulled remote tracking branch.
+  rebase = true
+
+[push]
+  # Use Git 1.x.x default to avoid errors on machines with old Git
+  # installations. To use `simple` instead, add this to one of your ~/.extra/
+  # files:
+  #   `git config --global push.default simple`.
+  default = matching
+  # Make `git push` push relevant annotated tags when pushing branches out.
+  followTags = true
+
 [rerere]
   enabled = 1
-# }}}
 
-# URLs {{{
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
@@ -174,19 +154,9 @@
 
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
-# }}}
 
-# Filter {{{
-[filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
-  required = true
-# }}}
+[user]
+  email = tom.trabue@gmail.com
+  name = Tom Trabue
 
-# Init {{{
-[init]
-  # Always name the default branch "master" when creating a new git repo.
-  defaultBranch = master
-# }}}
-
-# vim:foldenable:foldmethod=marker:foldlevel=0
+# vim:foldenable:foldmethod=indent
