@@ -45,11 +45,9 @@ __src_machine_local_files() {
   if [ -d "${machineLocalFilesDir}" ] &&
     [ -n "$(command ls -A "${machineLocalFilesDir}")" ]; then
     for f in "${machineLocalFilesDir}"/*; do
-      if [ -f "${f}" ]; then
-        . "${f}"
-      fi
+      [ -s "${f}" ] && . "${f}"
     done
-  elif [ -f "${machineLocalFilesDir}" ]; then
+  elif [ -s "${machineLocalFilesDir}" ]; then
     # The ~/.extra directory used to be a file, so we should include this case
     # for backwards compatibility.
     . "${machineLocalFilesDir}"
