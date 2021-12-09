@@ -18,11 +18,37 @@ pbr() {
   local projectIdentifier
   local projectBranchName
   local defaultRemote="$(defaultremote)"
+  local OPTIND
+  local o
 
   if ! isgitrepo; then
     err "Not in a Git repository"
     return 1
   fi
+
+  while getopts ":hn:d:p:" o; do
+    case "${o}" in
+    h)
+      __pbr_help
+      return 0
+      ;;
+    n)
+      taskNumber="${OPTARG}"
+      ;;
+    d)
+      description="${OPTARG}"
+      ;;
+    p)
+      projectIdentifier="${OPTARG}"
+      ;;
+    *)
+      err "Unknown operand"
+      __pbr_usage
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
 
   if [ -z "${taskNumber}" ] && [ -n "${1}" ]; then
     taskNumber="${1}"
@@ -75,13 +101,68 @@ EOF
   fi
 }
 
+__pbr_usage() {
+  command cat <<EOF
+USAGE:
+  pbr [TASK_NUMBER] [DESCRIPTION]
+      [-h]
+      [-d DESCRIPTION]
+      [-n TASK_NUMBER]
+      [-p PROJECT_IDENTIFIER]
+EOF
+}
+
+__pbr_help() {
+  __pbr_usage
+  command cat <<EOF
+
+OPTIONS:
+  -h
+    Print the help message (this message) and exit.
+
+  -d DESCRIPTION
+    Supply the description for the project branch as an optional argument.
+
+  -n TASK_NUMBER
+    Supply the task number for the project branch as an optional argument.
+
+  -p PROJECT_IDENTIFIER
+    Supply the project ID for the project branch as an optional argument.
+
+ENVIRONMENT VARIABLES:
+  Each of these environment variables may be placed in a per-project file named
+  '${PROJECT_ENV_FILE_NAME}' located in the project's root directory.
+
+  PROJECT_IDENTIFIER
+    The project ID string that prefixes each project branch. It is a string of
+    upper-case letters, such as 'PROJ'.
+
+  PROJECT_FIELD_SEPARATOR
+    The character separating primary fields in a project branch.
+
+    Example: PROJ-1234.add.cool.feature
+
+    The field separator is '-' since it delineates the primary aspects of the
+    branch name.
+
+  PROJECT_WORD_SEPARATOR
+    The character separating word fields in the project branch description.
+
+    Example: PROJ-1234.add.cool.feature
+
+    The word separator is '.' since it separates the words in the description.
+EOF
+}
+
 __construct_project_branch() {
   local taskNumber="${1}"
   local description="${2}"
   local projectIdentifier="${3}"
-  local formatString="%s-%s.%s"
+  local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
+  local projectWordSep="${PROJECT_WORD_SEPARATOR:-.}"
+  local formatString="%s${projectFieldSep}%s${projectWordSep}%s"
   local formattedDescription="$(echo "${description}" |
-    sed -E 's/\s+/./g')"
+    sed -E "s/\s+/${projectWordSep}/g")"
 
   printf "${formatString}" \
     "${projectIdentifier}" \
@@ -304,6 +385,7 @@ __construct_project_commit_msg() {
   local projectIdentifier="${3}"
   local commitMsgFormat="${4:-${PROJECT_MSG_STYLE}}"
   local formatString
+  local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
 
   if [ -z "${commitMsgFormat}" ]; then
     commitMsgFormat="colon"
@@ -311,13 +393,13 @@ __construct_project_commit_msg() {
 
   case "${commitMsgFormat}" in
   'braces')
-    formatString='[%s-%s] %s'
+    formatString="[%s${projectFieldSep}s] %s"
     ;;
   'nopunct')
-    formatString='%s-%s %s'
+    formatString="%s${projectFieldSep}%s %s"
     ;;
   *)
-    formatString='%s-%s: %s'
+    formatString="%s${projectFieldSep}%s: %s"
     ;;
   esac
 
