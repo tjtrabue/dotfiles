@@ -145,17 +145,12 @@ pcm() {
     taskNumber="$(__parse_branch_for_task_number "$(currentref)")"
   fi
 
-  if [ -z "${commitMsg}" ] && [ -n "${1}" ]; then
-    commitMsg="${1}"
-    shift
+  if [ -z "${commitMsg}" ] && [ -n "${*}" ]; then
+    commitMsg="${*}"
   fi
 
-  if [ -z "${projectIdentifier}" ] && [ -n "${1}" ]; then
-    projectIdentifier="${1}"
-    shift
-  fi
-  # If we did not get the project ID as a positional parameter, try to parse it
-  # from the current branch name.
+  # If we did not get the project ID another way, try to parse it from the
+  # current branch name.
   if [ -z "${projectIdentifier}" ]; then
     projectIdentifier="$(__parse_branch_for_project_id "$(currentref)")"
   fi
@@ -219,7 +214,7 @@ USAGE:
   pcm [-h | -m COMMIT_MSG | -n TASK_NUMBER | -p PROJECT_IDENTIFIER |
        -f MSG_FORMAT]
 
-  pcm [TASK_NUMBER] [COMMIT_MSG] [PROJECT_IDENTIFIER]
+  pcm [TASK_NUMBER] [COMMIT_MSG]
 EOF
 }
 
@@ -236,17 +231,17 @@ OPTIONS:
                  prompted to enter the it interactively.
 
   -n TASK_NUMBER: Supply the task number. If this option is omitted, the user
-                  may supply the task number as a positional parameter.
-                  Otherwise, the user will be prompted to enter the it
-                  interactively.
+                  may supply the task number as a positional parameter. The
+                  branch name will also be parsed for a possible task number.
+                  In all other cases, the user will be prompted to enter the the
+                  task number interactively.
 
-  -p PROJECT_IDENTIFIER: Supply the project ID string. If this option is
-                         omitted, the user may supply the project ID as a
-                         positional parameter. If no other value for
+  -p PROJECT_IDENTIFIER: Supply the project ID string. If no other value for
                          this parameter is supplied, its value will be read from
-                         the PROJECT_IDENTIFIER environment variable, and,
-                         failing that, the user will be prompted for the value
-                         of the project ID interactively.
+                         the PROJECT_IDENTIFIER environment variable, then the
+                         branch name will be parsed and, failing those, the
+                         user will be prompted for the value of the project ID
+                         interactively.
 
   -f MSG_FORMAT: The format for the commit message. The value of this variable
                  can be any value that is valid for PROJECT_MSG_STYLE. See the
