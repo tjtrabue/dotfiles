@@ -1,8 +1,9 @@
-# This is the top-level Git configuration file for the user, and goes in:
-#   ${XDG_CONFIG_HOME:-${HOME}/.config}/git/
+# This is the top-level Git configuration file for the user, and should be
+# named:
+#   ${XDG_CONFIG_HOME:-${HOME}/.config}/git/config
 #
 # NOTE: Older versions of Git may not recognize this file, in which case only
-# ~/.gitconfig should be used.
+#       ~/.gitconfig should be used.
 #
 # Any options present in this file will be overridden by values specified in
 # ~/.gitconfig, allowing this file to be kept in version control as a collection
