@@ -42,13 +42,18 @@ __src_machine_local_files() {
   # This test is necessary for determining whether the ~/.extra directory is
   # empty. If it is empty, we want to ignore this sourcing step altogether
   # because that would break our workflwo.
-  [ -d "${machineLocalFilesDir}" ] &&
-    [ -n "$(command ls -A "${machineLocalFilesDir}")" ] &&
+  if [ -d "${machineLocalFilesDir}" ] &&
+    [ -n "$(command ls -A "${machineLocalFilesDir}")" ]; then
     for f in "${machineLocalFilesDir}"/*; do
       if [ -f "${f}" ]; then
         . "${f}"
       fi
     done
+  elif [ -f "${machineLocalFilesDir}" ]; then
+    # The ~/.extra directory used to be a file, so we should include this case
+    # for backwards compatibility.
+    . "${machineLocalFilesDir}"
+  fi
 }
 
 # Source all files in a given directory.
