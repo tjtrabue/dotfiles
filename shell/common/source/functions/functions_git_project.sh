@@ -140,7 +140,8 @@ ENVIRONMENT VARIABLES:
     upper-case letters, such as 'PROJ'.
 
   PROJECT_FIELD_SEPARATOR
-    The character separating primary fields in a project-task item.
+    The character separating primary fields in a project-task item. If this
+    environment variable is not set, default value is '-'.
 
     Example from branch name: PROJ-1234.add.cool.feature
     Example from commit message: PROJ-1234: Added a cool feature
@@ -150,7 +151,8 @@ ENVIRONMENT VARIABLES:
 
   PROJECT_WORD_SEPARATOR
     The character separating word fields in the description part of the project
-    branch name.
+    branch name. If this environment variable is not set, the default value is
+    '.'.
 
     Example from branch name: PROJ-1234.add.cool.feature
 
@@ -356,7 +358,8 @@ ENVIRONMENT VARIABLES:
                        nopunct -> "PROJ-1234 This is the commit message"
 
   PROJECT_FIELD_SEPARATOR
-    The character separating primary fields in a project-task item.
+    The character separating primary fields in a project-task item. If this
+    environment variable is not set, default value is '-'.
 
     Example from branch name: PROJ-1234.add.cool.feature
     Example from commit message: PROJ-1234: Added a cool feature
