@@ -35,6 +35,13 @@ __src_one_time_transfers() {
 }
 
 # Source shell files local to the machine (i.e., not under version control).
+# These files are designed to hold extra configuration important for the user's
+# daily tasks on their machine but is not portable. Thus, any work-specific or
+# computer-specific configuration should go in these files.
+#
+# NOTE: The config in these files should take precedence over anything
+# committed to this repository. This allows for machine-local overriding of
+# default configuration.
 __src_machine_local_files() {
   local machineLocalFilesDir="${HOME}/.extra"
   local f
