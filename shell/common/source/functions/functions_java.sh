@@ -13,29 +13,6 @@ src_java_for_profile() {
   initialize_sdkman_for_shell
 }
 
-# Install SDKMan, the manager for Java development SDKs and tools.
-install_sdkman() {
-  local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
-
-  # Install SDKMAN if we don't already have it installed.
-  log_info "Installing sdkman"
-  install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
-    "https://get.sdkman.io"
-
-  # Merge the default configuration file for sdkman with the config file we have
-  # checked in to this repository.
-  merge_sdkman_config
-}
-
-# Install jenv, the Java environment manager. It is a similar tool to pyenv.
-install_jenv() {
-  local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
-
-  log_info "Installing JENV"
-  install_tool_from_git "jenv" "${jenvHome}" \
-    "https://github.com/jenv/jenv.git"
-}
-
 # Enable jenv in the current shell.
 initialize_jenv_for_shell() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
@@ -70,6 +47,29 @@ initialize_sdkman_for_shell() {
   else
     warn "No SDKMAN initialization script found at: ${sdkmanInitScript}"
   fi
+}
+
+# Install SDKMan, the manager for Java development SDKs and tools.
+install_sdkman() {
+  local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
+
+  # Install SDKMAN if we don't already have it installed.
+  log_info "Installing sdkman"
+  install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
+    "https://get.sdkman.io"
+
+  # Merge the default configuration file for sdkman with the config file we have
+  # checked in to this repository.
+  merge_sdkman_config
+}
+
+# Install jenv, the Java environment manager. It is a similar tool to pyenv.
+install_jenv() {
+  local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
+
+  log_info "Installing JENV"
+  install_tool_from_git "jenv" "${jenvHome}" \
+    "https://github.com/jenv/jenv.git"
 }
 
 # Combine the SDKMAN configuration file in the ~/.sdkman directory with the
@@ -124,6 +124,37 @@ install_sdkman_packages() {
   sdk install micronaut
   # Install leiningen for managing Clojure projects.
   sdk install leiningen
+
+  # Make sure we register new Java versions with jenv
+  add_sdkman_java_candidates_to_jenv
+}
+
+# Integrate installed Java SDKs into jenv by registering them.
+add_sdkman_java_candidates_to_jenv() {
+  local sdkJavaCandidatesDir="${SDKMAN_DIR:-${HOME}/.sdkman}/candidates/java"
+  local dir
+  local d
+
+  if [ ! -d "${sdkJavaCandidatesDir}" ]; then
+    err "Java candidates dir ${BLUE}${sdkJavaCandidatesDir}${NC} does not exist"
+    return 1
+  fi
+
+  if [ -z "$(command -v jenv)" ]; then
+    err "No jenv command found in current shell environment"
+    return 2
+  fi
+
+  log_info "Adding SDKMAN java candidates to jenv"
+  for dir in "${sdkJavaCandidatesDir}"/*; do
+    # We want to make sure not to add the "current" symlink used by SDKMAN to
+    # jenv.
+    if [ -d "${dir}" ] && [ ! -h "${dir}" ]; then
+      d="$(basename "${dir}")"
+      log_info "Adding java candidate ${GREEN}${d}${NC} to jenv"
+      jenv add "${d}"
+    fi
+  done
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
