@@ -127,8 +127,14 @@ filecontentsinfile() {
     return 1
   fi
 
-  if [ -n "$(comm -13 <(sort -u "${file2}") <(sort -u "${file1}") 2>/dev/null)" ]; then
-    return 1
+  # If any output is returned, file1 is not entirely contained within file2.
+  if [ -n "$(
+    comm -13 \
+      <(sort -u "${file2}") \
+      <(sort -u "${file1}") \
+      2>/dev/null
+  )" ]; then
+    return 2
   fi
 }
 
