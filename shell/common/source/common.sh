@@ -22,15 +22,14 @@ LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 
 # Source additional files {{{
 
-# Source files that were transferred from the dotfiles repo, but not linked
-# to track future changes.
-__src_one_time_transfers() {
+# Source files important for initializing basic environment variables and
+# properties needed by functions and aliases. This should be the first sourcing
+# function called in most circumstances.
+__src_env_setup_files() {
   local f
 
-  for f in "${HOME}/.dirs" "${HOME}/.vars"; do
-    if [ -f "${f}" ]; then
-      . "${f}"
-    fi
+  for f in "${HOME}/."{dirs,vars,var_overrides}; do
+    [ -s "${f}" ] && . "${f}"
   done
 }
 
@@ -63,8 +62,8 @@ __src_machine_local_files() {
 
 # Source all files in a given directory.
 __src_dir() {
-  local dir="$1"
-  local file
+  local dir="${1}"
+  local f
 
   if [ -z "${dir}" ]; then
     echo "ERROR: No directory provided to __src_dir" 1>&2
@@ -72,8 +71,8 @@ __src_dir() {
   fi
 
   if [ -d "${dir}" ]; then
-    for file in $(find "${dir}" -maxdepth 1 -mindepth 1 -type f); do
-      . "$file"
+    for f in "${dir}"/*; do
+      [ -s "${f}" ] && . "${f}"
     done
   fi
 }
@@ -121,9 +120,7 @@ __src_standard_subdirs_under_dir() {
   local d
 
   for d in "${baseDir}/"{aliases,functions,other}; do
-    if [ -d "${d}" ]; then
-      __src_dir "${d}"
-    fi
+    [ -d "${d}" ] && __src_dir "${d}"
   done
 }
 
@@ -143,14 +140,14 @@ __src() {
     srcDir="${DOTFILES_BASH}/source"
     # Also load readline bindings if using Bash.
     # NOTE: We only bind the readline file if our shell is interactive.
-    [ -f "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" &&
+    [ -s "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" &&
       bind -f "${HOME}/.inputrc"
   elif [ "${currentShell}" = "zsh" ]; then
     srcDir="${DOTFILES_ZSH}/source"
   fi
 
-  # Source .vars and .dirs.
-  __src_one_time_transfers
+  # Source .vars, .var_overrides, and .dirs.
+  __src_env_setup_files
 
   # Source all alias/function/other files, both in the common source directory
   # and in current shell's source directory.

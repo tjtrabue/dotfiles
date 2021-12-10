@@ -238,19 +238,6 @@ fs() {
   fi
 }
 
-# Use Git’s colored diff when available
-if hash git >>/dev/null 2>&1; then
-  diff() {
-    if [ -x "$(command -v bat)" ]; then
-      # Use `bat` to colorize output, if available.
-      git diff --no-index --name-only --diff-filter=d -- "$@" | xargs bat --diff
-    else
-      # Default to using git's own colorization capabilities.
-      git diff --no-index --color-words "$@"
-    fi
-  }
-fi
-
 # Create a data URL from a file
 dataurl() {
   local mimeType=$(file -b --mime-type "$1")

@@ -20,7 +20,7 @@ ${HOME}/.luarocks/bin
 ${HOME}/.npm-global/bin
 ${HOME}/.cargo/bin
 ${HOME}/.jenv/bin
-${HOME}/.sdkman/candidates/*/current/bin
+${HOME}/.jenv/shims
 ${HOME}/.pyenv/bin
 ${HOME}/.pyenv/shims
 ${HOME}/.rvm/bin
