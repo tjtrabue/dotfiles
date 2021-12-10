@@ -14,7 +14,7 @@ mksource() {
   done
 
   if ! echo "${sourceFileName}" | grep -E -q "(aliases)|(functions).*"; then
-    err "Source file name must begin with \"aliases\" or \"functions\""
+    err 'Source file name must begin with "aliases" or "functions"'
     return 2
   fi
 
@@ -111,6 +111,24 @@ rmblanklines() {
     sed -i '/^[[:space:]]*$/d' "${fileDescriptor}"
   else
     sed '/^[[:space:]]*$/d' "${fileDescriptor}"
+  fi
+}
+
+# Return 0 if file1's contents are entirely contained within file2.
+# Otherwise, return an error code.
+#   file1: contained file
+#   file2: containing file
+filecontentsinfile() {
+  local file1="${1}"
+  local file2="${2}"
+
+  if [ ! -f "${file1}" ] || [ ! -f "${file2}" ]; then
+    err "Must provide two file arguments to filecontentsinfile"
+    return 1
+  fi
+
+  if [ -n "$(comm -13 <(sort -u "${file2}") <(sort -u "${file1}") 2>/dev/null)" ]; then
+    return 1
   fi
 }
 
