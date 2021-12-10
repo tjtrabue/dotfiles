@@ -286,35 +286,6 @@ copy_dotfiles() {
   log_info "Copying complete"
 }
 
-# Inject extra environment variables into the ~/.vars file, if prudent.
-add_extra_os_vars() {
-  local os="$(getosinfo | head -1 | sed 's/Distribution:\s*//')"
-  local extraVarsDir="${DOTFILES_REPO}/copy/var_files"
-  local extraVarsLinuxDir="${extraVarsDir}/linux"
-  local markerString="#<additional-vars-insert>"
-  local extraVarsFile="NONE"
-
-  log_info "Injecting additional OS variables into ${TARGET_HOME}/.vars"
-
-  case "${os}" in
-  "Arch Linux")
-    extraVarsFile="${extraVarsLinuxDir}/arch_vars.bash"
-    ;;
-
-  *)
-    log_info "No extra vars to add for OS: ${os}"
-    ;;
-  esac
-
-  if [ -f "${extraVarsFile}" ]; then
-    sed -i -e "/${markerString}/r ${extraVarsFile}" "${TARGET_HOME}/.vars"
-  fi
-
-  # Get rid of marker string in ~/.vars
-  sed -i "/${markerString}/d" "${TARGET_HOME}/.vars"
-  log_info "Done injecting additional variables"
-}
-
 # Create important directories.
 ensure_dirs_present() {
   log_info "Creating important directories"
