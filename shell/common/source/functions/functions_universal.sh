@@ -3,7 +3,7 @@
 # Returns the block of sourced code for the function or alias given as an argument:
 func() {
   local CODE="$(declare -f $*)"
-  if [[ -z "$CODE" ]]; then
+  if [[ -z $CODE ]]; then
     alias | grep --color=never "alias $*="
   else
     echo "$CODE"
@@ -18,7 +18,7 @@ get_index() {
   local element=$2
 
   for i in "${!arr[@]}"; do
-    if [[ "${arr[$i]}" == "${element}" ]]; then
+    if [[ ${arr[$i]} == "${element}" ]]; then
       echo "${i}"
       exit 0
     fi
@@ -30,7 +30,7 @@ get_index() {
 # If no direcotry is specified, it checks the current directory.
 syml() {
   local directory="."
-  if [[ "$#" -gt 0 ]]; then
+  if [[ $# -gt 0 ]]; then
     directory="$1"
   fi
 
@@ -42,7 +42,7 @@ syml() {
 # adding the -a or --all argument removes all tmp files as well.
 rmbaks() {
   local all="$1"
-  if [[ "$1" == "-a" || "$1" == "--all" ]]; then
+  if [[ $1 == "-a" || $1 == "--all" ]]; then
     find . -type f \( -name "*.bak" -or -name "*.tmp" \) -print0 | xargs -0 rm
   else
     find . -type f -name "*.bak" -print0 | xargs -0 rm
@@ -58,7 +58,7 @@ mkbin() {
   elif [ -d "$DOTFILES_HOME" ]; then
     bashTemplate="$(find "$DOTFILES_HOME" -type f -iname "*mkbin.bash")"
   else
-    err "No \$DOTFILES_HOME directory found! Please ensure that this variable is set," \
+    err 'No $DOTFILES_HOME directory found! Please ensure that this variable is set,' \
       "that the directory exists, and try again."
     return 1
   fi
@@ -66,7 +66,7 @@ mkbin() {
     echoe "Please enter a name for the executable (with or without file extension):"
     read -er executableName
   done
-  if [[ "$executableName" =~ \..*$ ]]; then
+  if [[ $executableName =~ \..*$ ]]; then
     executableName="${executableName/.*//}"
   fi
   cp "$bashTemplate" "$executableName"
@@ -115,7 +115,6 @@ rmswap() {
 #
 # Usage:
 #   runinit test      -> ~/.dotfiles/init/init_test
-#   runinit test java -> ~/.dotfiles/init/init_test; ~/.dotfiles/init/init_java
 runinit() {
   local initTopics=("${@}")
   local funcName="${FUNCNAME[0]}"
@@ -231,7 +230,7 @@ fs() {
   else
     local arg=-sh
   fi
-  if [[ -n "$*" ]]; then
+  if [[ -n $* ]]; then
     du $arg -- "$@"
   else
     du $arg .[^.]* *
@@ -250,7 +249,7 @@ dataurl() {
 # Create a git.io short URL
 gitio() {
   if [ -z "${1}" -o -z "${2}" ]; then
-    echo "Usage: \`gitio slug url\`"
+    echo 'Usage: `gitio slug url`'
     return 1
   fi
   curl -i http://git.io/ -F "url=${2}" -F "code=${1}"
@@ -340,7 +339,7 @@ getcertnames() {
   local tmp=$(echo -e "GET / HTTP/1.0\nEOT" |
     openssl s_client -connect "${domain}:443" -servername "${domain}" 2>&1)
 
-  if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+  if [[ ${tmp} == *"-----BEGIN CERTIFICATE-----"* ]]; then
     local certText=$(echo "${tmp}" |
       openssl x509 -text -certopt "no_aux, no_header, no_issuer, no_pubkey, \
       no_serial, no_sigdump, no_signame, no_validity, no_version")

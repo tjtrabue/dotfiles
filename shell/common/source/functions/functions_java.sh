@@ -18,7 +18,7 @@ initialize_jenv_for_shell() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
 
   if ! tool_installed "jenv" "${jenvHome}"; then
-    install_jenv
+    install_or_update_jenv
   fi
 
   # Make sure jenv is available on $PATH.
@@ -38,7 +38,7 @@ initialize_sdkman_for_shell() {
 
   # Make sure sdkman is installed.
   if ! tool_installed "sdk" "${sdkmanHome}"; then
-    install_sdkman
+    install_or_update_sdkman
   fi
 
   if [ -s "${sdkmanInitScript}" ]; then
@@ -49,27 +49,40 @@ initialize_sdkman_for_shell() {
   fi
 }
 
-# Install SDKMan, the manager for Java development SDKs and tools.
-install_sdkman() {
+# Install SDKMAN, the manager for Java SDKs and development tools.
+# Updates SDKMAN if it is already installed.
+install_or_update_sdkman() {
   local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
 
-  # Install SDKMAN if we don't already have it installed.
-  log_info "Installing sdkman"
-  install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
-    "https://get.sdkman.io"
+  if [ -n "$(command -v sdk)" ]; then
+    log_info "Updating sdkman"
+    echo "y" | sdk upgrade
+  else
+    # Install SDKMAN if we don't already have it installed.
+    log_info "Installing sdkman"
+    install_tool_from_url_and_script "sdk" "${sdkmanHome}" \
+      "https://get.sdkman.io"
 
-  # Merge the default configuration file for sdkman with the config file we have
-  # checked in to this repository.
-  merge_sdkman_config
+    # Merge the default configuration file for sdkman with the config file we have
+    # checked in to this repository.
+    merge_sdkman_config
+  fi
 }
 
-# Install jenv, the Java environment manager. It is a similar tool to pyenv.
-install_jenv() {
+# Install jenv, the Java environment manager. It is a similar tool to pyenv. If
+# jenv is already installed, this updates it to the latest stable version.
+install_or_update_jenv() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
 
-  log_info "Installing JENV"
-  install_tool_from_git "jenv" "${jenvHome}" \
-    "https://github.com/jenv/jenv.git"
+  if [ -d "${jenvHome}" ]; then
+    log_info "Updating JENV"
+    git -C "${jenvHome}" reset --hard
+    git -C "${jenvHome}" pull
+  else
+    log_info "Installing JENV"
+    install_tool_from_git "jenv" "${jenvHome}" \
+      "https://github.com/jenv/jenv.git"
+  fi
 }
 
 # Combine the SDKMAN configuration file in the ~/.sdkman directory with the
