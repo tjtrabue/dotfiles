@@ -30,7 +30,6 @@ __swift_installed() {
 __update_swift_format() {
   local swiftFormatDir="${1:-${WS}/swift-format}"
 
-  git -C "${swiftFormatDir}" clean -df
   git -C "${swiftFormatDir}" reset --hard
   git -C "${swiftFormatDir}" fetch
 }

@@ -58,7 +58,6 @@ update_tool_from_git() {
   fi
 
   log_info "Updating tool at: ${BLUE}${toolHomeDir}${NC}"
-  git -C "${toolHomeDir}" clean -df
   git -C "${toolHomeDir}" reset --hard
   git -C "${toolHomeDir}" pull
 }

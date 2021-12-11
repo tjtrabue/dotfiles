@@ -37,7 +37,6 @@ __clone_or_update_kwin_tiling_repo() {
 
   if [ -d "${destDir}" ]; then
     log_info "Updating KWin Tiling repo"
-    git -C "${destDir}" clean -df
     git -C "${destDir}" reset --hard
     git -C "${destDir}" checkout "$(defaultbranch "${destDir}")"
     git -C "${destDir}" pull

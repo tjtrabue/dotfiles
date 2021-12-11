@@ -96,7 +96,6 @@ __clone_iterm2_color_schemes() {
   if [ -d "${destDir}" ]; then
     log_info "Updating iTerm2 Color Schemes repo"
     git -C "${destDir}" reset --hard
-    git -C "${destDir}" clean -df
     git -C "${destDir}" pull
   else
     log_info "Cloning iTerm2 Color Schemes repo"

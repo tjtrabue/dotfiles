@@ -43,7 +43,6 @@ __clone_or_update_wally() {
   if [ -d "${wallyDestDir}" ]; then
     log_info "Pulling updates for wally"
     git -C "${wallyDestDir}" reset --hard
-    git -C "${wallyDestDir}" clean -df
     git -C "${wallyDestDir}" pull
   else
     log_info "Cloning wally keyboard flashing tool to:" \

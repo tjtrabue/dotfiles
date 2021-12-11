@@ -98,7 +98,6 @@ install_or_update_flutter_sdk() {
   if [ -d "${destDir}" ]; then
     log_info "Updating Flutter SDK"
     git -C "${destDir}" reset --hard
-    git -C "${destDir}" clean -df
     git -C "${destDir}" checkout "${flutterSdkBranch}"
     git -C "${destDir}" pull
   else
