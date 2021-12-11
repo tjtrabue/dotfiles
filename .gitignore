@@ -246,17 +246,19 @@ link/config/Google
 # KDE {{{
 # KDE is a desktop environment for Linux.
 
+link/config/KDE/
 link/config/discoverrc
 link/config/gtk-*
 link/config/gtkrc*
+link/config/kconf_updaterc
 link/config/kde.org/
-link/config/KDE/
-link/config/ksmserverrc
 link/config/kglobalshortcutsrc
+link/config/ksmserverrc
 link/config/plasma-org.kde.plasma.desktop-appletsrc
 link/config/plasmanotifyrc
 link/config/plasmashellrc
 link/config/session/
+link/config/spectaclerc
 link/config/systemsettingsrc
 link/config/xsettingsd/
 

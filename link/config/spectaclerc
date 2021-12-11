@@ -1,2 +1,2 @@
 [$Version]
-update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_newConfig.upd:spectacle-new-config
+update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_newConfig.upd:spectacle-new-config,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
