@@ -407,7 +407,8 @@ gpoh() {
 # branch, and the current branch would rebase on top of the other feature
 # branch. Please be careful before using this function.
 squashfor() {
-  local baseBranch="${1:-develop}"
+  local defaultBranch="$(defaultbranch)"
+  local baseBranch="${1:-${defaultBranch}}"
   local currentBranch
   local commitMsg
   local response
