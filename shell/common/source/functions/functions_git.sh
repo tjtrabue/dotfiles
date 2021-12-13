@@ -408,12 +408,23 @@ gpoh() {
 # branch. Please be careful before using this function.
 squashfor() {
   local defaultBranch="$(defaultbranch)"
-  local baseBranch="${1:-${defaultBranch}}"
-  local currentBranch
+  local baseBranch="${defaultBranch}"
   local commitMsg
+  local currentBranch
   local response
 
   currentBranch="$(currentref)"
+
+  # Try to get base branch as positional param
+  if [ -n "${1}" ]; then
+    baseBranch="${1}"
+    shift
+  fi
+
+  # Try to get commit message as positional param
+  if [ -n "${*}" ]; then
+    commitMsg="${*}"
+  fi
 
   if [ "${currentBranch}" = "master" ] ||
     [ "${currentBranch}" = "develop" ]; then
@@ -421,8 +432,8 @@ squashfor() {
     return 1
   fi
 
-  log_info "Using base branch: ${baseBranch}"
-  log_info "Branch to squash: ${currentBranch}"
+  log_debug "Using base branch: ${CYAN}${baseBranch}${NC}"
+  log_debug "Branch to squash: ${CYAN}${currentBranch}${NC}"
 
   while [ -z "${commitMsg}" ]; do
     echoe "Please enter a commit message for the squashed commits:"
@@ -431,7 +442,7 @@ squashfor() {
 
   while ! echo "${response}" | grep -q "[YyNn]"; do
     command cat <<EOF
-Do you wish to squash all commits on ${curentBranch} with message:
+Do you wish to squash all commits on ${CYAN}${curentBranch}${NC} with message:
 '${commitMsg}'? [y/n]
 EOF
     read -r response
