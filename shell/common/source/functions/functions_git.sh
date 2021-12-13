@@ -76,13 +76,6 @@ emsg() {
 
 # Branching/switching branches {{{
 
-# Check if a ref (branch, tag, etc) exists locally.
-refexists() {
-  local refName="${1}"
-
-  git rev-parse --verify "${refName}" >>/dev/null 2>&1
-}
-
 # Switch to a Git branch/commit/tag.
 # Supports history, so we can return to the previously visited ref using
 #   sw -1
@@ -139,7 +132,7 @@ __init_sw_config() {
   done
 }
 
-# Get nth line from history file if arg is of the form'-<n>' where n is an
+# Get nth line from history file if arg is of the form '-<n>', where n is an
 # integer.
 __get_sw_numeric_ref_from_hist_file() {
   local arg="${1}"
@@ -542,6 +535,14 @@ grmc() {
 # }}}
 
 # Verifying refs {{{
+
+# Check if a ref (branch, tag, etc) exists locally.
+verifylocalref() {
+  local refName="${1}"
+
+  git rev-parse --verify "${refName}" >>/dev/null 2>&1
+}
+
 # Check if a ref name exists locally or in the remote repository.
 # Usage:
 #   verifyref REF [GIT_REPO_PATH]

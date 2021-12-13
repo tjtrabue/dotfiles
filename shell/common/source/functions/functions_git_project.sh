@@ -95,8 +95,8 @@ EOF
 
   if [ "$(currentref)" = "${projectBranchName}" ]; then
     warn "Already on branch ${CYAN}${projectBranchName}${NC}"
-  elif refexists "${projectBranchName}" ||
-    refexists "${defaultRemote}/${projectBranchName}"; then
+  elif verifylocalref "${projectBranchName}" ||
+    verifylocalref "${defaultRemote}/${projectBranchName}"; then
     log_info "Branch ${CYAN}${projectBranchName}${NC} already exists;" \
       "switching to it"
     # Want to use `sw` to make use of its history tracking capabilties.
