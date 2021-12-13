@@ -145,7 +145,7 @@ __add_git_alias_completions() {
     __add_git_command_alias_completions "stash" "gst" "_git_stash"
     __add_git_command_alias_completions "switch" "gsw" "_git_switch"
     __add_git_command_alias_completions "tag" "gt" "_git_tag"
-  ofi
+  fi
 }
 
 # Mark a particular alias as a git command for the purpose of adding shell

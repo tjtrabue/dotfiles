@@ -513,6 +513,31 @@ totalgitreset() {
 }
 # }}}
 
+# Removing files {{{
+
+# git rm --cached
+grmc() {
+  local files="${@}"
+  local gitRmCmd="git rm --cached"
+  local fileRmCmd="rm"
+  local f
+
+  for f in "${files[@]}"; do
+    if [ -d "${f}" ]; then
+      gitRmCmd="${gitRmCmd} -rf"
+      fileRmCmd="${fileRmCmd} -rf"
+      break
+    fi
+  done
+
+  gitRmCmd="${gitRmCmd} ${files[@]}"
+  fileRmCmd="${fileRmCmd} ${files[@]}"
+  log_info "Removing files: ${BLUE}${files[*]}${NC} from Git repo"
+  eval "${gitRmCmd}"
+  eval "${fileRmCmd}"
+}
+# }}}
+
 # Verifying refs {{{
 # Check if a ref name exists locally or in the remote repository.
 # Usage:

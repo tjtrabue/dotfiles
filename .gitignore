@@ -259,6 +259,7 @@ link/config/gtk-*
 link/config/gtkrc*
 link/config/gwenviewrc
 link/config/kalarmrc
+link/config/khotkeysrc
 link/config/kateschemarc
 link/config/kcminputrc
 link/config/kconf_updaterc

@@ -60,11 +60,6 @@ alias grbc="git rebase --continue"
 alias greh="git reset HEAD"
 # }}}
 
-# Removing files from Git {{{
-alias grmc="git rm --cached"
-alias grmrc="git rm -rf --cached"
-# }}}
-
 # lazygit {{{
 # Activate lazygit porcelain tool.
 alias lg="lazygit"
