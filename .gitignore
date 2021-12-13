@@ -252,6 +252,9 @@ link/config/gtk-*
 link/config/gtkrc*
 link/config/kalarmrc
 link/config/kateschemarc
+link/config/akregatorrc
+link/config/baloofilerc
+link/config/bluedevilglobalrc
 link/config/kcminputrc
 link/config/kconf_updaterc
 link/config/kde.org/
