@@ -247,14 +247,19 @@ link/config/Google
 # KDE is a desktop environment for Linux.
 
 link/config/KDE/
-link/config/discoverrc
-link/config/gtk-*
-link/config/gtkrc*
-link/config/kalarmrc
-link/config/kateschemarc
+link/config/QtProject.conf
+link/config/Trolltech.conf
 link/config/akregatorrc
 link/config/baloofilerc
 link/config/bluedevilglobalrc
+link/config/discoverrc
+link/config/dolphinrc
+link/config/drkonqirc
+link/config/gtk-*
+link/config/gtkrc*
+link/config/gwenviewrc
+link/config/kalarmrc
+link/config/kateschemarc
 link/config/kcminputrc
 link/config/kconf_updaterc
 link/config/kde.org/
@@ -274,15 +279,18 @@ link/config/kscreenlockerrc
 link/config/ksmserverrc
 link/config/ktimezonedrc
 link/config/kxkbrc
+link/config/okularpartrc
 link/config/plasma-localerc
 link/config/plasma-org.kde.plasma.desktop-appletsrc
 link/config/plasmanotifyrc
 link/config/plasmarc
 link/config/plasmashellrc
 link/config/powermanagementprofilesrc
+link/config/sddmthemeinstallerrc
 link/config/session/
 link/config/spectaclerc
 link/config/systemsettingsrc
+link/config/webengineurlinterceptoradblockrc
 link/config/xsettingsd/
 
 # The activity manager changes too frequently, and is not useful for sharing.

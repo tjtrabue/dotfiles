@@ -139,12 +139,13 @@ __add_git_alias_completions() {
     __add_git_command_alias_completions "reset" "gres" "_git_reset"
     __add_git_command_alias_completions "restore" "grest" "_git_restore"
     __add_git_command_alias_completions "revert" "grev" "_git_revert"
+    __add_git_command_alias_completions "rm" "grm" "_git_rm"
     __add_git_command_alias_completions "status" "gs" "_git_status"
     __add_git_command_alias_completions "show-branch" "gsb" "_git_show_branch"
     __add_git_command_alias_completions "stash" "gst" "_git_stash"
     __add_git_command_alias_completions "switch" "gsw" "_git_switch"
     __add_git_command_alias_completions "tag" "gt" "_git_tag"
-  fi
+  ofi
 }
 
 # Mark a particular alias as a git command for the purpose of adding shell

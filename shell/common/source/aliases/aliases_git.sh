@@ -36,7 +36,6 @@ alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 # }}}
 
 # Staging/pushing/pulling aliases {{{
-alias ga="git add"
 alias gaa="git add -A"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
@@ -59,6 +58,11 @@ alias grbc="git rebase --continue"
 
 # Resetting aliases {{{
 alias greh="git reset HEAD"
+# }}}
+
+# Removing files from Git {{{
+alias grmc="git rm --cached"
+alias grmrc="git rm -rf --cached"
 # }}}
 
 # lazygit {{{
