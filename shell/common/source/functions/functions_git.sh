@@ -407,11 +407,15 @@ gpoh() {
 # branch, and the current branch would rebase on top of the other feature
 # branch. Please be careful before using this function.
 squashfor() {
-  local defaultBranch="$(defaultbranch)"
-  local baseBranch="${defaultBranch}"
+  local baseBranch="$(defaultbranch)"
   local commitMsg
   local currentBranch
   local response
+
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
 
   currentBranch="$(currentref)"
 
@@ -429,7 +433,7 @@ squashfor() {
   if [ "${currentBranch}" = "master" ] ||
     [ "${currentBranch}" = "develop" ]; then
     err "Not squashing commits on protected branch: ${currentBranch}"
-    return 1
+    return 2
   fi
 
   log_debug "Using base branch: ${CYAN}${baseBranch}${NC}"
@@ -450,7 +454,7 @@ EOF
 
   if echo "${response}" | grep -q "[Nn]"; then
     echoe "Aborting"
-    return 2
+    return 3
   fi
 
   git reset "$(git merge-base "${baseBranch}" "${currentBranch}")"
