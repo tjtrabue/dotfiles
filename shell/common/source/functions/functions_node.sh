@@ -99,7 +99,7 @@ export_nvm_default_node_path() {
     rmblanklines "${pathFile}"
   fi
 
-  export_path
+  export_path "${pathFile}" "PATH"
 }
 
 # Install Node Version Manager (nvm)
