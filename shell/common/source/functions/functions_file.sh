@@ -1,7 +1,5 @@
 #!/bin/sh
 
-### Create ###
-
 mksource() {
   local sourceDir="$DOTFILES_HOME/shell/common/source"
   local sourceFileName="$*"
@@ -66,8 +64,6 @@ mkinit() {
   cp "${initTemplate}" "${initFilePath}"
   chmod 755 "${initFilePath}"
 }
-
-### Remove ###
 
 # Remove all broken symlinks in a directory.
 rmbsyml() {
