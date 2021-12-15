@@ -88,8 +88,7 @@ sw() {
   local currentRef="$(currentref)"
 
   if [ -z "${arg}" ]; then
-    err "No ref provided to switch"
-    return 1
+    arg="$(defaultbranch)"
   fi
 
   __init_sw_config
