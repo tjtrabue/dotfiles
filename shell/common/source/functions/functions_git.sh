@@ -387,9 +387,27 @@ ggg() {
 gpoh() {
   local currentRef="$(currentref)"
   local defaultRemote="$(defaultremote)"
+  local gitPushCmd="git push -u"
+  local OPTIND
+  local o
+
+  while getopts ":f" o; do
+    case "${o}" in
+    f)
+      gitPushCmd="${gitPushCmd} -f"
+      ;;
+    *)
+      err "Unknown operand: ${RED}${o}${NC}"
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  gitPushCmd="${gitPushCmd} '${defaultRemote}' '${currentRef}'"
 
   # Make sure we set the current branch to track the its remote counterpart.
-  git push -u "${defaultRemote}" "${currentRef}"
+  eval "${gitPushCmd}"
 }
 # }}}
 
