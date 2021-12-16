@@ -527,7 +527,6 @@ totalgitreset() {
 grmc() {
   local files="${@}"
   local gitRmCmd="git rm --cached"
-  local fileRmCmd="rm"
   local f
 
   # Add recursive flags to file removal commands if we are working with
@@ -535,17 +534,14 @@ grmc() {
   for f in "${files[@]}"; do
     if [ -d "${f}" ]; then
       gitRmCmd="${gitRmCmd} -rf"
-      fileRmCmd="${fileRmCmd} -rf"
       break
     fi
   done
 
   gitRmCmd="${gitRmCmd} ${files[*]}"
-  fileRmCmd="${fileRmCmd} ${files[*]}"
 
   log_info "Removing files: ${BLUE}${files[*]}${NC} from Git repo"
   eval "${gitRmCmd}"
-  eval "${fileRmCmd}"
 }
 # }}}
 
