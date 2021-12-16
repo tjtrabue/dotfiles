@@ -305,18 +305,25 @@ dbi() {
   local defaultBranch="$(defaultbranch)"
   local currentBranch="$(currentref)"
   local branches
+  local selectedBranches
   local branch
 
   branches=($(git branch --format="%(refname:lstrip=-1)" |
     grep -v -e "^${defaultBranch}\$" -e "^${currentBranch}\$" \
-      -e '^master$' -e '^main$' -e '^develop$' |
-    fzf))
+      -e '^master$' -e '^main$' -e '^develop$'))
 
   if [ -z "${branches[*]}" ]; then
+    warn "No applicable branches to delete"
     return 0
   fi
 
-  for branch in "${branches[@]}"; do
+  selectedBranches="$(echo "${branches[@]}" | tr ' ' '\n' | fzf)"
+
+  if [ -z "${selectedBranches[*]}" ]; then
+    return 0
+  fi
+
+  for branch in "${selectedBranches[@]}"; do
     log_info "Deleting branch: ${CYAN}${branch}${NC}"
     git branch -D "${branch}"
   done
