@@ -308,7 +308,8 @@ dbi() {
   local branch
 
   branches=($(git branch --format="%(refname:lstrip=-1)" |
-    grep -v -e "${defaultBranch}" -e "${currentBranch}" |
+    grep -v -e "^${defaultBranch}\$" -e "^${currentBranch}\$" \
+      -e '^master$' -e '^main$' -e '^develop$' |
     fzf))
 
   if [ -z "${branches[*]}" ]; then
