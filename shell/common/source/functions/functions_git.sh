@@ -330,6 +330,19 @@ dbi() {
 }
 # }}}
 
+# Repository cleanup {{{
+
+# Perform housekeeping on the given repository, mostly for compressing old refs,
+# removing old remote tracking refs that no longer exist in the remote, etc.
+gcleanup() {
+  local repo="${1:-$(git rev-parse --show-toplevel)}"
+
+  log_info "Cleaning repository: ${BLUE}${repo}${NC}"
+  git -C "${repo}" gc --aggressive
+  git -C "${repo}" fetch --prune --prune-tags
+}
+# }}}
+
 # Committing {{{
 
 # Shortcut for `git commit -m '<msg>'`. No need to put quote marks around your
