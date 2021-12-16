@@ -298,6 +298,28 @@ gbl() {
   git branch -a --color=never --format="%(refname:lstrip=-1)" |
     grep -v '^HEAD$' | sort -u
 }
+
+# Interactively delete branches. Safely removes important branches from the list
+# of deletable branches, such as the default branch and the current branch.
+dbi() {
+  local defaultBranch="$(defaultbranch)"
+  local currentBranch="$(currentref)"
+  local branches
+  local branch
+
+  branches=($(git branch --format="%(refname:lstrip=-1)" |
+    grep -v -e "${defaultBranch}" -e "${currentBranch}" |
+    fzf))
+
+  if [ -z "${branches[*]}" ]; then
+    return 0
+  fi
+
+  for branch in "${branches[@]}"; do
+    log_info "Deleting branch: ${CYAN}${branch}${NC}"
+    git branch -D "${branch}"
+  done
+}
 # }}}
 
 # Committing {{{
