@@ -218,8 +218,9 @@ link/config/expressvpn
 # Completion database files.
 shell/zsh/zdotdir/.zcomp*
 # Extra completion files that should not be tracked.
-shell/zsh/zdotdir/completions/git-completion.bash
-shell/zsh/zdotdir/completions/_git
+shell/zsh/zdotdir/completion/_docker
+shell/zsh/zdotdir/completion/_git
+shell/zsh/zdotdir/completion/git-completion.bash
 # History file
 shell/zsh/zdotdir/.zsh_history
 # Saved sessions
