@@ -91,3 +91,24 @@ HTML, TOML, YAML, etc.
   #+begin_src emacs-lisp
     (use-package yaml-mode)
   #+end_src
+
+* GNU Hyperbole
+Hyperbole is an interactive minor mode for viewing and managing any sort of
+hypertext in Emacs. It has been called Markdown for hypertext. If you activate
+=hyperbole= in a buffer containing hypertext, Texinfo, email addresses, URLs,
+Emacs key sequences, Org mode links, Markdown links, or any of a dozen other
+hypertext patterns, Hyperbole will render them as interactable objects.
+
+It's a rich and fairly complicated package. View the [[https://gnu.org/software/hyperbole][documentation online]] for a
+full introduction.
+
+** Hyperbole complements Org Mode
+Hyperbole complements Org Mode, and does not seek to replace or re-implement Org
+Mode. Check the Emacs Wiki page for information about how to use Hyperbole and
+Org Mode in tandem.
+
+** use-package specification
+
+#+begin_src emacs-lisp
+  (use-package hyperbole)
+#+end_src
