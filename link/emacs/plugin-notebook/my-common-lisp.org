@@ -140,7 +140,8 @@ Thank you so much for the your contributions, Mihai!
 #+end_src
 
 ** Plugins
-Extra plugins for SLY.
+Enhancements for SLY. Much needed to provide powerful features that SLY lacks by
+default, such as expanding macros and editing ASDF build files.
 
 *** sly-asdf
 Enables editing of ASDF systems from SLY. ASDF is the de-facto standard

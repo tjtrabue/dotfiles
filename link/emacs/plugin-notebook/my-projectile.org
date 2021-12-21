@@ -10,32 +10,32 @@ for project files, searching for text, renaming files, building and installing
 project artifacts, etc.
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package projectile
-      ;; perspective.el overwrites projectile's command prefix, so we want to load
-      ;; projectile after perspective.
-      :after (evil-collection perspective)
-      :demand t
-      :bind-keymap
-      ("C-c p" . projectile-command-map)
-      :general
-      (general-def 'normal 'override
-        ;; Use C-p to search for files in project
-        "C-p" 'projectile-find-file)
-      :custom
-      ;; Enable caching unconditionally.
-      (projectile-enable-caching t)
-      ;; Figure out completion system to use automatically.
-      (projectile-completion-system 'auto)
-      ;; Lis of directory paths (and optional depths) that projectile should use
-      ;; when searching for projects.
-      (projectile-project-search-path `(,my/workspace-dir ,my/practice-dir))
-      :init
-      ;; Enable projectile globally.  It's important to keep this here!!! Do not
-      ;; create an after-init-hook for projectile because it doesn't work
-      ;; fully. You'll experience weird errors if you do this.
-      (projectile-global-mode +1)
-      :config
-      ;; Add extra ignored directories here.
-      (add-to-list 'projectile-globally-ignored-directories my/straight-home-dir))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package projectile
+    ;; perspective.el overwrites projectile's command prefix, so we want to load
+    ;; projectile after perspective.
+    :after (evil-collection perspective)
+    :demand t
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
+    :general
+    (general-def 'normal 'override
+      ;; Use C-p to search for files in project
+      "C-p" 'projectile-find-file)
+    :custom
+    ;; Enable caching unconditionally.
+    (projectile-enable-caching t)
+    ;; Figure out completion system to use automatically.
+    (projectile-completion-system 'auto)
+    ;; Lis of directory paths (and optional depths) that projectile should use
+    ;; when searching for projects.
+    (projectile-project-search-path `(,my/workspace-dir ,my/practice-dir))
+    :init
+    ;; Enable projectile globally.  It's important to keep this here!!! Do not
+    ;; create an after-init-hook for projectile because it doesn't work
+    ;; fully. You'll experience weird errors if you do this.
+    (projectile-global-mode +1)
+    :config
+    ;; Add extra ignored directories here.
+    (add-to-list 'projectile-globally-ignored-directories my/straight-home-dir))
+#+end_src

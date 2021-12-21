@@ -107,7 +107,7 @@ Hyperbole complements Org Mode, and does not seek to replace or re-implement Org
 Mode. Check the Emacs Wiki page for information about how to use Hyperbole and
 Org Mode in tandem.
 
-** use-package specification
+** =use-package= specification
 
 #+begin_src emacs-lisp
   (use-package hyperbole)
