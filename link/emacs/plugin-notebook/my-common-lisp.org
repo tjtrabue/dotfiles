@@ -153,7 +153,10 @@ the debugger like with calling =asdf:load-system= directly.
 
 #+begin_src emacs-lisp
   (use-package sly-asdf
-    :after sly)
+    :after sly
+    :demand t
+    :config
+    (add-to-list 'sly-contribs 'sly-asdf 'append))
 #+end_src
 
 *** sly-quicklisp
@@ -170,6 +173,23 @@ Expand macros right inside source files!
 #+begin_src emacs-lisp
   (use-package sly-macrostep
     :after sly)
+#+end_src
+
+*** sly-stepper
+Common Lisp Stepper interface for SLY.
+
+#+begin_src emacs-lisp
+  (use-package sly-stepper
+    :after sly
+    :straight
+    ;; This package is not yet available from MELPA.
+    (sly-stepper :type git
+                 :host github
+                 :repo "joaotavora/sly-stepper"
+                 :branch "master")
+    :hook
+    (sly-mode . (lambda ()
+                  (require 'sly-stepper-autoloads))))
 #+end_src
 
 *** sly-named-readtables
@@ -190,6 +210,29 @@ Adds ANSI color support to the SLY REPL.
     :demand t
     :config
     (add-to-list 'sly-contribs 'sly-repl-ansi-color))
+#+end_src
+
+*** sly-package-inferred
+Replaces SLY's default completion with a function better suited to systems using
+the package-inferred style.
+
+#+begin_src emacs-lisp
+  (use-package sly-package-inferred
+    ;; 12/21/21
+    ;; Needs a special fork of SLY in order to work.
+    ;; I don't know if this plugin is even useful yet.
+    :disabled
+    :after sly
+    :demand t
+    :straight
+    ;; This package is not yet available on MELPA.
+    (sly-package-inferred :type git
+                          :host github
+                          :repo "40ants/sly-package-inferred"
+                          :branch "master")
+    :hook
+    (sly-mode . (lambda ()
+                  (require 'sly-package-inferred-autoloads))))
 #+end_src
 
 * SLIME
