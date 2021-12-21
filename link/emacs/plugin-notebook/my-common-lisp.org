@@ -218,7 +218,6 @@ MREPL. To install =agnostic-lizard=, simply run:
 #+begin_src emacs-lisp
   (use-package sly-stepper
     :after sly
-    :demand t
     :straight
     ;; This package is not yet available from MELPA.
     (sly-stepper :flavor melpa
@@ -228,11 +227,12 @@ MREPL. To install =agnostic-lizard=, simply run:
                  :branch "master"
                  :files
                  (:defaults "*.lisp" "*.asd"))
-    :config
+    :init
     ;; Install sly-stepper dependencies with quicklisp.
     (when (executable-find "ros")
       ;; Install agnostic-lizard
       (shell-command "ros -e '(ql:system-apropos \"agnostic-lizard\")'"))
+    :config
     (require 'sly-stepper-autoloads))
 #+end_src
 
