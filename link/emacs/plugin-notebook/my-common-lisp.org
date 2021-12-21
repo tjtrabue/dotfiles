@@ -179,16 +179,18 @@ Common Lisp Stepper interface for SLY.
 
 #+begin_src emacs-lisp
   (use-package sly-stepper
+    ;; Seems to always break SLY.
+    :disabled
     :after sly
+    :demand t
     :straight
     ;; This package is not yet available from MELPA.
     (sly-stepper :type git
                  :host github
                  :repo "joaotavora/sly-stepper"
                  :branch "master")
-    :hook
-    (sly-mode . (lambda ()
-                  (require 'sly-stepper-autoloads))))
+    :config
+    (require 'sly-stepper-autoloads))
 #+end_src
 
 *** sly-named-readtables
