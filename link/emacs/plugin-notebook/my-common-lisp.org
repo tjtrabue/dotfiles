@@ -136,7 +136,30 @@ Thank you so much for the your contributions, Mihai!
     ;; Select completion method. Can be one of:
     ;;   'sly-simple-completions (speculative completions)
     ;;   'sly-flex-completions (exact completions)
-    (sly-complete-symbol-function 'sly-flex-completions))
+    (sly-complete-symbol-function 'sly-flex-completions)
+    ;; Extra SLY features to load. Check the contrib/ subdirectory of the sly repo
+    ;; for a complete list of features.
+    (sly-contribs (delete-dups (append '(sly-autodoc
+                                         sly-fancy
+                                         sly-fancy-inspector
+                                         sly-fancy-trace
+                                         sly-fontifying-fu
+                                         sly-indentation
+                                         sly-mrepl
+                                         sly-package-fu
+                                         sly-profiler
+                                         sly-retro
+                                         sly-scratch
+                                         sly-stickers
+                                         sly-trace-dialog
+                                         sly-tramp)
+                                       sly-contribs)))
+    :init
+    ;; Add the SLY contrib packages to Emacs' load-path.
+    (add-to-list 'load-path (file-truename
+                             (concat my/straight-repos-dir "/sly/contrib/")))
+    :config
+    (require 'sly-autoloads))
 #+end_src
 
 ** Plugins
@@ -177,19 +200,38 @@ Expand macros right inside source files!
 *** sly-stepper
 Common Lisp Stepper interface for SLY.
 
+*NOTE*: You may need to install =agnostic-lizard= with quicklisp before this
+will work! Otherwise, you'll To do so, simply run:
+
+#+begin_src sh :tangle no
+  # If using a standard common lisp implementation:
+  sbcl
+  # OR, if using roswell:
+  ros run
+
+  # Either way, you will need to run:
+  CL-USER> (ql:system-apropos "agnostic-lizard")
+#+end_src
+
+**** =use-package= specification
 #+begin_src emacs-lisp
   (use-package sly-stepper
-    ;; Seems to always break SLY.
-    :disabled
     :after sly
     :demand t
     :straight
     ;; This package is not yet available from MELPA.
-    (sly-stepper :type git
+    (sly-stepper :flavor melpa
+                 :type git
                  :host github
                  :repo "joaotavora/sly-stepper"
-                 :branch "master")
+                 :branch "master"
+                 :files
+                 (:defaults "*.lisp" "*.asd"))
     :config
+    ;; Install sly-stepper dependencies with quicklisp.
+    (when (executable-find "ros")
+      ;; Install agnostic-lizard
+      (shell-command "ros -e '(ql:system-apropos \"agnostic-lizard\")'"))
     (require 'sly-stepper-autoloads))
 #+end_src
 
@@ -227,10 +269,13 @@ the package-inferred style.
     :demand t
     :straight
     ;; This package is not yet available on MELPA.
-    (sly-package-inferred :type git
+    (sly-package-inferred :flavor melpa
+                          :type git
                           :host github
                           :repo "40ants/sly-package-inferred"
-                          :branch "master")
+                          :branch "master"
+                          :files
+                          (:defaults "*.lisp" "*.asd"))
     :hook
     (sly-mode . (lambda ()
                   (require 'sly-package-inferred-autoloads))))
