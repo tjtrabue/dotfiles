@@ -201,7 +201,8 @@ Expand macros right inside source files!
 Common Lisp Stepper interface for SLY.
 
 *NOTE*: You may need to install =agnostic-lizard= with quicklisp before this
-will work! Otherwise, you'll To do so, simply run:
+will work! Otherwise, loading this plugin will cause a fatal error in the SLY
+MREPL. To install =agnostic-lizard=, simply run:
 
 #+begin_src sh :tangle no
   # If using a standard common lisp implementation:
