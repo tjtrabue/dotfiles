@@ -154,9 +154,7 @@ the debugger like with calling =asdf:load-system= directly.
 #+begin_src emacs-lisp
   (use-package sly-asdf
     :after sly
-    :demand t
-    :config
-    (add-to-list 'sly-contribs 'sly-asdf 'append))
+    :demand t)
 #+end_src
 
 *** sly-quicklisp
