@@ -59,7 +59,7 @@ function. Install it with the following command:
   npm install -g git+https://gitlab.com/matsievskiysv/math-preview
 #+end_src
 
-** use-package specification
+** =use-package= specification
 
 #+begin_src emacs-lisp
   (use-package math-preview)

@@ -75,7 +75,7 @@ some code formatting software.
           my/format-all-major-modes))
 #+end_src
 
-** use-package specification
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package format-all
     ;; Disabled in favor of apheleia.
@@ -196,7 +196,7 @@ and filetypes. Check their docstrings for more details.
       (add-to-list 'apheleia-mode-alist '(sh-mode . shfmt))))
 #+end_src
 
-** use-package specification
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package apheleia
     :hook

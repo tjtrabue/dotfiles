@@ -27,7 +27,7 @@ useful Emacs plugins, including Projectile and LSP Mode.
       "The path to the Makefile for ECB.")
   #+end_src
 
-* straight-use-package specification
+* =straight-use-package= specification
   We're skipping the =use-package= macro altogether in favor of the simpler
   =straight-use-package= system since all we need to do is clone the repository.
   =use-package= gets very unhappy when there is nothing to build or autoload,

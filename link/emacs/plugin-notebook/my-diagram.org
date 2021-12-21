@@ -32,7 +32,7 @@ Node.js tool. Check the installation instructions for =mermaid-cli=.
         "default")))
 #+end_src
 
-** use-package specification
+** =use-package= specification
 
 #+begin_src emacs-lisp
   (use-package mermaid-mode
