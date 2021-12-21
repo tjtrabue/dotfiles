@@ -16,12 +16,13 @@ clean_nvim() {
 # Installs the latest, greatest Neovim from the official site as an
 # appimage, and links the included executable to /usr/local/bin.
 install_neovim_nightly_appimage() {
-  local neovimReleasesDir="${NVIM_HOME:-${HOME}/.config/nvim}/.releases"
+  local neovimReleasesDir="${NVIM_APPIMAGE_RELEASE_DIR:-${HOME}/.config/nvim/.releases}"
   local neovimAppimagesDir="${neovimReleasesDir}/appimages"
   local latestAppimageDir="${neovimAppimagesDir}/latest"
   local appimageRunnable="${latestAppimageDir}/squashfs-root/usr/bin/nvim"
   local appimageName="nvim.appimage"
-  local nvimSymlinkDest="/usr/local/bin"
+  local nvimSyslinkPrefix="${NVIM_APPIMAGE_INSTALL_PREFIX:-/usr/local}"
+  local nvimSymlinkDest="${nvimSyslinkPrefix}/bin"
 
   __download_neovim_nightly_appimage
 
@@ -42,6 +43,28 @@ install_neovim_nightly_appimage() {
 
   log_info "Linking new neovim executable to: ${nvimSymlinkDest}/nvim"
   sudo ln -sf -t "${nvimSymlinkDest}" "${appimageRunnable}" >>/dev/null 2>&1
+}
+
+# Uninstall the Neovim nightly appimage.
+uninstall_neovim_nightly_appimage() {
+  local nvimSyslinkPrefix="${NVIM_APPIMAGE_INSTALL_PREFIX:-/usr/local}"
+  local nvimReleaseDir="${NVIM_APPIMAGE_RELEASE_DIR:-${HOME}/.config/nvim/.releases}"
+  local uninstallFiles=(
+    "${nvimSyslinkPrefix}/bin/nvim"
+  )
+  local f
+
+  for f in "${uninstallFiles[@]}"; do
+    if [ -s "${f}" ] || [ -h "${f}" ]; then
+      log_info "Removing file: ${BLUE}${f}${NC}"
+      rm -f "${f}"
+    fi
+  done
+
+  if [ -d "${nvimReleaseDir}" ]; then
+    log_info "Removing Neovim appimage directory: ${BLUE}${nvimReleaseDir}${NC}"
+    rm -rf "${nvimReleaseDir}"
+  fi
 }
 
 __download_neovim_nightly_appimage() {
