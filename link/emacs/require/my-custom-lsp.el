@@ -152,7 +152,9 @@ debugging."
 ;;;###autoload
 (defun my-custom-lsp-register-lsp-servers ()
   "Register all custom LSP servers that we want."
-  (my-custom-lsp--register-common-lisp-lsp-servers))
+  ;; CL-LSP still seems incompatible with Emacs.
+  ;; (my-custom-lsp--register-common-lisp-lsp-servers)
+  )
 
 (defun my-custom-lsp--register-common-lisp-lsp-servers ()
   "Register Common Lisp languageservers for use with `lsp-mode'."
