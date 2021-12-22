@@ -179,9 +179,6 @@ Thank you so much for the your contributions, Mihai!
     (add-to-list 'load-path (file-truename
                              (concat my/straight-repos-dir "/sly/contrib/")))
     :config
-    (when (executable-find "ros")
-      ;; Load the PPCRE library to enhance SLY's autocompletion.
-      (shell-command "ros -e '(ql:quickload :cl-ppcre)'"))
     (require 'sly-autoloads))
 #+end_src
 
