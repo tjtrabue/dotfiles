@@ -146,7 +146,7 @@ Thank you so much for the your contributions, Mihai!
     (sly-default-lisp 'sbcl)
     ;; Select completion method. Can be one of:
     ;;   'sly-simple-completions (speculative completions)
-    ;;   'sly-flex-completions (exact completions)
+    ;;   'sly-flex-completions   (exact completions)
     (sly-complete-symbol-function 'sly-flex-completions)
     ;; Extra SLY features to load. Check the `contrib/' subdirectory of the sly
     ;; repo for a complete list of features.
@@ -178,10 +178,10 @@ Thank you so much for the your contributions, Mihai!
     ;; Add optional SLY features to Emacs' load-path.
     (add-to-list 'load-path (file-truename
                              (concat my/straight-repos-dir "/sly/contrib/")))
+    :config
     (when (executable-find "ros")
       ;; Load the PPCRE library to enhance SLY's autocompletion.
       (shell-command "ros -e '(ql:quickload :cl-ppcre)'"))
-    :config
     (require 'sly-autoloads))
 #+end_src
 
