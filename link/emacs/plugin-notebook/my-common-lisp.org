@@ -137,8 +137,8 @@ Thank you so much for the your contributions, Mihai!
     ;;   'sly-simple-completions (speculative completions)
     ;;   'sly-flex-completions (exact completions)
     (sly-complete-symbol-function 'sly-flex-completions)
-    ;; Extra SLY features to load. Check the contrib/ subdirectory of the sly repo
-    ;; for a complete list of features.
+    ;; Extra SLY features to load. Check the `contrib/' subdirectory of the sly
+    ;; repo for a complete list of features.
     (sly-contribs (delete-dups (append '(sly-autodoc
                                          sly-fancy
                                          sly-fancy-inspector
@@ -155,7 +155,7 @@ Thank you so much for the your contributions, Mihai!
                                          sly-tramp)
                                        sly-contribs)))
     :init
-    ;; Add the SLY contrib packages to Emacs' load-path.
+    ;; Add optional SLY features to Emacs' load-path.
     (add-to-list 'load-path (file-truename
                              (concat my/straight-repos-dir "/sly/contrib/")))
     :config
