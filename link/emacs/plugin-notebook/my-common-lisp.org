@@ -124,10 +124,10 @@ Thank you so much for the your contributions, Mihai!
       ",")
     (my/evil-leader-def sly-mrepl-mode-map
       "," 'sly-mrepl-shortcut
-      "s" 'sly-mrepl-shortcut
       "P" 'sly-mrepl-set-package
+      "R" 'sly-restart-inferior-lisp
       "i" 'sly-package-internal-symbols
-      "r" 'sly-restart-inferior-lisp)
+      "s" 'sly-mrepl-shortcut)
     (general-def 'insert sly-mrepl-mode-map
       ;; Make sure we use basic SLY ENTER functionality instead of Lispy's.
       "RET"      'sly-mrepl-return
