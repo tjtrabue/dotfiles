@@ -61,6 +61,11 @@ link_roswell_init_file() {
   local roswellHomeDir="${HOME}/.roswell"
   local roswellInitTarget="${roswellHomeDir}/${roswellInitFileName}"
 
+  if [ ! -d "${roswellHomeDir}" ]; then
+    err "No Roswell home dir found at: ${BLUE}${roswellHomeDir}${NC}"
+    return 1
+  fi
+
   if [ -f "${roswellInitTarget}" ] && [ ! -h "${roswellInitTarget}" ]; then
     log_info "Backing up existing initialization file:" \
       "${BLUE}${roswellInitTarget}${NC}"
