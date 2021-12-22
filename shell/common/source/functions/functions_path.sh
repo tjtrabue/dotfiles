@@ -42,7 +42,7 @@ atp() {
 # then
 #   shortpath "/home/me/.jenv/bin" -> ${JENV_HOME}/bin
 shortpath() {
-  local inputPath="$1"
+  local inputPath="${1}"
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
   local varFile="${VAR_FILE:-${HOME}/.vars}"
   local bestVar=""
@@ -53,7 +53,7 @@ shortpath() {
   local shortPath="${inputPath}"
 
   if [ -z "${inputPath}" ]; then
-    err "No file path provided."
+    err "No file path provided"
     return 1
   fi
 

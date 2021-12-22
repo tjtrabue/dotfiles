@@ -7,20 +7,28 @@
 # USAGE:
 #   diralias <alias name> [<target directory>]
 diralias() {
-  local dirAlias="$1"
-  shift
+  local dirAlias
+  local targetDir="$(pwd)"
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
   local existingAliasValue
   local lastByteOfFile
   local stringToWrite
-  local targetDir
+  local shortPath
+
+  # Get CLI args
+  if [ -n "${1}" ]; then
+    dirAlias="${1}"
+    shift
+  fi
+  if [ -n "${1}" ]; then
+    targetDir="${1}"
+    shift
+  fi
 
   if [ -z "${dirAlias}" ]; then
     err "No alias name given to ${FUNCNAME[0]}"
     return 1
   fi
-
-  targetDir="${1:-$(pwd)}"
 
   existingAliasValue="$(
     grep "${dirAlias}=" <"${dirAliasFile}" |
@@ -30,13 +38,16 @@ diralias() {
   )"
 
   # If the alias already exists, get rid of the old one before adding the new
-  #one.
+  # one.
   if [ -n "${existingAliasValue}" ]; then
     sed -i "/^${dirAlias}=/d" "${dirAliasFile}"
   fi
 
+  # Get the shortened version of the target directory path.
+  shortPath="$(shortpath "${targetDir}")"
+
   # The diralias line to write to the DIR_ALIAS_FILE.
-  stringToWrite="${dirAlias}=\"${targetDir}\""
+  stringToWrite="${dirAlias}=\"${shortPath}\""
 
   # Remove trailing newline from diralias file if it has one.
   perl -pi -e 'chomp if eof' "${dirAliasFile}"
