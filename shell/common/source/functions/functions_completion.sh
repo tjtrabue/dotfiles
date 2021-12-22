@@ -37,6 +37,7 @@ add_bash_completions() {
 # NOTE ABOUT ZSH: Install and activate Zsh completions with a plugin manager,
 #                 such as zplug.
 add_zsh_completions() {
+  __init_zsh_completions
   __add_zsh_git_completions
   __add_zsh_docker_completions
   __add_extra_zsh_completions
