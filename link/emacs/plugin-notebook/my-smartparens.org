@@ -39,13 +39,10 @@ aforementioned Vim plugins have.
       ;; Enable smartparens globally.
       ((after-init . smartparens-global-mode)
        ;; Enable strict mode for Lisp dialects.
-       ((cider-repl-mode
-         clojure-mode
+       ((clojure-mode
          emacs-lisp-mode
-         ielm-mode
          lisp-mode
-         lisp-interaction-mode
-         sly-mrepl-mode)
+         lisp-interaction-mode)
         . smartparens-strict-mode))
       :config
       (require 'smartparens-config))

@@ -132,6 +132,9 @@ Thank you so much for the your contributions, Mihai!
       ;; Make sure we use basic SLY ENTER functionality instead of Lispy's.
       "RET"      'sly-mrepl-return
       "<return>" 'sly-mrepl-return
+      ;; Make a newline in the REPL without evaluating the expression
+      "C-RET"      'newline-and-indent
+      "C-<return>" 'newline-and-indent
       ;; Indent, complete symbol, or expand arg list.
       "TAB"   'sly-mrepl-indent-and-complete-symbol
       "<tab>" 'sly-mrepl-indent-and-complete-symbol
