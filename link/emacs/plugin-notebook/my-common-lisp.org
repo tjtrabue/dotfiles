@@ -205,12 +205,12 @@ will work! Otherwise, loading this plugin will cause a fatal error in the SLY
 MREPL. To install =agnostic-lizard=, simply run:
 
 #+begin_src sh :tangle no
+  # Start a REPL session.
   # If using a standard common lisp implementation:
   sbcl
-  # OR, if using roswell:
+  # OR, if using roswell to manage Common Lisp implementations:
   ros run
-
-  # Either way, you will need to run:
+  # Either way, once you're in the Common Lisp REPL you will need to run:
   CL-USER> (ql:system-apropos "agnostic-lizard")
 #+end_src
 
