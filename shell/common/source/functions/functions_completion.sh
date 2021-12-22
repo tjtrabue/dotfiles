@@ -68,6 +68,13 @@ __create_zsh_completion_dir() {
   fi
 }
 
+__add_zsh_completion_dir_to_fpath() {
+  local completionDir="$(__get_zsh_completion_dir)"
+
+  # Add completion files to function path
+  fpath=("${completionDir}" $fpath)
+}
+
 # Download extra Zsh completions for git.
 __add_zsh_git_completions() {
   # Zsh provides Git completions by default, so this is no longer necesary.
@@ -87,11 +94,7 @@ __add_zsh_git_completions() {
       "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh"
   fi
 
-  # Add completion files to function path
-  fpath=("${completionDir}" $fpath)
-
-  zstyle ':completion:*:*:git:*' script "${bashCompletionFile}"
-
+  __add_zsh_completion_dir_to_fpath
   __add_custom_zsh_git_completions
 }
 
@@ -107,8 +110,7 @@ __add_zsh_docker_completions() {
       "https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker"
   fi
 
-  # Add completion files to function path
-  fpath=("${completionDir}" $fpath)
+  __add_zsh_completion_dir_to_fpath
 }
 
 # Add Zsh completions for custom Git functions from this repository.
