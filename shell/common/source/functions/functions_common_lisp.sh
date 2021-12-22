@@ -18,6 +18,7 @@ install_roswell() {
     ;;
   esac
 
+  link_roswell_init_file
 }
 
 # Install all relevant Common Lisp distributions.
@@ -49,6 +50,26 @@ install_common_lisp_packages() {
       install_packages_from_file_with_tool "ros install" \
         "${COMMON_LISP_PACKAGES_FILE}"
     }
+}
+
+# Link our Roswell initialization file to ~/.roswell/init.lisp.
+# The code in this file gets executed whenever Roswell starts a new REPL.
+link_roswell_init_file() {
+  local roswellLinkDir="${DOTFILES_LINK}/roswell"
+  local roswellInitFileName="init.lisp"
+  local roswellInitFile="${roswellLinkDir}/${roswellInitFileName}"
+  local roswellHomeDir="${HOME}/.roswell"
+  local roswellInitTarget="${roswellHomeDir}/${roswellInitFileName}"
+
+  if [ -f "${roswellInitTarget}" ] && [ ! -h "${roswellInitTarget}" ]; then
+    log_info "Backing up existing initialization file:" \
+      "${BLUE}${roswellInitTarget}${NC}"
+    mv "${roswellInitTarget}"{,.bak}
+  fi
+
+  log_info "Linking Roswell initialization file:" \
+    "${BLUE}${roswellInitTarget}${NC}"
+  ln -sf -t "${roswellHomeDir}" "${roswellInitFile}"
 }
 
 # Install roswell with homebrew.
