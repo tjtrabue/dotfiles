@@ -225,8 +225,7 @@ MREPL. To install =agnostic-lizard=, simply run:
                  :host github
                  :repo "joaotavora/sly-stepper"
                  :branch "master"
-                 :files
-                 (:defaults "*.lisp" "*.asd"))
+                 :files (:defaults "*.lisp" "*.asd"))
     :init
     ;; Install sly-stepper dependencies with quicklisp.
     (when (executable-find "ros")
@@ -275,8 +274,7 @@ the package-inferred style.
                           :host github
                           :repo "40ants/sly-package-inferred"
                           :branch "master"
-                          :files
-                          (:defaults "*.lisp" "*.asd"))
+                          :files (:defaults "*.lisp" "*.asd"))
     :hook
     (sly-mode . (lambda ()
                   (require 'sly-package-inferred-autoloads))))
