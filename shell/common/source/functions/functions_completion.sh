@@ -30,18 +30,18 @@ add_bash_completions() {
   __add_custom_zsh_git_completions
   __add_docker_alias_completions
   __add_sdkman_completions
-  __add_asdf_completions_for_bash_zsh
+  __add_asdf_completions_for_bash
 }
 
 # Add any extra Zsh completions.
 # NOTE ABOUT ZSH: Install and activate Zsh completions with a plugin manager,
 #                 such as zplug.
 add_zsh_completions() {
-  __init_zsh_completions
   __add_zsh_git_completions
   __add_zsh_docker_completions
   __add_extra_zsh_completions
-  __add_asdf_completions_for_bash_zsh
+  __add_asdf_completions_for_zsh
+  __init_zsh_completions
 }
 
 # Add extra Fish shell completions.
@@ -286,15 +286,27 @@ __add_sdkman_completions() {
   fi
 }
 
-# Add asdf version manager completions for Bash and Zsh.
-__add_asdf_completions_for_bash_zsh() {
+# Add asdf version manager command line completions for Bash.
+__add_asdf_completions_for_bash() {
   local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
   local asdfCompletionFile="${asdfDir}/completions/asdf.bash"
 
   if [ -f "${asdfCompletionFile}" ]; then
     . "${asdfCompletionFile}"
   else
-    warn "No ASDF completion file found at: ${GREEN}${asdfCompletionFile}${NC}"
+    warn "No ASDF completion file found at: ${BLUE}${asdfCompletionFile}${NC}"
+  fi
+}
+
+# Add asdf version manager command line completions for Zsh.
+__add_asdf_completions_for_zsh() {
+  local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
+  local asdfCompletionDir="${asdfDir}/completions"
+
+  if [ -d "${asdfCompletionDir}" ]; then
+    fpath=(${asdfCompletionDir} $fpath)
+  else
+    warn "No ASDF completion dir found at: ${BLUE}${asdfCompletionDir}${NC}"
   fi
 }
 
