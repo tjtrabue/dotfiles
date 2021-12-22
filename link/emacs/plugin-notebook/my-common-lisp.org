@@ -154,6 +154,15 @@ Thank you so much for the your contributions, Mihai!
                                          sly-trace-dialog
                                          sly-tramp)
                                        sly-contribs)))
+    ;; How to transmit Unicode characters between Emacs and the Lisp system.
+    ;; You also need an appropriate font that supports Unicode symbols.
+    (sly-net-coding-system 'utf-8-unix)
+    ;; Path to the file containing the MREPL's history.
+    (sly-mrepl-history-file-name (file-truename
+                                  (concat user-emacs-directory
+                                          "/.sly-mrepl-history")))
+    ;; Move MREPL history duplicates to more recent slots.
+    (sly-mrepl-prevent-duplicate-history 'move)
     :init
     ;; Add optional SLY features to Emacs' load-path.
     (add-to-list 'load-path (file-truename
