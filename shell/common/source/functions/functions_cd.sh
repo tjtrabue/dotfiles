@@ -65,8 +65,8 @@ __do_cd() {
     __do_cd_history "${dirArg}"
   elif echo "${dirArg}" | grep -E -q -- '^@$'; then
     # Use '@' to cd to the root of the current git repository.
-    log_debug "cd'ing to git root: ${dirArg}"
-    __do_cd_to_vcs_root
+    log_debug "cd'ing to project root: ${dirArg}"
+    __do_cd_to_project_root
   else
     log_debug "cd'ing to directory or alias: ${dirArg}"
     __do_cd_to_dir_or_alias "${dirArg}"
@@ -105,9 +105,31 @@ __do_cd_history() {
   fi
 }
 
-# Return to the root of the current VCS repository.
-__do_cd_to_vcs_root() {
-  if ! isrepo; then
+# Return to the root of the current project directory tree.
+# Usually, this amounts to returning to the root of the current Git/VCS
+# repository.
+__do_cd_to_project_root() {
+  if isrepo; then
+    __do_cd_to_vcs_project_root
+  else
+    err "Could not determine project root"
+    return 1
+  fi
+}
+
+# Return to top level of the current version control repository.
+__do_cd_to_vcs_project_root() {
+  if isgitrepo; then
+    __do_cd_to_git_project_root
+  else
+    err "Could not determine VCS type"
+    return 1
+  fi
+}
+
+# Return to top level of the current Git repository.
+__do_cd_to_git_project_root() {
+  if ! isgitrepo; then
     err "Not inside a VCS repository."
     return 1
   fi
