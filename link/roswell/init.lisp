@@ -4,4 +4,7 @@
 ;; managed by Roswell, and acts as a drop-in replacement for many "rc" files
 ;; specific to particular Common Lisp implementations, like .sbclrc.
 
+;; Needed for regex searching in Emacs SLY
 (ql:quickload :cl-ppcre)
+;; Needed for some SLY plugins
+(ql:quickload "agnostic-lizard")

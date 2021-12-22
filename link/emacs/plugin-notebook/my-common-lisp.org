@@ -231,7 +231,7 @@ MREPL. To install =agnostic-lizard=, simply run:
   # OR, if using roswell to manage Common Lisp implementations:
   ros run
   # Either way, once you're in the Common Lisp REPL you will need to run:
-  CL-USER> (ql:system-apropos "agnostic-lizard")
+  CL-USER> (ql:quickload "agnostic-lizard")
 #+end_src
 
 **** =use-package= specification
@@ -246,11 +246,6 @@ MREPL. To install =agnostic-lizard=, simply run:
                  :repo "joaotavora/sly-stepper"
                  :branch "master"
                  :files (:defaults "*.lisp" "*.asd"))
-    :init
-    ;; Install sly-stepper dependencies with quicklisp.
-    (when (executable-find "ros")
-      ;; Install agnostic-lizard
-      (shell-command "ros -e '(ql:system-apropos \"agnostic-lizard\")'"))
     :config
     (require 'sly-stepper-autoloads))
 #+end_src

@@ -26,8 +26,7 @@ regardless of its particular dialect.
         emacs-lisp-mode
         ielm-mode
         lisp-mode
-        lisp-interaction-mode
-        sly-mrepl-mode)
+        lisp-interaction-mode)
        . lispy-mode)
       :general
       (general-unbind lispy-mode-map
