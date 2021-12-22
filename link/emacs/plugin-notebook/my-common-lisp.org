@@ -121,11 +121,20 @@ Thank you so much for the your contributions, Mihai!
     (general-unbind sly-mrepl-mode-map
       ",")
     (my/evil-leader-def sly-mrepl-mode-map
+      "," 'sly-mrepl-shortcut
       "s" 'sly-mrepl-shortcut
       "p" 'sly-mrepl-set-package
       "i" 'sly-package-internal-symbols
       "r" 'sly-restart-inferior-lisp)
     (general-def 'insert sly-mrepl-mode-map
+      ;; Make sure we use basic SLY ENTER functionality instead of Lispy's.
+      "RET"      'sly-mrepl-return
+      "<return>" 'sly-mrepl-return
+      ;; Indent, complete symbol, or expand arg list.
+      "TAB"   'sly-mrepl-indent-and-complete-symbol
+      "<tab>" 'sly-mrepl-indent-and-complete-symbol
+      "C-l"   'sly-mrepl-indent-and-complete-symbol
+      ;; Cycle through MREPL history.
       "C-j" 'comint-next-input
       "C-k" 'comint-previous-input)
     :custom
