@@ -67,7 +67,7 @@ for any programming language that supports a formatting tool.")
                                        LaTeX-mode
                                        latex-mode
                                        less-css-mode
-                                       lisp-mode
+                                       ;; lisp-mode
                                        lua-mode
                                        mhtml-mode
                                        objc-mode
@@ -153,8 +153,7 @@ debugging."
 (defun my-custom-lsp-register-lsp-servers ()
   "Register all custom LSP servers that we want."
   ;; CL-LSP still seems incompatible with Emacs.
-  ;; (my-custom-lsp--register-common-lisp-lsp-servers)
-  )
+  (my-custom-lsp--register-common-lisp-lsp-servers))
 
 (defun my-custom-lsp--register-common-lisp-lsp-servers ()
   "Register Common Lisp languageservers for use with `lsp-mode'."

@@ -119,11 +119,13 @@ Thank you so much for the your contributions, Mihai!
       "C-q s" 'sly-quit-sentinel
       "C-q c" 'sly-quit-connection-at-point)
     (general-unbind sly-mrepl-mode-map
+      ;; Get rid of default `,' behavior since that conflicts with evil's leader
+      ;; feature.
       ",")
     (my/evil-leader-def sly-mrepl-mode-map
       "," 'sly-mrepl-shortcut
       "s" 'sly-mrepl-shortcut
-      "p" 'sly-mrepl-set-package
+      "P" 'sly-mrepl-set-package
       "i" 'sly-package-internal-symbols
       "r" 'sly-restart-inferior-lisp)
     (general-def 'insert sly-mrepl-mode-map
@@ -176,6 +178,9 @@ Thank you so much for the your contributions, Mihai!
     ;; Add optional SLY features to Emacs' load-path.
     (add-to-list 'load-path (file-truename
                              (concat my/straight-repos-dir "/sly/contrib/")))
+    (when (executable-find "ros")
+      ;; Load the PPCRE library to enhance SLY's autocompletion.
+      (shell-command "ros -e '(ql:quickload :cl-ppcre)'"))
     :config
     (require 'sly-autoloads))
 #+end_src
