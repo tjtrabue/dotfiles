@@ -856,7 +856,11 @@ and hooks in a way that defers loading the package.
     ;; If a non-nil argument is passed to `general-evil-setup', you may omit the
     ;; "general-" prefix for these macros. I find that leaving them in makes your
     ;; code more descriptive, however.
-    (general-evil-setup))
+    (general-evil-setup)
+    ;;; Set universal keybindings with General
+    ;; Evil leader shortcuts:
+    (my/evil-leader-def
+      "ee" 'eval-last-sexp))
 #+end_src
 
 * Load External Configuration Files

@@ -64,7 +64,10 @@ This file contains Emacs plugins and configuration for writin Emacs Lisp.
    #+begin_src emacs-lisp
      (use-package eros
        :hook
-       (emacs-lisp-mode . eros-mode))
+       (emacs-lisp-mode . eros-mode)
+       :general
+       (my/evil-leader-def
+         "ee" 'eros-eval-last-sexp))
    #+end_src
 
 ** elmacro
