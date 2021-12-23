@@ -122,12 +122,22 @@ Thank you so much for the your contributions, Mihai!
       ;; Get rid of default `,' behavior since that conflicts with evil's leader
       ;; feature.
       ",")
+    ;; SLY leader keybindings (prefix: `s')
+    (my/evil-leader-def sly-mode-map
+      "sS" 'sly-who-sets
+      "sZ" 'sly-mrepl-sync
+      "sb" 'sly-who-binds
+      "sc" 'sly-who-calls
+      "sd" 'sly-edit-definition
+      "sr" 'sly-who-references
+      "ss" 'sly-stickers-dwim
+      "sw" 'sly-calls-who
+      "sz" 'sly-mrepl)
     (my/evil-leader-def sly-mrepl-mode-map
       "," 'sly-mrepl-shortcut
       "P" 'sly-mrepl-set-package
       "R" 'sly-restart-inferior-lisp
-      "i" 'sly-package-internal-symbols
-      "s" 'sly-mrepl-shortcut)
+      "i" 'sly-package-internal-symbols)
     (general-def 'insert sly-mrepl-mode-map
       ;; Make sure we use basic SLY ENTER functionality instead of Lispy's.
       "RET"      'sly-mrepl-return
@@ -142,6 +152,11 @@ Thank you so much for the your contributions, Mihai!
       ;; Cycle through MREPL history.
       "C-j" 'comint-next-input
       "C-k" 'comint-previous-input)
+    ;; Bindings for the Trace Dialog
+    (general-def 'normal sly-trace-dialog-mode-map
+      ;; Copy the trace under point to the MREPL
+      "gC" 'sly-mrepl-copy-call-to-repl
+      "gP" 'sly-mrepl-copy-part-to-repl)
     :custom
     ;; Set the program used to interact with Common Lisp.
     (inferior-lisp-program (my/get-inferior-lisp-program))

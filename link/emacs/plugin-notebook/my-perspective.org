@@ -51,7 +51,7 @@ different perspective, and many more.
         "pL" 'persp-state-load
         "pS" 'persp-state-save
         "pa" 'persp-add-buffer
-        "pb" 'persp-switch-to-buffer
+        "pb" 'persp-switch-to-buffer*
         "pc" 'persp-kill
         "pi" 'persp-import
         "pk" 'persp-remove-buffer
