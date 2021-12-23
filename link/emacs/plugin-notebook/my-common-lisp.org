@@ -126,6 +126,7 @@ Thank you so much for the your contributions, Mihai!
     (my/evil-leader-def sly-mode-map
       ;; override standard `,ee' shortcut for evaluating s-exps
       "ee" 'sly-eval-last-expression
+      "sR" 'sly-stickers-replay
       "sS" 'sly-who-sets
       "sT" 'sly-trace-dialog
       "sZ" 'sly-mrepl-sync
