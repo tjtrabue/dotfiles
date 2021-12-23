@@ -132,6 +132,8 @@ Thank you so much for the your contributions, Mihai!
       "sb" 'sly-who-binds
       "sc" 'sly-who-calls
       "sd" 'sly-edit-definition
+      "sf" 'sly-compile-defun
+      "sk" 'sly-compile-and-load-file
       "sr" 'sly-who-references
       "ss" 'sly-stickers-dwim
       "st" 'sly-trace-dialog-toggle-trace
