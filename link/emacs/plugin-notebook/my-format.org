@@ -145,6 +145,7 @@ and filetypes. Check their docstrings for more details.
                      (list "--indent-size" (number-to-string indent)))
                    (when indent-tabs-mode "--tab")
                    "-"))
+      (lisp-format . ("lisp-format"))
       (shfmt . ("shfmt" "-s" "-")))
     "Alist that maps names to custom apheleia formatters.
   It is perfectly acceptable to define formatters for executables
@@ -153,7 +154,10 @@ and filetypes. Check their docstrings for more details.
   `apheleia-mode-alist'.")
 
   (defvar my/apheleia-mode-formatters-alist
-    '((sh-mode . beautysh))
+    '(
+      ;; lisp-format is currently broken
+      ;; ((emacs-lisp-mode lisp-mode scheme-mode) . lisp-format)
+      (sh-mode . beautysh))
     "Alist mapping major modes to custom formatter specifications for apheleia.
   The car of each alist cons cell can either be a single symbol or
   string, or a list of symbols or strings. If the car is a list,
