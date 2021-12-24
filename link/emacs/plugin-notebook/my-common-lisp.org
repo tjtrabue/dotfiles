@@ -133,6 +133,7 @@ Thank you so much for the your contributions, Mihai!
       "sc"  'sly-who-calls
       "sd"  'sly-edit-definition
       "sf"  'sly-compile-defun
+      "si"  'sly-stickers-dwim
       "sk"  'sly-compile-and-load-file
       "sp"  'sly-stepper
       "sr"  'sly-who-references
