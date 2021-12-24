@@ -126,25 +126,29 @@ Thank you so much for the your contributions, Mihai!
     (my/evil-leader-def sly-mode-map
       ;; override standard `,ee' shortcut for evaluating s-exps
       "ee"  'sly-eval-last-expression
-      "sS"  'sly-who-sets
       "sT"  'sly-trace-dialog
       "sZ"  'sly-mrepl-sync
-      "sb"  'sly-who-binds
-      "sc"  'sly-who-calls
       "sd"  'sly-edit-definition
+      "se"  'sly-edit-value
       "sf"  'sly-compile-defun
       "si"  'sly-stickers-dwim
       "sk"  'sly-compile-and-load-file
-      "sp"  'sly-stepper
-      "sr"  'sly-who-references
+      "sp"  'sly-pprint-eval-last-expression
+      "sr"  'sly-eval-region
       "ssF" 'sly-stickers-forget
       "ssd" 'sly-stickers-clear-defun-stickers
       "ssf" 'sly-stickers-fetch
       "ssk" 'sly-stickers-clear-buffer-stickers
+      "ssp" 'sly-stepper
       "ssr" 'sly-stickers-replay
       "sss" 'sly-stickers-dwim
       "st"  'sly-trace-dialog-toggle-trace
-      "sw"  'sly-calls-who
+      "su"  'sly-undefine-function
+      "swb" 'sly-who-binds
+      "swc" 'sly-who-calls
+      "swr" 'sly-who-references
+      "sws" 'sly-who-sets
+      "sww" 'sly-calls-who
       "sz"  'sly-mrepl)
     (my/evil-leader-def sly-mrepl-mode-map
       "," 'sly-mrepl-shortcut
