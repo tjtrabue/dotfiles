@@ -181,4 +181,24 @@ EOF
   install_emacs_plus_for_macos
 }
 
+# Clean macOS system caches.
+cleanup_mac() {
+  local userCacheDir="${HOME}/Library/Caches"
+
+  if [ -x "$(command -v brew)" ]; then
+    # Delete homebrew caches.
+    brew cleanup --prune=all
+  fi
+
+  if [ -x "$(command -v xcrun)" ]; then
+    # Delete old device simulators
+    xcrun simctl delete unavailable
+  fi
+
+  if [ -d "${userCacheDir}" ]; then
+    # Purge user caches
+    rm -rf "${userCacheDir}"/*
+  fi
+}
+
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
