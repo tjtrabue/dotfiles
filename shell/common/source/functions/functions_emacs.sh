@@ -346,7 +346,7 @@ __update_straight_repo() {
       break
     else
       warn "Did not update repo: ${BLUE}$(basename "${repo}")${NC} on attempt" \
-        "${i} of ${numRetries}"
+        "${GREEN}${i}${NC} of ${GREEN}${numRetries}${NC}"
     fi
   done
 
@@ -388,4 +388,4 @@ clone_roam_notes() {
 }
 
 # Modeline for this file (leave it commented!)
-# vim:foldenable:foldmethod=syntax:foldlevel=0:foldnestmax=1
+# vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
