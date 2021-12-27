@@ -186,19 +186,24 @@ cleanup_mac() {
   local userCacheDir="${HOME}/Library/Caches"
 
   if [ -x "$(command -v brew)" ]; then
-    # Delete homebrew caches.
+    log_info "Deleting Homebrew caches"
     brew cleanup --prune=all
   fi
 
   if [ -x "$(command -v xcrun)" ]; then
-    # Delete old device simulators
+    log_info "Deleting old simlator devices"
     xcrun simctl delete unavailable
   fi
 
   if [ -d "${userCacheDir}" ]; then
-    # Purge user caches
+    log_info "Purging user caches in: ${BLUE}${userCacheDir}${NC}"
     rm -rf "${userCacheDir}"/*
   fi
+
+  cat <<EOF
+Done cleaning mac! You should restart your computer to ensure that all changes
+take effect.
+EOF
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
