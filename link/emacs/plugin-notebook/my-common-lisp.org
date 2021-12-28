@@ -118,10 +118,6 @@ Thank you so much for the your contributions, Mihai!
       "C-q l" 'sly-quit-lisp
       "C-q s" 'sly-quit-sentinel
       "C-q c" 'sly-quit-connection-at-point)
-    (general-unbind sly-mrepl-mode-map
-      ;; Get rid of default `,' behavior since that conflicts with evil's leader
-      ;; feature.
-      ",")
     ;; SLY leader keybindings
     (my/evil-leader-def sly-mode-map
       ;; override standard `,ee' shortcut for evaluating s-exps
@@ -155,6 +151,10 @@ Thank you so much for the your contributions, Mihai!
       "P" 'sly-mrepl-set-package
       "R" 'sly-restart-inferior-lisp
       "i" 'sly-package-internal-symbols)
+    (general-unbind sly-mrepl-mode-map
+      ;; Get rid of default `,' behavior since that conflicts with evil's leader
+      ;; feature.
+      ",")
     (general-def 'insert sly-mrepl-mode-map
       ;; Make sure we use basic SLY ENTER functionality instead of Lispy's.
       "RET"      'sly-mrepl-return

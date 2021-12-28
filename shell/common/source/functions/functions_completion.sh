@@ -103,12 +103,22 @@ __add_zsh_git_completions() {
 __add_zsh_docker_completions() {
   local completionDir="$(__get_zsh_completion_dir)"
   local zshDockerCompletionFile="${completionDir}/_docker"
+  local zshDockerComposeCompletionFile="${completionDir}/_docker-compose"
 
   __create_zsh_completion_dir
 
   if [ ! -f "${zshDockerCompletionFile}" ]; then
-    curl -o "${zshDockerCompletionFile}" \
+    log_info "Downloading Docker Zsh completions to:" \
+      "${BLUE}${zshDockerCompletionFile}${NC}"
+    curl -fsSL -o "${zshDockerCompletionFile}" \
       "https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker"
+  fi
+
+  if [ ! -f "${zshDockerComposeCompletionFile}" ]; then
+    log_info "Downloading docker-compose Zsh completions to:" \
+      "${BLUE}${zshDockerComposeCompletionFile}${NC}"
+    curl -fsSL -o "${zshDockerComposeCompletionFile}" \
+      "https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/zsh/_docker-compose"
   fi
 
   __add_zsh_completion_dir_to_fpath
