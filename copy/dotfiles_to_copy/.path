@@ -19,6 +19,7 @@ ${HOME}/.cabal/bin
 ${HOME}/.luarocks/bin
 ${HOME}/.npm-global/bin
 ${HOME}/.cargo/bin
+${HOME}/.sdkman/candidates/*/current/bin
 ${HOME}/.jenv/bin
 ${HOME}/.jenv/shims
 ${HOME}/.pyenv/bin
