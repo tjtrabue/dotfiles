@@ -46,10 +46,12 @@ ninja
 openssh
 parallel
 plantuml
+postgres
 pyenv
 ranger
 rclone
 rectangle
+rename
 ripgrep
 roswell
 screen

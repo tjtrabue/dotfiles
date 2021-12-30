@@ -71,6 +71,34 @@ local function formatter_rustfmt()
   }
 end
 
+-- tidy for XML
+local function formatter_tidy_xml()
+  return {
+    exe = "tidy",
+    args = {
+      "-xml",
+      "-utf8",
+      "-bare",
+      "-clean",
+      "-indent",
+      "-wrap",
+      "80",
+      "--vertical-space",
+      "yes"
+    },
+    stdin = true
+  }
+end
+
+-- xmllint
+local function formatter_xmllint()
+  return {
+    exe = "xmllint",
+    args = {"--format", "-"},
+    stdin = true
+  }
+end
+
 -- Assign formatters for each filetype
 require("formatter").setup(
   {
@@ -107,6 +135,9 @@ require("formatter").setup(
       sh = {
         -- formatter_beautysh,
         formatter_shfmt
+      },
+      xml = {
+        formatter_xmllint
       }
     }
   }
@@ -127,6 +158,7 @@ augroup FormatAutogroup
   autocmd FileType python autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType rust autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
+  " autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
 augroup END
 ]],
   true

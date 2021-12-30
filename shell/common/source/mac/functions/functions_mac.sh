@@ -181,6 +181,12 @@ EOF
   install_emacs_plus_for_macos
 }
 
+# Enables hidden files in Finder by default.
+show_hidden_files_in_finder() {
+  defaults write com.apple.Finder AppleShowAllFiles true
+  killall Finder
+}
+
 # Clean macOS system caches.
 cleanup_mac() {
   local userCacheDir="${HOME}/Library/Caches"
