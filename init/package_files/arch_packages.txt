@@ -36,6 +36,7 @@ dmenu
 dnsutils
 docbook2x
 docker
+docker-compose
 doxygen
 efibootmgr
 elixir

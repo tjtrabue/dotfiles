@@ -8,3 +8,5 @@
 (ql:quickload :cl-ppcre)
 ;; Needed for some SLY plugins
 (ql:quickload "agnostic-lizard")
+;; Portable MOP implementation for Common Lisp.
+(ql:quickload "closer-mop")
