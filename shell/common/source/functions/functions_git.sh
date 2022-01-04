@@ -72,6 +72,15 @@ reponame() {
 emsg() {
   edit "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
 }
+
+# Get a local representation of a remote branch name. If the input is already a
+# local ref, just use that name. Thus,
+#   origin/develop -> develop
+#   master         -> master
+localrefname() {
+  local remoteRefName="${1}"
+  echo "${remoteRefName#*/}"
+}
 # }}}
 
 # Branching/switching branches {{{
@@ -155,12 +164,12 @@ __get_sw_numeric_ref_from_hist_file() {
 # its remote counterpart. If the local copy already exists, we have only to
 # switch to it.
 __checkout_local_or_remote_branch() {
-  local remoteBranch="${1}"
-  local localBranch="$(basename "${remoteBranch}" 2>/dev/null)"
+  local branchToSwitch="${1}"
+  local localBranch="$(localrefname "${branchToSwitch}")"
   local currentRef="$(currentref)"
   local defaultRemote="$(defaultremote)"
 
-  if [ -z "${remoteBranch}" ]; then
+  if [ -z "${branchToSwitch}" ]; then
     err "No branch name provided"
     return 1
   elif [ "${localBranch}" = "${currentRef}" ]; then
@@ -169,7 +178,7 @@ __checkout_local_or_remote_branch() {
   fi
 
   if ! verifyref "${localBranch}"; then
-    git checkout -t "${remoteBranch}"
+    git checkout -t "${branchToSwitch}"
   else
     git branch -u "${defaultRemote}/${localBranch}" "${localBranch}" 2>/dev/null
     git checkout "${localBranch}"
