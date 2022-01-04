@@ -3,28 +3,28 @@
 
 -- Set linters by filetype
 require("lint").inters_by_ft = {
-  ansible = {"ansible_lint"},
-  bash = {"shellcheck"},
-  c = {"cppcheck"},
-  clojure = {"clj-kondo"},
+  ansible = {"ansible_lint", "cspell"},
+  bash = {"shellcheck", "cspell"},
+  c = {"cppcheck", "cspell"},
+  clojure = {"clj-kondo", "cspell"},
   cmake = {"cmakelint"},
-  cpp = {"cppcheck", "cpplint"},
+  cpp = {"cppcheck", "cpplint", "cspell"},
   dockerfile = {"hadolint"},
-  go = {"revive"},
-  haskell = {"hlint"},
-  html = {"tidy"},
-  java = {"checkstyle"},
-  javascript = {"eslint"},
-  javascriptreact = {"eslint"},
-  lua = {"selene", "luacheck"},
+  go = {"revive", "cspell"},
+  haskell = {"hlint", "cspell"},
+  html = {"tidy", "cspell"},
+  java = {"checkstyle", "cspell"},
+  javascript = {"eslint", "cspell"},
+  javascriptreact = {"eslint", "cspell"},
+  lua = {"selene", "luacheck", "cspell"},
   markdown = {"markdownlint", "vale", "proselint"},
-  python = {"pylint", "flake8"},
-  ruby = {"ruby"},
-  sh = {"shellcheck"},
+  python = {"pylint", "flake8", "cspell"},
+  ruby = {"ruby", "cspell"},
+  sh = {"shellcheck", "cspell"},
   tex = {"chktex"},
-  vim = {"vint"},
-  yaml = {"yamllint"},
-  zsh = {"shellcheck"}
+  vim = {"vint", "cspell"},
+  yaml = {"yamllint", "cspell"},
+  zsh = {"shellcheck", "cspell"}
 }
 
 -- Set up autocmd to trigger linting

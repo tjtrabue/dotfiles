@@ -8,6 +8,7 @@ babel-eslint
 bash-language-server
 bible
 caniuse-cmd
+cspell
 csslint
 dockerfile-language-server-nodejs
 eslint
