@@ -1,4 +1,5 @@
 aspell
+awscli
 binutils
 broot
 clang-format
