@@ -42,7 +42,6 @@ add_zsh_completions() {
   __add_zsh_docker_completions
   __add_extra_zsh_completions
   __add_asdf_completions_for_zsh
-  __init_zsh_completions
 }
 
 # Add extra Fish shell completions.
