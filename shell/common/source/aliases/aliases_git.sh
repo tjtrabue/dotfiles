@@ -39,6 +39,7 @@ alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 alias gaa="git add -A"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
+# Add all new/changed files in repo and use them to amend previous commit
 alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
 # }}}
 
