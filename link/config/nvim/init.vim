@@ -114,6 +114,9 @@ call s:SourcePluginConfigFile('galaxyline.vim')
 
 " Org mode configuration
 call s:SourcePluginConfigFile('orgmode.nvim.lua')
+
+" Code linter that works alongside Neovim's LSP.
+call s:SourcePluginConfigFile('nvim-lint.lua')
 " }}}
 
 " Automatically compile new plugins whenever the plugins.lua file is

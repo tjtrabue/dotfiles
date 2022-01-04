@@ -308,6 +308,11 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     use {"onsails/lspkind-nvim"}
     -- }}}
 
+    -- Code Linting {{{
+    -- Linting tool that complements Neovim's built-in LSP client.
+    use {"mfussenegger/nvim-lint"}
+    -- }}}
+
     -- Debugging
     use {"mfussenegger/nvim-dap"}
     use {"puremourning/vimspector"}

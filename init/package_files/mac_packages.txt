@@ -27,6 +27,7 @@ graphviz
 grep
 growlnotify
 gzip
+hadolint
 httpie
 hunspell
 isync
@@ -57,6 +58,7 @@ ripgrep
 roswell
 screen
 sd
+selene
 shellcheck
 shfmt
 sourcekitten
@@ -66,6 +68,7 @@ texlab
 the_silver_searcher
 tmux
 up
+vale
 vlc
 vmtouch
 watch

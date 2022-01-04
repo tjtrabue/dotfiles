@@ -2,6 +2,9 @@ autopep8
 beautysh
 black
 cmake-language-server
+cmake-lint
+cookiecutter
+cpplint
 django
 eyed3
 flake8
@@ -13,15 +16,15 @@ mdv3
 pipenv
 powerline-gitstatus
 powerline-status
+proselint
 pylint
 pynvim
 python-language-server
 pywal
 rebound-cli
-cookiecutter
 thefuck
 ueberzug
-vint
+vim-vint
 virtualenvwrapper
 yamllint
 yapf

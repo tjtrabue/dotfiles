@@ -30,8 +30,6 @@ end
 
 -- Custom configuration {{{
 
-local nvim_lsp = require("lspconfig")
-
 -- nvim-cmp completion capabilities for Neovim's LSP.
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
