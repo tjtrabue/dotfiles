@@ -17,7 +17,7 @@ as being actively maintained, making =avy= the better alternative.
   (use-package avy
     :after evil-collection
     :general
-    (general-def 'normal 'override
+    (general-def 'normal
       ;; Jump to word beginning with character.
       "f" 'avy-goto-word-1
       ;; Jump to text beginning with 1 input character.
