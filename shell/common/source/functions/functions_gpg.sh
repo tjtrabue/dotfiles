@@ -51,7 +51,8 @@ __check_gpg_agent_running() {
 __load_existing_gpg_agent_from_file() {
   local gpgAgentFile="${HOME}/.gpg-agent-info"
 
-  log_info "Reading GPG agent information from file: ${gpgAgentFile}"
+  log_info "Reading GPG agent information from file:" \
+    "${BLUE}${gpgAgentFile}${NC}"
   . "${gpgAgentFile}"
   export GPG_AGENT_INFO
   export SSH_AUTH_SOCK
@@ -63,7 +64,8 @@ __load_existing_gpg_agent_from_file() {
 __create_gpg_agent() {
   local gpgAgentFile="${HOME}/.gpg-agent-info"
 
-  log_info "Starting GPG agent"
+  log_info "Starting GPG agent and writing its configuration to file:" \
+    "${BLUE}${gpgAgentFile}${NC}"
   # NOTE: Newer versions of `gpg-agent` do not write the env file. There is no
   #       reason to keep an env file since `gpg` manages the agent's lifecycle
   #       for you nowadays. The '--write-env-file' option remains for
@@ -75,8 +77,8 @@ __create_gpg_agent() {
 # Should always export GPG_TTY! This sets the current terminal as the one to
 # receive GPG information.
 __set_current_tty_for_gpg() {
-  log_info "Setting current TTY for GPG input/output."
   GPG_TTY="$(tty)"
+  log_info "Setting current TTY for GPG input/output: ${CYAN}${GPG_TTY}${NC}"
   export GPG_TTY
 }
 
