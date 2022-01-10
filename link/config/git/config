@@ -123,8 +123,23 @@
   smudge = git-lfs smudge %f
   required = true
 
+[grep]
+  # Fallback to --no-index when using git-grep outside of a repository.
+  fallbackToNoIndex = true
+  # Which regex type to use by default with git-grep.
+  patternType = perl
+  # Use as many threads as there are logical cores when grepping.
+  threads = 0
+
 [github]
   user = tjtrabue
+
+[gui]
+  commitMsgWidth = 80
+  pruneDuringFetch = true
+
+[guitool "meld"]
+  cmd = meld
 
 [help]
   # Automatically correct and execute mistyped commands
