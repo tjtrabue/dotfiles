@@ -126,6 +126,9 @@
 [grep]
   # Fallback to --no-index when using git-grep outside of a repository.
   fallbackToNoIndex = true
+  # Always output results with full file paths when git-grep is run from
+  # subdirectories of the repository root.
+  fullName = true
   # Which regex type to use by default with git-grep.
   patternType = perl
   # Use as many threads as there are logical cores when grepping.
