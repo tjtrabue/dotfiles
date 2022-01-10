@@ -30,10 +30,6 @@
   # Show most recently changed branches first.
   sort = -committerdate
 
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
-
 [color]
   branch = auto
   diff = auto
@@ -86,10 +82,22 @@
   untrackedCache = true
 
 [diff]
+  colorMoved = zebra
+  colorMovedWS = no
   tool = meld
 
 [difftool]
   prompt = false
+
+[fetch]
+  # 0 means use a reasonable number of threads for fetching refs in parallel.
+  parallel = 0
+  # Automatically make Git clean objects in your local repository when fetching
+  # changes from remote.
+  prune = true
+  # Also prune tags to maintain a one-to-one relation between local refs and
+  # remote refs.
+  pruneTags = true
 
 [filter "lfs"]
   clean = git-lfs clean %f
