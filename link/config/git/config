@@ -104,6 +104,7 @@
   colorMoved = zebra
   colorMovedWS = no
   tool = meld
+  guitool = meld
 
 [difftool]
   prompt = false
@@ -149,16 +150,24 @@
 
 [help]
   # Automatically correct and execute mistyped commands
-  autocorrect = 1
+  autoCorrect = immediate
 
 [init]
   # Always name the default branch "master" when creating a new git repo.
   defaultBranch = master
 
+[log]
+  decorate = auto
+
 [merge]
+  # How to present merge conflicts in files.
+  #   merge -> <<< === >>>
+  #   diff3 -> <<< ||| === >>>
+  conflictStyle = merge
   log = true
   # Use meld as default mergetool
   tool = meld
+  guitool = meld
 
 [mergetool]
   prompt = false
