@@ -109,7 +109,7 @@
   prompt = false
 
 [difftool "meld"]
-  cmd = meld "$LOCAL" "$REMOTE"
+  cmd = meld "${LOCAL}" "${REMOTE}"
 
 [fetch]
   # 0 means use a reasonable number of threads for fetching refs in parallel.
@@ -164,7 +164,18 @@
   prompt = false
 
 [mergetool "meld"]
-  cmd = meld "$LOCAL" "$MERGED" "REMOTE" --output "$MERGED"
+  # The command line run for meld when `git mergetool` is called.
+  # These variables are available to the command at runtime:
+  #   LOCAL  -> the file in the current branch
+  #   REMOTE -> the file in the branch being merged
+  #   MERGED -> the partially merged file containing the merge conflict
+  #             information.
+  #   BASE   -> the shared commit ancestor of $LOCAL and $REMOTE (i.e., the file
+  #             as it was when the branch containing $REMOTE was originally
+  #             created).
+  cmd = meld "${LOCAL}" "${MERGED}" "${REMOTE}" --output "${MERGED}"
+  # Alternatively, the cmd could be:
+  # cmd = meld "${LOCAL}" "${BASE}" "${REMOTE}" --output "${MERGED}"
   # Automatically merge non-conflicting parts, highlight conflicting parts, and
   # wait for user decision.
   useAutoMerge = true
