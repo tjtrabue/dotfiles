@@ -27,29 +27,44 @@
   whitespace = fix
 
 [branch]
+  # Setup new local branches to automatically track their remote counterparts.
+  autoSetupMerge = always
+  # Always rebase instead of merging when pulling changes.
+  autoSetupRebase = always
   # Show most recently changed branches first.
   sort = -committerdate
 
 [color]
+  advice = auto
   branch = auto
   diff = auto
+  grep = always
   interactive = auto
   push = auto
   pager = true
+  remote = always
+  showBranch = always
   status = auto
   transport = auto
   ui = auto
 
+[color "advice"]
+  hint = green
+
 [color "branch"]
   current = yellow reverse
   local = yellow
+  plain = magenta
   remote = green
+  upstream = cyan
 
 [color "diff"]
-  meta = yellow bold
+  commit = blue bold # commit headers
   frag = magenta bold # line info
-  old = red bold # deletions
+  func = cyan bold # function in hunk header
+  meta = yellow bold # metainformation
   new = green bold # additions
+  old = red bold # deletions
 
 [color "interactive"]
   prompt = green
@@ -70,6 +85,10 @@
   nobranch = red reverse
   localBranch = yellow reverse
   remoteBranch = blue reverse
+
+[column]
+  # Whether/when to report output in columns.
+  ui = auto column nodense
 
 [core]
   autocrlf = input
