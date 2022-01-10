@@ -108,6 +108,9 @@
 [difftool]
   prompt = false
 
+[difftool "meld"]
+  cmd = meld "$LOCAL" "$REMOTE"
+
 [fetch]
   # 0 means use a reasonable number of threads for fetching refs in parallel.
   parallel = 0
@@ -158,9 +161,10 @@
   tool = meld
 
 [mergetool]
-  prompt = true
+  prompt = false
 
 [mergetool "meld"]
+  cmd = meld "$LOCAL" "$MERGED" "REMOTE" --output "$MERGED"
   # Automatically merge non-conflicting parts, highlight conflicting parts, and
   # wait for user decision.
   useAutoMerge = true
