@@ -182,6 +182,8 @@
   #   BASE   -> the shared commit ancestor of $LOCAL and $REMOTE (i.e., the file
   #             as it was when the branch containing $REMOTE was originally
   #             created).
+  # See this StackOverflow answer for more details:
+  # https://stackoverflow.com/questions/34119866/setting-up-and-using-meld-as-your-git-difftool-and-mergetool
   cmd = meld "${LOCAL}" "${MERGED}" "${REMOTE}" --output "${MERGED}"
   # Alternatively, the cmd could be:
   # cmd = meld "${LOCAL}" "${BASE}" "${REMOTE}" --output "${MERGED}"
