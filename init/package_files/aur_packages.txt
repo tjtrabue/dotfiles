@@ -25,6 +25,7 @@ mu
 neovim-nightly-bin
 optimus-manager
 polybar-git
+pv4
 roswell
 swift-bin
 thunderbird-nightly-bin
