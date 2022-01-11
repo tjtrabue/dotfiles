@@ -170,7 +170,15 @@
   guitool = meld
 
 [mergetool]
+  # Whether to keep .orig files after the merge completes.
+  keepBackup = false
+  # Whether to keep temp files if mergetool returns an error.
+  keepTemporaries = false
+  # Whether to prompt before each invocation of the mergetool.
   prompt = false
+  # Whether to write the temporary BASE, LOCAL, and REMOTE files to a temp
+  # directory outside the worktree so as not to polute the codebase.
+  writeToTemp = true
 
 [mergetool "meld"]
   # The command line run for meld when `git mergetool` is called.
