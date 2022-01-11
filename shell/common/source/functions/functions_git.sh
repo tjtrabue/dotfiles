@@ -127,7 +127,7 @@ sw() {
     ref="${arg}"
   fi
 
-  if "${createBranch}"; then
+  if "${createBranch}" && ! verifyref "${ref}"; then
     git branch "${ref}" || {
       err "Could not create branch ${CYAN}${ref}${NC}"
       return 2
