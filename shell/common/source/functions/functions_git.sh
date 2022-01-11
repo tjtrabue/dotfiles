@@ -95,6 +95,22 @@ sw() {
   local ref
   # We want to write the current branch/commit to history after we switch.
   local currentRef="$(currentref)"
+  local createBranch=false
+  local OPTIND
+  local o
+
+  while getopts ":b:" o; do
+    case "${o}" in
+    b)
+      # Create a new branch if '-b' provided.
+      arg="${OPTARG}"
+      createBranch=true
+      ;;
+      # We don't want a '*' default case because we want to be able to interpret
+      # numeric arguments prefixed with '-' to traverse branch history.
+    esac
+  done
+  shift $((OPTIND - 1))
 
   if [ -z "${arg}" ]; then
     arg="$(defaultbranch)"
@@ -111,14 +127,19 @@ sw() {
     ref="${arg}"
   fi
 
-  if ! verifyref "${ref}"; then
+  if "${createBranch}"; then
+    git branch "${ref}" || {
+      err "Could not create branch ${CYAN}${ref}${NC}"
+      return 2
+    }
+  elif ! verifyref "${ref}"; then
     err "${CYAN}${ref}${NC} is not a valid Git ref"
-    return 2
+    return 3
   fi
 
   if ! __checkout_local_or_remote_branch "${ref}"; then
     err "Could not switch to ref: ${CYAN}${ref}${NC}"
-    return 3
+    return 4
   fi
 
   if [ "${ref}" != "${currentRef}" ]; then
