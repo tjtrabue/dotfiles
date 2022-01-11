@@ -8,18 +8,18 @@
 # I only have to look in one place if I want to change both the alias and its
 # completion function.
 
-# Branch alaises {{{
+# Branch {{{
 alias newb="git checkout -b"
 alias delb="git branch -D"
 alias currb="git rev-parse --abbrev-ref HEAD"
 # }}}
 
-# Info aliases {{{
+# Info {{{
 alias groot="git rev-parse --show-toplevel"
 alias gtracked="git for-each-ref --format='%(upstream:short)' \"\$(git symbolic-ref -q HEAD)\""
 # }}}
 
-# Diff aliases {{{
+# Diff {{{
 alias gdc="git diff --cached"
 # Return 0 if no tracked files have been changed.
 alias nochanges="git diff --exit-code --quiet"
@@ -35,7 +35,7 @@ alias gdt="git difftool --dir-diff"
 alias gadded="git diff --cached --numstat | wc -l | sed -e \"s/[ \t]//g\""
 # }}}
 
-# Staging/pushing/pulling aliases {{{
+# Staging/pushing/pulling {{{
 alias gaa="git add -A"
 alias gca="git commit --amend"
 alias gcan="git commit --amend --no-edit"
@@ -43,7 +43,7 @@ alias gcan="git commit --amend --no-edit"
 alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amend --no-edit"
 # }}}
 
-# Commit log aliases {{{
+# Commit log {{{
 alias gl='git log --graph --color=always --format="%C(auto)%h%d %s %C(blue)%C(bold)%cr"'
 alias gll='git log --graph --color=always --format=full'
 # }}}
@@ -52,13 +52,19 @@ alias gll='git log --graph --color=always --format=full'
 alias gmt="git mergetool"
 # }}}
 
-# Rebasing aliases {{{
+# Rebasing {{{
 alias grba="git rebase --abort"
 alias grbc="git rebase --continue"
 # }}}
 
-# Resetting aliases {{{
+# Resetting {{{
 alias greh="git reset HEAD"
+# }}}
+
+# Restoring {{{
+
+# Remove staged changes from index
+alias grs="git restore --staged"
 # }}}
 
 # lazygit {{{

@@ -644,6 +644,29 @@ verifyref() {
 }
 # }}}
 
+# Stashing {{{
+
+# Stash changes to local files, pull changes from remote, and pop stashed
+# changes afterward.
+gsp() {
+  local filePaths="${*}"
+
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
+  if [ -z "${filePaths}" ]; then
+    filePaths="$(git rev-parse --show-toplevel)"
+  fi
+
+  eval "git add ${filePaths}" &&
+    git stash save &&
+    git pull &&
+    git stash pop
+}
+# }}}
+
 # Git environment for shell {{{
 
 # Prepare any extra Git-related shell functions for the current shell.
