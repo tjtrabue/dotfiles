@@ -138,6 +138,13 @@ lspconfig.cmake.setup {
 } ]]
 -- }}}
 
+-- cssmodules-language-server {{{
+lspconfig.cssmodules_ls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
 -- dartls {{{
 lspconfig.dartls.setup {
   capabilities = capabilities,

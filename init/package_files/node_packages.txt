@@ -11,6 +11,7 @@ bible
 caniuse-cmd
 cspell
 csslint
+cssmodules-language-server
 dockerfile-language-server-nodejs
 dot-language-server
 emmet-ls
