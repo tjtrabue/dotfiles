@@ -1,6 +1,8 @@
 -- Configuration for Neovim's native LSP functions.
 -- Must source this file after the `nvim-lspconfig` plugin loads.
 
+local lspconfig = require("lspconfig")
+
 -- Private functions {{{
 
 --- Execute the OS command `cmd` and return the result as a string.
@@ -95,7 +97,7 @@ end
 
 -- Language servers {{{
 -- bash-language-server {{{
-require "lspconfig".bashls.setup {
+lspconfig.bashls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
@@ -108,28 +110,50 @@ require "lspconfig".bashls.setup {
 -- compile_commands.json or, for simpler projects, a compile_flags.txt.
 -- For details on how to automatically generate one using CMake look here.
 
-require "lspconfig".clangd.setup {
+lspconfig.clangd.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 --- }}}
 
+-- clojure-lsp {{{
+lspconfig.clojure_lsp.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
 -- cmake-ls {{{
-require "lspconfig".cmake.setup {
+lspconfig.cmake.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- vscode-css-languageserver {{{
-require "lspconfig".cssls.setup {
+-- Currently disabled in favor of tailwindcss
+--[[ lspconfig.cssls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+} ]]
+-- }}}
+
+-- dartls {{{
+lspconfig.dartls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- dockerfile-ls {{{
-require "lspconfig".dockerls.setup {
+lspconfig.dockerls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
+-- dot-language-server {{{
+lspconfig.dotls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
@@ -138,7 +162,7 @@ require "lspconfig".dockerls.setup {
 -- efm-language-server {{{
 -- Not currently used because EFM requires a lot of setup, and is not terribly
 -- useful.
---[[ require "lspconfig".efm.setup {
+--[[ lspconfig.efm.setup {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
@@ -147,29 +171,36 @@ require "lspconfig".dockerls.setup {
 -- elixir-ls {{{
 local elixir_ls_bin = os_cmd_to_string("command -v elixir-ls")
 
-require "lspconfig".elixirls.setup {
+lspconfig.elixirls.setup {
   capabilities = capabilities,
   cmd = {elixir_ls_bin},
   on_attach = on_attach
 }
 -- }}}
---
+
+-- emmet-ls (for HTML templating/snippet expansion) {{{
+lspconfig.emmet_ls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
 -- erlang-ls {{{
-require "lspconfig".erlangls.setup {
+lspconfig.erlangls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- graphql-language-server {{{
-require "lspconfig".graphql.setup {
+lspconfig.graphql.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- haskell-language-server {{{
-require "lspconfig".hls.setup {
+lspconfig.hls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
@@ -180,14 +211,14 @@ require "lspconfig".hls.setup {
 local html_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 html_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require "lspconfig".html.setup {
+lspconfig.html.setup {
   capabilities = html_capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- intelephense {{{
-require "lspconfig".intelephense.setup {
+lspconfig.intelephense.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
@@ -197,7 +228,7 @@ require "lspconfig".intelephense.setup {
 
 -- vscode-json-languageserver only provides range formatting. You can map a
 -- command that applies range formatting to the entire document:
-require "lspconfig".jsonls.setup {
+lspconfig.jsonls.setup {
   capabilities = capabilities,
   commands = {
     Format = {
@@ -238,7 +269,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-require "lspconfig".sumneko_lua.setup {
+lspconfig.sumneko_lua.setup {
   capabilities = capabilities,
   -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
   cmd = {sumneko_binary},
@@ -274,21 +305,21 @@ require "lspconfig".sumneko_lua.setup {
 
 -- To use the language server, ensure that you have Perl::LanguageServer
 -- installed and perl command is on your path.
-require "lspconfig".perlls.setup {
+lspconfig.perlls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- pyright {{{
-require "lspconfig".pyright.setup {
+lspconfig.pyright.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- rls (Rust) {{{
-require "lspconfig".rls.setup {
+lspconfig.rls.setup {
   capabilities = capabilities,
   -- Use nightly build
   cmd = {"rustup", "run", "nightly", "rls"},
@@ -297,32 +328,52 @@ require "lspconfig".rls.setup {
 -- }}}
 
 -- sqlls (SQL) {{{
---
 local sql_ls_bin = os_cmd_to_string("command -v sql-language-server")
 
-require "lspconfig".sqlls.setup {
+lspconfig.sqlls.setup {
   capabilities = capabilities,
   cmd = {sql_ls_bin},
   on_attach = on_attach
 }
 -- }}}
 
+-- tailwind-css {{{
+lspconfig.tailwindcss.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
+-- terraform-lsp {{{
+lspconfig.terraform_lsp.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
 -- texlab (LaTeX) {{{
-require "lspconfig".texlab.setup {
+lspconfig.texlab.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+-- }}}
+
+-- typescript-language-server {{{
+lspconfig.tsserver.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- vim-language-server {{{
-require "lspconfig".vimls.setup {
+lspconfig.vimls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
 
 -- yaml-language-server {{{
-require "lspconfig".yamlls.setup {
+lspconfig.yamlls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
