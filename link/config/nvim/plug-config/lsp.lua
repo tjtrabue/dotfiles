@@ -130,7 +130,7 @@ lspconfig.cmake.setup {
 }
 -- }}}
 
--- vscode-css-languageserver {{{
+-- cssls {{{
 -- Currently disabled in favor of tailwindcss
 --[[ lspconfig.cssls.setup {
   capabilities = capabilities,
@@ -213,7 +213,7 @@ lspconfig.hls.setup {
 }
 -- }}}
 
--- vscode-html-language-server {{{
+-- html-ls {{{
 --Enable (broadcasting) snippet capability for completion
 local html_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 html_capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -231,7 +231,7 @@ lspconfig.intelephense.setup {
 }
 -- }}}
 
--- vscode-json-language-server {{{
+-- jsonls {{{
 
 -- vscode-json-languageserver only provides range formatting. You can map a
 -- command that applies range formatting to the entire document:
