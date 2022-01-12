@@ -1,4 +1,5 @@
--- Aerial is a
+-- Aerial is a code browser for Neovim that provides great integration with
+-- Neovim's built-in LSP client.
 require("aerial").setup(
   {
     -- Enum: prefer_right, prefer_left, right, left
