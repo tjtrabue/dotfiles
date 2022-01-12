@@ -49,7 +49,7 @@ openssh
 parallel
 plantuml
 postgres
-pv4
+p4v
 pyenv
 ranger
 rclone
