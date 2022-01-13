@@ -379,7 +379,7 @@ gcleanup() {
 # commit message. This function handles that bit for you.
 gcm() {
   local message="${*}"
-  local noProject=false
+  local attemptProjectCommit=true
   local OPTIND
   local o
 
@@ -395,7 +395,7 @@ gcm() {
       return 0
       ;;
     n)
-      noProject=true
+      attemptProjectCommit=false
       ;;
     *)
       err "Unknown operand"
@@ -421,7 +421,7 @@ gcm() {
     return 2
   fi
 
-  if ! "${noProject}" && validate_project_branch "$(currentref)"; then
+  if "${attemptProjectCommit}" && validate_project_branch "$(currentref)"; then
     # Hook into the `pcm` project commit function if we're on a valid project
     # branch.
     pcm -m "${commitMsg}"
