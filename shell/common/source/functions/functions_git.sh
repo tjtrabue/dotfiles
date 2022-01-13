@@ -378,7 +378,7 @@ gcleanup() {
 # Shortcut for `git commit -m '<msg>'`. No need to put quote marks around your
 # commit message. This function handles that bit for you.
 gcm() {
-  local message="${*}"
+  local message
   local attemptProjectCommit=true
   local OPTIND
   local o
@@ -406,6 +406,11 @@ gcm() {
   done
   shift $((OPTIND - 1))
 
+  if [ "$#" -gt 0 ]; then
+    message="${*}"
+    shift "$#"
+  fi
+
   if git diff --cached --exit-code --quiet; then
     err "No files added to the index. Use 'git add' to add them."
     return 1
@@ -424,7 +429,7 @@ gcm() {
   if "${attemptProjectCommit}" && validate_project_branch "$(currentref)"; then
     # Hook into the `pcm` project commit function if we're on a valid project
     # branch.
-    pcm -m "${commitMsg}"
+    pcm -m "${message}"
   else
     # Otherwise, make a standard commit.
     git commit -m "${message}"

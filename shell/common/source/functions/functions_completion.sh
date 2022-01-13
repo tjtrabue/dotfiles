@@ -40,6 +40,7 @@ add_zsh_completions() {
   __init_zsh_completions
   __add_zsh_git_completions
   __add_zsh_docker_completions
+  __add_zsh_aws_completions
   __add_extra_zsh_completions
   __add_asdf_completions_for_zsh
 }
@@ -52,6 +53,9 @@ add_fish_completions() {
 # Initialize the Zsh completion system manually. This is sometimes necessary, as
 # Zsh does not automatically activate its completions at first.
 __init_zsh_completions() {
+  # Needed for AWS completions in Zsh.
+  autoload bashcompinit && bashcompinit
+  # Should come last.
   autoload -Uz compinit && compinit
 }
 
@@ -121,6 +125,15 @@ __add_zsh_docker_completions() {
   fi
 
   __add_zsh_completion_dir_to_fpath
+}
+
+# Make sure aws completions work in Zsh.
+__add_zsh_aws_completions() {
+  local awsCompleterPath="$(command -v aws_completer)"
+
+  if [ -x "${awsCompleterPath}" ]; then
+    complete -C "${awsCompleterPath}" aws
+  fi
 }
 
 # Add Zsh completions for custom Git functions from this repository.
