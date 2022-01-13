@@ -317,8 +317,6 @@ EOF
 
 __pcm_usage() {
   command cat <<EOF
-pcm - Create Git commits for current software project
-
 USAGE:
   pcm [TASK_NUMBER] [COMMIT_MSG]
       [-h]
@@ -330,6 +328,10 @@ EOF
 }
 
 __pcm_help() {
+  command cat <<EOF
+pcm - Create Git commits for current software project
+
+EOF
   __pcm_usage
   command cat <<EOF
 
@@ -388,13 +390,27 @@ ENVIRONMENT VARIABLES:
 EOF
 }
 
+# Return 0 if input branch name is of the form 'PROJ-1234...'.
+# Return an error code, otherwise.
+validate_project_branch() {
+  local branchName="${1}"
+  local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
+
+  if [ -z "${branchName}" ]; then
+    branchName="$(currentref)"
+  fi
+
+  echo "${branchName}" |
+    grep -E -q -o "[A-Z]+${projectFieldSep}[0-9]+.*"
+}
+
 # Try to get the project ID string from the current branch name.
 # For example:
 #   PROJ-1234 -> PROJ
 __parse_branch_for_project_id() {
   local branchName="${1}"
 
-  if __validate_project_branch "${branchName}"; then
+  if validate_project_branch "${branchName}"; then
     echo "${branchName}" | grep -E --color=never -o '^[A-Z]+'
   fi
 }
@@ -405,19 +421,9 @@ __parse_branch_for_project_id() {
 __parse_branch_for_task_number() {
   local branchName="${1}"
 
-  if __validate_project_branch "${branchName}"; then
+  if validate_project_branch "${branchName}"; then
     echo "${branchName}" | grep -E --color=never -o '[0-9]+'
   fi
-}
-
-# Return 0 if input branch name is of the form 'PROJ-1234...'.
-# Return an error code, otherwise.
-__validate_project_branch() {
-  local branchName="${1}"
-  local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
-
-  echo "${branchName}" |
-    grep -E -q -o "[A-Z]+${projectFieldSep}[0-9]+.*"
 }
 
 # Prints commit messages in a variety of established formats, determined by the

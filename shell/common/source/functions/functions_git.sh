@@ -379,6 +379,32 @@ gcleanup() {
 # commit message. This function handles that bit for you.
 gcm() {
   local message="${*}"
+  local noProject=false
+  local OPTIND
+  local o
+
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
+  while getopts ":hn" o; do
+    case "${o}" in
+    h)
+      __gcm_help
+      return 0
+      ;;
+    n)
+      noProject=true
+      ;;
+    *)
+      err "Unknown operand"
+      __gcm_usage
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
 
   if git diff --cached --exit-code --quiet; then
     err "No files added to the index. Use 'git add' to add them."
@@ -395,7 +421,45 @@ gcm() {
     return 2
   fi
 
-  git commit -m "${message}"
+  if ! "${noProject}" && validate_project_branch "$(currentref)"; then
+    # Hook into the `pcm` project commit function if we're on a valid project
+    # branch.
+    pcm -m "${commitMsg}"
+  else
+    # Otherwise, make a standard commit.
+    git commit -m "${message}"
+  fi
+}
+
+__gcm_usage() {
+  command cat <<EOF
+USAGE:
+  gcm [MSG]
+      [-h]
+      [-n]
+EOF
+}
+
+__gcm_help() {
+  command cat <<EOF
+gcm - Alias function for 'git commit -m <msg>'
+
+gcm will attempt to make a project-style commit if it determines the current
+branch is a valid project branch unless the '-n' option is provided.
+
+EOF
+  __gcm_usage
+
+  command cat <<EOF
+
+OPTIONS:
+  -h
+    Print the help message and exit.
+
+  -n
+    Do not attempt to make a project commit, even if the current branch is a
+    project branch.
+EOF
 }
 # }}}
 
