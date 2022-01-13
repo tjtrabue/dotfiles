@@ -29,13 +29,13 @@ alias dup="docker update"
 alias dun="docker unpause"
 
 # docker-compose {{{
-if [ -x "$(command -v docker-compose)" ]; then
-  # Use the hyphenated command when possible, as it works better with Zsh's
-  # completion system.
-  alias dp="docker-compose"
-else
-  # Fall back on the standard `docker compose` command if necessary.
+if docker compose version >>/dev/null 2>&1; then
+  # Use newer `docker compose` when possible. `compose` is now a plugin for
+  # Docker, instead of a stand-alone executable.
   alias dp="docker compose"
+else
+  # Fall back on the standard `docker-compose` command if necessary.
+  alias dp="docker-compose"
 fi
 # }}}
 
