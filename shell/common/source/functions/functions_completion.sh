@@ -180,6 +180,7 @@ __add_git_alias_completions() {
   if isfunc "__git_complete"; then
     __add_git_command_alias_completions "add" "ga" "_git_add"
     __add_git_command_alias_completions "branch" "gb" "_git_branch"
+    __add_git_command_alias_completions "blame" "gbl" "_git_blame"
     __add_git_command_alias_completions "commit" "gc" "_git_commit"
     __add_git_command_alias_completions "clone" "gcl" "_git_clone"
     __add_git_command_alias_completions "clean" "gcle" "_git_clean"
