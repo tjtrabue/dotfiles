@@ -388,11 +388,14 @@ gcm() {
     return 1
   fi
 
-  while getopts ":hp:" o; do
+  while getopts ":hm:p:" o; do
     case "${o}" in
     h)
       __gcm_help
       return 0
+      ;;
+    m)
+      message="${OPTARG}"
       ;;
     p)
       attemptProjectCommit="${OPTARG}"
@@ -439,8 +442,9 @@ gcm() {
 __gcm_usage() {
   command cat <<EOF
 USAGE:
-  gcm [MSG]
+  gcm [COMMIT_MSG]
       [-h]
+      [-m COMMIT_MSG]
       [-p ATTEMPT_PROJECT_COMMIT]
 EOF
 }
@@ -457,6 +461,12 @@ EOF
 OPTIONS:
   -h
     Print the help message and exit.
+
+  -m COMMIT_MSG
+    Supply the commit message as an optional argument. If this option is not
+    provided, the commit message can be supplied as the primary argument to
+    gcm. If the commit message is not supplied on the command line in any way,
+    the user will be prompted for the message.
 
   -p ATTEMPT_PROJECT_COMMIT
     Boolean value determining whether gcm should attempt a project-style commmit
