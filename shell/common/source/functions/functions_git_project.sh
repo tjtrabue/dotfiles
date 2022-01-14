@@ -58,10 +58,11 @@ pbr() {
     shift
   fi
 
-  if [ -z "${description}" ] && [ -n "${*}" ]; then
+  if [ -z "${description}" ] && [ "$#" -gt 0 ]; then
     description="${*}"
     log_debug "Got description from command line:" \
       "'${YELLOW}${description}${NC}'"
+    shift "$#"
   fi
 
   while ! __validate_task_number "${taskNumber}"; do
@@ -248,9 +249,10 @@ pcm() {
     log_debug "Task number is now: ${YELLOW}${taskNumber}${NC}"
   fi
 
-  if [ -z "${commitMsg}" ] && [ -n "${*}" ]; then
+  if [ -z "${commitMsg}" ] && [ "$#" -gt 0 ]; then
     log_debug "Getting commit message from command line"
     commitMsg="${*}"
+    shift "$#"
   fi
 
   # If we did not get the project ID another way, try to parse it from the
