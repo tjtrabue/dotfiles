@@ -55,14 +55,14 @@
   ui = auto
 
 [color "advice"]
-  hint = green
+  hint = brightgreen
 
 [color "branch"]
   current = yellow reverse
   local = yellow
-  plain = magenta
-  remote = green
-  upstream = cyan
+  plain = green
+  remote = blue
+  upstream = blue reverse
 
 [color "diff"]
   commit = blue bold # commit headers
@@ -73,24 +73,32 @@
   old = red bold # deletions
 
 [color "interactive"]
-  prompt = green
-  header = yellow
-  help = blue
+  prompt = blue bold
+  header = yellow bold
+  help = brightgreen
   error = red
 
 [color "push"]
   error = red
 
+[color "remote"]
+  hint = brightcyan
+  warning = yellow bold
+  success = green
+
 [color "status"]
-  header = yellow
-  added = yellow
-  changed = green
+  header = magenta
+  added = green
+  changed = yellow
   untracked = cyan
-  unmerged = magenta
-  branch = blue
+  unmerged = cyan reverse
+  branch = blue bold
   nobranch = red reverse
   localBranch = yellow reverse
   remoteBranch = blue reverse
+
+[color "transport"]
+  rejected = red
 
 [column]
   # Whether/when to report output in columns.
