@@ -13,7 +13,6 @@ require third-party plugins to perform its tasks, so be ready to hunt down
 some code formatting software.
 
 ** Variables
-
 #+begin_src emacs-lisp
   ;; I've commented out several major modes that are either badly supported
   ;; (like sh-mode) or have better support with lsp-mode.
