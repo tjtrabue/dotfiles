@@ -1,3 +1,4 @@
+github.com/lighttiger2505/sqls
 github.com/mattn/efm-langserver
 github.com/wailsapp/wails/cmd/wails@latest
 mvdan.cc/sh/v3/cmd/shfmt

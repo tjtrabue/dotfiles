@@ -334,12 +334,21 @@ lspconfig.rls.setup {
 }
 -- }}}
 
--- sqlls (SQL) {{{
-local sql_ls_bin = os_cmd_to_string("command -v sql-language-server")
+-- sqlls (SQL LanguageServer written in Node.js) {{{
+--[[ local sql_ls_bin = os_cmd_to_string("command -v sql-language-server")
 
 lspconfig.sqlls.setup {
   capabilities = capabilities,
   cmd = {sql_ls_bin},
+  on_attach = on_attach
+} ]]
+-- }}}
+
+-- sqls (SQL LanguageServer written in Go) {{{
+-- To install sqls, run this command:
+--   go get github.com/lighttiger2505/sqls
+lspconfig.sqls.setup {
+  capabilities = capabilities,
   on_attach = on_attach
 }
 -- }}}
