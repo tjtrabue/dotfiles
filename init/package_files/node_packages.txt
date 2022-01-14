@@ -43,6 +43,7 @@ node-cljfmt
 npm-check-updates
 prettier
 speed-test
+sql-formatter
 sql-language-server
 stylelint
 tern

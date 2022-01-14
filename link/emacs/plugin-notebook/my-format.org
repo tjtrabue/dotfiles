@@ -146,6 +146,7 @@ and filetypes. Check their docstrings for more details.
                    "-"))
       (lisp-format . ("lisp-format"))
       (shfmt . ("shfmt" "-s" "-"))
+      (sql-formatter . ("sql-formatter" "-l" "sql"))
       (xmllint . ("xmllint" "--format" "-")))
     "Alist that maps names to custom apheleia formatters.
   It is perfectly acceptable to define formatters for executables
@@ -158,6 +159,7 @@ and filetypes. Check their docstrings for more details.
       ;; lisp-format is currently broken
       ;; ((emacs-lisp-mode lisp-mode scheme-mode) . lisp-format)
       (sh-mode . beautysh)
+      (sql-mode . sql-formatter)
       (xml-mode . xmllint))
     "Alist mapping major modes to custom formatter specifications for apheleia.
   The car of each alist cons cell can either be a single symbol or

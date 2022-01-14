@@ -71,6 +71,18 @@ local function formatter_rustfmt()
   }
 end
 
+-- sql-formatter
+local function formatter_sql_formatter()
+  return {
+    exe = "sql-formatter",
+    args = {
+      "-l",
+      "sql"
+    },
+    stdin = true
+  }
+end
+
 -- tidy for XML
 local function formatter_tidy_xml()
   return {
@@ -136,6 +148,9 @@ require("formatter").setup(
         -- formatter_beautysh,
         formatter_shfmt
       },
+      sql = {
+        formatter_sql_formatter
+      },
       xml = {
         formatter_xmllint
       }
@@ -158,6 +173,7 @@ augroup FormatAutogroup
   autocmd FileType python autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType rust autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
   " autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
 augroup END
 ]],
