@@ -26,6 +26,12 @@
 [apply]
   whitespace = fix
 
+[blame]
+  coloring = highlightRecent
+  date = human
+  markIgnoredLines = true
+  markUnblamableLines = true
+
 [branch]
   # Setup new local branches to automatically track their remote counterparts.
   autoSetupMerge = always
@@ -92,7 +98,7 @@
 
 [core]
   autocrlf = input
-  whitespace = fix,space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
+  whitespace = space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
   editor = nvim
   pager = "less -XF"
   # Prevent showing files whose names contain non-ASCII symbols as unversioned.
@@ -103,14 +109,19 @@
 [diff]
   colorMoved = zebra
   colorMovedWS = no
+  mnemonicPrefix = true
+  renames = copy
   tool = meld
   guitool = meld
 
 [difftool]
   prompt = false
 
-[difftool "meld"]
-  cmd = meld "${LOCAL}" "${REMOTE}"
+# [difftool "meld"]
+#   The command invoked by 'git difftool'. You may not want to set this and
+#   instead opt for Git's default meld command to allow better interop between
+#   Git and meld.
+#   cmd = meld "${LOCAL}" "${REMOTE}"
 
 [fetch]
   # 0 means use a reasonable number of threads for fetching refs in parallel.
@@ -157,6 +168,7 @@
   defaultBranch = master
 
 [log]
+  date = human
   decorate = auto
 
 [merge]
@@ -192,9 +204,14 @@
   #             created).
   # See this StackOverflow answer for more details:
   # https://stackoverflow.com/questions/34119866/setting-up-and-using-meld-as-your-git-difftool-and-mergetool
-  cmd = meld "${LOCAL}" "${MERGED}" "${REMOTE}" --output "${MERGED}"
+  # NOTE: You may not want to set the command at all and instead opt for Git's
+  # default command to allow better interop between Git and meld.
+  # cmd = meld "${LOCAL}" "${MERGED}" "${REMOTE}" --output "${MERGED}"
   # Alternatively, the cmd could be:
   # cmd = meld "${LOCAL}" "${BASE}" "${REMOTE}" --output "${MERGED}"
+  # Skip the check for meld's '--output' option and assume it to be present if
+  # set to true. Setting this value to false avoids using '--output' altogether.
+  hasOutput = true
   # Automatically merge non-conflicting parts, highlight conflicting parts, and
   # wait for user decision.
   useAutoMerge = true
@@ -211,6 +228,8 @@
   default = matching
   # Make `git push` push relevant annotated tags when pushing branches out.
   followTags = true
+  # Can reduces size of packfile sent to remote Git repo.
+  negotiate = true
 
 [rerere]
   enabled = 1
