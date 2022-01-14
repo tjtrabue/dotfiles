@@ -9,7 +9,7 @@
 alias g="git"
 alias ga="git add"
 alias gb="git branch"
-alias gbl="git blame"
+alias gbm="git blame"
 alias gc="git commit"
 alias gcb="git checkout -b"
 alias gcl="git clone"
