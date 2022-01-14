@@ -1,4 +1,4 @@
--- Custom galazyline config.
+-- Custom galaxyline config.
 -- Credit for starting config goes to glepnir on GitHub.
 
 local gl = require("galaxyline")
@@ -6,7 +6,7 @@ local condition = require("galaxyline.condition")
 local gls = gl.section
 gl.short_line_list = {"NvimTree", "vista", "dbui", "packer"}
 
--- From the Neom Doom colorscheme for Neovim.
+-- From the Neon Doom colorscheme for Neovim.
 local doom_colors = {
   bg = "#282c34",
   fg = "#bbc2cf",

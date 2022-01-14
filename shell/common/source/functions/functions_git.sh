@@ -388,14 +388,14 @@ gcm() {
     return 1
   fi
 
-  while getopts ":hn" o; do
+  while getopts ":hp:" o; do
     case "${o}" in
     h)
       __gcm_help
       return 0
       ;;
-    n)
-      attemptProjectCommit=false
+    p)
+      attemptProjectCommit="${OPTARG}"
       ;;
     *)
       err "Unknown operand"
@@ -441,16 +441,13 @@ __gcm_usage() {
 USAGE:
   gcm [MSG]
       [-h]
-      [-n]
+      [-p ATTEMPT_PROJECT_COMMIT]
 EOF
 }
 
 __gcm_help() {
   command cat <<EOF
 gcm - Alias function for 'git commit -m <msg>'
-
-gcm will attempt to make a project-style commit if it determines the current
-branch is a valid project branch unless the '-n' option is provided.
 
 EOF
   __gcm_usage
@@ -461,9 +458,11 @@ OPTIONS:
   -h
     Print the help message and exit.
 
-  -n
-    Do not attempt to make a project commit, even if the current branch is a
-    project branch.
+  -p ATTEMPT_PROJECT_COMMIT
+    Boolean value determining whether gcm should attempt a project-style commmit
+    if the current branch is formatted according to the style prescribed in the
+    pcm function. The default behavior is to always attempt project-style
+    commits. Passing '-p false' means to never attempt a project commit.
 EOF
 }
 # }}}

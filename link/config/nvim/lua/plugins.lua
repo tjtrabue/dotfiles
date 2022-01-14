@@ -76,7 +76,7 @@ packer.startup(
 
     use {"glepnir/galaxyline.nvim"}
 
-    use {"hoob3rt/lualine.nvim"}
+    -- use {"hoob3rt/lualine.nvim"}
 
     -- Tab bar {{{
     use {"romgrk/barbar.nvim"}
@@ -274,7 +274,7 @@ packer.startup(
       end
     }
     -- Extra LSP configuration.
-    use {"nvim-lua/lsp_extensions.nvim"}
+    -- use {"nvim-lua/lsp_extensions.nvim"}
     -- Integrates LSP features with statusline.
     use {"nvim-lua/lsp-status.nvim"}
     -- Show lightbulb icon in gutter when a code action is available.
