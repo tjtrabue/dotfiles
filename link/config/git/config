@@ -87,7 +87,7 @@
   success = green
 
 [color "status"]
-  header = magenta
+  header = white italic
   added = green
   changed = yellow
   untracked = cyan
