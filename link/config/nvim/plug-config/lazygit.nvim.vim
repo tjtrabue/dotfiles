@@ -7,6 +7,6 @@ let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " cust
 let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
 
 " setup mapping to call :LazyGit
-nnoremap <silent> <leader>gg :LazyGit<CR>
+nnoremap <silent> <leader>lg :LazyGit<CR>
 
 " vim:foldenable:foldmethod=marker:foldlevel=0

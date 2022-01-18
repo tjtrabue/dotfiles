@@ -2,4 +2,12 @@
 
 local neogit = require("neogit")
 
-neogit.setup {}
+neogit.setup {
+  disable_commit_confirmation = true,
+  signs = {
+    -- { CLOSED, OPENED }
+    section = {"ᐅ", "ᐁ"},
+    item = {"ᐅ", "ᐁ"},
+    hunk = {"", ""}
+  }
+}
