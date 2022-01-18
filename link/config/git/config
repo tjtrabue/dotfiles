@@ -91,7 +91,7 @@
   added = green
   changed = yellow
   untracked = cyan
-  unmerged = cyan reverse
+  unmerged = magenta
   branch = blue bold
   nobranch = red reverse
   localBranch = yellow reverse
