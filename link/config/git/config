@@ -239,8 +239,19 @@
   # Can reduces size of packfile sent to remote Git repo.
   negotiate = true
 
+# `git rerere` is a tool that helps in resolving repeated failed automerges, as
+# is often the case when rebasing a feature branch against its parent branch,
+# and suffering the pains of git replaying multiple commits that conflict with
+# something newly checked in to the parent.
 [rerere]
-  enabled = 1
+  # Whether git-rerere should update the index file automatically; this is
+  # disabled by default.
+  autoUpdate = true
+  enabled = true
+
+[reset]
+  # Whether "git reset" should default to use the "--quiet" option.
+  quiet = true
 
 [url "git@github.com:"]
   insteadOf = "gh:"
