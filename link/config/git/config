@@ -102,7 +102,7 @@
 
 [column]
   # Whether/when to report output in columns.
-  ui = auto column nodense
+  ui = never column nodense
 
 [core]
   autocrlf = input
