@@ -109,7 +109,10 @@ packer.startup(
     -- Git  {{{
     use {"airblade/vim-gitgutter"}
     use {"kdheepak/lazygit.nvim"}
-    use {"TimUntersberger/neogit"}
+    use {
+      "TimUntersberger/neogit",
+      requires = "nvim-lua/plenary.nvim"
+    }
     use {"f-person/git-blame.nvim"}
     -- }}}
 

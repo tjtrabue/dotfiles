@@ -225,7 +225,7 @@
   useAutoMerge = true
 
 [pull]
-  # Always rebase current branch on top of the pulled remote tracking branch.
+  # Always rebase current branch on top of the pulled remote branch.
   rebase = true
 
 [push]
