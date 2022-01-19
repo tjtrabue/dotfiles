@@ -107,7 +107,8 @@ packer.startup(
     use {"shougo/neomru.vim"}
 
     -- Git  {{{
-    use {"airblade/vim-gitgutter"}
+    -- Newer and more universal replacement for gitgutter
+    use {"mhinz/vim-signify"}
     use {"kdheepak/lazygit.nvim"}
     use {
       "TimUntersberger/neogit",

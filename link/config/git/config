@@ -88,10 +88,10 @@
 
 [color "status"]
   header = white italic
-  added = green
-  changed = yellow
-  untracked = cyan
-  unmerged = magenta
+  added = green bold
+  changed = yellow bold
+  untracked = cyan bold
+  unmerged = magenta bold
   branch = blue bold
   nobranch = red reverse
   localBranch = yellow reverse
@@ -146,6 +146,9 @@
   smudge = git-lfs smudge %f
   required = true
 
+[github]
+  user = tjtrabue
+
 [grep]
   # Fallback to --no-index when using git-grep outside of a repository.
   fallbackToNoIndex = true
@@ -156,9 +159,6 @@
   patternType = perl
   # Use as many threads as there are logical cores when grepping.
   threads = 0
-
-[github]
-  user = tjtrabue
 
 [gui]
   commitMsgWidth = 72
