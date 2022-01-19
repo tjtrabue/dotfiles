@@ -34,7 +34,7 @@
 
 [branch]
   # Setup new local branches to automatically track their remote counterparts.
-  autoSetupMerge = always
+  autoSetupMerge = true
   # Always rebase instead of merging when pulling changes.
   autoSetupRebase = always
   # Show most recently changed branches first.
@@ -58,9 +58,9 @@
   hint = brightgreen
 
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  plain = green
+  current = magenta reverse
+  local = magenta
+  plain = cyan
   remote = blue
   upstream = blue reverse
 
