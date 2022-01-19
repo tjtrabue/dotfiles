@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(defvar my-font-family "Hack Nerd Font"
+(defvar my-font-family "FiraCode Nerd Font"
   "The default font family used throughout Emacs.")
 
 ;;;###autoload
