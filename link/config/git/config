@@ -104,6 +104,12 @@
   # Whether/when to report output in columns.
   ui = never column nodense
 
+[commit]
+  # The template file to use when editing a Git commit message in your editor.
+  # My default template just contains ignored lines with reminders as to how to
+  # create a great Git message.
+  template = ~/.gitmessage
+
 [core]
   autocrlf = input
   whitespace = space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
