@@ -1,0 +1,52 @@
+#+title:   Use Typographic Ligatures in Emacs
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:01:18
+#+tags:    font ligature
+#+STARTUP: fold
+
+Ligatures are special composite characters rendered in order to represent two or
+more standard Unicode characters in a more aesthetically pleasing and readily
+identifiable way. Emacs does not have native support for typographic ligatures,
+but there are plugins available that provide such features.
+
+*NOTE:* You must use a compatible font in order for ligatures to render
+properly. If you encounter errors with these plugins, please ensure that Emacs
+is using an appropriate font.
+
+* ligature
+Allows the user to specify which ligatures they want to use per major mode. Note
+that each set of ligatures must be compatible with the selected font, and each
+set of ligatures may not be compatible with others.
+
+#+begin_src emacs-lisp
+  (use-package ligature
+    :straight
+    (ligature :type git
+              :host github
+              :repo "mickeynp/ligature.el"
+              :branch "master")
+    :hook
+    (after-init . global-ligature-mode)
+    :config
+    ;; Enable all JetBrains Mono ligatures in programming modes
+    (ligature-set-ligatures 'prog-mode '("-|" "-~" "---" "-<<" "-<" "--" "->"
+                                         "->>" "-->" "///" "/=" "/==" "/>" "//"
+                                         "/*" "*>" "***" "*/" "<-" "<<-" "<=>"
+                                         "<=" "<|" "<||" "<|||" "<|>" "<:" "<>"
+                                         "<-<" "<<<" "<==" "<<=" "<=<" "<==>"
+                                         "<-|" "<<" "<~>" "<=|" "<~~" "<~" "<$>"
+                                         "<$" "<+>" "<+" "</>" "</" "<*" "<*>"
+                                         "<->" "<!--" ":>" ":<" ":::" "::" ":?"
+                                         ":?>" ":=" "::=" "=>>" "==>" "=/=" "=!="
+                                         "=>" "===" "=:=" "==" "!==" "!!" "!="
+                                         ">]" ">:" ">>-" ">>=" ">=>" ">>>" ">-"
+                                         ">=" "&&&" "&&" "|||>" "||>" "|>" "|]"
+                                         "|}" "|=>" "|->" "|=" "||-" "|-" "||="
+                                         "||" ".." ".?" ".=" ".-" "..<" "..."
+                                         "+++" "+>" "++" "[||]" "[<" "[|" "{|"
+                                         "??" "?." "?=" "?:" "##" "###" "####"
+                                         "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?"
+                                         "#(" ";;" "_|_" "__" "~~" "~~>" "~>" "~-"
+                                         "~@" "$>" "^=" "]#")))
+#+end_src

@@ -82,11 +82,7 @@ offering you relevant actions to use on a target determined by the context:
       (add-to-list 'display-buffer-alist
                    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                      nil
-                     (window-parameters (mode-line-format . none))))
-      ;; Take out some commands from the list of commands that require the user to
-      ;; edit and approve the command before embark acts. This makes these
-      ;; particular commands a bit more snappy.
-      (delete 'kill-buffer embark-allow-edit-commands))
+                     (window-parameters (mode-line-format . none)))))
   #+end_src
 
 * Plugins
