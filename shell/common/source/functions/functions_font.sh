@@ -3,8 +3,16 @@
 # Locate a given font via an input regular expression
 findfont() {
   local pattern="$1"
+  local searchCmd="grep -E -i"
 
-  eval "fc-list | grep -E -i '${pattern}' | less"
+  if [ -x "$(command -v rg)" ]; then
+    searchCmd="rg -i"
+  elif [ -x "$(command -v ag)" ]; then
+    searchCmd="ag -i"
+  fi
+
+  searchCmd="${searchCmd} '${pattern}'"
+  eval "fc-list | ${searchCmd} | sed 's/^[^:]*:\s*//' | less"
 }
 
 # Install or update the amazing Nerd Fonts repository.
