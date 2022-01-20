@@ -634,59 +634,58 @@ EOF
 
 # Reverting/resetting {{{
 
-# Go nuclear: get rid of ALL uncommitted changes to the current working tree of
-# the provided Git repository (or the repo the current directory belongs to if
-# no repo is given).
-#
-# WARNING: Be VERY careful before you use this function!!!! You cannot undo the
-# changes it makes!
-totalgitreset() {
-  local repo
+# Reset changes to a Git repo, either soft or hard.
+gres() {
+  local numCommitsToReset
+  local gitResetCmd="git reset"
+  local resetStyle="mixed"
   local OPTIND
   local o
-  local force=false
-  local response
 
-  # Usage function for when user enters "-h" option.
-  totalgitreset_usage() {
-    echoe "USAGE: totalgitreset [-fh] [REPO]"
-  }
-
-  while getopts ":fh" o; do
+  while getopts ":sfmMkn:" o; do
     case "${o}" in
-    f)
-      force=true
+    s)
+      resetStyle="soft"
       ;;
-    h)
-      totalgitreset_usage
-      return 0
+    f)
+      resetStyle="hard"
+      ;;
+    m)
+      resetStyle="mixed"
+      ;;
+    M)
+      resetStyle="merge"
+      ;;
+    k)
+      resetStyle="keep"
+      ;;
+    n)
+      numCommitsToReset="${OPTARG}"
       ;;
     *)
-      err "Unknown operand"
-      totalgitreset_usage
+      err "Unknown arg: ${o}"
       return 1
       ;;
     esac
   done
   shift $((OPTIND - 1))
 
-  repo="${1:-$(git rev-parse --show-toplevel)}"
-
-  if ! "${force}"; then
-    while ! echo "${response}" | grep -E -q "^[YyNn]$"; do
-      echoe "WARNING: Do you really want to revert ALL changes to repo" \
-        "${BLUE}$(basename "${repo}")${NC}? You cannot undo these changes" \
-        "[y/n]"
-      read -r response
-    done
-    if echo "${response}" | grep -E -q "^[Nn]$"; then
-      echoe "Aborted by user."
-      return 2
-    fi
+  # Try to get number of commits to reset as main arg.
+  if [ -n "${1}" ]; then
+    numCommitsToReset="${1}"
+    shift
   fi
 
-  git -C "${repo}" clean -fdx
-  git -C "${repo}" reset --hard HEAD
+  # Validate number of commits to reset.
+  if ! echo "${numCommitsToReset}" | grep -q '^[1-9][0-9]*$'; then
+    err "Invalid number of commits to reset: ${GREEN}${numCommitsToReset}${NC}"
+    return 2
+  fi
+
+  gitResetCmd="${gitResetCmd} --${resetStyle}"
+  gitResetCmd="${gitResetCmd} HEAD~${numCommitsToReset}"
+
+  eval "${gitResetCmd}"
 }
 # }}}
 

@@ -334,7 +334,8 @@ __update_straight_repo() {
     defaultBranch="$(defaultbranch "${repo}")"
     log_info "Checking out default branch: ${GREEN}${defaultBranch}${NC}"
     # Reset all changes to make for a clean working tree
-    totalgitreset -f "${repo}"
+    git -C "${repo}" clean -fdx
+    git -C "${repo}" reset --hard HEAD
     # Checkout the default branch
     git -C "${repo}" checkout -f "${defaultBranch}"
   fi

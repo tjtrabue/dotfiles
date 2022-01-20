@@ -106,7 +106,7 @@ EOF
     log_info "Creating new project branch: ${CYAN}${projectBranchName}${NC}"
     git branch "${projectBranchName}"
     # Want to use `sw` to make use of its history tracking capabilties.
-    sw "${projectBranchName}"
+    sw -b "${projectBranchName}"
   fi
 }
 
