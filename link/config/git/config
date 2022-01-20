@@ -253,7 +253,7 @@
   # Whether git-rerere should update the index file automatically; this is
   # disabled by default.
   autoUpdate = true
-  enabled = true
+  enabled = 1
 
 [reset]
   # Whether "git reset" should default to use the "--quiet" option.
