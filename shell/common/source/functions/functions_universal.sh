@@ -2,12 +2,8 @@
 
 # Returns the block of sourced code for the function or alias given as an argument:
 func() {
-  local CODE="$(declare -f $*)"
-  if [[ -z $CODE ]]; then
-    alias | grep --color=never "alias $*="
-  else
-    echo "$CODE"
-  fi
+  local aliasOrFuncName="${*}"
+  alias "${aliasOrFuncName}" || declare -f "${aliasOrFuncName}"
 }
 
 # Returns the index of an array element
