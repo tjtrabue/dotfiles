@@ -100,6 +100,9 @@ call s:SourcePluginConfigFile('treesitter-textobjs.lua')
 " Define treesitter configuration
 call s:SourcePluginConfigFile('nvim-treesitter.conf.lua')
 
+" Highlight colors in files for color names, RGB values, and hex codes.
+call s:SourcePluginConfigFile('nvim-colorizer.lua')
+
 " These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.vim')
 call s:SourcePluginConfigFile('nvim-web-devicons.lua')

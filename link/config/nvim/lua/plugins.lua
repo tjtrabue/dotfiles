@@ -89,10 +89,7 @@ packer.startup(
 
     -- Color support {{{
     -- Highlight hex colorcodes and names in their respective colors.
-    use {
-      "norcalli/nvim-colorizer.lua",
-      config = [[require'colorizer'.setup()]]
-    }
+    use {"norcalli/nvim-colorizer.lua"}
     -- }}}
 
     -- Quickfix {{{
