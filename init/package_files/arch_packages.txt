@@ -165,6 +165,7 @@ the_silver_searcher
 tidy
 tree
 tree-sitter
+ttf-cascadia-code
 ttf-croscore
 ttf-fira-code
 ttf-fira-mono

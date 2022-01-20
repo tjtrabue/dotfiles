@@ -23,12 +23,14 @@ lua-emmy-language-server-bin
 lua-language-server-git
 mu
 neovim-nightly-bin
+nonicons-font
 optimus-manager
-polybar-git
 p4v
+polybar-git
 roswell
 swift-bin
 thunderbird-nightly-bin
+ttf-nerd-fonts-symbols
 up
 vmtouch-git
 yank
