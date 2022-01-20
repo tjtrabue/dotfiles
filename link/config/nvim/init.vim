@@ -14,10 +14,6 @@ let g:plugin_install_dir = stdpath('data') . '/site/pack/packer/start'
 " The file specifying all third-party plugins to use.
 let g:packer_plugins_file = stdpath('config') . '/lua/plugins.lua'
 
-" Install and activate plugins from vim-plug:
-" NOTE: Currently using `packer` instead of `vim-plug`.
-" exec 'source ' . stdpath('config') . '/plugins.vim'
-
 " Load plugins defined in ./lua/plugins.lua:
 lua require('plugins')
 

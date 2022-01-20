@@ -95,21 +95,27 @@ set viminfo^=%
 " }}}
 
 " Code Folding {{{
-" Basic command reference:
-"   Open all folds  : zR
-"   Close all folds : zM
+" Code folding is Vim-speak for code block collapsing. It allows for a birdseye
+" view of large buffers.
 
-" Enable folding (code block collapsing)
+" Basic command reference:
+"   Open all folds under fold at point  : zO
+"   Close all folds under fold at point : zC
+"   Open all folds in buffer            : zR
+"   Close all folds in buffer           : zM
+
+" Enable folding.
 set foldenable
 
-" Start folding from the very beginning
+" The number of fold occurrences after which Vim will start folding code.
 set foldlevel=0
 
-" Nest at most 10 folds
+" The maximum number of folds to nest within one another.
 set foldnestmax=10
 
-" Fold based on language syntax by default
-set foldmethod=syntax
+" Default fold method to use.
+" NOTE: See also the 'autocmds.vim' file for more fold settings.
+set foldmethod=indent
 " }}}
 
 " Indentation {{{
