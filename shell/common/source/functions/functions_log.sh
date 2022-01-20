@@ -172,48 +172,48 @@ __get_timestamp() {
   date +'%Y-%m-%dT%H:%M:%S'
 }
 
+# Return a (possibly colorized) string representing one segment of a log
+# statement.
+__colorize_log_message_segment() {
+  local segmentInfo="${1}"
+  local color="${2}"
+  local fontEffects="${3}"
+  local outputInColor="${4}"
+  local sep="|"
+
+  if [ -z "${segmentInfo}" ]; then
+    return 0
+  fi
+
+  if [ -n "${outputInColor}" ]; then
+    printf "%s%s" "${sep}" "${fontEffects}${color}${segmentInfo}${NC}"
+  else
+    printf "%s%s" "${sep}" "${segmentInfo}"
+  fi
+}
+
 __get_log_message_info() {
   local outputInColor="${1:-''}"
   local info=""
-  local sep="|"
   local fileName="$(__get_file_name)"
   local funcName="$(__get_function_name)"
   local lineNo="$(__get_line_number)"
   local timestamp="$(__get_timestamp)"
+  local fontEffects="${BOLD}"
 
-  if [ -n "$fileName" ]; then
-    if [ -n "$outputInColor" ]; then
-      info+="${sep}${BOLD}${BLUE}${fileName}${NC}"
-    else
-      info+="${sep}${fileName}${NC}"
-    fi
-  fi
+  info="${info}$(__colorize_log_message_segment \
+    "${fileName}" "${BLUE}" "${fontEffects}" "${outputInColor}")"
 
-  if [ -n "$funcName" ]; then
-    if [ -n "$outputInColor" ]; then
-      info+="${sep}${BOLD}${MAGENTA}${funcName}${NC}"
-    else
-      info+="${sep}${funcName}"
-    fi
-  fi
+  info="${info}$(__colorize_log_message_segment \
+    "${funcName}" "${MAGENTA}" "${fontEffects}" "${outputInColor}")"
 
-  if [ -n "$lineNo" ]; then
-    if [ -n "$outputInColor" ]; then
-      info+="${sep}${BOLD}${CYAN}${lineNo}${NC}"
-    else
-      info+="${sep}${lineNo}"
-    fi
-  fi
+  info="${info}$(__colorize_log_message_segment \
+    "${lineNo}" "${CYAN}" "${fontEffects}" "${outputInColor}")"
 
-  if [ -n "$timestamp" ]; then
-    if [ -n "$outputInColor" ]; then
-      info+="${sep}${BOLD}${YELLOW}${timestamp}${NC}"
-    else
-      info+="${sep}${timestamp}"
-    fi
-  fi
+  info="${info}$(__colorize_log_message_segment \
+    "${timestamp}" "${YELLOW}" "${fontEffects}" "${outputInColor}")"
 
-  echo "$info"
+  printf "%s" "${info}"
 }
 
 __get_log_type_with_color() {
@@ -273,7 +273,7 @@ __log() {
 }
 
 # Test all logging functions
-__log_test() {
+log_test() {
   log_info "info"
   warn "warning"
   err "error"
