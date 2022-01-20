@@ -91,7 +91,7 @@ print_header() {
     "${bookend}" \
     "$(((termwidth - 2 - ${#msg}) / 2 - ${#bookend}))" \
     "${spacePadding}" \
-    "$msg" \
+    "${msg}" \
     "$(((termwidth - 1 - ${#msg}) / 2 - ${#bookend}))" \
     "${spacePadding}" \
     "${bookend}"
@@ -106,11 +106,11 @@ print_header() {
 # Set the parent program's logging file to a given file
 log_to_file() {
   local logFile="$1"
-  if [ -z "$logFile" ]; then
+  if [ -z "${logFile}" ]; then
     err "No file provided for logging!"
     return 1
   fi
-  export LOG_TO_FILE="$logFile"
+  export LOG_TO_FILE="${logFile}"
 }
 
 # Turn off file logging
