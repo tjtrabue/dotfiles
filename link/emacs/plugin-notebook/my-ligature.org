@@ -88,5 +88,5 @@ set of ligatures may not be compatible with others.
                                       "#(" ";;" "_|_" "__" "~~" "~~>" "~>" "~-"
                                       "~@" "$>" "^=" "]#")))
       ;; Enable all JetBrains Mono ligatures in programming modes
-      (ligature-set-ligatures 'prog-mode jetbrains-mono-ligatures)))
+      (ligature-set-ligatures 'prog-mode cascadia-code-ligatures)))
 #+end_src
