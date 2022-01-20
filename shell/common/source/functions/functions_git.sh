@@ -379,7 +379,7 @@ gcleanup() {
 # commit message. This function handles that bit for you.
 gcm() {
   local message
-  local attemptProjectCommit=true
+  local attemptProjectCommit=${ATTEMPT_PROJECT_COMMIT:-true}
   local OPTIND
   local o
 
@@ -471,8 +471,8 @@ OPTIONS:
   -p ATTEMPT_PROJECT_COMMIT
     Boolean value determining whether gcm should attempt a project-style commmit
     if the current branch is formatted according to the style prescribed in the
-    pcm function. The default behavior is to always attempt project-style
-    commits. Passing '-p false' means to never attempt a project commit.
+    pcm function. The default behavior is to respect the ATTEMPT_PROJECT_COMMIT
+    boolean environment variable, which itself defaults to true.
 EOF
 }
 # }}}
@@ -635,15 +635,19 @@ EOF
 # Reverting/resetting {{{
 
 # Reset changes to a Git repo, either soft or hard.
-gres() {
+greset() {
   local numCommitsToReset
-  local gitResetCmd="git reset"
+  local gitRepo
+  local gitResetCmd
   local resetStyle="mixed"
   local OPTIND
   local o
 
-  while getopts ":sfmMkn:" o; do
+  while getopts ":C:sfmMkn:" o; do
     case "${o}" in
+    C)
+      gitRepo="${OPTARG}"
+      ;;
     s)
       resetStyle="soft"
       ;;
@@ -676,15 +680,18 @@ gres() {
     shift
   fi
 
+  if [ -z "${gitRepo}" ]; then
+    gitRepo="$(git rev-parse --show-toplevel 2>/dev/null)"
+  fi
+
   # Validate number of commits to reset.
   if ! echo "${numCommitsToReset}" | grep -q '^[1-9][0-9]*$'; then
     err "Invalid number of commits to reset: ${GREEN}${numCommitsToReset}${NC}"
     return 2
   fi
 
-  gitResetCmd="${gitResetCmd} --${resetStyle}"
+  gitResetCmd="git -C ${gitRepo} reset --${resetStyle}"
   gitResetCmd="${gitResetCmd} HEAD~${numCommitsToReset}"
-
   eval "${gitResetCmd}"
 }
 # }}}
