@@ -126,11 +126,11 @@ __get_line_number() {
   local currentShell="$(currentshell)"
 
   if [ "${currentShell}" = "bash" ]; then
-    echo "${BASH_LINENO[3]}"
+    printf "${BASH_LINENO[3]}"
   elif [ "${currentShell}" = "zsh" ]; then
-    echo "${funcfiletrace[4]##*:}"
+    printf "${funcfiletrace[4]##*:}"
   else
-    echo "${LINENO}"
+    printf "${LINENO}"
   fi
 }
 
@@ -149,7 +149,7 @@ __get_function_name() {
 
   functionName="${functionName}()"
 
-  echo "${functionName}"
+  printf "${functionName}"
 }
 
 # Return the file name of the calling function based on the shell currently in
@@ -158,11 +158,11 @@ __get_file_name() {
   local currentShell="$(currentshell)"
 
   if [ "${currentShell}" = "bash" ]; then
-    echo "${BASH_SOURCE[4]##*/}"
+    printf "${BASH_SOURCE[4]##*/}"
   elif [ "${currentShell}" = "zsh" ]; then
-    echo "${funcfiletrace[4]}" | sed -r 's/.*\/([^/:]*):.*/\1/'
+    printf "${funcfiletrace[4]}" | sed -r 's/.*\/([^/:]*):.*/\1/'
   else
-    basename "$(test -L "$0" && readlink "$0" || echo "$0")"
+    basename "$(test -L "$0" && readlink "$0" || printf "$0")"
   fi
 }
 
@@ -180,16 +180,19 @@ __colorize_log_message_segment() {
   local fontEffects="${3}"
   local outputInColor="${4}"
   local sep="|"
+  local segmentString
 
   if [ -z "${segmentInfo}" ]; then
     return 0
   fi
 
   if [ -n "${outputInColor}" ]; then
-    printf "%s%s" "${sep}" "${fontEffects}${color}${segmentInfo}${NC}"
+    segmentString="${fontEffects}${color}${segmentInfo}${NC}"
   else
-    printf "%s%s" "${sep}" "${segmentInfo}"
+    segmentString="${segmentInfo}"
   fi
+
+  printf "%s%s" "${sep}" "${segmentString}"
 }
 
 __get_log_message_info() {
@@ -219,28 +222,31 @@ __get_log_message_info() {
 __get_log_type_with_color() {
   local logType="$1"
   local color=""
-  case "$logType" in
+  local fontEffects="${BOLD}"
+
+  case "${logType}" in
   "DEBUG")
-    color="${BOLD}${MAGENTA}"
+    color="${MAGENTA}"
     ;;
   "INFO")
-    color="${BOLD}${GREEN}"
+    color="${GREEN}"
     ;;
   "WARNING")
-    color="${BOLD}${YELLOW}"
+    color="${YELLOW}"
     ;;
   "ERROR")
-    color="${BOLD}${RED}"
+    color="${RED}"
     ;;
   "SUCCESS")
-    color="${BOLD}${GREEN}"
+    color="${GREEN}"
     ;;
   *)
-    echo "ERROR: Unknown log type ${logType}" 1>&2
+    printf "ERROR: Unknown log type '%s'\n" "${logType}" 1>&2
     return 1
     ;;
   esac
-  echo "${color}${logType}${NC}"
+
+  printf "%s" "${fontEffects}${color}${logType}${NC}"
 }
 
 # Predicate function for determining whether a message should be logged
