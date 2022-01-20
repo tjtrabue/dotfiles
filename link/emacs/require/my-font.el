@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(defvar my-font-family "JetBrainsMono Nerd Font"
+(defvar my-font-family "CaskaydiaCove Nerd Font"
   "The default font family used throughout Emacs.")
 
 ;;;###autoload
