@@ -343,8 +343,8 @@ dbi() {
       -e '^master$' -e '^main$' -e '^develop$'))
 
   if [ -z "${branches[*]}" ]; then
-    warn "No applicable branches to delete"
-    return 0
+    err "No applicable branches to delete"
+    return 1
   fi
 
   selectedBranches="$(echo "${branches[@]}" | tr ' ' '\n' | fzf)"
