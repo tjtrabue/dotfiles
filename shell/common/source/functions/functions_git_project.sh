@@ -21,11 +21,6 @@ pbr() {
   local OPTIND
   local o
 
-  if ! isgitrepo; then
-    err "Not in a Git repository"
-    return 1
-  fi
-
   while getopts ":hn:d:p:" o; do
     case "${o}" in
     h)
@@ -49,6 +44,11 @@ pbr() {
     esac
   done
   shift $((OPTIND - 1))
+
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
 
   if [ -z "${taskNumber}" ] && [ -n "${1}" ] &&
     echo "${1}" | grep -E -q '^[0-9]+$'; then
@@ -200,11 +200,6 @@ pcm() {
   local OPTIND
   local o
 
-  if ! isgitrepo; then
-    err "Not in a Git repository"
-    return 1
-  fi
-
   while getopts ":hm:n:p:f:" o; do
     case "${o}" in
     h)
@@ -231,6 +226,11 @@ pcm() {
     esac
   done
   shift $((OPTIND - 1))
+
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
 
   # Try to get task number as first positional parameter if the first positional
   # parameter is a number.

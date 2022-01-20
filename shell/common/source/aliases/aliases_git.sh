@@ -46,6 +46,7 @@ alias gacan="git add \"\$(git rev-parse --show-toplevel)\"/ && git commit --amen
 # Commit log {{{
 alias gl='git log --graph --color=always --format="%C(auto)%h%d %s %C(blue)%C(bold)%cr"'
 alias gll='git log --graph --color=always --format=full'
+alias gsl='git shortlog --format="%h%d %s [%cr]"'
 # }}}
 
 # Mergetool {{{
