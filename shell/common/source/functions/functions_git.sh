@@ -7,7 +7,7 @@
 # If no repository directory is provided, defaults to the current dir.
 # Return 0 if the directory is a Git repo. Return non-zero otherwise.
 isgitrepo() {
-  local repoDir="${1:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+  local repoDir="${1:-$(git rev-parse --git-dir 2>/dev/null)}"
 
   git -C "${repoDir}" rev-parse >>/dev/null 2>&1
 }
@@ -763,6 +763,31 @@ gsp() {
     git stash save &&
     git pull &&
     git stash pop
+}
+# }}}
+
+# Hooks {{{
+
+# Link the Git hooks scripts in the dotfiles repo to a given Git repository.
+# If the user does not provide a Git repo, the current repository is assumed.
+link_git_hooks() {
+  local gitRepo="${1:-.}"
+  local dotfilesGitHooksDir="${DOTFILES_COPY}/git_hooks"
+  local targetHooksDir
+
+  if ! isgitrepo "${gitRepo}"; then
+    err "${BLUE}${gitRepo}${NC} is not contained within a Git repo"
+    return 1
+  fi
+
+  targetHooksDir="$(git -C "${gitRepo}" rev-parse --git-dir 2>/dev/null)/hooks"
+
+  if [ ! -d "${targetHooksDir}" ]; then
+    mkdir -p "${targetHooksDir}"
+  fi
+
+  find "${dotfilesGitHooksDir}" -maxdepth 1 -mindepth 1 -type f -exec \
+    ln -sf -t "${targetHooksDir}" '{}' \;
 }
 # }}}
 
