@@ -3,6 +3,10 @@
 # Turn off coloration
 export NC="$(tput sgr0)"
 
+# Font weight effects
+export BOLD="$(tput bold)"
+export ITALIC="$(tput sitm)"
+
 # Standard colors
 export BLACK="$(tput setaf 0)"
 export RED="$(tput setaf 1)"

@@ -183,7 +183,7 @@ __get_log_message_info() {
 
   if [ -n "$fileName" ]; then
     if [ -n "$outputInColor" ]; then
-      info+="${sep}${BLUE}${fileName}${NC}"
+      info+="${sep}${BOLD}${BLUE}${fileName}${NC}"
     else
       info+="${sep}${fileName}${NC}"
     fi
@@ -191,7 +191,7 @@ __get_log_message_info() {
 
   if [ -n "$funcName" ]; then
     if [ -n "$outputInColor" ]; then
-      info+="${sep}${MAGENTA}${funcName}${NC}"
+      info+="${sep}${BOLD}${MAGENTA}${funcName}${NC}"
     else
       info+="${sep}${funcName}"
     fi
@@ -199,7 +199,7 @@ __get_log_message_info() {
 
   if [ -n "$lineNo" ]; then
     if [ -n "$outputInColor" ]; then
-      info+="${sep}${CYAN}${lineNo}${NC}"
+      info+="${sep}${BOLD}${CYAN}${lineNo}${NC}"
     else
       info+="${sep}${lineNo}"
     fi
@@ -207,7 +207,7 @@ __get_log_message_info() {
 
   if [ -n "$timestamp" ]; then
     if [ -n "$outputInColor" ]; then
-      info+="${sep}${YELLOW}${timestamp}${NC}"
+      info+="${sep}${BOLD}${YELLOW}${timestamp}${NC}"
     else
       info+="${sep}${timestamp}"
     fi
@@ -221,19 +221,19 @@ __get_log_type_with_color() {
   local color=""
   case "$logType" in
   "DEBUG")
-    color="${MAGENTA}"
+    color="${BOLD}${MAGENTA}"
     ;;
   "INFO")
-    color="${GREEN}"
+    color="${BOLD}${GREEN}"
     ;;
   "WARNING")
-    color="${YELLOW}"
+    color="${BOLD}${YELLOW}"
     ;;
   "ERROR")
-    color="${RED}"
+    color="${BOLD}${RED}"
     ;;
   "SUCCESS")
-    color="${GREEN}"
+    color="${BOLD}${GREEN}"
     ;;
   *)
     echo "ERROR: Unknown log type ${logType}" 1>&2
