@@ -240,6 +240,12 @@ link/config/kitty/kitty-themes
 link/config/flutter/tool_state
 # }}}
 
+# SQL LS {{{
+# We don't want to track the sqls config file because it always contains local,
+# and possibly sensitive configuration.
+link/config/sqls/config.yml
+# }}}
+
 # Android Development Environment {{{
 link/config/Android\ Open\ Source\ Project
 link/config/Google

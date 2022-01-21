@@ -347,8 +347,12 @@ lspconfig.sqlls.setup {
 -- sqls (SQL LanguageServer written in Go) {{{
 -- To install sqls, run this command:
 --   go get github.com/lighttiger2505/sqls
+local sqls_cmd = os_cmd_to_string("command -v sqls")
+local sqls_config_file = os.getenv("HOME") .. "/.config/sqls/config.yml"
+
 lspconfig.sqls.setup {
   capabilities = capabilities,
+  cmd = {sqls_cmd, "-config", sqls_config_file},
   on_attach = on_attach
 }
 -- }}}
