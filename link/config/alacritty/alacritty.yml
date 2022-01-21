@@ -98,36 +98,36 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: "Hack Nerd Font Mono"
+    family: Hack Nerd Font Mono
     # The `style` can be specified to pick a specific face.
-    style: "Regular"
+    style: Regular
   # Bold font face
   bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: "Hack Nerd Font Mono"
+    family: Hack Nerd Font Mono
     # The `style` can be specified to pick a specific face.
-    style: "Bold"
+    style: Bold
   # Italic font face
   italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: "Hack Nerd Font Mono"
+    family: Hack Nerd Font Mono
     # The `style` can be specified to pick a specific face.
-    style: "Italic"
+    style: Italic
   # Bold italic font face
   bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: "Hack Nerd Font Mono"
+    family: Hack Nerd Font Mono
     # The `style` can be specified to pick a specific face.
-    style: "Bold Italic"
+    style: Bold Italic
   # Point size
   size: 7.5
   # Offset is the extra space around each character. `offset.y` can be thought of
@@ -163,32 +163,32 @@ colors:
   # Colors (Doom Vibrant theme, based on hlissner/emacs-doom-themes)
   colors:
     bright:
-      black: '#000000'
-      blue: '#51afef'
-      cyan: '#5cEfFF'
-      green: '#7bc275'
-      magenta: '#c57bdb'
-      red: '#ff665c'
-      white: '#bbc2cf'
-      yellow: '#fcce7b'
+      black: "#000000"
+      blue: "#51afef"
+      cyan: "#5cEfFF"
+      green: "#7bc275"
+      magenta: "#c57bdb"
+      red: "#ff665c"
+      white: "#bbc2cf"
+      yellow: "#fcce7b"
     cursor:
-      cursor: '#51afef'
-      text: '#1b1b1b'
+      cursor: "#51afef"
+      text: "#1b1b1b"
     normal:
-      black: '#000000'
-      blue: '#1f5582'
-      cyan: '#6A8FBF'
-      green: '#4db5bd'
-      magenta: '#a991f1'
-      red: '#e69055'
-      white: '#bbc2cf'
-      yellow: '#e69055'
+      black: "#000000"
+      blue: "#1f5582"
+      cyan: "#6A8FBF"
+      green: "#4db5bd"
+      magenta: "#a991f1"
+      red: "#e69055"
+      white: "#bbc2cf"
+      yellow: "#e69055"
     primary:
-      background: '#282c34'
-      foreground: '#bbc2cf'
+      background: "#282c34"
+      foreground: "#bbc2cf"
     selection:
-      background: '#42444b'
-      text: '#bbc2cf'
+      background: "#42444b"
+      text: "#bbc2cf"
   xt_with_bright_colors: true
 # Visual Bell
 #
