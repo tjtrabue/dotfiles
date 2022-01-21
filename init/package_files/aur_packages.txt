@@ -26,6 +26,7 @@ neovim-nightly-bin
 nonicons-font
 optimus-manager
 p4v
+pack-cli-bin
 polybar-git
 roswell
 swift-bin
