@@ -76,8 +76,27 @@ local function formatter_sql_formatter()
   return {
     exe = "sql-formatter",
     args = {
-      "-l",
-      "sql"
+      "--language",
+      "postgresql",
+      "--indent",
+      "2",
+      "--uppercase",
+      "--lines-between-queries",
+      "2"
+    },
+    stdin = true
+  }
+end
+
+-- sqlformat
+local function formatter_sqlformat()
+  return {
+    exe = "sqlformat",
+    args = {
+      "--identifiers=lower",
+      "--keywords=upper",
+      "--indent_width=2",
+      "-"
     },
     stdin = true
   }

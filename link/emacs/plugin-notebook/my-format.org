@@ -146,7 +146,9 @@ and filetypes. Check their docstrings for more details.
                    "-"))
       (lisp-format . ("lisp-format"))
       (shfmt . ("shfmt" "-s" "-"))
-      (sql-formatter . ("sql-formatter" "-l" "sql"))
+      (sql-formatter . ("sql-formatter" "--language" "postgresql"
+                        "--indent" "2" "--uppercase"
+                        "--lines-between-queries" "2"))
       (xmllint . ("xmllint" "--format" "-")))
     "Alist that maps names to custom apheleia formatters.
   It is perfectly acceptable to define formatters for executables
