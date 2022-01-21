@@ -31,6 +31,7 @@ add_bash_completions() {
   __add_docker_alias_completions
   __add_sdkman_completions
   __add_asdf_completions_for_bash
+  __add_pack_completions_for_bash
 }
 
 # Add any extra Zsh completions.
@@ -43,6 +44,7 @@ add_zsh_completions() {
   __add_zsh_aws_completions
   __add_extra_zsh_completions
   __add_asdf_completions_for_zsh
+  __add_pack_completions_for_zsh
 }
 
 # Add extra Fish shell completions.
@@ -342,6 +344,25 @@ __add_asdf_completions_for_fish() {
   if [ -d "${asdfDir}" ]; then
     . "${asdfCompletionFile}"
   fi
+}
+
+# Add completions for Buildpack CLI to Bash.
+__add_pack_completions_for_bash() {
+  if [ -x "$(command -v pack)" ]; then
+    . "$(pack completion --shell "bash")"
+  fi
+}
+
+# Add completions for Buildpack CLI to Zsh.
+__add_pack_completions_for_zsh() {
+  if [ -x "$(command -v pack)" ]; then
+    . "$(pack completion --shell "zsh")"
+  fi
+}
+
+# Add completions for Buildpack CLI to Fish.
+__add_pack_completions_for_fish() {
+  source (pack completion --shell fish)
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1

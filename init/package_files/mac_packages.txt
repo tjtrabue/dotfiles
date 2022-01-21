@@ -2,6 +2,7 @@ aspell
 awscli
 binutils
 broot
+buildpacks/tap/pack
 clang-format
 clojure/tools/clojure
 cmatrix
@@ -46,10 +47,10 @@ neofetch
 neovim --HEAD
 ninja
 openssh
+p4v
 parallel
 plantuml
 postgres
-p4v
 pyenv
 ranger
 rclone
