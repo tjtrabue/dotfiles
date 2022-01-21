@@ -77,6 +77,7 @@ for any programming language that supports a formatting tool.")
                                        ruby-mode
                                        scss-mode
                                        sh-mode
+                                       sql-mode
                                        swift-mode
                                        terraform-mode
                                        TeX-latex-mode
