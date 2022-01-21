@@ -2,7 +2,7 @@
 
 ;; Author: Thomas Jacob Trabue
 ;; Maintainer: Thomas Jacob Trabue
-;; Version: version
+;; Version: 1.0.0
 ;; Package-Requires: ((emacs "26.1"))
 ;; Homepage: homepage
 ;; Keywords: keywords
@@ -25,7 +25,8 @@
 
 ;;; Commentary:
 
-;; commentary
+;; This package contains my personal font configuration.  It's supposed to be a
+;; single point of configuration for my Emacs font defaults.
 
 ;;; Code:
 
