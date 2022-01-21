@@ -22,9 +22,11 @@ pynvim
 python-language-server
 pywal
 rebound-cli
+sqlformat
 thefuck
 ueberzug
 vim-vint
 virtualenvwrapper
+yamlfmt
 yamllint
 yapf

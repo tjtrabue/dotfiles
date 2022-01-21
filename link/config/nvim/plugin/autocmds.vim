@@ -37,15 +37,4 @@ augroup highlight_yank
 augroup END
 " }}}
 
-" Folding {{{
-augroup fold_code
-  " Use 'indent' as the default foldmethod.
-  au BufReadPre * setlocal foldmethod=indent
-  " Allow the user to create manual folds while editing. This command is
-  " executed after the modeline is read, so it will respect any default
-  " foldmethod overrides set in the modeline.
-  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-augroup END
-" }}}
-
 " vim:foldenable:foldmethod=marker:foldlevel=0

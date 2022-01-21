@@ -130,6 +130,15 @@ local function formatter_xmllint()
   }
 end
 
+-- yamlfmt
+local function formatter_yamlfmt()
+  return {
+    exe = "yamlfmt",
+    args = {},
+    stdin = true
+  }
+end
+
 -- Assign formatters for each filetype
 require("formatter").setup(
   {
@@ -172,6 +181,9 @@ require("formatter").setup(
       },
       xml = {
         formatter_xmllint
+      },
+      yaml = {
+        formatter_yamlfmt
       }
     }
   }
@@ -194,6 +206,7 @@ augroup FormatAutogroup
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
   " autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType yaml autocmd BufWritePost <buffer> FormatWrite
 augroup END
 ]],
   true

@@ -149,7 +149,8 @@ and filetypes. Check their docstrings for more details.
       (sql-formatter . ("sql-formatter" "--language" "postgresql"
                         "--indent" "2" "--uppercase"
                         "--lines-between-queries" "2"))
-      (xmllint . ("xmllint" "--format" "-")))
+      (xmllint . ("xmllint" "--format" "-"))
+      (yamlfmt . ("yamlfmt")))
     "Alist that maps names to custom apheleia formatters.
   It is perfectly acceptable to define formatters for executables
   that may or may not be installed on the filesystem. They will not
@@ -162,7 +163,8 @@ and filetypes. Check their docstrings for more details.
       ;; ((emacs-lisp-mode lisp-mode scheme-mode) . lisp-format)
       (sh-mode . beautysh)
       (sql-mode . sql-formatter)
-      (xml-mode . xmllint))
+      (xml-mode . xmllint)
+      (yaml-mode . yamlfmt))
     "Alist mapping major modes to custom formatter specifications for apheleia.
   The car of each alist cons cell can either be a single symbol or
   string, or a list of symbols or strings. If the car is a list,

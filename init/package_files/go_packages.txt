@@ -1,3 +1,4 @@
+github.com/jessfraz/dockfmt
 github.com/lighttiger2505/sqls
 github.com/mattn/efm-langserver
 github.com/wailsapp/wails/cmd/wails@latest
