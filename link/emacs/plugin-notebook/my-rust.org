@@ -18,3 +18,11 @@ applications that run as native compiled binaries.
       ("\\.rs\\'" . rust-mode)
       ("\\.rlib\\'" . rust-mode))
   #+end_src
+
+* rustic
+=rustic-mode= is based on =rust-mode=, but provides additional features, such as
+=flycheck= integration and multiline error parsing.
+
+#+begin_src emacs-lisp
+  (use-package rustic)
+#+end_src

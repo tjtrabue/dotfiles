@@ -245,9 +245,12 @@ require("formatter").setup(
   }
 )
 
--- Format the specified filetypes on save.
 vim.api.nvim_exec(
   [[
+" Format whole buffer
+nnoremap <silent> <leader>FF :Format<CR>
+
+" Format the specified filetypes on save.
 augroup FormatAutogroup
   autocmd!
   autocmd FileType bash autocmd BufWritePost <buffer> FormatWrite
