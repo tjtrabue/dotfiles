@@ -104,7 +104,9 @@ set viminfo^=%
 "   Open all folds in buffer            : zR
 "   Close all folds in buffer           : zM
 
-" Enable folding.
+" Enable code folding.
+" NOTE: See autocmds.vim for foldenable logic. We only want to enable folding
+" for large files, so we have to do that with autocmds.
 set foldenable
 
 " The number of fold occurrences after which Vim will start folding code.

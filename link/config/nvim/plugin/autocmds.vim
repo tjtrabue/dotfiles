@@ -37,4 +37,17 @@ augroup highlight_yank
 augroup END
 " }}}
 
+" Code folding {{{
+" We only want to initially fold all code in a buffer if the number of lines in
+" the buffer exceeds a certain threshold. Otherwise, unfold all folds in the
+" buffer.
+augroup fold_code
+  autocmd BufRead * if line('$') >= 100
+        \| execute "normal! zM"
+        \| else
+        \| execute "normal! zR"
+        \| endif
+augroup END
+" }}}
+
 " vim:foldenable:foldmethod=marker:foldlevel=0
