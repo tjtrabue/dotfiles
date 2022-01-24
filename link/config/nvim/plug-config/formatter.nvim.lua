@@ -157,6 +157,9 @@ require("formatter").setup(
       css = {
         formatter_prettier
       },
+      elm = {
+        formatter_prettier
+      },
       graphql = {
         formatter_prettier
       },
@@ -196,6 +199,9 @@ require("formatter").setup(
       python = {
         formatter_yapf
       },
+      ruby = {
+        formatter_prettier
+      },
       rust = {
         formatter_rustfmt
       },
@@ -211,6 +217,9 @@ require("formatter").setup(
       },
       sql = {
         formatter_sql_formatter
+      },
+      toml = {
+        formatter_prettier
       },
       typescript = {
         formatter_prettier
@@ -236,6 +245,7 @@ augroup FormatAutogroup
   autocmd FileType c autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType cpp autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType css autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType elm autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType graphql autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType html autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType javascript autocmd BufWritePost <buffer> FormatWrite
@@ -249,11 +259,13 @@ augroup FormatAutogroup
   autocmd FileType markdown autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType perl autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType python autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType ruby autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType rust autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sass autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType scss autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType toml autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType typescript autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType yaml autocmd BufWritePost <buffer> FormatWrite

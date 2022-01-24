@@ -4,6 +4,7 @@
 @babel/parser
 @babel/polyfill
 @mermaid-js/mermaid-cli
+@prettier/plugin-ruby
 @prettier/plugin-xml
 @tailwindcss/language-server
 babel-eslint
@@ -43,6 +44,8 @@ mermaid
 node-cljfmt
 npm-check-updates
 prettier
+prettier-plugin-elm
+prettier-plugin-toml
 speed-test
 sql-formatter
 stylelint
