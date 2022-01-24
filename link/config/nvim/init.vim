@@ -39,41 +39,41 @@ endfunction
 
 " This should be first, since which key ought to be registered before we make
 " any leader mappings.
-call s:SourcePluginConfigFile('vim-which-key.vim')
+call s:SourcePluginConfigFile('vim-which-key.config.vim')
 
-call s:SourcePluginConfigFile('airline.vim')
-call s:SourcePluginConfigFile('awesome_terminal_fonts.vim')
-call s:SourcePluginConfigFile('ctrlp.vim')
-call s:SourcePluginConfigFile('emmet.vim')
-call s:SourcePluginConfigFile('vim-signify.vim')
-call s:SourcePluginConfigFile('gundo.vim')
-call s:SourcePluginConfigFile('incsearch-easymotion.vim')
-call s:SourcePluginConfigFile('incsearch.vim')
-call s:SourcePluginConfigFile('latex.vim')
-call s:SourcePluginConfigFile('tagbar.vim')
-call s:SourcePluginConfigFile('tmuxline.vim')
-call s:SourcePluginConfigFile('ultisnips.vim')
-call s:SourcePluginConfigFile('vim-easymotion.vim')
-call s:SourcePluginConfigFile('vim_latex_live_preview.vim')
-call s:SourcePluginConfigFile('lazygit.nvim.vim')
-call s:SourcePluginConfigFile('undotree.vim')
+call s:SourcePluginConfigFile('airline.config.vim')
+call s:SourcePluginConfigFile('awesome_terminal_fonts.config.vim')
+call s:SourcePluginConfigFile('ctrlp.config.vim')
+call s:SourcePluginConfigFile('emmet.config.vim')
+call s:SourcePluginConfigFile('vim-signify.config.vim')
+call s:SourcePluginConfigFile('gundo.config.vim')
+call s:SourcePluginConfigFile('incsearch-easymotion.config.vim')
+call s:SourcePluginConfigFile('incsearch.config.vim')
+call s:SourcePluginConfigFile('latex.config.vim')
+call s:SourcePluginConfigFile('tagbar.config.vim')
+call s:SourcePluginConfigFile('tmuxline.config.vim')
+call s:SourcePluginConfigFile('ultisnips.config.vim')
+call s:SourcePluginConfigFile('vim-easymotion.config.vim')
+call s:SourcePluginConfigFile('vim_latex_live_preview.config.vim')
+call s:SourcePluginConfigFile('lazygit.config.vim')
+call s:SourcePluginConfigFile('undotree.config.vim')
 call s:SourcePluginConfigFile('neogit.lua')
-call s:SourcePluginConfigFile('neogit.vim')
-call s:SourcePluginConfigFile('git-blame.nvim.vim')
-call s:SourcePluginConfigFile('glow.nvim.vim')
-call s:SourcePluginConfigFile('barbar.nvim.vim')
-call s:SourcePluginConfigFile('nvim-hlslens.vim')
+call s:SourcePluginConfigFile('neogit.config.vim')
+call s:SourcePluginConfigFile('git-blame.config.vim')
+call s:SourcePluginConfigFile('glow.config.vim')
+call s:SourcePluginConfigFile('barbar.config.vim')
+call s:SourcePluginConfigFile('nvim-hlslens.config.vim')
 call s:SourcePluginConfigFile('formatter.nvim.lua')
-call s:SourcePluginConfigFile('ranger.vim.vim')
+call s:SourcePluginConfigFile('ranger.config.vim')
 
-call s:SourcePluginConfigFile('nvim-tree.vim')
-" call s:SourcePluginConfigFile('chadtree.vim')
+call s:SourcePluginConfigFile('nvim-tree.config.vim')
+" call s:SourcePluginConfigFile('chadtree.config.vim')
 
 call s:SourcePluginConfigFile('indent-guides.nvim.lua')
 " Currently not using fzf. Using telescope.nvim instead.
-" call s:SourcePluginConfigFile('fzf.vim')
+" call s:SourcePluginConfigFile('fzf.config.vim')
 call s:SourcePluginConfigFile('telescope.nvim.lua')
-call s:SourcePluginConfigFile('telescope.nvim.vim')
+call s:SourcePluginConfigFile('telescope.config.vim')
 
 " Load auto-completion configuration
 call s:SourcePluginConfigFile('nvim-cmp.lua')
@@ -100,14 +100,14 @@ call s:SourcePluginConfigFile('nvim-treesitter.conf.lua')
 call s:SourcePluginConfigFile('nvim-colorizer.lua')
 
 " These should always come last!!!
-call s:SourcePluginConfigFile('colorscheme.vim')
+call s:SourcePluginConfigFile('colorscheme.config.vim')
 call s:SourcePluginConfigFile('nvim-web-devicons.lua')
 
 " Activate the awesome galaxyline statusbar. This status line must be entirely
 " self-configured. That is, there is no 'default' status line that comes with
 " galaxyline. However, the repo does contain a few example files that you can
 " use as a starting point for your own custom status lines.
-call s:SourcePluginConfigFile('galaxyline.vim')
+call s:SourcePluginConfigFile('galaxyline.config.vim')
 
 " lualine is a fast, minimal framework for building statuslines.
 " call s:SourcePluginConfigFile('lualine.nvim.lua')
