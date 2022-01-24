@@ -3,3 +3,4 @@ $(brew --prefix)/opt/gnu-getopt/bin
 $(brew --prefix)/opt/openssh/bin
 $(brew --prefix)/opt/*/**/gnubin
 $(brew --prefix)/opt/llvm/bin
+$(brew --prefix)/opt/util-linux/bin

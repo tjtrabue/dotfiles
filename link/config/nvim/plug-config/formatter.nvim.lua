@@ -276,10 +276,10 @@ augroup FormatAutogroup
   autocmd FileType sass autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType scss autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
-  autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
+  " autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType toml autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType typescript autocmd BufWritePost <buffer> FormatWrite
-  autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
+  " autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType yaml autocmd BufWritePost <buffer> FormatWrite
 augroup END
 ]],

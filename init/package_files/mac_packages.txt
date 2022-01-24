@@ -70,6 +70,7 @@ texlab
 the_silver_searcher
 tmux
 up
+util-linux
 vale
 vlc
 vmtouch
