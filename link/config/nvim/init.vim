@@ -40,11 +40,12 @@ endfunction
 " is only intended to allow for machine-local overrides of our baseline
 " configuration.
 function! s:SourceOverrideConfigFiles()
-  for lf in split(glob(g:override_config_dir . '/*.lua'), '\n')
-    silent execute 'luafile ' . lf
-  endfor
-  for vf in split(glob(g:override_config_dir . '/*.vim'), '\n')
-    silent execute 'source ' . vf
+  for f in split(glob(g:override_config_dir . '/*'), '\n')
+    if f =~ '\.vim$'
+      silent execute 'source ' . f
+    elseif f =~ '\.lua$'
+      silent execute 'luafile ' . f
+    endif
   endfor
 endfunction
 " }}}
