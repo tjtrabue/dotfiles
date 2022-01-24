@@ -18,6 +18,15 @@ local function formatter_beautysh()
   }
 end
 
+-- black
+local function formatter_black()
+  return {
+    exe = "black",
+    args = {"--stdin-filename", vim.api.nvim_buf_get_name(0), "-"},
+    stdin = true
+  }
+end
+
 -- clang-format
 local function formatter_clang_format()
   return {
@@ -197,7 +206,7 @@ require("formatter").setup(
         formatter_perltidy
       },
       python = {
-        formatter_yapf
+        formatter_black
       },
       ruby = {
         formatter_prettier
