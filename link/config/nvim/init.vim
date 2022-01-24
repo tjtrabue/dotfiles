@@ -8,6 +8,11 @@ let $MYVIMRC = stdpath('config') . '/init.vim'
 " them automatically.
 let g:plugin_config_dir = stdpath('config') . '/plug-config'
 
+" Directory containing '.vim' and '.lua' files that should override default
+" config in the 'plugin/' and 'plug-config/' directories.
+" This directory is not tracked by Git, and may or may not exist.
+let g:override_config_dir = stdpath('config') . '/override-config'
+
 " Directory containing all installed plugins
 let g:plugin_install_dir = stdpath('data') . '/site/pack/packer/start'
 
@@ -20,12 +25,27 @@ lua require('plugins')
 " Private functions {{{
 
 " Source a file in the plugin-config dir.
-function! s:SourcePluginConfigFile(file)
-  if a:file =~ '\.vim$'
-    silent execute 'source ' . g:plugin_config_dir . '/' . a:file
-  elseif a:file =~ '\.lua$'
-    silent execute 'luafile ' . g:plugin_config_dir . '/' . a:file
+function! s:SourcePluginConfigFile(filename)
+  let l:filepath = g:plugin_config_dir . '/' . a:filename
+
+  if l:filepath =~ '\.vim$'
+    silent execute 'source ' . l:filepath
+  elseif l:filepath =~ '\.lua$'
+    silent execute 'luafile ' . l:filepath
   endif
+endfunction
+
+" Source all files in the 'override-config/' directory. The 'override-config/'
+" directory does not have to be present for this function to work properly, and
+" is only intended to allow for machine-local overrides of our baseline
+" configuration.
+function! s:SourceOverrideConfigFiles()
+  for lf in split(glob(g:override_config_dir . '/*.lua'), '\n')
+    silent execute 'luafile ' . lf
+  endfor
+  for vf in split(glob(g:override_config_dir . '/*.vim'), '\n')
+    silent execute 'source ' . vf
+  endfor
 endfunction
 " }}}
 
@@ -120,6 +140,10 @@ call s:SourcePluginConfigFile('nvim-lint.config.lua')
 
 " PostgreSQL syntax highlighting config
 call s:SourcePluginConfigFile('pgsql.config.vim')
+" }}}
+
+" Source override config files {{{
+call s:SourceOverrideConfigFiles()
 " }}}
 
 " Automatically compile new plugins whenever the plugins.lua file is

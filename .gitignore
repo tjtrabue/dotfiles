@@ -84,6 +84,7 @@ link/config/caja
 
 # Neovim {{{
 link/config/nvim/backups
+link/config/nvim/override-config
 link/config/nvim/swaps
 link/config/nvim/undo
 link/config/nvim/.netrwhist
