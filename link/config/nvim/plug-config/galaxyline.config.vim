@@ -15,7 +15,7 @@ if filereadable(s:example_galaxyline_file) && ! s:use_custom_theme
   execute 'luafile ' . s:example_galaxyline_file
 else
   " If we can't find the example ilfe, default to the one we copied/configured.
-  execute 'luafile ' . g:plugin_config_dir . '/galaxyline.lua'
+  execute 'luafile ' . g:plugin_config_dir . '/galaxyline.config.lua'
 endif
 
 " vim:foldenable:foldmethod=marker:foldlevel=0

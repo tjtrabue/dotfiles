@@ -57,51 +57,51 @@ call s:SourcePluginConfigFile('vim-easymotion.config.vim')
 call s:SourcePluginConfigFile('vim_latex_live_preview.config.vim')
 call s:SourcePluginConfigFile('lazygit.config.vim')
 call s:SourcePluginConfigFile('undotree.config.vim')
-call s:SourcePluginConfigFile('neogit.lua')
+call s:SourcePluginConfigFile('neogit.config.lua')
 call s:SourcePluginConfigFile('neogit.config.vim')
 call s:SourcePluginConfigFile('git-blame.config.vim')
 call s:SourcePluginConfigFile('glow.config.vim')
 call s:SourcePluginConfigFile('barbar.config.vim')
 call s:SourcePluginConfigFile('nvim-hlslens.config.vim')
-call s:SourcePluginConfigFile('formatter.nvim.lua')
+call s:SourcePluginConfigFile('formatter.config.lua')
 call s:SourcePluginConfigFile('ranger.config.vim')
 
 call s:SourcePluginConfigFile('nvim-tree.config.vim')
 " call s:SourcePluginConfigFile('chadtree.config.vim')
 
-call s:SourcePluginConfigFile('indent-guides.nvim.lua')
+call s:SourcePluginConfigFile('indent-guides.config.lua')
 " Currently not using fzf. Using telescope.nvim instead.
 " call s:SourcePluginConfigFile('fzf.config.vim')
-call s:SourcePluginConfigFile('telescope.nvim.lua')
+call s:SourcePluginConfigFile('telescope.config.lua')
 call s:SourcePluginConfigFile('telescope.config.vim')
 
 " Load auto-completion configuration
-call s:SourcePluginConfigFile('nvim-cmp.lua')
+call s:SourcePluginConfigFile('nvim-cmp.config.lua')
 
 " Load Aerial code browser config file
-call s:SourcePluginConfigFile('aerial.nvim.lua')
+call s:SourcePluginConfigFile('aerial.config.lua')
 
 " Load the LSP configuration file.
-call s:SourcePluginConfigFile('lsp.lua')
+call s:SourcePluginConfigFile('lsp.config.lua')
 
 " Better defaults for nvim-lsp.
-call s:SourcePluginConfigFile('nvim-lsputils.lua')
+call s:SourcePluginConfigFile('nvim-lsputils.config.lua')
 
 " Trouble is a pretty LSP diagnostic browser for Neovim.
-call s:SourcePluginConfigFile('trouble.nvim.lua')
+call s:SourcePluginConfigFile('trouble.config.lua')
 
 " Define new textobjects with the help of treesitter and LSP.
-call s:SourcePluginConfigFile('treesitter-textobjs.lua')
+call s:SourcePluginConfigFile('treesitter-textobjs.config.lua')
 
 " Define treesitter configuration
-call s:SourcePluginConfigFile('nvim-treesitter.conf.lua')
+call s:SourcePluginConfigFile('nvim-treesitter.conf.config.lua')
 
 " Highlight colors in files for color names, RGB values, and hex codes.
-call s:SourcePluginConfigFile('nvim-colorizer.lua')
+call s:SourcePluginConfigFile('nvim-colorizer.config.lua')
 
 " These should always come last!!!
 call s:SourcePluginConfigFile('colorscheme.config.vim')
-call s:SourcePluginConfigFile('nvim-web-devicons.lua')
+call s:SourcePluginConfigFile('nvim-web-devicons.config.lua')
 
 " Activate the awesome galaxyline statusbar. This status line must be entirely
 " self-configured. That is, there is no 'default' status line that comes with
@@ -110,13 +110,13 @@ call s:SourcePluginConfigFile('nvim-web-devicons.lua')
 call s:SourcePluginConfigFile('galaxyline.config.vim')
 
 " lualine is a fast, minimal framework for building statuslines.
-" call s:SourcePluginConfigFile('lualine.nvim.lua')
+" call s:SourcePluginConfigFile('lualine.config.lua')
 
 " Org mode configuration
-call s:SourcePluginConfigFile('orgmode.nvim.lua')
+call s:SourcePluginConfigFile('orgmode.config.lua')
 
 " Code linter that works alongside Neovim's LSP.
-call s:SourcePluginConfigFile('nvim-lint.lua')
+call s:SourcePluginConfigFile('nvim-lint.config.lua')
 
 " PostgreSQL syntax highlighting config
 call s:SourcePluginConfigFile('pgsql.config.vim')
