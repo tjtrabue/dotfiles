@@ -59,7 +59,7 @@ install_latest_node() {
 
 # Install global NPM packages for the currently selected Node.js version.
 install_node_packages() {
-  xargs npm install -g <"${NODE_PACKAGES_FILE}"
+  eval "npm install -g --force $(tr '\n' ' ' <"${NODE_PACKAGES_FILE}")"
 }
 
 update_node_packages() {

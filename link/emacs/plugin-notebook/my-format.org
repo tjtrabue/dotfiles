@@ -145,6 +145,7 @@ and filetypes. Check their docstrings for more details.
                    (when indent-tabs-mode "--tab")
                    "-"))
       (lisp-format . ("lisp-format"))
+      (prettier . ("prettier" "--stdin-filepath" (buffer-file-name)))
       (shfmt . ("shfmt" "-s" "-"))
       (sql-formatter . ("sql-formatter" "--language" "postgresql"
                         "--indent" "2" "--uppercase"
@@ -161,10 +162,19 @@ and filetypes. Check their docstrings for more details.
     '(
       ;; lisp-format is currently broken
       ;; ((emacs-lisp-mode lisp-mode scheme-mode) . lisp-format)
+      (css-mode . prettier)
+      (graphql-mode . prettier)
+      (html-mode . prettierj)
+      (js-mode . prettier)
+      (js2-mode . prettier)
+      (less-css-mode . prettier)
+      (mhtml-mode . prettier)
+      (scss-mode . prettier)
       (sh-mode . beautysh)
       (sql-mode . sql-formatter)
-      (xml-mode . xmllint)
-      (yaml-mode . yamlfmt))
+      (typescript-mode . prettier)
+      (xml-mode . prettier)
+      (yaml-mode . prettier))
     "Alist mapping major modes to custom formatter specifications for apheleia.
   The car of each alist cons cell can either be a single symbol or
   string, or a list of symbols or strings. If the car is a list,

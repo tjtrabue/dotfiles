@@ -1,0 +1,17 @@
+#+title:   GraphQL: Advanced Web API Design Spec
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:01:24
+#+tags:    api graphql web
+#+STARTUP: fold
+
+GraphQL is an improvement upon the ReST web API specification, providing a
+stronger typing system for endpoints, as well as a means of hitting multiple
+endpoints via a single query..
+
+* graphql-mode
+Major mode for editing GraphQL schemas and queries.
+
+#+begin_src emacs-lisp
+  (use-package graphql-mode)
+#+end_src

@@ -154,6 +154,15 @@ require("formatter").setup(
       cpp = {
         formatter_clang_format
       },
+      css = {
+        formatter_prettier
+      },
+      graphql = {
+        formatter_prettier
+      },
+      html = {
+        formatter_prettier
+      },
       javascript = {
         formatter_prettier
       },
@@ -172,6 +181,9 @@ require("formatter").setup(
       jsx = {
         formatter_prettier
       },
+      less = {
+        formatter_prettier
+      },
       lua = {
         formatter_luafmt
       },
@@ -187,6 +199,12 @@ require("formatter").setup(
       rust = {
         formatter_rustfmt
       },
+      sass = {
+        formatter_prettier
+      },
+      scss = {
+        formatter_prettier
+      },
       sh = {
         -- formatter_beautysh,
         formatter_shfmt
@@ -198,10 +216,12 @@ require("formatter").setup(
         formatter_prettier
       },
       xml = {
-        formatter_xmllint
+        -- formatter_xmllint,
+        formatter_prettier
       },
       yaml = {
-        formatter_yamlfmt
+        -- formatter_yamlfmt,
+        formatter_prettier
       }
     }
   }
@@ -215,17 +235,23 @@ augroup FormatAutogroup
   autocmd FileType bash autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType c autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType cpp autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType css autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType graphql autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType html autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType javascript autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType javascript.jsx autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType javascriptreact autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType json autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType jsonc autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType jsx autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType less autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType lua autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType markdown autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType perl autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType python autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType rust autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType sass autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType scss autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType typescript autocmd BufWritePost <buffer> FormatWrite

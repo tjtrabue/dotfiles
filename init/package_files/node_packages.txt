@@ -4,6 +4,7 @@
 @babel/parser
 @babel/polyfill
 @mermaid-js/mermaid-cli
+@prettier/plugin-xml
 @tailwindcss/language-server
 babel-eslint
 bash-language-server
@@ -44,14 +45,13 @@ npm-check-updates
 prettier
 speed-test
 sql-formatter
-sql-language-server
 stylelint
 tern
 tldr
 typescript
 typescript-language-server
 vim-language-server
-vscode-languageservers-extracted
-vue-language-server
+vls
+vscode-langservers-extracted
 yaml-language-server
 yarn
