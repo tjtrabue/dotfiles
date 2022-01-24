@@ -157,6 +157,12 @@ require("formatter").setup(
       javascript = {
         formatter_prettier
       },
+      ["javascript.jsx"] = {
+        formatter_prettier
+      },
+      javascriptreact = {
+        formatter_prettier
+      },
       json = {
         formatter_prettier
       },
@@ -210,6 +216,8 @@ augroup FormatAutogroup
   autocmd FileType c autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType cpp autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType javascript autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType javascript.jsx autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType javascriptreact autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType json autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType jsonc autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType jsx autocmd BufWritePost <buffer> FormatWrite

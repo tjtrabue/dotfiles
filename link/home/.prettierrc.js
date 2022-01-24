@@ -4,14 +4,15 @@
 
 module.exports = {
   semi: true,
-  singleQuote: false,
-  quoteProps: "consistent",
+  singleQuote: true,
+  quoteProps: 'consistent',
   jsxSingleQuote: false,
-  trailingComma: "all",
-  arrowParens: "avoid",
+  trailingComma: 'es5',
+  arrowParens: 'avoid',
   bracketSpacing: false,
   // Always wrap Markdown files after a fixed width
-  proseWrap: "always",
-}
+  printWidth: 80,
+  proseWrap: 'always',
+};
 
 // vim:foldenable:foldmethod=marker
