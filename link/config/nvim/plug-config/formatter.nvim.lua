@@ -157,6 +157,15 @@ require("formatter").setup(
       javascript = {
         formatter_prettier
       },
+      json = {
+        formatter_prettier
+      },
+      jsonc = {
+        formatter_prettier
+      },
+      jsx = {
+        formatter_prettier
+      },
       lua = {
         formatter_luafmt
       },
@@ -179,6 +188,9 @@ require("formatter").setup(
       sql = {
         formatter_sql_formatter
       },
+      typescript = {
+        formatter_prettier
+      },
       xml = {
         formatter_xmllint
       },
@@ -198,6 +210,9 @@ augroup FormatAutogroup
   autocmd FileType c autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType cpp autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType javascript autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType json autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType jsonc autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType jsx autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType lua autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType markdown autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType perl autocmd BufWritePost <buffer> FormatWrite
@@ -205,7 +220,8 @@ augroup FormatAutogroup
   autocmd FileType rust autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sh autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType sql autocmd BufWritePost <buffer> FormatWrite
-  " autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType typescript autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType xml autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType yaml autocmd BufWritePost <buffer> FormatWrite
 augroup END
 ]],
