@@ -181,7 +181,7 @@ and filetypes. Check their docstrings for more details.
       (markdown-mode . prettier)
       (mhtml-mode . prettier)
       (objc-mode . clang-format)
-      (python-mode . yapf)
+      (python-mode . black)
       (ruby-mode . prettier)
       (rust-mode . rustfmt)
       (rustic-mode . rustfmt)
