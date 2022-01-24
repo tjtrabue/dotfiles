@@ -382,6 +382,10 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
       end
     }
     -- }}}
+
+    -- SQL
+    -- PostgreSQL syntax highlighting
+    use {"lifepillar/pgsql.vim"}
   end
 )
 -- }}}

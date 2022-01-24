@@ -117,6 +117,9 @@ call s:SourcePluginConfigFile('orgmode.nvim.lua')
 
 " Code linter that works alongside Neovim's LSP.
 call s:SourcePluginConfigFile('nvim-lint.lua')
+
+" PostgreSQL syntax highlighting config
+call s:SourcePluginConfigFile('pgsql.config.vim')
 " }}}
 
 " Automatically compile new plugins whenever the plugins.lua file is
