@@ -1,9 +1,17 @@
 " This file mainly contains keybindings for Telescope to use within Vim proper.
 
 " Files {{{
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+
+" Search for files in project.
+nnoremap <ljader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+" Emacs style binding for people used to `find-file`.
 nnoremap <C-x>f <cmd>lua require('telescope.builtin').find_files()<cr>
+
+" Search (with grep, ag, rg, etc.) through codebase in realtime.
 nnoremap <leader>fs <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <C-r> <cmd>lua require('telescope.builtin').live_grep()<cr>
+
+" Search for version-controlled files. Faster than `find_files()`.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
 " }}}
 
