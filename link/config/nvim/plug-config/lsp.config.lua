@@ -3,7 +3,7 @@
 
 local lspconfig = require("lspconfig")
 
--- Private functions {{{
+-- Private function
 
 --- Execute the OS command `cmd` and return the result as a string.
 local function os_cmd_to_string(cmd)
@@ -28,9 +28,6 @@ local function os_cmd_to_string(cmd)
 
   return str
 end
--- }}}
-
--- Custom configuration {{{
 
 -- nvim-cmp completion capabilities for Neovim's LSP.
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -44,13 +41,12 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
 
-  -- Aerial code browser config. {{{
+  -- Aerial code browser config.
   require("aerial").on_attach(client, bufnr)
-  -- }}}
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  -- Mappings {{{
+  -- Mappings
   local opts = {noremap = true, silent = true}
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
@@ -74,7 +70,6 @@ local on_attach = function(client, bufnr)
   elseif client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
-  -- }}}
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
@@ -93,17 +88,15 @@ local on_attach = function(client, bufnr)
     )
   end
 end
--- }}}
 
--- Language servers {{{
--- bash-language-server {{{
+-- Language servers
+-- bash-language-server
 lspconfig.bashls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- clangd {{{
+-- clangd
 -- NOTE: Clang >= 9 is recommended! See this issue for more.
 --
 -- clangd relies on a JSON compilation database specified as
@@ -114,125 +107,104 @@ lspconfig.clangd.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
---- }}}
 
--- clojure-lsp {{{
+-- clojure-lsp
 lspconfig.clojure_lsp.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- cmake-ls {{{
+-- cmake-ls
 lspconfig.cmake.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- cssls {{{
+-- cssls
 -- Currently disabled in favor of tailwindcss
 --[[ lspconfig.cssls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
--- }}}
-
--- cssmodules-language-server {{{
+-- cssmodules-language-server
 lspconfig.cssmodules_ls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- dartls {{{
+-- dartls
 lspconfig.dartls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- dockerfile-ls {{{
+-- dockerfile-ls
 lspconfig.dockerls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- dot-language-server {{{
+-- dot-language-server
 lspconfig.dotls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- efm-language-server {{{
+-- efm-language-server
 -- Not currently used because EFM requires a lot of setup, and is not terribly
 -- useful.
 --[[ lspconfig.efm.setup {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
--- }}}
-
--- elixir-ls {{{
+-- elixir-ls
 local elixir_ls_bin = os_cmd_to_string("command -v elixir-ls")
-
 lspconfig.elixirls.setup {
   capabilities = capabilities,
   cmd = {elixir_ls_bin},
   on_attach = on_attach
 }
--- }}}
 
--- emmet-ls (for HTML templating/snippet expansion) {{{
+-- emmet-ls (for HTML templating/snippet expansion)
 lspconfig.emmet_ls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- erlang-ls {{{
+-- erlang-ls
 lspconfig.erlangls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- graphql-language-server {{{
+-- graphql-language-server
 lspconfig.graphql.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- haskell-language-server {{{
+-- haskell-language-server
 lspconfig.hls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- html-ls {{{
+-- html-ls
 --Enable (broadcasting) snippet capability for completion
 local html_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 html_capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 lspconfig.html.setup {
   capabilities = html_capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- intelephense {{{
+-- intelephense
 lspconfig.intelephense.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- jsonls {{{
-
+-- jsonls
 -- vscode-json-languageserver only provides range formatting. You can map a
 -- command that applies range formatting to the entire document:
 lspconfig.jsonls.setup {
@@ -246,36 +218,13 @@ lspconfig.jsonls.setup {
   },
   on_attach = on_attach
 }
--- }}}
 
--- lua-language-server {{{
-local system_name
-if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
-elseif vim.fn.has("win32") == 1 then
-  system_name = "Windows"
-else
-  print("Unsupported system for sumneko")
-end
-
--- If you use my install_lua_language_server function, that function installs a
--- wrapper script that contains the shell command necessary to run
--- lua-language-server from the command line as a single command, so you do not
--- need to give this configuration extra arguments.
-
--- Set the path to the sumneko lua-language-server installation.
--- Use the "install_lua_language_server" function to install this LSP to the
--- standard location this configuration expects.
--- local sumneko_root_path = os.getenv("WS") .. "/lua-language-server"
--- local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
+-- lua-language-server
 
 local sumneko_binary = os_cmd_to_string("command -v lua-language-server")
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-
 lspconfig.sumneko_lua.setup {
   capabilities = capabilities,
   -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
@@ -306,35 +255,30 @@ lspconfig.sumneko_lua.setup {
   },
   on_attach = on_attach
 }
--- }}}
 
--- Perl-Language-Server {{{
-
+-- Perl-Language-Server
 -- To use the language server, ensure that you have Perl::LanguageServer
 -- installed and perl command is on your path.
 lspconfig.perlls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- pyright {{{
+-- pyright
 lspconfig.pyright.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- rls (Rust) {{{
+-- rls (Rust)
 lspconfig.rls.setup {
   capabilities = capabilities,
   -- Use nightly build
   cmd = {"rustup", "run", "nightly", "rls"},
   on_attach = on_attach
 }
--- }}}
 
--- sqlls (SQL LanguageServer written in Node.js) {{{
+-- sqlls (SQL LanguageServer written in Node.js)
 --[[ local sql_ls_bin = os_cmd_to_string("command -v sql-language-server")
 
 lspconfig.sqlls.setup {
@@ -342,9 +286,7 @@ lspconfig.sqlls.setup {
   cmd = {sql_ls_bin},
   on_attach = on_attach
 } ]]
--- }}}
-
--- sqls (SQL LanguageServer written in Go) {{{
+-- sqls (SQL LanguageServer written in Go)
 -- To install sqls, run this command:
 --   go get github.com/lighttiger2505/sqls
 local sqls_cmd = os_cmd_to_string("command -v sqls")
@@ -355,49 +297,39 @@ lspconfig.sqls.setup {
   cmd = {sqls_cmd, "-config", sqls_config_file},
   on_attach = on_attach
 }
--- }}}
 
--- tailwind-css {{{
+-- tailwind-css
 lspconfig.tailwindcss.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- terraform-lsp {{{
+-- terraform-lsp
 lspconfig.terraform_lsp.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- texlab (LaTeX) {{{
+-- texlab (LaTeX)
 lspconfig.texlab.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- typescript-language-server {{{
+-- typescript-language-server
 lspconfig.tsserver.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- vim-language-server {{{
+-- vim-language-server
 lspconfig.vimls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
 
--- yaml-language-server {{{
+-- yaml-language-server
 lspconfig.yamlls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
--- }}}
--- }}}
-
--- vim:foldenable:foldmethod=marker:foldlevel=0

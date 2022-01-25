@@ -117,7 +117,7 @@ set foldnestmax=1
 
 " Default fold method to use.
 " NOTE: See also the 'autocmds.vim' file for more fold settings.
-set foldmethod=indent
+set foldmethod=syntax
 " }}}
 
 " Indentation {{{
