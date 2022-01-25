@@ -2,7 +2,7 @@ autopep8
 beautysh
 black
 cmake-language-server
-cmake-lint
+cmakelint
 cookiecutter
 cpplint
 django
