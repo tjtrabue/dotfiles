@@ -113,7 +113,7 @@ set foldenable
 set foldlevel=0
 
 " The maximum number of folds to nest within one another.
-set foldnestmax=10
+set foldnestmax=1
 
 " Default fold method to use.
 " NOTE: See also the 'autocmds.vim' file for more fold settings.
