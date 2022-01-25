@@ -7,13 +7,16 @@
 Plugins and configuration for various stylesheet languages, such as CSS, LESS, and SCSS.
 
 * less-css-mode
-
 #+begin_src emacs-lisp
-(use-package less-css-mode)
+  (use-package less-css-mode)
+#+end_src
+
+* sass-mode
+#+begin_src emacs-lisp
+  (use-package sass-mode)
 #+end_src
 
 * scss-mode
-
 #+begin_src emacs-lisp
-(use-package scss-mode)
+  (use-package scss-mode)
 #+end_src
