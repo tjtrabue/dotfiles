@@ -38,11 +38,14 @@ augroup END
 " }}}
 
 " Code folding {{{
+
 " We only want to initially fold all code in a buffer if the number of lines in
 " the buffer exceeds a certain threshold. Otherwise, unfold all folds in the
 " buffer.
+"
+" `winheight(0)` returns the height of the current window.
 augroup fold_code
-  autocmd BufRead * if line('$') >= 100
+  autocmd BufRead * if line('$') >= winheight(0)
         \| execute "normal! zM"
         \| else
         \| execute "normal! zR"
