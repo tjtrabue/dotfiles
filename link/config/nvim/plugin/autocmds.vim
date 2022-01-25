@@ -46,9 +46,9 @@ augroup END
 " `winheight(0)` returns the height of the current window.
 augroup fold_code
   autocmd BufRead * if line('$') >= winheight(0)
-        \| execute "normal! zM"
+        \| silent execute "normal zM"
         \| else
-        \| execute "normal! zR"
+        \| silent execute "normal zR"
         \| endif
 augroup END
 " }}}
