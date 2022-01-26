@@ -131,7 +131,9 @@ sw() {
     ref="${arg}"
   fi
 
-  ref="$(echo "${ref}" | tr '[ \t]' "${branchWordSeparator}")"
+  ref="$(echo -n "${ref}" |
+    sed -e 's/^\s*//' -e 's/\s*$//' |
+    tr '[ \t]' "${branchWordSeparator}")"
   if "${createBranch}" && ! verifyref "${ref}"; then
     git branch "${ref}" || {
       err "Could not create branch ${CYAN}${ref}${NC}"
