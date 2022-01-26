@@ -158,7 +158,7 @@ ENVIRONMENT VARIABLES:
     The field separator here is '-' since it delineates the primary aspects of
     the project task under development.
 
-  PROJECT_WORD_SEPARATOR
+  BRANCH_WORD_SEPARATOR
     The character separating word fields in the description part of the project
     branch name. If this environment variable is not set, the default value is
     '.'.
@@ -175,7 +175,7 @@ __construct_project_branch() {
   local description="${2}"
   local projectIdentifier="${3}"
   local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
-  local projectWordSep="${PROJECT_WORD_SEPARATOR:-.}"
+  local projectWordSep="${BRANCH_WORD_SEPARATOR:-.}"
   local formatString="%s${projectFieldSep}%s${projectWordSep}%s"
   local formattedDescription="$(echo "${description}" |
     sed -E "s/\s+/${projectWordSep}/g")"

@@ -96,6 +96,10 @@ sw() {
   # We want to write the current branch/commit to history after we switch.
   local currentRef="$(currentref)"
   local createBranch=false
+  # Character used to separate words in a branch name,
+  # i.e., if this variable is set to ".", then an arg of
+  # "this is my branch" will become "this.is.my.branch".
+  local branchWordSeparator="${BRANCH_WORD_SEPARATOR:-.}"
   local OPTIND
   local o
 
@@ -127,6 +131,7 @@ sw() {
     ref="${arg}"
   fi
 
+  ref="$(echo "${ref}" | tr '[ \t]' "${branchWordSeparator}")"
   if "${createBranch}" && ! verifyref "${ref}"; then
     git branch "${ref}" || {
       err "Could not create branch ${CYAN}${ref}${NC}"
