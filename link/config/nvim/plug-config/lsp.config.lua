@@ -220,7 +220,11 @@ lspconfig.jsonls.setup {
   on_attach = on_attach
 }
 
--- kotlin_language_server
+-- kotlin-language-server
+-- This server is currently awful. Just terrible. You should not use it if you
+-- have any other options. Use IntelliJ IDEA, use Android Studio, use VSCode,
+-- use anything else but this if you can. It is far too slow, and does not
+-- integrate well with non-VSCode editors.
 local kotlin_language_server_binary = os_cmd_to_string("command -v kotlin-language-server")
 lspconfig.kotlin_language_server.setup {
   capabilities = capabilities,
