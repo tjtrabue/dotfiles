@@ -219,6 +219,12 @@ lspconfig.jsonls.setup {
   on_attach = on_attach
 }
 
+-- kotlin_language_server
+lspconfig.kotlin_language_server.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+
 -- lua-language-server
 
 local sumneko_binary = os_cmd_to_string("command -v lua-language-server")
