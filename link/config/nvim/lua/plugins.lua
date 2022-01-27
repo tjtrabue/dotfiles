@@ -268,9 +268,9 @@ packer.startup(
     }
     -- Patches colorschemes that don't support LSP client syntax for
     -- diagnostics.
-    use "folke/lsp-colors.nvim"
+    use {"folke/lsp-colors.nvim"}
     -- Aerial is a code browser sidebar powered by nvim-lsp.
-    use "stevearc/aerial.nvim"
+    use {"stevearc/aerial.nvim"}
     -- Pretty diagnostic list for Neovim
     use {
       "folke/trouble.nvim",
@@ -279,6 +279,8 @@ packer.startup(
         require("trouble").setup()
       end
     }
+    -- Full integration between nvim-lsp and Eclipse's JDTLS Java server.
+    use {"mfussenegger/nvim-jdtls"}
     -- Extra LSP configuration.
     -- use {"nvim-lua/lsp_extensions.nvim"}
     -- Integrates LSP features with statusline.
