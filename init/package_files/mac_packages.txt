@@ -35,6 +35,7 @@ isync
 jq
 kakoune
 kind
+kotlin-language-server
 kubectl
 lazygit
 leapp

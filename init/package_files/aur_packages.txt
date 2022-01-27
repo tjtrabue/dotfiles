@@ -15,6 +15,7 @@ flutter-git
 glow-bin
 icons-in-terminal
 jdtls
+kotlin-language-server-git
 lazygit-git
 libgccjit
 lightdm-webkit-theme-aether
