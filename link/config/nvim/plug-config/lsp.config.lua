@@ -2,6 +2,7 @@
 -- Must source this file after the `nvim-lspconfig` plugin loads.
 
 local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
 
 -- Private function
 
@@ -220,9 +221,59 @@ lspconfig.jsonls.setup {
 }
 
 -- kotlin_language_server
+local kotlin_language_server_binary = os_cmd_to_string("command -v kotlin-language-server")
 lspconfig.kotlin_language_server.setup {
   capabilities = capabilities,
-  on_attach = on_attach
+  cmd = {kotlin_language_server_binary},
+  filetypes = {"kotlin"},
+  on_attach = on_attach,
+  root_dir = util.root_pattern("settings.gradle", "settings.gradle.kts", ".git"),
+  settings = {
+    -- Most of these settings are defaults, but for some reason it was necessary
+    -- to specify them to get the kotlin-language-server to work.
+    kotlin = {
+      compiler = {
+        jvm = {
+          target = "default"
+        }
+      },
+      completion = {
+        snippets = {
+          enabled = true
+        }
+      },
+      debounceTime = 250,
+      debugAdapter = {
+        path = ""
+      },
+      externalSources = {
+        autoConvertToKotlin = true,
+        useKlsScheme = true
+      },
+      indexing = {
+        enabled = true
+      },
+      languageServer = {
+        debugAttach = {
+          autoSuspend = false,
+          enabled = false,
+          port = 5005
+        },
+        enabled = true,
+        path = kotlin_language_server_binary,
+        port = 0,
+        transport = "stdio"
+      },
+      linting = {
+        debounceTime = 250
+      },
+      snippetsEnabled = true,
+      trace = {
+        server = "off"
+      }
+    }
+  },
+  single_file_support = true
 }
 
 -- lua-language-server

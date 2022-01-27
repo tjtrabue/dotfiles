@@ -198,6 +198,10 @@ packer.startup(
     use {"neovimhaskell/haskell-vim"}
     -- }}}
 
+    -- Kotlin {{{
+    use {"udalov/kotlin-vim"}
+    -- }}}
+
     -- LaTeX {{{
     use {"lervag/vimtex"}
     use {"xuhdev/vim-latex-live-preview"}
