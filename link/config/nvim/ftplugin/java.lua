@@ -3,7 +3,32 @@
 local jdtls = require("jdtls")
 local jdtls_setup = require("jdtls.setup")
 
+--- Execute the OS command `cmd` and return the result as a string.
+local function os_cmd_to_string(cmd)
+  -- The output string to return
+  local str = ""
+  -- get a temporary file name
+  local tmp = os.tmpname()
+
+  -- execute a command
+  os.execute(cmd .. " > " .. tmp)
+
+  -- display output
+  for line in io.lines(tmp) do
+    if str ~= "" then
+      str = str .. "\n"
+    end
+    str = str .. line
+  end
+
+  -- remove temporary file
+  os.remove(tmp)
+
+  return str
+end
+
 local jdtls_install_root = os.getenv("HOME") .. "/applications/jdtls"
+local jdtls_plugins_dir = jdtls_install_root .. "/plugins"
 local config_dir_name
 
 -- Where JDTLS will store per-project data.
@@ -19,6 +44,12 @@ elseif vim.fn.has("win64") or vim.fn.has("win32") then
 else
   config_dir_name = "config_linux"
 end
+
+-- The JDTLS executable jar file.
+local launcher_jar =
+  os_cmd_to_string(
+  "find " .. jdtls_plugins_dir .. " -maxdepth 1 -mindepth 1 -type f -iname '*org.eclipse.equinox.launcher_*.jar'"
+)
 
 -- May not be necessary
 -- Create the workspace root dir
@@ -41,8 +72,7 @@ local config = {
     "--add-opens",
     "java.base/java.lang=ALL-UNNAMED",
     "-jar",
-    -- May have to adjust version number at the end of this jar file.
-    jdtls_install_root .. "/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
+    launcher_jar,
     "-configuration",
     jdtls_install_root .. "/" .. config_dir_name,
     "-data",
