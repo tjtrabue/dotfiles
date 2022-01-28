@@ -110,6 +110,23 @@ rmblanklines() {
   fi
 }
 
+# Remove the last newline (if present) from a given file. If no filename is
+# given, or if the filename is '-', read from stdin and write to stdout.
+rmfinalnewline() {
+  local filename="${1:-/dev/stdin}"
+
+  if [ "${filename}" = "-" ]; then
+    filename="/dev/stdin"
+  fi
+
+  if [ "${filename}" = "/dev/stdin" ]; then
+    printf %s "$(cat "${filename}")"
+  else
+    printf %s "$(cat "${filename}")" >"${filename}.bak"
+    mv "${filename}"{.bak,}
+  fi
+}
+
 # Return 0 if file1's contents are entirely contained within file2.
 # Otherwise, return an error code.
 #   file1: contained file
