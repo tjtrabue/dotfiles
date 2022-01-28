@@ -1,0 +1,10 @@
+# Paths to add to the LUA_PATH environment variable.
+#
+# Each line in this file is a new entry for LUA_PATH. Lines can contain
+# arbitrary shell code, which will be evaluated by the `setluapath` function.
+#
+# This file is intended to allow the user to make additions to the LUA_PATH
+# environemtn variable. Thus, the entries in this file do not completely
+# describe LUA_PATH.
+
+${DOTFILES_LUA}/tjdot/?.lua

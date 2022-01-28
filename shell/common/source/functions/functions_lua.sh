@@ -103,6 +103,30 @@ install_lua_packages() {
   install_json4lua
 }
 
+# Add entries in ~/.luapath to the $LUA_PATH environment variable.
+setluapath() {
+  local luapathFile="${LUAPATH_FILE:-${HOME}/.luapath}"
+  local luapathStaticFile="${luapathFile}_static"
+  local constructedLuapath
+
+  constructedLuapath="$(
+    eval echo "\"$(printf "%s" "${LUA_PATH}" |
+      tr ';' '\n' |
+      cat "${luapathFile}" - |
+      sed -e '/^#/d' -e '/^$/d' |
+      sed "s|^${HOME}|\${HOME}|" |
+      tr '\n' ';' |
+      sed 's/;$//')\""
+  )"
+
+  cat <<EOF >"${luapathStaticFile}"
+#!/bin/sh
+
+LUA_PATH="${constructedLuapath}"
+export LUA_PATH
+EOF
+}
+
 # Get all installed Lua versions
 __get_lua_versions() {
   # We want to find and filter out our versions of Lua.
