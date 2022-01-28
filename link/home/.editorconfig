@@ -27,9 +27,6 @@ max_line_length = 80
 # completely)
 # Default: 4
 indent_size = 4
-# true (recommended) / false
-# Default: true
-insert_final_newline = true
 # Possible values: <number> (e.g. 120) (package name, imports & comments are
 #                                       ignored),
 #                  "off"
