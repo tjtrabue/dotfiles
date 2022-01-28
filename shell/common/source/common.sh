@@ -166,6 +166,9 @@ __src() {
   # export the dynamically constructed $PATH variable from the entries in
   # ~/.path.
   spath
+
+  # Source the dynamically generated ~/.luapath file.
+  src_lua_path
 }
 
 # Start SSH, GPG, and other agents, if necessary.
@@ -208,7 +211,7 @@ src_all() {
   __src
 
   # Make sure luarocks are available
-  src_lua_path
+  src_luarocks_module_path
   # Start SSH and GPG agents
   __src_agents
   # Take care of fixing the SSH authentication socket if logged in over SSH.

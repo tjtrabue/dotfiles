@@ -135,7 +135,7 @@ construct_path() {
 }
 
 # Source the LuaRocks module path.
-src_lua_path() {
+src_luarocks_module_path() {
   if [ -x "$(command -v luarocks)" ]; then
     eval "$(luarocks path)"
   fi

@@ -1,5 +1,6 @@
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
+local fs = require("tjdot.fs")
 local jdtls = require("jdtls")
 local jdtls_setup = require("jdtls.setup")
 
@@ -23,7 +24,7 @@ end
 
 -- The JDTLS executable jar file.
 local launcher_jar =
-  os_cmd_to_string(
+  fs.os_cmd_to_string(
   "find " .. jdtls_plugins_dir .. " -maxdepth 1 -mindepth 1 -type f -iname '*org.eclipse.equinox.launcher_*.jar'"
 )
 

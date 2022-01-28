@@ -7,4 +7,4 @@
 # environemtn variable. Thus, the entries in this file do not completely
 # describe LUA_PATH.
 
-${DOTFILES_LUA}/tjdot/?.lua
+${DOTFILES_LUA}/?.lua

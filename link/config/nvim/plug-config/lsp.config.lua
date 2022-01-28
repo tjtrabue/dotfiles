@@ -1,34 +1,9 @@
 -- Configuration for Neovim's native LSP functions.
 -- Must source this file after the `nvim-lspconfig` plugin loads.
 
+local fs = require("tjdot.fs")
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
-
--- Private function
-
---- Execute the OS command `cmd` and return the result as a string.
-local function os_cmd_to_string(cmd)
-  -- The output string to return
-  local str = ""
-  -- get a temporary file name
-  local tmp = os.tmpname()
-
-  -- execute a command
-  os.execute(cmd .. " > " .. tmp)
-
-  -- display output
-  for line in io.lines(tmp) do
-    if str ~= "" then
-      str = str .. "\n"
-    end
-    str = str .. line
-  end
-
-  -- remove temporary file
-  os.remove(tmp)
-
-  return str
-end
 
 -- nvim-cmp completion capabilities for Neovim's LSP.
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -159,7 +134,7 @@ lspconfig.dotls.setup {
   on_attach = on_attach
 } ]]
 -- elixir-ls
-local elixir_ls_bin = os_cmd_to_string("command -v elixir-ls")
+local elixir_ls_bin = fs.os_cmd_to_string("command -v elixir-ls")
 lspconfig.elixirls.setup {
   capabilities = capabilities,
   cmd = {elixir_ls_bin},
@@ -225,7 +200,7 @@ lspconfig.jsonls.setup {
 -- have any other options. Use IntelliJ IDEA, use Android Studio, use VSCode,
 -- use anything else but this if you can. It is far too slow, and does not
 -- integrate well with non-VSCode editors.
-local kotlin_language_server_binary = os_cmd_to_string("command -v kotlin-language-server")
+local kotlin_language_server_binary = fs.os_cmd_to_string("command -v kotlin-language-server")
 lspconfig.kotlin_language_server.setup {
   capabilities = capabilities,
   cmd = {kotlin_language_server_binary},
@@ -282,7 +257,7 @@ lspconfig.kotlin_language_server.setup {
 
 -- lua-language-server
 
-local sumneko_binary = os_cmd_to_string("command -v lua-language-server")
+local sumneko_binary = fs.os_cmd_to_string("command -v lua-language-server")
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
@@ -340,7 +315,7 @@ lspconfig.rls.setup {
 }
 
 -- sqlls (SQL LanguageServer written in Node.js)
---[[ local sql_ls_bin = os_cmd_to_string("command -v sql-language-server")
+--[[ local sql_ls_bin = fs.os_cmd_to_string("command -v sql-language-server")
 
 lspconfig.sqlls.setup {
   capabilities = capabilities,
@@ -350,7 +325,7 @@ lspconfig.sqlls.setup {
 -- sqls (SQL LanguageServer written in Go)
 -- To install sqls, run this command:
 --   go get github.com/lighttiger2505/sqls
-local sqls_cmd = os_cmd_to_string("command -v sqls")
+local sqls_cmd = fs.os_cmd_to_string("command -v sqls")
 local sqls_config_file = os.getenv("HOME") .. "/.config/sqls/config.yml"
 
 lspconfig.sqls.setup {

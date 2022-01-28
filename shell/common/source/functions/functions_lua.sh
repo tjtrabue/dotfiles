@@ -103,23 +103,40 @@ install_lua_packages() {
   install_json4lua
 }
 
-# Add entries in ~/.luapath to the $LUA_PATH environment variable.
-setluapath() {
-  local luapathFile="${LUAPATH_FILE:-${HOME}/.luapath}"
-  local luapathStaticFile="${luapathFile}_static"
+# Source the dynamically generated LUA_PATH variable.
+src_lua_path() {
+  local luaPathFile="${LUA_PATH_FILE:-${HOME}/.luapath}"
+  local luaPathStaticFile="${luaPathFile}_static"
+
+  if [ ! -f "${luaPathStaticFile}" ]; then
+    export_lua_path
+  fi
+
+  . "${luaPathStaticFile}"
+}
+
+# Add entries from ~/.luapath to the $LUA_PATH environment variable.
+export_lua_path() {
+  # File containing new entries to add to LUA_PATH.
+  local luaPathFile="${LUA_PATH_FILE:-${HOME}/.luapath}"
+  # File containing the generated LUA_PATH for quick sourcing. It would be far
+  # too expensive to run this function on every invocation of `src`.
+  local luaPathStaticFile="${luaPathFile}_static"
+  # Holds the value of the dynamically generated LUA_PATH.
   local constructedLuapath
 
   constructedLuapath="$(
     eval echo "\"$(printf "%s" "${LUA_PATH}" |
       tr ';' '\n' |
-      cat "${luapathFile}" - |
+      cat "${luaPathFile}" - |
       sed -e '/^#/d' -e '/^$/d' |
-      sed "s|^${HOME}|\${HOME}|" |
+      sed "s|^${HOME}|\${HOME}|")\"" |
+      rmduplines |
       tr '\n' ';' |
-      sed 's/;$//')\""
+      sed 's/;$//'
   )"
 
-  cat <<EOF >"${luapathStaticFile}"
+  cat <<EOF >"${luaPathStaticFile}"
 #!/bin/sh
 
 LUA_PATH="${constructedLuapath}"
