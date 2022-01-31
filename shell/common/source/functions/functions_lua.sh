@@ -187,7 +187,7 @@ __eval_lua_path_file() {
 
   eval "printf '%s\n'" "\"$(
     cat "${luaPathFile}" |
-      sed -e '/^$/d' -e '/^#/d'
+      sed -e '/^\s*$/d' -e '/^#/d'
   )\""
 }
 
