@@ -282,7 +282,7 @@ copy_dotfiles() {
   log_info "Copying dotfiles from: ${BLUE}${oneTimeTransfersDir}${NC}"
 
   find "${oneTimeTransfersDir}" -maxdepth 1 -mindepth 1 -type f \
-    -exec cp -f '{}' "${TARGET_HOME}/" \;
+    -exec cp -f -t "${TARGET_HOME}/" '{}' \;
   log_info "Copying complete"
 }
 
