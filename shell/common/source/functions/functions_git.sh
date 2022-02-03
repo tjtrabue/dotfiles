@@ -514,6 +514,19 @@ gdd() {
 }
 # }}}
 
+# Listing files {{{
+
+# List files in a directory by last git modification.
+glsm() {
+  local dirPath="${1:-$(pwd)}"
+
+  git ls-tree -rz --name-only HEAD "${dirPath}" |
+    TZ=UTC xargs -0 -I_ \
+      git --no-pager log -1 --date=iso-local --format="%ad _" -- _ |
+    sort
+}
+# }}}
+
 # Macro functions {{{
 
 # These functions run sequences of Git commands in order to make the developer's
