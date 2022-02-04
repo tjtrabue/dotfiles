@@ -203,6 +203,16 @@ nmap <leader>pr <Action>(Run)
 nmap <leader>bb <Action>(ToggleLineBreakpoint)
 " }}}
 
+" Documentation {{{
+
+" Quick documentation (not only for Java, all languages)
+nmap <leader>qd <Action>(QuickJavaDoc)
+" Show description of the error under the cursor
+nmap <leader>qe <Action>(ShowErrorDescription)
+" Quick definition of the thing under the cursor
+nmap <leader>qi <Action>(QuickImplementations)
+" }}}
+
 " Searching and Source Code Navigation {{{
 nmap <C-/> <Action>(FindInPath)
 nmap <C-a> <Action>(GotoAction)
