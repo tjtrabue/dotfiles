@@ -340,15 +340,22 @@ nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
 " Don't use defualt mappings
 let g:multi_cursor_use_default_mapping=0
 
-" Custom mapping
-let g:multi_cursor_start_word_key      = '<C-.>'
-let g:multi_cursor_select_all_word_key = '<C-;>'
-let g:multi_cursor_start_key           = 'g<C-.>'
-let g:multi_cursor_select_all_key      = 'g<C-;>'
-let g:multi_cursor_next_key            = '<C-.>'
-let g:multi_cursor_prev_key            = '<C-,>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
+" Custom keymappings
+" The default '<A-n>', '<A-p>' bindings don't work on macOS because macOS treats
+" <A-n> as a 'dead key' in order to enter accented characters.
+nmap <C-n>  <Plug>NextWholeOccurrence
+xmap <C-n>  <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+nmap <C-x>  <Plug>SkipOccurrence
+xmap <C-x>  <Plug>SkipOccurrence
+nmap <C-m>  <Plug>RemoveOccurrence
+xmap <C-m>  <Plug>RemoveOccurrence
+
+nmap <S-C-n>  <Plug>AllWholeOccurrences
+xmap <S-C-n>  <Plug>AllWholeOccurrences
+nmap g<S-C-n> <Plug>AllOccurrences
+xmap g<S-C-n> <Plug>AllOccurrences
 " }}}
 
 " }}}
