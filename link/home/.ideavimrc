@@ -13,7 +13,9 @@ set gdefault
 set viminfo^=%
 
 " Time in milliseconds to wait for a key sequence to complete.
-set timeoutlen=800
+" It is 1000 by default.
+" Set it to a longer time interval for better 'which-key' behavior.
+set timeoutlen=5000
 " }}}
 
 " IntelliJ specific settings {{{
