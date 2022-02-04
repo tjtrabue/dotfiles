@@ -199,16 +199,20 @@ nmap <leader>pd <Action>(Debug)
 nmap <leader>pr <Action>(Run)
 " }}}
 
+" Breakpoints {{{
+nmap <leader>bb <Action>(ToggleLineBreakpoint)
+" }}}
+
 " Searching and Source Code Navigation {{{
 nmap <C-/> <Action>(FindInPath)
 nmap <C-a> <Action>(GotoAction)
 nmap <C-p> <Action>(GotoFile)
 nmap <leader>a <Action>(GotoAction)
-nmap <leader>b <Action>(ShowNavBar)
 nmap <leader>f <Action>(GotoFile)
 nmap <leader>h <Action>(CallHierarchy)
 nmap <leader>s <Action>(GotoRelated)
 nmap <leader>u <Action>(FindUsages)
+nmap <leader>v <Action>(ShowNavBar)
 nmap <C-s> <Action>(FileStructurePopup)
 nmap <C-o> <Action>(GotoSymbol)
 nmap gC <Action>(GotoClass)
