@@ -1,24 +1,5 @@
 " Configuration file for IdeaVim plugin for IntelliJ IDEA.
 
-" Emulated Plugins {{{
-" These plugins are based on popular Vim plugins, and must be activated
-" individually before they take effect. IdeaVim supports vim-plug syntax for
-" activating plugins, which allows easy interoperability with an existing
-" ~/.vimrc file.
-
-Plug 'dbakker/vim-paragraph-motion'
-Plug 'easymotion/vim-easymotion'
-Plug 'kana/vim-textobj-entire'
-Plug 'machakann/vim-highlightedyank'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'preservim/nerdtree'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'vim-matchit'
-" }}}
-
 " General {{{
 
 " Use system clipboard from IdeaVim and vice versa.
@@ -327,7 +308,34 @@ augroup toggleRelativeLineNumbers
 augroup END
 " }}}
 
+" Emulated Plugins {{{
+" These plugins are based on popular Vim plugins, and must be activated
+" individually before they take effect. IdeaVim supports vim-plug syntax for
+" activating plugins, which allows easy interoperability with an existing
+" ~/.vimrc file.
+
+Plug 'dbakker/vim-paragraph-motion'
+Plug 'easymotion/vim-easymotion'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'kana/vim-textobj-entire'
+Plug 'machakann/vim-highlightedyank'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'preservim/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'vim-matchit'
+
 " Plugin Configuration {{{
+
+" Easymotion {{{
+" Use easymotion instead of standard f/t bindings
+nmap f <Plug>(easymotion-s)
+nmap F <Plug>(easymotion-s)
+nmap t <Plug>(easymotion-s)
+nmap T <Plug>(easymotion-s)
+" }}}
 
 " NERDTree {{{
 nnoremap <leader>nt :NERDTree<CR>
@@ -358,6 +366,7 @@ nmap g<S-C-n> <Plug>AllOccurrences
 xmap g<S-C-n> <Plug>AllOccurrences
 " }}}
 
+" }}}
 " }}}
 
 " vim:foldenable:foldmethod=marker
