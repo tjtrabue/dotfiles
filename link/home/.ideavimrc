@@ -259,6 +259,7 @@ imap <A-k> <Action>(MoveStatementUp)
 vmap <A-j> <Action>(MoveStatementDown)
 vmap <A-k> <Action>(MoveStatementUp)
 
+" Indent visual blocks in a natural way with < and >
 vnoremap < <gv
 vnoremap > >gv
 
