@@ -182,8 +182,8 @@ nmap <leader>t <Action>(Terminal.OpenInTerminal)
 " }}}
 
 " Method navigation {{{
-nnoremap [[ <Action>(MethodUp)
-nnoremap ]] <Action>(MethodDown)
+nmap [[ <Action>(MethodUp)
+nmap ]] <Action>(MethodDown)
 " }}}
 
 " Refactoring/Optimizing {{{
