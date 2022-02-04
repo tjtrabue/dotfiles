@@ -195,6 +195,7 @@ nmap <leader>o <Action>(OptimizeImports)
 
 " Project Build/Test/Run {{{
 nmap <leader>pb <Action>(Compile)
+nmap <leader>pd <Action>(Debug)
 nmap <leader>pr <Action>(Run)
 " }}}
 
