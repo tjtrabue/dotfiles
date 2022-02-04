@@ -314,22 +314,29 @@ augroup END
 " activating plugins, which allows easy interoperability with an existing
 " ~/.vimrc file.
 
-Plug 'dbakker/vim-paragraph-motion'
-Plug 'easymotion/vim-easymotion'
-Plug 'vim-scripts/argtextobj.vim'
-Plug 'kana/vim-textobj-entire'
-Plug 'machakann/vim-highlightedyank'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'preservim/nerdtree'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'vim-matchit'
+set NERDTree
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set exchange
+set textobj-entire
+set highlightedyank
+set vim-paragraph-motion
+set textobj-indent
+set matchit
+
+" These emulated Vim plugins require additional IntelliJ plugins to be
+" installed from the plugin marketplace.
+"
+" Requires: IdeaVim-EasyMotion, AceJump
+set easymotion
+" Requires: Which-Key
+set which-key
 
 " Plugin Configuration {{{
 
-" Easymotion {{{
+" EasyMotion {{{
 " Use easymotion instead of standard f/t bindings
 nmap f <Plug>(easymotion-s)
 nmap F <Plug>(easymotion-s)
