@@ -164,9 +164,9 @@ sethandler <C-k> i:ide
 nnoremap <leader>e :e ~/.ideavimrc<CR>
 nnoremap <leader>R :source ~/.ideavimrc<CR>
 
-" Move lines with Alt-j and Alt-k
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
+" Move statements with Alt-j and Alt-k
+nmap <A-j> <Action>(MoveStatementDown)
+nmap <A-k> <Action>(MoveStatementUp)
 
 " Make 'Y' yank to the end of the current line.
 " This makes 'Y' behave more like other 'capital letter' commands.
@@ -240,9 +240,9 @@ nmap gf <Action>(Forward)
 " Use 'jk' as an Escape alias to exit insert and visual modea.
 inoremap jk <ESC>
 
-" Move lines with Alt-j and Alt-k
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
+" Move statements with Alt-j and Alt-k
+imap <A-j> <Action>(MoveStatementDown)
+imap <A-k> <Action>(MoveStatementUp)
 
 " Cycle completion
 
@@ -256,8 +256,8 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 
 " Visual Mode Mappings {{{
 " Move lines with Alt-j and Alt-k
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+vmap <A-j> <Action>(MoveStatementDown)
+vmap <A-k> <Action>(MoveStatementUp)
 
 vnoremap < <gv
 vnoremap > >gv
