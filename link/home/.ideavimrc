@@ -362,11 +362,12 @@ set which-key
 
 " EasyMotion {{{
 " Use easymotion instead of standard f/t bindings
-" Jump anywhere
+" Jump to word starting with char
 nmap f <Plug>(easymotion-s)
-nmap F <Plug>(easymotion-s)
 nmap t <Plug>(easymotion-s)
-nmap T <Plug>(easymotion-s)
+" Jump to word
+nmap F <Plug>(easymotion-bd-w)
+nmap T <Plug>(easymotion-bd-w)
 " Jump to start of line content
 nmap L <Plug>(easymotion-bd-jk)
 " }}}
