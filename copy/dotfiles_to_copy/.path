@@ -1,6 +1,12 @@
 # This file contains entries that will be evaluated and concatenated together in
 # order to construct the $PATH environment variable. Entries added to the end of
-# the file take precedence over entries at the beginning of the file.
+# the file take precedence over entries at the beginning of the file. Thus, if
+# the executable `mybin` exists in both the "/bin" and the "/usr/bin"
+# directories, and this file contains the entries:
+#   /bin
+#   /usr/bin
+# in that order, then `mybin` in "/usr/bin" will be used when the user invokes
+# `mybin` on the command line.
 
 /bin
 /sbin

@@ -144,7 +144,7 @@ sw() {
     return 3
   fi
 
-  if ! __checkout_local_or_remote_branch "${ref}"; then
+  if ! git checkout "${ref}"; then
     err "Could not switch to ref: ${CYAN}${ref}${NC}"
     return 4
   fi
@@ -185,32 +185,6 @@ __get_sw_numeric_ref_from_hist_file() {
   fi
 
   sed "${arg#-}q;d" "${histFile}"
-}
-
-# Intelligently determine whether a local copy of a remote branch exists. If it
-# does not, we must first create a local copy and instruct the branch to track
-# its remote counterpart. If the local copy already exists, we have only to
-# switch to it.
-__checkout_local_or_remote_branch() {
-  local branchToSwitch="${1}"
-  local localBranch="$(localrefname "${branchToSwitch}")"
-  local currentRef="$(currentref)"
-  local defaultRemote="$(defaultremote)"
-
-  if [ -z "${branchToSwitch}" ]; then
-    err "No branch name provided"
-    return 1
-  elif [ "${localBranch}" = "${currentRef}" ]; then
-    warn "HEAD is already set to ref: ${CYAN}${localBranch}${NC}"
-    return 0
-  fi
-
-  if ! verifyref "${localBranch}"; then
-    git checkout -t "${branchToSwitch}"
-  else
-    git branch -u "${defaultRemote}/${localBranch}" "${localBranch}" 2>/dev/null
-    git checkout "${localBranch}"
-  fi
 }
 
 # Persist most recent ref passed to `sw' to the history file for that Git
