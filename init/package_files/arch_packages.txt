@@ -118,6 +118,7 @@ openjdk-doc
 openjdk8-doc
 openssh
 openssl
+pacman-contrib
 papirus-icon-theme
 parallel
 pass

@@ -11,6 +11,10 @@ install_arch_packages() {
 
 # Clean up Arch installation, including package caches and orphaned packages.
 paclean() {
+  if [ -x "$(command -v paccache)" ]; then
+    # `paccache` comes from the "pacman-contrib" package.
+    paccache -r
+  fi
   sudo pacman -Sc --noconfirm
   remove_orphans
 }
