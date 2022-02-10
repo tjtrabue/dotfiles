@@ -6,14 +6,16 @@
 let g:EasyMotion_smartcase = 1
 " smartsign
 let g:EasyMotion_use_smartsign_us = 1 " US layout
+" Keep cursor column when JK motion
+let g:EasyMotion_startofline = 0
 " }}}
 
 " Keymappings {{{
 
 " Remap 'f' and 'F' in normal mode to be more useful.
-" Move to {char}
-map f <Plug>(easymotion-bd-f)
-nmap f <Plug>(easymotion-overwin-f)
+" Move to word starting with {char}
+map f <Plug>(easymotion-s)
+nmap f <Plug>(easymotion-s)
 " Move to word
 map F <Plug>(easymotion-bd-w)
 nmap F <Plug>(easymotion-overwin-w)
