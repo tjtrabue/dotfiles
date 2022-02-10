@@ -289,6 +289,7 @@ link/config/kscreenlockerrc
 link/config/ksmserverrc
 link/config/ktimezonedrc
 link/config/kxkbrc
+link/config/kwinrc
 link/config/okularpartrc
 link/config/plasma-localerc
 link/config/plasma-org.kde.plasma.desktop-appletsrc

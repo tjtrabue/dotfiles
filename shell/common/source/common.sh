@@ -124,24 +124,28 @@ __src_standard_subdirs_under_dir() {
   done
 }
 
+# Bash and some other shells rely on the readline library for command line
+# editing capabilities. Thus, we may need to re-activate bindings in the
+# readline init file, named ~/.inputrc, for those shells.
+__src_readline_init_file() {
+  local readlineInitFile="${HOME}/.inputrc"
+
+  # NOTE: We only bind the readline file if our shell is interactive.
+  [ -s "${readlineInitFile}" ] && echo "$-" | grep -q ".*i.*" &&
+    bind -f "${readlineInitFile}"
+}
+
 # Source all functions and alias files for any POSIX-compliant shell.
 __src() {
   local currentShell="$(basename "${SHELL}")"
   local srcDir
-  local f
-  local d
-
-  # Source this file
-  . "${COMMON_SOURCE_FILE}"
 
   # Determine in which directory our shell-specific aliases and functions
   # reside.
   if [ "${currentShell}" = "bash" ]; then
     srcDir="${DOTFILES_BASH}/source"
     # Also load readline bindings if using Bash.
-    # NOTE: We only bind the readline file if our shell is interactive.
-    [ -s "${HOME}/.inputrc" ] && echo "$-" | grep -q ".*i.*" &&
-      bind -f "${HOME}/.inputrc"
+    __src_readline_init_file
   elif [ "${currentShell}" = "zsh" ]; then
     srcDir="${DOTFILES_ZSH}/source"
   fi
@@ -151,11 +155,8 @@ __src() {
 
   # Source all alias/function/other files, both in the common source directory
   # and in current shell's source directory.
-  for d in $(find "${COMMON_SOURCE}" "${srcDir}" \
-    -maxdepth 1 -mindepth 1 -type d \
-    -name '*functions' -o -name '*aliases' -o -name '*other'); do
-    __src_dir "${d}"
-  done
+  __src_standard_subdirs_under_dir "${COMMON_SOURCE}"
+  __src_standard_subdirs_under_dir "${srcDir}"
 
   # Source OS-specific aliases and functions.
   __src_os
