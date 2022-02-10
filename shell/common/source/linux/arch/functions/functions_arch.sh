@@ -9,6 +9,12 @@ install_arch_packages() {
     sudo pacman -S --needed -
 }
 
+# Clean up Arch installation, including package caches and orphaned packages.
+paclean() {
+  sudo pacman -Sc --noconfirm
+  remove_orphans
+}
+
 # Orphan = unused package
 remove_orphans() {
   pacman -Qtdq | sudo pacman -Rns -
