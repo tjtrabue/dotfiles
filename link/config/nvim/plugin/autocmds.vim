@@ -27,6 +27,9 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 " Interpret config files for IDE Vim plugins as Vim syntax
 autocmd BufNewFile,BufRead .vrapperrc set filetype=vim syntax=vim
 autocmd BufNewFile,BufRead .ideavimrc set filetype=vim syntax=vim
+
+" Observe new Git config file locations and naming conventions.
+autocmd BufNewFile,BufRead */git/ignore set filetype=gitignore syntax=gitignore
 " }}}
 
 " Highlight yanked text {{{
