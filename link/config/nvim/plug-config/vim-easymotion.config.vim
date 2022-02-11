@@ -14,10 +14,8 @@ let g:EasyMotion_startofline = 0
 
 " Remap 'f' and 'F' in normal mode to be more useful.
 " Move to word starting with {char}
-map f <Plug>(easymotion-bd-f)
 nmap f <Plug>(easymotion-s)
 " Move to word
-map F <Plug>(easymotion-bd-w)
 nmap F <Plug>(easymotion-overwin-w)
 
 " s{char}{char} to move to {char}{char}
@@ -28,7 +26,6 @@ nmap t <Plug>(easymotion-bd-t)
 
 " Remap 'L' in normal mode to be more useful.
 " Move to line
-map L <Plug>(easymotion-bd-jk)
 nmap L <Plug>(easymotion-overwin-line)
 " }}}
 
