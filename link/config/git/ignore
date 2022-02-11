@@ -1,3 +1,21 @@
+# This is the system-wide gitignore file. All Git repositories with which the
+# user interacts will observe the rules specified in this file, but may choose
+# to override some of them in their repository-specific .gitignore files.
+#
+# The default location for this file is:
+#   ${XDG_CONFIG_HOME}/git/ignore
+# Or, if the XDG_CONFIG_HOME environment variable is not set:
+#   ${HOME}/.config/git/ignore
+#
+# If you want change this file's name/location, you must set the
+# "core.excludesFile" Git config variable to your desired location.
+# For example, if you want to place this file at ~/.gitignore, you must set:
+#
+#   [core]
+#     excludesFile = "~/.gitignore"
+#
+# in your ~/.gitconfig file.
+
 ######################
 # OS generated files #
 ######################
