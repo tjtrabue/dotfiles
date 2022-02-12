@@ -242,6 +242,15 @@ link_lsp_config() {
   ln -sf "${lspConfigDir}" "${lspConfigTarget}"
 }
 
+# Link the gpg.conf file to ~/.gnupg/gpg.conf
+link_gpg_config() {
+  local gpgConfFile="${DOTFILES_LINK}/gnupg/gpg.conf"
+  local gpgConfTarget="${HOME}/.gnupg/gpg.conf"
+
+  log_info "Linking ${BLUE}gpg.conf${NC} file"
+  ln -sf "${gpgConfFile}" "${gpgConfTarget}"
+}
+
 # Link the repository itself, if necessary.
 link_repo() {
   log_info "Linking dotfiles repository to: ${DOTFILES_HOME}"
@@ -320,6 +329,8 @@ main() {
   link_dotfiles
   link_zdotdir
   link_config
+  link_lsp_config
+  link_gpg_config
   add_extra_os_vars
   add_extra_paths_to_path_file
 }
