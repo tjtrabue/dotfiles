@@ -82,4 +82,23 @@ __set_current_tty_for_gpg() {
   export GPG_TTY
 }
 
+# Print all GPG secret key IDs.
+gpgsecret() {
+  gpg --list-secret-keys --keyid-format long |
+    grep -E '^\s*sec\s+' |
+    awk '{print $2}' |
+    sed 's|.*/||'
+}
+
+# Export a GPG secret key in ASCII armor format.
+gpgexport() {
+  local secretKeyId="${1}"
+
+  if [ -z "${secretKeyId}" ]; then
+    secretKeyId="$(gpgsecret | head -1)"
+  fi
+
+  gpg --armor --export "${secretKeyId}"
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
