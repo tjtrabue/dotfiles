@@ -245,9 +245,16 @@ link_lsp_config() {
 # Link the gpg.conf file to ~/.gnupg/gpg.conf
 link_gpg_config() {
   local gpgConfFile="${DOTFILES_LINK}/gnupg/gpg.conf"
-  local gpgConfTarget="${HOME}/.gnupg/gpg.conf"
+  local gnupgHome="${HOME}/.gnupg"
+  local gpgConfTarget="${gnupgHome}/gpg.conf"
 
-  log_info "Linking ${BLUE}gpg.conf${NC} file"
+  if [ ! -f "${gpgConfFile}" ]; then
+    err "No GPG config file found at: ${BLUE}${gpgConfFile}${NC}"
+    return 1
+  fi
+
+  log_info "Linking ${BLUE}${gpgConfFile}${NC} to ${BLUE}${gpgConfTarget}${NC}"
+  mkdir -p "${gnupgHome}"
   ln -sf "${gpgConfFile}" "${gpgConfTarget}"
 }
 

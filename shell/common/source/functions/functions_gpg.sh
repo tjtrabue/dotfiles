@@ -85,8 +85,8 @@ __set_current_tty_for_gpg() {
 # Symlink the gpg.conf file in the dotfiles repo to ~/.gnupg/gpg.conf
 link_gpg_config() {
   local gpgConfFile="${DOTFILES_LINK}/gnupg/gpg.conf"
-  local gpgConfigHome="${HOME}/.gnupg"
-  local gpgConfTarget="${gpgConfigHome}/gpg.conf"
+  local gnupgHome="${HOME}/.gnupg"
+  local gpgConfTarget="${gnupgHome}/gpg.conf"
 
   if [ ! -f "${gpgConfFile}" ]; then
     err "No GPG configuration file found at: ${BLUE}${gpgConfFile}${NC}"
@@ -94,7 +94,7 @@ link_gpg_config() {
   fi
 
   log_info "Linking ${BLUE}${gpgConfFile}${NC} to ${BLUE}${gpgConfTarget}${NC}"
-  mkdir -p "${gpgConfigHome}"
+  mkdir -p "${gnupgHome}"
   ln -sf "${gpgConfFile}" "${gpgConfTarget}"
 }
 
