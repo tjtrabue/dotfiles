@@ -82,6 +82,22 @@ __set_current_tty_for_gpg() {
   export GPG_TTY
 }
 
+# Symlink the gpg.conf file in the dotfiles repo to ~/.gnupg/gpg.conf
+link_gpg_config() {
+  local gpgConfFile="${DOTFILES_LINK}/gnupg/gpg.conf"
+  local gpgConfigHome="${HOME}/.gnupg"
+  local gpgConfTarget="${gpgConfigHome}/gpg.conf"
+
+  if [ ! -f "${gpgConfFile}" ]; then
+    err "No GPG configuration file found at: ${BLUE}${gpgConfFile}${NC}"
+    return 1
+  fi
+
+  log_info "Linking ${BLUE}${gpgConfFile}${NC} to ${BLUE}${gpgConfTarget}${NC}"
+  mkdir -p "${gpgConfigHome}"
+  ln -sf "${gpgConfFile}" "${gpgConfTarget}"
+}
+
 # Print all GPG secret key IDs.
 gpgsecret() {
   gpg --list-secret-keys --keyid-format long |
