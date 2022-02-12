@@ -10,13 +10,21 @@ clipboard__help() {
   command cat <<EOF
 clipboard - dynamic wrapper around CLI clipboard programs
 
-Use the clipboard program to pipe the output of a text-yielding command to the
-system's clipboard. The CLI tool for interacting with the system clipboard is
-different depending on the operating system. This tool figures out which tool to
-use dynmically so that you don't have to.
+USAGE:
+clipboard [-h] [--] [FILE [...]]
+
+DESCRIPTION:
+This program copies text from stdin (the default) or a file argument to the
+system clipboard. The CLI tool used to interact with the system clipboard is
+system-dependent. This command determines which tool to use dynmically so that
+you don't have to remember which tools you can currently access.
 
 EXAMPLES:
-  cat README.md | clipboard
+  $ cat README.md | clipboard
+
+  $ clipboard file.txt
+
+  $ printf "foo" | clipboard
 EOF
 }
 # }}}
