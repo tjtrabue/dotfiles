@@ -79,33 +79,4 @@ dirnonempty() {
   [ -d "${dir}" ] && [ -n "$(command ls -A "${dir}")" ]
 }
 
-# Go To Project
-# gtp a fast way of bouncing around project repositories.
-gtp() {
-  local projectDir="${WS:-${HOME}/workspace}"
-  local projectListingCommand="find '${projectDir}' -maxdepth 1 -mindepth 1 \
-    -type d -printf '%f\n' |
-    sort -u"
-  local selectedProject
-
-  # Prioritized list of fuzzy search tools.
-  if [ -x "$(command -v fzf)" ]; then
-    selectedProject="$(eval "${projectListingCommand}" | fzf)"
-  elif [ -x "$(command -v fzy)" ]; then
-    selectedProject="$(eval "${projectListingCommand}" | fzy)"
-  else
-    err "No fuzzy searching cli tool found"
-    return 1
-  fi
-
-  if [ -z "${selectedProject}" ]; then
-    return 0
-  elif [ ! -d "${projectDir}/${selectedProject}" ]; then
-    err "${BLUE}${selectedProject}${NC} is not a project directory"
-    return 2
-  fi
-
-  cd "${projectDir}/${selectedProject}"
-}
-
 # vim:foldenable:foldmethod=indent:foldnestmax=1

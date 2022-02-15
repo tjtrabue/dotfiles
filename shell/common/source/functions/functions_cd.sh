@@ -13,6 +13,47 @@ cd() {
   __cd "${*}"
 }
 
+# cd to project
+# `cdp` a fast way of bouncing around project repositories.
+cdp() {
+  local projectDir="${1}"
+  local projectListingCommand="find \"\${projectDir}\" -maxdepth 1 -mindepth 1 \
+    -type d -printf '%f\n' |
+    sort -u"
+  local selectedProject
+
+  if [ -z "${projectDir}" ]; then
+    projectDir="${WS:-${HOME}/workspace}"
+  fi
+
+  if [ ! -d "${projectDir}" ]; then
+    err "${BLUE}${projectDir}${NC} is not a directory"
+    return 1
+  elif [ -z "$(ls -1 "${projectDir}")" ]; then
+    err "No projects found in ${BLUE}${projectDir}${NC}"
+    return 2
+  fi
+
+  # Prioritized list of fuzzy search tools.
+  if [ -x "$(command -v fzf)" ]; then
+    selectedProject="$(eval "${projectListingCommand}" | fzf)"
+  elif [ -x "$(command -v fzy)" ]; then
+    selectedProject="$(eval "${projectListingCommand}" | fzy)"
+  else
+    err "No fuzzy searching cli tool found"
+    return 3
+  fi
+
+  if [ -z "${selectedProject}" ]; then
+    return 0
+  elif [ ! -d "${projectDir}/${selectedProject}" ]; then
+    err "${BLUE}${projectDir}/${selectedProject}${NC} is not a directory"
+    return 4
+  fi
+
+  cd "${projectDir}/${selectedProject}"
+}
+
 # Wrapper function for the `cd` builtin that tracks directory history, and
 # understands a few new sigils.
 __cd() {
