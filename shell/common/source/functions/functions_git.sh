@@ -255,9 +255,7 @@ swi() {
   local branchListingCommand="git branch -a --format '%(refname:short)' |
     grep -E -v \
       -e '^(${defaultRemote}/)?${currentBranch}\$' \
-      -e '\WHEAD\$' |
-    sed -e 's/^\s*//' -e 's/\s*\$//' |
-    awk '{print \$1}' |
+      -e '^(${defaultRemote}/)?HEAD\$' |
     sort -u"
 
   # Prioritized list of fuzzy search tools used to select the branch.
