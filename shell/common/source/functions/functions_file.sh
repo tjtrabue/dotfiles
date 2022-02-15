@@ -46,6 +46,25 @@ mksource() {
   done
   shift $((OPTIND - 1))
 
+  # Get file name as main argument
+  sourceFileName="$*"
+
+  # Try to figure out the shell file type based on its extension, if the user
+  # provided a file extension.
+  # NOTE: This will override any option flags used to specify the shell type.
+  case "${sourceFileName##*.}" in
+  "bash")
+    shellType="bash"
+    ;;
+  "sh")
+    shellType="common"
+    ;;
+  "zsh")
+    shellType="zsh"
+    ;;
+  esac
+
+  # Figure out where to put the new file based on the shell type.
   case "${shellType}" in
   "bash")
     sourceDir="${dotfilesShellDir}/bash/source"
@@ -61,8 +80,6 @@ mksource() {
     return 2
     ;;
   esac
-
-  sourceFileName="$*"
 
   while [ -z "${sourceFileName}" ]; do
     echoe "Please enter name for new sourceable shell file:"
