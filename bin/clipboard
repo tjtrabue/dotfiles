@@ -11,15 +11,23 @@ declare CONTENT_SOURCE="/dev/stdin"
 declare CONTENTS=""
 
 # Help function {{{
-clipboard__help() {
+clipboard__usage() {
   command cat <<EOF
-clipboard - dynamic wrapper around CLI clipboard programs
-
 USAGE:
 clipboard [-h]
           [-f FILE]
           [--]
           [CONTENTS]
+EOF
+}
+
+clipboard__help() {
+  command cat <<EOF
+clipboard - dynamic wrapper around CLI clipboard programs
+
+EOF
+  clipboard__usage
+  command cat <<EOF
 
 DESCRIPTION:
 This program copies text from stdin (the default) or a file argument to the
@@ -32,16 +40,25 @@ OPTIONS:
     Print the help message and exit.
 
   -f | --file FILE
-    Copy the contents from FILE to the clipboard. FILE can be a true file or a
-    file descriptor, such as /dev/stdin, although stdin is always assumed if no
-    primary arguments are provided.
+    Copy the contents of FILE to the clipboard. FILE can be a regular file or a
+    file descriptor, such as '/dev/stdin', although stdin is always assumed if
+    no primary arguments are provided.
 
 EXAMPLES:
+  # Primary arguments are copied to clipboard as strings, so this command copies
+  # the string "foo" to the clipboard.
+  $ clipboard "foo"
+
+  # clipboard reads from stdin if no primary arguments are passed.
   $ cat README.md | clipboard
 
-  $ clipboard -f file.txt
+  # You can also use standard input redirection to read from files.
+  $ clipboard <README.md
 
-  $ printf "foo" | clipboard
+  # The -f option is used to specify a file to copy to the clipboard.
+  # This form works exactly like the stdout redirection method above, and is
+  # indeed an equivalent alternative.
+  $ clipboard -f file.txt
 EOF
 }
 # }}}
@@ -157,6 +174,7 @@ while true; do
 
   *)
     echoe "Unknown option $1 to ${THIS_EXEC}"
+    clipboard__usage
     exit 2
     ;;
   esac
