@@ -1,13 +1,71 @@
 #!/bin/sh
 
+# Create a new sourceable file (aliases, functions, etc.) for a given shell.
+# The name of the file must begin with one of:
+#   aliases_
+#   functions_
+# Use option flags to specify the shell for which the file should be created:
+#   -c -> Common
+#   -b -> Bash
+#   -z -> Zsh
 mksource() {
-  local sourceDir="$DOTFILES_HOME/shell/common/source"
-  local sourceFileName="$*"
+  local sourceFileName
+  local dotfilesShellDir="${DOTFILES_HOME}/shell"
+  local sourceDir="${dotfilesShellDir}/common/source"
+  local shellType="common"
+  local fileExtension="sh"
+  local shebang="#!/bin/sh"
+  local targetFileParentDir
   local targetFile
   local response
+  local OPTIND
+  local o
+
+  while getopts ":bcz" o; do
+    case "${o}" in
+    b)
+      shellType="bash"
+      fileExtension="bash"
+      shebang="#!/usr/bin/env bash"
+      ;;
+    c)
+      shellType="common"
+      fileExtension="sh"
+      shebang="#!/bin/sh"
+      ;;
+    z)
+      shellType="zsh"
+      fileExtension="zsh"
+      shebang="#!/usr/bin/env zsh"
+      ;;
+    *)
+      err "Unknown option: ${o}"
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  case "${shellType}" in
+  "bash")
+    sourceDir="${dotfilesShellDir}/bash/source"
+    ;;
+  "common")
+    sourceDir="${dotfilesShellDir}/common/source"
+    ;;
+  "zsh")
+    sourceDir="${dotfilesShellDir}/zsh/source"
+    ;;
+  *)
+    err "Could not determine source dir for shell type: ${shellType}"
+    return 2
+    ;;
+  esac
+
+  sourceFileName="$*"
 
   while [ -z "${sourceFileName}" ]; do
-    echoe "Please enter name of new source file:"
+    echoe "Please enter name for new sourceable shell file:"
     read -er sourceFileName
   done
 
@@ -16,28 +74,37 @@ mksource() {
     return 2
   fi
 
-  # Remove file extension from file name
+  # Remove file extension from input file name
   sourceFileName="${sourceFileName/.@(bash|zsh|sh)/}"
 
+  # Figure out where to put the new file
   if echo "${sourceFileName}" | grep -q "^aliases"; then
-    targetFile="${sourceDir}/aliases/${sourceFileName}.sh"
+    targetFileParentDir="${sourceDir}/aliases"
   elif echo "${sourceFileName}" | grep -q "^functions"; then
-    targetFile="${sourceDir}/functions/${sourceFileName}.sh"
+    targetFileParentDir="${sourceDir}/functions"
   fi
 
+  # Construct the final path for the new file
+  targetFile="${targetFileParentDir}/${sourceFileName}.${fileExtension}"
+
   # Exit if the file already exists.
-  if [ -f "$targetFile" ]; then
-    err "File $targetFile already exists."
+  if [ -f "${targetFile}" ]; then
+    err "File ${BLUE}${targetFile}${NC} already exists."
     return 3
   fi
 
+  # Ensure the parent directory is present, and bring the file into existence.
+  mkdir -p "${targetFileParentDir}"
   touch "${targetFile}"
-  echo -e "#!/bin/sh\n\n\n" >>"${targetFile}"
 
+  # Add the shebang to the top of the file
+  printf '%s\n\n\n' "${shebang}" >>"${targetFile}"
+
+  # Add Vim modeline to the bottom of the file
   if echo "${sourceFileName}" | grep -q "^aliases"; then
-    echo "# vim:foldenable:foldmethod=marker:foldlevel=0" >>"${targetFile}"
+    printf '%s' "# vim:foldenable:foldmethod=marker:foldlevel=0" >>"${targetFile}"
   elif echo "${sourceFileName}" | grep -q "^functions"; then
-    echo "# vim:foldenable:foldmethod=indent:foldnestmax=1" >>"${targetFile}"
+    printf '%s' "# vim:foldenable:foldmethod=indent:foldnestmax=1" >>"${targetFile}"
   fi
 }
 
