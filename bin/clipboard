@@ -17,7 +17,7 @@ USAGE:
 clipboard [-h]
           [-f FILE]
           [--]
-          [CONTENTS]
+          [STRING]
 EOF
 }
 
@@ -30,10 +30,9 @@ EOF
   command cat <<EOF
 
 DESCRIPTION:
-This program copies text from stdin (the default) or a file argument to the
-system clipboard. The CLI tool used to interact with the system clipboard is
-system-dependent. This command determines which tool to use dynmically so that
-you don't have to remember which tools you can currently access.
+This program copies text from stdin (the default) or a string primary argument
+to the system clipboard. Clipboard CLI tools are system-dependent. This command
+determines which tool to use dynmically so that you don't have to remember them.
 
 OPTIONS:
   -h | --help
@@ -117,11 +116,9 @@ clipboard__get_clipboard_executable() {
   "Darwin")
     CLIPBOARD_EXEC="pbcopy"
     ;;
-
   "Linux")
     CLIPBOARD_EXEC="xclip"
     ;;
-
   *)
     echoe "ERROR: Could not determine clipboard CLI executable for OS: ${os}"
     return 1
@@ -129,7 +126,8 @@ clipboard__get_clipboard_executable() {
   esac
 }
 
-# Some clipboard CLI tools require optional arguments to work properly.
+# Some clipboard CLI tools, such as xclip, require optional arguments to work
+# properly.
 clipboard__get_clipboard_executable_options() {
   local os="$(get_os_type)"
 
@@ -137,7 +135,6 @@ clipboard__get_clipboard_executable_options() {
   "Linux")
     CLIPBOARD_EXEC_OPTS="-selection clipboard"
     ;;
-
   *)
     CLIPBOARD_EXEC_OPTS=""
     ;;
@@ -159,18 +156,36 @@ EOF
   fi
 }
 
-# Perform the actual content copying.
-clipboard__copy_contents_to_clipboard() {
+# Return the final command line string used to interact with the system
+# clipboard.
+clipboard__get_final_clipboard_cmd() {
   local clipboardCmd="${CLIPBOARD_EXEC}"
 
   if [ -n "${CLIPBOARD_EXEC_OPTS}" ]; then
     clipboardCmd="${clipboardCmd} ${CLIPBOARD_EXEC_OPTS}"
   fi
 
+  echo "${clipboardCmd}"
+}
+
+# Copy a string to clipboard.
+clipboard__copy_string_to_clipboard() {
+  local clipboardCmd="$(clipboard__get_final_clipboard_cmd)"
+  eval "printf '%s' \"${CONTENTS}\" | ${clipboardCmd}"
+}
+
+# Copy a file or file descriptor's contents to the clipboard.
+clipboard__copy_file_contents_to_clipboard() {
+  local clipboardCmd="$(clipboard__get_final_clipboard_cmd)"
+  eval "${clipboardCmd} <${CONTENT_SOURCE}"
+}
+
+# Perform the actual content copying.
+clipboard__copy_contents_to_clipboard() {
   if [ -n "${CONTENTS}" ]; then
-    eval "echo ${CONTENTS} | ${clipboardCmd}"
+    clipboard__copy_string_to_clipboard
   else
-    eval "${clipboardCmd} <${CONTENT_SOURCE}"
+    clipboard__copy_file_contents_to_clipboard
   fi
 }
 # }}}
