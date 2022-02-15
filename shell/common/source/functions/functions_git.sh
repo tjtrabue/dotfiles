@@ -250,6 +250,7 @@ __get_sw_hist_file_name_for_repo() {
 # Interactive branch switching using fuzzy search program.
 swi() {
   local branch
+  local defaultRemote="$(defaultremote)"
   local branchListingCommand="git branch -a --format '%(HEAD)%(refname:short)' |
     grep -v -e '^\s*\*' -e 'HEAD' |
     sed -e 's/^\s*//' -e 's/\s*\$//' |
@@ -264,6 +265,10 @@ swi() {
   else
     branch="$(eval "${branchListingCommand}" | __swi_default_list_branches)"
   fi
+
+  # Strip off the leading "origin/" (or default remote) part of the branch name,
+  # if necessary.
+  branch="$(echo "${branch}" | sed "s|^\s*${defaultRemote}/||")"
 
   if [ -n "${branch}" ]; then
     sw "${branch}"
