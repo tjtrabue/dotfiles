@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
+# Be extra strict, and fail if any irregularity is encountered.
+set -Eeuo pipefail
+
 # The clipboard CLI command to use
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
-declare CLIPBOARD_CMD=""
+declare CLIPBOARD_EXEC=""
+declare CLIPBOARD_EXEC_OPTS=""
+declare CONTENT_SOURCE="/dev/stdin"
 declare CONTENTS=""
 
 # Help function {{{
@@ -11,7 +16,10 @@ clipboard__help() {
 clipboard - dynamic wrapper around CLI clipboard programs
 
 USAGE:
-clipboard [-h] [--] [FILE [...]]
+clipboard [-h]
+          [-f FILE]
+          [--]
+          [CONTENTS]
 
 DESCRIPTION:
 This program copies text from stdin (the default) or a file argument to the
@@ -19,10 +27,19 @@ system clipboard. The CLI tool used to interact with the system clipboard is
 system-dependent. This command determines which tool to use dynmically so that
 you don't have to remember which tools you can currently access.
 
+OPTIONS:
+  -h | --help
+    Print the help message and exit.
+
+  -f | --file FILE
+    Copy the contents from FILE to the clipboard. FILE can be a true file or a
+    file descriptor, such as /dev/stdin, although stdin is always assumed if no
+    primary arguments are provided.
+
 EXAMPLES:
   $ cat README.md | clipboard
 
-  $ clipboard file.txt
+  $ clipboard -f file.txt
 
   $ printf "foo" | clipboard
 EOF
@@ -37,21 +54,40 @@ echoe() {
 # }}}
 
 # Primary functions {{{
-clipboard__get_clipboard_command() {
+
+# Dynamically determine the CLI executable that interacts with the system
+# clipboard.
+clipboard__get_clipboard_executable() {
   local os="$(uname -s)"
 
   case "${os}" in
   "Darwin")
-    CLIPBOARD_CMD="pbcopy"
+    CLIPBOARD_EXEC="pbcopy"
     ;;
   *)
-    CLIPBOARD_CMD="xclip -selection clipboard"
+    CLIPBOARD_EXEC="xclip"
     ;;
   esac
 }
 
+# Some clipboard CLI tools require optional arguments to work properly.
+clipboard__get_clipboard_executable_options() {
+  local os="$(uname -s)"
+
+  case "${os}" in
+  "Darwin")
+    CLIPBOARD_EXEC_OPTS=""
+    ;;
+  *)
+    CLIPBOARD_EXEC_OPTS="-selection clipboard"
+    ;;
+  esac
+}
+
+# Make sure the executable that interacts with the system clipboard exists on
+# the user's PATH.
 clipboard__check_clipboard_program_exists() {
-  local clipboardExecutable="$(echo "${CLIPBOARD_CMD}" | awk '{print $1}')"
+  local clipboardExecutable="$(echo "${CLIPBOARD_EXEC}" | awk '{print $1}')"
 
   if [ -z "$(command -v "${clipboardExecutable}")" ]; then
     command cat <<EOF
@@ -63,12 +99,18 @@ EOF
   fi
 }
 
-# Does the actual content copying.
+# Perform the actual content copying.
 clipboard__copy_contents_to_clipboard() {
-  if [ -z "${CONTENTS}" ]; then
-    eval "${CLIPBOARD_CMD} </dev/stdin"
+  local clipboardCmd="${CLIPBOARD_EXEC}"
+
+  if [ -n "${CLIPBOARD_EXEC_OPTS}" ]; then
+    clipboardCmd="${clipboardCmd} ${CLIPBOARD_EXEC_OPTS}"
+  fi
+
+  if [ -n "${CONTENTS}" ]; then
+    eval "echo ${CONTENTS} | ${clipboardCmd}"
   else
-    eval "${CLIPBOARD_CMD} ${CONTENTS}"
+    eval "${clipboardCmd} <${CONTENT_SOURCE}"
   fi
 }
 # }}}
@@ -76,15 +118,16 @@ clipboard__copy_contents_to_clipboard() {
 # Main function {{{
 # Main point of entry for the program.
 main() {
-  CONTENTS="${*}"
-  clipboard__get_clipboard_command
+  CONTENTS="$*"
+  clipboard__get_clipboard_executable
+  clipboard__get_clipboard_executable_options
   clipboard__check_clipboard_program_exists
   clipboard__copy_contents_to_clipboard
 }
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help -n 'clipboard' -- "$@")
+args=$(getopt -o hf: --long help,file: -n 'clipboard' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -95,19 +138,31 @@ while true; do
     exit 0
     ;;
 
+  -f | --file)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      CONTENT_SOURCE="$2"
+      shift 2
+      ;;
+    esac
+    ;;
+
   --)
     shift
     break
     ;;
 
   *)
-    echoe "Unknown option ${1} to ${THIS_EXEC}"
+    echoe "Unknown option $1 to ${THIS_EXEC}"
     exit 2
     ;;
   esac
 done
 # }}}
 
-main "${*}"
+main "$*"
 
 # vim:foldenable:foldmethod=marker:
