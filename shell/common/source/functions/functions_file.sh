@@ -29,19 +29,19 @@ mksource() {
   # provided a file extension.
   case "${sourceFileName##*.}" in
   "bash")
+    sourceDir="${dotfilesShellDir}/bash/source"
     fileExtension="bash"
     shebang="#!/usr/bin/env bash"
-    sourceDir="${dotfilesShellDir}/bash/source"
     ;;
   "sh")
+    sourceDir="${dotfilesShellDir}/common/source"
     fileExtension="sh"
     shebang="#!/bin/sh"
-    sourceDir="${dotfilesShellDir}/common/source"
     ;;
   "zsh")
+    sourceDir="${dotfilesShellDir}/zsh/source"
     fileExtension="zsh"
     shebang="#!/usr/bin/env zsh"
-    sourceDir="${dotfilesShellDir}/zsh/source"
     ;;
   esac
 
