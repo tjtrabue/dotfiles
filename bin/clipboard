@@ -171,7 +171,7 @@ clipboard__get_final_clipboard_cmd() {
 # Copy a string to clipboard.
 clipboard__copy_string_to_clipboard() {
   local clipboardCmd="$(clipboard__get_final_clipboard_cmd)"
-  eval "printf '%s' \"${CONTENTS}\" | ${clipboardCmd}"
+  eval "echo -en \"${CONTENTS}\" | ${clipboardCmd}"
 }
 
 # Copy a file or file descriptor's contents to the clipboard.
