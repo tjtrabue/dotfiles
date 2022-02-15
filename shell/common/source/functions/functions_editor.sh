@@ -72,4 +72,15 @@ rmvimbackup() {
   rm -f "${VIM_BACKUPS}"/*
 }
 
+# Open ~/.vimrc or ~/.config/nvim/init.vim in the configured editor, depending
+# on whether EDITOR is configured for vim or nvim, respectively.
+editvimrc() {
+  # Set Vim config file based on which version is in use.
+  local vimConfigFile="${HOME}/.vimrc"
+  if [ "${EDITOR}" = "nvim" ]; then
+    vimConfigFile="${USER_CONF}/nvim/init.vim"
+  fi
+  edit "${vimConfigFile}"
+}
+
 # vim:foldenable:foldmethod=indent
