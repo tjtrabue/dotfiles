@@ -251,8 +251,8 @@ __get_sw_hist_file_name_for_repo() {
 swi() {
   local branch
   local defaultRemote="$(defaultremote)"
-  local branchListingCommand="git branch -a --format '%(HEAD)%(refname:short)' |
-    grep -v -e '^\s*\*' -e 'HEAD' |
+  local branchListingCommand="git branch -a --format '%(refname:short)' |
+    grep -v -e '^\s*\*' -e '\WHEAD\$' |
     sed -e 's/^\s*//' -e 's/\s*\$//' |
     awk '{print \$1}' |
     sort -u"
@@ -263,7 +263,7 @@ swi() {
   elif [ -x "$(command -v fzy)" ]; then
     branch="$(eval "${branchListingCommand}" | fzy)"
   else
-    branch="$(eval "${branchListingCommand}" | __swi_default_list_branches)"
+    branch="$(eval "${branchListingCommand}" | __default_list_branches)"
   fi
 
   # Strip off the leading "origin/" (or default remote) part of the branch name,
@@ -276,7 +276,7 @@ swi() {
 }
 
 # Interactive switching program used when no fuzzy finder programs can be found.
-__swi_default_list_branches() {
+__default_list_branches() {
   local branches=("$@")
   local selection
   local b
@@ -311,8 +311,8 @@ __swi_default_list_branches() {
 
 # Lists all branch names, local and remote, for the given repo.
 gbl() {
-  git branch -a --color=never --format="%(refname:lstrip=-1)" |
-    grep -v '^HEAD$' | sort -u
+  git branch -a --color=never --format="%(refname:short)" |
+    grep -v '\WHEAD$' | sort -u
 }
 
 # Interactively delete branches. Safely removes important branches from the list
@@ -323,17 +323,29 @@ dbi() {
   local branches
   local selectedBranches
   local branch
+  local branchListingCommand="git branch --format='%(refname:short)' |
+    grep -v -e '\WHEAD\$' -e '^${defaultBranch}\$' -e '^${currentBranch}\$' \
+      -e '^master\$' -e '^main\$' -e '^develop\$' |
+    tr ' ' '\n' |
+    sort -u
+  "
 
-  branches=($(git branch --format="%(refname:lstrip=-1)" |
-    grep -v -e "^${defaultBranch}\$" -e "^${currentBranch}\$" \
-      -e '^master$' -e '^main$' -e '^develop$'))
+  branches=($(eval "${branchListingCommand}"))
 
   if [ -z "${branches[*]}" ]; then
     err "No applicable branches to delete"
     return 1
   fi
 
-  selectedBranches="$(echo "${branches[@]}" | tr ' ' '\n' | fzf)"
+  # Prioritized list of fuzzy search tools used to select the branch.
+  if [ -x "$(command -v fzf)" ]; then
+    selectedBranches=($(echo "${branches[@]}" | tr ' ' '\n' | fzf))
+  elif [ -x "$(command -v fzy)" ]; then
+    selectedBranches=($(echo "${branches[@]}" | tr ' ' '\n' | fzy))
+  else
+    err "No fuzzy searching cli tool found"
+    return 2
+  fi
 
   if [ -z "${selectedBranches[*]}" ]; then
     return 0
