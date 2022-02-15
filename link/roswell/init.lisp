@@ -8,5 +8,16 @@
 (ql:quickload :cl-ppcre)
 ;; Needed for some SLY plugins
 (ql:quickload "agnostic-lizard")
-;; Portable MOP implementation for Common Lisp.
+;; Portable MOP (Metaobject Protocol) implementation for Common Lisp.
 (ql:quickload "closer-mop")
+
+(defun print-condition-hook (condition hook)
+  "Print error message CONDITION and abort the current operation."
+  (declare (ignore hook))
+  (format t "~A" condition)
+  (clear-input)
+  (abort))
+
+;; Set debugger hook to print the error condition, but do not enter the
+;; debugger.
+;; (setf *debugger-hook* #'print-condition-hook)
