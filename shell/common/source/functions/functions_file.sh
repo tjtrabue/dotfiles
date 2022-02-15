@@ -4,10 +4,17 @@
 # The name of the file must begin with one of:
 #   aliases_
 #   functions_
-# Use option flags to specify the shell for which the file should be created:
+#
+# You may use option flags to specify the shell type:
 #   -c -> Common
 #   -b -> Bash
 #   -z -> Zsh
+#
+# Alternatively, mksource can figure out the shell type based on the file
+# extension of the input file name:
+#  .sh -> Common
+#  .bash -> Bash
+#  .zsh -> Zsh
 mksource() {
   local sourceFileName
   local dotfilesShellDir="${DOTFILES_HOME}/shell"
@@ -55,12 +62,18 @@ mksource() {
   case "${sourceFileName##*.}" in
   "bash")
     shellType="bash"
+    fileExtension="bash"
+    shebang="#!/usr/bin/env bash"
     ;;
   "sh")
     shellType="common"
+    fileExtension="sh"
+    shebang="#!/bin/sh"
     ;;
   "zsh")
     shellType="zsh"
+    fileExtension="zsh"
+    shebang="#!/usr/bin/env zsh"
     ;;
   esac
 
@@ -92,7 +105,7 @@ mksource() {
   fi
 
   # Remove file extension from input file name
-  sourceFileName="${sourceFileName/.@(bash|zsh|sh)/}"
+  sourceFileName="${sourceFileName%.*}"
 
   # Figure out where to put the new file
   if echo "${sourceFileName}" | grep -q "^aliases"; then
