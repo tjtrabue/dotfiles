@@ -16,7 +16,6 @@ mksource() {
   local sourceFileName
   local dotfilesShellDir="${DOTFILES_HOME}/shell"
   local sourceDir="${dotfilesShellDir}/common/source"
-  local shellType="common"
   local fileExtension="sh"
   local shebang="#!/bin/sh"
   local targetFileParentDir
@@ -30,36 +29,19 @@ mksource() {
   # provided a file extension.
   case "${sourceFileName##*.}" in
   "bash")
-    shellType="bash"
     fileExtension="bash"
     shebang="#!/usr/bin/env bash"
-    ;;
-  "sh")
-    shellType="common"
-    fileExtension="sh"
-    shebang="#!/bin/sh"
-    ;;
-  "zsh")
-    shellType="zsh"
-    fileExtension="zsh"
-    shebang="#!/usr/bin/env zsh"
-    ;;
-  esac
-
-  # Figure out where to put the new file based on the shell type.
-  case "${shellType}" in
-  "bash")
     sourceDir="${dotfilesShellDir}/bash/source"
     ;;
-  "common")
+  "sh")
+    fileExtension="sh"
+    shebang="#!/bin/sh"
     sourceDir="${dotfilesShellDir}/common/source"
     ;;
   "zsh")
+    fileExtension="zsh"
+    shebang="#!/usr/bin/env zsh"
     sourceDir="${dotfilesShellDir}/zsh/source"
-    ;;
-  *)
-    err "Could not determine source dir for shell type: ${shellType}"
-    return 2
     ;;
   esac
 
