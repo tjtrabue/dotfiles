@@ -251,8 +251,12 @@ __get_sw_hist_file_name_for_repo() {
 swi() {
   local branch
   local defaultRemote="$(defaultremote)"
+  local currentBranch="$(currentref)"
   local branchListingCommand="git branch -a --format '%(refname:short)' |
-    grep -v -e '^\s*\*' -e '\WHEAD\$' |
+    grep -v \
+      -e '^${currentBranch}\$' \
+      -e '^${defaultRemote}/${currentBranch}\$' \
+      -e '\WHEAD\$' |
     sed -e 's/^\s*//' -e 's/\s*\$//' |
     awk '{print \$1}' |
     sort -u"
