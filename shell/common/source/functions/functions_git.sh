@@ -253,9 +253,8 @@ swi() {
   local defaultRemote="$(defaultremote)"
   local currentBranch="$(currentref)"
   local branchListingCommand="git branch -a --format '%(refname:short)' |
-    grep -v \
-      -e '^${currentBranch}\$' \
-      -e '^${defaultRemote}/${currentBranch}\$' \
+    grep -E -v \
+      -e '^(${defaultRemote}/)?${currentBranch}\$' \
       -e '\WHEAD\$' |
     sed -e 's/^\s*//' -e 's/\s*\$//' |
     awk '{print \$1}' |
