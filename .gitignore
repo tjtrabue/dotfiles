@@ -233,12 +233,16 @@ shell/zsh/zdotdir/.zsh_sessions
 link/config/filezilla/*
 # }}}
 
+# Flutter {{{
+link/config/flutter/tool_state
+# }}}
+
 # Kitty terminal emulator {{{
 link/config/kitty/kitty-themes
 # }}}
 
-# Flutter {{{
-link/config/flutter/tool_state
+# libaccounts {{{
+link/config/libaccounts-glib/
 # }}}
 
 # SQL LS {{{
@@ -327,6 +331,10 @@ link/config/Kitware/
 # Terminus terminal {{{
 link/config/terminus/*
 !link/config/terminus/config.yaml
+# }}}
+
+# user-dirs {{{
+link/config/user-dirs*
 # }}}
 
 # vim:foldenable:foldmethod=marker
