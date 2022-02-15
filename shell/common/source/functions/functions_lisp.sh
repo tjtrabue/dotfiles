@@ -19,17 +19,23 @@ install_lisp_format() {
 # SBCL does not ship with readline support, so we'll need to wrap the REPL
 # command with the `rlwrap` command to inject readline support.
 sbcl() {
-  if [ -z "$(command -v rlwrap)" ]; then
-    err "rlwrap not installed"
-    return 1
+  if [ -n "$(command -v rlwrap)" ]; then
+    eval "rlwrap $(__get_sbcl_run_command)"
+  else
+    # Default to simply using SBCL without rlwrap if we do not have rlwrap
+    # installed.
+    eval "$(__get_sbcl_run_command)"
   fi
+}
 
+# Figure out which command line to execute in order to summon up an SBCL REPL.
+__get_sbcl_run_command() {
   if [ -n "$(command -v ros)" ]; then
     # Use Roswell if available.
-    rlwrap ros run
+    printf "%s %s" "ros" "run"
   else
     # Fall back on a standard SBCL installation.
-    rlwrap sbcl
+    printf "%s" "sbcl"
   fi
 }
 
