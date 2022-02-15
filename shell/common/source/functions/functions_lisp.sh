@@ -16,4 +16,21 @@ install_lisp_format() {
     }
 }
 
+# SBCL does not ship with readline support, so we'll need to wrap the REPL
+# command with the `rlwrap` command to inject readline support.
+sbcl() {
+  if [ -z "$(command -v rlwrap)" ]; then
+    err "rlwrap not installed"
+    return 1
+  fi
+
+  if [ -n "$(command -v ros)" ]; then
+    # Use Roswell if available.
+    rlwrap ros run
+  else
+    # Fall back on a standard SBCL installation.
+    rlwrap sbcl
+  fi
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
