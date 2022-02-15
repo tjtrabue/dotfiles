@@ -50,8 +50,8 @@ mksource() {
     read -er sourceFileName
   done
 
-  if ! echo "${sourceFileName}" | grep -E -q "^(aliases)|(functions).*"; then
-    err 'Source file name must begin with "aliases" or "functions"'
+  if ! echo "${sourceFileName}" | grep -E -q "^(aliases)|(functions)_.*"; then
+    err 'Source file name must begin with "aliases_" or "functions_"'
     return 2
   fi
 
