@@ -5,16 +5,13 @@
 #   aliases_
 #   functions_
 #
-# You may use option flags to specify the shell type:
-#   -c -> Common
-#   -b -> Bash
-#   -z -> Zsh
-#
-# Alternatively, mksource can figure out the shell type based on the file
-# extension of the input file name:
+# mksource can figure out the shell type based on the file extension of the
+# input file name:
 #  .sh -> Common
 #  .bash -> Bash
 #  .zsh -> Zsh
+#
+# By default, a file extension of ".sh" is assumed if no extension is provided.
 mksource() {
   local sourceFileName
   local dotfilesShellDir="${DOTFILES_HOME}/shell"
@@ -25,40 +22,12 @@ mksource() {
   local targetFileParentDir
   local targetFile
   local response
-  local OPTIND
-  local o
-
-  while getopts ":bcz" o; do
-    case "${o}" in
-    b)
-      shellType="bash"
-      fileExtension="bash"
-      shebang="#!/usr/bin/env bash"
-      ;;
-    c)
-      shellType="common"
-      fileExtension="sh"
-      shebang="#!/bin/sh"
-      ;;
-    z)
-      shellType="zsh"
-      fileExtension="zsh"
-      shebang="#!/usr/bin/env zsh"
-      ;;
-    *)
-      err "Unknown option: ${o}"
-      return 1
-      ;;
-    esac
-  done
-  shift $((OPTIND - 1))
 
   # Get file name as main argument
   sourceFileName="$*"
 
   # Try to figure out the shell file type based on its extension, if the user
   # provided a file extension.
-  # NOTE: This will override any option flags used to specify the shell type.
   case "${sourceFileName##*.}" in
   "bash")
     shellType="bash"
@@ -99,7 +68,7 @@ mksource() {
     read -er sourceFileName
   done
 
-  if ! echo "${sourceFileName}" | grep -E -q "(aliases)|(functions).*"; then
+  if ! echo "${sourceFileName}" | grep -E -q "^(aliases)|(functions).*"; then
     err 'Source file name must begin with "aliases" or "functions"'
     return 2
   fi
@@ -119,7 +88,7 @@ mksource() {
 
   # Exit if the file already exists.
   if [ -f "${targetFile}" ]; then
-    err "File ${BLUE}${targetFile}${NC} already exists."
+    err "Source file ${BLUE}${targetFile}${NC} already exists."
     return 3
   fi
 
