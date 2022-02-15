@@ -320,4 +320,13 @@ Thumbs.db
 link/config/iterm2
 # }}}
 
+# Kitware {{{
+link/config/Kitware/
+# }}}
+
+# Terminus terminal {{{
+link/config/terminus/*
+!link/config/terminus/config.yaml
+# }}}
+
 # vim:foldenable:foldmethod=marker
