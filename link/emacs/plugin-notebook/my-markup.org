@@ -13,8 +13,15 @@ HTML, TOML, YAML, etc.
 #+end_src
 
 * markdown-mode
+Major mode for editing Markdown files, complete with a plethora of functions for
+inserting links, following links, navigating files quickly, changing headers,
+and more.
+
 #+begin_src emacs-lisp
-  (use-package markdown-mode)
+  (use-package markdown-mode
+    :general
+    (general-def 'normal markdown-mode-map
+      "gl" 'markdown-follow-link-at-point))
 #+end_src
 
 * grip-mode

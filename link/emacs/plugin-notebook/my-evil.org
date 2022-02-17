@@ -378,13 +378,13 @@ configuration.
     :after evil-collection
     :general
     (general-def 'normal 'override
-      "g c c" 'evilnc-comment-or-uncomment-lines
-      "g c l" 'evilnc-quick-comment-or-uncomment-to-the-line
-      "g c p" 'evilnc-comment-or-uncomment-paragraphs
-      "g c r" 'comment-or-uncomment-region)
+      "gcc" 'evilnc-comment-or-uncomment-lines
+      "gcl" 'evilnc-quick-comment-or-uncomment-to-the-line
+      "gcp" 'evilnc-comment-or-uncomment-paragraphs
+      "gcr" 'comment-or-uncomment-region)
     (general-def 'visual 'override
-      "g c" 'evilnc-comment-or-uncomment-lines
-      "g C" 'comment-or-uncomment-region))
+      "gc" 'evilnc-comment-or-uncomment-lines
+      "gC" 'comment-or-uncomment-region))
 #+end_src
 
 ** evil-mark-replace
