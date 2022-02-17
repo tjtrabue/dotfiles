@@ -335,11 +335,14 @@ evil's normal state from insert state.
 #+end_src
 
 ** evil-surround
+=vim-surround= keybindings for =evil-mode=. Can't live without it!
+
 #+begin_src emacs-lisp
   (use-package evil-surround
     :after evil-collection
-    :hook
-    (after-init . global-evil-surround-mode))
+    :demand t
+    :config
+    (global-evil-surround-mode 1))
 #+end_src
 
 ** evil-numbers
