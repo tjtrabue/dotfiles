@@ -90,6 +90,7 @@ for any programming language that supports a formatting tool.")
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
   "List to be concatenated with `lsp-language-id-configuration'.")
 
+;;;###autoload
 (defun my-custom-lsp-override-keymappings ()
   "Set custom evil keybindings for `lsp-mode'.
 
