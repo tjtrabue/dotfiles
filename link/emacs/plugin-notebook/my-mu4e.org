@@ -16,10 +16,10 @@ installing =mu4e= from MELPA, you must install the =mu= or =maildir-utils=
 system utility using your distribution's package manager. =mu4e= is simply a
 collection of =mu= bindings for Emacs. If your package repositories do not
 contain =mu= or =maildir-utils=, you must install =mu= from source. Check the
-GitHub repository for manual installation instructions if you must go that
+[[https://github.com/djcb/mu][GitHub repository]] for manual installation instructions if you must go that
 route.
 
-** Installing with straight.el (why you shouldn't!)
+** Why you shouldn't install =mu4e= with straight.el
 It is theoretically /possible/ to install both =mu= and =mu4e= using
 straight.el. However, this approach is not recommended for a number of
 reasons. First, =mu= is a collection of system utilities, it is not just an
@@ -83,6 +83,7 @@ Get desktop notifications for =mu4e=.
 
 #+begin_src emacs-lisp
   (use-package mu4e-alert
+    :after mu4e
     ;; Only load mu4e if we have the requisite executables installed.
     :if (my/use-mu4e-p)
     :config
