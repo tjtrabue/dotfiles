@@ -10,10 +10,10 @@ This is a minor mode that uniquely colors variable/function names in order to
 easily identify them in a file.
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package color-identifiers-mode
-      :demand t
-      :config
-      ;; Turn on color-identifiers-mode globally.
-      (global-color-identifiers-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package color-identifiers-mode
+    :demand t
+    :config
+    ;; Turn on color-identifiers-mode globally.
+    (global-color-identifiers-mode 1))
+#+end_src
