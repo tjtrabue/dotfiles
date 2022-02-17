@@ -32,6 +32,7 @@ add_bash_completions() {
   __add_sdkman_completions
   __add_asdf_completions_for_bash
   __add_pack_completions_for_bash
+  __add_gh_completions_for_bash
 }
 
 # Add any extra Zsh completions.
@@ -45,6 +46,7 @@ add_zsh_completions() {
   __add_extra_zsh_completions
   __add_asdf_completions_for_zsh
   __add_pack_completions_for_zsh
+  __add_gh_completions_for_zsh
 }
 
 # Add extra Fish shell completions.
@@ -363,6 +365,26 @@ __add_pack_completions_for_zsh() {
 # Add completions for Buildpack CLI to Fish.
 __add_pack_completions_for_fish() {
   source (pack completion --shell fish)
+}
+
+# Add completions for the GitHub command line tools to Bash.
+__add_gh_completions_for_bash() {
+  if [ -x "$(command -v gh)" ]; then
+    log_info "Activating gh completions for Bash"
+    eval "$(gh completion -s bash)"
+  fi
+}
+
+# Add completions for the GitHub command line tools to Zsh.
+__add_gh_completions_for_zsh() {
+  local zshCompletionDir="$(__get_zsh_completion_dir)"
+  local zshGhCompletionFile="${zshCompletionDir}/_gh"
+
+  log_info "Activating gh completions for Zsh"
+  if [ -x "$(command -v gh)" ] && [ ! -f "${zshGhCompletionFile}" ]; then
+    mkdir -p "${zshCompletionDir}"
+    gh completion -s zsh >"${zshGhCompletionFile}"
+  fi
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1

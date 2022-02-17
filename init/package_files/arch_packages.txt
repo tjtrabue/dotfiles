@@ -52,6 +52,7 @@ fzf
 fzy
 gdb
 git
+github-cli
 global
 gnupg
 go
