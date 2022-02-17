@@ -114,8 +114,8 @@ Language and encoding parameters for this particular Emacs instance.
 #+end_src
 
 * Configure Load Path
-The load-path list is a collection of file paths that Emacs uses to locate
-Elisp modules at runtime.
+The load-path list is a collection of file paths that Emacs uses to locate Elisp
+modules at runtime.
 
 #+begin_src emacs-lisp
   ;; Tell Emacs where custom library files are
@@ -149,9 +149,9 @@ custom Emacs Lisp libraries.
 
 * Load Hotfix Modules
 Load any HOTFIX modules in order to fix backwards-compatibility issues.  It is
-best to keep these code snippets out of the main Emacs configuration file
-since they are necessary evil, not main configuration code, and as such will
-soon become unnecessary and may be safely removed.
+best to keep these code snippets out of the main Emacs configuration file since
+they are necessary evil, not main configuration code, and as such will soon
+become unnecessary and may be safely removed.
 
 #+begin_src emacs-lisp
   ;; Fix `make-obsolete' functions argument list issues.
@@ -192,10 +192,10 @@ opposed to strewing them about each directory you visit.
 #+end_src
 
 * Color Configuration
-Here we configure ANSI colors for various modes used throughout Emacs.
-We need to make =comint-mode=, which all shell emulators in Emacs (known as
-inferior interpreters) inherit from, recognize ANSI color escape sequences
-so that shells don't look like a hot mess. We also want colorized man pages.
+Here we configure ANSI colors for various modes used throughout Emacs.  We need
+to make =comint-mode=, which all shell emulators in Emacs (known as inferior
+interpreters) inherit from, recognize ANSI color escape sequences so that shells
+don't look like a hot mess. We also want colorized man pages.
 
 #+begin_src emacs-lisp
   ;; Set ANSI color integration in comint-mode
@@ -210,10 +210,10 @@ so that shells don't look like a hot mess. We also want colorized man pages.
 #+end_src
 
 * Set Emacs Variables
-Here is where we set existing Emacs variables to our preferred values, both
-for customization and performance. Emacs is notoriously slow unless you tweak
-many existing variables, especially if you use advanced programming tools such
-as LanguageServerProtocol clients and servers.
+Here is where we set existing Emacs variables to our preferred values, both for
+customization and performance. Emacs is notoriously slow unless you tweak many
+existing variables, especially if you use advanced programming tools such as
+LanguageServerProtocol clients and servers.
 
 #+begin_src emacs-lisp
   ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
@@ -322,9 +322,9 @@ as LanguageServerProtocol clients and servers.
 
 * Adjust initial frame size
 In keeping with the spirit of Emacs, there are a plethora of methods for
-changing the size of the first frame Emacs creates. A frame is basically
-Emacs' concept of a window in Microsoft Windows or macOS lingo. The method(s)
-used below are the most portable.
+changing the size of the first frame Emacs creates. A frame is basically Emacs'
+concept of a window in Microsoft Windows or macOS lingo. The method(s) used
+below are the most portable.
 
 #+begin_src emacs-lisp
   (let (;; Get desired frame height and width as fraction of total monitor size.
@@ -347,9 +347,9 @@ Set default font for Emacs.
 
 * Info
 =info= is Emacs' built in help system. You use =info= to browse various
-documentation pages. However, by default, Emacs only looks in a small number
-of locations for help pages. Here we add more locations for browsing
-user-installed info pages.
+documentation pages. However, by default, Emacs only looks in a small number of
+locations for help pages. Here we add more locations for browsing user-installed
+info pages.
 
 #+begin_src emacs-lisp
   ;; Make sure user-installed info pages are available.
@@ -369,9 +369,9 @@ our lives easier.
 #+end_src
 
 * Activate/Deactivate Default Minor Modes
-Turn certain minor modes on or off by default. You can think of a minor mode
-as a plugin, or an extra set of functions and behaviors that can be turned on
-or off by calling their parent minor-mode function. For instance, calling
+Turn certain minor modes on or off by default. You can think of a minor mode as
+a plugin, or an extra set of functions and behaviors that can be turned on or
+off by calling their parent minor-mode function. For instance, calling
 (save-place-mode 1) will make Emacs open previously closed files at their last
 edited location, as opposed to opening them at the beginning.
 
@@ -452,7 +452,7 @@ Key bindings available in any major mode.
 #+end_src
 
 * Email
-These settings are used to configure Emacs' mail-mode and integrations with
+These settings are used to configure Emacs' mail-mode and integration with
 external email programs, such as mutt.
 
 #+begin_src emacs-lisp
@@ -563,11 +563,11 @@ will not recognize by default, so we must set them here.
 * Hooks
 Hooks are analogous to Vim's autocmds. They represent a series of functions to
 run when a particular event occurs. Both Emacs proper and third party plugins
-design and expose certain hooks along with their packages, and the user can
-then attach functions to each hook by means of the 'add-hook function. The
-most commonly used hooks are those for major modes, each having a name like
-java-mode-hook, or haskell-mode-hook.  However, most packages provide
-additional hooks for use besides those for major and minor modes.
+design and expose certain hooks along with their packages, and the user can then
+attach functions to each hook by means of the 'add-hook function. The most
+commonly used hooks are those for major modes, each having a name like
+java-mode-hook, or haskell-mode-hook.  However, most packages provide additional
+hooks for use besides those for major and minor modes.
 
 ** Buffer-menu-mode hooks
 #+begin_src emacs-lisp
@@ -708,8 +708,8 @@ Hooks that run whenever the window size changes.
 #+end_src
 
 * Package Manager
-Configure package managers Emacs leverages to install and configure
-third-party packages.
+Configure package managers Emacs leverages to install and configure third-party
+packages.
 
 ** straight
 =straight= is a newer package manager for Emacs that differs from
@@ -865,9 +865,9 @@ and hooks in a way that defers loading the package.
 
 * Load External Configuration Files
 Load additional Emacs configuration files from my custom plugins directories.
-Most of these files correspond directly to third-party dependencies from
-MELPA.  My configuration files install, configure, and load those third-party
-packages in a way that does not clutter my primary configuration file.
+Most of these files correspond directly to third-party dependencies from MELPA.
+My configuration files install, configure, and load those third-party packages
+in a way that does not clutter my primary configuration file.
 
 #+begin_src emacs-lisp
   (my/apply-to-dir-files my/emacs-plugin-dir
