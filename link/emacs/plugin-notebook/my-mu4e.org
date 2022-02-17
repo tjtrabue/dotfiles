@@ -44,6 +44,8 @@ interoperable versions of the two tools.
     ;; doesn't load:
     ;; :load-path "/usr/share/emacs/site-lisp/mu4e/"
     :init
+    ;; Load mu4e
+    (require 'mu4e)
     ;; Set the user's mail dir if not already set from environment variable.
     (defvar my/mail-dir (getenv "MAIL_DIR") "Local email folder.")
     (if (not my/mail-dir)
