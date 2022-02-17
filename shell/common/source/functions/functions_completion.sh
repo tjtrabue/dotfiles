@@ -52,6 +52,7 @@ add_zsh_completions() {
 # Add extra Fish shell completions.
 add_fish_completions() {
   __add_asdf_completions_for_fish
+  __add_gh_completions_for_fish
 }
 
 # Initialize the Zsh completion system manually. This is sometimes necessary, as
@@ -384,6 +385,17 @@ __add_gh_completions_for_zsh() {
   if [ -x "$(command -v gh)" ] && [ ! -f "${zshGhCompletionFile}" ]; then
     mkdir -p "${zshCompletionDir}"
     gh completion -s zsh >"${zshGhCompletionFile}"
+  fi
+}
+
+# Add completions for the GitHub command line tools to Fish.
+__add_gh_completions_for_fish() {
+  local fishCompletionDir="${HOME}/.config/fish/completions"
+  local fishGhCompletionFile="${fishCompletionDir}/gh.fish"
+
+  if [ -x "$(command -v gh)" ] && [ ! -f "${fishGhCompletionFile}" ]; then
+    mkdir -p "${fishCompletionDir}"
+    gh completion -s fish > "${fishGhCompletionFile}"
   fi
 }
 
