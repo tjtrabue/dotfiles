@@ -4,60 +4,67 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-Plugins and configuration for Emacs' help features.
-See the HelpPlus page on the [[https://www.emacswiki.org/emacs/HelpPlus [[][EmacsWiki]] for more information.
+Plugins and configuration for Emacs' help features.  See the HelpPlus page on
+the [[https://www.emacswiki.org/emacs/HelpPlus ][EmacsWiki]] for more information.
 
 * helpful
-  =helpful= is an alternative to Emacs' built-in help system that provides far
-  more contextual information. It is essentially a drop-in replacement for the
-  help system.
+=helpful= is an alternative to Emacs' built-in help system that provides far
+more contextual information. It is essentially a drop-in replacement for the
+help system.
 
-  #+begin_src emacs-lisp
-    (use-package helpful
-      :general
-      (general-def
-        ;; Replace standard help functions with helpful functions.
-        "C-h f" 'helpful-callable
-        "C-h v" 'helpful-variable
-        "C-h k" 'helpful-key
-        ;; Other useful keybindings.
-        "C-h C" 'helpful-command
-        "C-h F" 'helpful-function)
-      (my/user-leader-def
-        "C-d" 'helpful-at-point))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package helpful
+    ;; 2/17/2022
+    ;; helpful has not yet implemented new Emacs' (version 29.0.50 and
+    ;; onward) symbol reading capabilities, so it will not work with those
+    ;; versions of Emacs. The error encountered is "void variable
+    ;; read-symbol-position-list". Keep checking for updates to see if the
+    ;; maintainers implemented a fix for this issue.
+    :if (< emacs-major-version 29)
+    :general
+    (general-def
+      ;; Replace standard help functions with helpful functions.
+      "C-h f" 'helpful-callable
+      "C-h v" 'helpful-variable
+      "C-h k" 'helpful-key
+      ;; Other useful keybindings.
+      "C-h C" 'helpful-command
+      "C-h F" 'helpful-function)
+    (my/user-leader-def
+      "C-d" 'helpful-at-point))
+#+end_src
 
 * help+
-  Enhance Emacs' help system with new functions and key bindings.
+Enhance Emacs' help system with new functions and key bindings.
 
-  #+begin_src emacs-lisp
-    (use-package help+
-      :demand t)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package help+
+    :demand t)
+#+end_src
 
 ** Plugins
-   Extra plugins to complete =help+='s power.
+Extra plugins to complete =help+='s power.
 
 *** help-fns+
-   Add cool new help functions, such as describe-keymap
+Add cool new help functions, such as describe-keymap
 
-   #+begin_src emacs-lisp
-     (use-package help-fns+
-       :demand t
-       :general
-       (general-def
-         "C-h M-m" 'describe-keymap
-         "C-h M-f" 'describe-face))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package help-fns+
+    :demand t
+    :general
+    (general-def
+      "C-h M-m" 'describe-keymap
+      "C-h M-f" 'describe-face))
+#+end_src
 
 *** help-macro+
-   #+begin_src emacs-lisp
-     (use-package help-macro+
-       :demand t)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package help-macro+
+    :demand t)
+#+end_src
 
 *** help-mode+
-   #+begin_src emacs-lisp
-     (use-package help-mode+
-       :demand t)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package help-mode+
+    :demand t)
+#+end_src
