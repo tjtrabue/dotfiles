@@ -17,6 +17,7 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
   #+begin_src emacs-lisp
     (use-package centaur-tabs
       :after evil-collection
+      :demand t
       :general
       (general-def
         "C-x B" 'centaur-tabs-switch-group)
@@ -27,9 +28,6 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
         ;; Use ']b' and '[b' to navigate tabs.
         "] b" 'centaur-tabs-forward
         "[ b" 'centaur-tabs-backward)
-      :hook
-      ;; Enable centaur-tabs globally
-      (after-init . centaur-tabs-mode)
       :init
       ;; Can be necessary for current tab underline to display correctly.
       ;; Only important if centaur-tabs-set-bar is set to 'under.
@@ -55,6 +53,8 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
       ;; Only cycle through visible tabs, do not advance to new tab groups.
       (centaur-tabs-cycle-scope 'tabs)
       :config
+      ;; Enable centaur-tabs globally
+      (centaur-tabs-mode 1)
       ;; Make the headline face match the centaur-tabs-default face
       (centaur-tabs-headline-match)
       ;; Automatically group tabs by Projectile project.

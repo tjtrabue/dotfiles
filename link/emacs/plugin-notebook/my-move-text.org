@@ -14,15 +14,16 @@ around in Emacs buffers.
 
   #+begin_src emacs-lisp
     (use-package drag-stuff
-      :hook
-      (after-init . drag-stuff-global-mode)
+      :demand t
       :general
       (general-def '(normal visual) '(drag-stuff-mode-map override)
         "M-k" 'drag-stuff-up
         "M-j" 'drag-stuff-down
         ;; "M-h" 'drag-stuff-left
         ;; "M-l" 'drag-stuff-right
-        ))
+        )
+      :config
+      (drag-stuff-global-mode 1))
   #+end_src
 
 * move-text

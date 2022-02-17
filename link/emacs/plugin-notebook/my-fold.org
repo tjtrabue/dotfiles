@@ -86,11 +86,10 @@ with Emacs, while still others must be installed as third-party plugins.
      (use-package vimish-fold
        ;; origami supports Vim-style "{{{...}}}" folding now.
        :disabled
+       :demand t
        :hook
-       ;; Activate vimish-fold mode for all buffers.
-       ((after-init . vimish-fold-global-mode)
-        ;; Re-create folds from mark comments when visiting a file.
-        (find-file . vimish-fold-from-marks))
+       ;; Re-create folds from mark comments when visiting a file.
+       (find-file . vimish-fold-from-marks)
        :general
        (general-def
          ;; The standard vimish-fold keybinding. I don't tend to use it.
@@ -113,5 +112,8 @@ with Emacs, while still others must be installed as third-party plugins.
        ;; Where to indicate a fold
        (vimish-fold-indication-mode 'right-fringe)
        ;; Whether to save folds on buffer saving.
-       (vimish-fold-persist-on-saving t))
+       (vimish-fold-persist-on-saving t)
+       :config
+       ;; Activate vimish-fold mode for all buffers.
+       (vimish-fold-global-mode 1))
    #+end_src

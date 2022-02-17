@@ -9,8 +9,7 @@
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package anzu
-    :hook
-    (after-init . global-anzu-mode)
+    :demand t
     :general
     (general-def
       [remap query-replace] 'anzu-query-replace
@@ -21,5 +20,7 @@
     :custom
     ;; Turn off anzu's modeline capability so that spaceline will handle anzu
     ;; information instead.
-    (anzu-cons-mode-line-p nil))
+    (anzu-cons-mode-line-p nil)
+    :config
+    (global-anzu-mode 1))
 #+end_src

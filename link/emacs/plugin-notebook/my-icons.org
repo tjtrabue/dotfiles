@@ -54,6 +54,7 @@
 
   #+begin_src emacs-lisp
     (use-package mode-icons
-      :hook
-      (after-init . mode-icons-mode))
+      :demand t
+      :config
+      (mode-icons-mode 1))
   #+end_src

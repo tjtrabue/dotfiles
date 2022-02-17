@@ -14,8 +14,7 @@ replacement for plugins like Swiper and Helm Swoop.
   #+begin_src emacs-lisp
     (use-package ctrlf
       :after evil-collection
-      :hook
-      (after-init . ctrlf-mode)
+      :demand t
       :general
       (general-def
         ;; Remap standard Emacs isearch keybinding
@@ -32,6 +31,8 @@ replacement for plugins like Swiper and Helm Swoop.
       ;; Use fuzzy search and regular expressions by default.
       (ctrlf-default-search-style 'fuzzy-regexp)
       :config
+      ;; Enable ctrlf-mode globally
+      (ctrlf-mode 1)
       ;; We want to use VI-style navigation for search results.
       (add-to-list 'ctrlf-minibuffer-bindings '("C-j" . ctrlf-forward-default))
       (add-to-list 'ctrlf-minibuffer-bindings '("C-k" . ctrlf-backward-default)))

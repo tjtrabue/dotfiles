@@ -243,9 +243,9 @@ and filetypes. Check their docstrings for more details.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package apheleia
-    :hook
-    (after-init . apheleia-global-mode)
+    :demand t
     :config
+    (apheleia-global-mode 1)
     (my/apheleia-add-formatters my/apheleia-custom-formatters)
     (my/apheleia-map-modes-to-formatters my/apheleia-mode-formatters-alist)
     (my/apheleia-override-formatters))

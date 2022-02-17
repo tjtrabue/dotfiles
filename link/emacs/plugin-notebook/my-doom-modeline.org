@@ -13,8 +13,7 @@ modeline from Doom Emacs.
   #+begin_src emacs-lisp
     (use-package doom-modeline
       :after (all-the-icons doom-themes)
-      :hook
-      (after-init . doom-modeline-mode)
+      :demand t
       :custom
       ;; How tall the modeline should be (GUI only).
       (doom-modeline-height 35)
@@ -30,5 +29,7 @@ modeline from Doom Emacs.
       ;; each).
       (doom-modeline-indent-info t)
       ;; Show mu4e notifications (requires `mu4e-alert')
-      (doom-modeline-mu4e (my/use-mu4e-p)))
+      (doom-modeline-mu4e (my/use-mu4e-p))
+      :config
+      (doom-modeline-mode 1))
   #+end_src

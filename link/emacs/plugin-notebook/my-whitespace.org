@@ -18,8 +18,9 @@ lines as is necessary, and second, it keeps your code contributions clean.
 
 #+begin_src emacs-lisp
   (use-package whitespace-cleanup-mode
-    :hook
-    (after-init . global-whitespace-cleanup-mode))
+    :demand t
+    :config
+    (global-whitespace-cleanup-mode 1))
 #+end_src
 
 * clean-aindent-mode
@@ -34,15 +35,14 @@ lines as is necessary, and second, it keeps your code contributions clean.
   (use-package clean-aindent-mode
     ;; Old, unmaintained, unnecessary, a little buggy
     :disabled
-    :hook
-    (after-init .
-                (lambda ()
-                  ;; Turn off electric-indent-mode, since auto-indent is
-                  ;; sufficient.
-                  (electric-indent-mode -1)
-                  (clean-aindent-mode 1)))
+    :demand t
     :custom
-    (clean-aindent-is-simple-indent t))
+    (clean-aindent-is-simple-indent t)
+    :config
+    ;; Turn off electric-indent-mode, since auto-indent is
+    ;; sufficient.
+    (electric-indent-mode -1)
+    (clean-aindent-mode 1))
 #+end_src
 
 * dtrt-indent
@@ -52,8 +52,9 @@ lines as is necessary, and second, it keeps your code contributions clean.
 
 #+begin_src emacs-lisp
   (use-package dtrt-indent
-    :hook
-    (after-init . dtrt-indent-mode)
+    :demand t
     :custom
-    (dtrt-indent-verbosity 0))
+    (dtrt-indent-verbosity 0)
+    :config
+    (dtrt-indent-mode 1))
 #+end_src

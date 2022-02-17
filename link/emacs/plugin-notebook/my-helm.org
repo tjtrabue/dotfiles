@@ -402,9 +402,11 @@ Configuration for all things helm-related, including helm-projectile integration
        ;; Currently disabled since the xref buffer is perfectly helpful.
        :disabled
        :after (helm sly)
+       :demand t
        :hook
-       ((after-init . global-helm-sly-mode)
-        (sly-mrepl . helm-sly-disable-internal-completion))
+       (sly-mrepl . helm-sly-disable-internal-completion)
        :custom
-       (helm-completion-in-region-fuzzy-match t))
+       (helm-completion-in-region-fuzzy-match t)
+       :config
+       (global-helm-sly-mode 1))
    #+end_src

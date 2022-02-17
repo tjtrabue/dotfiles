@@ -43,8 +43,6 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        :disabled
        :after evil-collection
        :demand t
-       :hook
-       (after-init . ivy-mode)
        :general
        (general-def ivy-switch-buffer-map
          ;; Make sure that navigation shortcuts work
@@ -76,7 +74,9 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
        (ivy-height-alist
         '((t
            lambda (_caller)
-           (/ (frame-height) 3)))))
+           (/ (frame-height) 3))))
+       :config
+       (ivy-mode 1))
    #+end_src
 
 ** Plugins
@@ -87,8 +87,9 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
       (use-package all-the-icons-ivy
         :disabled
         :after (all-the-icons ivy)
-        :hook
-        (after-init . all-the-icons-ivy-setup))
+        :demand t
+        :config
+        (all-the-icons-ivy-setup))
     #+end_src
 
 *** ivy-prescient
@@ -136,15 +137,16 @@ candidate is not marked, mark it. Otherwise, unmark the marked candidate."
      (use-package counsel
        :disabled
        :after ivy
-       :hook
-       (after-init . counsel-mode)
+       :demand t
        :general
        (general-def
          [remap dired] 'counsel-dired
          [remap recentf-open-files] 'counsel-recentf)
        :custom
        (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable))
+       (counsel-describe-variable-function #'helpful-variable)
+       :config
+       (counsel-mode 1))
    #+end_src
 
 ** Plugins

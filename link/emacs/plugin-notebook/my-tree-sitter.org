@@ -13,10 +13,9 @@ highlighting.
   #+begin_src emacs-lisp
     (use-package tree-sitter
       :demand t
-      :hook
-      (after-init . global-tree-sitter-mode)
       :config
-      (require 'tree-sitter))
+      (require 'tree-sitter)
+      (global-tree-sitter-mode 1))
   #+end_src
 
 * tree-sitter-langs
@@ -26,6 +25,7 @@ highlighting.
   #+begin_src emacs-lisp
     (use-package tree-sitter-langs
       :after tree-sitter
+      :demand t
       :hook
       ;; Enable tree-sitter highlighting whenever possible.
       (tree-sitter-after-on . tree-sitter-hl-mode)

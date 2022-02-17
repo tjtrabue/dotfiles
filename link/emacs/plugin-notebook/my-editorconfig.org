@@ -42,6 +42,7 @@ so that each time they are saved they are formatted"
 * editorconfig
 #+begin_src emacs-lisp
   (use-package editorconfig
-    :hook
-    (after-init . editorconfig-mode))
+    :demand t
+    :config
+    (editorconfig-mode 1))
 #+end_src

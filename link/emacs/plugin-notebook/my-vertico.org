@@ -31,8 +31,7 @@ UI, as well as an enhancement.
   #+begin_src emacs-lisp
     (use-package vertico
       :after evil-collection
-      :hook
-      (after-init . vertico-mode)
+      :demand t
       :general
       (general-def vertico-map
         "?" 'minibuffer-completion-help
@@ -73,7 +72,9 @@ UI, as well as an enhancement.
         (kbd "<tab>") 'vertico-insert
         (kbd "M-<tab>") 'minibuffer-complete
         ;; Select currently typed text and exit Vertico
-        (kbd "C-M-j") 'vertico-exit-input))
+        (kbd "C-M-j") 'vertico-exit-input)
+      :config
+      (vertico-mode 1))
   #+end_src
 
 * Extensions

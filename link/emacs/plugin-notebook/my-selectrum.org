@@ -16,8 +16,7 @@ aforementioned three tools.
       ;; Disabled in favor of Vertico
       :disabled
       :after counsel
-      :hook
-      (after-init . selectrum-mode)
+      :demand t
       :general
       (general-def
         ;; Pull up selectrum with the previous input already entered
@@ -28,7 +27,9 @@ aforementioned three tools.
         "C-k" 'selectrum-previous-candidate)
       :custom
       (selectrum-num-candidates-displayed 20)
-      (selectrum-fix-minibuffer-height t))
+      (selectrum-fix-minibuffer-height t)
+      :config
+      (selectrum-mode 1))
   #+end_src
 
 * Plugins

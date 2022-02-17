@@ -228,8 +228,6 @@ seen. For these reasons, I recommend using =general= and foregoing
     ;; Disabled in favor of general.
     :disabled
     :demand t
-    :hook
-    (after-init . global-evil-leader-mode)
     :init
     ;; Set evil-mode variables here.
     ;; These values must be set here because evil-leader loads before evil
@@ -252,6 +250,7 @@ seen. For these reasons, I recommend using =general= and foregoing
     :custom
     (evil-leader/leader ",")
     :config
+    (global-evil-leader-mode 1)
     (evil-leader/set-key
      ;; M-x alias
      "," #'execute-extended-command
@@ -362,8 +361,9 @@ Code commenting plugin based on =vim-commentary= for Vim.
     ;; Disabled in favor of evil-nerd-commenter
     :disabled
     :after evil-collection
-    :hook
-    (after-init . evil-commentary-mode))
+    :demand t
+    :config
+    (evil-commentary-mode 1))
 #+end_src
 
 ** evil-nerd-commenter
@@ -403,8 +403,9 @@ be marginally useful at times.
 #+begin_src emacs-lisp
   (use-package evil-matchit
     :after evil-collection
-    :hook
-    (after-init . global-evil-matchit-mode))
+    :demand t
+    :config
+    (global-evil-matchit-mode 1))
 #+end_src
 
 ** evil-exchange
@@ -447,8 +448,9 @@ consecutive motions beginning with =gx=.
 #+begin_src emacs-lisp
   (use-package evil-visualstar
     :after evil-collection
-    :hook
-    (after-init . global-evil-visualstar-mode))
+    :demand t
+    :config
+    (global-evil-visualstar-mode 1))
 #+end_src
 
 ** evil-snipe
@@ -512,8 +514,7 @@ on =multiple-cursors= at all, and is in fact an alternative implementation.
 #+begin_src emacs-lisp
   (use-package evil-mc
     :after evil-collection
-    :hook
-    (after-init . global-evil-mc-mode)
+    :demand t
     :general
     (general-def '(normal visual)
       "C->" 'evil-mc-make-and-goto-next-match
@@ -527,7 +528,9 @@ on =multiple-cursors= at all, and is in fact an alternative implementation.
       "cu" 'evil-mc-undo-last-added-cursor)
     :custom
     ;; Override default mode line string
-    (evil-mc-mode-line-prefix "ⓜ"))
+    (evil-mc-mode-line-prefix "ⓜ")
+    :config
+    (global-evil-mc-mode 1))
 #+end_src
 
 ** kubernetes-evil

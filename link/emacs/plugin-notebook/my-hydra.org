@@ -76,6 +76,7 @@ of the selected paste register would be pasted at point.
   #+begin_src emacs-lisp
     (use-package hydra
       :after evil-collection
-      :hook
-      (after-init . my/define-hydras))
+      :demand t
+      :config
+      (my/define-hydras))
   #+end_src

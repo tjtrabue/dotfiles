@@ -35,15 +35,16 @@ aforementioned Vim plugins have.
 
   #+begin_src emacs-lisp
     (use-package smartparens
+      :demand t
       :hook
-      ;; Enable smartparens globally.
-      ((after-init . smartparens-global-mode)
-       ;; Enable strict mode for Lisp dialects.
-       ((clojure-mode
-         emacs-lisp-mode
-         lisp-mode
-         lisp-interaction-mode)
-        . smartparens-strict-mode))
+      ;; Enable strict mode for Lisp dialects.
+      ((clojure-mode
+        emacs-lisp-mode
+        lisp-mode
+        lisp-interaction-mode)
+       . smartparens-strict-mode)
       :config
+      ;; Enable smartparens globally.
+      (smartparens-global-mode)
       (require 'smartparens-config))
   #+end_src

@@ -8,11 +8,11 @@
 
 =crux= is a collection of ridiculously useful extensions for Emacs.
 
-* use package specification
-
-  #+begin_src emacs-lisp
-    (use-package crux
-      :hook
-      ;; Automatically reopen any root-owned file as root.
-      (after-init . crux-reopen-as-root-mode))
-  #+end_src
+* =use package= specification
+#+begin_src emacs-lisp
+  (use-package crux
+    :demand t
+    :config
+    ;; Automatically reopen any root-owned file as root.
+    (crux-reopen-as-root-mode 1))
+#+end_src

@@ -13,9 +13,8 @@ Provides visual feedback to certain editor actions.
     :disabled
     :after (evil-collection undo-tree)
     :demand t
-    :hook
-    (after-init . volatile-highlights-mode)
     :config
+    (volatile-highlights-mode 1)
     ;;--------------------------------------------------------------------------
     ;; Supporting evil-mode.
     ;;--------------------------------------------------------------------------

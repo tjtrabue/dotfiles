@@ -15,9 +15,8 @@ that expands the snippet based on the abbreviation before point.
 
   #+begin_src emacs-lisp
     (use-package yasnippet
+      :demand t
       :commands yas-minor-mode
-      :hook
-      (after-init . yas-global-mode)
       :general
       (general-unbind yas-minor-mode-map
         "TAB"
@@ -36,6 +35,7 @@ that expands the snippet based on the abbreviation before point.
       ;; Integrate yasnippet with hippie-expand
       (add-to-list 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
       :config
+      (yas-global-mode 1)
       (yas-reload-all))
   #+end_src
 

@@ -126,8 +126,9 @@ features absent from the majority of such explorers.
        ;; Use all-the-icons-dired instead
        :disabled
        :after (treemacs dired)
-       :hook
-       (after-init . treemacs-icons-dired-mode))
+       :demand t
+       :config
+       (treemacs-icons-dired-mode 1))
    #+end_src
 
 ** treemacs-magit

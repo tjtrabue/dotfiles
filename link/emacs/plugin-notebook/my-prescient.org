@@ -27,8 +27,7 @@ not sort matches.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package prescient
-    :hook
-    (after-init . prescient-persist-mode)
+    :demand t
     :custom
     ;; Whether to put full matches before partial matches.
     (prescient-sort-full-matches-first t)
@@ -36,5 +35,6 @@ not sort matches.
     (prescient-use-case-folding 'smart)
     ;; List of filtering methods prescient uses on space-separated arguments
     ;; (prescient-filter-method '(literal regexp initialism fuzzy))
-    )
+    :config
+    (prescient-persist-mode 1))
 #+end_src

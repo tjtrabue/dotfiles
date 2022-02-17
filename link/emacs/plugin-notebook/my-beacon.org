@@ -13,6 +13,7 @@ around a window. Very beautiful. Very powerful.
     ;; Beacon can be pretty expensive in terms of CPU cycles.
     :disabled
     :demand t
+    :config
     ;; Enable beacon globally.
-    :hook (after-init . beacon-mode))
+    (beacon-mode 1))
 #+end_src

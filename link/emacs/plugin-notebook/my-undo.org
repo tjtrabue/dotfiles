@@ -16,8 +16,9 @@ This file adds some enhancements to Emacs' undo functionality.
 
   #+begin_src emacs-lisp
     (use-package undo-tree
-      :hook
-      (after-init . global-undo-tree-mode))
+      :demand t
+      :config
+      (global-undo-tree-mode 1))
   #+end_src
 
 * undo-fu
@@ -38,6 +39,7 @@ This file adds some enhancements to Emacs' undo functionality.
 
   #+begin_src emacs-lisp
     (use-package undo-fu-session
-      :hook
-      (after-init . global-undo-fu-session-mode))
+      :demand t
+      :config
+      (global-undo-fu-session-mode 1))
   #+end_src
