@@ -83,7 +83,7 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-mode . (lambda ()
                   ;; Enable which-key integration for lsp-mode
                   (lsp-enable-which-key-integration)
-                  (my-custom-lsp-override-keymappings)))
+                  (my-custom-lsp-override-evil-keymappings)))
     :bind-keymap
     ("C-c l" . lsp-command-map)
     :init

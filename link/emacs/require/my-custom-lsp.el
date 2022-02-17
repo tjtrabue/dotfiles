@@ -91,7 +91,7 @@ for any programming language that supports a formatting tool.")
   "List to be concatenated with `lsp-language-id-configuration'.")
 
 ;;;###autoload
-(defun my-custom-lsp-override-keymappings ()
+(defun my-custom-lsp-override-evil-keymappings ()
   "Set custom evil keybindings for `lsp-mode'.
 
 This function ought to be set as a hook function on
