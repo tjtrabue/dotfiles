@@ -154,7 +154,6 @@ myriad systems benefit from Consult's functions.
        :preview-key 'any
        consult-grep consult-git-grep consult-ripgrep
        consult-bookmark consult-recent-file consult-xref
-       consult--source-file consult--source-project-file consult--source-bookmark
        :preview-key (kbd "C-;"))
       ;; Optionally make narrowing help available in the minibuffer.
       ;; You may want to use `embark-prefix-help-command' or which-key instead.

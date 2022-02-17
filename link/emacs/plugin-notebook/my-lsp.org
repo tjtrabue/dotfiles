@@ -30,8 +30,28 @@ documentation on hover, syntax linting and error checking, etc.
 
 #+begin_src emacs-lisp
   (use-package lsp-mode
+    :after evil-collection
     ;; Commands used to autoload this package.
     :commands (lsp lsp-deferred)
+    :general
+    (general-def lsp-mode-map
+      ;; We have to take the remap strategy to override evil's motion state
+      ;; commands beginning with "g". Otherwise, evil's default keybindings take
+      ;; precedence.
+      ;; ga
+      [remap what-cursor-position] 'lsp-code-actions-at-point
+      ;; gd
+      [remap evil-goto-definition] 'lsp-find-definition
+      ;; go
+      [remap evil-goto-char] 'lsp-organize-imports
+      ;; gi
+      [remap evil-insert-resume] 'lsp-find-implementation)
+    (general-def 'normal lsp-mode-map
+      "g D" 'lsp-find-declaration
+      "g l" 'lsp-find-locations
+      "g R" 'lsp-find-references
+      "g r" 'lsp-rename
+      "g t" 'lsp-find-type-definition)
     ;; Here you can change the package's customizable variables.
     :custom
     ;;; General settings

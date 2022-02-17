@@ -21,9 +21,6 @@ found in other modern editors, such as Notepad++ and VisualStudio Code.
       :general
       (general-def
         "C-x B" 'centaur-tabs-switch-group)
-      (general-def 'normal
-        "g t" 'centaur-tabs-forward
-        "g T" 'centaur-tabs-backward)
       (general-def 'normal evil-collection-unimpaired-mode-map
         ;; Use ']b' and '[b' to navigate tabs.
         "] b" 'centaur-tabs-forward
