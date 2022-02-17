@@ -272,7 +272,6 @@ link/config/gtk-*
 link/config/gtkrc*
 link/config/gwenviewrc
 link/config/kalarmrc
-link/config/khotkeysrc
 link/config/kateschemarc
 link/config/kcminputrc
 link/config/kconf_updaterc
@@ -283,6 +282,7 @@ link/config/kdedefaults
 link/config/kdeglobals
 link/config/kglobalshortcutsrc
 link/config/khelpcenterrc
+link/config/khotkeysrc
 link/config/khtml
 link/config/kmail2rc
 link/config/kmixrc
@@ -292,8 +292,10 @@ link/config/krunnerrc
 link/config/kscreenlockerrc
 link/config/ksmserverrc
 link/config/ktimezonedrc
-link/config/kxkbrc
+link/config/kwalletmanager5rc
+link/config/kwalletrc
 link/config/kwinrc
+link/config/kxkbrc
 link/config/okularpartrc
 link/config/plasma-localerc
 link/config/plasma-org.kde.plasma.desktop-appletsrc
