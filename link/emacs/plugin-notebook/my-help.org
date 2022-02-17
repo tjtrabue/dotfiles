@@ -18,6 +18,7 @@ help system.
     ;; elisp-refs, a dependency of this plugin, still depends on
     ;; read-symbol-positions-list, a deprecated Emacs variable in 29.0.50 and
     ;; onward.  This may cause problems, so please be aware.
+    :if (< emacs-major-version 29)
     :general
     (general-def
       ;; Replace standard help functions with helpful functions.
