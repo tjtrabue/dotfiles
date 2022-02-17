@@ -16,34 +16,42 @@ install_lisp_format() {
     }
 }
 
-# Launch default Lisp REPL.
+# Launch default Common Lisp REPL.
 lisp() {
+  local lispRunCommand="$(__get_lisp_run_command)"
+
+  if [ -z "${lispRunCommand}" ]; then
+    err "Could not determine Lisp run command"
+    return 1
+  fi
+
   if [ -n "$(command -v rlwrap)" ]; then
     # Most Lisp REPLs do not support readline. We want to wrap the REPL command
-    # with the `rlwrap` utility that provides readline for us.
-    eval "rlwrap $(__get_lisp_run_command)"
-  else
-    # Default to simply using SBCL without rlwrap if we do not have rlwrap
-    # installed.
-    eval "$(__get_lisp_run_command)"
+    # with the `rlwrap` utility that provides readline capabilities.
+    lispRunCommand="rlwrap ${lispRunCommand}"
   fi
+
+  eval "${lispRunCommand}"
 }
 
 # Figure out which command line to execute in order to summon up a Lisp REPL.
 __get_lisp_run_command() {
-  local defaultLispRunCommand="$(__get_default_lisp_run_cmd)"
-
   if [ -n "$(command -v ros)" ]; then
     # Use Roswell if available.
     printf "ros run"
   else
-    printf "${defaultLispRunCommand}"
+    __get_default_common_lisp_program
   fi
 }
 
 # Return the default Common Lisp implementation to use.
-__get_default_lisp_run_cmd() {
-  printf "sbcl"
+__get_default_common_lisp_program() {
+  if [ -x "$(command -v sbcl)" ]; then
+    printf "sbcl"
+  else
+    err 'No Common Lisp installation found on $PATH'
+    return 1
+  fi
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
