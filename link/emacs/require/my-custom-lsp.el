@@ -90,6 +90,26 @@ for any programming language that supports a formatting tool.")
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
   "List to be concatenated with `lsp-language-id-configuration'.")
 
+(defun my-custom-lsp-override-keymappings ()
+  "Set custom evil keybindings for `lsp-mode'.
+
+This function ought to be set as a hook function on
+`lsp-mode-hook' since all the keybindings are buffer-local so
+that they will override evil's default keybindings, which are
+very hard to override otherwise.  For instance, \"gd\" is bound
+to evil-goto-definition in `evil-motion-state-map', whose
+bindings always take precedence over normal state mappings."
+  (general-def 'normal 'local
+    "g a" 'lsp-code-actions-at-point
+    "g d" 'lsp-find-definition
+    "g o" 'lsp-organize-imports
+    "g i" 'lsp-find-implementation
+    "g D" 'lsp-find-declaration
+    "g l" 'lsp-find-locations
+    "g R" 'lsp-find-references
+    "g r" 'lsp-rename
+    "g t" 'lsp-find-type-definition))
+
 ;;;###autoload
 (defun my-custom-lsp-add-format-on-save-hook (mode)
   "This function adds a buffer local hook for the major mode represented by
