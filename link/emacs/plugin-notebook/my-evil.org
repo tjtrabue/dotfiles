@@ -100,10 +100,7 @@ Miscellaneous functions related to =evil-mode=.
     "Define leader shortcuts for `evil-mode' similar to Vim's leader feature."
     (my/evil-leader-def
       ;; M-x alias
-      "," 'execute-extended-command
-      ;; Evil line navigation
-      "m" 'evil-first-non-blank
-      "." 'evil-end-of-line
+      "m" 'execute-extended-command
       ;; Buffer
       "bb" 'switch-to-buffer
       "bk" 'kill-this-buffer

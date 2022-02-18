@@ -109,7 +109,23 @@ Thank you so much for the your contributions, Mihai!
     :commands sly
     :hook
     ;; Remember, sly-mode is a minor mode that works alongside lisp-mode.
-    (lisp-mode . sly-mode)
+    ((lisp-mode . sly-mode)
+     (sly-mode . (lambda ()
+                   ;; Override evil's g-prefixed mappings with SLY bindings.
+                   (general-def 'normal 'local
+                     "gA" 'sly-apropos-all
+                     "gB" 'sly-who-binds
+                     "gC" 'sly-calls-who
+                     "gH" 'sly-describe-symbol
+                     "gS" 'sly-who-specializes
+                     "ga" 'sly-apropos
+                     "gb" 'sly-pop-find-definition-stack
+                     "gc" 'sly-who-calls
+                     "gd" 'sly-edit-definition
+                     "ge" 'sly-edit-uses
+                     "gh" 'sly-describe-function
+                     "gr" 'sly-who-references
+                     "gs" 'sly-who-sets))))
     :general
     (general-def sly-prefix-map
       ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
