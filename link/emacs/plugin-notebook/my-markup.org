@@ -20,8 +20,10 @@ and more.
 #+begin_src emacs-lisp
   (use-package markdown-mode
     :general
+    (my/user-leader-def markdown-mode-map
+      "C-l" 'markdown-follow-link-at-point)
     (general-def 'normal markdown-mode-map
-      "gl" 'markdown-follow-link-at-point))
+      "g l" 'markdown-follow-link-at-point))
 #+end_src
 
 * grip-mode

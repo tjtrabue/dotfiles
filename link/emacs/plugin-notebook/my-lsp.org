@@ -83,7 +83,21 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-mode . (lambda ()
                   ;; Enable which-key integration for lsp-mode
                   (lsp-enable-which-key-integration)
-                  (my-custom-lsp-override-evil-keymappings)))
+
+                  ;; Override evil g-prefixed keybindings with LSP navigation and
+                  ;; code action commands. We have to make these buffer-local
+                  ;; bindings because that's the only way they will take
+                  ;; precedence over evil's motion state bindings in normal state.
+                  (general-def 'normal 'local
+                    "ga" 'lsp-code-actions-at-point
+                    "gd" 'lsp-find-definition
+                    "go" 'lsp-organize-imports
+                    "gi" 'lsp-find-implementation
+                    "gD" 'lsp-find-declaration
+                    "gl" 'lsp-find-locations
+                    "gR" 'lsp-find-references
+                    "gr" 'lsp-rename
+                    "gt" 'lsp-find-type-definition)))
     :bind-keymap
     ("C-c l" . lsp-command-map)
     :init
