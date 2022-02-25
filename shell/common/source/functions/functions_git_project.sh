@@ -168,15 +168,17 @@ ENVIRONMENT VARIABLES:
     The word separator here is '-' since it separates the words "add", "cool",
     and "feature" in the description.
 
-  PROJECT_SLUG_DESC_SEPARATOR
+  BRANCH_SECTION_SEPARATOR
     The character separating the project slug (such as 'PROJ-1234') from the
-    branch description (such as 'add-a-cool-feature'). If this environment
-    variable is not set, the default value is '/'.
+    branch description (such as 'add-a-cool-feature'). It may eventually come to
+    separate other sections of the branch name, as well, functioning as a
+    namespace segment separator. If this environment variable is not set, the
+    default value is '/'.
 
     Example from branch name: PROJ-1234/add-a-cool-feature
 
-    The project slug description separator is '/' because it separates
-    'PROJ-1234' from 'add-a-cool-feature'.
+    The branch section separator is '/' because it separates 'PROJ-1234' from
+    'add-a-cool-feature'.
 EOF
 }
 
@@ -186,7 +188,7 @@ __construct_project_branch() {
   local projectIdentifier="${3}"
   local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
   local projectWordSep="${BRANCH_WORD_SEPARATOR:--}"
-  local projectSlugDescSep="${PROJECT_SLUG_DESC_SEPARATOR:-/}"
+  local projectSlugDescSep="${BRANCH_SECTION_SEPARATOR:-/}"
   local formatString="%s${projectFieldSep}%s${projectSlugDescSep}%s"
   local formattedDescription="$(echo "${description}" |
     sed -E "s/\s+/${projectWordSep}/g")"
