@@ -191,6 +191,10 @@ nmap [[ <Action>(MethodUp)
 nmap ]] <Action>(MethodDown)
 " }}}
 
+" Line numbers {{{
+nmap <leader>N :set relativenumber!<CR>
+" }}}
+
 " Refactoring/Optimizing {{{
 nmap <leader>r <Action>(Refactorings.QuickListPopupAction)
 vmap <leader>r <Action>(Refactorings.QuickListPopupAction)

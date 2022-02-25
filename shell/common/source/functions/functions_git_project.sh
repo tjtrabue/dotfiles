@@ -161,12 +161,22 @@ ENVIRONMENT VARIABLES:
   BRANCH_WORD_SEPARATOR
     The character separating word fields in the description part of the project
     branch name. If this environment variable is not set, the default value is
-    '.'.
+    '-'.
 
-    Example from branch name: PROJ-1234.add.cool.feature
+    Example from branch name: PROJ-1234/add-cool-feature
 
-    The word separator here is '.' since it separates the words in the
-    description.
+    The word separator here is '-' since it separates the words "add", "cool",
+    and "feature" in the description.
+
+  PROJECT_SLUG_DESC_SEPARATOR
+    The character separating the project slug (such as 'PROJ-1234') from the
+    branch description (such as 'add-a-cool-feature'). If this environment
+    variable is not set, the default value is '/'.
+
+    Example from branch name: PROJ-1234/add-a-cool-feature
+
+    The project slug description separator is '/' because it separates
+    'PROJ-1234' from 'add-a-cool-feature'.
 EOF
 }
 
@@ -175,8 +185,9 @@ __construct_project_branch() {
   local description="${2}"
   local projectIdentifier="${3}"
   local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
-  local projectWordSep="${BRANCH_WORD_SEPARATOR:-.}"
-  local formatString="%s${projectFieldSep}%s${projectWordSep}%s"
+  local projectWordSep="${BRANCH_WORD_SEPARATOR:--}"
+  local projectSlugDescSep="${PROJECT_SLUG_DESC_SEPARATOR:-/}"
+  local formatString="%s${projectFieldSep}%s${projectSlugDescSep}%s"
   local formattedDescription="$(echo "${description}" |
     sed -E "s/\s+/${projectWordSep}/g")"
 
@@ -387,7 +398,7 @@ ENVIRONMENT VARIABLES:
     Example from branch name: PROJ-1234.add.cool.feature
     Example from commit message: PROJ-1234: Added a cool feature
 
-    The field separator here is '-' since it delineates the primary aspects of
+    The field separator here is '-' since it separates the primary aspects of
     the project task under development.
 EOF
 }
