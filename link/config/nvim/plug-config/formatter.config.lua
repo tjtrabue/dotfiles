@@ -53,6 +53,15 @@ local function formatter_luafmt()
   }
 end
 
+-- mix format
+local function formatter_mix_format()
+  return {
+    exe = "mix",
+    args = {"format", "-"},
+    stdin = true
+  }
+end
+
 -- perltidy
 local function formatter_perltidy()
   return {
@@ -166,6 +175,9 @@ require("formatter").setup(
       css = {
         formatter_prettier
       },
+      elixir = {
+        formatter_mix_format
+      },
       elm = {
         formatter_prettier
       },
@@ -257,6 +269,7 @@ augroup FormatAutogroup
   autocmd FileType c autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType cpp autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType css autocmd BufWritePost <buffer> FormatWrite
+  autocmd FileType elixir autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType elm autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType graphql autocmd BufWritePost <buffer> FormatWrite
   autocmd FileType html autocmd BufWritePost <buffer> FormatWrite
