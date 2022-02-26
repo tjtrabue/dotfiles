@@ -364,7 +364,9 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     -- File tree explorer
     use {
       "kyazdani42/nvim-tree.lua",
-      cmd = {"NvimTreeOpen", "NvimTreeToggle"}
+      requires = {
+        "kyazdani42/nvim-web-devicons" -- optional, for file icon
+      }
     }
 
     use {
