@@ -75,23 +75,23 @@ silent !sh -c 'mkdir -p ${XDG_CONFIG_HOME:-${HOME}/.config}/nvim/swaps >>/dev/nu
 silent !sh -c 'mkdir -p ${XDG_CONFIG_HOME:-${HOME}/.config}/nvim/undo >>/dev/null 2>&1'
 
 " Make variables for backup, swap, and undo files.
-let g:user_config_dir = $XDG_CONFIG_HOME
-if ! isdirectory(g:user_config_dir)
-  let g:user_config_dir = $HOME . '/.config'
+let s:user_config_dir = $XDG_CONFIG_HOME
+if ! isdirectory(s:user_config_dir)
+  let s:user_config_dir = $HOME . '/.config'
 endif
-let g:user_nvim_backups_dir = g:user_config_dir . '/nvim/backups'
-let g:user_nvim_swaps_dir = g:user_config_dir . '/nvim/swaps'
-let g:user_nvim_undo_dir = g:user_config_dir . '/nvim/undo'
+let s:user_nvim_backups_dir = s:user_config_dir . '/nvim/backups'
+let s:user_nvim_swaps_dir = s:user_config_dir . '/nvim/swaps'
+let s:user_nvim_undo_dir = s:user_config_dir . '/nvim/undo'
 
 " Centralize backups, swapfiles and undo history
 set backup
 set writebackup
 " Notice the use of 'let &...' instead of 'set ...'. Using 'let' allows us to
 " use variables on the right side of option assignments.
-let &backupdir=g:user_nvim_backups_dir
-let &directory=g:user_nvim_swaps_dir
+let &backupdir=s:user_nvim_backups_dir
+let &directory=s:user_nvim_swaps_dir
 if exists('&undodir')
-  let &undodir=g:user_nvim_undo_dir
+  let &undodir=s:user_nvim_undo_dir
 endif
 
 " Don’t create backups when editing files in certain directories
