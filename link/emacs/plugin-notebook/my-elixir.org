@@ -4,30 +4,57 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-Integration with Elixir, a functional, process-oriented programming language.
+Emacs plugins providing integration with Elixir, a functional programming
+language built on Erlang's BEAM virtual machine optimized for writing
+distributed, fault-tolerant applications that must contend with a vast multitude
+of concurrent processes.
 
 * elixir-mode
-  The ubiquitous mode for working with Elixir files. =elixir-mode= provides
-  font-locking, indentation, and navigation support for the Elixir programming
-  language.
+The ubiquitous mode for working with Elixir files. =elixir-mode= provides
+font-locking, indentation, and navigation support for the Elixir programming
+language.
 
-  #+begin_src emacs-lisp
-    (use-package elixir-mode)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package elixir-mode)
+#+end_src
+
+* exunit.el
+Simple interface for running ExUnit tests from inside Emacs.
+
+#+begin_src emacs-lisp
+  (use-package exunit
+    :hook
+    ;; Turn on exunit-mode when editing Elixir files
+    (elixir-mode . exunit-mode))
+#+end_src
+
+* inf-elixir
+Provides functions for opening and interacting with IEx, the Elixir REPL.
+
+#+begin_src emacs-lisp
+  (use-package inf-elixir
+    :general
+    (my/user-leader-def elixir-mode-map
+      "i i" 'inf-elixir
+      "i p" 'inf-elixir-project
+      "i l" 'inf-elixir-send-line
+      "i r" 'inf-elixir-send-region
+      "i b" 'inf-elixir-send-buffer))
+#+end_src
 
 * Alchemist
-  =alchemist= is a suite of tools for working with Elixir projects, including
-  Phoenix MVC applications.
+=alchemist= is a suite of tools for working with Elixir projects, including
+Phoenix MVC applications.
 
-  *DEPRECATION NOTICE:* Much to the dismay of many an Elixirite, work on
-  Alchemist has halted indefinitely. As of now, the community is focusing all of
-  their efforts on =elixir-ls=, the Elixir LSP provider. =elixir-ls= is an
-  amazing tool, one of the best language servers by far, but it lacks some of
-  the features of Alchemist. Thus, it is likely that a number of Alchemist
-  features will find new homes as their own projects on GitHub, so be on the
-  lookout!
+*DEPRECATION NOTICE:* Much to the dismay of many an Elixirite, work on
+Alchemist has halted indefinitely. As of now, the community is focusing all of
+their efforts on =elixir-ls=, the Elixir LSP server. =elixir-ls= is an
+amazing tool, one of the best language servers by far, but it lacks some of
+the features of Alchemist. Thus, it is likely that a number of Alchemist
+features will find new homes as their own projects on GitHub, so be on the
+lookout!
 
-  #+begin_src emacs-lisp
-    (use-package alchemist
-      :disabled)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package alchemist
+    :disabled)
+#+end_src
