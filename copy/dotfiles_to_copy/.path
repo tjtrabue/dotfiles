@@ -22,6 +22,7 @@ ${HOME}/.dotfiles/bin
 ${HOME}/.fzf/bin
 ${HOME}/.ghcup/bin
 ${HOME}/.cabal/bin
+${HOME}/.cache/rebar3/bin
 ${HOME}/.luarocks/bin
 ${HOME}/.npm-global/bin
 ${HOME}/.cargo/bin

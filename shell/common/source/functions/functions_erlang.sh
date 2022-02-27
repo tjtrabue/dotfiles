@@ -20,6 +20,15 @@ bootstrap_erlang_project() {
   make -f "${erlangMkFile}" bootstrap bootstrap-rel
 }
 
+# Install the rebar build tool for Erlang.
+install_rebar() {
+  local rebarUrl="https://s3.amazonaws.com/rebar3/rebar3"
+
+  curl -sSLO ${rebarUrl} && chmod +x rebar3 &&
+    ./rebar3 local install &&
+    rm -f rebar3
+}
+
 # Install the Erlang language server.
 install_erlang_ls() {
   local erlangLsGitRepoUrl="https://github.com/erlang-ls/erlang_ls.git"
