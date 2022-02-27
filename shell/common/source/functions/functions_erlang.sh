@@ -28,16 +28,7 @@ install_erlang_ls() {
   # script will be installed.
   local installPrefix="${HOME}/.local"
 
-  if [ -d "${erlangLsDest}" ]; then
-    log_info "Updating erlang_ls"
-    git -C "${erlangLsDest}" clean -df
-    git -C "${erlangLsDest}" restore --staged .
-    git -C "${erlangLsDest}" restore .
-    git -C "${erlangLsDest}" pull
-  else
-    log_info "Cloning erlang_ls"
-    git clone "${erlangLsGitRepoUrl}" "${erlangLsDest}"
-  fi
+  clone_or_update_git_repo "${erlangLsGitRepoUrl}" "${erlangLsDest}"
 
   log_info "Installing erlang_ls"
   mkdir -p "${installPrefix}"

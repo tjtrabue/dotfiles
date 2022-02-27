@@ -476,6 +476,37 @@ EOF
 }
 # }}}
 
+# Cloning {{{
+
+# Clone or update a Git repository, depending on whether the Git repository
+# already exists on the file system.
+clone_or_update_git_repo() {
+  local repoUrl="${1}"
+  local repoDestDir="${2}"
+
+  if [ -z "${repoUrl}" ]; then
+    err "No Git repository URL provided"
+    return 1
+  fi
+
+  if [ -z "${repoDestDir}" ]; then
+    repoDestDir="$(basename "${repoUrl%.git}")"
+  fi
+
+  if [ -d "${repoDestDir}" ]; then
+    log_info "Updating Git repo: ${BLUE}${repoDestDir}${NC}"
+    git -C "${repoDestDir}" clean -df
+    git -C "${repoDestDir}" restore --staged .
+    git -C "${repoDestDir}" restore .
+    git -C "${repoDestDir}" pull
+  else
+    log_info "Cloning Git repo at ${MAGENTA}${repoUrl}${NC} to" \
+      "${BLUE}${repoDestDir}${NC}"
+    git clone "${repoUrl}" "${repoDestDir}"
+  fi
+}
+# }}}
+
 # Diff {{{
 
 # Show last diff for a given file
