@@ -29,7 +29,9 @@ Simple interface for running ExUnit tests from inside Emacs.
 #+end_src
 
 * inf-elixir
-Provides functions for opening and interacting with IEx, the Elixir REPL.
+Provides functions for opening and interacting with IEx, the Elixir REPL, from
+inside Emacs. Useful if you do not use Alchemist, which is deprecated, so you
+probably shouldn't.
 
 #+begin_src emacs-lisp
   (use-package inf-elixir
@@ -43,7 +45,7 @@ Provides functions for opening and interacting with IEx, the Elixir REPL.
 #+end_src
 
 * Alchemist
-=alchemist= is a suite of tools for working with Elixir projects, including
+Alchemist is a suite of tools for working with Elixir projects, including
 Phoenix MVC applications.
 
 *DEPRECATION NOTICE:* Much to the dismay of many an Elixirite, work on
