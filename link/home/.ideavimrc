@@ -203,9 +203,16 @@ nmap <leader>o <Action>(OptimizeImports)
 " }}}
 
 " Project Build/Test/Run {{{
-nmap <leader>pb <Action>(Compile)
 nmap <leader>pd <Action>(Debug)
 nmap <leader>pr <Action>(Run)
+
+" The "Build Project" action is different depending on which JetBrains IDE
+" we're using.
+if &ide =~? 'android studio'
+    nmap <leader>pb <Action>(MakeGradleProject)
+else
+    nmap <leader>pb <Action>(CompileProject)
+endif
 " }}}
 
 " Breakpoints {{{
