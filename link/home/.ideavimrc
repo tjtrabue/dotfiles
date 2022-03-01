@@ -208,7 +208,9 @@ nmap <leader>pr <Action>(Run)
 
 " The "Build Project" action is different depending on which JetBrains IDE
 " we're using.
-if &ide =~? 'android studio'
+if &ide =~? 'intellij idea'
+    nmap <leader>pb <Action>(CompileDirty)
+elseif &ide =~? 'android studio'
     nmap <leader>pb <Action>(MakeGradleProject)
 else
     nmap <leader>pb <Action>(CompileProject)
