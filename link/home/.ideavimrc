@@ -259,6 +259,7 @@ if &ide =~? 'intellij idea'
     nmap <leader>pb <Action>(CompileDirty)
 elseif &ide =~? 'android studio'
     nmap <leader>pb <Action>(MakeGradleProject)
+    nmap <leader>ps <Action>(Android.SyncProject)
 else
     nmap <leader>pb <Action>(CompileProject)
 endif
