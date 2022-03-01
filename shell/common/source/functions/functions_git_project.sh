@@ -442,20 +442,27 @@ __parse_branch_for_task_number() {
 }
 
 # Format the description in the branch name into a proper commit message string.
-# This function does not actually create a new commit, but only returns the
-# string to be used for the commit message.
+# Example: `PROJ-1234/add-cool-feature` -> `Add cool feature`
 __parse_branch_for_commit_msg() {
-  local projectId="$(__parse_branch_for_project_id)"
-  local taskNumber="$(__parse_branch_for_task_number)"
+  local branchName="${1}"
   local branchSectionSeparator="${BRANCH_SECTION_SEPARATOR:-/}"
   local branchWordSeparator="${BRANCH_WORD_SEPARATOR:--}"
 
-  git rev-parse --abbrev-ref HEAD |
-    sed -E -e "s|^.*${branchSectionSeparator}||" \
-      -e "s|${branchWordSeparator}| |g" \
-      -e 's|^\s*||' \
-      -e 's|\s*$||' \
-      -e 's|\b(.*)|\u\1|'
+  echo "${branchName}" | sed -E -e "s|^.*${branchSectionSeparator}||" \
+    -e "s|${branchWordSeparator}| |g" \
+    -e 's|^\s*||' \
+    -e 's|\s*$||' \
+    -e 's|\b(.*)|\u\1|'
+}
+
+# Get a full commit message from the current project branch.
+get_commit_msg_from_project_branch() {
+  local branchName="$(git rev-parse --abbrev-ref HEAD)"
+  local projectId="$(__parse_branch_for_project_id "${branchName}")"
+  local taskNumber="$(__parse_branch_for_task_number "${branchName}")"
+  local commitMsg="$(__parse_branch_for_commit_msg "${branchName}")"
+
+  __construct_project_commit_msg "${taskNumber}" "${commitMsg}" "${projectId}"
 }
 
 # Prints commit messages in a variety of established formats, determined by the
