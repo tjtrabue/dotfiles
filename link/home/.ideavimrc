@@ -203,7 +203,15 @@ nmap <leader>o <Action>(OptimizeImports)
 " }}}
 
 " Project Build/Test/Run {{{
+
+" Choose a Debug configuration and run it
+nmap <leader>cd <Action>(ChooseDebugConfiguration)
+" Choose a Run configuration and run it
+nmap <leader>cr <Action>(ChooseRunConfiguration)
+
+" Debug the currently selected Run configuration
 nmap <leader>pd <Action>(Debug)
+" Run the currently selected Run configuration
 nmap <leader>pr <Action>(Run)
 " }}}
 
