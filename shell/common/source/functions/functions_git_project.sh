@@ -441,6 +441,23 @@ __parse_branch_for_task_number() {
   fi
 }
 
+# Format the description in the branch name into a proper commit message string.
+# This function does not actually create a new commit, but only returns the
+# string to be used for the commit message.
+__parse_branch_for_commit_msg() {
+  local projectId="$(__parse_branch_for_project_id)"
+  local taskNumber="$(__parse_branch_for_task_number)"
+  local branchSectionSeparator="${BRANCH_SECTION_SEPARATOR:-/}"
+  local branchWordSeparator="${BRANCH_WORD_SEPARATOR:--}"
+
+  git rev-parse --abbrev-ref HEAD |
+    sed -E -e "s|^.*${branchSectionSeparator}||" \
+      -e "s|${branchWordSeparator}| |g" \
+      -e 's|^\s*||' \
+      -e 's|\s*$||' \
+      -e 's|\b(.*)|\u\1|'
+}
+
 # Prints commit messages in a variety of established formats, determined by the
 # PROJECT_MSG_STYLE environment variable.
 # See 'pcm -h' for more information on acceptable formats.
