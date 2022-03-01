@@ -187,11 +187,11 @@ __construct_project_branch() {
   local description="${2}"
   local projectIdentifier="${3}"
   local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
-  local projectWordSep="${BRANCH_WORD_SEPARATOR:--}"
-  local projectSlugDescSep="${BRANCH_SECTION_SEPARATOR:-/}"
-  local formatString="%s${projectFieldSep}%s${projectSlugDescSep}%s"
+  local branchWordSep="${BRANCH_WORD_SEPARATOR:--}"
+  local branchSectionSep="${BRANCH_SECTION_SEPARATOR:-/}"
+  local formatString="%s${projectFieldSep}%s${branchSectionSep}%s"
   local formattedDescription="$(echo "${description}" |
-    sed -E "s/\s+/${projectWordSep}/g")"
+    sed -E "s/\s+/${branchWordSep}/g")"
 
   printf "${formatString}" \
     "${projectIdentifier}" \
