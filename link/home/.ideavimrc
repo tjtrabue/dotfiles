@@ -176,6 +176,10 @@ nmap Y y$
 nmap [b <Action>(PreviousTab)
 nmap ]b <Action>(NextTab)
 
+" General {{{
+nmap <leader>ud <Action>(CheckForUpdate)
+" }}}
+
 " Buffer management {{{
 " Delete buffer
 nmap <leader>bd :bd<CR>
@@ -249,6 +253,10 @@ nmap gp <Action>(GotToSuperMethod)
 nmap gt <Action>(GotoTest)
 nmap gb <Action>(Back)
 nmap gf <Action>(Forward)
+" }}}
+
+" Git {{{
+nmap <leader>gg <Action>(Git.Menu)
 " }}}
 
 " IDE-specific mappings {{{
