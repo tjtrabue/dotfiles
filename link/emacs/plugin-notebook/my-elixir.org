@@ -45,8 +45,8 @@ probably shouldn't.
 #+end_src
 
 * Alchemist
-Alchemist is a suite of tools for working with Elixir projects, including
-Phoenix MVC applications.
+A suite of tools for working with Elixir projects, including Phoenix MVC
+applications.
 
 *DEPRECATION NOTICE:* Much to the dismay of many an Elixirite, work on
 Alchemist has halted indefinitely. As of now, the community is focusing all of
@@ -54,7 +54,7 @@ their efforts on =elixir-ls=, the Elixir LSP server. =elixir-ls= is an
 amazing tool, one of the best language servers by far, but it lacks some of
 the features of Alchemist. Thus, it is likely that a number of Alchemist
 features will find new homes as their own projects on GitHub, so be on the
-lookout!
+lookout.
 
 #+begin_src emacs-lisp
   (use-package alchemist
