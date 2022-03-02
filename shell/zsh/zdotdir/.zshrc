@@ -26,6 +26,8 @@ export ZPLUG_HOME="${HOME}/.zplug"
 # Options {{{
 # Timestamp history and more
 setopt extended_history
+# Use fancy glob syntax, such as PATTERN(#QUALIFIERS)
+setopt extended_glob
 # Trim duplicated commands from history before trimming unique commands.
 setopt hist_expire_dups_first
 # If you run the same command multiple times in a row, only add it to history
