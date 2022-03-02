@@ -109,9 +109,10 @@ modes, as well as format buffers on save."
                          (hook-name (concat (symbol-name mode) "-hook")))
             (add-hook (intern hook-name)
               (lambda ()
-                ;; Shorten company prefix since LSP servers are very efficient
-                ;; backends.
+                ;; Shorten company prefix and reduce completion delay since LSP
+                ;; servers are very efficient backends.
                 (setq-local company-minimum-prefix-length 1)
+                ;; (setq-local company-idle-delay 0.0)
                 ;; Automatically start lsp when you visit a relevant file
                 (lsp-deferred)
                 ;; Enable auto-revert to keep files up to date with filesystem.
