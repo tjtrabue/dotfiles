@@ -16,94 +16,94 @@ search front-end. Thus, Vertico really is a /replacement/ for Emacs' completion
 UI, as well as an enhancement.
 
 * Vertico vs. other narrowing completion UIs
-  Vertico is an alternative to completion frameworks such as Selectrum, Ivy,
-  Helm, IDO, =icomplete-vertical=, etc. The main difference is that Vertico aims
-  to be as minimal as possible, only providing a pretty UI and deferring the
-  completion system to other plugins, such as the built-in Emacs completion
-  system or =orderless=. Vertico is probably most similar to IComplete since
-  both are fully compatible with =completing-read=, although Vertico has far
-  more features and looks nicer than IComplete. Selectrum is nearly as pure as
-  Vertico, but does contain some custom filtering logic that keeps it from full
-  =completing-read= compatibility. Vertico is also probably the most flexible
-  completion UI in terms of customization.
+Vertico is an alternative to completion frameworks such as Selectrum, Ivy,
+Helm, IDO, =icomplete-vertical=, etc. The main difference is that Vertico aims
+to be as minimal as possible, only providing a pretty UI and deferring the
+completion system to other plugins, such as the built-in Emacs completion
+system or =orderless=. Vertico is probably most similar to IComplete since
+both are fully compatible with =completing-read=, although Vertico has far
+more features and looks nicer than IComplete. Selectrum is nearly as pure as
+Vertico, but does contain some custom filtering logic that keeps it from full
+=completing-read= compatibility. Vertico is also probably the most flexible
+completion UI in terms of customization.
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package vertico
-      :after evil-collection
-      :demand t
-      :general
-      (general-def vertico-map
-        "?" 'minibuffer-completion-help
-        "C-j" 'vertico-next
-        "C-k" 'vertico-previous
-        "C-d" 'vertico-scroll-up
-        "C-u" 'vertico-scroll-down
-        "C-o" 'vertico-first
-        "C-i" 'vertico-last
-        "C-M-j" 'vertico-exit-input)
-      :custom
-      ;; Whether to grow and shrink vertico buffer dynamically
-      ;; Can be t (whichi means grow and shrink), nil, or 'grow-only
-      (vertico-resize nil)
-      ;; Max number of candidates to show
-      (vertico-count 20)
-      ;; Enable cycling for vertico-next and vertico-previous
-      (vertico-cycle t)
-      :init
-      ;; This is where we bind keys because it gives us more flexibility.
-      (evil-define-key 'normal vertico-map
-        ;; Pressing ? brings up help for available completions
-        "?" 'minibuffer-completion-help)
-      (evil-define-key '(normal insert) vertico-map
-        ;; Navigate vertico with C-j and C-k
-        (kbd "C-j") 'vertico-next
-        (kbd "C-k") 'vertico-previous
-        ;; I know it looks backwards, but this makes more sense in practice.
-        ;; Vertico considers further down the list as "scrolling up", and vice
-        ;; versa.
-        (kbd "C-d") 'vertico-scroll-up
-        (kbd "C-u") 'vertico-scroll-down
-        ;; Go to top or bottom of minibuffer
-        (kbd "C-o") 'vertico-first
-        (kbd "C-i") 'vertico-last
-        ;; Complete current selection
-        (kbd "C-l") 'vertico-insert
-        (kbd "<tab>") 'vertico-insert
-        (kbd "M-<tab>") 'minibuffer-complete
-        ;; Select currently typed text and exit Vertico
-        (kbd "C-M-j") 'vertico-exit-input)
-      :config
-      (vertico-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package vertico
+    :after evil-collection
+    :demand t
+    :general
+    (general-def vertico-map
+      "?" 'minibuffer-completion-help
+      "C-j" 'vertico-next
+      "C-k" 'vertico-previous
+      "C-d" 'vertico-scroll-up
+      "C-u" 'vertico-scroll-down
+      "C-o" 'vertico-first
+      "C-i" 'vertico-last
+      "C-M-j" 'vertico-exit-input)
+    :custom
+    ;; Whether to grow and shrink vertico buffer dynamically
+    ;; Can be t (which means grow and shrink), nil, or 'grow-only
+    (vertico-resize nil)
+    ;; Max number of candidates to show
+    (vertico-count 20)
+    ;; Enable cycling for vertico-next and vertico-previous
+    (vertico-cycle t)
+    :init
+    ;; This is where we bind keys because it gives us more flexibility.
+    (evil-define-key 'normal vertico-map
+      ;; Pressing ? brings up help for available completions
+      "?" 'minibuffer-completion-help)
+    (evil-define-key '(normal insert) vertico-map
+      ;; Navigate vertico with C-j and C-k
+      (kbd "C-j") 'vertico-next
+      (kbd "C-k") 'vertico-previous
+      ;; I know it looks backwards, but this makes more sense in practice.
+      ;; Vertico considers further down the list as "scrolling up", and vice
+      ;; versa.
+      (kbd "C-d") 'vertico-scroll-up
+      (kbd "C-u") 'vertico-scroll-down
+      ;; Go to top or bottom of minibuffer
+      (kbd "C-o") 'vertico-first
+      (kbd "C-i") 'vertico-last
+      ;; Complete current selection
+      (kbd "C-l") 'vertico-insert
+      (kbd "<tab>") 'vertico-insert
+      (kbd "M-<tab>") 'minibuffer-complete
+      ;; Select currently typed text and exit Vertico
+      (kbd "C-M-j") 'vertico-exit-input)
+    :config
+    (vertico-mode 1))
+#+end_src
 
 * Extensions
 ** vertico-directory
-   Configure directory extension.
-   *NOTE:* The file =vertico-directory.el= must be installed manually.
+Configure directory extension.
+*NOTE:* The file =vertico-directory.el= must be installed manually.
 
-   #+begin_src emacs-lisp
-     (use-package vertico-directory
-       :after vertico
-       ;; Vertico extensions are bundled with the Vertico repo.
-       :ensure nil
-       :straight nil
-       :hook
-       ;; Tidy shadowed file names
-       (rfn-eshadow-update-overlay . vertico-directory-tidy))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package vertico-directory
+    :after vertico
+    ;; Vertico extensions are bundled with the Vertico repo.
+    :ensure nil
+    :straight nil
+    :hook
+    ;; Tidy shadowed file names
+    (rfn-eshadow-update-overlay . vertico-directory-tidy))
+#+end_src
 
 ** vertico-mouse
-   Mouse integration for Vertico.
+Mouse integration for Vertico.
 
-   #+begin_src emacs-lisp
-     (use-package vertico-mouse
-       ;; Does not work with my setup.
-       :disabled
-       :after vertico
-       ;; Vertico extensions are bundled with the Vertico repo.
-       :ensure nil
-       :straight nil
-       :hook
-       (vertico-mode . vertico-mouse-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package vertico-mouse
+    ;; Does not work with my setup.
+    :disabled
+    :after vertico
+    ;; Vertico extensions are bundled with the Vertico repo.
+    :ensure nil
+    :straight nil
+    :hook
+    (vertico-mode . vertico-mouse-mode))
+#+end_src
