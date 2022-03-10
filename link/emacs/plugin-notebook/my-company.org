@@ -184,6 +184,7 @@ Show quick documentation for company completions in a separate popup.
 ** company-statistics
 #+begin_src emacs-lisp
   (use-package company-statistics
+    ;; I think prescient-mode is a better alternative to this plugin.
     :disabled
     :after company
     :hook
@@ -300,7 +301,11 @@ you should use it at your own risk.
     :after company
     :if (display-graphic-p)
     :hook
-    (company-mode . company-box-mode))
+    (company-mode . company-box-mode)
+    :custom
+    ;; Max number of candidates to show in tooltip.
+    ;; A large number can slow down rendering.
+    (company-box-max-candidates 10))
 #+end_src
 
 ** company-prescient
