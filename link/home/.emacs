@@ -71,15 +71,17 @@
     "My tangled Emacs configuration file created from `my/main-emacs-init-org'.")
   (defconst my/main-emacs-init-elc (byte-compile-dest-file my/main-emacs-init-el)
     "My compiled Emacs configuration file byte-compiled from
-`main-emacs-init-el'."))
+`main-emacs-init-el'.")
+  (defconst my/use-straight t
+    "Whether to use straight.el instead of Emacs' built-in package manager."))
 
 ;; Define functions to help us get started compiling and loading our other
 ;; files.
 (defsubst my/file-not-exists-or-newer-than-other-p (file other)
   "Return non-nil if FILE does not exist or is newer than OTHER file."
   (or (not (file-exists-p file))
-      (equal (nth 4 (file-attributes file)) (list 0 0))
-      (file-newer-than-file-p file other)))
+    (equal (nth 4 (file-attributes file)) (list 0 0))
+    (file-newer-than-file-p file other)))
 
 (defsubst my/tangle-config-artifact (elisp-file)
   "Tangle the ancestor to an ELISP-FILE.
@@ -130,30 +132,39 @@ FILE's extension is '.el'."
 Files in the directory are matched based on PATTERN, which is a regex."
   (require 'cl-lib)
   (cl-flet ((apply-it (f)
-                      (funcall fn (concat (file-name-as-directory dir) f))))
+              (funcall fn (concat (file-name-as-directory dir) f))))
     (if (file-directory-p dir)
-        (mapc #'apply-it (directory-files dir nil pattern)))))
+      (mapc #'apply-it (directory-files dir nil pattern)))))
 
 ;; Load extra packages using Emacs 24's package system.
-(when (>= emacs-major-version 24)
-  ;; Package configuration
-  (require 'package)
-  ;; Add extra package archives to the list of repositories.
-  ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
-  ;;       to change the URLs to simple HTTP in order for them to function.
-  ;;       If you must do this, also uncomment the two expressions below.
-  ;;       That will reset the archives list and allow you to only use
-  ;;       unsecured connections for package transfer.
-  ;; (setq package-archives nil)
-  ;; (add-to-list 'package-archives
-  ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-  (add-to-list 'package-archives
-               '("org" . "https://orgmode.org/elpa/") t)
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
-  (add-to-list 'package-archives
-               '("marmalade" . "https://marmalade-repo.org/packages/") t)
-  (package-initialize))
+;; NOTE: Currently disabled since we use straight.el to manage our packages.
+(if (and (not my/use-straight) (>= emacs-major-version 24))
+  ;;; IF we want to use the built-in package manager...
+  (progn
+    ;; Package configuration
+    (require 'package)
+    ;; Add extra package archives to the list of repositories.
+    ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+    ;;       to change the URLs to simple HTTP in order for them to function.
+    ;;       If you must do this, also uncomment the two expressions below.
+    ;;       That will reset the archives list and allow you to only use
+    ;;       unsecured connections for package transfer.
+    ;; (setq package-archives nil)
+    ;; (add-to-list 'package-archives
+    ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+    (add-to-list 'package-archives
+      '("org" . "https://orgmode.org/elpa/") t)
+    (add-to-list 'package-archives
+      '("melpa" . "https://melpa.org/packages/") t)
+    (add-to-list 'package-archives
+      '("marmalade" . "https://marmalade-repo.org/packages/") t)
+    (package-initialize))
+  ;;; OTHERWISE...
+  ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
+  (setq package-enable-at-startup nil)
+  ;; this tells package.el not to add those pesky customized variable settings
+  ;; at the end of your init.el
+  (setq package--init-file-ensured t))
 
 ;; Automatically install packages using use-package
 ;; Should NOT use this right now since we're now using straight.el instead of
