@@ -288,11 +288,11 @@ completion item documentation.
 
 *COMPATIBILITY:* =company-box= only works in GUI Emacs.
 
-*IMPORTANT PERFORMANCE NOTE:* I have noticed that enabling =company-box= greatly
-increases input lag when using =company= completion, sometimes causing Emacs to
-freeze completely when completing (this sometimes happens in
-=emacs-lisp-mode=). =company-box= certainly is cool, and looks beautiful, but
-you should use it at your own risk.
+*IMPORTANT PERFORMANCE NOTE:* I have noticed that enabling =company-box=
+/greatly/ increases input lag when using =company= completion, sometimes causing
+Emacs to freeze completely (this sometimes happens in =emacs-lisp-mode=). The
+input lag can drag your editing speed to a halt. =company-box= certainly is
+cool, and looks beautiful, but you should use it at your own risk.
 
 #+begin_src emacs-lisp
   (use-package company-box

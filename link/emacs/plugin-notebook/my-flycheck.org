@@ -11,180 +11,183 @@ configuration. However, should you need to install a few new =flycheck= plugins
 it is very simple to do.
 
 * flycheck
-  *NOTE ABOUT FLYSPELL:* =flyspell-mode= requires you to have an
-  ispell-compatible spell-checking binary installed, such as =hunspell=.
-  Furthermore, =hunspell= requires you to have dictionaries installed in
-  predictable locations. Run =hunspell -D= to view the path =hunspell= uses to
-  find dictionaries, which is different depending on your operating system.
-
-  #+begin_src emacs-lisp
-    (use-package flycheck
-      :hook
-      (prog-mode . flycheck-mode)
-      :custom
-      ;; The allotted time before displaying errors at point.
-      (flycheck-display-errors-delay 0.9)
-      ;; How many seconds flycheck waits before checking the buffer.
-      ;; Setting this value higher can speed up Emacs.
-      (flycheck-idle-change-delay 3)
-      ;; Highlight whole line instead of symbol to speed up flycheck.
-      (flycheck-highlighting-mode 'lines))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :hook
+    (prog-mode . flycheck-mode)
+    :custom
+    ;; The allotted time before displaying errors at point.
+    (flycheck-display-errors-delay 0.9)
+    ;; How many seconds flycheck waits before checking the buffer.
+    ;; Setting this value higher can speed up Emacs.
+    (flycheck-idle-change-delay 0.5)
+    ;; How to highlight perform highlighting.
+    ;;   columns -> Highlight a single character
+    ;;   symbols -> highlight the problematic symbol, if any, or act like columns
+    ;;   sexps   -> highlight a full expression, if any, or act like columns
+    ;;   lines   -> highlight the entire line (faster)
+    (flycheck-highlighting-mode 'symbols))
+#+end_src
 
 * flyspell
-  =flyspell= is =flycheck='s companion spell-checker plugin. Where =flycheck=
-  checks for code correctness, =flyspell= checks spelling in both the
-  traditional and in a more coding-correct sense (i.e., take camel case into
-  account, and so on).
+=flyspell= is =flycheck='s companion spell-checker plugin. Where =flycheck=
+checks for code correctness, =flyspell= checks spelling in both the traditional
+and in a more coding-correct sense (i.e., take camel case into account, and so
+on).
 
-  #+begin_src emacs-lisp
-    (use-package flyspell
-      :after ispell
-      :demand t
-      :init
-      (setq ispell-program-name
-            ;; Prefer aspell over hunspell since aspell is faster
-            (if (executable-find "aspell") "aspell" "hunspell"))
-      (cond ((equal ispell-program-name "hunspell")
-             ;; Extra configuration for hunspell.
-             (setq ispell-local-dictionary "en_US")
-             (setq ispell-local-dictionary-alist
-                   ;; Please note the list `("-d" "en_US")` contains ACTUAL
-                   ;; parameters passed to hunspell You could use `("-d"
-                   ;; "en_US,en_US-med")` to check with multiple dictionaries
-                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil
-                      ("-d" "en_US") nil utf-8)))
-             ;; New variable `ispell-hunspell-dictionary-alist' is defined in Emacs.
-             ;; If it's nil, Emacs tries to automatically set up the dictionaries.
-             (when (boundp 'ispell-hunspell-dictionary-alist)
-               (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)))
-            ((equal ispell-program-name "aspell")
-             ;; Extra configuration for aspell.
-             (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
-             ;; Handle camel-case words
-             (cond ((string-match-p "--camel-case"
-                                    (shell-command-to-string "aspell --help"))
-                    (add-to-list 'ispell-extra-args "--camel-case" t))
-                   (t
-                    ;; Older versions of aspell used --run-together instead of
-                    ;; --camel-case
-                    (add-to-list 'ispell-extra-args "--run-together" t)
-                    (add-to-list 'ispell-extra-args "--run-together-limit=16" t)))))
-      :config
-      (ispell-set-spellchecker-params))
-  #+end_src
+*NOTE:* =flyspell-mode= requires you to have an ispell-compatible spell-checking
+binary installed, such as =hunspell=.  Furthermore, =hunspell= requires you to
+have dictionaries installed in predictable locations. Run =hunspell -D= to view
+the path =hunspell= uses to find dictionaries, which is different depending on
+your operating system.
+
+#+begin_src emacs-lisp
+  (use-package flyspell
+    :after ispell
+    :demand t
+    :init
+    (setq ispell-program-name
+          ;; Prefer aspell over hunspell since aspell is faster
+          (if (executable-find "aspell") "aspell" "hunspell"))
+    (cond ((equal ispell-program-name "hunspell")
+           ;; Extra configuration for hunspell.
+           (setq ispell-local-dictionary "en_US")
+           (setq ispell-local-dictionary-alist
+                 ;; Please note the list `("-d" "en_US")` contains ACTUAL
+                 ;; parameters passed to hunspell You could use `("-d"
+                 ;; "en_US,en_US-med")` to check with multiple dictionaries
+                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil
+                    ("-d" "en_US") nil utf-8)))
+           ;; New variable `ispell-hunspell-dictionary-alist' is defined in Emacs.
+           ;; If it's nil, Emacs tries to automatically set up the dictionaries.
+           (when (boundp 'ispell-hunspell-dictionary-alist)
+             (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)))
+          ((equal ispell-program-name "aspell")
+           ;; Extra configuration for aspell.
+           (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
+           ;; Handle camel-case words
+           (cond ((string-match-p "--camel-case"
+                                  (shell-command-to-string "aspell --help"))
+                  (add-to-list 'ispell-extra-args "--camel-case" t))
+                 (t
+                  ;; Older versions of aspell used --run-together instead of
+                  ;; --camel-case
+                  (add-to-list 'ispell-extra-args "--run-together" t)
+                  (add-to-list 'ispell-extra-args "--run-together-limit=16" t)))))
+    :config
+    (ispell-set-spellchecker-params))
+#+end_src
 
 * Plugins
 ** flycheck-cask
-   #+begin_src emacs-lisp
-     (use-package flycheck-cask
-       :after flycheck
-       :hook
-       (flycheck-mode . flycheck-cask-setup))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-cask
+    :after flycheck
+    :hook
+    (flycheck-mode . flycheck-cask-setup))
+#+end_src
 
 ** flycheck-clojure
-   These Clojure linters depend on CIDER running in order to work, so you should
-   make sure to only activate them when the CIDER REPL starts.
+These Clojure linters depend on CIDER running in order to work, so you should
+make sure to only activate them when the CIDER REPL starts.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-clojure
-       :after flycheck
-       :hook
-       (cider-mode . flycheck-clojure-setup))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-clojure
+    :after flycheck
+    :hook
+    (cider-mode . flycheck-clojure-setup))
+#+end_src
 
 ** flycheck-clj-kondo
-   Integrates the =clj-kondo= Clojure linting tool with =flycheck=. =clj-kondo=
-   is pretty wonderful because it is a stand-alone binary, not depending on a
-   running REPL in order to function. That makes =clj-kondo= is a great
-   =flycheck= linter to use if you do not want to use CIDER.
+Integrates the =clj-kondo= Clojure linting tool with =flycheck=. =clj-kondo=
+is pretty wonderful because it is a stand-alone binary, not depending on a
+running REPL in order to function. That makes =clj-kondo= is a great
+=flycheck= linter to use if you do not want to use CIDER.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-clj-kondo
-       :after flycheck
-       :hook
-       (clojure-mode . (lambda ()
-                         (require 'flycheck-clj-kondo))))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-clj-kondo
+    :after flycheck
+    :hook
+    (clojure-mode . (lambda ()
+                      (require 'flycheck-clj-kondo))))
+#+end_src
 
 ** flycheck-haskell
-   #+begin_src emacs-lisp
-     (use-package flycheck-haskell
-       :after flycheck
-       :hook
-       (haskell-mode . flycheck-haskell-setup))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-haskell
+    :after flycheck
+    :hook
+    (haskell-mode . flycheck-haskell-setup))
+#+end_src
 
 ** flycheck-inline
-   Shows Flycheck output inline right beneath their reporting location.  This is
-   an alternative to =flycheck-pos-tip=. I tend to like =flycheck-pos-tip=
-   better, though.
+Shows Flycheck output inline right beneath their reporting location.  This is
+an alternative to =flycheck-pos-tip=. I tend to like =flycheck-pos-tip=
+better, though.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-inline
-       :disabled
-       :after (flycheck quick-peek)
-       :hook
-       (flycheck-mode . flycheck-inline-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-inline
+    :disabled
+    :after (flycheck quick-peek)
+    :hook
+    (flycheck-mode . flycheck-inline-mode))
+#+end_src
 
 ** flycheck-package
-   Check Emacs Lisp packages for common errors.
+Check Emacs Lisp packages for common errors.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-package
-       :after flycheck
-       :config
-       (flycheck-package-setup))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-package
+    :after flycheck
+    :config
+    (flycheck-package-setup))
+#+end_src
 
 ** flycheck-pkg-config
-   Allows Flycheck to use =pkg-config= when determining C/C++ library headers.
+Allows Flycheck to use =pkg-config= when determining C/C++ library headers.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-pkg-config
-       :after flycheck)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-pkg-config
+    :after flycheck)
+#+end_src
 
 ** flycheck-pos-tip
-   Shows the error at point in a =pos-tip= graphical popup.
+Shows the error at point in a =pos-tip= graphical popup.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-pos-tip
-       :after flycheck
-       :hook
-       (flycheck-mode . (lambda ()
-                          ;; Put errors in tooltips if we're not in lsp-mode, since
-                          ;; lsp-mode does its own thing and doing so would cause
-                          ;; duplication.
-                          (if (not (bound-and-true-p lsp-mode))
-                              (flycheck-pos-tip-mode 1)))))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-pos-tip
+    :after flycheck
+    :hook
+    (flycheck-mode . (lambda ()
+                       ;; Put errors in tooltips if we're not in lsp-mode, since
+                       ;; lsp-mode does its own thing and doing so would cause
+                       ;; duplication.
+                       (if (not (bound-and-true-p lsp-mode))
+                           (flycheck-pos-tip-mode 1)))))
+#+end_src
 
 ** flycheck-relint
-   Checks regular expression syntax.
+Checks regular expression syntax.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-relint
-       :after flycheck
-       :config
-       (flycheck-relint-setup))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-relint
+    :after flycheck
+    :config
+    (flycheck-relint-setup))
+#+end_src
 
 ** flycheck-rust
-
-   #+begin_src emacs-lisp
-     (use-package flycheck-rust
-       :after flycheck)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-rust
+    :after flycheck)
+#+end_src
 
 ** flycheck-status-emoji
-   Replaces standard Flycheck indicators with expressive emojis.
+Replaces standard Flycheck indicators with expressive emojis.
 
-   #+begin_src emacs-lisp
-     (use-package flycheck-status-emoji
-       :after flycheck
-       :hook
-       (flycheck-mode . flycheck-status-emoji-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-status-emoji
+    :after flycheck
+    :hook
+    (flycheck-mode . flycheck-status-emoji-mode))
+#+end_src
