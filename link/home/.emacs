@@ -158,21 +158,18 @@ Files in the directory are matched based on PATTERN, which is a regex."
       '("melpa" . "https://melpa.org/packages/") t)
     (add-to-list 'package-archives
       '("marmalade" . "https://marmalade-repo.org/packages/") t)
-    (package-initialize))
+    (package-initialize)
+    ;; Automatically install packages using use-package
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+    (eval-when-compile (require 'use-package)))
   ;;; OTHERWISE...
   ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
   (setq package-enable-at-startup nil)
   ;; this tells package.el not to add those pesky customized variable settings
   ;; at the end of your init.el
   (setq package--init-file-ensured t))
-
-;; Automatically install packages using use-package
-;; Should NOT use this right now since we're now using straight.el instead of
-;; package.el
-;; (unless (package-installed-p 'use-package)
-;;   (package-refresh-contents)
-;;   (package-install 'use-package))
-;; (eval-when-compile (require 'use-package))
 
 ;; Have to set default-directory to the dotfiles directory in my dotfiles
 ;; repository because symlinks and Emacs apparently do not play well together.
