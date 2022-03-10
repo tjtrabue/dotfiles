@@ -18,10 +18,11 @@ pbr() {
   local projectIdentifier
   local projectBranchName
   local defaultRemote="$(defaultremote)"
+  local namespaceSegments
   local OPTIND
   local o
 
-  while getopts ":hn:d:p:" o; do
+  while getopts ":hn:d:p:s:" o; do
     case "${o}" in
     h)
       __pbr_help
@@ -35,6 +36,9 @@ pbr() {
       ;;
     p)
       projectIdentifier="${OPTARG}"
+      ;;
+    s)
+      namespaceSegments="${namespaceSegments}${OPTARG},"
       ;;
     *)
       err "Unknown operand"
@@ -92,7 +96,8 @@ EOF
 
   projectBranchName="$(__construct_project_branch "${taskNumber}" \
     "${description}" \
-    "${projectIdentifier}")"
+    "${projectIdentifier}" \
+    "${namespaceSegments}")"
 
   if [ "$(currentref)" = "${projectBranchName}" ]; then
     warn "Already on branch ${CYAN}${projectBranchName}${NC}"
@@ -186,16 +191,20 @@ __construct_project_branch() {
   local taskNumber="${1}"
   local description="${2}"
   local projectIdentifier="${3}"
+  local namespaceSegments="${4}"
   local projectFieldSep="${PROJECT_FIELD_SEPARATOR:--}"
   local branchWordSep="${BRANCH_WORD_SEPARATOR:--}"
   local branchSectionSep="${BRANCH_SECTION_SEPARATOR:-/}"
-  local formatString="%s${projectFieldSep}%s${branchSectionSep}%s"
+  local formattedNamespace="$(echo "${namespaceSegments}" |
+    sed -E "s|,|${branchSectionSep}|g")"
+  local formatString="%s${projectFieldSep}%s${branchSectionSep}%s%s"
   local formattedDescription="$(echo "${description}" |
     sed -E "s/\s+/${branchWordSep}/g")"
 
   printf "${formatString}" \
     "${projectIdentifier}" \
     "${taskNumber}" \
+    "${formattedNamespace}" \
     "${formattedDescription}"
 }
 
