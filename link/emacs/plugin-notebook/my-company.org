@@ -305,7 +305,10 @@ cool, and looks beautiful, but you should use it at your own risk.
     :custom
     ;; Max number of candidates to show in tooltip.
     ;; A large number can slow down rendering.
-    (company-box-max-candidates 10))
+    (company-box-max-candidates 10)
+    ;; Min/max dimensions for the completion tooltip window.
+    (company-box-tooltip-minimum-width 260)
+    (company-box-tooltip-maximum-width 260))
 #+end_src
 
 ** company-prescient
