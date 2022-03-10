@@ -4,11 +4,11 @@
 #+date:   2020:05:25
 #+STARTUP: fold
 
-=flycheck= is a phenomenal general-purpose syntax checker based on a number of
-plugins.  =flycheck= comes pre-packaged with a huge number of language syntax
-plugins, so it will probably work for you without any extra
-configuration. However, should you need to install a few new =flycheck= plugins
-it is very simple to do.
+=flycheck= is a phenomenal general-purpose syntax checker that uses a plugin
+system to lint source code buffers.  =flycheck= comes pre-packaged with a huge
+number of language syntax plugins, so it will probably work for you without any
+extra configuration. However, should you need to install a few new =flycheck=
+plugins it is very simple to do.
 
 * flycheck
 #+begin_src emacs-lisp
