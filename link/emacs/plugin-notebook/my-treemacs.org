@@ -31,13 +31,13 @@ features absent from the majority of such explorers.
         "t C-t" 'treemacs-find-file
         "t M-t" 'treemacs-find-tag)
       (my/evil-leader-def
-        "tP" 'treemacs-add-and-display-current-project
-        "tR" 'treemacs-remove-workspace
-        "ta" 'treemacs-add-project-to-workspace
-        "te" 'treemacs-edit-workspaces
-        "tm" 'treemacs
-        "tr" 'treemacs-remove-project-from-workspace
-        "ts" 'treemacs-switch-workspace)
+        "t P" 'treemacs-add-and-display-current-project
+        "t R" 'treemacs-remove-workspace
+        "t a" 'treemacs-add-project-to-workspace
+        "t e" 'treemacs-edit-workspaces
+        "t m" 'treemacs
+        "t r" 'treemacs-remove-project-from-workspace
+        "t s" 'treemacs-switch-workspace)
       :init
       (with-eval-after-load 'winum
         (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))

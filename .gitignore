@@ -340,4 +340,8 @@ link/config/terminus/*
 link/config/user-dirs*
 # }}}
 
+# lazygit {{{
+link/config/lazygit/state.yml
+# }}}
+
 # vim:foldenable:foldmethod=marker
