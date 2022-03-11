@@ -83,51 +83,6 @@ on their parameters.
     (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
 #+end_src
 
-* Other functions
-Miscellaneous functions related to =evil-mode=.
-
-#+begin_src emacs-lisp
-  (defun my/set-evil-keybindings ()
-    "Set VI-like keybindings for various major modes."
-    ;; Use custom "J" command that removes leading comment designators.
-    (define-key evil-normal-state-map [remap evil-join] 'my-evil-join)
-    ;; Evil ":" command minibuffer keys
-    (evil-define-key 'insert evil-ex-completion-map
-      (kbd "<tab>") #'evil-ex-completion
-      (kbd "TAB") #'evil-ex-completion))
-
-  (defun my/set-evil-leader-shortcuts ()
-    "Define leader shortcuts for `evil-mode' similar to Vim's leader feature."
-    (my/evil-leader-def
-      ;; M-x alias
-      "m" 'execute-extended-command
-      ;; Buffer
-      "bb" 'switch-to-buffer
-      "bk" 'kill-this-buffer
-      ;; Dired
-      "dd" 'dired
-      ;; eshell
-      "es" 'eshell-below
-      ;; Git/Magit
-      "gg" 'magit-status
-      "gd" 'magit-dispatch
-      "gtt" 'git-timemachine-toggle
-      ;; ace-window
-      "jk" 'ace-window
-      ;; Killing buffers
-      "kk" 'kill-buffer
-      ;; File
-      "lf" 'load-file
-      "of" 'org-babel-load-file
-      ;; Flycheck
-      "fn" 'flycheck-next-error
-      "fp" 'flycheck-previous-error
-      ;; File searching
-      "rg" 'deadgrep
-      ;; undo-tree
-      "ut" #'undo-tree-visualize))
-#+end_src
-
 * =use-package= specification
 The Evil mode plugin itself.
 
@@ -161,15 +116,53 @@ The Evil mode plugin itself.
       ;; Only scroll half a page up/down with C-b and C-f instead of a
       ;; full page. I find this gives me more control over page movement.
       [remap evil-scroll-page-up] 'evil-scroll-up
-      [remap evil-scroll-page-down] 'evil-scroll-down)
-    (general-def 'insert
-      ;; TAB should try expanding or fall back on self-insertion.
-      "TAB" 'my-hippie-expand-or-tab
-      "<tab>" 'my-hippie-expand-or-tab)
+      [remap evil-scroll-page-down] 'evil-scroll-down
+      ;; Use custom "J" command that removes leading comment designators.
+      [remap evil-join] 'my-evil-join
+      ;; Easily navigate defintions, references, etc.
+      "gb" 'xref-go-back
+      "gd" 'xref-find-definitions
+      "gr" 'xref-find-references)
     ;; This form unbinds keys in given evil states and/or keymaps.
     (general-unbind 'insert
       ;; Get rid of annoying evil-paste-from-register binding.
       "C-r")
+    (general-def 'insert
+      ;; TAB should try expanding or fall back on self-insertion.
+      "TAB" 'my-hippie-expand-or-tab
+      "<tab>" 'my-hippie-expand-or-tab)
+    ;; Evil ":" command minibuffer keys
+    (general-def 'insert evil-ex-completion-map
+      "<tab>" 'evil-ex-completion
+      "TAB"   'evil-ex-completion)
+    (my/evil-leader-def
+      ;; M-x alias
+      "m" 'execute-extended-command
+      ;; Buffer
+      "bb" 'switch-to-buffer
+      "bk" 'kill-this-buffer
+      ;; Dired
+      "dd" 'dired
+      ;; eshell
+      "es" 'eshell-below
+      ;; Git/Magit
+      "gg" 'magit-status
+      "gd" 'magit-dispatch
+      "gtt" 'git-timemachine-toggle
+      ;; ace-window
+      "jk" 'ace-window
+      ;; Killing buffers
+      "kk" 'kill-buffer
+      ;; File
+      "lf" 'load-file
+      "of" 'org-babel-load-file
+      ;; Flycheck
+      "fn" 'flycheck-next-error
+      "fp" 'flycheck-previous-error
+      ;; File searching
+      "rg" 'deadgrep
+      ;; undo-tree
+      "ut" 'undo-tree-visualize)
     :init
     ;; NOTE: We must set variables for evil-mode's initialization in evil-leader's
     ;;       use-package directive because it loads first, and it in turn loads
@@ -201,9 +194,7 @@ The Evil mode plugin itself.
     ;; Enable evil-mode globally
     (evil-mode 1)
     (my/define-custom-evil-operators)
-    (my/add-evil-advice)
-    (my/set-evil-keybindings)
-    (my/set-evil-leader-shortcuts))
+    (my/add-evil-advice))
 #+end_src
 
 * Plugins
