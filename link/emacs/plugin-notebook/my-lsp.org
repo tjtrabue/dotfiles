@@ -349,6 +349,9 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
     (general-def lsp-ui-mode-map
       [remap xref-find-definitions] 'lsp-ui-peek-find-definitions
       [remap xref-find-references] 'lsp-ui-peek-find-references)
+    (general-def 'normal lsp-ui-mode-map
+      "gd" 'lsp-ui-peek-find-definitions
+      "gr" 'lsp-ui-peek-find-references)
     (general-def lsp-ui-peek-mode-map
       ;; Navigate through the peek menu for references
       "C-j" 'lsp-ui-peek--select-next
