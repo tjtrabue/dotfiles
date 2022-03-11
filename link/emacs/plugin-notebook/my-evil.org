@@ -129,12 +129,12 @@ The Evil mode plugin itself.
       "C-r")
     (general-def 'insert
       ;; TAB should try expanding or fall back on self-insertion.
-      "TAB" 'my-hippie-expand-or-tab
+      "TAB"   'my-hippie-expand-or-tab
       "<tab>" 'my-hippie-expand-or-tab)
     ;; Evil ":" command minibuffer keys
     (general-def 'insert evil-ex-completion-map
-      "<tab>" 'evil-ex-completion
-      "TAB"   'evil-ex-completion)
+      "TAB"   'evil-ex-completion
+      "<tab>" 'evil-ex-completion)
     (my/evil-leader-def
       ;; M-x alias
       "m" 'execute-extended-command
