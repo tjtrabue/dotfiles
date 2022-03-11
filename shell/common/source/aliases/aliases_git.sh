@@ -53,6 +53,11 @@ alias gsl='git shortlog --format="%h%d %s [%cr]"'
 alias gmt="git mergetool"
 # }}}
 
+# Pull {{{
+# Stash changes, pull updates, pop stashed changes
+alias stashpull="git stash && git pull && git stash pop"
+# }}}
+
 # Rebasing {{{
 alias grba="git rebase --abort"
 alias grbc="git rebase --continue"
