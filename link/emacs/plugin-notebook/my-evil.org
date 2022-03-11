@@ -145,24 +145,11 @@ The Evil mode plugin itself.
       "dd" 'dired
       ;; eshell
       "es" 'eshell-below
-      ;; Git/Magit
-      "gg" 'magit-status
-      "gd" 'magit-dispatch
-      "gtt" 'git-timemachine-toggle
-      ;; ace-window
-      "jk" 'ace-window
       ;; Killing buffers
       "kk" 'kill-buffer
       ;; File
       "lf" 'load-file
-      "of" 'org-babel-load-file
-      ;; Flycheck
-      "fn" 'flycheck-next-error
-      "fp" 'flycheck-previous-error
-      ;; File searching
-      "rg" 'deadgrep
-      ;; undo-tree
-      "ut" 'undo-tree-visualize)
+      "of" 'org-babel-load-file)
     :init
     ;; NOTE: We must set variables for evil-mode's initialization in evil-leader's
     ;;       use-package directive because it loads first, and it in turn loads

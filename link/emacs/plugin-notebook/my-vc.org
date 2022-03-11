@@ -43,12 +43,16 @@ Plugins for extending Emacs with version control capabilities.
     (use-package magit
       :after evil-collection
       :general
-      (my/user-leader-def
-        "g" 'magit-status)
       (general-def '(normal emacs) magit-status-mode-map
         ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
         ;; buffer, which keeps our buffer list clean.
         "q" 'my/magit-kill-buffers)
+      (my/user-leader-def
+        "g" 'magit-status)
+      (my/evil-leader-def
+        "gg"  'magit-status
+        "gd"  'magit-dispatch
+        "gtt" 'git-timemachine-toggle)
       :custom
       ;; List of symbols for actions that Magit should not confirm, or t.
       (magit-no-confirm '(stage-all-changes unstage-all-changes)))

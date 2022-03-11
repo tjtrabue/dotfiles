@@ -15,6 +15,10 @@ plugins it is very simple to do.
   (use-package flycheck
     :hook
     (prog-mode . flycheck-mode)
+    :general
+    (my/evil-leader-def
+      "fn" 'flycheck-next-error
+      "fp" 'flycheck-previous-error)
     :custom
     ;; The allotted time before displaying errors at point.
     (flycheck-display-errors-delay 0.9)
