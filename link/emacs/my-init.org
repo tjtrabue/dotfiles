@@ -588,6 +588,8 @@ Set variables used by LSP servers.
   ;; lsp-mode can be compiled in two modes: `plist' and `hash-table'.
   ;; Plists provide better performance in deserialization and are lighter than
   ;; hash tables.
+  ;; NOTE: You MUST rebuilt all lsp-mode related packages if you change this
+  ;;       variable!
   (setenv "LSP_USE_PLISTS" "true")
 #+end_src
 

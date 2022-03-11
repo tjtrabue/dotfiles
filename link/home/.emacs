@@ -15,7 +15,10 @@
 ;; They will be reset later on to further optimize our experience.
 (defvar last-file-name-handler-alist file-name-handler-alist
   "Name of the `file-name-handler-alist' that was set to nil during startup.")
-(setq gc-cons-threshold most-positive-fixnum
+;; Set the garbage collection threshold super high for startup. We'll need to
+;; reset these values later so as not to impede our computer's performance, but
+;; it does speed up Emacs' start time.
+(setq gc-cons-threshold (* 4 (* 100 1024 1024))
   gc-cons-percentage 0.6
   file-name-handler-alist nil)
 
