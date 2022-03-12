@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(defvar my-font-family "CaskaydiaCove Nerd Font"
+(defvar my-font-family "Cascadia Code PL"
   "The default font family used throughout Emacs.")
 
 ;;;###autoload
@@ -38,7 +38,7 @@
   "Set the default font for all of Emacs."
   (set-face-attribute 'default nil
     :family my-font-family ;; The font's name
-    :height 110 ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
+    :height 110        ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
     :weight 'semi-bold ;; Style
     :width 'normal))
 
