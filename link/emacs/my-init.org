@@ -636,9 +636,9 @@ These run after loading init files and handling the command line.
               ;; settings to some reasonable defaults. A large gc-cons-threshold
               ;; will cause freezing and stuttering during long-term interactive
               ;; use. I find these are nice defaults:
-              (setq gc-cons-threshold (* 100 1024 1024)
-                    gc-cons-percentage 0.1
-                    file-name-handler-alist last-file-name-handler-alist)))
+              (setq gc-cons-threshold 104857600) ;; 100 MB
+              (setq gc-cons-percentage 0.1)
+              (setq file-name-handler-alist last-file-name-handler-alist)))
 #+end_src
 
 ** minibuffer-setup hooks

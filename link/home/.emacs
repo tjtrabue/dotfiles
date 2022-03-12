@@ -18,9 +18,9 @@
 ;; Set the garbage collection threshold super high for startup. We'll need to
 ;; reset these values later so as not to impede our computer's performance, but
 ;; it does speed up Emacs' start time.
-(setq gc-cons-threshold (* 4 (* 100 1024 1024))
-  gc-cons-percentage 0.6
-  file-name-handler-alist nil)
+(setq gc-cons-threshold 419430400) ;; 400 MB.
+(setq gc-cons-percentage 0.6)
+(setq file-name-handler-alist nil)
 
 ;; JIT settings to speed up startup.
 ;; https://tychoish.com/post/towards-faster-emacs-start-times/
