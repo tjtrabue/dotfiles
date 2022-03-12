@@ -78,6 +78,7 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
       "<return>" 'company-complete-selection
       "TAB" 'company-complete-selection
       "<tab>" 'company-complete-selection
+      "C-l" 'company-complete-selection
       ;; Vim-style keybindings for cycling through matches
       "C-j" (lambda ()
               (interactive)
