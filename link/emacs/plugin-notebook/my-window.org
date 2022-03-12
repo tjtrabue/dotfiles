@@ -1,0 +1,20 @@
+#+title:   Emacs Window Plugins/Configuration
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:03:11
+#+tags:    window
+#+STARTUP: fold
+
+Plugins and configuration for Emacs windows.
+
+* Zoom
+=zoom-mode= enforces a balanced window layout when creating new windows and
+navigating between them. Inactive windows shrink, allowing the active window to
+take the majority of the available screen space.
+
+#+begin_src emacs-lisp
+  (use-package zoom
+    :demand t
+    :config
+    (zoom-mode 1))
+#+end_src

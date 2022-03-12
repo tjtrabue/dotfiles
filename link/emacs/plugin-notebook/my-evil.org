@@ -4,9 +4,9 @@
 #+date:    2020:05:25
 #+STARTUP: fold
 
-The Extensible VI Layer (AKA evil.  AKA the only way to use Emacs).  =evil-mode=
-is a fully featured VI emulator for Emacs, even improving upon the features of
-Vim at times.
+Evil, or =evil-mode=, is the Extensible VI Layer (AKA the only way to use
+Emacs).  =evil-mode= is a fully featured VI emulator for Emacs, even improving
+upon the features of Vim at times.
 
 * *Important Note About Occasional Behavior of =d= and =dd= commands
 *If Evil Mode treats 'd' like 'dd', 'c' like 'cc', etc*: You need delete the
