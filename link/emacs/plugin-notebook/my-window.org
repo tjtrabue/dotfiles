@@ -12,10 +12,12 @@ Plugins and configuration for Emacs windows.
 navigating between them. Inactive windows shrink to predefined dimensions,
 allowing the active window to take up the majority of available screen space,
 making =zoom-mode= similar to a dynamic tiling window manager for Emacs
-windows. I think Zoom is a must-have for Emacs users.
+windows.
 
 #+begin_src emacs-lisp
   (use-package zoom
+    ;; Messes with which-key window
+    :disabled
     :demand t
     :config
     (zoom-mode 1))

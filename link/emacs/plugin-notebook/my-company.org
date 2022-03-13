@@ -93,13 +93,9 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     (company-require-match nil)
     ;; Don't make plain text completions lowercase.
     (company-dabbrev-downcase nil)
-    ;; How long company waits before suggesting completions.
-    ;; WARNING: Setting this value too low could cause a huge performance
-    ;;          bottleneck!
+    ;; How long company waits before suggesting completions. Settings this value
+    ;; to too small a value can reduce performance.
     (company-idle-delay 0)
-    ;; How long company waits before redisplaying candidates when fetching
-    ;; candidates asynchronously.
-    (company-async-redisplay-delay 0.005)
     ;; Start suggesting completions after this many characters typed.
     (company-minimum-prefix-length 1)
     ;; Change UI appearance of company
