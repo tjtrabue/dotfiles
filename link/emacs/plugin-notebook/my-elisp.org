@@ -92,5 +92,11 @@ both to =C-c C-d d= and =C-c C-d C-d= by default.
 #+begin_src emacs-lisp
   (use-package elisp-slime-nav
     :hook
-    ((emacs-lisp-mode ielm-mode) . elisp-slime-nav-mode))
+    ((emacs-lisp-mode ielm-mode) . elisp-slime-nav-mode)
+    :general
+    (general-def 'normal elisp-slime-nav-mode-map
+      ;; elisp-slime-nav binds "K" in evil's normal mode to lookup the Elisp
+      ;; symbol at point. However, we can get more mileage out of this binding by
+      ;; calling 'helpful-at-point instead of the standard Emacs help function .
+      [remap elisp-slime-nav-describe-elisp-thing-at-point] 'helpful-at-point))
 #+end_src
