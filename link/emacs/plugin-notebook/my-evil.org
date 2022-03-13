@@ -135,6 +135,9 @@ The Evil mode plugin itself.
     (general-def 'insert evil-ex-completion-map
       "TAB"   'evil-ex-completion
       "<tab>" 'evil-ex-completion)
+    (general-def 'motion
+      ;; Use ";" as an alias for "M-x"
+      ";" 'execute-extended-command)
     (my/evil-leader-def
       ;; M-x alias
       "m" 'execute-extended-command
