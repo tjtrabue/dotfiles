@@ -177,7 +177,7 @@ nmap [b <Action>(PreviousTab)
 nmap ]b <Action>(NextTab)
 
 " General {{{
-nmap <leader>ud <Action>(CheckForUpdate)
+nmap <leader>U <Action>(CheckForUpdate)
 " }}}
 
 " Buffer management {{{
