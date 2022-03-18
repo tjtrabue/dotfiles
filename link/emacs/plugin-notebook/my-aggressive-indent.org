@@ -21,11 +21,18 @@ flexibility in code style over consistency.
       ;; formatters. It's also far more useful in Lisp modes than it is for editing
       ;; ALGOL-derived languages.
       ((;; clojure-mode ; Agressive indent screws with clojure-lsp
+        c-mode
+        c++-mode
         elixir-mode
         emacs-lisp-mode
+        haskell-mode
         ielm-mode
+        java-mode
         lisp-mode
         lisp-interaction-mode
+        objc-mode
+        python-mode
+        ruby-mode
         sly-mrepl-mode)
        . aggressive-indent-mode))
   #+end_src
