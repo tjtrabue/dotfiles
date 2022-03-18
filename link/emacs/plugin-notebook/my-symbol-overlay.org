@@ -17,5 +17,7 @@ and more powerful.
     (my/user-leader-def
       ;; This extended general definition allows binding keymaps to keys similar
       ;; to use-package's `bind-keymap' directive.
-      "O" '(:keymap symbol-overlay-map)))
+      "O" '(:keymap symbol-overlay-map))
+    (general-def symbol-overlay-map
+      "R" 'symbol-overlay-remove-all))
 #+end_src
