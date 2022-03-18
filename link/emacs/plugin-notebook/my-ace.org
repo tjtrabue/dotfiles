@@ -7,14 +7,12 @@
 Configuration for the fantastic ace modes, such as =ace-jump-mode= used to
 quickly move around a buffer, or ace-window used as a replacement for =C-o=.
 
-*NOTE:* Most keybindings are set in my-evil.el since that is where evil-mode's
-        map leader key bindings must be set. Also, =ace-jump-mode= is old and no
-        longer maintained, so I recommend using =avy= as a modern
-        alternative. See =my-avy= for configuration details.
+*NOTE:* =ace-jump-mode= is old and no longer maintained, so I recommend using
+=avy= as a modern alternative. See =my-avy= for configuration details.
 
 * Ace Window
-  Quick and easy window navigation, Ace style! This plugin extends the buffer
-  jumping system of =ace-jump-mode= to navigating between windows, as well.
+Quick and easy window navigation, Ace style! This plugin extends the buffer
+jumping system of =ace-jump-mode= to navigating between windows, as well.
 
 #+begin_src emacs-lisp
   (use-package ace-window
@@ -24,9 +22,6 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
       [remap other-window] 'ace-window
       ;; Also use C-, to call ace-window
       "C-," 'ace-window)
-    (my/evil-leader-def
-      ;; ',,' jumps to other window
-      "," 'ace-window)
     :custom
     ;; Set window selection keys to the home row ones.
     (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
@@ -35,7 +30,7 @@ quickly move around a buffer, or ace-window used as a replacement for =C-o=.
 * Ace Link
 #+begin_src emacs-lisp
   ;; Quickly follow links in org-mode, help-mode, info-mode, etc.
-  ;; Uses the 'o' key by default to select a link.
+  ;; Uses the `o' key by default to select a link.
   (use-package ace-link
     :demand t
     :config
