@@ -62,8 +62,9 @@ Lists TODOs and related comments in the =magit-status= buffer.
 #+begin_src emacs-lisp
   (use-package magit-todos
     :after magit
-    :hook
-    (magit-status-mode . magit-todos-mode))
+    :demand t
+    :config
+    (magit-todos-mode 1))
 #+end_src
 
 * magit-lfs
