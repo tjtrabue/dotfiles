@@ -22,6 +22,14 @@ to the =my-custom-lsp.el= file.
   the =~/.emacs.d/= directory.
 - *haskell-language-server*: Install with =ghcup=.
 
+* Diagnosing performance issues
+If you experience slow performance while using =lsp-mode=, run the command =M-x
+lsp-doctor= for specific recommendations on how you can speed up
+=lsp-mode=. These recommendations include default Emacs variables you can tune,
+recompiling Emacs with native JSON parsing support, and more. Best of all,
+=lsp-doctor= tells you which recommendations your Emacs setup already meets, and
+which ones you do not yet satisfy.
+
 * lsp-mode
 =lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
 heavy lifting of starting up Language Servers and managing connections to
