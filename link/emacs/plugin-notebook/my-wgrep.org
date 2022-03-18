@@ -10,9 +10,14 @@
 buffer like =sed= interactively. No need to learn =sed= script, just learn
 Emacs.
 
+*NOTE:* =wgrep= /enhances/ Emacs' grep buffer. You do not need to launch an
+additional process from =M-x=. That is to say, there is no interactive =wgrep=
+command. You simply search your project using =grep=, =projectile-riprep=, etc.,
+and then you use =wgrep='s keybindings to edit and apply your changes.
+
 * Using =wgrep=
-  You can edit the text in the grep buffer after typing =C-c C-p= . After that
-  the changed text is highlighted. The following keybindings are defined:
+You can edit the text in the grep buffer after typing =C-c C-p= . After that
+the changed text is highlighted. The following keybindings are defined:
 
   - =C-c C-e=: Apply the changes to file buffers.
   - =C-c C-u=: All changes are unmarked and ignored.
@@ -24,29 +29,29 @@ Emacs.
   - =C-c C-k=: Discard all changes and exit.
   - =C-x C-q=: Exit wgrep mode.
 
-  To save all buffers that wgrep has changed, run:
+    To save all buffers that wgrep has changed, run:
 
-  =M-x wgrep-save-all-buffers=
+    =M-x wgrep-save-all-buffers=
 
-  To save buffer automatically when wgrep-finish-edit:
+    To save buffer automatically when wgrep-finish-edit:
 
-  #+begin_src emacs-lisp :tangle no
-    (setq wgrep-auto-save-buffer t)
-  #+end_src
+    #+begin_src emacs-lisp :tangle no
+      (setq wgrep-auto-save-buffer t)
+    #+end_src
 
-  You can change the default key binding to switch to wgrep:
+    You can change the default key binding to switch to wgrep:
 
-  #+begin_src emacs-lisp :tangle no
-    (setq wgrep-enable-key "r")
-  #+end_src
+    #+begin_src emacs-lisp :tangle no
+      (setq wgrep-enable-key "r")
+    #+end_src
 
-  To apply all changes regardless of whether or not buffer is read-only:
+    To apply all changes regardless of whether or not buffer is read-only:
 
-  #+begin_src emacs-lisp :tangle no
-    (setq wgrep-change-readonly-file t)
-  #+end_src
+    #+begin_src emacs-lisp :tangle no
+      (setq wgrep-change-readonly-file t)
+    #+end_src
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package wgrep)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package wgrep)
+#+end_src
