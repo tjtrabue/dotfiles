@@ -98,8 +98,12 @@ documentation on hover, syntax linting and error checking, etc.
                     "gR" 'lsp-find-references
                     "gr" 'lsp-rename
                     "gt" 'lsp-find-type-definition)))
-    :bind-keymap
-    ("C-c l" . lsp-command-map)
+    :general
+    ;; This is general.el's way of accomplishing :bind-keymap, but
+    ;; general's way is more flexible and integrates with its
+    ;; `general-describe-keybindings' function.
+    (my/user-leader-def lsp-mode-map
+      "l" '(:keymap lsp-command-map))
     :init
     (require 'my-custom-lsp)
     ;; Add lsp-mode hooks for major modes.

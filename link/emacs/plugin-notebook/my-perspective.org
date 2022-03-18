@@ -33,10 +33,10 @@ different perspective, and many more.
       :hook
       ;; Save perspective to disk whenever the user kills Emacs.
       (kill-emacs . persp-state-save)
-      :bind-keymap
-      ;; May be necessary to tie keybinding to perspective prefix
-      ("C-c j" . perspective-map)
       :general
+      (my/user-leader-def
+        ;; This is general.el's way of accomplishing :bind-keymap.
+        "j" '(:keymap perspective-map))
       (general-def 'override
         "C-x b" 'persp-switch-to-buffer
         "C-x k" 'persp-kill-buffer*
