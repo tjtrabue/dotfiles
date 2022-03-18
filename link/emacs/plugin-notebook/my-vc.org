@@ -7,138 +7,147 @@
 Plugins for extending Emacs with version control capabilities.
 
 * vc
-  General version control plugin for Emacs.
+General version control plugin for Emacs.
 
-  #+begin_src emacs-lisp
-    ;; General version control plugin for Emacs.
-    (use-package vc)
-  #+end_src
+#+begin_src emacs-lisp
+  ;; General version control plugin for Emacs.
+  (use-package vc)
+#+end_src
 
 * git-modes
-  The following plugin contains major modes for editing various Git file types.
+The following plugin contains major modes for editing various Git file types.
 
-  #+begin_src emacs-lisp
-    (use-package git-modes)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package git-modes)
+#+end_src
 
 * magit
-  The /best/ interactive Git client out there! Honestly, Magit is reason enough
-  by itself to use Emacs. Every capability you have ever wanted from a Git
-  porcelain exists in Magit.
+The /best/ interactive Git client out there! Honestly, Magit is reason enough
+by itself to use Emacs. Every capability you have ever wanted from a Git
+porcelain exists in Magit.
 
 ** Functions
-   #+begin_src emacs-lisp
-     (defun my/magit-kill-buffers ()
-       "Restore window configuration and kill all Magit buffers."
-       (interactive)
-       (let ((buffers (magit-mode-get-buffers)))
-         (magit-restore-window-configuration)
-         (mapc #'kill-buffer buffers)))
-   #+end_src
+#+begin_src emacs-lisp
+  (defun my/magit-kill-buffers ()
+    "Restore window configuration and kill all Magit buffers."
+    (interactive)
+    (let ((buffers (magit-mode-get-buffers)))
+      (magit-restore-window-configuration)
+      (mapc #'kill-buffer buffers)))
+#+end_src
 
 ** =use-package= specification
-  #+begin_src emacs-lisp
-    ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
-    ;; config section.
-    (use-package magit
-      :after evil-collection
-      :general
-      (general-def '(normal emacs) magit-status-mode-map
-        ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
-        ;; buffer, which keeps our buffer list clean.
-        "q" 'my/magit-kill-buffers)
-      (my/user-leader-def
-        "g" 'magit-status)
-      (my/evil-leader-def
-        "gg"  'magit-status
-        "gd"  'magit-dispatch
-        "gtt" 'git-timemachine-toggle)
-      :custom
-      ;; List of symbols for actions that Magit should not confirm, or t.
-      (magit-no-confirm '(stage-all-changes unstage-all-changes)))
-  #+end_src
+#+begin_src emacs-lisp
+  ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
+  ;; config section.
+  (use-package magit
+    :after evil-collection
+    :general
+    (general-def '(normal emacs) magit-status-mode-map
+      ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
+      ;; buffer, which keeps our buffer list clean.
+      "q" 'my/magit-kill-buffers)
+    (my/user-leader-def
+      "g" 'magit-status)
+    (my/evil-leader-def
+      "gg"  'magit-status
+      "gd"  'magit-dispatch
+      "gtt" 'git-timemachine-toggle)
+    :custom
+    ;; List of symbols for actions that Magit should not confirm, or t.
+    (magit-no-confirm '(stage-all-changes unstage-all-changes)))
+#+end_src
 
 * magit-todos
-  Lists TODOs and related comments in the =magit-status= buffer.
+Lists TODOs and related comments in the =magit-status= buffer.
 
-  #+begin_src emacs-lisp
-    (use-package magit-todos
-      :config
-      (magit-todos-mode))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package magit-todos
+    :after magit
+    :hook
+    (magit-status-mode . magit-todos-mode))
+#+end_src
+
+* magit-lfs
+Adds Git Large File Storage capabilities to Magit.
+
+#+begin_src emacs-lisp
+  (use-package magit-lfs
+    :after magit)
+#+end_src
 
 * forge
-  A plugin for =magit= to interface with numerous Git hosts, such as GitHub,
-  GitLab, and many more.
+A plugin for =magit= to interface with numerous Git hosts, such as GitHub,
+GitLab, and many more.
 
 ** Configuring Authentication with GitHub
-   First, you need to create a Personal Authentication Token (PAT) on GitHub. You
-   need to specify certain scopes to when you create your PAT, I'd go ahead and
-   check all of the boxes.
-   Next, copy and save your token to your =~/.authinfo= file in
-   a line like this:
+First, you need to create a Personal Authentication Token (PAT) on GitHub. You
+need to specify certain scopes to when you create your PAT, I'd go ahead and
+check all of the boxes.
+Next, copy and save your token to your =~/.authinfo= file in
+a line like this:
 
-   =machine api.github.com login YOUR_GITHUB_USERNAME^forge password
-   YOUR_GITHUB_TOKEN=
+=machine api.github.com login YOUR_GITHUB_USERNAME^forge password
+YOUR_GITHUB_TOKEN=
 
-   Note that the =^forge= after your GitHub username is important! That is a
-   package specifier.
+Note that the =^forge= after your GitHub username is important! That is a
+package specifier.
 
-   After this, you should be able to use =forge= and all of its features.
+After this, you should be able to use =forge= and all of its features.
 
 ** =use-package= specification
-   #+begin_src emacs-lisp
-     (use-package forge
-       :after magit)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package forge
+    :after magit)
+#+end_src
 
 * diff-hl
-  Highlights current Git changes in the fringe, much like =git-gutter= in
-  Vim. There were =git-gutter= plugins for Emacs, but they are no longer
-  maintained.
+Highlights current Git changes in the fringe, much like =git-gutter= in
+Vim. There were =git-gutter= plugins for Emacs, but they are no longer
+maintained.
 
-  #+begin_src emacs-lisp
-    (use-package diff-hl
-      :demand t
-      :hook
-      ;; These hooks are needed for Magit 2.4 and newer.
-      ((magit-pre-refresh . diff-hl-magit-pre-refresh)
-       (magit-post-refresh . diff-hl-magit-post-refresh))
-      :config
-      ;; Enable diff-hl globally.
-      (global-diff-hl-mode)
-      ;; Provide similar functionality in dired-mode.
-      (diff-hl-dired-mode)
-      ;; Update highlights on the fly instead of after each file write. Much
-      ;; more useul than the default behavior.
-      (diff-hl-flydiff-mode)
-      ;; Makes the fringe/margin react to mouse clicks to show the corresponding
-      ;; hunk.
-      (diff-hl-show-hunk-mouse-mode))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package diff-hl
+    :demand t
+    :hook
+    ;; These hooks are needed for Magit 2.4 and newer.
+    ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+     (magit-post-refresh . diff-hl-magit-post-refresh))
+    :config
+    ;; Enable diff-hl globally.
+    (global-diff-hl-mode)
+    ;; Provide similar functionality in dired-mode.
+    (diff-hl-dired-mode)
+    ;; Update highlights on the fly instead of after each file write. Much
+    ;; more useul than the default behavior.
+    (diff-hl-flydiff-mode)
+    ;; Makes the fringe/margin react to mouse clicks to show the corresponding
+    ;; hunk.
+    (diff-hl-show-hunk-mouse-mode))
+#+end_src
 
 * git-timemachine
-  Step through historic versions of git controlled file using Emacs.  All you
-  must do is visit a git-controlled file and invoke =git-timemachine= or
-  =git-timemachine-toggle= Check the documentation for the default keybindings.
+Step through historic versions of git controlled file using Emacs.  All you
+must do is visit a git-controlled file and invoke =git-timemachine= or
+=git-timemachine-toggle= Check the documentation for the default keybindings.
 
-  #+begin_src emacs-lisp
-    (use-package git-timemachine
-      :commands (git-timemachine git-timemachine-toggle))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package git-timemachine
+    :commands (git-timemachine git-timemachine-toggle))
+#+end_src
 
 * git-link
-  Interactively create and retrieve links to the current file's page on GitHub,
-  GitLab, BitBucket, etc.
+Interactively create and retrieve links to the current file's page on GitHub,
+GitLab, BitBucket, etc.
 
-  #+begin_src emacs-lisp
-    (use-package git-link)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package git-link)
+#+end_src
 
 * ghub
-  =ghub= is an Emacs Lisp library for interacting with GitHub. It is managed by
-  the Magit team as a separate project.
+=ghub= is an Emacs Lisp library for interacting with GitHub. It is managed by
+the Magit team as a separate project.
 
-  #+begin_src emacs-lisp
-    (use-package ghub)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package ghub)
+#+end_src
