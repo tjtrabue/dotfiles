@@ -47,8 +47,6 @@ porcelain exists in Magit.
       ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
       ;; buffer, which keeps our buffer list clean.
       "q" 'my/magit-kill-buffers)
-    (my/user-leader-def
-      "g" 'magit-status)
     (my/evil-leader-def
       "gg"  'magit-status
       "gd"  'magit-dispatch
@@ -141,12 +139,18 @@ Interactively create and retrieve links to the current file's page on GitHub,
 GitLab, BitBucket, etc.
 
 #+begin_src emacs-lisp
-  (use-package git-link)
+  (use-package git-link
+    :general
+    (my/user-leader-def
+      "g l" 'git-link))
 #+end_src
 
 * ghub
-=ghub= is an Emacs Lisp library for interacting with GitHub. It is managed by
-the Magit team as a separate project.
+=ghub= is an Emacs Lisp library for interacting with the web APIs, both REST and
+GraphQL, for a number of "forges", such as GitHub, GitLab, BitBucket, and
+more. It is managed by the Magit team as a separate project. =ghub= is
+complementary to =forge=, it is not an alternative, as =ghub= is much simpler
+and is designed for quick and easy access to Git forge resources.
 
 #+begin_src emacs-lisp
   (use-package ghub)
