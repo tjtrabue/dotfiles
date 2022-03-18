@@ -1,0 +1,21 @@
+#+title:   Symbol Overlay: Highlight and Operate on Symbols Quickly
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:03:18
+#+tags:    highlight symbol overlay
+#+STARTUP: fold
+
+Symbol Overlay allows Emacs users to highlight symbols in any major mode and
+then operate on those symbols, such as go to definition, rename, etc. It was
+inspired by the =highlight-symbol= package, but =symbol-overlay= is much faster
+and more powerful.
+
+* =use-package= specification
+#+begin_src emacs-lisp
+  (use-package symbol-overlay
+    :general
+    (my/user-leader-def
+      ;; This extended general definition allows binding keymaps to keys similar
+      ;; to use-package's `bind-keymap' directive.
+      "O" '(:keymap symbol-overlay-map)))
+#+end_src
