@@ -28,11 +28,17 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
 #+end_src
 
 * Ace Link
+Quickly follow links in =help-mode=, =info-mode=, =woman-mode=, =eww-mode=,
+=compilation-mode=, and =custom-map-mode=.  Uses the =o= key by default to
+select a link.
+
 #+begin_src emacs-lisp
-  ;; Quickly follow links in org-mode, help-mode, info-mode, etc.
-  ;; Uses the `o' key by default to select a link.
   (use-package ace-link
     :demand t
+    :general
+    ;; `C-c o' follows links in in `org-mode'
+    (my/user-leader-def org-mode-map
+      "o" 'ace-link-org)
     :config
     (ace-link-setup-default))
 #+end_src
