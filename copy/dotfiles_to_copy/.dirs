@@ -4,6 +4,7 @@
 # Aliases are added to this file via the "diralias" command.
 dot="${HOME}/.dotfiles"
 conf="${HOME}/.config"
+extra="${HOME}/.extra"
 emd="${HOME}/.emacs.d"
 nv="${conf}/nvim"
 ws="${HOME}/workspace"
