@@ -54,8 +54,8 @@ alias gmt="git mergetool"
 # }}}
 
 # Pull {{{
-# Stash changes, pull updates, pop stashed changes
-alias stashpull="git stash && git pull && git stash pop"
+# Stash changes, Pull updates, Pop stashed changes
+alias spp="git stash && git pull && git stash pop"
 # }}}
 
 # Rebasing {{{
