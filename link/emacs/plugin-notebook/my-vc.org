@@ -48,8 +48,16 @@ porcelain exists in Magit.
       ;; buffer, which keeps our buffer list clean.
       "q" 'my/magit-kill-buffers)
     (my/evil-leader-def
-      "gg"  'magit-status
+      "gD"  'magit-diff-dwim
+      "gP"  'magit-push
+      "gR"  'magit-reset
+      "gc"  'magit-commit
       "gd"  'magit-dispatch
+      "gg"  'magit-status
+      "gm"  'magit-merge
+      "gp"  'magit-pull
+      "gr"  'magit-rebase
+      "gs"  'magit-stage-modified
       "gtt" 'git-timemachine-toggle)
     :custom
     ;; List of symbols for actions that Magit should not confirm, or t.
