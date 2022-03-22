@@ -168,12 +168,21 @@ and is designed for quick and easy access to Git forge resources.
 * git-messenger
 Pop up the last commit message for the current line.
 
+I've noticed that this plugin doesn't work that well with PGP-signed
+commits. The popup only shows the PGP signature, not the commit message.
+
 #+begin_src emacs-lisp
   (use-package git-messenger
     :commands
     (git-messenger:popup-diff
      git-messenger:popup-message
      git-messenger:popup-show)
+    :general
+    (my/user-leader-def
+      "g S" 'git-messenger:popup-show-verbose
+      "g d" 'git-messenger:popup-diff
+      "g m" 'git-messenger:popup-message
+      "g s" 'git-messenger:popup-show)
     :custom
     ;; Whether to use `magit-show-commit' for showing status/diff commands.
     (git-messenger:use-magit-popup t))
