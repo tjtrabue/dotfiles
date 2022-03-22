@@ -164,3 +164,11 @@ and is designed for quick and easy access to Git forge resources.
 #+begin_src emacs-lisp
   (use-package ghub)
 #+end_src
+
+* git-messenger
+Pop up the last commit message for the current line.
+
+#+begin_src emacs-lisp
+  (use-package git-messenger
+    :commands git-messenger:popup-message)
+#+end_src
