@@ -170,5 +170,11 @@ Pop up the last commit message for the current line.
 
 #+begin_src emacs-lisp
   (use-package git-messenger
-    :commands git-messenger:popup-message)
+    :commands
+    (git-messenger:popup-diff
+     git-messenger:popup-message
+     git-messenger:popup-show)
+    :custom
+    ;; Whether to use `magit-show-commit' for showing status/diff commands.
+    (git-messenger:use-magit-popup t))
 #+end_src
