@@ -269,6 +269,9 @@ if &ide =~? 'intellij idea'
 elseif &ide =~? 'android studio'
     nmap <leader>pb <Action>(MakeGradleProject)
     nmap <leader>ps <Action>(Android.SyncProject)
+elseif &ide =~? 'appcode'
+    nmap <leader>pb <Action>(Build)
+    nmap <leader>ps <Action>(Swift.PackageManager.Resolve)
 else
     nmap <leader>pb <Action>(CompileProject)
 endif
