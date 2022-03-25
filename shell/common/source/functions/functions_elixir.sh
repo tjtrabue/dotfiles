@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Install Elixir and OTP with asdf. Do not use system package managers, as their
+# pre-packaged distributions are often lacking features.
+
 # Install the Elixir language server protocol implementation.
 # The install prefix for the libraries and executables may be provided as an
 # optional argument.
