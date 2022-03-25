@@ -36,5 +36,6 @@ ${HOME}/.rvm/rubies/default/bin
 ${HOME}/.rvm/gems/default/bin
 ${HOME}/.roswell/bin
 ${HOME}/.asdf/bin
+${HOME}/.asdf/shims
 ${HOME}/go/bin
 ${HOME}/perl5/bin

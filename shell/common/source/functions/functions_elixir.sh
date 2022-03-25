@@ -48,10 +48,8 @@ __build_elixir_ls() {
   (
     log_info "Building ElixirLS"
     cd "${elixirLsRepo}"
-    export MIX_ENV="prod"
-    export MIX_HOME="${HOME}/.mix"
     mix local.hex --force
-    mix deps.get
+    mix deps.update --all
     mix compile
   )
 }
@@ -68,7 +66,6 @@ __install_elixir_ls() {
 
   (
     cd "${elixirLsRepo}"
-    export MIX_ENV="prod"
     install -dm0755 "${installLib}/${elixirLsName}"
     mix elixir_ls.release -o "${installLib}/${elixirLsName}"
 
