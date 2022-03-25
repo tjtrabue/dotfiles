@@ -69,6 +69,8 @@ Lists TODOs and related comments in the =magit-status= buffer.
 
 #+begin_src emacs-lisp
   (use-package magit-todos
+    ;; Really slow for some reason
+    :disabled
     :after magit
     :demand t
     :config
