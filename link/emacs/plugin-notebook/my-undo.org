@@ -20,6 +20,13 @@ This file adds some enhancements to Emacs' undo functionality.
       :general
       (my/evil-leader-def
         "ut" 'undo-tree-visualize)
+      :custom
+      ;; Whether to show diffs when browsing through undo tree
+      (undo-tree-visualizer-diff t)
+      ;; Whether to save undo history to file
+      (undo-tree-auto-save-history t)
+      ;; Whether to show relative timestamps in undo tree
+      (undo-tree-visualizer-timestamps t)
       :config
       (global-undo-tree-mode 1))
   #+end_src
