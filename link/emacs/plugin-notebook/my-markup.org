@@ -26,6 +26,15 @@ and more.
       "g l" 'markdown-follow-link-at-point))
 #+end_src
 
+* markdown-toc
+Generate a table of contents for a markdown file.
+
+#+begin_src emacs-lisp
+  (use-package markdown-toc
+    :hook
+    (markdown-mode . markdown-toc-mode))
+#+end_src
+
 * grip-mode
 Instant Github-flavored Markdown/Org preview using Grip (which stands for
 "GitHub Readme Instant Preview"). The preview can be shown in your configured
