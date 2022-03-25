@@ -69,10 +69,28 @@ Lists TODOs and related comments in the =magit-status= buffer.
 
 #+begin_src emacs-lisp
   (use-package magit-todos
-    ;; Really slow for some reason
+    ;; This package is really slow, even with glob exclude optimizations.
     :disabled
     :after magit
     :demand t
+    :hook
+    (magit-status-mode . (lambda ()
+                           (setq magit-todos-exclude-globs
+                                 (append '("*.a"
+                                           "*.class"
+                                           "*.elc"
+                                           "*.jar"
+                                           "*.o"
+                                           "*.so"
+                                           "*.tar.gz"
+                                           "*.tgz"
+                                           "*.zip"
+                                           "build/"
+                                           "dist/"
+                                           "elpa/"
+                                           "node_modules/"
+                                           "straight/")
+                                         magit-todos-exclude-globs))))
     :config
     (magit-todos-mode 1))
 #+end_src
