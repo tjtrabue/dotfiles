@@ -107,7 +107,7 @@ documentation on hover, syntax linting and error checking, etc.
                     "gr" 'lsp-rename
                     "gt" 'lsp-find-type-definition)
                   (my/evil-leader-def 'local
-                    "s" '(:keymap lsp-command-map))))
+                    "w" '(:keymap lsp-command-map))))
     :general
     ;; This is general.el's way of accomplishing :bind-keymap, but
     ;; general's way is more flexible and integrates with its
