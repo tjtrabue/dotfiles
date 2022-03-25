@@ -75,22 +75,22 @@ Lists TODOs and related comments in the =magit-status= buffer.
     :demand t
     :hook
     (magit-status-mode . (lambda ()
-                           (setq magit-todos-exclude-globs
-                                 (append '("*.a"
-                                           "*.class"
-                                           "*.elc"
-                                           "*.jar"
-                                           "*.o"
-                                           "*.so"
-                                           "*.tar.gz"
-                                           "*.tgz"
-                                           "*.zip"
-                                           "build/"
-                                           "dist/"
-                                           "elpa/"
-                                           "node_modules/"
-                                           "straight/")
-                                         magit-todos-exclude-globs))))
+                           (setq-local magit-todos-exclude-globs
+                                       '("*.a"
+                                         "*.class"
+                                         "*.elc"
+                                         "*.jar"
+                                         "*.o"
+                                         "*.so"
+                                         "*.tar.gz"
+                                         "*.tgz"
+                                         "*.zip"
+                                         ".git/"
+                                         "build/"
+                                         "dist/"
+                                         "elpa/"
+                                         "node_modules/"
+                                         "straight/"))))
     :config
     (magit-todos-mode 1))
 #+end_src
