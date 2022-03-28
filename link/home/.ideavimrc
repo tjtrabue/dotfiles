@@ -217,6 +217,8 @@ nmap <leader>cr <Action>(ChooseRunConfiguration)
 nmap <leader>pd <Action>(Debug)
 " Run the currently selected Run configuration
 nmap <leader>pr <Action>(Run)
+" Stop the currently running app
+nmap <leader>pS <Action>(Stop)
 " }}}
 
 " Breakpoints {{{
