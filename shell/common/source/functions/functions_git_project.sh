@@ -439,6 +439,29 @@ __parse_branch_for_project_id() {
   fi
 }
 
+# Try a number of heuristics to retrieve the project identifier, which is
+# usually a four-letter slug such as "PROJ", for the current repository.
+__get_project_id() {
+  local projectId
+
+  # If we did not get the project ID another way, try to parse it from the
+  # current branch name.
+  if [ -z "${projectId}" ]; then
+    log_debug "Trying to get project ID from branch name..."
+    projectId="$(__parse_branch_for_project_id "$(currentref)")"
+    log_debug "Project ID is now: ${YELLOW}${projectId}${NC}"
+  fi
+
+  # If we still don't have a project identifier, see if we've set the
+  # PROJECT_IDENTIFIER environment variable for our current project.
+  if [ -z "${projectId}" ]; then
+    __src_project_vars_for_git_project
+    projectId="${PROJECT_IDENTIFIER}"
+  fi
+
+  echo "${projectId}"
+}
+
 # Try to get the task number from the current branch name.
 # For example:
 #   PROJ-1234 -> 1234
@@ -448,6 +471,30 @@ __parse_branch_for_task_number() {
   if validate_project_branch "${branchName}"; then
     echo "${branchName}" | grep -E --color=never -o '[0-9]+'
   fi
+}
+
+__get_task_number() {
+  local taskNumber="${1}"
+
+  # Try to get task number as first positional parameter if the first positional
+  # parameter is a number.
+  if [ -n "${taskNumber}" ] &&
+    echo "${1}" | grep -E -q '^[0-9]+$'; then
+    taskNumber="${1}"
+    log_debug "Got task number as positional parameter:" \
+      "${YELLOW}${taskNumber}${NC}"
+    shift
+  fi
+
+  # If we did not get the task number as a positional parameter, try to parse
+  # it from the current branch name.
+  if [ -z "${taskNumber}" ]; then
+    log_debug "Trying to get task number from branch name..."
+    taskNumber="$(__parse_branch_for_task_number "$(currentref)")"
+    log_debug "Task number is now: ${YELLOW}${taskNumber}${NC}"
+  fi
+
+  echo "${taskNumber}"
 }
 
 # Format the description in the branch name into a proper commit message string.
@@ -533,6 +580,31 @@ __validate_project_commit_msg() {
     -e "^\[[A-Z]+${projectFieldSep}[0-9]+\]\s+.*\$"; then
     return 1
   fi
+}
+
+#=========================================#
+#========== Project Pull Request =========#
+#=========================================#
+
+ppr() {
+  local projectIdentifier
+  local taskNumber
+  local prTitleMessage
+  local prBodyMessage
+  local finalPrTitle
+
+  taskNumber="$(__get_task_number "${1}")"
+
+  projectIdentifier="$(__get_project_id)"
+
+  prTitleMessage="${1}"
+  shift
+
+  finalPrTitle="${projectIdentifier}-${taskNumber}: ${prTitleMessage}"
+
+  prBodyMessage="$*"
+
+  gh pr create --title "${finalPrTitle}" --body "${prBodyMessage}"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
