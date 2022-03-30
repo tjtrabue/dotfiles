@@ -73,7 +73,7 @@ EOF
   done
 
   if [ -z "${projectIdentifier}" ]; then
-    projectIdentifier="$(__get_project_id)"
+    projectIdentifier="$(__get_project_identifier)"
   fi
 
   while [ -z "${description}" ]; do
@@ -254,7 +254,7 @@ pcm() {
   fi
 
   if [ -z "${projectIdentifier}" ]; then
-    projectIdentifier="$(__get_project_id)"
+    projectIdentifier="$(__get_project_identifier)"
   fi
 
   # Read task number interactively if it could not be deduced elsewhere.
@@ -413,25 +413,25 @@ __parse_branch_for_project_id() {
 
 # Try a number of heuristics to retrieve the project identifier, which is
 # usually a four-letter slug such as "PROJ", for the current repository.
-__get_project_id() {
-  local projectId
+__get_project_identifier() {
+  local projectIdentifier
 
   # If we did not get the project ID another way, try to parse it from the
   # current branch name.
-  if [ -z "${projectId}" ]; then
+  if [ -z "${projectIdentifier}" ]; then
     log_debug "Trying to get project ID from branch name..."
-    projectId="$(__parse_branch_for_project_id "$(currentref)")"
-    log_debug "Project ID is now: ${YELLOW}${projectId}${NC}"
+    projectIdentifier="$(__parse_branch_for_project_id "$(currentref)")"
+    log_debug "Project ID is now: ${YELLOW}${projectIdentifier}${NC}"
   fi
 
   # If we still don't have a project identifier, see if we've set the
   # PROJECT_IDENTIFIER environment variable for our current project.
-  if [ -z "${projectId}" ]; then
+  if [ -z "${projectIdentifier}" ]; then
     __src_project_vars_for_git_project
-    projectId="${PROJECT_IDENTIFIER}"
+    projectIdentifier="${PROJECT_IDENTIFIER}"
   fi
 
-  echo "${projectId}"
+  echo "${projectIdentifier}"
 }
 
 # Try to get the task number from the current branch name.
@@ -564,10 +564,43 @@ ppr() {
   local prTitleMessage
   local prBodyMessage
   local finalPrTitle
+  local OPTIND
+  local o
 
-  taskNumber="$(__get_task_number "${1}")"
+  while getopts ":b:hn:p:t:" o; do
+    case "${o}" in
+    b)
+      prBodyMessage="${OPTARG}"
+      ;;
+    h)
+      __ppr_help
+      return 0
+      ;;
+    n)
+      taskNumber="${OPTARG}"
+      ;;
+    p)
+      projectIdentifier="${OPTARG}"
+      ;;
+    t)
+      prTitleMessage="${OPTARG}"
+      ;;
+    *)
+      err "Unknown operand"
+      __ppr_usage
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
 
-  projectIdentifier="$(__get_project_id)"
+  if [ -z "${taskNumber}" ]; then
+    taskNumber="$(__get_task_number)"
+  fi
+
+  if [ -z "${projectIdentifier}" ]; then
+    projectIdentifier="$(__get_project_identifier)"
+  fi
 
   if [ -n "${1}" ]; then
     prTitleMessage="${1}"
@@ -590,6 +623,60 @@ EOF
   done
 
   gh pr create --title "${finalPrTitle}" --body "${prBodyMessage}"
+}
+
+__ppr_usage() {
+  command cat <<EOF
+USAGE:
+  ppr [PR_TITLE] [PR_BODY]
+      [-h]
+      [-b PR_BODY]
+      [-n TASK_NUMBER]
+      [-p PROJECT_IDENTIFIER]
+      [-t PR_TITLE]
+EOF
+}
+
+__ppr_help() {
+  command cat <<EOF
+ppr - Create a pull request based on the current Git project branch
+
+EOF
+  __ppr_usage
+  command cat <<EOF
+
+OPTIONS:
+  -h
+    Print the help message (this message) and exit.
+
+  -b PR_BODY
+    Supply the PR body. If this option is omitted, the user will be prompted for
+    the body during runtime.
+
+  -n TASK_NUMBER
+    Supply the task number. If this option is omitted, the user may supply the
+    task number as a positional parameter. The branch name will also be parsed
+    for a possible task number. In all other cases, the user will be prompted
+    to enter the the task number interactively.
+
+  -p PROJECT_IDENTIFIER
+    Supply the project ID string. If no other value for this parameter is
+    supplied, its value will be read from the PROJECT_IDENTIFIER environment
+    variable, then the branch name will be parsed and, failing those, the user
+    will be prompted for the value of the project ID interactively.
+
+  -t PR_TITLE
+    Supply the PR title. If this option is omitted, the user will be prompted for
+    the title during runtime.
+
+ENVIRONMENT VARIABLES:
+  Each of these environment variables may be placed in a per-project file named
+  '${PROJECT_ENV_FILE_NAME}' located in the project's root directory.
+
+  PROJECT_IDENTIFIER
+    The project ID string to use for the current project. It's value should look
+    like 'PROJ'.
+EOF
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
