@@ -54,12 +54,8 @@ pbr() {
     return 1
   fi
 
-  if [ -z "${taskNumber}" ] && [ -n "${1}" ] &&
-    echo "${1}" | grep -E -q '^[0-9]+$'; then
-    taskNumber="${1}"
-    log_debug "Got task number from positional parameter:" \
-      "${YELLOW}${taskNumber}${NC}"
-    shift
+  if [ -z "${taskNumber}" ]; then
+    taskNumber="$(__get_task_number "${1}")"
   fi
 
   if [ -z "${description}" ] && [ "$#" -gt 0 ]; then
@@ -77,15 +73,8 @@ EOF
   done
 
   if [ -z "${projectIdentifier}" ]; then
-    __src_project_vars_for_git_project
-    projectIdentifier="${PROJECT_IDENTIFIER}"
+    projectIdentifier="$(__get_project_id)"
   fi
-  while [ -z "${projectIdentifier}" ]; do
-    command cat <<EOF
-Enter project ID:
-EOF
-    read -r projectIdentifier
-  done
 
   while [ -z "${description}" ]; do
     command cat <<EOF
@@ -254,21 +243,8 @@ pcm() {
     return 1
   fi
 
-  # Try to get task number as first positional parameter if the first positional
-  # parameter is a number.
-  if [ -z "${taskNumber}" ] && [ -n "${1}" ] &&
-    echo "${1}" | grep -E -q '^[0-9]+$'; then
-    taskNumber="${1}"
-    log_debug "Got task number as positional parameter:" \
-      "${YELLOW}${taskNumber}${NC}"
-    shift
-  fi
-  # If we did not get the task number as a positional parameter, try to parse
-  # it from the current branch name.
   if [ -z "${taskNumber}" ]; then
-    log_debug "Trying to get task number from branch name..."
-    taskNumber="$(__parse_branch_for_task_number "$(currentref)")"
-    log_debug "Task number is now: ${YELLOW}${taskNumber}${NC}"
+    taskNumber="$(__get_task_number "${1}")"
   fi
 
   if [ -z "${commitMsg}" ] && [ "$#" -gt 0 ]; then
@@ -277,12 +253,8 @@ pcm() {
     shift "$#"
   fi
 
-  # If we did not get the project ID another way, try to parse it from the
-  # current branch name.
   if [ -z "${projectIdentifier}" ]; then
-    log_debug "Trying to get project ID from branch name..."
-    projectIdentifier="$(__parse_branch_for_project_id "$(currentref)")"
-    log_debug "Project ID is now: ${YELLOW}${projectIdentifier}${NC}"
+    projectIdentifier="$(__get_project_id)"
   fi
 
   # Read task number interactively if it could not be deduced elsewhere.
@@ -597,12 +569,25 @@ ppr() {
 
   projectIdentifier="$(__get_project_id)"
 
-  prTitleMessage="${1}"
-  shift
+  if [ -n "${1}" ]; then
+    prTitleMessage="${1}"
+    shift
+  fi
+  while [ -z "${prTitleMessage}" ]; do
+    command cat <<EOF
+Enter PR title:
+EOF
+    read -r prTitleMessage
+  done
 
   finalPrTitle="${projectIdentifier}-${taskNumber}: ${prTitleMessage}"
 
-  prBodyMessage="$*"
+  while [ -z "${prBodyMessage}" ]; do
+    command cat <<EOF
+Enter main PR message:
+EOF
+    read -r prBodyMessage
+  done
 
   gh pr create --title "${finalPrTitle}" --body "${prBodyMessage}"
 }
