@@ -57,6 +57,10 @@ pbr() {
   if [ -z "${taskNumber}" ]; then
     taskNumber="$(__get_task_number "${1}")"
   fi
+  if [ -n "${1}" ]; then
+    log_debug "Shifting task number"
+    shift
+  fi
 
   if [ -z "${description}" ] && [ "$#" -gt 0 ]; then
     description="${*}"
@@ -245,6 +249,10 @@ pcm() {
 
   if [ -z "${taskNumber}" ]; then
     taskNumber="$(__get_task_number "${1}")"
+  fi
+  if [ -n "${1}" ]; then
+    log_debug "Shifting task number"
+    shift
   fi
 
   if [ -z "${commitMsg}" ] && [ "$#" -gt 0 ]; then
@@ -455,7 +463,6 @@ __get_task_number() {
     taskNumber="${1}"
     log_debug "Got task number as positional parameter:" \
       "${YELLOW}${taskNumber}${NC}"
-    shift
   fi
 
   # If we did not get the task number as a positional parameter, try to parse
