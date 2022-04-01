@@ -309,6 +309,7 @@ link/config/session/
 link/config/spectaclerc
 link/config/systemsettingsrc
 link/config/webengineurlinterceptoradblockrc
+link/config/xdg-desktop-portal-kderc
 link/config/xsettingsd/
 
 # The activity manager changes too frequently, and is not useful for sharing.
