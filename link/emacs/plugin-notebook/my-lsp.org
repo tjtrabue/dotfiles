@@ -48,6 +48,7 @@ documentation on hover, syntax linting and error checking, etc.
     ;; most window managers).
     (lsp-keymap-prefix "C-c l")
     (lsp-enable-snippet t)
+    (lsp-semantic-tokens-enable t)
     (lsp-enable-semantic-highlighting t)
     ;; Whether to include all info returned by document/onHover in the eldoc
     ;; echo area rather than simply basic info.

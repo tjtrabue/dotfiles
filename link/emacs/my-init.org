@@ -253,6 +253,9 @@ LanguageServerProtocol clients and servers.
   ;; Silence the annoying error/warning bell
   (setq ring-bell-function 'ignore)
 
+  ;; Suppress various warning types.
+  (setq warning-suppress-log-types '((comp)))
+
   ;; Display relative line numbers like in Vim.
   (setq display-line-numbers-type 'relative)
 
