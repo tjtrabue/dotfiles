@@ -296,7 +296,26 @@ straight_update_repos() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local straightHome="${emacsHome}/straight"
   local straightRepos="${straightHome}/repos"
+  local fast=false
   local d
+  local OPTIND
+  local o
+
+  while getopts ":f" o; do
+    case "${o}" in
+    f)
+      # Fast update method does not do any analysis of the current branch of the
+      # straight repo. It simply forces a git update of the current ref. This
+      # approach is much faster than the default method.
+      fast=true
+      ;;
+    *)
+      err "Unknown operand"
+      return 1
+      ;;
+    esac
+  done
+  shift $((OPTIND - 1))
 
   if [ ! -d "${straightRepos}" ]; then
     err "Directory ${straightRepos} does not exist."
@@ -304,9 +323,32 @@ straight_update_repos() {
   fi
 
   log_info "Updating default branches for all straight.el cloned repositories"
-  for d in "${straightRepos}"/*; do
-    __update_straight_repo "${d}"
-  done
+  if "${fast}"; then
+    __straight_update_repos_fast "${straightRepos}"
+  else
+    for d in "${straightRepos}"/*; do
+      __update_straight_repo "${d}"
+    done
+  fi
+}
+
+__straight_update_repos_fast() {
+  local straightRepos="${1:-${HOME}/.emacs.d/straight/repos}"
+
+  if [ ! -d "${straightRepos}" ]; then
+    err "Directory ${straightRepos} does not exist."
+    return 1
+  fi
+
+  log_info "Using fast update method for straight.el repos"
+  if [ -x "$(command -v parallel)" ]; then
+    # Use GNU Parallel if available.
+    find "${straightRepos}" -maxdepth 1 -mindepth 1 -type d |
+      parallel git -C '{}' pull -f
+  else
+    find "${straightRepos}" -maxdepth 1 -mindepth 1 -type d \
+      -exec git -C '{}' pull -f \;
+  fi
 }
 
 # Update a repository cloned by straight.el.
