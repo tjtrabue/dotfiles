@@ -344,7 +344,7 @@ __straight_update_repos_fast() {
   if [ -x "$(command -v parallel)" ]; then
     # Use GNU Parallel if available.
     find "${straightRepos}" -maxdepth 1 -mindepth 1 -type d |
-      parallel git -C '{}' pull -f
+      parallel 'echo Updating repo: {/} && git -C {} pull -f'
   else
     find "${straightRepos}" -maxdepth 1 -mindepth 1 -type d \
       -exec git -C '{}' pull -f \;
