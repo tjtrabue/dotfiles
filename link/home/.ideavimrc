@@ -160,6 +160,10 @@ sethandler <C-k> i:ide
 
 " Normal Mode Mappings {{{
 
+" System {{{
+nmap <leader>Q <Action>(InvalidateCaches)
+" }}}
+
 " Editing and Reloading the ~/.ideavimrc file
 nmap <leader>e :e ~/.ideavimrc<CR>
 nmap <leader>R :source ~/.ideavimrc<CR>
