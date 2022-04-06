@@ -1,0 +1,15 @@
+#+title:   Edit code blocks in separate window
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:04:06
+#+tags:    edit indirect markdown
+#+STARTUP: fold
+
+=edit-indirect= allows you to edit Markdown code blocks in a dedicated buffer,
+similar to how =org-mode= behaves.
+
+* =use-package= specification
+
+#+begin_src emacs-lisp
+  (use-package edit-indirect)
+#+end_src
