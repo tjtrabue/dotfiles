@@ -13,25 +13,37 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
 * Functions
   #+begin_src emacs-lisp
     (defun my/comint-search-history ()
-      "Search `comint-mode' input history and insert the selected command at point."
+      "Search `comint-mode' input history and insert the selected entry at point."
       (interactive)
-      (let* ((curr-cmd-line (buffer-substring (comint-line-beginning-position) (line-end-position)))
-             (command       (my-completing-read-comint-input-ring curr-cmd-line)))
-        (delete-region (comint-line-beginning-position) (line-end-position))
-        (insert command)))
+      (let ((curr-cmd-line)
+            (command))
+        ;; Save and restore current point position if we terminate the completion
+        ;; with C-g.
+        (save-excursion
+          (goto-char (point-max))
+          (setq curr-cmd-line (buffer-substring (comint-line-beginning-position)
+                                                (line-end-position)))
+          (setq command (my-completing-read-comint-input-ring curr-cmd-line))
+          (delete-region (comint-line-beginning-position) (line-end-position))
+          (insert command))
+        ;; Move point to the end of the current prompt if the command succeeds.
+        (goto-char (point-max))
+        ;; Enter evil insert state if in a different state.
+        (if (and (boundp evil-mode) evil-mode (eq evil-state 'normal))
+            (evil-append-line 1))))
   #+end_src
 
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package comint
-    :after evil
+    :after evil-collection
     :demand t
     ;; This is a built-in feature, so we don't want to clone or install
     ;; anything.
     :ensure nil
     :straight nil
     :general
-    (general-def comint-mode-map
+    (general-def '(normal insert) comint-mode-map
       ;; Search backward through history using completing-read.
       "C-r" 'my/comint-search-history)
     (general-def 'insert comint-mode-map
