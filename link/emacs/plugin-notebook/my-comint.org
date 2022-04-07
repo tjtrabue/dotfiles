@@ -12,11 +12,12 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
 
 * Functions
   #+begin_src emacs-lisp
-    (defun my/set-comint-keybindings ()
-      "Set evil keybindings for `comint-mode'."
-      (evil-define-key 'insert comint-mode-map
-        (kbd "C-j") #'comint-next-input
-        (kbd "C-k") #'comint-previous-input))
+    (defun my/comint-search-history ()
+      "Search `comint-mode' input history and insert the selected command at point."
+      (interactive)
+      (let* ((curr-cmd-line (buffer-substring (comint-line-beginning-position) (point)))
+             (command   (my-completing-read-comint-input-ring curr-cmd-line)))
+        (insert command)))
   #+end_src
 
 * =use-package= specification
@@ -28,11 +29,16 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
     ;; anything.
     :ensure nil
     :straight nil
+    :general
+    (general-def comint-mode-map
+      ;; Search backward through history using completing-read.
+      "C-r" 'my/comint-search-history)
+    (general-def 'insert comint-mode-map
+      "C-j" 'comint-next-input
+      "C-k" 'comint-previous-input)
     :custom
     ;; Increase the comint buffer (e.g., history) size.
     (comint-buffer-maximum-size 20000)
     ;; Make the prompt read only.
-    (comint-prompt-read-only t)
-    :config
-    (my/set-comint-keybindings))
+    (comint-prompt-read-only t))
 #+end_src

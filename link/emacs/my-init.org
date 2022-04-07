@@ -163,6 +163,8 @@ custom Emacs Lisp libraries.
   (require 'my-straight-helpers)
   ;; My hippie-expand customizations.
   (require 'my-hippie-expand)
+  ;; Custom completing-read functions.
+  (require 'my-completing-read)
 #+end_src
 
 * Load Hotfix Modules
