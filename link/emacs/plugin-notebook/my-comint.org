@@ -29,7 +29,7 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
         ;; Move point to the end of the current prompt if the command succeeds.
         (goto-char (point-max))
         ;; Enter evil insert state if in a different state.
-        (if (and (boundp evil-mode) evil-mode (eq evil-state 'normal))
+        (if (and (boundp evil-mode) evil-mode (not (eq evil-state 'insert)))
             (evil-append-line 1))))
   #+end_src
 
