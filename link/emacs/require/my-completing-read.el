@@ -36,8 +36,9 @@
 
 INIT-STR is the initial completion string placed into the minibuffer.
 If INIT-STR is nil, no initial string will be placed into the minibuffer."
-  (interactive)
-  (completing-read "Shell History: " (ring-elements comint-input-ring) nil nil init-str))
+  (interactive "P")
+  (completing-read "Shell History: "
+    (ring-elements comint-input-ring) nil nil init-str))
 
 (provide 'my-completing-read)
 

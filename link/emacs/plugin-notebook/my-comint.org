@@ -15,8 +15,9 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
     (defun my/comint-search-history ()
       "Search `comint-mode' input history and insert the selected command at point."
       (interactive)
-      (let* ((curr-cmd-line (buffer-substring (comint-line-beginning-position) (point)))
-             (command   (my-completing-read-comint-input-ring curr-cmd-line)))
+      (let* ((curr-cmd-line (buffer-substring (comint-line-beginning-position) (line-end-position)))
+             (command       (my-completing-read-comint-input-ring curr-cmd-line)))
+        (delete-region (comint-line-beginning-position) (line-end-position))
         (insert command)))
   #+end_src
 
