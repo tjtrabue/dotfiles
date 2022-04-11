@@ -29,10 +29,9 @@ fuzzygit() {
 
 __fuzzygit_get_toplevel_command() {
   local fuzzyFinderCmd="${1}"
-  local toplevelCmds="$(__fuzzygit_get_toplevel_commands)"
-  eval "$(__fuzzygit_construct_fuzzy_find_cmd_line \
+  __fuzzygit_get_arg_from_list \
     "${fuzzyFinderCmd}" \
-    "printf '${toplevelCmds}' | tr ' ' '\n'")"
+    "$(__fuzzygit_get_toplevel_commands)"
 }
 
 __fuzzygit_get_toplevel_commands() {
@@ -80,6 +79,18 @@ __fuzzygit_run_git_cmd() {
 ############################################
 ##                  Misc                  ##
 ############################################
+
+__fuzzygit_get_arg_from_list() {
+  local fuzzyFinderCmd="${1}"
+  local argList="${2}"
+  local selectedArg="$(
+    eval "$(__fuzzygit_construct_fuzzy_find_cmd_line \
+      "${fuzzyFinderCmd}" \
+      "printf '${argList}' | tr ' ' '\n'")"
+  )"
+
+  printf "%s" "${selectedArg}"
+}
 
 # Construct a fuzzy find command from the specified fuzzy finder executable and
 # an arbitrary shell string representing some type of listing command.
