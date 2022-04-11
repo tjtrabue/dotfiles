@@ -45,6 +45,7 @@ __fuzzygit_get_toplevel_commands() {
 ############################################
 
 __fuzzygit_add() {
+  local fuzzyFinderCmd="${1}"
   __fuzzygit_run_git_cmd "${fuzzyFinderCmd}" "git ls-files -m" "git add"
 }
 
