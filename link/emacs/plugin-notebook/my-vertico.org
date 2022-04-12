@@ -42,6 +42,27 @@ completion UI in terms of customization.
       "C-o" 'vertico-first
       "C-i" 'vertico-last
       "C-M-j" 'vertico-exit-input)
+    (general-def 'normal vertico-map
+      ;; Pressing ? brings up help for available completions
+      "?" 'minibuffer-completion-help)
+    (general-def '(normal insert) vertico-map
+      ;; Navigate vertico with C-j and C-k
+      "C-j" 'vertico-next
+      "C-k" 'vertico-previous
+      ;; I know it looks backwards, but this makes more sense in practice.
+      ;; Vertico considers further down the list as "scrolling up", and vice
+      ;; versa.
+      "C-d" 'vertico-scroll-up
+      "C-u" 'vertico-scroll-down
+      ;; Go to top or bottom of minibuffer
+      "C-o" 'vertico-first
+      "C-i" 'vertico-last
+      ;; Complete current selection
+      "C-l" 'vertico-insert
+      "TAB" 'vertico-insert
+      "M-TAB" 'minibuffer-complete
+      ;; Select currently typed text and exit Vertico
+      "C-M-j" 'vertico-exit-input)
     :custom
     ;; Whether to grow and shrink vertico buffer dynamically
     ;; Can be t (which means grow and shrink), nil, or 'grow-only
@@ -50,29 +71,6 @@ completion UI in terms of customization.
     (vertico-count 20)
     ;; Enable cycling for vertico-next and vertico-previous
     (vertico-cycle t)
-    :init
-    ;; This is where we bind keys because it gives us more flexibility.
-    (evil-define-key 'normal vertico-map
-      ;; Pressing ? brings up help for available completions
-      "?" 'minibuffer-completion-help)
-    (evil-define-key '(normal insert) vertico-map
-      ;; Navigate vertico with C-j and C-k
-      (kbd "C-j") 'vertico-next
-      (kbd "C-k") 'vertico-previous
-      ;; I know it looks backwards, but this makes more sense in practice.
-      ;; Vertico considers further down the list as "scrolling up", and vice
-      ;; versa.
-      (kbd "C-d") 'vertico-scroll-up
-      (kbd "C-u") 'vertico-scroll-down
-      ;; Go to top or bottom of minibuffer
-      (kbd "C-o") 'vertico-first
-      (kbd "C-i") 'vertico-last
-      ;; Complete current selection
-      (kbd "C-l") 'vertico-insert
-      (kbd "<tab>") 'vertico-insert
-      (kbd "M-<tab>") 'minibuffer-complete
-      ;; Select currently typed text and exit Vertico
-      (kbd "C-M-j") 'vertico-exit-input)
     :config
     (vertico-mode 1))
 #+end_src

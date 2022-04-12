@@ -63,12 +63,11 @@ offering you relevant actions to use on a target determined by the context:
         "C-M-l" 'my/embark-act-noquit
         ;; alternative for `describe-bindings'
         "C-h E" 'embark-bindings)
+      (general-def 'normal embark-collect-mode-map
+        "p" 'consult-preview-at-point)
       :init
       ;; Optionally replace the key help with a completing-read interface
       (setq prefix-help-command #'embark-prefix-help-command)
-      ;; Define evil keybindings
-      (evil-define-key 'normal embark-collect-mode-map
-        "p" #'consult-preview-at-point)
       :custom
       ;; When embark is invoked from the minibuffer, this option controls whether or
       ;; not embark dismisses the minibuffer after `embark-act' finishes.

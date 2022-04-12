@@ -560,6 +560,9 @@ more-helpful local prompt."
        (general-def eshell-proc-mode-map
          "M-j" 'eshell-next-matching-input-from-input
          "M-k" 'eshell-previous-matching-input-from-input)
+       (general-def '(normal insert) eshell-mode-map
+         ;; Use C-r in eshell mode to search back through history
+         "C-r" 'helm-eshell-history)
        :custom
        ;; eshell-buffer-shorthand t ...  Can't see Bug 19391
        (eshell-scroll-to-bottom-on-input 'all)
@@ -575,11 +578,7 @@ more-helpful local prompt."
        ;; ~/.emacs.d/eshell
        (eshell-directory-name (expand-file-name "eshell" user-emacs-directory))
        :init
-       (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function)
-       :config
-       ;; Use C-r in eshell mode to search back through history
-       (evil-define-key '(normal insert) eshell-mode-map
-         (kbd "C-r") #'helm-eshell-history))
+       (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function))
    #+end_src
 
 * Plugins
