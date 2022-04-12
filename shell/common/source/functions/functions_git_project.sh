@@ -57,17 +57,6 @@ pbr() {
   if [ -z "${taskNumber}" ]; then
     taskNumber="$(__get_task_number "${1}")"
   fi
-  if [ -n "${1}" ]; then
-    log_debug "Shifting task number"
-    shift
-  fi
-
-  if [ -z "${description}" ] && [ "$#" -gt 0 ]; then
-    description="${*}"
-    log_debug "Got description from command line:" \
-      "'${YELLOW}${description}${NC}'"
-    shift "$#"
-  fi
 
   while ! __validate_task_number "${taskNumber}"; do
     command cat <<EOF
@@ -75,6 +64,13 @@ Enter task number:
 EOF
     read -r taskNumber
   done
+
+  if [ -z "${description}" ] && [ "$#" -gt 0 ]; then
+    description="${*}"
+    log_debug "Got description from command line:" \
+      "'${YELLOW}${description}${NC}'"
+    shift "$#"
+  fi
 
   if [ -z "${projectIdentifier}" ]; then
     projectIdentifier="$(__get_project_identifier)"
