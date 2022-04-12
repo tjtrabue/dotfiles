@@ -270,20 +270,21 @@ Used to provide default Vim keybindings for all standard Emacs modes.
     :after evil
     :demand t
     :general
+    (general-unbind
+      ;; We do not need to kill a line with C-k anymore since we're using
+      ;; Vim keys.
+      "C-k")
     (general-unbind 'normal
       ;; Unbind some unused mappings
       "M-.")
+    (general-unbind 'insert
+      ;; We never need to insert digraphs!
+      "C-k")
     :custom
     ;; Whether or not to use Vim keys in the minibuffer.
     (evil-collection-setup-minibuffer t)
     :config
-    (evil-collection-init)
-    ;; Get rid of troublesome keybindings (must come here in the :config block):
-    ;; We do not need to kill a line with C-k anymore since we're using
-    ;; Vim keys.
-    (global-unset-key (kbd "C-k"))
-    ;; We never need to insert digraphs!
-    (define-key evil-insert-state-map (kbd "C-k") nil))
+    (evil-collection-init))
 #+end_src
 
 ** evil-escape
@@ -323,12 +324,15 @@ evil's normal state from insert state.
 #+end_src
 
 ** evil-numbers
+Increment or decrement numbers at point.
+
 #+begin_src emacs-lisp
   (use-package evil-numbers
     :demand t
-    :config
-    (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
-    (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt))
+    :general
+    (my/user-leader-def 'normal
+      "+" 'evil-numbers/inc-at-pt
+      "-" 'evil-numbers/dec-at-pt))
 #+end_src
 
 ** evil-commentary
@@ -444,14 +448,17 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
     :hook
     ;; Turn off snipe in magit-mode for compatibility.
     (magit-mode . turn-off-evil-snipe-override-mode)
+    :general
+    ;; Don't want snipe messing with evil-leader's mappings.
+    (general-unbind evil-snipe-override-mode-map
+      "<motion-state> ,")
+    (general-unbind evil-snipe-override-local-mode-map
+      "<motion-state> ,")
     :custom
     (evil-snipe-scope 'whole-visible)
     (evil-snipe-repeat-scope 'whole-buffer)
     (evil-snipe-spillover-scope 'whole-buffer)
     :config
-    ;; Don't want snipe messing with evil-leader's mappings.
-    (define-key evil-snipe-override-mode-map (kbd "<motion-state> ,") nil)
-    (define-key evil-snipe-override-local-mode-map (kbd "<motion-state> ,") nil)
     ;; Map '[' to match any opening delimiter in any snipe mode.
     (push '(?\[ "[[{(]") evil-snipe-aliases)
     (evil-snipe-override-mode 1))

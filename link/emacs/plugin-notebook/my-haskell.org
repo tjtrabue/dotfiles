@@ -20,44 +20,39 @@ strengthen your Haskell game in no time.
 
 #+begin_src emacs-lisp
   (use-package haskell-mode
-    :after (evil evil-collection)
-    :init
-      ;; Format Haskell code when file is saved
-      (setq haskell-stylish-on-save t
-            ;; (Re)generate tags file whenever code is saved
-            haskell-tags-on-save t
-            ;; Some handy and benign features
-            haskell-process-suggest-remove-import-lines t
-            haskell-process-auto-import-loaded-modules t
-            haskell-process-log t)
-    :config
-    ;; We need to use with-eval-after-load because the map keeps getting
-    ;; reported as void otherwise; must be a loading mismatch in haskell-mode.
-    (with-eval-after-load 'haskell
-      (add-hook 'haskell-mode-hook (lambda ()
-                                       ;; Used to integrate Emacs with
-                                       ;; inferior-haskell shells.
-                                       (interactive-haskell-mode)
-                                       ;; Enable declaration scanning mode for
-                                       ;; better menu support.
-                                       (haskell-decl-scan-mode)
-                                       ;; Insert a module template at the
-                                       ;; beginning of a new Haskell file.
-                                       (haskell-auto-insert-module-template)
-                                       ;; Automatically enable haskell-unicode
-                                       ;; input method.
-                                       (turn-on-haskell-unicode-input-method)))
-      ;; Add Vim-like bindings for navigating history
-      (define-key haskell-interactive-mode-map (kbd "M-k")
-        'haskell-interactive-mode-history-previous)
-      (define-key haskell-interactive-mode-map (kbd "M-j")
-        'haskell-interactive-mode-history-next)
+    :after evil-collection
+    :hook
+    (haskell-mode . (lambda ()
+                      ;; Used to integrate Emacs with
+                      ;; inferior-haskell shells.
+                      (interactive-haskell-mode)
+                      ;; Enable declaration scanning mode for
+                      ;; better menu support.
+                      (haskell-decl-scan-mode)
+                      ;; Insert a module template at the
+                      ;; beginning of a new Haskell file.
+                      (haskell-auto-insert-module-template)
+                      ;; Automatically enable haskell-unicode
+                      ;; input method.
+                      (turn-on-haskell-unicode-input-method)))
+    :general
+    (general-def haskell-interactive-mode-map
+      "M-k" 'haskell-interactive-mode-history-previous
+      "M-j" 'haskell-interactive-mode-history-next
       ;; Jump to error at point
-      (define-key haskell-interactive-mode-map (kbd "M-.")
-        'haskell-mode-goto-loc)
+      "M-." 'haskell-mode-goto-loc)
+    (my/user-leader-def haskell-interactive-mode-map
       ;; Show the type of the variable at point
-      (define-key haskell-interactive-mode-map (kbd "C-c C-t")
-        'haskell-mode-show-type-at)))
+      "C-t" 'haskell-mode-show-type-at)
+    :custom
+    ;; Format Haskell code when file is saved
+    (haskell-stylish-on-save t)
+    ;; (Re)generate tags file whenever code is saved
+    (haskell-tags-on-save t)
+    ;; Some handy and benign features
+    (haskell-process-suggest-remove-import-lines t)
+    (haskell-process-auto-import-loaded-modules t)
+    (haskell-process-log t))
 #+end_src
 
 * structured-haskell-mode (shm)
