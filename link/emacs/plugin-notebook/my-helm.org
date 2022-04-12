@@ -103,12 +103,9 @@ Configuration for all things helm-related, including helm-projectile integration
     :disabled
     :after helm
     :commands helm-rg
-    :general
-    (my/user-leader-def
-      "s r" 'helm-rg)
-    :config
+    :custom
     ;; Extra CLI options to pass to ripgrep
-    (setq helm-rg-default-extra-args '("--hidden")))
+    (helm-rg-default-extra-args '("--hidden")))
 #+end_src
 
 ** helm-ag
