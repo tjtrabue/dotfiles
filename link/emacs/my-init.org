@@ -896,6 +896,9 @@ and hooks in a way that defers loading the package.
     ;; code more descriptive, however.
     (general-evil-setup)
     ;;; Set universal keybindings with General
+    (general-def
+      ;; Nobody uses downcase-region, anyway.
+      "C-x C-l" 'find-library)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
       "ee" 'eval-last-sexp))
