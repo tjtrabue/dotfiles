@@ -338,5 +338,11 @@ Elixir-related major modes that are not covered by =lsp-mode=, such as
                     :repo "ayrat555/company-elixir"
                     :files (:defaults "company_elixir_script.exs"))
     :hook
-    (inf-elixir-mode . company-elixir-hook))
+    (inf-elixir-mode . company-elixir-hook)
+    :custom
+    ;; The command used to start IEx.
+    ;; Defaults to "iex -S mix".
+    (company-elixir-iex-command "iex -S mix")
+    ;; The major mode used to kick off company-elixir
+    (company-elixir-major-mode #'inf-elixir-mode))
 #+end_src
