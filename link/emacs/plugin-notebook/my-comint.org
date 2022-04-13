@@ -42,6 +42,12 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
     ;; anything.
     :ensure nil
     :straight nil
+    :hook
+    (comint-mode . (lambda ()
+                     ;; Don't want to show trailing whitespace in the
+                     ;; interactive shell.
+                     (setq-local show-trailing-whitespace nil)
+                     (whitespace-mode -1)))
     :general
     (general-def '(normal insert) comint-mode-map
       ;; Search backward through history using completing-read.
