@@ -24,6 +24,7 @@ gnu-sed
 gnu-tar
 gnu-which
 gnutls
+gradle-completion
 graphviz
 grep
 growlnotify

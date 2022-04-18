@@ -33,6 +33,7 @@ add_bash_completions() {
   __add_asdf_completions_for_bash
   __add_pack_completions_for_bash
   __add_gh_completions_for_bash
+  __add_gradle_completions_for_bash
 }
 
 # Add any extra Zsh completions.
@@ -47,6 +48,7 @@ add_zsh_completions() {
   __add_asdf_completions_for_zsh
   __add_pack_completions_for_zsh
   __add_gh_completions_for_zsh
+  __add_gradle_completions_for_zsh
 }
 
 # Add extra Fish shell completions.
@@ -396,6 +398,45 @@ __add_gh_completions_for_fish() {
   if [ -x "$(command -v gh)" ] && [ ! -f "${fishGhCompletionFile}" ]; then
     mkdir -p "${fishCompletionDir}"
     gh completion -s fish > "${fishGhCompletionFile}"
+  fi
+}
+
+# Add tab completion for gradle command line tools for Bash.
+__add_gradle_completions_for_bash() {
+  local gradleCompletionHome="${HOME}/.gradle_completion"
+
+  if [ ! -d "${gradleCompletionHome}" ]; then
+    __clone_gradle_completions_repo
+  fi
+
+  . "${gradleCompletionHome}/gradle-completion.bash"
+}
+
+# Add tab completion for gradle command line tools for Zsh.
+__add_gradle_completions_for_zsh() {
+  local gradleCompletionHome="${HOME}/.gradle_completion"
+
+  if [ ! -d "${gradleCompletionHome}" ]; then
+    __clone_gradle_completions_repo
+  fi
+
+  fpath=("${gradleCompletionHome}" $fpath)
+}
+
+__clone_gradle_completions_repo() {
+  local gradleCompletionUrl="https://github.com/gradle/gradle-completion"
+  local gradleCompletionHome="${HOME}/.gradle_completion"
+
+  if [ -d "${gradleCompletionHome}" ]; then
+    log_info "Updating Gradle completions repo at:" \
+      "${BLUE}${gradleCompletionHome}${NC}"
+    git -C "${gradleCompletionHome}" restore -S
+    git -C "${gradleCompletionHome}" restore
+    git -C "${gradleCompletionHome}" pull
+  else
+    log_info "Cloning Gradle completions repo to:" \
+      "${BLUE}${gradleCompletionHome}${NC}"
+    git clone "${gradleCompletionUrl}" "${gradleCompletionHome}"
   fi
 }
 
