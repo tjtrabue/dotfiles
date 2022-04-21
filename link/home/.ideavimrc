@@ -180,6 +180,10 @@ nmap Y y$
 nmap [b <Action>(PreviousTab)
 nmap ]b <Action>(NextTab)
 
+" Navigate highlighted errors with vim-unimpaired style bindings
+nmap [e <Action>(GotoNextError)
+nmap ]e <Action>(GotoPreviousError)
+
 " General {{{
 nmap <leader>U <Action>(CheckForUpdate)
 " }}}
