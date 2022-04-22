@@ -56,6 +56,7 @@ pbr() {
 
   if [ -z "${taskNumber}" ]; then
     taskNumber="$(__get_task_number "${1}")"
+    __validate_task_number "${taskNumber}" && shift
   fi
 
   while ! __validate_task_number "${taskNumber}"; do
