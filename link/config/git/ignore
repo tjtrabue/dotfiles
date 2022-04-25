@@ -16,6 +16,12 @@
 #
 # in your ~/.gitconfig file.
 
+#####################
+# Dotfiles metadata #
+#####################
+
+.git_project.sh
+
 ######################
 # OS generated files #
 ######################
