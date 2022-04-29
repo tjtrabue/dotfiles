@@ -9,25 +9,10 @@ install_arch_packages() {
     sudo pacman -S --needed -
 }
 
-# Clean up Arch installation, including package caches and orphaned packages.
-paclean() {
-  if [ -x "$(command -v paccache)" ]; then
-    # `paccache` comes from the "pacman-contrib" package.
-    paccache -r
-  fi
-  sudo pacman -Sc --noconfirm
-  remove_orphans
-}
-
-# Orphan = unused package
-remove_orphans() {
-  pacman -Qtdq | sudo pacman -Rns -
-}
-
 # Re-initialize the Arch Linux GPG trust keyring. This is sometimes necessary
 # after a long period of inactivity on an Arch Linux installation, as keys can
-# become stale and untrusted.
-arch_rekey() {
+# become stale or untrusted, which can lead to system upgrades not completing.
+pacrekey() {
   local archGnupgDir="/etc/pacman.d/gnupg"
 
   if [ -d "${archGnupgDir}" ]; then
@@ -36,8 +21,25 @@ arch_rekey() {
   fi
 
   log_info "Re-initializing Arch Linux GPG keyring"
+  sudo pacman -Sy archlinux-keyring
   sudo pacman-key --init
   sudo pacman-key --populate archlinux
+  sudo pacman-key --refresh-keys
+}
+
+# Clean up Arch installation, including package caches and orphaned packages.
+paclean() {
+  if [ -x "$(command -v paccache)" ]; then
+    # `paccache` comes from the "pacman-contrib" package.
+    paccache -r
+  fi
+  sudo pacman -Sc --noconfirm
+  pacman_remove_orphans
+}
+
+# Orphan = unused transitive package
+pacman_remove_orphans() {
+  pacman -Qtdq | sudo pacman -Rns --noconfirm -
 }
 
 # Set the Arch repository mirror list to only US sites
