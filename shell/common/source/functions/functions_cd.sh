@@ -5,7 +5,7 @@
 # repository.
 cd() {
   # Print help message if requested.
-  if echo "${1}" | grep -q -E -- "(-h)|(--help)"; then
+  if echo "${1}" | grep -q -E -- "^\s*(-h)|(--help)"; then
     __cd_help
     return 0
   fi
