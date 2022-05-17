@@ -64,7 +64,7 @@ alias grbc="git rebase --continue"
 # }}}
 
 # Resetting {{{
-alias greh="git reset HEAD"
+alias gre="git reset --soft"
 # }}}
 
 # Restoring {{{
