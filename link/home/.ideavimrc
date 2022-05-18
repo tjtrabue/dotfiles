@@ -181,8 +181,8 @@ nmap [b <Action>(PreviousTab)
 nmap ]b <Action>(NextTab)
 
 " Navigate highlighted errors with vim-unimpaired style bindings
-nmap [e <Action>(GotoNextError)
-nmap ]e <Action>(GotoPreviousError)
+nmap [e <Action>(GotoPreviousError)
+nmap ]e <Action>(GotoNextError)
 
 " General {{{
 nmap <leader>U <Action>(CheckForUpdate)
