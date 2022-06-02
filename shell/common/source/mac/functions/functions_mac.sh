@@ -206,7 +206,7 @@ cleanup_mac() {
     rm -rf "${userCacheDir}"/*
   fi
 
-  cat <<EOF
+  command cat <<EOF
 Done cleaning mac! You should restart your computer to ensure that all changes
 take effect.
 EOF
@@ -236,6 +236,13 @@ clean_xcode() {
       rm -rf "${d}"
     fi
   done
+
+  command cat <<EOF
+Done cleaning Xcode caches! Restart Xcode and follow these instructions:
+
+- Clean the build folder
+- Reset package caches
+EOF
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
