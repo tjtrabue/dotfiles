@@ -212,4 +212,30 @@ take effect.
 EOF
 }
 
+# Clean Xcode caches. Make sure to stop Xcode before running this function to
+# ensure proper execution.
+clean_xcode() {
+  local xcodeCacheDir="${HOME}/Library/Caches/com.apple.dt.Xcode"
+  local derivedDataDir="${HOME}/Library/Developer/Xcode/DerivedData"
+  # Delete all subdirectories but do NOT delete this directory itself!!!
+  local iosDeviceSupportDir="${HOME}/Library/Developer/Xcode/iOS DeviceSupport"
+  local d
+
+  log_info "Cleaning Xcode cache"
+
+  for d in "${xcodeCacheDir}" "${derivedDataDir}"; do
+    if [ -d "${d}" ]; then
+      log_info "Removing Xcode cache dir: ${BLUE}${d}${NC}"
+      rm -rf "${d}"
+    fi
+  done
+
+  for d in "${iosDeviceSupportDir}"/*; do
+    if [ -d "${d}" ]; then
+      log_info "Removing iOS device support cache: ${BLUE}${d}${NC}"
+      rm -rf "${d}"
+    fi
+  done
+}
+
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
