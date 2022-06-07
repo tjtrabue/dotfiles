@@ -6,6 +6,7 @@ android-studio
 arc-kde-git
 authy
 brave-bin
+code-minimap
 drive-git
 elixir-ls-git
 emacs-native-comp-git-enhanced

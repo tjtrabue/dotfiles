@@ -717,6 +717,9 @@ call s:SourcePluginConfigFile('nvim-lint.config.lua')
 
 " PostgreSQL syntax highlighting config
 call s:SourcePluginConfigFile('pgsql.config.vim')
+
+" Minimap plugin
+call s:SourcePluginConfigFile('minimap.config.vim')
 " }}}
 
 " Source override config files {{{

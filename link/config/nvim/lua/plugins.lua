@@ -103,6 +103,12 @@ packer.startup(
 
     use {"shougo/neomru.vim"}
 
+    -- Minimap {{{
+
+    -- Attempt to install the code-minimap Rust package upon update/install.
+    use {"wfxr/minimap.vim", run = ":!cargo install --locked code-minimap"}
+    -- }}}
+
     -- Git  {{{
     use {"tpope/vim-fugitive"}
     -- Newer and more universal replacement for gitgutter

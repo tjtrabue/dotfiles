@@ -6,6 +6,7 @@ buildpacks/tap/pack
 clang-format
 clojure/tools/clojure
 cmatrix
+code-minimap
 coreutils
 diffutils
 docker
