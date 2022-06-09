@@ -833,7 +833,7 @@ user are also within Emacs' reach.
     :init
     ;; Whether to output debug info to the *Messages* buffer.
     ;; NOTE: This variable is not customizable.
-    (setq exec-path-from-shell-debug t)
+    (setq exec-path-from-shell-debug nil)
     :custom
     ;; How long to wait before warning about long startup time for shell.
     (exec-path-from-shell-warn-duration-millis 500)
