@@ -242,7 +242,7 @@ LanguageServerProtocol clients and servers.
   ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
   ;; screen with debugging output seems to mess with evil-mode, so I find it
   ;; prudent to turn this variable off until I have a reason to turn it on.
-  (setq debug-on-error nil)
+  (setq debug-on-error t)
   ;; Always follow symlinks
   (setq vc-follow-symlinks t)
   ;; Reduce risk of loading outdated bytecode
@@ -766,15 +766,19 @@ straight-pull-all=
     ;; Always use use-package when installing packages, making the ':straight t'
     ;; part of the use-package macro unnecessary.
     (setq straight-use-package-by-default t)
-    ;; The branch of straight.el to use
-    (setq straight-repository-branch "develop")
+    ;; The straight.el branch to clone.
+    (setq straight-repository-branch "master")
     (let ((bootstrap-file
            (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
           (bootstrap-version 5))
       (unless (file-exists-p bootstrap-file)
         (with-current-buffer
             (url-retrieve-synchronously
-             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+              (concat
+                "https://raw.githubusercontent.com/raxod502/straight.el/"
+                straight-repository-branch
+                "/install.el")
+             "https://raw.githubusercontent.com/raxod502/straight.el/master/install.el"
              'silent 'inhibit-cookies)
           (goto-char (point-max))
           (eval-print-last-sexp)))
