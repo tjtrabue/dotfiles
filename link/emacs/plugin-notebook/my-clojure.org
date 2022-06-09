@@ -131,6 +131,10 @@ world needed another Lisp.
         "ctr" 'cider-test-show-report
         "cu" 'cider-undef
         "cv" 'cider-version)
+      (general-def 'normal cider-mode-map
+        "gs" 'cider-find-var
+        "gi" 'cider-find-resource
+        "gu" 'cider-xref-fn-refs)
       ;; Clearing the whole REPL is a useful feature since the REPL gets slower
       ;; the larger it gets.
       (my/user-leader-def cider-repl-mode-map
