@@ -13,8 +13,8 @@ please on any UNIX-based operating system.
 ## IMPORTANT NOTE (PLEASE READ)
 
 This project is highly opinionated -- once installed, the user's development
-environment is replaced entirely by my own custom environment. As such, I doubt
-this project's configuration is suited for most users, and I urge anyone
+environment will be replaced entirely by my own custom environment. As such, I
+doubt this project's configuration is suited for most users, and I urge anyone
 interested in my setup to comb through my files and take only what they find
 useful since running the `install.sh` script will hijack their environment.
 **Use `install.sh` at your own risk.** In fact, don't use it at all.
@@ -24,17 +24,21 @@ useful since running the `install.sh` script will hijack their environment.
 I view my dotfiles repository as an extension of my keyboard. I've grown and
 adapted my configuration for many years, and it has gotten to the point where
 doing without these files would be very difficult for me. It is a bit like my
-interactive programming notebook. I began compiling dotfiles in 2015 when I
-worked for IBM. At the time, I had a good friend and mentor who taught me all
-about Bash and using the UNIX command line. My friend maintained a large,
-customized dotfiles repository. I had never heard of dotfiles before, nor of the
-convention whereby developers collected and shared them. The fact that my friend
-could open a terminal on a brand new computer, run a few lines of POSIX, and
-have his established programming environment fully functional in no time flat
-was simply astounding to me. Needless to say, I was enthralled by the notion of
-a dotfiles repository. It was then that I started putting together my own
-dotfiles project, and growing it has been one of the happiest hobbies of my
-adult life.
+interactive programming notebook. I began compiling my dotfiles in 2015 while
+working for IBM. At the time, I had a good friend and mentor who taught me all
+about Bash and the UNIX command line. My friend maintained a large, customized
+dotfiles repository. I had never heard of dotfiles before, nor of the convention
+whereby developers collected and shared them, but I was intrigued. The fact that
+my friend could open a terminal on a brand new computer, run a few lines of
+POSIX, and have his established programming environment fully functional in no
+time flat was simply astounding to me. It was then that I started putting
+together my own dotfiles project, and growing it has been one of the happiest
+hobbies of my adult life.
+
+I do hope that the automated approach I have taken to bootstrapping a UNIX-based
+development environment inspires other developers to do the same. I cannot
+adequately convey the amount of time and effort this repository has saved me
+over the years in terms of configuration and coding.
 
 ## Usage
 
@@ -47,7 +51,12 @@ adult life.
 1. Enjoy!
 
 Seriously, I designed this project for my own needs, so I have to advise others
-not to install this project on their computers. It will bamboozle and bewilder
-you, and may permanently destroy your existing configuration. If you have
-questions about anything in this project, please don't hesitate to open a
-ticket. I always value other developers' feedback.
+**not** to install this project on their computers. It will bamboozle and
+bewilder you, and may permanently destroy your existing development
+configuration. If you have questions about anything in this project, please
+don't hesitate to open a ticket. I always value other developers' feedback.
+
+## To Rick Hickey, should he be reading this
+
+Hi. Can I work at your company? I know Clojure really well, and I don't like
+`HttpServletRequest` ;)
