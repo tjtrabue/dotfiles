@@ -37,6 +37,19 @@ paclean() {
   pacman_remove_orphans
 }
 
+# Remove the pacman lock file. This deadlock situation occurs sometimes when
+# pacman is interrupted during an operation, such as the computer crashing
+# during an update.
+pacman_unlock_db() {
+  local pacmanDbLockFile="/var/lib/pacman/db.lck"
+
+  if [ -f "${pacmanDbLockFile}" ]; then
+    log_info "Removing lock from pacman database:" \
+      "${BLUE}${pacmanDbLockFile}${NC}"
+    sudo rm -f "${pacmanDbLockFile}"
+  fi
+}
+
 # Orphan = unused transitive package
 pacman_remove_orphans() {
   pacman -Qtdq | sudo pacman -Rns --noconfirm -
