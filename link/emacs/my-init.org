@@ -92,6 +92,8 @@ This is where I define new variables to be used throughout my configuration.
     (defvar my/lisp-major-modes
       '(cider-repl-mode
         clojure-mode
+        clojurec-mode
+        clojurescript-mode
         emacs-lisp-mode
         ielm-mode
         lisp-mode

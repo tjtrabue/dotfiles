@@ -395,6 +395,8 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
     (lsp-ui-doc-show-with-cursor t)
     ;; Show current symbol's documentation when the mouse pointer moves over it.
     (lsp-ui-doc-show-with-mouse t)
+    ;; Whether to display documentation in a WebKit child frame.
+    (lsp-ui-doc-use-webkit nil)
     ;; Automatically refresh the menu
     (lsp-ui-imenu-auto-refresh t))
 #+end_src
