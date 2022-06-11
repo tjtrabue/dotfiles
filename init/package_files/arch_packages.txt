@@ -21,6 +21,7 @@ broot
 cabal-install
 chromium
 clang
+clojure
 cmake
 cmus
 crictl
