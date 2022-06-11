@@ -59,8 +59,8 @@ go
 gpicview
 grub
 hacksaw
-haskell-ghc-check
-haskell-haddock-library
+# haskell-ghc-check
+# haskell-haddock-library
 hicolor-icon-theme
 htop
 httpie

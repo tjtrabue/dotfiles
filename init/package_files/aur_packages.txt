@@ -6,6 +6,8 @@ android-studio
 arc-kde-git
 authy
 brave-bin
+clj-kondo
+clojure-lsp-bin
 code-minimap-bin
 drive-git
 elixir-ls-git
