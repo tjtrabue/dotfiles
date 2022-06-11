@@ -16,12 +16,19 @@ around in Emacs buffers.
     (use-package drag-stuff
       :demand t
       :general
-      (general-def '(normal visual) '(drag-stuff-mode-map override)
+      (general-def '(normal visual) drag-stuff-mode-map
         "M-k" 'drag-stuff-up
         "M-j" 'drag-stuff-down
         ;; "M-h" 'drag-stuff-left
         ;; "M-l" 'drag-stuff-right
         )
+      ;; NOTE: Can't use `:custom' stanza to customize drag-stuff
+      ;;       variables because the author used `defvar' instead
+      ;;       of `defcustom' to define the plugin's variables.
+      :init
+      ;; Do not activate drag-stuff for lisp files since we want
+      ;; to use lispy commands to drag s-exps.
+      (setq drag-stuff-except-modes my/lisp-major-modes)
       :config
       (drag-stuff-global-mode 1))
   #+end_src

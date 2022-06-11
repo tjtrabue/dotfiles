@@ -33,7 +33,8 @@
 ;; Common Lisp emulation library
 (require 'cl-lib)
 
-(defvar my-custom-lsp-format-major-mode-blacklist '(cperl-mode
+(defvar my-custom-lsp-format-major-mode-blacklist '(clojure-mode
+                                                     cperl-mode
                                                      lua-mode
                                                      perl-mode
                                                      python-mode
@@ -48,8 +49,6 @@ for any programming language that supports a formatting tool.")
 (defvar my-custom-lsp-enabled-modes '(c++-mode
                                        c-mode
                                        clojure-mode
-                                       clojurec-mode
-                                       clojurescript-mode
                                        cmake-mode
                                        cperl-mode
                                        css-mode

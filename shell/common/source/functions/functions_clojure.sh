@@ -70,4 +70,18 @@ install_clj_kondo() {
   rm -f "${cljKondoInstaller}"
 }
 
+# Wrapper for the Leiningen command line tool that supports readline
+# configuration to make using the Clojure REPL more joyful.
+wlein() {
+  local commandString="$*"
+  local leinCommand="rlwrap --always-readline lein ${commandString}"
+
+  if [ ! -x "$(command -v lein)" ]; then
+    err "${GREEN}lein${NC} command line tool not installed."
+    return 1
+  fi
+
+  eval "${leinCommand}"
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

@@ -7,6 +7,7 @@ arc-kde-git
 authy
 brave-bin
 clj-kondo
+clojure-git
 clojure-lsp-bin
 code-minimap-bin
 drive-git
