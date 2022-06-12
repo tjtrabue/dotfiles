@@ -131,6 +131,8 @@ world needed another Lisp.
         "ctr" 'cider-test-show-report
         "cu" 'cider-undef
         "cv" 'cider-version)
+      (my/evil-leader-def cider-mode-map
+        "=" 'cider-format-buffer)
       (general-def 'normal cider-mode-map
         "gs" 'cider-find-var
         "gi" 'cider-find-resource

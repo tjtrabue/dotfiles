@@ -38,3 +38,4 @@ ttf-nerd-fonts-symbols
 up
 vmtouch-git
 yank
+zprint-bin
