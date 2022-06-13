@@ -101,9 +101,11 @@ world needed another Lisp.
       :general
       (general-unbind cider-repl-mode-map
         ",")
-      (general-def '(normal insert) cider-repl-mode-map
+      (general-def 'normal cider-repl-mode-map
         "C-j" 'cider-repl-next-input
         "C-k" 'cider-repl-previous-input
+        "C-r" 'cider-repl-history)
+      (general-def 'insert cider-repl-mode-map
         "C-r" 'cider-repl-history)
       (my/evil-leader-def cider-repl-mode-map
         "cs" 'cider-repl-handle-shortcut
