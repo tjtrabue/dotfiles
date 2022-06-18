@@ -106,33 +106,36 @@ world needed another Lisp.
         "C-k" 'cider-repl-previous-input
         "C-r" 'cider-repl-history)
       (general-def 'insert cider-repl-mode-map
+        "C-n" 'cider-repl-next-input
+        "C-p" 'cider-repl-previous-input
         "C-r" 'cider-repl-history)
       (my/evil-leader-def cider-repl-mode-map
-        "cs" 'cider-repl-handle-shortcut
-        "cC" 'cider-classpath
-        "cF" 'cider-repl-toggle-clojure-font-lock
-        "cH" 'cider-repl-history
-        "cN" 'cider-ns-reload
-        "cR" 'cider-ns-refresh
-        "cS" 'cider-sideloader-start
-        "cU" 'cider-repl-require-repl-utils
-        "ca" 'cider-restart
-        "cb" 'cider-repl-clear-buffer
-        "cc" 'cider-repl-clear-output
-        "cd" 'cider-doc
-        "ch" 'cider-repl-shortcuts-help
-        "cn" 'cider-repl-set-ns
-        "cp" 'cider-repl-toggle-pretty-printing
-        "cq" 'cider-quit
-        "cr" 'cider-run
+        ","   'cider-repl-handle-shortcut
+        "cs"  'cider-repl-handle-shortcut
+        "cC"  'cider-classpath
+        "cF"  'cider-repl-toggle-clojure-font-lock
+        "cH"  'cider-repl-history
+        "cN"  'cider-ns-reload
+        "cR"  'cider-ns-refresh
+        "cS"  'cider-sideloader-start
+        "cU"  'cider-repl-require-repl-utils
+        "ca"  'cider-restart
+        "cb"  'cider-repl-clear-buffer
+        "cc"  'cider-repl-clear-output
+        "cd"  'cider-doc
+        "ch"  'cider-repl-shortcuts-help
+        "cn"  'cider-repl-set-ns
+        "cp"  'cider-repl-toggle-pretty-printing
+        "cq"  'cider-quit
+        "cr"  'cider-run
         "cta" 'cider-test-run-loaded-tests
         "ctf" 'cider-test-run-ns-tests-with-filters
         "ctF" 'my/cider-test-prompt-for-filters
         "ctn" 'cider-test-run-ns-tests
         "ctp" 'cider-test-run-project-tests
         "ctr" 'cider-test-show-report
-        "cu" 'cider-undef
-        "cv" 'cider-version)
+        "cu"  'cider-undef
+        "cv"  'cider-version)
       (my/evil-leader-def cider-mode-map
         "=" 'cider-format-buffer)
       (general-def 'normal cider-mode-map

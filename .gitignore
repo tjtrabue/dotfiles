@@ -269,6 +269,7 @@ link/config/bluedevilglobalrc
 link/config/discoverrc
 link/config/dolphinrc
 link/config/drkonqirc
+link/config/emaildefaults
 link/config/gtk-*
 link/config/gtkrc*
 link/config/gwenviewrc
