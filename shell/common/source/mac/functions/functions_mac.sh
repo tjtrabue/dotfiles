@@ -160,6 +160,22 @@ alias_homebrew_gcc_executables() {
   fi
 }
 
+# Special install function for the emacs-plus package, which is Emacs that
+# supports modern features, such as native code compilation, dbus support, cool
+# icons, and more.
+install_emacs_plus_for_macos() {
+  local emacsPlusVersion="29"
+  local icon="dragon-icon"
+
+  brew install "emacs-plus@${emacsPlusVersion}" \
+    --with-xwidgets \
+    --with-mailutils \
+    --with-dbus \
+    --with-native-comp \
+    --with-debug \
+    "--with-${icon}"
+}
+
 # Delete and re-compile emacs-plus from source.
 upgrade_emacs_plus_for_macos() {
   local response
