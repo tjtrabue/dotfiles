@@ -346,4 +346,8 @@ link/config/user-dirs*
 link/config/lazygit/state.yml
 # }}}
 
+# git-cola {{{
+link/config/git-cola
+# }}}
+
 # vim:foldenable:foldmethod=marker
