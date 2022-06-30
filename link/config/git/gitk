@@ -23,7 +23,7 @@ set fgcolor #bcc1cd
 set uifgcolor #24262f
 set uifgdisabledcolor #999
 set colors {"#8bc07c" "#ec6f5c" "#69ace9" "#bb7bd7" "#42434a" "#8bc07c" "#e4bf84"}
-set diffcolors {"#c30000" "#009800" "#69ace9"}
+set diffcolors {"#ec6f5c" "#8bc07c" "#69ace9"}
 set mergecolors {"#ec6f5c" "#69ace9" "#8bc07c" purple "#e4bf84" "#009090"
 "#bb7bd7" "#808000" "#009000" "#ff0080" "#73d6fa" "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
 set markbgcolor #e0e0ff
@@ -52,7 +52,7 @@ set indexcirclecolor #8bc07c
 set circlecolors {"#bcc1cd" "#69ace9" gray "#69ace9" "#69ace9"}
 set linkfgcolor #69ace9
 set circleoutlinecolor black
-set diffbgcolors {"#fff3f3" "#f0fff0"}
+set diffbgcolors {"#42434a" "#42434a"}
 set web_browser open
 set geometry(main) 1792x1035+0+25
 set geometry(state) zoomed
