@@ -11,7 +11,7 @@ set autoselect 1
 set autosellen 40
 set showneartags 1
 set maxrefs 20
-set visiblerefs {"master"}
+set visiblerefs {"master", "develop", "main"}
 set hideremotes 0
 set showlocalchanges 1
 set datetimeformat {%Y-%m-%d %H:%M:%S}
@@ -27,14 +27,14 @@ set diffcolors {"#ec6f5c" "#8bc07c" "#69ace9"}
 set mergecolors {"#ec6f5c" "#69ace9" "#8bc07c" purple "#e4bf84" "#009090"
 "#bb7bd7" "#808000" "#009000" "#ff0080" "#73d6fa" "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
 set markbgcolor #e0e0ff
-set diffcontext 3
+set diffcontext 5
 set selectbgcolor #42434a
 set foundbgcolor #5e646a
 set currentsearchhitbgcolor #4978a3
 set extdifftool meld
 set perfile_attrs 0
 set headbgcolor #8bc07c
-set headfgcolor #2a2d37
+set headfgcolor black
 set headoutlinecolor black
 set remotebgcolor #ffddaa
 set tagbgcolor #e4bf84
