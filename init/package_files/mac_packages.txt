@@ -18,6 +18,7 @@ findutils
 fzy
 gawk
 gcc
+git-gui
 global
 gnu-getopt
 gnu-indent
