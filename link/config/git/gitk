@@ -1,6 +1,6 @@
-set mainfont {{Cascadia Code PL} 14 bold}
-set textfont {{Cascadia Code PL} 14 bold}
-set uifont {{NotoSans Nerd Font} 14 bold}
+set mainfont {{Cascadia Code PL} 11 bold}
+set textfont {{Cascadia Code PL} 11 bold}
+set uifont {{NotoSans Nerd Font} 11 bold}
 set tabstop 2
 set findmergefiles 0
 set maxgraphpct 50
@@ -54,12 +54,12 @@ set linkfgcolor #69ace9
 set circleoutlinecolor #5e646a
 set diffbgcolors {"#42434a" "#42434a"}
 set web_browser open
-set geometry(main) 1792x1035+0+25
-set geometry(state) zoomed
-set geometry(topwidth) 1792
-set geometry(topheight) 165
-set geometry(pwsash0) "564 1"
-set geometry(pwsash1) "855 1"
-set geometry(botwidth) 712
-set geometry(botheight) 865
+set geometry(main) 952x972+0+0
+set geometry(state) normal
+set geometry(topwidth) 952
+set geometry(topheight) 255
+set geometry(pwsash0) "326 1"
+set geometry(pwsash1) "490 1"
+set geometry(botwidth) 410
+set geometry(botheight) 712
 set permviews {}
