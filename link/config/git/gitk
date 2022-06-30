@@ -1,6 +1,6 @@
 set mainfont {{Cascadia Code PL} 14 bold}
 set textfont {{Cascadia Code PL} 14 bold}
-set uifont {{Lucida Grande} 9 bold}
+set uifont {{NotoSans Nerd Font} 14 bold}
 set tabstop 2
 set findmergefiles 0
 set maxgraphpct 50
@@ -29,8 +29,8 @@ set mergecolors {"#ec6f5c" "#69ace9" "#8bc07c" purple "#e4bf84" "#009090"
 set markbgcolor #e0e0ff
 set diffcontext 3
 set selectbgcolor #42434a
-set foundbgcolor #e4bf84
-set currentsearchhitbgcolor orange
+set foundbgcolor #5e646a
+set currentsearchhitbgcolor #4978a3
 set extdifftool meld
 set perfile_attrs 0
 set headbgcolor #8bc07c
