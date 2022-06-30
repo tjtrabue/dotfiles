@@ -29,20 +29,20 @@ set mergecolors {"#ec6f5c" "#69ace9" "#8bc07c" purple "#e4bf84" "#009090"
 set markbgcolor #e0e0ff
 set diffcontext 3
 set selectbgcolor #42434a
-set foundbgcolor yellow
+set foundbgcolor #e4bf84
 set currentsearchhitbgcolor orange
-set extdifftool opendiff
+set extdifftool meld
 set perfile_attrs 0
 set headbgcolor #8bc07c
-set headfgcolor black
+set headfgcolor #2a2d37
 set headoutlinecolor black
 set remotebgcolor #ffddaa
-set tagbgcolor yellow
+set tagbgcolor #e4bf84
 set tagfgcolor black
 set tagoutlinecolor black
 set reflinecolor black
-set filesepbgcolor #aaaaaa
-set filesepfgcolor black
+set filesepbgcolor #2a2d37
+set filesepfgcolor #e4bf84
 set linehoverbgcolor #ffff80
 set linehoverfgcolor black
 set linehoveroutlinecolor black
@@ -51,7 +51,7 @@ set workingfilescirclecolor #ec6f5c
 set indexcirclecolor #8bc07c
 set circlecolors {"#bcc1cd" "#69ace9" gray "#69ace9" "#69ace9"}
 set linkfgcolor #69ace9
-set circleoutlinecolor black
+set circleoutlinecolor #5e646a
 set diffbgcolors {"#42434a" "#42434a"}
 set web_browser open
 set geometry(main) 1792x1035+0+25
