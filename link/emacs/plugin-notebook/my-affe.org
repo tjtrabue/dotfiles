@@ -1,0 +1,42 @@
+#+title:   AFFE: Asynchronous Fuzzy Finder for Emacs
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:07:02
+#+tags:
+#+STARTUP: fold
+
+AFFE provides features similar to =fzf=, but is written in pure Elisp. It
+depends on Consult, and works best when plugged with Orderless for sorting.
+It also functions best alongside the =rg= commandline utility, which greatly
+enhances AFFE's performance.
+
+* Functions
+
+#+begin_src emacs-lisp
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    "Configure Orderless as the affe-regex-compiler in Consult.
+
+  The default Consult regex compiler is pretty basic, and does no sorting
+  ranking.  Orderless, on the other hand, handles these concerns in superb
+  fashion."
+    (lexical-let ((input (orderless-pattern-compiler input)))
+      (cons input (lambda (str) (orderless--highlight input str)))))
+#+end_src
+
+* =use-package= specification
+#+begin_src emacs-lisp
+  (use-package affe
+    :after (consult orderless)
+    :commands (affe-grep affe-find)
+    :general
+    (general-def 'normal
+      "C-r" 'affe-grep)
+    :custom
+    ;; Change how affe's regex engine behaves, including sorting/filtering.
+    ;; The default value is:
+    ;; (affe-regexp-compiler #'consult--default-regexp-compiler)
+    (affe-regexp-compiler #'affe-orderless-regexp-compiler)
+    :config
+    ;; ; Manual preview key for `affe-grep'
+    (consult-customize affe-grep :preview-key (kbd "M-.")))
+#+end_src

@@ -1,0 +1,58 @@
+#+title:  Highlight the current line when the cursor jumps
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:27
+#+STARTUP: fold
+
+=beacon=, =pulsar=, and possibly other packages provide a feature that
+temporarily highlights the current line when the cursor jumps within a buffer or
+across buffers.
+
+* Beacon
+Pulse a colorful highlight on the current line when the cursor jumps.
+
+#+begin_src emacs-lisp
+  (use-package beacon
+    ;; Beacon can be pretty expensive in terms of CPU cycles.
+    :disabled
+    :demand t
+    :config
+    ;; Enable beacon globally.
+    (beacon-mode 1))
+#+end_src
+
+* Pulsar
+Pulsar is minimalist alternative to Beacon. Beacon tends to be computationally
+intensive, which makes it non-viable for large files. Pulsar behaves much nicer
+with files of any size.
+
+#+begin_src emacs-lisp
+  (use-package pulsar
+    :demand t
+    :custom
+    (pulsar-pulse-functions
+     '(recenter-top-bottom
+       move-to-window-line-top-bottom
+       reposition-window
+       forward-page
+       backward-page
+       scroll-up-command
+       scroll-down-command
+       org-next-visible-heading
+       org-previous-visible-heading
+       org-forward-heading-same-level
+       org-backward-heading-same-level
+       outline-backward-same-level
+       outline-forward-same-level
+       outline-next-visible-heading
+       outline-previous-visible-heading
+       outline-up-heading))
+    (pulsar-pulse-on-window-change t)
+    (pulsar-pulse t)
+    (pulsar-delay 0.055)
+    (pulsar-iterations 10)
+    (pulsar-face 'pulsar-magenta)
+    (pulsar-highlight-face 'pulsar-yellow)
+    :config
+    (pulsar-global-mode 1))
+#+end_src

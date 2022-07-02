@@ -63,3 +63,13 @@ Add cool new help functions, such as describe-keymap
   (use-package help-mode+
     :demand t)
 #+end_src
+
+* devdocs
+Emacs integration with the DevDocs website.
+
+#+begin_src emacs-lisp
+  (use-package devdocs
+    :general
+    (general-def
+      "C-h D" 'devdocs-lookup))
+#+end_src

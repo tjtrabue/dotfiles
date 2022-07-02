@@ -49,6 +49,17 @@
       (ibuffer-mode . all-the-icons-ibuffer-mode))
   #+end_src
 
+* all-the-icons-completion
+Add icons to completion candidates using the built in completion metadata functions.
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-completion
+    :after all-the-icons
+    :demand t
+    :config
+    (all-the-icons-completion-mode))
+#+end_src
+
 * mode-icons
   Show an icon instead of the major mode name in the modeline.
 

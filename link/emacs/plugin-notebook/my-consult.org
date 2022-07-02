@@ -28,14 +28,6 @@ myriad systems benefit from Consult's functions.
   completion UI you choose. It could be Selectrum, Vertico, the built-in Emacs
   completion system, or any other compatible framework.
 
-* Functions
-  #+begin_src emacs-lisp
-    (defun my/crm-indicator (args)
-      "Add prompt indicator to `completing-read-multiple'.
-    Alternatively try `consult-completing-read-multiple'."
-      (cons (concat "[CRM] " (car args)) (cdr args)))
-  #+end_src
-
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package consult
@@ -102,8 +94,6 @@ myriad systems benefit from Consult's functions.
         "M-s e" 'consult-isearch
         ;; needed by consult-line to detect isearch
         "M-s l" 'consult-line)
-      (general-def 'normal
-        "C-r" 'consult-ripgrep)
       (my/evil-leader-def
         ;; Open the fancy consult-buffer navigator.
         "cb" 'consult-buffer)
@@ -117,12 +107,6 @@ myriad systems benefit from Consult's functions.
       ;; Optionally tweak the register preview window.
       ;; This adds thin lines, sorting and hides the mode line of the window.
       (advice-add #'register-preview :override #'consult-register-window)
-      ;; Optionally replace `completing-read-multiple' with an enhanced version.
-      (advice-add #'completing-read-multiple
-                  :override #'consult-completing-read-multiple)
-      ;; Add prompt indicator to `completing-read-multiple'.
-      (advice-add #'consult-completing-read-multiple
-                  :filter-args #'my/crm-indicator)
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
       :custom
@@ -159,3 +143,20 @@ myriad systems benefit from Consult's functions.
       ;; You may want to use `embark-prefix-help-command' or which-key instead.
       (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
   #+end_src
+
+* Plugins
+** consult-lsp
+Integration with =lsp-mode=.
+#+begin_src emacs-lisp
+  (use-package consult-lsp
+    :after (consult lsp-mode)
+    :demand t)
+#+end_src
+
+** consult-projectile
+Integration with the =projectile= project manager.
+#+begin_src emacs-lisp
+  (use-package consult-projectile
+    :after (consult projectile)
+    :demand t)
+#+end_src
