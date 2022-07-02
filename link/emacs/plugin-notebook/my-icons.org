@@ -57,7 +57,7 @@ Add icons to completion candidates using the built in completion metadata functi
     :after all-the-icons
     :demand t
     :config
-    (all-the-icons-completion-mode))
+    (all-the-icons-completion-mode 1))
 #+end_src
 
 * mode-icons
