@@ -13,7 +13,7 @@
 ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
 ;; screen with debugging output seems to mess with evil-mode, so I find it
 ;; prudent to turn this variable off until I have a reason to turn it on.
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
