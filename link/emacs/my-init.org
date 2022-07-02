@@ -262,7 +262,7 @@ LanguageServerProtocol clients and servers.
   ;; Up the maximum depth for eval, apply, and funcall functions.
   ;; This variable is supposed to catch infinite recursions before
   ;; they cause a stack overflow, but its default value is very low.
-  (setq max-lisp-eval-depth 10000)
+  (setq max-lisp-eval-depth 10101)
 
   ;; Get rid of scrollbars since l33t programmers don't need any.
   (setq vertical-scroll-bar nil)
