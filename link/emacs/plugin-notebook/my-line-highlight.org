@@ -28,7 +28,9 @@ with files of any size.
 
 #+begin_src emacs-lisp
   (use-package pulsar
-    :demand t
+    :disabled
+    :hook
+    (after-init . pulsar-global-mode)
     :custom
     (pulsar-pulse-functions
      '(recenter-top-bottom
@@ -52,7 +54,5 @@ with files of any size.
     (pulsar-delay 0.055)
     (pulsar-iterations 10)
     (pulsar-face 'pulsar-magenta)
-    (pulsar-highlight-face 'pulsar-yellow)
-    :config
-    (pulsar-global-mode 1))
+    (pulsar-highlight-face 'pulsar-yellow))
 #+end_src
