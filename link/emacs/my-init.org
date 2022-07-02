@@ -241,10 +241,6 @@ existing variables, especially if you use advanced programming tools such as
 LanguageServerProtocol clients and servers.
 
 #+begin_src emacs-lisp
-  ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
-  ;; screen with debugging output seems to mess with evil-mode, so I find it
-  ;; prudent to turn this variable off until I have a reason to turn it on.
-  (setq debug-on-error nil)
   ;; Always follow symlinks
   (setq vc-follow-symlinks t)
   ;; Reduce risk of loading outdated bytecode
@@ -345,7 +341,9 @@ LanguageServerProtocol clients and servers.
   (when (>= emacs-major-version 28)
     ;; Hide commands in M-x which do not work in the current mode.
     ;; Vertico commands are hidden in normal buffers.
-    (setq read-extended-command-predicate #'command-completion-default-include-p))
+    (setq read-extended-command-predicate #'command-completion-default-include-p)
+    ;; Automatically native compile all packages installed with package.el
+    (setq package-native-compile t))
 #+end_src
 
 * Adjust initial frame size
@@ -600,6 +598,22 @@ Set variables used by LSP servers.
   (setenv "LSP_USE_PLISTS" "true")
 #+end_src
 
+* Native Compilation
+We want to native-compile as many of our configuration files as we can to speed
+up performance.
+
+** Native compile personal Elisp files
+While emacs compiles its own built-in Elisp files to native code, but users must
+instruct Emacs to compile custom libraries.
+
+#+begin_src emacs-lisp
+  ;; This command native-compiles all Elisp files under a directory
+  (native-compile-async `(,my/elisp-lib-dir
+                          ,my/emacs-plugin-dir
+                          ,my/plugin-notebook-dir)
+                        'recursively)
+#+end_src
+
 * Hooks
 Hooks are analogous to Vim's autocmds. They represent a series of functions to
 run when a particular event occurs. Both Emacs proper and third party plugins
@@ -763,54 +777,52 @@ To update all packages installed through straight, run =M-x
 straight-pull-all=
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (defvar bootstrap-version)
-    ;; Always use use-package when installing packages, making the ':straight t'
-    ;; part of the use-package macro unnecessary.
-    (setq straight-use-package-by-default t)
-    ;; The straight.el branch to clone.
-    (setq straight-repository-branch "master")
-    (let ((bootstrap-file
-           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-          (bootstrap-version 5))
-      (unless (file-exists-p bootstrap-file)
-        (with-current-buffer
-            (url-retrieve-synchronously
-              (concat
-                "https://raw.githubusercontent.com/raxod502/straight.el/"
-                straight-repository-branch
-                "/install.el")
-             "https://raw.githubusercontent.com/raxod502/straight.el/master/install.el"
-             'silent 'inhibit-cookies)
-          (goto-char (point-max))
-          (eval-print-last-sexp)))
-      (with-no-warnings
-        (load bootstrap-file nil 'nomessage))
+  (defvar bootstrap-version)
+  ;; Always use use-package when installing packages, making the ':straight t'
+  ;; part of the use-package macro unnecessary.
+  (setq straight-use-package-by-default t)
+  ;; The straight.el branch to clone.
+  (setq straight-repository-branch "master")
+  (let ((bootstrap-file
+          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+            (concat
+              "https://raw.githubusercontent.com/raxod502/straight.el/"
+              straight-repository-branch
+              "/install.el")
+            'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (with-no-warnings
+      (load bootstrap-file nil 'nomessage))
 
-      ;; Refresh package repositories
-      (when (not (fboundp 'straight-pull-recipe-repositories))
-        ;; Sometimes straight.el does not include the convenience function
-        ;; `straight-pull-recipe-repositories', in which case we should alias
-        ;; that function to our own custom version.
-        (defalias 'straight-pull-recipe-repositories
-          'my-straight-helpers-pull-recipe-repositories))
-      (straight-pull-recipe-repositories)
+    ;; Refresh package repositories
+    (when (not (fboundp 'straight-pull-recipe-repositories))
+      ;; Sometimes straight.el does not include the convenience function
+      ;; `straight-pull-recipe-repositories', in which case we should alias
+      ;; that function to our own custom version.
+      (defalias 'straight-pull-recipe-repositories
+        'my-straight-helpers-pull-recipe-repositories))
+    (straight-pull-recipe-repositories)
 
-      ;; Default mode for loading packages: either defer or demand.
-      ;; (setq use-package-always-demand t)
-      (setq use-package-always-defer t)
+    ;; Default mode for loading packages: either defer or demand.
+    ;; (setq use-package-always-demand t)
+    (setq use-package-always-defer t)
 
-      ;; Install use-package via straight.
-      ;; After this function runs, use-package will automatically use straight
-      ;; to install packages if you specify ':stright t' instead of ':ensure t'.
-      ;; If you have set straight-use-package-by-default to t, this is
-      ;; unnecessary.
-      (straight-use-package
-       ;; Override the MELPA recipe in order to get all Elisp files for
-       ;; use-package. For some reason, the MELPA recipe excludes several
-       ;; important source files.
-       '(use-package :type git :host github :repo "jwiegley/use-package"
-          :files (:defaults)))))
+    ;; Install use-package via straight.
+    ;; After this function runs, use-package will automatically use straight
+    ;; to install packages if you specify ':stright t' instead of ':ensure t'.
+    ;; If you have set straight-use-package-by-default to t, this is
+    ;; unnecessary.
+    (straight-use-package
+      ;; Override the MELPA recipe in order to get all Elisp files for
+      ;; use-package. For some reason, the MELPA recipe excludes several
+      ;; important source files.
+      '(use-package :type git :host github :repo "jwiegley/use-package"
+        :files (:defaults))))
 #+end_src
 
 ** Install packages needed from the very start

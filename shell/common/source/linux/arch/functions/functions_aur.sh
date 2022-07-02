@@ -310,4 +310,9 @@ __get_list_of_new_packages() {
   echo "${newPackages[@]}"
 }
 
+# Update all packages installed with the AUR helper tool.
+aurupdate() {
+  aurhu --ignore="emacs-native-comp-git-enhanced"
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

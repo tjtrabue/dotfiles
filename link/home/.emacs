@@ -10,6 +10,11 @@
 
 ;;; Code:
 
+;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
+;; screen with debugging output seems to mess with evil-mode, so I find it
+;; prudent to turn this variable off until I have a reason to turn it on.
+(setq debug-on-error t)
+
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
 ;; They will be reset later on to further optimize our experience.
@@ -166,7 +171,7 @@ Files in the directory are matched based on PATTERN, which is a regex."
     (unless (package-installed-p 'use-package)
       (package-refresh-contents)
       (package-install 'use-package))
-    (eval-when-compile (require 'use-package)))
+    (require 'use-package))
   ;;; OTHERWISE...
   ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
   (setq package-enable-at-startup nil)

@@ -54,10 +54,8 @@ Add icons to completion candidates using the built in completion metadata functi
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-completion
-    :after all-the-icons
-    :demand t
-    :config
-    (all-the-icons-completion-mode 1))
+    :hook
+    (after-init . all-the-icons-completion-mode))
 #+end_src
 
 * mode-icons
