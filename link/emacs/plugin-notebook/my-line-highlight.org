@@ -28,7 +28,6 @@ with files of any size.
 
 #+begin_src emacs-lisp
   (use-package pulsar
-    :disabled
     :hook
     (after-init . pulsar-global-mode)
     :custom

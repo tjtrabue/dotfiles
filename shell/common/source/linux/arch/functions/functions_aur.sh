@@ -105,6 +105,19 @@ get_aur_packages() {
   aur get <"${AUR_PACKAGES_FILE:?}"
 }
 
+# Update all packages installed with the AUR helper tool.
+# This funcion allows users to ignore certain packages, as well.
+# For instance, for Emacs, we typically want to download the PKGBUILD
+# file with `paru -G emacs-native-comp-git-enhanced` so we can edit it, then
+# install it manually with `makepkg -si`.
+aurupdate() {
+  local ignorePackages=(
+    "emacs-native-comp-git-enhanced"
+  )
+
+  aurhu --ignore="$(echo "${ignorePackages[*]}" | sed -E 's/ +/,/')"
+}
+
 # Download an AUR package but do not build/install
 __aur_get() {
   # Get args from stdin if none are passed as args
@@ -308,11 +321,6 @@ __get_list_of_new_packages() {
   done
 
   echo "${newPackages[@]}"
-}
-
-# Update all packages installed with the AUR helper tool.
-aurupdate() {
-  aurhu --ignore="emacs-native-comp-git-enhanced"
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
