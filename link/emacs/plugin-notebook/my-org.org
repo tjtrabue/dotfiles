@@ -90,8 +90,6 @@ activation.
 
 #+begin_src emacs-lisp
   (use-package org-beautify-theme
-    ;; This plugin makes Emacs incredibly slow when editing org-mode buffers.
-    :disabled
     :after org
     :demand t)
 #+end_src
