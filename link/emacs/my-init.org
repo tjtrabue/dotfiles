@@ -334,6 +334,9 @@ LanguageServerProtocol clients and servers.
   ;; more keyboard-centric.
   (setq use-dialog-box nil)
 
+  ;; Automatically revert Dired and other buffers when the filesystem updates.
+  (setq global-auto-revert-non-file-buffers t)
+
   ;; Display the name of the real file when visiting a symbolic link.
   ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
   ;; generation!
