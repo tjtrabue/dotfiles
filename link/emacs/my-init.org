@@ -325,6 +325,10 @@ LanguageServerProtocol clients and servers.
   (setq minibuffer-prompt-properties
         '(read-only t cursor-intangible t face minibuffer-prompt))
 
+  ;; Move custom set variables to a separate file so as not to clutter
+  ;; my personal initialization files.
+  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+
   ;; Display the name of the real file when visiting a symbolic link.
   ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
   ;; generation!
@@ -929,8 +933,12 @@ My configuration files install, configure, and load those third-party packages
 in a way that does not clutter my primary configuration file.
 
 #+begin_src emacs-lisp
+  ;; Load the file containing custom set variables.
+  (load custom-file 'noerror 'nomessage)
+
+  ;; Load personal files
   (my/apply-to-dir-files my/emacs-plugin-dir
-                         #'load-file "\\.el$")
+                         #'load "\\.el$")
   (my/apply-to-dir-files my/plugin-notebook-dir
                          #'org-babel-load-file "\\.org$")
 #+end_src
