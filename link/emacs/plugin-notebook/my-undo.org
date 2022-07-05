@@ -16,6 +16,7 @@ This file adds some enhancements to Emacs' undo functionality.
 
   #+begin_src emacs-lisp
     (use-package undo-tree
+      :disabled
       :demand t
       :general
       (my/evil-leader-def
