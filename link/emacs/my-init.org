@@ -325,9 +325,14 @@ LanguageServerProtocol clients and servers.
   (setq minibuffer-prompt-properties
         '(read-only t cursor-intangible t face minibuffer-prompt))
 
-  ;; Move custom set variables to a separate file so as not to clutter
-  ;; my personal initialization files.
+  ;; Move custom set variables to a separate file so as not to clutter my personal
+  ;; initialization files.
   (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+
+  ;; Whether to use a graphical dialog box for user input.  Disabling this option
+  ;; causes Emacs to prompt the user from the minibuffer instead, keeping Emacs
+  ;; more keyboard-centric.
+  (setq use-dialog-box nil)
 
   ;; Display the name of the real file when visiting a symbolic link.
   ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
@@ -448,8 +453,9 @@ edited location, as opposed to opening them at the beginning.
   ;; Git index. With this mode active, Git information would display automatically
   ;; after the file is added. If it was not active, you would have to manually
   ;; revert the buffer.
-  ;; NOTE: Enabling global-auto-revert can slow down Emacs!
-  (global-auto-revert-mode -1)
+  ;;
+  ;; NOTE: Enabling global-auto-revert can cause Emacs to slow down!
+  (global-auto-revert-mode 1)
 
   ;; Persist command history to disk so that it is saved between restarts.
   (savehist-mode 1)
