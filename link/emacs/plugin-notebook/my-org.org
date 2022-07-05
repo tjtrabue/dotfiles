@@ -235,3 +235,22 @@ Org mode.
     :config
     (require 'ox-gfm nil t))
 #+end_src
+
+** org-sticky-header
+Keep the =org-mode= header for the current section at the top of the buffer.
+
+#+begin_src emacs-lisp
+  (use-package org-sticky-header
+    :hook
+    (org-mode . org-sticky-header-mode))
+#+end_src
+
+** org-web-tools
+A library of Org mode functions for inserting copied URLs into Org buffers,
+processing HTML into Org syntax, and much more. A very powerful package!
+
+*NOTE:* This package depends on the Pandoc executable for many of its features.
+
+#+begin_src emacs-lisp
+  (use-package org-web-tools)
+#+end_src

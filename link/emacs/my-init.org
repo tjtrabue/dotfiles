@@ -340,7 +340,7 @@ LanguageServerProtocol clients and servers.
   ;; Display the name of the real file when visiting a symbolic link.
   ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
   ;; generation!
-  ;; (setq find-file-visit-truename nil)
+  (setq find-file-visit-truename nil)
 
   ;; Don’t compact font caches during GC. This can resolve lag issues with
   ;; doom-modeline and some other plugins.
