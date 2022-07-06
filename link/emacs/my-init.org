@@ -358,6 +358,18 @@ LanguageServerProtocol clients and servers.
     (setq package-native-compile t))
 #+end_src
 
+* Set fringe width
+In Emacs, the /fringe/ is the margin on the left and/or right side of a frame
+between the edge of the frame and the first buffer. You can even set the width
+of the right and left fringes individually.
+
+#+begin_src emacs-lisp
+  ;; When called with a number, set the fringe on the right and left to that many
+  ;; pixels.  When called interactively, prompt the user for a fringe style to
+  ;; apply.
+  (set-fringe-mode 10)
+#+end_src
+
 * Adjust initial frame size
 In keeping with the spirit of Emacs, there are a plethora of methods for
 changing the size of the first frame Emacs creates. A frame is basically Emacs'
