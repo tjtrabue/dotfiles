@@ -28,7 +28,7 @@ different perspective, and many more.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package perspective
-      :after evil-collection
+      ;; :after evil-collection
       :demand t
       :hook
       ;; Save perspective to disk whenever the user kills Emacs.
@@ -37,7 +37,7 @@ different perspective, and many more.
       (my/user-leader-def
         ;; This is general.el's way of accomplishing :bind-keymap.
         "j" '(:keymap perspective-map))
-      (general-def 'override
+      (general-def
         "C-x b" 'persp-switch-to-buffer
         "C-x k" 'persp-kill-buffer*
         "C-e" 'persp-switch-to-buffer)
@@ -62,8 +62,7 @@ different perspective, and many more.
       ;; Prefix for all perspective.el commands
       (persp-mode-prefix-key (kbd "C-c j"))
       ;; Where perspective.el saves its configuration
-      (persp-state-default-file
-       (file-truename (concat user-emacs-directory "/persp-state.el")))
+      (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
       :config
       ;; Turn on persp-mode globally
       (persp-mode 1)
@@ -81,7 +80,6 @@ different perspective, and many more.
 
    #+begin_src emacs-lisp
      (use-package persp-projectile
-       :after (perspective projectile)
        :general
        (general-def projectile-command-map
          [remap projectile-switch-project] 'projectile-persp-switch-project

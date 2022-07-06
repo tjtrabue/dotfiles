@@ -6,15 +6,16 @@
 
 Projectile is a project management plugin for Emacs that helps you perform
 important coding actions at the project level. Such actions include searching
-for project files, searching for text, renaming files, building and installing
-project artifacts, etc.
+for project files, text searching (i.e., project-scoped =grep=), renaming files,
+building and installing project artifacts, etc. Projectile is a project
+management super tool, and by far one of the most important Emacs plugins for
+software development.
 
-* =use-package= specification
 #+begin_src emacs-lisp
   (use-package projectile
     ;; perspective.el overwrites projectile's command prefix, so we want to load
     ;; projectile after perspective.
-    :after (evil-collection perspective)
+    :after perspective
     :demand t
     :general
     ;; This extended general definition allows us to bind keymaps to keys

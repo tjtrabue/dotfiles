@@ -42,7 +42,7 @@ This file adds some enhancements to Emacs' undo functionality.
     (use-package undo-fu
       :after evil-collection
       :general
-      (general-nmap
+      (general-def 'normal
         "u" 'undo-fu-only-undo
         "U" 'undo-fu-only-redo))
   #+end_src

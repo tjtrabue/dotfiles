@@ -31,7 +31,8 @@ myriad systems benefit from Consult's functions.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package consult
-      :after (evil-collection projectile)
+      :after projectile
+      :demand t
       ;; Replace bindings. Lazily loaded due by `use-package'.
       :general
       (my/user-leader-def
@@ -43,6 +44,8 @@ myriad systems benefit from Consult's functions.
       (general-def
         ;; orig. repeat-complex-command
         "C-x M-:" 'consult-complex-command
+        ;; A better alternative to `persp-switch-to-buffer'
+        "C-x b" 'consult-project-buffer
         ;; orig. switch-to-buffer
         "C-x C-b" 'consult-buffer
         ;; orig. switch-to-buffer-other-window
@@ -153,10 +156,47 @@ Integration with =lsp-mode=.
     :demand t)
 #+end_src
 
+** consult-ls-git
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package consult-ls-git
+    :after consult)
+#+end_src
+
 ** consult-projectile
-Integration with the =projectile= project manager.
+Integrates =consult= with the =projectile= project manager. It provides the
+awesome =consult=-ing read front end for =projectile= functions.
+
+*** Functions
+#+begin_src emacs-lisp
+  (defun my/consult-projectile-add-buffer-to-perspective ()
+    "Advising function to add the buffer to the current perspective."
+    (when (bound-and-true-p persp-mode)
+      (persp-add-buffer (current-buffer))))
+#+end_src
+
+*** =use-package= specification
 #+begin_src emacs-lisp
   (use-package consult-projectile
     :after (consult projectile)
-    :demand t)
+    :general
+    (general-def 'normal 'override
+      ;; Use consult-projectile instead of projectile-find-file
+      [remap projectile-find-file] 'consult-projectile)
+    (general-def 'normal '(global-map projectile-command-map)
+      [remap projectile-switch-project]   'consult-projectile-switch-project
+      [remap projectile-find-dir]         'consult-projectile-find-dir
+      [remap projectile-recentf]          'consult-projectile-recentf
+      [remap projectile-switch-to-buffer] 'consult-projectile-switch-to-buffer)
+    :init
+    (advice-add #'consult-projectile-find-file
+                :after
+                #'my/consult-projectile-add-buffer-to-perspective))
+#+end_src
+
+** consult-yasnippet
+
+#+begin_src emacs-lisp
+  (use-package consult-yasnippet
+    :after consult)
 #+end_src
