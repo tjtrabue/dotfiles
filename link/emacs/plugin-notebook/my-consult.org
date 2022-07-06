@@ -223,6 +223,8 @@ awesome =consult=-ing read front end for =projectile= functions.
       [remap projectile-find-dir]         'consult-projectile-find-dir
       [remap projectile-recentf]          'consult-projectile-recentf
       [remap projectile-switch-to-buffer] 'consult-projectile-switch-to-buffer)
+    (general-def projectile-command-map
+      "f" 'consult-projectile-find-file)
     :init
     (advice-add #'consult-projectile-find-file
                 :after
