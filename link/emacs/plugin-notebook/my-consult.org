@@ -172,7 +172,10 @@ Integration with =lsp-mode=.
     (general-def lsp-command-map
       "c d" 'consult-lsp-diagnostics
       "c f" 'consult-lsp-file-symbols
-      "c s" 'consult-lsp-symbols))
+      "c s" 'consult-lsp-symbols)
+    (general-def lsp-mode-map
+      "C-S-d" 'consult-lsp-diagnostics
+      "C-S-f" 'consult-lsp-symbols))
 #+end_src
 
 ** consult-ls-git
