@@ -75,7 +75,7 @@ myriad systems benefit from Consult's functions.
         "M-g m" 'consult-mark
         "M-g k" 'consult-global-mark
         "M-g i" 'consult-imenu
-        "M-g I" 'consult-project-imenu
+        "M-g I" 'consult-imenu-multi
         ;; M-s bindings (search-map)
         "M-s f" 'consult-find
         "M-s L" 'consult-locate
@@ -89,14 +89,16 @@ myriad systems benefit from Consult's functions.
         ;; recentf
         [remap recentf-open-files] 'consult-recent-file
         ;; Isearch integration
-        "M-s e" 'consult-isearch)
+        "M-s e" 'consult-isearch-history)
       (general-def isearch-mode-map
         ;; orig. isearch-edit-string
-        "M-e" 'consult-isearch
+        "M-e" 'consult-isearch-history
         ;; orig. isearch-edit-string
-        "M-s e" 'consult-isearch
+        "M-s e" 'consult-isearch-history
         ;; needed by consult-line to detect isearch
-        "M-s l" 'consult-line)
+        "M-s l" 'consult-line
+        ;; needed by consult-line to detect isearch
+        "M-s L" 'consult-line-multi)
       (my/evil-leader-def
         ;; Open the fancy consult-buffer navigator.
         "cb" 'consult-bookmark)
