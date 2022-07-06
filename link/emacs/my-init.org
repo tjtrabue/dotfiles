@@ -850,15 +850,15 @@ straight-pull-all=
         :files (:defaults))))
 #+end_src
 
-** Install packages needed from the very start
+* Install packages needed from the very start
 Some packages are important to load right at the get-go, either because we
 want their functionality right now, or because they provide extra keywords
 for =use-package= that we want to make use of in our =use-package=
 statements.
 
-*** exec-path-from-shell
+** exec-path-from-shell
 This plugin sets Emacs' own =$PATH= environment variable in sync with the
-user's =$PATH=, making sure that all external executables available to the
+user's =$PATH=, making sure that all external executable available to the
 user are also within Emacs' reach.
 
 #+begin_src emacs-lisp
@@ -889,7 +889,7 @@ user are also within Emacs' reach.
       (setenv "USE_LEAN_PROFILE" nil)))
 #+end_src
 
-*** use-package-chords
+** use-package-chords
 Adds =:chords= keyword to =use-package= for defining key-chords.
 
 #+begin_src emacs-lisp
@@ -899,7 +899,7 @@ Adds =:chords= keyword to =use-package= for defining key-chords.
     (key-chord-mode 1))
 #+end_src
 
-*** general
+** general
 =general.el= is a macro system for managing Emacs keybindings. You can think
 of it as a wrapper around both standard Emacs keybinding forms, such as
 =define-key=, =global-set-key=, etc., and third-party keybinding macros,
@@ -944,6 +944,9 @@ and hooks in a way that defers loading the package.
       "C-x C-l" 'find-library)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
+      "bd" 'bookmark-delete
+      "bj" 'bookmark-jump
+      "bs" 'bookmark-set
       "ee" 'eval-last-sexp))
 #+end_src
 

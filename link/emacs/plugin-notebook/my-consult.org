@@ -99,7 +99,7 @@ myriad systems benefit from Consult's functions.
         "M-s l" 'consult-line)
       (my/evil-leader-def
         ;; Open the fancy consult-buffer navigator.
-        "cb" 'consult-buffer)
+        "cb" 'consult-bookmark)
       :hook
       ;; Enable automatic preview at point in the *Completions* buffer.
       ;; This is relevant when you use the default completion UI,
