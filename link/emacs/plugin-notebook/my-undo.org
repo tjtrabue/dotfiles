@@ -16,6 +16,8 @@ This file adds some enhancements to Emacs' undo functionality.
 
   #+begin_src emacs-lisp
     (use-package undo-tree
+      ;; undo-tree can cause errors due to its history file feature. It's mostly
+      ;; fine, but the errors can get annoying.
       :disabled
       :demand t
       :general
@@ -40,8 +42,9 @@ This file adds some enhancements to Emacs' undo functionality.
     (use-package undo-fu
       :after evil-collection
       :general
-      (general-def 'normal
-        "u" 'undo-fu-only-undo))
+      (general-nmap
+        "u" 'undo-fu-only-undo
+        "U" 'undo-fu-only-redo))
   #+end_src
 
 * undo-fu-session
