@@ -58,9 +58,9 @@ offering you relevant actions to use on a target determined by the context:
                                (whitespace-mode -1)))
       :general
       (general-def
-        "C-M-k" 'embark-act
-        "C-M-." 'embark-dwim
-        "C-M-l" 'my/embark-act-noquit
+        "M-o" 'embark-act
+        "M-u" 'embark-dwim
+        "M-m" 'my/embark-act-noquit
         ;; alternative for `describe-bindings'
         "C-h E" 'embark-bindings)
       (general-def 'normal embark-collect-mode-map
