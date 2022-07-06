@@ -198,5 +198,8 @@ awesome =consult=-ing read front end for =projectile= functions.
 
 #+begin_src emacs-lisp
   (use-package consult-yasnippet
-    :after consult)
+    :after (consult yasnippet)
+    :general
+    (general-def yas-minor-mode-map
+      "C-c y y" 'consult-yasnippet))
 #+end_src
