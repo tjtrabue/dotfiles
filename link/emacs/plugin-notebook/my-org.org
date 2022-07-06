@@ -242,7 +242,15 @@ Keep the =org-mode= header for the current section at the top of the buffer.
 #+begin_src emacs-lisp
   (use-package org-sticky-header
     :hook
-    (org-mode . org-sticky-header-mode))
+    (org-mode . org-sticky-header-mode)
+    :custom
+    ;; How to display the sticky header. Can be one of:
+    ;;   nil
+    ;;   'full (show full path to the current heading)
+    ;;   'reversed (show full path to current heading but in reverse order)
+    (org-sticky-header-full-path 'full)
+    ;; The prefix string for the sticky header-line.
+    (org-sticky-header-heading-star "◉"))
 #+end_src
 
 ** org-web-tools
