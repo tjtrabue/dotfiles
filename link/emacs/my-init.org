@@ -342,6 +342,15 @@ LanguageServerProtocol clients and servers.
   ;; generation!
   (setq find-file-visit-truename nil)
 
+  ;; Controls whether and when Emacs saves bookmarks to disk.
+  ;;   nil    -> Emacs never saves bookmarks.
+  ;;   t      -> Emacs saves bookmarks when it is killed.
+  ;;   NUMBER -> Emacs will save bookmarks to file after NUMBER changes
+  ;;             are made to bookmarks (i.e., if NUMBER is 1, Emacs will
+  ;;             will save the bookmarks file every time a bookmark is created
+  ;;             or deleted).
+  (setq bookmark-save-flag 1)
+
   ;; Don’t compact font caches during GC. This can resolve lag issues with
   ;; doom-modeline and some other plugins.
   (setq inhibit-compacting-font-caches t)
