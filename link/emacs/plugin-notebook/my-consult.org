@@ -148,12 +148,31 @@ myriad systems benefit from Consult's functions.
   #+end_src
 
 * Plugins
+** consult-dir
+A very powerful plugin for listing directories from a myriad different sources,
+including recentf directories, project directories, bookmarked directories, and
+more.
+
+#+begin_src emacs-lisp
+  (use-package consult-dir
+    :after consult
+    :general
+    (general-def
+      "C-x C-d" 'consult-dir)
+    (my/evil-leader-def
+      "cd" 'consult-dir))
+#+end_src
+
 ** consult-lsp
 Integration with =lsp-mode=.
 #+begin_src emacs-lisp
   (use-package consult-lsp
     :after (consult lsp-mode)
-    :demand t)
+    :general
+    (general-def lsp-command-map
+      "c d" 'consult-lsp-diagnostics
+      "c f" 'consult-lsp-file-symbols
+      "c s" 'consult-lsp-symbols))
 #+end_src
 
 ** consult-ls-git
@@ -202,4 +221,15 @@ awesome =consult=-ing read front end for =projectile= functions.
     :general
     (general-def yas-minor-mode-map
       "C-c y y" 'consult-yasnippet))
+#+end_src
+
+** consult-flycheck
+=consult= integration with the =flycheck= linting engine.
+
+#+begin_src emacs-lisp
+  (use-package consult-flycheck
+    :after (consult flycheck)
+    :general
+    (general-def
+      [remap consult-flymake] 'consult-flycheck))
 #+end_src
