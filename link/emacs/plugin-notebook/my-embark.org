@@ -72,10 +72,6 @@ offering you relevant actions to use on a target determined by the context:
       ;; When embark is invoked from the minibuffer, this option controls whether or
       ;; not embark dismisses the minibuffer after `embark-act' finishes.
       (embark-quit-after-action t)
-      ;; How you wish to display the embark-collect view:
-      ;; 'list - List view (One row that wraps around if necessary)
-      ;; 'grid - Grid view (Multiple columns)
-      (embark-collect-view 'grid)
       :config
       ;; Hide the mode line of the Embark live/completions buffers
       (add-to-list 'display-buffer-alist
