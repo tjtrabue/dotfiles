@@ -28,6 +28,17 @@ myriad systems benefit from Consult's functions.
   completion UI you choose. It could be Selectrum, Vertico, the built-in Emacs
   completion system, or any other compatible framework.
 
+* Narrowing the completion buffer
+One of the primary features of Consult is /narrowing/ the completion buffer, not
+only based on a text search expression, but also based on pre-configured
+/categories/ for the completion source(s). To narrow based on category, the user
+must type the =consult-narrow-key= following by a key configured to narrow the
+completion buffer to some category. For example:
+
+1. =M-x consult-buffer=
+2. Type the =consult-narrow-key= (usually =<= or =C-+=)
+3. Type =p= to narrow the completion buffer to project buffers
+
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package consult
@@ -118,7 +129,7 @@ myriad systems benefit from Consult's functions.
       ;; Optionally configure the register formatting. This improves the register
       ;; preview for `consult-register', `consult-register-load',
       ;; `consult-register-store' and the Emacs built-ins.
-      (register-preview-delay 0)
+      (register-preview-delay 0.5)
       (register-preview-function #'consult-register-format)
       ;; Use Consult to select xref locations with preview
       (xref-show-xrefs-function #'consult-xref)
