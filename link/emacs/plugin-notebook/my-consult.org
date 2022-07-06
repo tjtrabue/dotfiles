@@ -183,7 +183,7 @@ awesome =consult=-ing read front end for =projectile= functions.
     (general-def 'normal 'override
       ;; Use consult-projectile instead of projectile-find-file
       [remap projectile-find-file] 'consult-projectile)
-    (general-def 'normal '(global-map projectile-command-map)
+    (general-def '(global-map projectile-command-map)
       [remap projectile-switch-project]   'consult-projectile-switch-project
       [remap projectile-find-dir]         'consult-projectile-find-dir
       [remap projectile-recentf]          'consult-projectile-recentf
