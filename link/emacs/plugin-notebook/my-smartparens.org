@@ -6,7 +6,7 @@
 #+tags:
 #+STARTUP: fold
 
-=smartparens= is a very popular Emacs plugin that automatically inserts closing
+=smartparens= is a popular Emacs plugin that automatically inserts closing
 delimiters based on the syntax of the programming language currently in
 use. However, =smartparens= can do much more than simply insert closing
 delimiters. It can act as a whole editing environment for Lisp dialects similar
