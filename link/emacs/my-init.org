@@ -5,8 +5,8 @@
 #+STARTUP: fold
 
 This Org document contains my primary Emacs configuration. =~/.emacs= only holds
-a few core pieces of code needed to prepare and load this file. The full
-repository for my dotfiles can be found [[https://github.com/tjtrabue/dotfiles][here]].
+pieces of code necessary to prepare and load this file. The full repository for
+my dotfiles is [[https://github.com/tjtrabue/dotfiles][here]].
 
 * Require statements
 These are =require= directives used to import Elisp modules used heavily by
@@ -21,7 +21,7 @@ block.
   (require 'dired-x)
   ;; String manipulation library
   (require 'subr-x)
-  ;; Make C and C++ modes available; necessary for many third-party packages
+  ;; Make C and C++ modes available; necessary for some third-party packages
   (require 'cc-mode)
   ;; "find function at point" library
   (require 'ffap)
@@ -233,9 +233,6 @@ auto-save feature for buffers.
   ;; Number of keystrokes between auto-saves (default 300)
   (setq auto-save-interval 300)
 #+end_src
-
-#+RESULTS:
-: 200
 
 * Color Configuration
 Here we configure ANSI colors for various modes used throughout Emacs.  We need
