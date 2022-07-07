@@ -666,6 +666,15 @@ main features of =lispyville=:
     (lispy-define-key lispy-mode-map "v" #'lispyville-toggle-mark-type))
 #+end_src
 
+*** Aliases
+#+begin_src emacs-lisp
+  (defalias 'evil-select-inner-unrestricted-object #'evil-select-inner-object
+    "Evil doesn't have a function called
+  `evil-select-inner-unrestricted-object', which is something that
+  lispyville requires. `evil-select-inner-object' is the closest
+  thing I can find.")
+#+end_src
+
 *** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lispyville
