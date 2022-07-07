@@ -1,0 +1,26 @@
+#+title:   English Grammar Configuration/Plugins
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:07:06
+#+tags:
+#+STARTUP: fold
+
+Even programmers (or pro-grammars!) need to know how to write! These Emacs
+plugins aid users in completing English language tasks.
+
+* writegood-mode
+This is a minor mode to aid in finding common writing problems. Matt Might’s
+weaselwords scripts inspired this mode.
+
+It highlights text based on a set of weasel-words, passive-voice and duplicate
+words.
+
+#+begin_src emacs-lisp
+  (use-package writegood-mode
+    :hook
+    ((latex-mode
+      markdown-mode
+      org-mode
+      tex-mode)
+     . writegood-mode))
+#+end_src

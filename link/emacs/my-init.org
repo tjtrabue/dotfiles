@@ -274,16 +274,16 @@ LanguageServerProtocol clients and servers.
   ;; Silence the annoying error/warning bell
   (setq ring-bell-function 'ignore)
 
-  ;; Suppress various warning types.
+  ;; Suppress specified warning types.
   (setq warning-suppress-log-types '((comp)))
 
   ;; Display relative line numbers like in Vim.
   (setq display-line-numbers 'relative)
   (setq display-line-numbers-type 'relative)
 
-  ;; Up the maximum depth for eval, apply, and funcall functions.
-  ;; This variable is supposed to catch infinite recursions before
-  ;; they cause a stack overflow, but its default value is very low.
+  ;; Up the maximum depth for eval, apply, and funcall functions.  This variable
+  ;; catches infinite recursions before they cause a stack overflow, but its
+  ;; default value is low.
   (setq max-lisp-eval-depth 10101)
 
   ;; Get rid of scrollbars since l33t programmers don't need any.
@@ -292,6 +292,13 @@ LanguageServerProtocol clients and servers.
   ;; Increase the amount of bytes Emacs reads per unit time from a given
   ;; process. The initial value is 4KB, far too low for modern day applications.
   (setq read-process-output-max (* 3 (* 1024 1024)))
+
+  ;; Max file size (in bytes) before a confirmation is required of the user before
+  ;; opening.
+  (setq large-file-warning-threshold 100000000)
+
+  ;; Echo unfinished commands after this many seconds of pause.
+  (setq echo-keystrokes 0.1)
 
   ;; Set the max number of variable bindings allowed at one time to a
   ;; number considerably higher than the default (which is 1600).
@@ -380,10 +387,6 @@ LanguageServerProtocol clients and servers.
 
   ;; Whether to cycle completions.
   (setq completion-cycle-threshold t)
-
-  ;; Max file size (in bytes) before a confirmation is required of the user before
-  ;; opening.
-  (setq large-file-warning-threshold 100000000)
 
   ;; Show file name and major mode in title bar.
   (setq-default frame-title-format
