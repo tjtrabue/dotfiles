@@ -525,6 +525,9 @@ edited location, as opposed to opening them at the beginning.
 
   ;; Display file size in mode line.
   (size-indication-mode 1)
+
+  ;; Turns on column numbers in mode line.
+  (column-number-mode 1)
 #+end_src
 
 * Key Bindings
