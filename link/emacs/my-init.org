@@ -112,7 +112,10 @@ Language and encoding parameters for this particular Emacs instance.
 #+begin_src emacs-lisp
   ;; Define a standard text encoding system for all files.
   (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
 #+end_src
 
 * Configure Load Path
@@ -257,7 +260,7 @@ LanguageServerProtocol clients and servers.
   (setq warning-suppress-log-types '((comp)))
 
   ;; Display relative line numbers like in Vim.
-  (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers 'relative)
 
   ;; Up the maximum depth for eval, apply, and funcall functions.
   ;; This variable is supposed to catch infinite recursions before
@@ -357,6 +360,10 @@ LanguageServerProtocol clients and servers.
 
   ;; Whether to cycle completions.
   (setq completion-cycle-threshold t)
+
+  ;; Max file size (in bytes) before a confirmation is required of the user before
+  ;; opening.
+  (setq large-file-warning-threshold 100000000)
 
   ;; Emacs 28 variables.
   (when (>= emacs-major-version 28)
@@ -486,6 +493,9 @@ edited location, as opposed to opening them at the beginning.
 
   ;; Automatically visit image files as images.
   (auto-image-file-mode 1)
+
+  ;; Display file size in mode line.
+  (size-indication-mode 1)
 #+end_src
 
 * Key Bindings
