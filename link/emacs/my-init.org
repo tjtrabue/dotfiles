@@ -51,6 +51,9 @@ This is where I define new variables to be used throughout my configuration.
     (defvar my/emacs-backup-dir (file-truename
                                  (concat user-emacs-directory "/backups"))
       "Directory housing all Emacs backup files.")
+    (defvar my/emacs-auto-saves-dir (file-truename
+                                    (concat user-emacs-directory "/auto-saves"))
+      "Directory housing all Emacs auto-save files.")
     (defvar my/emacs-lisp-dir (file-truename
                                (concat user-emacs-directory "/lisp"))
       "Extra miscellaneous elisp code goes here (if necessary).")
@@ -188,37 +191,51 @@ become unnecessary and may be safely removed.
   (require 'symbol-positions-fix)
 #+end_src
 
-* Configure Backup Dirs/Files
+* Configure Backup Dirs/Auto-Saves
 It's handy to have Emacs put all backup files in a centralized directory, as
-opposed to strewing them about each directory you visit.
+opposed to strewing them about each directory you visit. Same goes for the
+auto-save feature for buffers.
 
 #+begin_src emacs-lisp
-  ;; Put all backup files in ~/.emacs.d/backups to avoid causing
-  ;; unwanted side-effects.
-  (if (not (file-exists-p my/emacs-backup-dir))
-      (make-directory my/emacs-backup-dir t))
+  ;; Put all backup files in ~/.emacs.d/backups and auto save files in
+  ;; ~/.emacs.d/auto-saves to avoid causing unwanted side-effects.
+  (dolist (dir (list my/emacs-backup-dir my/emacs-auto-saves-dir))
+    (when (not (file-directory-p dir))
+      (make-directory dir t)))
   (setq backup-directory-alist
-        `(("." . ,(concat my/emacs-backup-dir "/"))))
+        `(("." . ,(file-truename my/emacs-backup-dir))))
+  (setq auto-save-file-name-transforms
+        `((".*" ,(file-truename (concat my/emacs-auto-saves-dir "/")) t)))
+  (setq auto-save-list-file-prefix
+        (file-truename (concat my/emacs-auto-saves-dir "/.saves-")))
+  (setq tramp-backup-directory-alist
+        `((".*" . ,(file-truename my/emacs-backup-dir))))
+  (setq tramp-auto-save-directory
+        (file-truename (concat my/emacs-auto-saves-dir "/")))
+
   ;; Backup of a file the first time it is saved.
   (setq make-backup-files t)
-  ;; don't clobber symlinks
+  ;; Don't clobber symlinks
   (setq backup-by-copying t)
   ;; Version numbers for backup files
   (setq version-control t)
   ;; Delete excess backup files silently
   (setq delete-old-versions t)
-  (setq delete-by-moving-to-trash t)
+  (setq delete-by-moving-to-trash nil)
   ;; Oldest versions to keep when new numbered backups created (default 2)
-  (setq kept-old-versions 6)
+  (setq kept-old-versions 2)
   ;; Newest versions to keep when new numbered backups created (default 2)
-  (setq kept-new-versions 9)
+  (setq kept-new-versions 5)
   ;; Auto-save every buffer that visits a file
   (setq auto-save-default t)
   ;; Number of seconds idle time before auto-save (default 30)
-  (setq auto-save-timeout 20)
+  (setq auto-save-timeout 30)
   ;; Number of keystrokes between auto-saves (default 300)
-  (setq auto-save-interval 200)
+  (setq auto-save-interval 300)
 #+end_src
+
+#+RESULTS:
+: 200
 
 * Color Configuration
 Here we configure ANSI colors for various modes used throughout Emacs.  We need
