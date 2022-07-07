@@ -38,10 +38,15 @@ aforementioned Vim plugins have.
       :demand t
       :hook
       ;; Enable strict mode for Lisp dialects.
-      ((clojure-mode
+      ((cider-repl-mode
+        clojure-mode
+        clojurec-mode
+        clojurescript-mode
         emacs-lisp-mode
+        ielm-mode
         lisp-mode
-        lisp-interaction-mode)
+        lisp-interaction-mode
+        sly-mrepl-mode)
        . smartparens-strict-mode)
       :config
       ;; Enable smartparens globally.
