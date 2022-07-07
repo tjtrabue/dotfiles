@@ -197,7 +197,10 @@ opposed to strewing them about each directory you visit.
   ;; unwanted side-effects.
   (if (not (file-exists-p my/emacs-backup-dir))
       (make-directory my/emacs-backup-dir t))
-  (setq backup-directory-alist `(("." . ,my/emacs-backup-dir)))
+  (setq backup-directory-alist
+        `(("." . ,(concat my/emacs-backup-dir "/"))))
+  (setq auto-save-file-name-transforms
+        `(("." ,(concat my/emacs-backup-dir "/") t)))
   ;; Backup of a file the first time it is saved.
   (setq make-backup-files t)
   ;; don't clobber symlinks
@@ -261,6 +264,7 @@ LanguageServerProtocol clients and servers.
 
   ;; Display relative line numbers like in Vim.
   (setq display-line-numbers 'relative)
+  (setq display-line-numbers-type 'relative)
 
   ;; Up the maximum depth for eval, apply, and funcall functions.
   ;; This variable is supposed to catch infinite recursions before
@@ -292,6 +296,7 @@ LanguageServerProtocol clients and servers.
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-follow-mouse 't)
+  (setq scroll-margin 0)
   (setq scroll-step 1)
   (setq scroll-conservatively 10000)
   (setq auto-window-vscroll nil)
@@ -364,6 +369,12 @@ LanguageServerProtocol clients and servers.
   ;; Max file size (in bytes) before a confirmation is required of the user before
   ;; opening.
   (setq large-file-warning-threshold 100000000)
+
+  ;; Show file name and major mode in title bar.
+  (setq-default frame-title-format
+                '("%b [%m]@"
+                  (:eval (or (file-remote-p default-directory 'host) system-name))
+                  " — Emacs"))
 
   ;; Emacs 28 variables.
   (when (>= emacs-major-version 28)
