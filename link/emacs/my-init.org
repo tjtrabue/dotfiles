@@ -199,8 +199,6 @@ opposed to strewing them about each directory you visit.
       (make-directory my/emacs-backup-dir t))
   (setq backup-directory-alist
         `(("." . ,(concat my/emacs-backup-dir "/"))))
-  (setq auto-save-file-name-transforms
-        `(("." ,(concat my/emacs-backup-dir "/") t)))
   ;; Backup of a file the first time it is saved.
   (setq make-backup-files t)
   ;; don't clobber symlinks
