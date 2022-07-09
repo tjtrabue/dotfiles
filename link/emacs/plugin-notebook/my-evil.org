@@ -717,9 +717,10 @@ main features of =lispyville=:
                                 ;; Use M-(, M-{, and M-[ to wrap Lisp objects in
                                 ;; delimiters.
                                 wrap
-                                ;; Use W, B, E, and gE to move semantically across
-                                ;; Lisp objects.
-                                (atom-movement t)
+                                ;; Use w, b, u, and ge to move semantically across
+                                ;; Lisp objects, and W, B, U, and gE to move
+                                ;; across standard evil text objects.
+                                atom-movement
                                 ;; Extra text object motions
                                 text-objects
                                 ;; Extra bindings
