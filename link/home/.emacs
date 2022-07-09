@@ -134,13 +134,13 @@ FILE's extension is '.el'."
            (setq ancestor-file (concat file-name ".org"))
            (my/tangle-config-artifact file)))))
 
-(defsubst my/apply-to-dir-files (dir fn pattern)
-  "Apply FN to all files in DIR.
+(defsubst my/apply-to-dir-files (dir pattern fn &rest args)
+  "Apply FN to all files in DIR matching regex PATTERN.
 
-Files in the directory are matched based on PATTERN, which is a regex."
+Any additional args ARGS are passed to FN."
   (require 'cl-lib)
   (cl-flet ((apply-it (f)
-              (funcall fn (concat (file-name-as-directory dir) f))))
+              (funcall fn (concat (file-name-as-directory dir) f) args)))
     (if (file-directory-p dir)
       (mapc #'apply-it (directory-files dir nil pattern)))))
 

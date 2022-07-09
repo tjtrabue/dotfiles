@@ -274,6 +274,12 @@ LanguageServerProtocol clients and servers.
   ;; Suppress specified warning types.
   (setq warning-suppress-log-types '((comp)))
 
+  ;; Describe the types of byte-compile warnings disired
+  ;; as a list. `nil' means present no byte compile warnings.
+  ;; `t' means present nearly all of them. `all' means
+  ;; present absolutely all of them.
+  (setq byte-compile-warnings t)
+
   ;; Display relative line numbers like in Vim.
   (setq display-line-numbers 'relative)
   (setq display-line-numbers-type 'relative)
@@ -1009,8 +1015,9 @@ in a way that does not clutter my primary configuration file.
   (load custom-file 'noerror 'nomessage)
 
   ;; Load personal files
-  (my/apply-to-dir-files my/emacs-plugin-dir
-                         #'load "\\.el$")
-  (my/apply-to-dir-files my/plugin-notebook-dir
-                         #'org-babel-load-file "\\.org$")
+  (my/apply-to-dir-files my/emacs-plugin-dir "\\.el$"
+                         (lambda (f &rest args)
+                           (load (file-name-sans-extension f) args)))
+  (my/apply-to-dir-files my/plugin-notebook-dir "\\.org$"
+                         #'org-babel-load-file)
 #+end_src

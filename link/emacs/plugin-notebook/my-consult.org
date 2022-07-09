@@ -110,6 +110,9 @@ completion buffer to some category. For example:
         [remap recentf-open-files] 'consult-recent-file
         ;; Isearch integration
         "M-s e" 'consult-isearch-history)
+      (general-def 'normal
+        ;; Use better consult-buffer over switch-to-buffer
+        "C-e" 'consult-buffer)
       (general-def isearch-mode-map
         ;; orig. isearch-edit-string
         "M-e" 'consult-isearch-history
