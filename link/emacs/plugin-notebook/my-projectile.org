@@ -26,8 +26,9 @@ software development.
       ;; Use C-p to search for files in project
       "C-p" 'projectile-find-file)
     :custom
-    ;; Enable caching unconditionally.
-    (projectile-enable-caching t)
+    ;; Whether to cache files to improve performance. If you cache files,
+    ;; Projectile may not find newly added project files until you restart Emacs.
+    (projectile-enable-caching nil)
     ;; Figure out completion system to use automatically.
     (projectile-completion-system 'auto)
     ;; Lis of directory paths (and optional depths) that projectile should use
