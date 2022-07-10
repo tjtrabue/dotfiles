@@ -18,9 +18,5 @@ words.
 #+begin_src emacs-lisp
   (use-package writegood-mode
     :hook
-    ((latex-mode
-      markdown-mode
-      org-mode
-      tex-mode)
-     . writegood-mode))
+    (text-mode . writegood-mode))
 #+end_src

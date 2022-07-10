@@ -28,7 +28,7 @@ block.
 #+end_src
 
 * Define User Variables
-This is where I define new variables to be used throughout my configuration.
+This is where I define new variables needed throughout my configuration.
 
 #+begin_src emacs-lisp
   ;; Make these variables compile-time constants (and available during
@@ -235,10 +235,10 @@ auto-save feature for buffers.
 #+end_src
 
 * Color Configuration
-Here we configure ANSI colors for various modes used throughout Emacs.  We need
-to make =comint-mode=, which all shell emulators in Emacs (known as inferior
-interpreters) inherit from, recognize ANSI color escape sequences so that shells
-don't look like a hot mess. We also want colorized man pages.
+Here we configure ANSI colors for major and minor modes used throughout Emacs.
+We need to make =comint-mode=, which all shell emulators in Emacs (known as
+inferior interpreters) inherit from, recognize ANSI color escape sequences so
+that shells don't look like a hot mess. We also want colorized man pages.
 
 #+begin_src emacs-lisp
   ;; Set ANSI color integration in comint-mode
@@ -254,8 +254,8 @@ don't look like a hot mess. We also want colorized man pages.
 
 * Set Emacs Variables
 Here is where we set existing Emacs variables to our preferred values, both for
-customization and performance. Emacs is notoriously slow unless you tweak many
-existing variables, especially if you use advanced programming tools such as
+customization and performance. Emacs is notoriously slow unless you tweak
+GC-related variables, especially if you use advanced programming tools such as
 LanguageServerProtocol clients and servers.
 
 #+begin_src emacs-lisp
@@ -412,9 +412,9 @@ between the edge of the frame and the first buffer. You can even set the width
 of the right and left fringes individually.
 
 #+begin_src emacs-lisp
-  ;; When called with a number, set the fringe on the right and left to that many
-  ;; pixels.  When called interactively, prompt the user for a fringe style to
-  ;; apply.
+  ;; When called with a number, set the fringe on the right and left to the
+  ;; specified number of pixels.  When called interactively, prompt the user for a
+  ;; fringe style to apply.
   (set-fringe-mode 10)
 #+end_src
 
@@ -444,10 +444,9 @@ Set default font for Emacs.
 #+end_src
 
 * Info
-=info= is Emacs' built in help system. You use =info= to browse various
-documentation pages. However, by default, Emacs only looks in a small number of
-locations for help pages. Here we add more locations for browsing user-installed
-info pages.
+=info= is Emacs' built in help system. You use =info= to browse documentation
+pages. However, by default, Emacs only looks in a small number of locations for
+help pages. Here we add more locations for browsing user-installed info pages.
 
 #+begin_src emacs-lisp
   ;; Make sure user-installed info pages are available.
@@ -468,10 +467,10 @@ our lives easier.
 
 * Activate/Deactivate Default Minor Modes
 Turn certain minor modes on or off by default. You can think of a minor mode as
-a plugin, or an extra set of functions and behaviors that can be turned on or
-off by calling their parent minor-mode function. For instance, calling
-(save-place-mode 1) will make Emacs open previously closed files at their last
-edited location, as opposed to opening them at the beginning.
+a plugin, or an extra set of functions and behaviors that the user turns on or
+off by calling the minor mode's function. For instance, calling
+=(save-place-mode 1)= will make Emacs open previously closed files at their last
+edited location, as opposed to opening them at the beginning of the file.
 
 #+begin_src emacs-lisp
   ;; Disable menubar and toolbar (they take up a lot of space!)
@@ -491,10 +490,12 @@ edited location, as opposed to opening them at the beginning.
   ;; names as separate words. This enables subword-mode in all buffers.
   (global-subword-mode 1)
 
-  ;; Automatically insert closing delimiters when an opening delimiter is typed.
-  ;; NOTE: Parinfer does a much better job balancing parentheses and much more,
-  ;; so we can disable electric-pair-mode.
-  ;; See my-lisp.org for details.
+  ;; Automatically insert closing delimiters when the user types an opening
+  ;; delimiter.
+  ;;
+  ;; NOTE: Parinfer does a much better job balancing parentheses and
+  ;; much more, so we can disable electric-pair-mode.  See my-lisp.org for
+  ;; details.
   (electric-pair-mode -1)
 
   ;; Automatically keep code indented when blocks change.
@@ -511,16 +512,17 @@ edited location, as opposed to opening them at the beginning.
   ;; Always show line numbers
   (global-display-line-numbers-mode 1)
 
-  ;; Keep buffers in sync with their respective files on disk as they change
-  ;; outside of Emacs. An example would be an untracked file being added to the
-  ;; Git index. With this mode active, Git information would display automatically
-  ;; after the file is added. If it was not active, you would have to manually
-  ;; revert the buffer.
+  ;; Keep buffers in sync with their respective files on disk as those files
+  ;; change outside of Emacs. An example would be the user adding a previously
+  ;; untracked file to the Git index. With this mode active, Emacs will update Git
+  ;; information automatically upon adding the file. If this mode is not active,
+  ;; the user will have to manually revert the buffer to see the updated
+  ;; information.
   ;;
   ;; NOTE: Enabling global-auto-revert can cause Emacs to slow down!
   (global-auto-revert-mode 1)
 
-  ;; Persist command history to disk so that it is saved between restarts.
+  ;; Persist command history to disk to maintain it between restarts.
   (savehist-mode 1)
 
   ;; Automatically visit image files as images.
@@ -557,8 +559,8 @@ Key bindings available in any major mode.
 #+end_src
 
 * Email
-These settings are used to configure Emacs' mail-mode and integration with
-external email programs, such as mutt.
+Settings for Emacs' =mail-mode= and integration with external email programs,
+such as =mutt= and =mu=.
 
 #+begin_src emacs-lisp
   ;; Change mode when Emacs is used to edit emails for Mutt
@@ -906,7 +908,7 @@ straight-pull-all=
         :files (:defaults))))
 #+end_src
 
-* Install packages needed from the very start
+* Install packages needed on startup
 Some packages are important to load right at the get-go, either because we
 want their functionality right now, or because they provide extra keywords
 for =use-package= that we want to make use of in our =use-package=
