@@ -1014,10 +1014,15 @@ in a way that does not clutter my primary configuration file.
   ;; Load the file containing custom set variables.
   (load custom-file 'noerror 'nomessage)
 
-  ;; Load personal files
+  ;; Load personal Elisp files.
   (my/apply-to-dir-files my/emacs-plugin-dir "\\.el$"
                          (lambda (f &rest args)
+                           "Make use of `load''s extensionless file loading
+  feature for Elisp files. This means `load' will first look for an .elc file,
+  then for a .el file in lieu of that."
                            (load (file-name-sans-extension f) args)))
+
+  ;; Load configuration embedded in Org mode files.
   (my/apply-to-dir-files my/plugin-notebook-dir "\\.org$"
                          #'org-babel-load-file)
 #+end_src
