@@ -694,13 +694,15 @@ instruct Emacs to compile custom libraries.
 #+end_src
 
 * Hooks
-Hooks are analogous to Vim's autocmds. They represent a series of functions to
+Hooks are analogous to Vim's =autocmds=. They represent a series of functions to
 run when a particular event occurs. Both Emacs proper and third party plugins
-design and expose certain hooks along with their packages, and the user can then
-attach functions to each hook by means of the 'add-hook function. The most
-commonly used hooks are those for major modes, each having a name like
-java-mode-hook, or haskell-mode-hook.  However, most packages provide additional
-hooks for use besides those for major and minor modes.
+expose certain hooks along with their packages, and the user can then attach
+functions to each hook by means of the =add-hook= function. The most commonly
+used hooks are those for major and minor modes, each having a name like
+=java-mode-hook=, or =company-mode-hook=.  However, most packages provide
+additional hooks for use besides those for major and minor modes, such as Evil's
+state change hooks like =evil-insert-state-entry-hook= and
+=evil-insert-state-exit-hook=.
 
 ** Buffer-menu-mode hooks
 #+begin_src emacs-lisp
