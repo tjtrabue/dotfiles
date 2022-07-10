@@ -152,6 +152,22 @@ default.
   (add-to-list 'load-path my/emacs-plugin-dir)
 #+end_src
 
+* Native Compilation
+We want to native-compile as many of our configuration files as we can to speed
+up performance.
+
+** Native compile personal Elisp files
+While emacs compiles its own built-in Elisp files to native code, but users must
+instruct Emacs to compile custom libraries.
+
+#+begin_src emacs-lisp
+  ;; This command native-compiles all Elisp files under a directory
+  (native-compile-async `(,my/elisp-lib-dir
+                          ,my/emacs-plugin-dir
+                          ,my/plugin-notebook-dir)
+                        'recursively)
+#+end_src
+
 * Require Custom Libraries
 Once we have configured the =load-path= we can add =require= statements for
 custom Emacs Lisp libraries.
@@ -677,22 +693,6 @@ Set variables used by LSP servers.
   ;; NOTE: You MUST rebuilt all lsp-mode related packages if you change this
   ;;       variable!
   (setenv "LSP_USE_PLISTS" "true")
-#+end_src
-
-* Native Compilation
-We want to native-compile as many of our configuration files as we can to speed
-up performance.
-
-** Native compile personal Elisp files
-While emacs compiles its own built-in Elisp files to native code, but users must
-instruct Emacs to compile custom libraries.
-
-#+begin_src emacs-lisp
-  ;; This command native-compiles all Elisp files under a directory
-  (native-compile-async `(,my/elisp-lib-dir
-                          ,my/emacs-plugin-dir
-                          ,my/plugin-notebook-dir)
-                        'recursively)
 #+end_src
 
 * Hooks
