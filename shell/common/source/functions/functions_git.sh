@@ -548,6 +548,21 @@ glsm() {
       git --no-pager log -1 --date=iso-local --format="%ad _" -- _ |
     sort
 }
+
+# List all files on the current branch that have changed from their version on
+# master.
+gchanged() {
+  local currentBranch="$(currentref)"
+  local defaultBranch="$(defaultbranch)"
+  local mainBranch="${1}"
+
+  if [ -z "${mainBranch}" ]; then
+    mainBranch="${defaultBranch}"
+  fi
+
+  git diff --name-only "${currentBranch}" \
+    "$(git merge-base "${currentBranch}" "${mainBranch}")"
+}
 # }}}
 
 # Macro functions {{{
