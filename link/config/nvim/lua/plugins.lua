@@ -217,7 +217,7 @@ packer.startup(
     use {"tpope/vim-repeat"}
     use {"wellle/targets.vim"}
     use {"easymotion/vim-easymotion"}
-    use {"editorconfig/editorconfig-vim"}
+    use {"gpanders/editorconfig.nvim"}
     -- }}}
 
     -- Delimiter plugins {{{
