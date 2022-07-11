@@ -5,8 +5,8 @@
 #+STARTUP: fold
 
 This Org document contains my primary Emacs configuration. =~/.emacs= only holds
-pieces of code necessary to prepare and load this file. The full repository for
-my dotfiles is [[https://github.com/tjtrabue/dotfiles][here]].
+pieces of code necessary to prepare and load this file. You can find my full
+dotfiles repository [[https://github.com/tjtrabue/dotfiles][here]].
 
 * Require statements
 These are =require= directives used to import Elisp modules used heavily by
