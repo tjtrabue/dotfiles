@@ -260,7 +260,7 @@ require("formatter").setup(
 vim.api.nvim_exec(
   [[
 " Format whole buffer
-nnoremap <silent> <leader>FF :Format<CR>
+nnoremap <silent> <leader>= :Format<CR>
 
 " Format the specified filetypes on save.
 augroup FormatAutogroup
