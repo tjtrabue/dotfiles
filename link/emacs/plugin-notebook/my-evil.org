@@ -629,8 +629,6 @@ main features of =lispyville=:
        "C-k" 'lispy-kill
        ;; Kill quoted string or sexp including point.
        "C-'" 'lispy-kill-at-point
-       ;; Quote characters when called from within "|"
-       "C-y" 'lispy-yank
        ;; Mark symbols with M-m
        "M-m" 'lispy-mark-symbol)
       (general-define-key
