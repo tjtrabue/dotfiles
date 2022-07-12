@@ -650,6 +650,8 @@ main features of =lispyville=:
        ;; Contract/expand current sexp.
        "<<" 'lispyville-<
        ">>" 'lispyville->
+       ;; Clone the current sexp or region
+       "C-y" 'lispy-clone
        ;; Move s-exps back and forth
        "M-j" 'lispyville-move-down
        "M-k" 'lispyville-move-up)
@@ -734,7 +736,7 @@ main features of =lispyville=:
                                 ;; v -> wrapped lispy-mark-symbol
                                 ;; V -> wrapped lispy-mark
                                 ;; C-v -> wrapped lispy-mark
-                                ;; mark
+                                mark
                                 ;; Use v to toggle mark.
                                 ;; NOTE: This will alter the behavior of `mark'.
                                 ;; mark-toggle
