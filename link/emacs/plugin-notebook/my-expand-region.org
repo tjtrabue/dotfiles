@@ -8,11 +8,18 @@
 textual region to broader and broader scopes as you continue to press the
 prescribed selection key.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package expand-region
-      :demand t
-      ;; I defined a hydra for expand-region for convenience..
-      ;; See my-hydra.org for keybindings for my expand-region hydra.
-      )
-  #+end_src
+*NOTE:* I defined a hydra for expand-region for convenience.  See =my-hydra.org=
+for keybindings for my expand-region hydra.
+
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :demand t
+    :hook
+    (org-mode . (lambda ()
+                  ;; No one has updated expand-region to reference new Org mode
+                  ;; function names.
+                  (defalias 'org-fold-get-folding-spec
+                    'org-fold-core-get-folding-spec)
+                  (defalias 'org-fold-next-folding-state-change
+                    'org-fold-core-next-folding-state-change))))
+#+end_src
