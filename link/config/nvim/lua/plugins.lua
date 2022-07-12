@@ -106,7 +106,10 @@ packer.startup(
     -- Minimap {{{
 
     -- Attempt to install the code-minimap Rust package upon update/install.
-    use {"wfxr/minimap.vim", run = ":!cargo install --locked code-minimap"}
+    use {
+      "wfxr/minimap.vim"
+      -- run = ":!cargo install --locked code-minimap"
+    }
     -- }}}
 
     -- Git  {{{
