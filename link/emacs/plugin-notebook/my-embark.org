@@ -69,8 +69,8 @@ offering you relevant actions to use on a target determined by the context:
       ;; Optionally replace the key help with a completing-read interface
       (setq prefix-help-command #'embark-prefix-help-command)
       :custom
-      ;; When embark is invoked from the minibuffer, this option controls whether or
-      ;; not embark dismisses the minibuffer after `embark-act' finishes.
+      ;; This option controls whether or not embark dismisses the minibuffer after
+      ;; `embark-act' finishes when the user invokes embark from the minibuffer.
       (embark-quit-after-action t)
       :config
       ;; Hide the mode line of the Embark live/completions buffers

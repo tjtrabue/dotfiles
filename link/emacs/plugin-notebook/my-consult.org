@@ -9,7 +9,7 @@
 Yet another completion framework for Emacs. Jeez, you think there would be
 enough of them at this point to satisfy these Emacs sycophants, but no.  Consult
 is a bit of a different creature than Helm and Ivy. In fact, Consult is more
-closely a relatively of Counsel than of Ivy, but whereas Counsel is a suite of
+closely related to Counsel than to Ivy, but whereas Counsel is a suite of
 utility functions implemented on Ivy's completion system, Consult is a suite of
 utility functions implemented using only Emacs' built-in =completing-read= API.
 Furthermore, whereas Counsel integrates only with Ivy, Consult integrates with
@@ -19,14 +19,14 @@ makes Consult far more flexible and widely usable than Counsel or Helm since a
 myriad systems benefit from Consult's functions.
 
 * What is Consult really?
-  Consult is designed to fulfill the same role for Selectrum and Vertico that
+  Consult fulfills the same role for Ido, Selectrum, Vertico, and more that
   Counsel fills for Ivy. You can think of Selectrum/Vertico, Consult, and Embark
   as a similar tool suite to Ivy, Counsel, and Swiper, although these triplets
   do not match up one-to-one. The main difference between these two tool suites
-  is that Ivy, Counsel, and Swiper are exclusive to one another, and must be
-  used as a package deal. Consult is completely agnostic to the narrowing
-  completion UI you choose. It could be Selectrum, Vertico, the built-in Emacs
-  completion system, or any other compatible framework.
+  is that Ivy, Counsel, and Swiper are exclusive to one another, not integrating
+  with other Emacs tools. In contrast, Consult is agnostic to the narrowing
+  completion UI you choose. It could be Selectrum, Vertico, Ido mode, the
+  built-in Emacs completion system, or any other compatible framework.
 
 * Narrowing the completion buffer
 One of the primary features of Consult is /narrowing/ the completion buffer, not
@@ -174,9 +174,9 @@ completion buffer to some category. For example:
 
 * Plugins
 ** consult-dir
-A very powerful plugin for listing directories from a myriad different sources,
-including recentf directories, project directories, bookmarked directories, and
-more.
+A powerful plugin for listing directories from a myriad different sources,
+including =recentf= directories, project directories, bookmarked directories,
+and more.
 
 #+begin_src emacs-lisp
   (use-package consult-dir
@@ -189,7 +189,8 @@ more.
 #+end_src
 
 ** consult-lsp
-Integration with =lsp-mode=.
+Consult integration with =lsp-mode=.
+
 #+begin_src emacs-lisp
   (use-package consult-lsp
     :after (consult lsp-mode)
@@ -204,6 +205,9 @@ Integration with =lsp-mode=.
 #+end_src
 
 ** consult-ls-git
+A set of Consult sources for Git files. =M-x consult-ls-git= is the primary
+command this package provides, showing file info for files changed in Git,
+staged files, tracked files, etc.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-ls-git
@@ -235,6 +239,7 @@ awesome =consult=-ing read front end for =projectile= functions.
 #+end_src
 
 ** consult-yasnippet
+Consult source for Yasnippet snippets for the current major mode.
 
 #+begin_src emacs-lisp
   (use-package consult-yasnippet
@@ -245,7 +250,7 @@ awesome =consult=-ing read front end for =projectile= functions.
 #+end_src
 
 ** consult-flycheck
-=consult= integration with the =flycheck= linting engine.
+Consult integration with the =flycheck= linting engine.
 
 #+begin_src emacs-lisp
   (use-package consult-flycheck
