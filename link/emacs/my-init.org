@@ -579,7 +579,7 @@ Settings for Emacs' =mail-mode= and integration with external email programs,
 such as =mutt= and =mu=.
 
 #+begin_src emacs-lisp
-  ;; Change mode when Emacs is used to edit emails for Mutt
+  ;; Change mode when editing emails for Mutt
   (setq auto-mode-alist (append '(("/tmp/mutt.*" . message-mode)) auto-mode-alist))
 #+end_src
 
