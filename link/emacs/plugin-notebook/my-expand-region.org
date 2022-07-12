@@ -17,7 +17,7 @@ for keybindings for my expand-region hydra.
     :hook
     (org-mode . (lambda ()
                   ;; No one has updated expand-region to reference new Org mode
-                  ;; function names.
+                  ;; function names. Remove these aliases once they do.
                   (defalias 'org-fold-get-folding-spec
                     'org-fold-core-get-folding-spec)
                   (defalias 'org-fold-next-folding-state-change
