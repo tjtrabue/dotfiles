@@ -1,4 +1,4 @@
-#+title:    Consult: Non-Opinionated Completion System
+#+title:    Consult: Non-Opinionated Completion Sources
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2021:07:17

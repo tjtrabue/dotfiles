@@ -861,8 +861,8 @@ straight-pull-all=
 
 #+begin_src emacs-lisp
   (defvar bootstrap-version)
-  ;; Always use use-package when installing packages, making the ':straight t'
-  ;; part of the use-package macro unnecessary.
+  ;; Always use `use-package' when installing packages, making the `:straight t'
+  ;; part of the `use-package' macro unnecessary.
   (setq straight-use-package-by-default t)
   ;; The straight.el branch to clone.
   (setq straight-repository-branch "master")
@@ -973,8 +973,8 @@ and hooks in a way that defers loading the package.
     ;; Define a shortcut function for defining keys that begin with "C-c"
     (general-create-definer my/user-leader-def
       :prefix "C-c")
-    ;; Create a replacement macro for `evil-leader'. This completely obsoletes the
-    ;; need to include `evil-leader' in your configuation!
+    ;; Create a replacement macro for `evil-leader'. This obsoletes the need to
+    ;; include `evil-leader' in your configuation!
     (general-create-definer my/evil-leader-def
       :states '(normal visual)
       :prefix ",")
