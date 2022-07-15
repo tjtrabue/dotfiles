@@ -8,6 +8,7 @@ clojure/tools/clojure
 cmatrix
 code-minimap
 coreutils
+datamash
 diffutils
 docker
 ed
