@@ -14,7 +14,6 @@ as being actively maintained, making =avy= the better alternative.
   (use-package avy
     :after evil-collection
     :general
-    ;; NOTE: See evil-leader config for other keybindings.
     (general-def '(normal motion)
       ;; Remap standard f/F t/T evil keybindings to avy motions.
       "f" 'avy-goto-char
