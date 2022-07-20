@@ -16,12 +16,12 @@ as being actively maintained, making =avy= the better alternative.
     :general
     (general-def '(normal motion)
       ;; Remap standard f/F t/T evil keybindings to avy motions.
-      "f" 'avy-goto-char
-      "F" 'avy-goto-word-1
-      "t" 'avy-goto-char-2
-      "T" 'avy-goto-word-0
+      "f" 'evil-avy-goto-char
+      "F" 'evil-avy-goto-word-1
+      "t" 'evil-avy-goto-char-2
+      "T" 'evil-avy-goto-word-0
       ;; Jump to line based on an abbreviation.
-      "L" 'avy-goto-line)
+      "L" 'evil-avy-goto-line)
     :custom
     ;; How avy's overlay appears near matches.
     (avy-style 'at-full)
