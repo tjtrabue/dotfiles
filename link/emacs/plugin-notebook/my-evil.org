@@ -201,6 +201,7 @@ define key bindings based on pressing a leader key (usually comma) followed
 by an arbitrary succession of additional key strokes to call a predefined
 function. It's similar in nature to Emacs' =key-chord= plugin.
 
+*** Prefer =general.el= to =evil-leader=
 *NOTE:* =general= provides a better method for defining Emacs keybindings in
 general (no pun intended), including leader-like keybindings. Not only this,
 but =evil-leader= is, unfortunately, quite badly documented. =general=, on
@@ -272,6 +273,7 @@ seen. For these reasons, I recommend using =general= and foregoing
 
 ** evil-collection
 Used to provide default Vim keybindings for all standard Emacs modes.
+
 #+begin_src emacs-lisp
   (use-package evil-collection
     :after evil
@@ -448,27 +450,36 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
 
 #+begin_src emacs-lisp
   (use-package evil-snipe
-    ;; I prefer to use avy instead of snipe.
-    :disabled
     :demand t
     :after evil-collection
     :hook
     ;; Turn off snipe in magit-mode for compatibility.
-    (magit-mode . turn-off-evil-snipe-override-mode)
+    (magit-mode . turn-off-evil-snipe-mode)
     :general
-    ;; Don't want snipe messing with evil-leader's mappings.
-    (general-unbind evil-snipe-override-mode-map
-      "<motion-state> ,")
-    (general-unbind evil-snipe-override-local-mode-map
-      "<motion-state> ,")
+    (general-def '(normal motion) evil-snipe-local-mode-map
+      "f" 'evil-snipe-f
+      "F" 'evil-snipe-F
+      "s" 'evil-snipe-s
+      "S" 'evil-snipe-S
+      "t" 'evil-snipe-t
+      "T" 'evil-snipe-T)
+    (general-def 'visual evil-snipe-local-mode-map
+      ;; Bind z/Z in evil's visual state to avoid conflicts
+      "z" 'evil-snipe-s
+      "Z" 'evil-snipe-S)
     :custom
     (evil-snipe-scope 'whole-visible)
     (evil-snipe-repeat-scope 'whole-buffer)
     (evil-snipe-spillover-scope 'whole-buffer)
+    ;; Whether to override , and ; for repeating snipe searches.
+    (evil-snipe-override-evil-repeat-keys nil)
+    ;; When enabled, searches will be case-insensitive unless the search contains
+    ;; a capital letter.
+    (evil-snipe-smart-case t)
     :config
     ;; Map '[' to match any opening delimiter in any snipe mode.
     (push '(?\[ "[[{(]") evil-snipe-aliases)
-    (evil-snipe-override-mode 1))
+    (evil-snipe-mode 1))
 #+end_src
 
 ** evil-org
