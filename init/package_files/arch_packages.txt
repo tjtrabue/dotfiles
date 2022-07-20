@@ -30,6 +30,7 @@ crypto++
 ctags
 cups
 cups-pdf
+datamash
 dejagnu
 dhclient
 dialog
