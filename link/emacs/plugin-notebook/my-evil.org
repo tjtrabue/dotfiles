@@ -457,12 +457,8 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
     (magit-mode . turn-off-evil-snipe-mode)
     :general
     (general-def '(normal motion) evil-snipe-local-mode-map
-      "f" 'evil-snipe-f
-      "F" 'evil-snipe-F
       "s" 'evil-snipe-s
-      "S" 'evil-snipe-S
-      "t" 'evil-snipe-t
-      "T" 'evil-snipe-T)
+      "S" 'evil-snipe-S)
     (general-def 'visual evil-snipe-local-mode-map
       ;; Bind z/Z in evil's visual state to avoid conflicts
       "z" 'evil-snipe-s

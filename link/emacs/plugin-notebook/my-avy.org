@@ -15,11 +15,21 @@ as being actively maintained, making =avy= the better alternative.
     :after evil-collection
     :general
     ;; NOTE: See evil-leader config for other keybindings.
-    (general-def 'normal
-      ;; Jump to word beginning with character.
-      ;; "f" 'avy-goto-word-1
-      ;; Jump to text beginning with 1 input character.
-      ;; "F" 'avy-goto-char-2
+    (general-def '(normal motion)
+      ;; Remap standard f/F t/T evil keybindings to avy motions.
+      "f" 'avy-goto-char
+      "F" 'avy-goto-word-1
+      "t" 'avy-goto-char-2
+      "T" 'avy-goto-word-0
       ;; Jump to line based on an abbreviation.
-      "L" 'avy-goto-line))
+      "L" 'avy-goto-line)
+    (my/evil-leader-def
+      ;; Jump to word beginning with character.
+      "a" 'avy-goto-word-1
+      ;; Jump to text beginning with 1 input character.
+      "A" 'avy-goto-char)
+    :custom
+    ;; When non-nil, display line overlay next to the first non-whitespace
+    ;; character.
+    (avy-indent-line-overlay t))
 #+end_src
