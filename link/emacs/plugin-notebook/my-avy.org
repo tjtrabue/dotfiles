@@ -29,6 +29,8 @@ as being actively maintained, making =avy= the better alternative.
       ;; Jump to text beginning with 1 input character.
       "A" 'avy-goto-char)
     :custom
+    ;; How avy's overlay appears near matches.
+    (avy-style 'at-full)
     ;; When non-nil, display line overlay next to the first non-whitespace
     ;; character.
     (avy-indent-line-overlay t))
