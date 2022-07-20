@@ -604,11 +604,6 @@ main features of =lispyville=:
   (defun my/set-lispyville-mode-keys ()
     "Set extra `evil-mode' keybindings for `lispyville-mode'."
     (let ((mode-map 'lispyville-mode-map))
-      ;; Wrap our favorite "jk" chord for lispyville mode.
-      ;; (general-define-key
-      ;;  :states '(insert replace)
-      ;;  :keymaps mode-map
-      ;;  (general-chord "jk") 'lispyville-normal-state)
       (general-define-key
        :states 'normal
        :keymaps mode-map
@@ -624,8 +619,6 @@ main features of =lispyville=:
        ;; List navigation
        "(" 'lispyville-backward-list-begin
        ")" 'lispyville-forward-list-begin
-       ;; Make "J" into the safe join operator in Lisp modes
-       "J" 'lispyville-join
        ;; Adapt ace-style jump commands for lispy.
        "F" 'lispy-ace-paren
        ;; Special comment functions
@@ -644,7 +637,9 @@ main features of =lispyville=:
        "[" 'lispy-brackets
        "]" 'lispy-right-nostring
        "{" 'lispy-braces
-       "}" 'lispy-right-nostring)
+       "}" 'lispy-right-nostring
+       ;; Remap our favorite normal mode chord to lispyville's version of ESC.
+       (general-chord "jk") 'lispyville-normal-state)
       (general-define-key
        :states '(normal insert)
        :keymaps mode-map
@@ -654,6 +649,8 @@ main features of =lispyville=:
       (general-define-key
        :states '(normal visual)
        :keymaps mode-map
+       ;; Make "J" into the safe join operator in Lisp modes
+       "J" 'lispyville-join
        ;; Contract/expand current sexp.
        "<<" 'lispyville-<
        ">>" 'lispyville->
