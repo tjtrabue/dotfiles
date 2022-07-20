@@ -176,8 +176,13 @@ packer.startup(
 
     -- Markdown {{{
     use {"plasticboy/vim-markdown"}
-    use {"shime/vim-livedown"}
-    use {"npxbr/glow.nvim", run = ":GlowInstall"}
+    -- NOTE: Requires Node.js and Yarn to work!
+    use {
+      "iamcco/markdown-preview.nvim",
+      run = function()
+        vim.fn["mkdp#util#install"]()
+      end
+    }
     -- }}}
 
     -- TOML {{{
