@@ -22,11 +22,6 @@ as being actively maintained, making =avy= the better alternative.
       "T" 'avy-goto-word-0
       ;; Jump to line based on an abbreviation.
       "L" 'avy-goto-line)
-    (my/evil-leader-def
-      ;; Jump to word beginning with character.
-      "a" 'avy-goto-word-1
-      ;; Jump to text beginning with 1 input character.
-      "A" 'avy-goto-char)
     :custom
     ;; How avy's overlay appears near matches.
     (avy-style 'at-full)
