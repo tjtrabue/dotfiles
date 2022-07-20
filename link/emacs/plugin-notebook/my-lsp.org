@@ -98,14 +98,15 @@ documentation on hover, syntax linting and error checking, etc.
                   ;; bindings because that's the only way they will take
                   ;; precedence over evil's motion state bindings in normal state.
                   (general-def 'normal 'local
+                    "gD" 'lsp-find-declaration
+                    "gH" 'lsp-treemacs-call-hierarchy
+                    "gR" 'lsp-find-references
                     "ga" 'lsp-execute-code-action
                     "gd" 'lsp-find-definition
-                    "gh" 'lsp-treemacs-call-hierarchy
-                    "go" 'lsp-organize-imports
+                    "gh" 'lsp-describe-thing-at-point
                     "gi" 'lsp-find-implementation
-                    "gD" 'lsp-find-declaration
                     "gl" 'lsp-find-locations
-                    "gR" 'lsp-find-references
+                    "go" 'lsp-organize-imports
                     "gr" 'lsp-rename
                     "gt" 'lsp-find-type-definition)
                   (my/evil-leader-def 'local
