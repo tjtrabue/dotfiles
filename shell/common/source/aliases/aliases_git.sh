@@ -25,6 +25,8 @@ alias gdc="git diff --cached"
 alias nochanges="git diff --exit-code --quiet"
 # Return 0 if no changed files have been added to the index.
 alias noadded="git diff --cached --exit-code --quiet"
+# Show diff between HEAD and HEAD~1.
+alias lastdiff="git diff HEAD~1"
 # }}}
 
 # Difftool {{{
