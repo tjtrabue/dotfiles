@@ -657,7 +657,6 @@ call s:SourcePluginConfigFile('undotree.config.vim')
 call s:SourcePluginConfigFile('neogit.config.lua')
 call s:SourcePluginConfigFile('neogit.config.vim')
 call s:SourcePluginConfigFile('git-blame.config.vim')
-call s:SourcePluginConfigFile('glow.config.vim')
 call s:SourcePluginConfigFile('barbar.config.vim')
 call s:SourcePluginConfigFile('nvim-hlslens.config.vim')
 call s:SourcePluginConfigFile('formatter.config.lua')
@@ -720,6 +719,9 @@ call s:SourcePluginConfigFile('pgsql.config.vim')
 
 " Minimap plugin
 call s:SourcePluginConfigFile('minimap.config.vim')
+
+" Markdown preview
+call s:SourcePluginConfigFile('markdown-preview.config.vim')
 " }}}
 
 " Source override config files {{{
