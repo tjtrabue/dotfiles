@@ -106,9 +106,11 @@ world needed another Lisp.
         "C-k" 'cider-repl-previous-input
         "C-r" 'cider-repl-history)
       (general-def 'insert cider-repl-mode-map
-        "C-n" 'cider-repl-next-input
-        "C-p" 'cider-repl-previous-input
-        "C-r" 'cider-repl-history)
+        "C-n"        'cider-repl-next-input
+        "C-p"        'cider-repl-previous-input
+        "C-r"        'cider-repl-history
+        "C-RET"      'cider-repl-newline-and-indent
+        "C-<return>" 'cider-repl-newline-and-indent)
       (my/evil-leader-def cider-repl-mode-map
         ","   'cider-repl-handle-shortcut
         "cs"  'cider-repl-handle-shortcut
@@ -189,7 +191,7 @@ world needed another Lisp.
       (cider-repl-history-size 1000)
       ;; File for storing CIDER REPL history.
       (cider-repl-history-file
-       (file-truename (concat user-emacs-directory "cider-repl-hist")))
+       (locate-user-emacs-file "cider-repl-hist"))
       ;; Turn off hover documentation since lsp-mode provides a better alternative.
       (cider-eldoc-display-for-symbol-at-point nil)
       ;; CIDER will try to add expected function arguments based on the current
