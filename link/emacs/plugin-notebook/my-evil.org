@@ -463,6 +463,11 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
       ;; Bind z/Z in evil's visual state to avoid conflicts
       "z" 'evil-snipe-s
       "Z" 'evil-snipe-S)
+    (general-unbind 'operator evil-snipe-local-mode-map
+      ;; Get rid of x/X snipe operators since they conflict with lispyville's sexp
+      ;; operators.
+      "x"
+      "X")
     :custom
     (evil-snipe-scope 'whole-visible)
     (evil-snipe-repeat-scope 'whole-buffer)
