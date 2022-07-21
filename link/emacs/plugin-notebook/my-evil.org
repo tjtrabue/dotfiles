@@ -357,6 +357,21 @@ Code commenting plugin based on =vim-commentary= for Vim.
     (evil-commentary-mode 1))
 #+end_src
 
+** evil-goggles
+Display visual hints (i.e., pulse a visual highlight) when editing in
+=evil-mode=.
+
+#+begin_src emacs-lisp
+  (use-package evil-goggles
+    ;; Really slow and rather incomplete.
+    :disabled
+    :after evil-collection
+    :demand t
+    :config
+    (evil-goggles-mode 1)
+    (evil-goggles-use-diff-faces))
+#+end_src
+
 ** evil-nerd-commenter
 A powerful and configurable code commenting plugin based on =NerdCommenter=
 for Vim. Unlike =evil-commentary=, this plugin does not come with any default
@@ -654,8 +669,10 @@ main features of =lispyville=:
       (general-define-key
        :states '(normal visual)
        :keymaps mode-map
-       ;; Make "J" into the safe join operator in Lisp modes
+       ;; Make "J" into the safe join operator in Lisp modes.
        "J" 'lispyville-join
+       ;; Copy the sexp at point or visual selection.
+       "Y" 'lispy-new-copy
        ;; Contract/expand current sexp.
        "<<" 'lispyville-<
        ">>" 'lispyville->
