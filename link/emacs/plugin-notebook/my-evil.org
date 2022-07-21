@@ -639,8 +639,12 @@ main features of =lispyville=:
        ;; List navigation
        "(" 'lispyville-backward-list-begin
        ")" 'lispyville-forward-list-begin
+       ;; Kill ARG sexps.
+       "D" 'lispy-kill
        ;; Adapt ace-style jump commands for lispy.
        "F" 'lispy-ace-paren
+       ;; Copy the sexp at point or visual selection.
+       "Y" 'lispy-new-copy
        ;; Special comment functions
        "gcc" 'lispyville-comment-or-uncomment-line
        "gcC" 'lispyville-comment-or-uncomment
@@ -671,8 +675,6 @@ main features of =lispyville=:
        :keymaps mode-map
        ;; Make "J" into the safe join operator in Lisp modes.
        "J" 'lispyville-join
-       ;; Copy the sexp at point or visual selection.
-       "Y" 'lispy-new-copy
        ;; Contract/expand current sexp.
        "<<" 'lispyville-<
        ">>" 'lispyville->
