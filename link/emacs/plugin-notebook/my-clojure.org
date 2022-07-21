@@ -174,7 +174,7 @@ world needed another Lisp.
       ;; How to colorize defined symbols of the following types.
       ;; Set this to nil to disable dynamic font-locking.
       ;; WARNING: Dynamic font-locking can slow down the REPL!
-      (cider-font-lock-dynamically '(macro core function var))
+      (cider-font-lock-dynamically '(macro core deprecated function var))
       ;; (cider-font-lock-dynamically nil)
       ;; Whether to pretty-print REPL output
       (cider-repl-use-pretty-printing t)
