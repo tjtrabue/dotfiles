@@ -68,17 +68,21 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     :after evil-collection
     :demand t
     :general
-    (general-def company-active-map
+    (general-def (company-active-map company-search-map)
       "RET" 'company-complete-selection
       "<return>" 'company-complete-selection
       "C-l" 'company-complete-selection)
-    (general-def 'insert company-active-map
+    (general-def 'insert '(company-active-map company-search-map)
       ;; Use RET and TAB to complete company completions
       "RET" 'company-complete-selection
       "<return>" 'company-complete-selection
-      "TAB" 'company-complete-selection
-      "<tab>" 'company-complete-selection
       "C-l" 'company-complete-selection
+      "TAB" (lambda ()
+              (interactive)
+              (company-complete-common-or-cycle 1))
+      "<tab>" (lambda ()
+                (interactive)
+                (company-complete-common-or-cycle 1))
       ;; Vim-style keybindings for cycling through matches
       "C-j" (lambda ()
               (interactive)
