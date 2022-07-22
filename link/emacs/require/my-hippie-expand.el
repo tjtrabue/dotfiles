@@ -73,6 +73,7 @@
     ;; `hippie-expand'.
     (tab-to-tab-stop)
     (hippie-expand arg)))
+
 (provide 'my-hippie-expand)
 
 ;;; my-hippie-expand.el ends here
