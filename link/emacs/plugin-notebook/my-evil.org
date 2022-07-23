@@ -649,8 +649,6 @@ main features of =lispyville=:
        "gcc" 'lispyville-comment-or-uncomment-line
        "gcC" 'lispyville-comment-or-uncomment
        "gcy" 'lispyville-comment-and-clone-dwim
-       ;; Delete ARG sexps.
-       "C-k" 'lispy-kill
        ;; Kill quoted string or sexp including point.
        "C-'" 'lispy-kill-at-point
        ;; Mark symbols with M-m
