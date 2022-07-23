@@ -1002,10 +1002,11 @@ and hooks in a way that defers loading the package.
       "C-x C-l" 'find-library)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
+      "<" 'eval-last-sexp
+      ">" 'eval-print-last-sexp
       "bd" 'bookmark-delete
       "bj" 'bookmark-jump
-      "bs" 'bookmark-set
-      "ee" 'eval-last-sexp))
+      "bs" 'bookmark-set))
 #+end_src
 
 * Load External Configuration Files
