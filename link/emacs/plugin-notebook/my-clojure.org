@@ -115,6 +115,8 @@ world needed another Lisp.
         "C-<return>" 'cider-repl-newline-and-indent)
       (my/evil-leader-def cider-repl-mode-map
         ","   'cider-repl-handle-shortcut
+        "<"   'cider-eval-last-sexp
+        ">"   'cider-eval-last-sexp-and-replace
         "cC"  'cider-classpath
         "cF"  'cider-repl-toggle-clojure-font-lock
         "cH"  'cider-repl-history
@@ -140,7 +142,9 @@ world needed another Lisp.
         "cu"  'cider-undef
         "cv"  'cider-version)
       (my/evil-leader-def cider-mode-map
-        "=" 'cider-format-buffer)
+        "=" 'cider-format-buffer
+        "<" 'cider-eval-last-sexp
+        ">" 'cider-eval-last-sexp-and-replace)
       (general-def 'normal cider-mode-map
         "gs" 'cider-find-var
         "gi" 'cider-find-resource
