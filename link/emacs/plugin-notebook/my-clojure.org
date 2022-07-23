@@ -101,6 +101,8 @@ world needed another Lisp.
       :general
       (general-unbind cider-repl-mode-map
         ",")
+      (general-def cider-repl-mode-map
+        "M-;" 'cider-repl-handle-shortcut)
       (general-def 'normal cider-repl-mode-map
         "C-j" 'cider-repl-next-input
         "C-k" 'cider-repl-previous-input
@@ -113,7 +115,6 @@ world needed another Lisp.
         "C-<return>" 'cider-repl-newline-and-indent)
       (my/evil-leader-def cider-repl-mode-map
         ","   'cider-repl-handle-shortcut
-        "cs"  'cider-repl-handle-shortcut
         "cC"  'cider-classpath
         "cF"  'cider-repl-toggle-clojure-font-lock
         "cH"  'cider-repl-history

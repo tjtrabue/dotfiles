@@ -688,11 +688,7 @@ main features of =lispyville=:
        :keymaps mode-map
        "gc" 'lispyville-comment-or-uncomment-line
        "gC" 'lispyville-comment-or-uncomment
-       "gy" 'lispyville-comment-and-clone-dwim)
-      (general-define-key
-       :states '(normal insert visual)
-       :keymaps mode-map
-       "M-;" 'lispy-comment)))
+       "gy" 'lispyville-comment-and-clone-dwim)))
 
   (defun my/set-lispyville-lispy-keys ()
     "Use `lispy-define-key' to set extra keybindings for `lispyville'."
