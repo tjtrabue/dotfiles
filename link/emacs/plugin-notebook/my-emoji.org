@@ -14,11 +14,13 @@ Here you will find plugins and configuration for displaying emojis in Emacs.
 
   #+begin_src emacs-lisp
     (use-package emojify
-      :demand t
+      :hook
+      ;; Probably do not want to use emojify-mode in programming language files.
+      ((magit-mode
+        text-mode)
+       . emojify-mode)
       :custom
       ;; Whether to automatically download required emojis.
       ;; Can be t, nil, or 'ask.
-      (emojify-download-emojis-p t)
-      :config
-      (global-emojify-mode 1))
+      (emojify-download-emojis-p t))
   #+end_src
