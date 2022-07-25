@@ -13,13 +13,5 @@ for keybindings for my expand-region hydra.
 
 #+begin_src emacs-lisp
   (use-package expand-region
-    :demand t
-    :hook
-    (org-mode . (lambda ()
-                  ;; No one has updated expand-region to reference new Org mode
-                  ;; function names. Remove these aliases once they do.
-                  (defalias 'org-fold-get-folding-spec
-                    'org-fold-core-get-folding-spec)
-                  (defalias 'org-fold-next-folding-state-change
-                    'org-fold-core-next-folding-state-change))))
+    :demand t)
 #+end_src
