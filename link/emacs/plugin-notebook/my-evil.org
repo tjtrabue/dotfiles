@@ -535,6 +535,9 @@ on =multiple-cursors= at all, and is in fact an alternative implementation.
     :after evil-collection
     :demand t
     :general
+    (general-def 'visual
+      "A" 'evil-mc-make-cursor-in-visual-selection-end
+      "I" 'evil-mc-make-cursor-in-visual-selection-beg)
     (general-def '(normal visual)
       "C->" 'evil-mc-make-and-goto-next-match
       "C-<" 'evil-mc-make-and-goto-prev-match)
