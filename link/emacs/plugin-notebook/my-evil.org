@@ -663,6 +663,7 @@ main features of =lispyville=:
        "]" 'lispy-right-nostring
        "{" 'lispy-braces
        "}" 'lispy-right-nostring
+       "DEL" 'lispyville-delete-char-or-splice-backwards
        ;; Remap our favorite normal mode chord to lispyville's version of ESC.
        (general-chord "jk") 'lispyville-normal-state)
       (general-define-key
