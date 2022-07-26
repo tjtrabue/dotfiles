@@ -558,7 +558,10 @@ on =multiple-cursors= at all, and is in fact an alternative implementation.
 #+end_src
 
 ** evil-multiedit
-Another multiple cursors plugin for =evil-mode=. Slightly different than =evil-mc=.
+Another multiple cursors plugin for =evil-mode=. Slightly different than
+=evil-mc=, =evil-multiedit= works by integrating =iedit= mode into =evil-mode=
+with some sensible defaults. You can even use =evil-multiedit= and =evil-mc= in
+concert, if you so desire, but I prefer =evil-multiedit= for all use cases.
 
 #+begin_src emacs-lisp
   (use-package evil-multiedit
