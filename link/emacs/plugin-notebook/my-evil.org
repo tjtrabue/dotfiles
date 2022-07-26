@@ -567,7 +567,9 @@ Another multiple cursors plugin for =evil-mode=. Slightly different than =evil-m
     (general-def '(normal visual)
       "RET" 'evil-multiedit-toggle-or-restrict-region
       "M-d" 'evil-multiedit-match-and-next
-      "M-D" 'evil-multiedit-match-and-prev)
+      "M-D" 'evil-multiedit-match-and-prev
+      "M-n" 'evil-multiedit-next
+      "M-p" 'evil-multiedit-prev)
     (general-def 'insert
       "RET" 'evil-multiedit-toggle-or-restrict-region
       "M-d" 'evil-multiedit-toggle-marker-here)
