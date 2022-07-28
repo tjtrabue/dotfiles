@@ -13,5 +13,10 @@ for keybindings for my expand-region hydra.
 
 #+begin_src emacs-lisp
   (use-package expand-region
-    :demand t)
+    :after evil-collection
+    :demand t
+    :general
+    (general-def 'visual
+      "=" 'er/expand-region
+      "+" 'er/contract-region))
 #+end_src
