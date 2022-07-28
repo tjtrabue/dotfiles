@@ -618,6 +618,7 @@ main features of =lispyville=:
               ;; Here we use the :keymaps keyword argument because we want to
               ;; evaluate `mode-map' before passing it to `my/evil-leader-def'.
               (my/evil-leader-def :keymaps mode-map
+                ">"  'lispy-eval-and-replace
                 "l(" 'lispy-wrap-round
                 "l)" 'lispyville-wrap-round
                 "l[" 'lispy-wrap-brackets
