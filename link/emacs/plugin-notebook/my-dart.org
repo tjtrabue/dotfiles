@@ -12,7 +12,9 @@ Plugins and configuration for the Dart programming language.
 Major mode for editing Dart source code files.
 
 #+begin_src emacs-lisp
-  (use-package dart-mode)
+  (use-package dart-mode
+    ;; The repository appears to be deleted.
+    :disabled)
 #+end_src
 
 * flutter
@@ -21,6 +23,8 @@ programming language.
 
 #+begin_src emacs-lisp
   (use-package flutter
+    ;; See note on dart-mode
+    :disabled
     :after dart-mode
     :hook
     (dart-mode . flutter-test-mode)
@@ -42,6 +46,8 @@ to work. You probably do not want to use both plugins at the same time.
 
 #+begin_src emacs-lisp
   (use-package hover
+    ;; See note on dart-mode
+    :disabled
     :after dart-mode
     :general
     (general-def dart-mode-map

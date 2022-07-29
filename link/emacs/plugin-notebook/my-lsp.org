@@ -266,6 +266,8 @@ Dart workflows.
 
 #+begin_src emacs-lisp
   (use-package lsp-dart
+    ;; See note on dart-mode
+    :disabled
     :after
     (dart-mode lsp-mode))
 #+end_src
