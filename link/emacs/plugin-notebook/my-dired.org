@@ -40,6 +40,8 @@ This is a Perl based tool, and its installation varies from system to system.
       ;; Copy from one dired buffer to another dired buffer shown
       ;; in a split window.
       (dired-dwim-target t)
+      ;; Automatically revert dired buffers when revisiting their directories.
+      (dired-auto-revert-buffer t)
       :config
       ;; Allow using 'a' in dired to find file or directory in same buffer.
       (put 'dired-find-alternate-file 'disabled nil))
