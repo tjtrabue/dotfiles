@@ -84,4 +84,20 @@ wlein() {
   eval "${leinCommand}"
 }
 
+# Get Clojure development files ready to go!
+init_clojure() {
+  __link_shadow_cljs_dir
+}
+
+__link_shadow_cljs_dir() {
+  local shadowCljsConfigDir="${DOTFILES_LINK}/shadow-cljs"
+  local shadowCljsConfigTarget="${HOME}/.shadow-cljs"
+
+  if [ ! -h "${shadowCljsConfigTarget}" ]; then
+    log_info "Linking shadow-cljs config dir to:" \
+      "${BLUE}${shadowCljsConfigTarget}${NC}"
+    ln -sf "${shadowCljsConfigDir}" "${shadowCljsConfigTarget}"
+  fi
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

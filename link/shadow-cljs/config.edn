@@ -1,0 +1,9 @@
+;; This file contains shadow-cljs configuration options that will be applied to
+;; all shadow-cljs projects. Be careful before adding configuration options to
+;; this file, as they will not be shared with your colleagues! This file should
+;; only contain local development environment configuration particular to you,
+;; and that does not apply to your projects.
+
+{:dependencies
+ ;; zprint is a pretty-printing and formatting library that CIDER can use.
+ [[zprint/zprint "1.2.3"]]}
