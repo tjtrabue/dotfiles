@@ -1,0 +1,14 @@
+#+title:   Dirvish: A Polished Dired with Batteries Included
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:07:29
+#+tags:
+#+STARTUP: fold
+
+=dirvish= is a customized =dired= with a vastly improved UI.
+
+#+begin_src emacs-lisp
+  (use-package dirvish
+    ;; Right now, dired does everything I need.
+    :disabled)
+#+end_src

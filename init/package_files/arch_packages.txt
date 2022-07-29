@@ -47,6 +47,7 @@ exa
 expac
 fd
 feh
+ffmpegthumbnailer
 findutils
 firefox
 fwupd
@@ -61,8 +62,6 @@ go
 gpicview
 grub
 hacksaw
-# haskell-ghc-check
-# haskell-haddock-library
 hicolor-icon-theme
 htop
 httpie
@@ -101,6 +100,7 @@ lynx
 maim
 man-db
 man-pages
+mediainfo
 meld
 meson
 mlocate
@@ -130,6 +130,7 @@ pdfjam
 perl-image-exiftool
 picom
 plantuml
+poppler
 postgresql
 pulseaudio
 pulseaudio-alsa
@@ -152,6 +153,7 @@ shellcheck
 shotgun
 stack
 streamlink
+tar
 texinfo
 texlive-bibtexextra
 texlive-core
@@ -177,6 +179,7 @@ ttf-fira-mono
 ttf-hack
 ttf-liberation
 udevil
+unzip
 upower
 vi
 vim
