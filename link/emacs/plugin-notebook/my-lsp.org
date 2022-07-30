@@ -87,8 +87,7 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-clients-lua-language-server-bin
      (executable-find "lua-language-server"))
     :hook
-    ;; NOTE: Language mode hooks are set in the Functions section of this
-    ;;       file.
+    ;; NOTE: We set language mode hooks in the Functions section of this file.
     (lsp-mode . (lambda ()
                   ;; Enable which-key integration for lsp-mode
                   (lsp-enable-which-key-integration)
