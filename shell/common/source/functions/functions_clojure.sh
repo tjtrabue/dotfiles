@@ -86,7 +86,19 @@ wlein() {
 
 # Get Clojure development files ready to go!
 init_clojure() {
+  __link_dot_clojure_dir
   __link_shadow_cljs_dir
+}
+
+__link_dot_clojure_dir() {
+  local dotClojureDir="${DOTFILES_LINK}/clojure"
+  local dotClojureTarget="${HOME}/.clojure"
+
+  if [ ! -h "${dotClojureTarget}" ]; then
+    log_info "Linking clojure global config dir to:" \
+      "${BLUE}${dotClojureTarget}${NC}"
+    ln -sf "${dotClojureDir}" "${dotClojureTarget}"
+  fi
 }
 
 __link_shadow_cljs_dir() {

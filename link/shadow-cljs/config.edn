@@ -5,5 +5,7 @@
 ;; and that does not apply to your projects.
 
 {:dependencies
- ;; zprint is a pretty-printing and formatting library that CIDER can use.
- [[zprint/zprint "1.2.3"]]}
+ ;; cljs-devtools adds Chrome enhancements for ClojureScript developers.
+ [[binaryage/devtools "1.0.6"]
+  ;; zprint is a pretty-printing and formatting library that CIDER can use.
+  [zprint/zprint "1.2.3"]]}

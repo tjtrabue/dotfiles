@@ -1,0 +1,1 @@
+{:lib com.github.seancorfield/clj-new, :coord {:git/tag "v1.2.399", :git/sha "c82384e"}}
