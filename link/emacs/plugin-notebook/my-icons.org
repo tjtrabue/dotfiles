@@ -32,6 +32,8 @@
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
+    ;; Use treemacs-icons-dired instead
+    :disabled
     :demand t
     :after all-the-icons
     :hook

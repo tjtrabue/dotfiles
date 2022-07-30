@@ -9,148 +9,156 @@ appears much like any other project file tree explorer, but provides many, many
 features absent from the majority of such explorers.
 
 * treemacs
-  This is the configuration for =treemacs= itself.
+This is the configuration for =treemacs= itself.
 
-  #+begin_src emacs-lisp
-    (use-package treemacs
-      :after all-the-icons
-      :commands treemacs
-      :general
-      (general-def
-        "M-0" 'treemacs-select-window)
-      (my/user-leader-def
-        "t 1" 'treemacs-delete-other-windows
-        "t t" 'treemacs
-        "t B" 'treemacs-bookmark
-        "t P" 'treemacs-add-and-display-current-project
-        "t R" 'treemacs-remove-workspace
-        "t a" 'treemacs-add-project-to-workspace
-        "t e" 'treemacs-edit-workspaces
-        "t r" 'treemacs-remove-project-from-workspace
-        "t s" 'treemacs-switch-workspace
-        "t C-t" 'treemacs-find-file
-        "t M-t" 'treemacs-find-tag)
-      (my/evil-leader-def
-        "t P" 'treemacs-add-and-display-current-project
-        "t R" 'treemacs-remove-workspace
-        "t a" 'treemacs-add-project-to-workspace
-        "t e" 'treemacs-edit-workspaces
-        "t m" 'treemacs
-        "t r" 'treemacs-remove-project-from-workspace
-        "t s" 'treemacs-switch-workspace)
-      :init
-      (with-eval-after-load 'winum
-        (general-def winum-keymap
-          "M-0" 'treemacs-select-window))
-      :custom
-      ;; Whether to put an empty line between root nodes.
-      (treemacs-space-between-root-nodes nil)
-      :config
-      (treemacs-follow-mode t)
-      (treemacs-filewatch-mode t)
-      (treemacs-fringe-indicator-mode t)
-      (pcase (cons (not (null (executable-find "git")))
-                   (not (null treemacs-python-executable)))
-        (`(t . t)
-         (treemacs-git-mode 'deferred))
-        (`(t . _)
-         (treemacs-git-mode 'simple))))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :after all-the-icons
+    :commands treemacs
+    :general
+    (general-def
+      "M-0" 'treemacs-select-window)
+    (my/user-leader-def
+      "t 1" 'treemacs-delete-other-windows
+      "t t" 'treemacs
+      "t B" 'treemacs-bookmark
+      "t P" 'treemacs-add-and-display-current-project
+      "t R" 'treemacs-remove-workspace
+      "t a" 'treemacs-add-project-to-workspace
+      "t e" 'treemacs-edit-workspaces
+      "t r" 'treemacs-remove-project-from-workspace
+      "t s" 'treemacs-switch-workspace
+      "t C-t" 'treemacs-find-file
+      "t M-t" 'treemacs-find-tag)
+    (my/evil-leader-def
+      "t P" 'treemacs-add-and-display-current-project
+      "t R" 'treemacs-remove-workspace
+      "t a" 'treemacs-add-project-to-workspace
+      "t e" 'treemacs-edit-workspaces
+      "t m" 'treemacs
+      "t r" 'treemacs-remove-project-from-workspace
+      "t s" 'treemacs-switch-workspace)
+    :init
+    (with-eval-after-load 'winum
+      (general-def winum-keymap
+        "M-0" 'treemacs-select-window))
+    :custom
+    ;; Whether to put an empty line between root nodes.
+    (treemacs-space-between-root-nodes nil)
+    :config
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+#+end_src
 
 * Plugins
 ** treemacs-projectile
-   Integration with =projectile= project manager.
-   Currently I have had to add an advising function to =projectile= in order to
-   update the =treemacs= workspace when we switch =projectile= projects because
-   =treemacs-projectile= does not take care of this on its own.
+Integration with =projectile= project manager.
+Currently I have had to add an advising function to =projectile= in order to
+update the =treemacs= workspace when we switch =projectile= projects because
+=treemacs-projectile= does not take care of this on its own.
 
 *** Helper Functions
-    #+begin_src emacs-lisp
-      (defun my/sync-treemacs-with-projectile ()
-        "Add advising functions to keep treemacs in sync with projectile
-      whenever a new projectile project is visited. I don't know why
-      treemacs-projectile does not provide this feature itself."
-        (advice-add 'projectile-switch-project-by-name
-                    :after (lambda (&rest args)
-                             (let* ((path (car args))
-                                    (name (treemacs--filename path)))
-                               (treemacs-do-add-project-to-workspace path name)))))
-    #+end_src
+#+begin_src emacs-lisp
+  (defun my/sync-treemacs-with-projectile ()
+    "Add advising functions to keep treemacs in sync with projectile
+  whenever a new projectile project is visited. I don't know why
+  treemacs-projectile does not provide this feature itself."
+    (advice-add 'projectile-switch-project-by-name
+                :after (lambda (&rest args)
+                         (let* ((path (car args))
+                                (name (treemacs--filename path)))
+                           (treemacs-do-add-project-to-workspace path name)))))
+#+end_src
 
 *** =use-package= specification
-    #+begin_src emacs-lisp
-      (use-package treemacs-projectile
-        :after (treemacs projectile)
-        :commands treemacs-projectile
-        :general
-        ;; Automatically prefixed with "C-c"
-        (my/user-leader-def
-          "t p" 'treemacs-projectile)
-        ;; evil-leader shortcuts
-        (my/evil-leader-def
-          "tp" 'treemacs-projectile)
-        :config
-        ;; Make sure to add new projects to treemacs workspace when we switch
-        ;; to a new projectile project.
-        ;; For some reason treemacs-projectile does not do this by itself.
-        (my/sync-treemacs-with-projectile))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :commands treemacs-projectile
+    :general
+    ;; Automatically prefixed with "C-c"
+    (my/user-leader-def
+      "t p" 'treemacs-projectile)
+    ;; evil-leader shortcuts
+    (my/evil-leader-def
+      "tp" 'treemacs-projectile)
+    :config
+    ;; Make sure to add new projects to treemacs workspace when we switch
+    ;; to a new projectile project.
+    ;; For some reason treemacs-projectile does not do this by itself.
+    (my/sync-treemacs-with-projectile))
+#+end_src
 
 ** treemacs-perspective
-   Adds the ='Perspectives= scope for Treemacs.
+Adds the ='Perspectives= scope for Treemacs.
 
-   *NOTE:* You may need to run =treemacs-edit-workspaces= and manually adjust
-   some of the project names/roots for your perspective.
+*NOTE:* You may need to run =treemacs-edit-workspaces= and manually adjust
+some of the project names/roots for your perspective.
 
-   #+begin_src emacs-lisp
-     (use-package treemacs-perspective
-       :after (treemacs perspective)
-       :demand t
-       :config
-       (treemacs-set-scope-type 'Perspectives))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs-perspective
+    :after (treemacs perspective)
+    :demand t
+    :config
+    (treemacs-set-scope-type 'Perspectives))
+#+end_src
 
 ** treemacs-evil
-   Evil mode compatibility for Treemacs.
+Evil mode compatibility for Treemacs.
 
-   #+begin_src emacs-lisp
-     (use-package treemacs-evil
-       :after (evil-collection treemacs)
-       :demand t)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs-evil
+    :after (evil-collection treemacs)
+    :demand t)
+#+end_src
 
 ** treemacs-icons-dired
-   Display Treemacs icons in =dired-mode= buffers.
+Display Treemacs icons in =dired-mode= buffers.
 
-   #+begin_src emacs-lisp
-     (use-package treemacs-icons-dired
-       ;; Use all-the-icons-dired instead
-       :disabled
-       :after (treemacs dired)
-       :demand t
-       :config
-       (treemacs-icons-dired-mode 1))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs-icons-dired
+    :after treemacs
+    :demand t
+    :config
+    (treemacs-icons-dired-mode 1))
+#+end_src
 
 ** treemacs-magit
-   Closing the gaps for filewatch- and git-modes in conjunction with Magit.
-   Specifically this package will hook into Magit so as to artificially produce
-   filewatch events for changes that treemacs would otherwise not catch, namely
-   the committing and (un)staging of files.
+Closing the gaps for filewatch- and git-modes in conjunction with Magit.
+Specifically this package will hook into Magit so as to artificially produce
+filewatch events for changes that treemacs would otherwise not catch, namely
+the committing and (un)staging of files.
 
-   #+begin_src emacs-lisp
-     (use-package treemacs-magit
-       :after (treemacs magit)
-       :demand t)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :demand t)
+#+end_src
 
 ** treemacs-all-the-icons
-   =all-the-icons= integration for Treemacs.
+=all-the-icons= integration for Treemacs.
 
-   #+begin_src emacs-lisp
-     (use-package treemacs-all-the-icons
-       :after (treemacs all-the-icons)
-       :demand t
-       :config
-       (treemacs-load-theme 'all-the-icons))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package treemacs-all-the-icons
+    :after (treemacs all-the-icons)
+    :demand t
+    :config
+    (treemacs-load-theme 'all-the-icons))
+#+end_src
+
+** treemacs-tab-bar
+Integration with =tab-bar-mode= that allows =treemacs= buffers to be unique
+inside the active tab instead of the default frame-based buffer scope.
+
+#+begin_src emacs-lisp
+  (use-package treemacs-tab-bar
+    ;; I don't use tab-bar-mode.
+    :disabled)
+#+end_src
