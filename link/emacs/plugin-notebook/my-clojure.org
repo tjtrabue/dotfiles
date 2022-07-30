@@ -48,44 +48,12 @@ world needed another Lisp.
 
 ** Variables
    #+begin_src emacs-lisp
-     (defvar my/extra-cider-jack-in-deps '(("zprint" . "1.2.3"))
+     (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.3"))
        "AList of extra dependencies for CIDER to install upon jack-in.")
    #+end_src
 
 ** Functions
   #+begin_src emacs-lisp
-    (defun my/get-cider-lein-artifact-exclusions (exclusions)
-      "Return an exclusions vector described by the elements of EXCLUSIONS."
-      (if exclusions
-          (format " :exclusions [%s]" (mapconcat #'identity exclusions " "))
-        ""))
-
-    (defun my/get-list-as-lein-artifact (lein-artifact-alist &optional exclusions)
-      "Turn LEIN-ARTIFACT-ALIST into a shell-quoted string representing a lein artifact.
-    Can specificy an optional EXCLUSIONS list, as well."
-      (let ((dep (car lein-artifact-alist))
-            (dep-version (cdr lein-artifact-alist)))
-        (shell-quote-argument
-         (format "[%s %S%s]" dep dep-version
-                 (my/get-cider-lein-artifact-exclusions exclusions)))))
-
-    (defun my/get-cider-lein-deps ()
-      "Return a shell-quoted string of all extra lein dependencies for CIDER."
-      (let ((dep-designator "update-in :dependencies conj ")
-            (arg-separator " -- "))
-        (seq-reduce (lambda (acc element)
-                      (concat acc
-                              dep-designator
-                              (my/get-list-as-lein-artifact element)
-                              arg-separator))
-                    my/extra-cider-jack-in-deps
-                    "")))
-
-    (defun my/get-cider-lein-parameters ()
-      "Return string of paramters to pass to lein."
-      (let ((default-params "repl :headless :host localhost"))
-        (concat (my/get-cider-lein-deps) default-params)))
-
     (defun my/cider-test-prompt-for-filters ()
       "Interactively prompt user for filters to apply to a test run."
       (interactive)
@@ -209,9 +177,20 @@ world needed another Lisp.
       ;; Whether to save a file when CIDER loads its buffer.
       ;; 'prompt means to prompt, t means always save, nil means never save.
       (cider-save-file-on-load t)
-      ;; Extra paramters to pass to lein, such as dependencies and plugins,
-      ;; as well as the final repl command..
-      (cider-lein-parameters (my/get-cider-lein-parameters)))
+      :config
+      ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
+      ;; These variables must be set in :config instead of :custom due to a
+      ;; loading order issue.
+      (setq cider-jack-in-dependencies
+            (delq nil
+                  (delete-dups
+                   (append cider-jack-in-dependencies
+                           my/extra-cider-jack-in-deps))))
+      (setq cider-jack-in-cljs-dependencies
+            (delq nil
+                  (delete-dups
+                   (append cider-jack-in-cljs-dependencies
+                           my/extra-cider-jack-in-deps)))))
   #+end_src
 
 * clj-refactor

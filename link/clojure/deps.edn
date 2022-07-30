@@ -86,6 +86,9 @@
   {:extra-deps {io.github.stuarthalloway/reflector
                 {:git/url "https://github.com/stuarthalloway/reflector"
                  :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
+  ;; Super fast pretty-printer/formatter library.
+  :zprint
+  {:extra-deps {zprint/zprint {:mvn/version "1.2.3"}}}
 
   ;; pull in specific versions of Clojure:
   :1.0 {:override-deps {org.clojure/clojure {:mvn/version "1.0.0"}}}
