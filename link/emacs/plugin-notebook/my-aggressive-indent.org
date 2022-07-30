@@ -12,6 +12,15 @@ It is aggressive, and as such will not allow you to violate it's consistency
 guidelines as long as the mode is active. This can get annoying if you value
 flexibility in code style over consistency.
 
+* NOTE: =aggressive-indent-mode= and LSP
+=aggressive-indent-mode= keeps your files indented by constantly making a series
+of micro-edits to your files /as you type/. What else works by analyzing your
+code as you type (i.e., as processes edit your files)? Yup, =lsp-mode=! This
+means that each time =aggressive-indent-mode= makes a micro-adjustment to your
+code, those changes go to any running LSP servers for analysis, which can lead
+to a massive decrease in Emacs' performance. I recommend that you disable
+=aggressive-indent-mode= anytime you start =lsp-mode= on a file.
+
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package aggressive-indent

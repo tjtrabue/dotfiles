@@ -110,7 +110,11 @@ documentation on hover, syntax linting and error checking, etc.
                     "gr" 'lsp-rename
                     "gt" 'lsp-find-type-definition)
                   (my/evil-leader-def 'local
-                    "w" '(:keymap lsp-command-map))))
+                    "w" '(:keymap lsp-command-map))
+                  ;; Disable aggressive indent (if active) due to performance
+                  ;; issues.
+                  (when (bound-and-true-p aggressive-indent-mode)
+                    (aggressive-indent-mode -1))))
     :general
     ;; This is general.el's way of accomplishing :bind-keymap, but
     ;; general's way is more flexible and integrates with its
