@@ -649,8 +649,8 @@ main features of =lispyville=:
                 "lS" 'lispy-splice
                 "lT" 'lispy-teleport
                 "lU" 'lispy-unbind-variable
-                "lW" 'my/lispyville-wrap-braces-and-insert
-                "lb" 'my/lispyville-wrap-brackets-and-insert
+                "lW" 'lispyville-wrap-braces
+                "lb" 'lispyville-wrap-brackets
                 "lc" 'lispy-clone
                 "ld" 'evil-collection-lispy-delete
                 "le" 'lispy-eval
