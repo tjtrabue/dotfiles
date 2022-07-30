@@ -29,6 +29,7 @@ flexibility in code style over consistency.
         ielm-mode
         java-mode
         lisp-mode
+        lisp-data-mode
         lisp-interaction-mode
         objc-mode
         python-mode

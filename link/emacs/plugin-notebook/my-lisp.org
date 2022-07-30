@@ -25,6 +25,7 @@ regardless of its particular dialect.
         emacs-lisp-mode
         ielm-mode
         lisp-mode
+        lisp-data-mode
         lisp-interaction-mode
         sly-mrepl-mode)
        . lispy-mode)
@@ -129,6 +130,7 @@ regardless of its particular dialect.
        emacs-lisp-mode
        ielm-mode
        lisp-mode
+       lisp-data-mode
        lisp-interaction-mode
        sly-mrepl-mode)
       :custom

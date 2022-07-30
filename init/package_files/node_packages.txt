@@ -46,6 +46,7 @@ npm-check-updates
 prettier
 prettier-plugin-elm
 prettier-plugin-toml
+shadow-cljs
 speed-test
 sql-formatter
 stylelint

@@ -52,7 +52,7 @@ This is where I define new variables needed throughout my configuration.
                                  (concat user-emacs-directory "/backups"))
       "Directory housing all Emacs backup files.")
     (defvar my/emacs-auto-saves-dir (file-truename
-                                    (concat user-emacs-directory "/auto-saves"))
+                                     (concat user-emacs-directory "/auto-saves"))
       "Directory housing all Emacs auto-save files.")
     (defvar my/emacs-lisp-dir (file-truename
                                (concat user-emacs-directory "/lisp"))
@@ -100,6 +100,7 @@ This is where I define new variables needed throughout my configuration.
         emacs-lisp-mode
         ielm-mode
         lisp-mode
+        lisp-data-mode
         lisp-interaction-mode
         sly-mrepl-mode)
       "List of important Lisp major modes")
