@@ -124,7 +124,6 @@ Display Treemacs icons in =dired-mode= buffers.
 
 #+begin_src emacs-lisp
   (use-package treemacs-icons-dired
-    :after treemacs
     :demand t
     :config
     (treemacs-icons-dired-mode 1))
