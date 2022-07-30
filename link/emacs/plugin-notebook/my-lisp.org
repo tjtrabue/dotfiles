@@ -35,10 +35,10 @@ regardless of its particular dialect.
         "]"
         "{"
         "}")
-      :custom
+      :init
       ;; Whether to consider all open parens in the window, rather than just the
       ;; open parens in the current defun.
-      (lispy-teleport-global t)
+      (setq lispy-teleport-global t)
       :config
       ;; Tweak key themes enabled by default.  Since I use lispyville for evil-mode
       ;; integration, I don't need the annoying "special" mode bindings that lispy
