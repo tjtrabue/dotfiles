@@ -13,8 +13,7 @@ regardless of its particular dialect.
   =lispy= is a great plugin for editing LISP files in a VI-oriented
   manner. There is also the fantastic =lispyville= plugin for integrating
   =lispy= with =evil-mode=. See the =my-evil.org= file for =lispyville='s
-  configuration, which is where most of the interesting =lispy= settings are
-  kept.
+  configuration, which is where I keep most of my interesting =lispy= settings.
 
   #+begin_src emacs-lisp
     (use-package lispy
@@ -36,6 +35,10 @@ regardless of its particular dialect.
         "]"
         "{"
         "}")
+      :custom
+      ;; Whether to consider all open parens in the window, rather than just the
+      ;; open parens in the current defun.
+      (lispy-teleport-global t)
       :config
       ;; Tweak key themes enabled by default.  Since I use lispyville for evil-mode
       ;; integration, I don't need the annoying "special" mode bindings that lispy

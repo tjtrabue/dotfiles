@@ -634,6 +634,7 @@ main features of =lispyville=:
                 "lQ" 'lispy-quotes
                 "lR" 'lispy-raise-some
                 "lS" 'lispy-splice
+                "lT" 'lispy-teleport
                 "lU" 'lispy-unbind-variable
                 "lb" 'lispy-bind-variable
                 "lc" 'lispy-clone
@@ -676,6 +677,8 @@ main features of =lispyville=:
        "D" 'lispy-kill
        ;; Adapt ace-style jump commands for lispy.
        "F" 'lispy-ace-paren
+       ;; Move ARG sexps to an open paren determined by ace-paren.
+       "T" 'lispy-teleport
        ;; Copy the sexp at point or visual selection.
        "Y" 'lispy-new-copy
        ;; Special comment functions
