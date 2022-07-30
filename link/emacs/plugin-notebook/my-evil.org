@@ -611,6 +611,18 @@ main features of =lispyville=:
     (lispy-parens (or arg 1))
     (evil-insert-state))
 
+  (defun my/lispyville-wrap-braces-and-insert (arg)
+    "Call `lispy-braces' with a default ARG of 1 and enter `evil-insert-state'."
+    (interactive "P")
+    (lispy-braces (or arg 1))
+    (evil-insert-state))
+
+  (defun my/lispyville-wrap-brackets-and-insert (arg)
+    "Call `lispy-brackets' with a default ARG of 1 and enter `evil-insert-state'."
+    (interactive "P")
+    (lispy-brackets (or arg 1))
+    (evil-insert-state))
+
   (defun my/set-lispyville-leader-keys ()
     "Set `evil-leader' keybindings for all lispy modes."
     (mapc (lambda (mode)
@@ -619,14 +631,15 @@ main features of =lispyville=:
               ;; evaluate `mode-map' before passing it to `my/evil-leader-def'.
               (my/evil-leader-def :keymaps mode-map
                 ">"  'lispy-eval-and-replace
-                "l(" 'lispy-wrap-round
+                "l(" 'my/lispyville-wrap-round-and-insert
                 "l)" 'lispyville-wrap-round
-                "l[" 'lispy-wrap-brackets
+                "l[" 'my/lispyville-wrap-brackets-and-insert
                 "l]" 'lispyville-wrap-brackets
-                "l{" 'lispy-wrap-braces
+                "l{" 'my/lispyville-wrap-braces-and-insert
                 "l}" 'lispyville-wrap-braces
                 "l<" 'lispyville-<
                 "l>" 'lispyville->
+                "lB" 'lispy-bind-variable
                 "lC" 'lispy-convolute-sexp
                 "lD" 'lispy-describe-inline
                 "lE" 'lispy-eval-and-insert
@@ -636,7 +649,8 @@ main features of =lispyville=:
                 "lS" 'lispy-splice
                 "lT" 'lispy-teleport
                 "lU" 'lispy-unbind-variable
-                "lb" 'lispy-bind-variable
+                "lW" 'my/lispyville-wrap-braces-and-insert
+                "lb" 'my/lispyville-wrap-brackets-and-insert
                 "lc" 'lispy-clone
                 "ld" 'evil-collection-lispy-delete
                 "le" 'lispy-eval
