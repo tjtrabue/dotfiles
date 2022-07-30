@@ -623,6 +623,12 @@ main features of =lispyville=:
     (lispy-brackets (or arg 1))
     (evil-insert-state))
 
+  (defun my/lispyville-kill-and-insert ()
+    "Kill line or sexp and enter `evil''s insert state."
+    (interactive)
+    (lispy-kill)
+    (evil-insert-state))
+
   (defun my/set-lispyville-leader-keys ()
     "Set `evil-leader' keybindings for all lispy modes."
     (mapc (lambda (mode)
@@ -687,6 +693,8 @@ main features of =lispyville=:
        ;; List navigation
        "(" 'lispyville-backward-list-begin
        ")" 'lispyville-forward-list-begin
+       ;; lispy-kill then enter insert state.
+       "C" 'my/lispyville-kill-and-insert
        ;; Kill ARG sexps.
        "D" 'lispy-kill
        ;; Adapt ace-style jump commands for lispy.
