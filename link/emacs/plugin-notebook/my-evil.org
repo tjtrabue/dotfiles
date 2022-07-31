@@ -699,8 +699,8 @@ main features of =lispyville=:
        "D" 'lispy-kill
        ;; Adapt ace-style jump commands for lispy.
        "F" 'lispy-ace-paren
-       ;; Move ARG sexps to an open paren determined by ace-paren.
-       "T" 'lispy-teleport
+       ;; Swap position of current sexp and the previous one.
+       "T" 'transpose-sexps
        ;; Copy the sexp at point or visual selection.
        "Y" 'lispy-new-copy
        ;; Special comment functions
