@@ -276,6 +276,7 @@ nmap <leader>gg <Action>(Git.Menu)
 " we're using.
 if &ide =~? 'intellij idea'
     nmap <leader>pb <Action>(CompileDirty)
+    nmap <leader>ps <Action>(Maven.Reimport)
 elseif &ide =~? 'android studio'
     nmap <leader>pb <Action>(MakeGradleProject)
     nmap <leader>ps <Action>(Android.SyncProject)
