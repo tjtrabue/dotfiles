@@ -78,6 +78,7 @@ java-openjfx-doc
 jdk-openjdk
 jdk8-openjdk
 jq
+kde-applications
 khal
 kitty
 kubeadm
@@ -128,6 +129,8 @@ pdfjam
 perl-image-exiftool
 picom
 plantuml
+plasma
+plasma-wayland-session
 poppler
 postgresql
 pulseaudio
@@ -189,6 +192,7 @@ xdotool
 xmobar
 xmonad
 xmonad-contrib
+xorg
 xorg-server
 xorg-server-xephyr
 xorg-xbacklight
