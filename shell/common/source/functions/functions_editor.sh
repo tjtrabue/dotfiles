@@ -12,7 +12,7 @@ ctrlp() {
 
   # Prioritized list of fuzzy search tools used to find files.
   if [ -n "$(command -v fzf)" ]; then
-    filesToEdit=($(fzf --preview \""${previewCmd}"\"))
+    filesToEdit=($(fzf --preview "${previewCmd}"))
   elif [ -n "$(command -v fzy)" ]; then
     filesToEdit=($(fd -t f '.' . | fzy))
   fi
