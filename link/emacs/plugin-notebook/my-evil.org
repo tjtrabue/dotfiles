@@ -8,7 +8,7 @@ Evil, or =evil-mode=, is the Extensible VI Layer (AKA the only way to use
 Emacs).  =evil-mode= is a fully featured VI emulator for Emacs, even improving
 upon the features of Vim at times.
 
-* *Important Note About Occasional Behavior of =d= and =dd= commands
+* Important Note About Occasional Behavior of =d= and =dd= commands
 *If Evil Mode treats 'd' like 'dd', 'c' like 'cc', etc*: You need delete the
 \*Backtrace\* buffer!!! This problem has been plaguing me since day 1 of using
 Evil, and I hate it! If deleting \*Backtrace\* doesn't work, there's probably
