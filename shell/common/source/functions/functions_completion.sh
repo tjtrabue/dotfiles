@@ -365,11 +365,6 @@ __add_pack_completions_for_zsh() {
   fi
 }
 
-# Add completions for Buildpack CLI to Fish.
-__add_pack_completions_for_fish() {
-  source (pack completion --shell fish)
-}
-
 # Add completions for the GitHub command line tools to Bash.
 __add_gh_completions_for_bash() {
   if [ -x "$(command -v gh)" ]; then

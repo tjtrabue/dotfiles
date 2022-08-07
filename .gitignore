@@ -263,6 +263,7 @@ link/config/Google
 link/config/KDE/
 link/config/QtProject.conf
 link/config/Trolltech.conf
+link/config/Unknown\ Organization/
 link/config/akregatorrc
 link/config/baloofilerc
 link/config/bluedevilglobalrc
@@ -270,11 +271,16 @@ link/config/discoverrc
 link/config/dolphinrc
 link/config/drkonqirc
 link/config/emaildefaults
+link/config/emailidentities
 link/config/gtk-*
 link/config/gtkrc*
 link/config/gwenviewrc
 link/config/kalarmrc
+link/config/kalendaracrc
+link/config/katemetainfos
+link/config/katerc
 link/config/kateschemarc
+link/config/katevirc
 link/config/kcminputrc
 link/config/kconf_updaterc
 link/config/kde.org/
@@ -287,8 +293,8 @@ link/config/khelpcenterrc
 link/config/khotkeysrc
 link/config/khtml
 link/config/kmail2rc
-link/config/kmixrc
 link/config/kmixctrlrc
+link/config/kmixrc
 link/config/konquerorrc
 link/config/korgacrc
 link/config/krunnerrc
@@ -300,6 +306,7 @@ link/config/kwalletrc
 link/config/kwinrc
 link/config/kxkbrc
 link/config/okularpartrc
+link/config/phishingurlrc
 link/config/plasma-localerc
 link/config/plasma-org.kde.plasma.desktop-appletsrc
 link/config/plasmanotifyrc
@@ -308,6 +315,7 @@ link/config/plasmashellrc
 link/config/powermanagementprofilesrc
 link/config/sddmthemeinstallerrc
 link/config/session/
+link/config/specialmailcollectionsrc
 link/config/spectaclerc
 link/config/systemsettingsrc
 link/config/webengineurlinterceptoradblockrc
@@ -316,6 +324,11 @@ link/config/xsettingsd/
 
 # The activity manager changes too frequently, and is not useful for sharing.
 link/config/kactivitymanagerd*
+# }}}
+
+# Akonadi {{{
+link/config/akonadi/
+link/config/akonadi*
 # }}}
 
 # OS X / macOS {{{

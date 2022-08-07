@@ -154,7 +154,7 @@ install_custom_ls_colors() {
 
   mkdir -p "${installDir}"
   curl -L "${tarballUrl}" | tar xzf - --directory="${installDir}" --strip=1
-  (cd "${installDir}" && sh install.sh)
+  (cd "${installDir}" && make install)
 }
 
 # Export LS_COLORS with the appropriate color settings for the current shell.

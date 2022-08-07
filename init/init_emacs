@@ -37,11 +37,17 @@ link_emacs_config_files() {
     -exec ln -sf -t "${EMACS_CONF}" '{}' \;
 }
 
+make_emacs_directories() {
+  log_info "Creating additional emacs config directories"
+  mkdir -p "${EMACS_CONF}/plugin"
+}
+
 # Main entry point for emacs initialization.
 main() {
   print_header "Initializing Emacs"
   init_emacs_d
   link_emacs_config_files
+  make_emacs_directories
   clone_roam_notes
   log_info "Done"
 }

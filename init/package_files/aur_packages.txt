@@ -25,7 +25,7 @@ lightdm-webkit-theme-aether
 ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
-neovim-nightly-bin
+neovim-git
 nonicons-font
 optimus-manager
 p4v
