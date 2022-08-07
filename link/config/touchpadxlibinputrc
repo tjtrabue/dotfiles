@@ -1,2 +1,7 @@
+[SynPS/2 Synaptics TouchPad]
+naturalScroll=true
+pointerAcceleration=0.15
+tapToClick=true
+
 [Synaptics TM3418-002]
 pointerAcceleration=0.2
