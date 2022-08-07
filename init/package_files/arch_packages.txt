@@ -135,8 +135,6 @@ pulseaudio-alsa
 pulsemixer
 python
 python-pip
-python2
-python2-pip
 ranger
 rclone
 read-edid
