@@ -75,8 +75,6 @@ iproute2
 isync
 java-openjfx
 java-openjfx-doc
-java8-openjfx
-java8-openjfx-doc
 jdk-openjdk
 jdk8-openjdk
 jq
@@ -178,7 +176,6 @@ ttf-fira-code
 ttf-fira-mono
 ttf-hack
 ttf-liberation
-udevil
 unzip
 upower
 vi
