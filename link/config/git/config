@@ -114,14 +114,29 @@
   autocrlf = input
   whitespace = space-before-tab,tab-in-indent,trailing-space,-indent-with-non-tab
   editor = nvim
-  pager = "less -XF"
+  pager = delta
   # Prevent showing files whose names contain non-ASCII symbols as unversioned.
   precomposeunicode = false
   # Speed up commands involving untracked files, such as `git status`.
   untrackedCache = true
 
+# delta (called `git-delta' in most package repositories) is a fantastic open
+# source tool for viewing syntax-highlighted git diff information. It acts as a
+# front-end for git-diff, git-show, and git-blame.
+#
+# It's slow on first invocation, but much faster on subsequent calls.
+[delta]
+  # use n and N to move between diff sections
+  navigate = true
+  # set to true if you're in a terminal w/ a light background color
+  # (e.g. the default macOS terminal)
+  light = false
+  line-numbers = true
+  # Side-by-side diffs are helpful, but impractical on small viewports.
+  side-by-side = false
+
 [diff]
-  colorMoved = zebra
+  colorMoved = default
   colorMovedWS = no
   mnemonicPrefix = true
   renames = copy
@@ -181,6 +196,12 @@
   # Always name the default branch "master" when creating a new git repo.
   defaultBranch = master
 
+[interactive]
+  diffFilter = delta --color-only
+
+[add.interactive]
+  useBuiltin = false
+
 [log]
   date = human
   decorate = auto
@@ -189,7 +210,7 @@
   # How to present merge conflicts in files.
   #   merge -> <<< === >>>
   #   diff3 -> <<< ||| === >>>
-  conflictStyle = merge
+  conflictStyle = diff3
   log = true
   # Use meld as default mergetool
   tool = meld

@@ -55,6 +55,7 @@ fzf
 fzy
 gdb
 git
+git-delta
 github-cli
 global
 gnupg

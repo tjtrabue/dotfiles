@@ -19,6 +19,7 @@ findutils
 fzy
 gawk
 gcc
+git-delta
 git-gui
 global
 gnu-getopt
