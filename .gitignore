@@ -257,6 +257,10 @@ link/config/Android\ Open\ Source\ Project
 link/config/Google
 # }}}
 
+# SystemD {{{
+link/config/systemd/
+# }}}
+
 # KDE {{{
 # KDE is a desktop environment for Linux.
 
