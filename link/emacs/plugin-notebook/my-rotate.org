@@ -1,0 +1,22 @@
+#+title:   Rotate window arrangements in a frame
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:08:07
+#+tags:
+#+STARTUP: fold
+
+Change the orientation of multiple windows in an Emacs frame. This package
+behaves similar to =tmux=.
+
+#+begin_src emacs-lisp
+  (use-package rotate
+    :general
+    (my/evil-leader-def
+      "rH" 'rotate:main-horizontal
+      "rV" 'rotate:main-vertical
+      "rh" 'rotate:even-horizontal
+      "rl" 'rotate-layout
+      "rt" 'rotate:tiled
+      "rv" 'rotate:even-vertical
+      "rw" 'rotate-window))
+#+end_src
