@@ -18,7 +18,7 @@ to =nil=, so this may help you.
 
 * Define custom evil operators
 An =evil-operator= is a function that acts on text objects (characters, words,
-lines, etc.). They are designed to mimic Vim's operators.
+lines, etc.). They mimic Vim's operators, but are much more customizeable.
 
 #+begin_src emacs-lisp
   (eval-when-compile
