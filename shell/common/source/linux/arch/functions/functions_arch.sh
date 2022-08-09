@@ -133,6 +133,7 @@ sure you have your bootloader in good working order!
 
 Are you sure you wish to continue? [y/n]
 EOF
+  read -r response
   done
 
   if echo "${response}" | grep -q '[Nn]'; then
