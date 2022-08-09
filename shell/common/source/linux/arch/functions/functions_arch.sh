@@ -121,4 +121,41 @@ install_optimus_manager() {
   sudo systemctl enable --now optimus-manager
 }
 
+arch_update_firmware() {
+  local response=false
+
+  while ! echo "${response}" | grep -q '[YyNn]'; do
+    command cat <<EOF
+WARNING!!!
+Updating your firmware can erase your bootloader configuration!
+DO NOT reboot your system after updating your firmware unless you are absolutely
+sure you have your bootloader in good working order!
+
+Are you sure you wish to continue? [y/n]
+EOF
+  done
+
+  if echo "${response}" | grep -q '[Nn]'; then
+    log_info "User cancelled operation"
+    return 1
+  fi
+
+  fwupdmgr refresh
+  fwupdmgr update
+
+  # We must re-configure grub after updating the firmware.
+  __configure_grub
+}
+
+__configure_grub() {
+  log_info "Installing GRUB bootloader"
+  sudo grub-install \
+    --target=x86_64-efi \
+    --efi-directory=/efi \
+    --bootloader-id=GRUB
+
+  log_info "Configuring GRUB"
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
