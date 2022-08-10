@@ -169,6 +169,7 @@ texlive-publishers
 texlive-science
 texworks
 the_silver_searcher
+throttled
 tidy
 tree
 tree-sitter
