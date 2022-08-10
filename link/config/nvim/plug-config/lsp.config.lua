@@ -292,6 +292,16 @@ lspconfig.sumneko_lua.setup {
   on_attach = on_attach
 }
 
+-- Marksman Markdown LSP {{{
+lspconfig.marksman.setup {
+  capabilities = capabilities,
+  cmd = {"marksman", "server"},
+  filetypes = {"markdown"},
+  on_attach = on_attach,
+  root_dir = util.root_pattern(".git", ".marksman.toml")
+}
+-- }}}
+
 -- Perl-Language-Server
 -- To use the language server, ensure that you have Perl::LanguageServer
 -- installed and perl command is on your path.
