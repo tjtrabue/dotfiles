@@ -68,6 +68,7 @@ for any programming language that supports a formatting tool.")
                                        less-css-mode
                                        ;; lisp-mode
                                        lua-mode
+                                       markdown-mode
                                        mhtml-mode
                                        objc-mode
                                        perl-mode
