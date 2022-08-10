@@ -72,11 +72,12 @@ mkbin() {
 # Return parent shell interpreter currently running, such as "bash", "zsh",
 # or even "python" or "php".
 currentshell() {
-  local parentInterpreter="$(ps h -o args='' -p "$$")"
+  local parentInterpreter="$(ps -ho args='' -p "$$")"
 
-  # Shave off leading '-' character. We don't want this function to have any
-  # external dependencies on GNU tools, if possible.
-  basename "$(echo "${parentInterpreter#-}" | cut -d' ' -f1)"
+  # Shave off leading '-' character.
+  basename "$(echo "${parentInterpreter}" |
+    sed 's/^\s*-//' |
+    cut -d' ' -f1)"
 }
 
 # Run a command over multiple lines of input from stdin or from a file
