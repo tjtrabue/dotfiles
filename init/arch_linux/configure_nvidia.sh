@@ -74,7 +74,12 @@ install_optimus_manager() {
 
 install_arch_nvidia_packages() {
   log_info "Installing NVIDIA packages"
-  pacman -S --noconfirm "nvidia" "nvidia-settings" "nvidia-prime"
+  pacman -S --noconfirm "nvidia" \
+    "nvidia-prime" \
+    "nvidia-settings" \
+    "nvidia-utils" \
+    "opencl-nvidia" \
+    "xorg-server-devel"
 }
 
 install_and_configure_packages() {
