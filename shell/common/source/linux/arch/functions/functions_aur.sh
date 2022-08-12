@@ -115,7 +115,7 @@ aurupdate() {
     "emacs-native-comp-git-enhanced"
   )
 
-  aurhu --ignore="$(echo "${ignorePackages[*]}" | sed -E 's/ +/,/')"
+  aurhu --ignore="$(echo "${ignorePackages[*]}" | sed -E 's/\s+/,/')"
 }
 
 # Download an AUR package but do not build/install
