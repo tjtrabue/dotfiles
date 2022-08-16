@@ -75,7 +75,7 @@ currentshell() {
   local parentInterpreter="$(ps -ho args='' -p "$$")"
 
   # Shave off leading '-' character.
-  basename "$(echo "${parentInterpreter}" |
+  basename "$(printf "%s" "${parentInterpreter}" |
     sed 's/^\s*-//' |
     cut -d' ' -f1)"
 }

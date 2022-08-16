@@ -78,12 +78,12 @@ completion UI in terms of customization.
 * Extensions
 ** vertico-directory
 Configure directory extension.
-*NOTE:* The file =vertico-directory.el= must be installed manually.
+*NOTE:* You must intall the =vertico-directory.el= file manually.
 
 #+begin_src emacs-lisp
   (use-package vertico-directory
     :after vertico
-    ;; Vertico extensions are bundled with the Vertico repo.
+    ;; Vertico extensions come with the repo.
     :ensure nil
     :straight nil
     :hook
@@ -99,7 +99,7 @@ Mouse integration for Vertico.
     ;; Does not work with my setup.
     :disabled
     :after vertico
-    ;; Vertico extensions are bundled with the Vertico repo.
+    ;; Vertico extensions come with the repo.
     :ensure nil
     :straight nil
     :hook

@@ -120,7 +120,9 @@ __src_standard_subdirs_under_dir() {
   local d
 
   for d in "${baseDir}/"{aliases,functions,other}; do
-    [ -d "${d}" ] && __src_dir "${d}"
+    if [ -d "${d}" ]; then
+      __src_dir "${d}"
+    fi
   done
 }
 
@@ -131,13 +133,18 @@ __src_readline_init_file() {
   local readlineInitFile="${HOME}/.inputrc"
 
   # NOTE: We only bind the readline file if our shell is interactive.
-  [ -s "${readlineInitFile}" ] && echo "$-" | grep -q ".*i.*" &&
+  if [ -s "${readlineInitFile}" ] && echo "$-" | grep -q ".*i.*"; then
     bind -f "${readlineInitFile}"
+  fi
 }
 
 # Source all functions and alias files for any POSIX-compliant shell.
 __src() {
-  local currentShell="$(basename "${SHELL}")"
+  local parentInterpreter="$(ps -ho args='' -p "$$")"
+  # Shave off leading '-' character.
+  local currentShell="$(basename "$(printf "%s" "${parentInterpreter}" |
+    sed 's/^\s*-//' |
+    cut -d' ' -f1)")"
   local srcDir
 
   # Determine in which directory our shell-specific aliases and functions

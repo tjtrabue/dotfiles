@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+set -Eeuo pipefail
+
+# Variables {{{
+DOTFILES_REPO="${HOME}/.dotfiles"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_REPO}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+install_emacs_arch() {
+  local workspaceDir="${WS:-${HOME}/workspace}"
+  local emacsPackageName="emacs-native-comp-git-enhanced"
+  (
+    cd "${workspaceDir}"
+    paru -G "${emacsPackageName}"
+    cd "${emacsPackageName}"
+    makepkg -si
+  )
+}
+
+main() {
+  # install_emacs_arch
+  echoe "Hello, world!"
+}
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
