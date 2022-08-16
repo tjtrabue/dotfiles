@@ -18,8 +18,6 @@ as being actively maintained, making =avy= the better alternative.
       ;; Remap standard f/F t/T evil keybindings to avy motions.
       "f" 'evil-avy-goto-char
       "F" 'evil-avy-goto-word-1
-      "t" 'evil-avy-goto-char-2
-      "T" 'evil-avy-goto-word-0
       ;; Jump to line based on an abbreviation.
       "L" 'evil-avy-goto-line)
     :custom
