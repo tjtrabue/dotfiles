@@ -48,7 +48,7 @@ world needed another Lisp.
 
 ** Variables
    #+begin_src emacs-lisp
-     (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.3"))
+     (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.4"))
        "AList of extra dependencies for CIDER to install upon jack-in.")
    #+end_src
 
