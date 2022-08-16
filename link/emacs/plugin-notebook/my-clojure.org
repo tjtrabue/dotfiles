@@ -46,6 +46,28 @@ world needed another Lisp.
     interacting with it. I've found that sometimes CIDER needs a moment to
     startup fully.
 
+** ClojureScript Development
+CIDER handles ClojureScript projects just as well as it does standard Clojure
+projects.
+
+*** shadow-cljs
+=shadow-cljs= is a phenomenal build tool for ClojureScript projects that
+integrates the Clojure ecosystem with Node.js. To start an nREPL for your
+=shadow-cljs= project, type =C-c M-J=, and select =shadow= as the project type
+from the prompt. You will also need to select a build profile to run, which is
+usually named =:app= for web application projects.
+
+**** Autostarting your app with =cider-jack-in-cljs=
+To start your project automatically upon jacking in, create a =.dir-locals.el=
+file in your project's root directory with the following content:
+
+#+begin_src emacs-lisp :tangle no
+  ;; Replace :app with the name of your build.
+  ((nil . ((cider-default-cljs-repl . shadow)
+           (cider-shadow-default-options . ":app")
+           (cider-shadow-watched-builds . (":app")))))
+#+end_src
+
 ** Variables
    #+begin_src emacs-lisp
      (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.4"))
