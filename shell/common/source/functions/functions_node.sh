@@ -79,7 +79,7 @@ export_nvm_default_node_path() {
   local defaultNodeVersion
   local defaultNodeBinPath
 
-  defaultNodeVersion="$(nvm version node 2>/dev/null)"
+  defaultNodeVersion="$(nvm version default 2>/dev/null)"
 
   if [ -z "${defaultNodeVersion}" ]; then
     err "Could not determine default node version with nvm"
