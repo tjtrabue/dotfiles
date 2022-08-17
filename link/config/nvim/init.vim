@@ -147,7 +147,7 @@ set autoindent
 filetype indent plugin on
 set smartindent
 " }}}
-"
+
 " Searching {{{
 " Use normal regular expression syntax and character meaning
 " (should be on by default anyway)
@@ -391,7 +391,7 @@ imap <DOWN> <NOP>
 imap <LEFT> <NOP>
 imap <RIGHT> <NOP>
 " }}}
-"
+
 " Normal Mode Mappings {{{
 
 " Move up and down by visual line, not actual line.
@@ -490,7 +490,7 @@ try
 catch
 endtry
 " }}}
-"
+
 " File Tab Mappings {{{
 "
 " Basic commands:
@@ -513,7 +513,7 @@ map <C-i>l :tabnext<CR>
 " Super useful when editing files in the same directory
 map <C-i>e :tabedit <C-r>=expand("%:p:h")<CR>/
 " }}}
-"
+
 " Sudo {{{
 "
 " Use ':w!!' to save changes to a file requiring root privileges that you opened
@@ -627,7 +627,7 @@ endfunction
 " }}}
 
 " Source plugin configuration files. {{{
-"
+
 " We don't want to keep these files in the standard 'plugin/' directory because
 " those files are not guaranteed to load in a given order, and may even load
 " asynchronously. We want to control when and where we load these plugin

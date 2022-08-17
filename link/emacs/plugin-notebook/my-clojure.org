@@ -68,6 +68,11 @@ file in your project's root directory with the following content:
            (cider-shadow-watched-builds . (":app")))))
 #+end_src
 
+**** Troubleshooting
+- If CIDER has trouble starting your =shadow-cljs= nREPL, it is most often a
+  dependency issue. Double check that your NPM and CLJS dependencies are
+  compatible with one another and installed correctly.
+
 ** Variables
    #+begin_src emacs-lisp
      (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.4"))
