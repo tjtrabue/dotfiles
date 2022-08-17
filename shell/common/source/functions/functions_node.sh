@@ -35,7 +35,7 @@ install_or_update_nvm() {
   __link_nvm_default_packages_file
 }
 
-# Use nvm to install the latest version of Node.js.
+# Use nvm to install the latest LTS version of Node.js.
 install_latest_node() {
   local nvmDir="${NVM_DIR:-${HOME}/.nvm}"
   local pathFile="${PATH_FILE:-${HOME}/.path}"
@@ -52,7 +52,7 @@ install_latest_node() {
 
   # Install latest Node.js and set it as the currently used version.
   # Also set latest node as default and install latest npm, as well.
-  nvm install --default --latest-npm node &&
+  nvm install --default --latest-npm --lts &&
     log_info "Writing path to latest node bin dir to: ${BLUE}${pathFile}${NC}" &&
     export_nvm_default_node_path
 }
