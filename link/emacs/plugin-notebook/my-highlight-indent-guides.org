@@ -12,8 +12,6 @@ similar to the behavior of other modern text editors.
 An alternative to this plugin is =highlight-indentaton.el=, which is popular but
 much more limited in terms of configuration.
 
-* =use-package= specification
-
 #+begin_src emacs-lisp
   (use-package highlight-indent-guides
     :hook
