@@ -12,6 +12,8 @@ VisualStudio Code, etc.).
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package minimap
+    ;; A little unpredictable. For instance, does not work well with org-mode.
+    :disabled
     :demand t
     :custom
     (minimap-window-location 'right)

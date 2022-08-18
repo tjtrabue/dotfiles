@@ -7,7 +7,7 @@
 
 Highlight TODO, and keywords such as FIXME, DEBUG, GOTCHA, and STUB in files.
 
-The package provides two minor modes: =hl-todo-mode= and =global-hl-minor-mode=.
+The package provides two minor modes: =hl-todo-mode= and =global-hl-todo-mode=.
 
 #+begin_src emacs-lisp
   (use-package hl-todo
