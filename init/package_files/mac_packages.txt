@@ -84,6 +84,7 @@ vmtouch
 watch
 wdiff
 wget
+xmlstarlet
 yank
 yq
 zsh
