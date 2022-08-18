@@ -24,10 +24,6 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
       [remap delete-window] 'ace-delete-window
       ;; Also use C-, to call ace-window
       "C-," 'ace-window)
-    ;; ,a acts as the previx for ace-window evil leader commands.
-    (my/evil-leader-def
-      "a a" 'ace-window
-      "a d" 'ace-delete-window)
     :custom
     ;; Set window selection keys to the home row ones.
     (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
