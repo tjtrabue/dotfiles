@@ -10,7 +10,7 @@ bumpmajor() {
     sed -E 's/([0-9]+)\.[0-9]+\.[0-9]+/\1/')"
   local newVersion="$((majorVersion += 1)).0.0${suffix}"
 
-  log_info "New version: ${GREEN}${newVersion}${NC}"
+  log_info "Bumping major version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
@@ -26,7 +26,7 @@ bumpminor() {
     sed -E 's/[0-9]+\.([0-9]+)\.[0-9]+/\1/')"
   local newVersion="${majorVersion}.$((minorVersion += 1)).0${suffix}"
 
-  log_info "New version: ${GREEN}${newVersion}${NC}"
+  log_info "Bumping minor version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
@@ -44,7 +44,7 @@ bumpbugfix() {
     sed -E 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/')"
   local newVersion="${majorVersion}.${minorVersion}.$((buxfixVersion += 1))${suffix}"
 
-  log_info "New version: ${GREEN}${newVersion}${NC}"
+  log_info "Bumping bugfix version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
