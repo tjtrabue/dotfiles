@@ -32,7 +32,6 @@ cups
 cups-pdf
 datamash
 dejagnu
-dhclient
 dialog
 dmenu
 dnsutils

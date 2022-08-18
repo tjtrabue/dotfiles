@@ -373,14 +373,8 @@ ctrl_interface=/run/wpa_supplicant
 update_config=1
 EOF
 
-# Network manager
-info_log "Configuring NetworkManager"
-cat <<EOF >"${MOUNT_ROOT}/etc/NetworkManager/conf.d/dhcp-client.conf"
-[main]
-dhcp=dhclient
-EOF
-
 # Activate WiFi services
+info_log "Enabling NetworkManager and wpa_supplicant"
 arch-chroot "$MOUNT_ROOT" systemctl enable wpa_supplicant
 arch-chroot "$MOUNT_ROOT" systemctl enable NetworkManager
 # }}}
