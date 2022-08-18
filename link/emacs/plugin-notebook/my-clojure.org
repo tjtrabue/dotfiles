@@ -8,43 +8,43 @@ Integration for the awesome Clojure programming language.  Thanks, Rich! The
 world needed another Lisp.
 
 * clojure-mode
-  Major mode for editing Clojure files.
+Major mode for editing Clojure files.
 
-  #+begin_src emacs-lisp
-    (use-package clojure-mode
-      :straight
-      ;; Default straight recipe only includes the clojure-mode.el file for some
-      ;; reason.
-      (clojure-mode :type git :host github :repo "clojure-emacs/clojure-mode"
-                    :files (:defaults))
-      :config
-      ;; Add extra syntax coloring (imprecise, but pretty)
-      (require 'clojure-mode-extra-font-locking))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package clojure-mode
+    :straight
+    ;; Default straight recipe only includes the clojure-mode.el file for some
+    ;; reason.
+    (clojure-mode :type git :host github :repo "clojure-emacs/clojure-mode"
+                  :files (:defaults))
+    :config
+    ;; Add extra syntax coloring (imprecise, but pretty)
+    (require 'clojure-mode-extra-font-locking))
+#+end_src
 
 * CIDER
-  An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
-  Lisp.
+An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
+Lisp.
 
-  To start the CIDER REPL server, press =C-c C-x j j= or =C-c M-j= from inside a
-  Clojure buffer.
+To start the CIDER REPL server, press =C-c C-x j j= or =C-c M-j= from inside a
+Clojure buffer.
 
 ** CIDER's Performance
-   CIDER is a powerful IDE server for Emacs (or potentially any editor that
-   decides to implement CIDER's nREPL specification), but there are situations
-   where it can be sluggish. You know what I mean: either the REPL lags after an
-   input, or a keyboard shortcut that sends new code to CIDER hangs for an
-   extended period of time. These problems are common, but are also quite
-   fixable. Here a few tips for how to speed up CIDER.
+CIDER is a powerful IDE server for Emacs (or potentially any editor that
+decides to implement CIDER's nREPL specification), but there are situations
+where it can be sluggish. You know what I mean: either the REPL lags after an
+input, or a keyboard shortcut that sends new code to CIDER hangs for an
+extended period of time. These problems are common, but are also quite
+fixable. Here a few tips for how to speed up CIDER.
 
 *** Update CIDER
-    Make sure you are running the latest version of CIDER. Performance issues
-    are fixed frequently.
+Make sure you are running the latest version of CIDER. Performance issues
+are fixed frequently.
 
 *** Wait a while after startup
-    Plain and simple. After CIDER starts up, wait a minute or two before
-    interacting with it. I've found that sometimes CIDER needs a moment to
-    startup fully.
+Plain and simple. After CIDER starts up, wait a minute or two before
+interacting with it. I've found that sometimes CIDER needs a moment to
+startup fully.
 
 ** ClojureScript Development
 CIDER handles ClojureScript projects just as well as it does standard Clojure
@@ -74,171 +74,179 @@ file in your project's root directory with the following content:
   compatible with one another and installed correctly.
 
 ** Variables
-   #+begin_src emacs-lisp
-     (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.4"))
-       "AList of extra dependencies for CIDER to install upon jack-in.")
-   #+end_src
+#+begin_src emacs-lisp
+  (defvar my/extra-cider-jack-in-deps '(("zprint/zprint" "1.2.4"))
+    "AList of extra dependencies for CIDER to install upon jack-in.")
+#+end_src
 
 ** Functions
-  #+begin_src emacs-lisp
-    (defun my/cider-test-prompt-for-filters ()
-      "Interactively prompt user for filters to apply to a test run."
-      (interactive)
-      (cider-test-run-loaded-tests 'prompt-for-filters))
-  #+end_src
+#+begin_src emacs-lisp
+  (defun my/cider-test-prompt-for-filters ()
+    "Interactively prompt user for filters to apply to a test run."
+    (interactive)
+    (cider-test-run-loaded-tests 'prompt-for-filters))
+#+end_src
 
 ** =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package cider
-      :after evil-collection
-      :hook
-      (clojure-mode . cider-mode)
-      :general
-      (general-unbind cider-repl-mode-map
-        ",")
-      (general-def cider-repl-mode-map
-        "M-;" 'cider-repl-handle-shortcut)
-      (general-def 'normal cider-repl-mode-map
-        "C-j" 'cider-repl-next-input
-        "C-k" 'cider-repl-previous-input
-        "C-r" 'cider-repl-history)
-      (general-def 'insert cider-repl-mode-map
-        "C-n"        'cider-repl-next-input
-        "C-p"        'cider-repl-previous-input
-        "C-r"        'cider-repl-history
-        "C-RET"      'cider-repl-newline-and-indent
-        "C-<return>" 'cider-repl-newline-and-indent)
-      (my/evil-leader-def cider-repl-mode-map
-        ","   'cider-repl-handle-shortcut
-        "<"   'cider-eval-last-sexp
-        ">"   'cider-eval-last-sexp-and-replace
-        "cC"  'cider-classpath
-        "cF"  'cider-repl-toggle-clojure-font-lock
-        "cH"  'cider-repl-history
-        "cN"  'cider-ns-reload
-        "cR"  'cider-ns-refresh
-        "cS"  'cider-sideloader-start
-        "cU"  'cider-repl-require-repl-utils
-        "ca"  'cider-restart
-        "cb"  'cider-repl-clear-buffer
-        "cc"  'cider-repl-clear-output
-        "cd"  'cider-doc
-        "ch"  'cider-repl-shortcuts-help
-        "cn"  'cider-repl-set-ns
-        "cp"  'cider-repl-toggle-pretty-printing
-        "cq"  'cider-quit
-        "cr"  'cider-run
-        "cta" 'cider-test-run-loaded-tests
-        "ctf" 'cider-test-run-ns-tests-with-filters
-        "ctF" 'my/cider-test-prompt-for-filters
-        "ctn" 'cider-test-run-ns-tests
-        "ctp" 'cider-test-run-project-tests
-        "ctr" 'cider-test-show-report
-        "cu"  'cider-undef
-        "cv"  'cider-version)
-      (my/evil-leader-def cider-mode-map
-        "=" 'cider-format-buffer
-        "<" 'cider-eval-last-sexp
-        ">" 'cider-eval-last-sexp-and-replace)
-      (general-def 'normal cider-mode-map
-        "gs" 'cider-find-var
-        "gi" 'cider-find-resource
-        "gu" 'cider-xref-fn-refs)
-      ;; Clearing the whole REPL is a useful feature since the REPL gets slower
-      ;; the larger it gets.
-      (my/user-leader-def cider-repl-mode-map
-        "M-b" 'cider-repl-clear-buffer)
-      :custom
-      ;; Which printing function CIDER uses under the hood to print output.
-      ;; pprint (default): clojure.pprint/pprint
-      ;; pr:               clojure.core/pr
-      ;; fipp:             Fast Idiomatic Pretty Printer, which is 5-10 times faster
-      ;;                   than pprint. Probably the best default choice.
-      ;; puget:            Puget is canonical serialization of data on top of fipp,
-      ;;                   but is slightly slower.
-      ;; zprint:           Fast and flexible alternative to the libraries mentioned
-      ;;                   above. Highly configurable, but requires you to specify
-      ;;                   zprint as a depdency either in your cider jack-in init
-      ;;                   command, or in your project dependencies file.
-      (cider-print-fn 'zprint)
-      ;; Whether to show the large help message when the CIDER REPL opens.  Turning
-      ;; it off saves space in the REPL buffer, which could speed up performance in
-      ;; the beginning.
-      (cider-repl-display-help-banner nil)
-      ;; Set this to t if you want to see all debugging info for communication
-      ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
-      ;; conn-name*. WARNING: This will greatly slow down CIDER!
-      (nrepl-log-messages nil)
-      ;; Whether to use font-locking for REPL input and results.
-      (cider-repl-use-clojure-font-lock t)
-      ;; How to colorize defined symbols of the following types.
-      ;; Set this to nil to disable dynamic font-locking.
-      ;; WARNING: Dynamic font-locking can slow down the REPL!
-      (cider-font-lock-dynamically '(macro core deprecated function var))
-      ;; (cider-font-lock-dynamically nil)
-      ;; Whether to pretty-print REPL output
-      (cider-repl-use-pretty-printing t)
-      ;; Window startup behavior for the REPL.
-      ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
-      (cider-repl-pop-to-buffer-on-connect 'display-only)
-      ;; Prefix string for results of REPL evaluation
-      (cider-repl-result-prefix " => ")
-      ;; Set character size limit for the REPL buffer.
-      (cider-repl-buffer-size-limit 100000)
-      ;; Wrap around REPL input history.
-      (cider-repl-wrap-history t)
-      ;; Max number of inputs held in history.
-      (cider-repl-history-size 1000)
-      ;; File for storing CIDER REPL history.
-      (cider-repl-history-file
-       (locate-user-emacs-file "cider-repl-hist"))
-      ;; Turn off hover documentation since lsp-mode provides a better alternative.
-      (cider-eldoc-display-for-symbol-at-point nil)
-      ;; If set to t, CIDER will try to add expected function arguments based on the
-      ;; current context (for example for the datomic.api/q function where it will
-      ;; show the expected inputs of the query at point).
-      (cider-eldoc-display-context-dependent-info t)
-      ;; Whether to prefer local resources as opposed to remote, or TRAMP resouces,
-      ;; if local resources are available.
-      (cider-prefer-local-resources t)
-      ;; Whether to save a file when CIDER loads its buffer.
-      ;; 'prompt means to prompt, t means always save, nil means never save.
-      (cider-save-file-on-load t)
-      :config
-      ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
-      ;; You must set these variables in :config instead of :custom due to a loading
-      ;; order issue.
-      ;;
-      ;; NOTE: CIDER automatically adds all dependencies from
-      ;;       `cider-jack-in-dependencies' to `cider-jack-in-cljs-dependencies'
-      ;;       when jacking in, so there's no need to specify additional
-      ;;       dependencies in both variables.
-      (setq cider-jack-in-dependencies
-            (delq nil
-                  (delete-dups
-                   (append cider-jack-in-dependencies
-                           my/extra-cider-jack-in-deps)))))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package cider
+    :after evil-collection
+    :hook
+    (clojure-mode . cider-mode)
+    :general
+    (general-unbind cider-repl-mode-map
+      ",")
+    (general-def cider-repl-mode-map
+      "M-;" 'cider-repl-handle-shortcut)
+    (general-def 'normal cider-repl-mode-map
+      "C-j" 'cider-repl-next-input
+      "C-k" 'cider-repl-previous-input
+      "C-r" 'cider-repl-history)
+    (general-def 'insert cider-repl-mode-map
+      "C-n"        'cider-repl-next-input
+      "C-p"        'cider-repl-previous-input
+      "C-r"        'cider-repl-history
+      "C-RET"      'cider-repl-newline-and-indent
+      "C-<return>" 'cider-repl-newline-and-indent)
+    (my/evil-leader-def cider-repl-mode-map
+      ","   'cider-repl-handle-shortcut
+      "<"   'cider-eval-last-sexp
+      ">"   'cider-eval-last-sexp-and-replace
+      "cC"  'cider-classpath
+      "cF"  'cider-repl-toggle-clojure-font-lock
+      "cH"  'cider-repl-history
+      "cN"  'cider-ns-reload
+      "cR"  'cider-ns-refresh
+      "cS"  'cider-sideloader-start
+      "cU"  'cider-repl-require-repl-utils
+      "ca"  'cider-restart
+      "cb"  'cider-repl-clear-buffer
+      "cc"  'cider-repl-clear-output
+      "cd"  'cider-doc
+      "ch"  'cider-repl-shortcuts-help
+      "cn"  'cider-repl-set-ns
+      "cp"  'cider-repl-toggle-pretty-printing
+      "cq"  'cider-quit
+      "cr"  'cider-run
+      "cta" 'cider-test-run-loaded-tests
+      "ctf" 'cider-test-run-ns-tests-with-filters
+      "ctF" 'my/cider-test-prompt-for-filters
+      "ctn" 'cider-test-run-ns-tests
+      "ctp" 'cider-test-run-project-tests
+      "ctr" 'cider-test-show-report
+      "cu"  'cider-undef
+      "cv"  'cider-version)
+    (my/evil-leader-def cider-mode-map
+      "=" 'cider-format-buffer
+      "<" 'cider-eval-last-sexp
+      ">" 'cider-eval-last-sexp-and-replace)
+    (general-def 'normal cider-mode-map
+      "gs" 'cider-find-var
+      "gi" 'cider-find-resource
+      "gu" 'cider-xref-fn-refs)
+    ;; Clearing the whole REPL is a useful feature since the REPL gets slower
+    ;; the larger it gets.
+    (my/user-leader-def cider-repl-mode-map
+      "M-b" 'cider-repl-clear-buffer)
+    :custom
+    ;; Which printing function CIDER uses under the hood to print output.
+    ;; pprint (default): clojure.pprint/pprint
+    ;; pr:               clojure.core/pr
+    ;; fipp:             Fast Idiomatic Pretty Printer, which is 5-10 times faster
+    ;;                   than pprint. Probably the best default choice.
+    ;; puget:            Puget is canonical serialization of data on top of fipp,
+    ;;                   but is slightly slower.
+    ;; zprint:           Fast and flexible alternative to the libraries mentioned
+    ;;                   above. Highly configurable, but requires you to specify
+    ;;                   zprint as a depdency either in your cider jack-in init
+    ;;                   command, or in your project dependencies file.
+    (cider-print-fn 'zprint)
+    ;; Whether to show the large help message when the CIDER REPL opens.  Turning
+    ;; it off saves space in the REPL buffer, which could speed up performance in
+    ;; the beginning.
+    (cider-repl-display-help-banner nil)
+    ;; Set this to t if you want to see all debugging info for communication
+    ;; between CIDER and the nREPL server in a buffer named *nrepl-messages
+    ;; conn-name*. WARNING: This will greatly slow down CIDER!
+    (nrepl-log-messages nil)
+    ;; Whether to use font-locking for REPL input and results.
+    (cider-repl-use-clojure-font-lock t)
+    ;; How to colorize defined symbols of the following types.
+    ;; Set this to nil to disable dynamic font-locking.
+    ;; WARNING: Dynamic font-locking can slow down the REPL!
+    (cider-font-lock-dynamically '(macro core deprecated function var))
+    ;; (cider-font-lock-dynamically nil)
+    ;; Whether to pretty-print REPL output
+    (cider-repl-use-pretty-printing t)
+    ;; Window startup behavior for the REPL.
+    ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
+    (cider-repl-pop-to-buffer-on-connect 'display-only)
+    ;; Prefix string for results of REPL evaluation
+    (cider-repl-result-prefix " => ")
+    ;; Set character size limit for the REPL buffer.
+    (cider-repl-buffer-size-limit 100000)
+    ;; Wrap around REPL input history.
+    (cider-repl-wrap-history t)
+    ;; Max number of inputs held in history.
+    (cider-repl-history-size 1000)
+    ;; File for storing CIDER REPL history.
+    (cider-repl-history-file
+     (locate-user-emacs-file "cider-repl-hist"))
+    ;; Turn off hover documentation since lsp-mode provides a better alternative.
+    (cider-eldoc-display-for-symbol-at-point nil)
+    ;; If set to t, CIDER will try to add expected function arguments based on the
+    ;; current context (for example for the datomic.api/q function where it will
+    ;; show the expected inputs of the query at point).
+    (cider-eldoc-display-context-dependent-info t)
+    ;; Whether to prefer local resources as opposed to remote, or TRAMP resouces,
+    ;; if local resources are available.
+    (cider-prefer-local-resources t)
+    ;; Whether to save a file when CIDER loads its buffer.
+    ;; 'prompt means to prompt, t means always save, nil means never save.
+    (cider-save-file-on-load t)
+    :config
+    ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
+    ;; You must set these variables in :config instead of :custom due to a loading
+    ;; order issue.
+    ;;
+    ;; NOTE: CIDER automatically adds all dependencies from
+    ;;       `cider-jack-in-dependencies' to `cider-jack-in-cljs-dependencies'
+    ;;       when jacking in, so there's no need to specify additional
+    ;;       dependencies in both variables.
+    (setq cider-jack-in-dependencies
+          (delq nil
+                (delete-dups
+                 (append cider-jack-in-dependencies
+                         my/extra-cider-jack-in-deps)))))
+#+end_src
 
 * clj-refactor
-  =clj-refactor= provides refactoring support for Clojure projects. It
-  complements the refactoring functionality you'd find in =clojure-mode= and
-  CIDER.
+=clj-refactor= provides refactoring support for Clojure projects. It
+complements the refactoring functionality you'd find in =clojure-mode= and
+CIDER.
 
-  #+begin_src emacs-lisp
-    (use-package clj-refactor
-      :hook
-      (clojure-mode .
-                    (lambda ()
-                      (clj-refactor-mode 1)
-                      ;; This choice of keybinding leaves cider-macroexpand-1
-                      ;; unbound
-                      (cljr-add-keybindings-with-prefix "C-c C-m")))
-      :custom
-      ;; disable clj-refactor adding ns to blank files.
-      ;; This is for interoperability with lsp-mode.
-      ;; lsp-mode takes care of this task.
-      (cljr-add-ns-to-blank-clj-files nil)
-      ;; Whether to warn the user before parsing the AST.
-      (cljr-warn-on-eval nil))
-  #+end_src
+** Troubleshooting
+*** =clj-refactor= and =refactor-nrepl= are out of sync
+If you see this error when you jack into the CIDER nREPL, most likely the
+problem is not with =clj-refactor= or its dependency =refactor-nrepl=, but with
+your project's dependencies. Make sure that your Clojure, ClojureScript, and, if
+necessary, Node.js dependencies are up-to-date and compatible and try again.
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package clj-refactor
+    :hook
+    (clojure-mode .
+                  (lambda ()
+                    (clj-refactor-mode 1)
+                    ;; This choice of keybinding leaves cider-macroexpand-1
+                    ;; unbound
+                    (cljr-add-keybindings-with-prefix "C-c C-m")))
+    :custom
+    ;; disable clj-refactor adding ns to blank files.
+    ;; This is for interoperability with lsp-mode.
+    ;; lsp-mode takes care of this task.
+    (cljr-add-ns-to-blank-clj-files nil)
+    ;; Whether to warn the user before parsing the AST.
+    (cljr-warn-on-eval nil))
+#+end_src

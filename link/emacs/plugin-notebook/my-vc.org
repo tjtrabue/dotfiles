@@ -69,8 +69,6 @@ Lists TODOs and related comments in the =magit-status= buffer.
 
 #+begin_src emacs-lisp
   (use-package magit-todos
-    ;; This package is really slow, even with glob exclude optimizations.
-    :disabled
     :after magit
     :demand t
     :hook
@@ -206,4 +204,15 @@ commits. The popup only shows the PGP signature, not the commit message.
     :custom
     ;; Whether to use `magit-show-commit' for showing status/diff commands.
     (git-messenger:use-magit-popup t))
+#+end_src
+
+* git-undo
+Adds a command for Emacs to regress, or "undo" a region back through its Git
+history, a region back through its Git history.
+
+#+begin_src emacs-lisp
+  (use-package git-undo
+    :general
+    (my/evil-leader-def
+      "gu" 'git-undo))
 #+end_src
