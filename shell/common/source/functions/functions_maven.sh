@@ -2,17 +2,13 @@
 
 # Bump a Maven project's major version (i.e., 1.0.0 -> 2.0.0).
 bumpmajor() {
-  local pomXml="pom.xml"
+  local pomXml="${1:-pom.xml}"
   local version="$(xpath -e '/project/version/text()' "${pomXml}" 2>/dev/null)"
   local suffix="$(echo "${version}" | sed -E 's/.*(-.*)/\1/')"
   local nonSnapshotVersion="$(echo "${version}" | sed 's/-.*$//')"
   local majorVersion="$(echo "${nonSnapshotVersion}" |
     sed -E 's/([0-9]+)\.[0-9]+\.[0-9]+/\1/')"
-  local minorVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/[0-9]+\.([0-9]+)\.[0-9]+/\1/')"
-  local buxfixVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/')"
-  local newVersion="$((majorVersion += 1)).${minorVersion}.${buxfixVersion}${suffix}"
+  local newVersion="$((majorVersion += 1)).0.0${suffix}"
 
   log_info "New version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
@@ -20,6 +16,7 @@ bumpmajor() {
 
 # Bump a Maven project's minor version (i.e., 1.0.0 -> 1.1.0).
 bumpminor() {
+  local pomXml="${1:-pom.xml}"
   local version="$(xpath -e '/project/version/text()' "${pomXml}" 2>/dev/null)"
   local suffix="$(echo "${version}" | sed -E 's/.*(-.*)/\1/')"
   local nonSnapshotVersion="$(echo "${version}" | sed 's/-.*$//')"
@@ -27,9 +24,7 @@ bumpminor() {
     sed -E 's/([0-9]+)\.[0-9]+\.[0-9]+/\1/')"
   local minorVersion="$(echo "${nonSnapshotVersion}" |
     sed -E 's/[0-9]+\.([0-9]+)\.[0-9]+/\1/')"
-  local buxfixVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/')"
-  local newVersion="${majorVersion}.$((minorVersion += 1)).${buxfixVersion}${suffix}"
+  local newVersion="${majorVersion}.$((minorVersion += 1)).0${suffix}"
 
   log_info "New version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
@@ -37,6 +32,7 @@ bumpminor() {
 
 # Bump a Maven project's bugfix version (i.e., 1.0.0 -> 1.0.1).
 bumpbugfix() {
+  local pomXml="${1:-pom.xml}"
   local version="$(xpath -e '/project/version/text()' "${pomXml}" 2>/dev/null)"
   local suffix="$(echo "${version}" | sed -E 's/.*(-.*)/\1/')"
   local nonSnapshotVersion="$(echo "${version}" | sed 's/-.*$//')"
