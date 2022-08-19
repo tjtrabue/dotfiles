@@ -358,9 +358,6 @@ autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 " Treat .md files as Markdown
 autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 
-" Strip trailing whitespace on buffer write
-autocmd BufWritePre * :%s/\s+$//e
-
 " Move cursor to last known position when reopening a file
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
