@@ -38,15 +38,17 @@ porcelain exists in Magit.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  ;; Most keybindings for magit are configured in my-evil.el under evil-leader's
-  ;; config section.
+  ;; I've configured most keybindings for Magit in `my-evil.el' under
+  ;; evil-leader's config section.
   (use-package magit
     :after evil-collection
     :general
     (general-def '(normal emacs) magit-status-mode-map
       ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
       ;; buffer, which keeps our buffer list clean.
-      "q" 'my/magit-kill-buffers)
+      ;; NOTE: Can slow down Magit's performance just a bit.
+      ;; "q" 'my/magit-kill-buffers
+      )
     (my/evil-leader-def
       "gD"  'magit-diff-dwim
       "gP"  'magit-push
