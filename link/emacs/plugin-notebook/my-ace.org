@@ -22,6 +22,8 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
       [remap other-window] 'ace-window
       ;; `C-x 0' should invoke ace-delete-window
       [remap delete-window] 'ace-delete-window
+      ;; `C-x 1' should invoke ace-delete-other-windows
+      [remap delete-other-windows] 'ace-delete-other-windows
       ;; Also use C-, to call ace-window
       "C-," 'ace-window)
     :custom
