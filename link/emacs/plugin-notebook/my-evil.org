@@ -26,9 +26,8 @@ lines, etc.). They mimic Vim's operators, but are much more customizeable.
       (defun my/define-custom-evil-operators ()
         "Define extra operators for use in `evil-mode'."
 
-        ;; FIXME
-        ;; when done on line:
-        ;;     (insert "\n#endif  // " ident)))))
+        ;; FIXME: When run on line:
+        ;;   (insert "\n#endif  // " ident)))))
         ;; it modifies the string and becomes:
         ;;     (insert "\n#endif // " ident)))))
         ;;
