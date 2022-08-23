@@ -21,11 +21,7 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
       ;; Remap C-o to the ace-window function
       [remap other-window] 'ace-window
       ;; Also use C-, to call ace-window
-      "C-," 'ace-window
-      ;; Standard mappings
-      "M-[ w" 'ace-window
-      "M-[ d" 'ace-delete-window
-      "M-[ o" 'ace-delete-other-windows)
+      "C-," 'ace-window)
     :custom
     ;; Set window selection keys to the home row ones.
     (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))

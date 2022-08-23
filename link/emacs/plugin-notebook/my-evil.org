@@ -711,7 +711,10 @@ main features of =lispyville=:
        ;; Kill quoted string or sexp including point.
        "C-'" 'lispy-kill-at-point
        ;; Mark symbols with M-m
-       "M-m" 'lispy-mark-symbol)
+       "M-m" 'lispy-mark-symbol
+       ;; Slurp and barf shortcuts.
+       "M-[" 'lispyville-barf
+       "M-]" 'lispyville-slurp)
       (general-define-key
        :states 'insert
        :keymaps mode-map
