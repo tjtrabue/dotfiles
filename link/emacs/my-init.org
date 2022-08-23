@@ -107,7 +107,9 @@ This is where I define new variables needed throughout my configuration.
     (defvar my/authinfo-files (mapcar (lambda (file)
                                         (file-truename (concat (getenv "HOME") "/" file)))
                                       '(".authinfo.gpg" ".authinfo" ".netrc"))
-      "The user's .authinfo files used to store login credentials."))
+      "The user's .authinfo files used to store login credentials.")
+    (defvar my/line-number-state 'relative
+      "The current global line number setting. Either `absolute' or `relative'."))
 #+end_src
 
 * Language/Encoding
@@ -1012,8 +1014,11 @@ and hooks in a way that defers loading the package.
       "N"  (lambda ()
              (interactive)
              (if (eq display-line-numbers t)
-                 (setq display-line-numbers 'relative)
-               (setq display-line-numbers t)))))
+                 (progn
+                   (setq my/line-number-state 'relative
+                         display-line-numbers 'relative))
+               (setq my/line-number-state 'absolute
+                     display-line-numbers t)))))
 #+end_src
 
 * Load External Configuration Files

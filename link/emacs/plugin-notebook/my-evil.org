@@ -99,7 +99,9 @@ The Evil mode plugin itself.
     ((evil-insert-state-entry . (lambda ()
                                   (setq display-line-numbers t)))
      (evil-insert-state-exit . (lambda ()
-                                 (setq display-line-numbers 'relative))))
+                                 (if (eq my/line-number-state 'absolute)
+                                     (setq display-line-numbers t)
+                                   (setq display-line-numbers 'relative)))))
     :general
     ;; Use "jk" to escape from insert and replace states.
     (general-define-key
