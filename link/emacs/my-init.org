@@ -1007,7 +1007,13 @@ and hooks in a way that defers loading the package.
       ">" 'eval-print-last-sexp
       "bd" 'bookmark-delete
       "bj" 'bookmark-jump
-      "bs" 'bookmark-set))
+      "bs" 'bookmark-set
+      ;; Toggle relative/absolute line numbers.
+      "N"  (lambda ()
+             (interactive)
+             (if (eq display-line-numbers t)
+                 (setq display-line-numbers 'relative)
+               (setq display-line-numbers t)))))
 #+end_src
 
 * Load External Configuration Files
