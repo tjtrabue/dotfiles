@@ -1,50 +1,32 @@
 #!/bin/sh
 
 # Bump a Maven project's major version (i.e., 1.0.0 -> 2.0.0).
-bumpmajor() {
+bumpmavenmajor() {
   local pomXml="${1:-pom.xml}"
   local version="$(xpath -e '/project/version/text()' "${pomXml}" 2>/dev/null)"
-  local suffix="$(echo "${version}" | sed -E 's/.*(-.*)/\1/')"
-  local nonSnapshotVersion="$(echo "${version}" | sed 's/-.*$//')"
-  local majorVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/([0-9]+)\.[0-9]+\.[0-9]+/\1/')"
-  local newVersion="$((majorVersion += 1)).0.0${suffix}"
+  local newVersion="$(bumpmajor "${version}")"
 
   log_info "Bumping major version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
 # Bump a Maven project's minor version (i.e., 1.0.0 -> 1.1.0).
-bumpminor() {
+bumpmavenminor() {
   local pomXml="${1:-pom.xml}"
   local version="$(xpath -e '/project/version/text()' "${pomXml}" 2>/dev/null)"
-  local suffix="$(echo "${version}" | sed -E 's/.*(-.*)/\1/')"
-  local nonSnapshotVersion="$(echo "${version}" | sed 's/-.*$//')"
-  local majorVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/([0-9]+)\.[0-9]+\.[0-9]+/\1/')"
-  local minorVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/[0-9]+\.([0-9]+)\.[0-9]+/\1/')"
-  local newVersion="${majorVersion}.$((minorVersion += 1)).0${suffix}"
+  local newVersion="$(bumpminor "${version}")"
 
   log_info "Bumping minor version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
-# Bump a Maven project's bugfix version (i.e., 1.0.0 -> 1.0.1).
-bumpbugfix() {
+# Bump a Maven project's patch version (i.e., 1.0.0 -> 1.0.1).
+bumpmavenpatch() {
   local pomXml="${1:-pom.xml}"
   local version="$(xpath -e '/project/version/text()' "${pomXml}" 2>/dev/null)"
-  local suffix="$(echo "${version}" | sed -E 's/.*(-.*)/\1/')"
-  local nonSnapshotVersion="$(echo "${version}" | sed 's/-.*$//')"
-  local majorVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/([0-9]+)\.[0-9]+\.[0-9]+/\1/')"
-  local minorVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/[0-9]+\.([0-9]+)\.[0-9]+/\1/')"
-  local buxfixVersion="$(echo "${nonSnapshotVersion}" |
-    sed -E 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/')"
-  local newVersion="${majorVersion}.${minorVersion}.$((buxfixVersion += 1))${suffix}"
+  local newVersion="$(bumppatch "${version}")"
 
-  log_info "Bumping bugfix version: ${GREEN}${newVersion}${NC}"
+  log_info "Bumping patch version: ${GREEN}${newVersion}${NC}"
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
