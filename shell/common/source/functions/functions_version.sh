@@ -7,9 +7,9 @@ bumpmajor() {
   if ! __check_version_string "${version}"; then
     return 1
   fi
-  local suffix="$(echo "${version}" | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+(.*)/\1/')"
-  local nonSnapshotVersion="$(printf '%s' "${version}" | sed 's/-.*$//')"
-  local majorVersion="$(__parse_version_string_for_major "${nonSnapshotVersion}")"
+  local suffix="$(__get_suffix_from_version "${version}")"
+  local nonSuffixedVersion="$(__strip_suffix_from_version "${version}")"
+  local majorVersion="$(__parse_version_string_for_major "${nonSuffixedVersion}")"
   printf '%s.%s.%s%s' "$((majorVersion += 1))" "0" "0" "${suffix}"
 }
 
@@ -20,10 +20,10 @@ bumpminor() {
   if ! __check_version_string "${version}"; then
     return 1
   fi
-  local suffix="$(echo "${version}" | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+(.*)/\1/')"
-  local nonSnapshotVersion="$(printf '%s' "${version}" | sed 's/-.*$//')"
-  local majorVersion="$(__parse_version_string_for_major "${nonSnapshotVersion}")"
-  local minorVersion="$(__parse_version_string_for_minor "${nonSnapshotVersion}")"
+  local suffix="$(__get_suffix_from_version "${version}")"
+  local nonSuffixedVersion="$(__strip_suffix_from_version "${version}")"
+  local majorVersion="$(__parse_version_string_for_major "${nonSuffixedVersion}")"
+  local minorVersion="$(__parse_version_string_for_minor "${nonSuffixedVersion}")"
   printf '%s' "${majorVersion}.$((minorVersion += 1)).0${suffix}"
 }
 
@@ -34,11 +34,11 @@ bumppatch() {
   if ! __check_version_string "${version}"; then
     return 1
   fi
-  local suffix="$(echo "${version}" | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+(.*)/\1/')"
-  local nonSnapshotVersion="$(printf '%s' "${version}" | sed 's/-.*$//')"
-  local majorVersion="$(__parse_version_string_for_major "${nonSnapshotVersion}")"
-  local minorVersion="$(__parse_version_string_for_minor "${nonSnapshotVersion}")"
-  local patchVersion="$(__parse_version_string_for_patch "${nonSnapshotVersion}")"
+  local suffix="$(__get_suffix_from_version "${version}")"
+  local nonSuffixedVersion="$(__strip_suffix_from_version "${version}")"
+  local majorVersion="$(__parse_version_string_for_major "${nonSuffixedVersion}")"
+  local minorVersion="$(__parse_version_string_for_minor "${nonSuffixedVersion}")"
+  local patchVersion="$(__parse_version_string_for_patch "${nonSuffixedVersion}")"
   printf '%s' "${majorVersion}.${minorVersion}.$((patchVersion += 1))${suffix}"
 }
 
@@ -55,6 +55,16 @@ __parse_version_string_for_minor() {
 __parse_version_string_for_patch() {
   local version="${1}"
   printf '%s' "${version}" | sed -E 's/[0-9]+\.[0-9]+\.([0-9]+)/\1/'
+}
+
+__get_suffix_from_version() {
+  local version="${1}"
+  printf '%s' "${version}" | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+(.*)/\1/'
+}
+
+__strip_suffix_from_version() {
+  local version="${1}"
+  printf '%s' "${version}" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+).*/\1/'
 }
 
 __check_version_string() {
