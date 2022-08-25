@@ -156,11 +156,10 @@ default.
 #+end_src
 
 * Native Compilation
-We want to native-compile as many of our configuration files as we can to speed
-up performance.
+To speed up performance, we want to native-compile our configuration files.
 
 ** Native compile personal Elisp files
-While emacs compiles its own built-in Elisp files to native code, but users must
+Emacs compiles its own built-in Emacs Lisp files to native code, but users must
 instruct Emacs to compile custom libraries.
 
 #+begin_src emacs-lisp
@@ -854,7 +853,7 @@ packages.
 ** straight
 =straight= is a newer package manager for Emacs that differs from
 =package.el=.  It operates by cloning Git repositories for Emacs packages and
-symlinking them to Emacs' runtime path. =straight= is also a purely
+sym-linking them to Emacs' runtime path. =straight= is also a purely
 functional package manager, and integrates nicely with the =use-package=
 macro.  *NOTE:* straight requires Emacs version 24.5 or higher to properly
 function.
@@ -924,7 +923,7 @@ user are also within Emacs' reach.
 
 #+begin_src emacs-lisp
   ;; When launched as a graphical application, Emacs typically inherits a default
-  ;; PATH variable, not the user's.  This can very annoying when it comes to
+  ;; PATH variable, not the user's.  This can be annoying when it comes to
   ;; launching external applications from within Emacs.  This plugin solves the
   ;; problem by manually importing the user's PATH variable and using it as the
   ;; value of Emacs exec-path variable.
@@ -995,7 +994,7 @@ and hooks in a way that defers loading the package.
     ;;   general-otomap
     ;;   general-itomap
     ;;   general-tomap
-    ;; If a non-nil argument is passed to `general-evil-setup', you may omit the
+    ;; If you pass a non-nil argument to `general-evil-setup', you may omit the
     ;; "general-" prefix for these macros. I find that leaving them in makes your
     ;; code more descriptive, however.
     (general-evil-setup)
