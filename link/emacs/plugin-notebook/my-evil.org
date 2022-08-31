@@ -1,4 +1,4 @@
-#+title:   evil-mode Configuration
+#+title:   The Extensible VI Layer (evil)
 #+author:  Tom Trabue
 #+email:   tom.trabue@gmail.com
 #+date:    2020:05:25
@@ -147,8 +147,6 @@ The Evil mode plugin itself.
       ;; Use ";" as an alias for "M-x"
       ";" 'execute-extended-command)
     (my/evil-leader-def
-      ;; M-x alias
-      "m" 'execute-extended-command
       ;; Buffer
       "bb" 'switch-to-buffer
       "bk" 'kill-this-buffer

@@ -1,0 +1,32 @@
+#+title:   Smerge: Resolve Merge Conflicts with Style
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:08:31
+#+tags:
+#+STARTUP: fold
+
+=smerge-mode= is a minor mode for resolving merge conflicts in a file. Simply
+activate =smerge-mode= and use Smerge's awesome keybindings to simplify your
+merge conflict resolutions!
+
+#+begin_src emacs-lisp
+  (use-package smerge-mode
+    :general
+    (my/evil-leader-def smerge-mode-map
+      "mC"  'smerge-combine-with-next
+      "mR"  'smerge-refine
+      "ma"  'smerge-keep-all
+      "mb"  'smerge-keep-base
+      "mc"  'smerge-keep-current
+      "md<" 'smerge-diff-base-upper
+      "md=" 'smerge-diff-upper-lower
+      "md>" 'smerge-diff-base-lower
+      "me"  'smerge-ediff
+      "ml"  'smerge-keep-lower
+      "mm"  'smerge-keep-upper
+      "mn"  'smerge-next
+      "mo"  'smerge-keep-lower
+      "mp"  'smerge-prev
+      "mr"  'smerge-resolve
+      "mu"  'smerge-keep-upper))
+#+end_src
