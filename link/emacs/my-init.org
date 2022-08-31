@@ -553,7 +553,9 @@ edited location, as opposed to opening them at the beginning of the file.
   (column-number-mode 1)
 
   ;; Automatically uncompress files when you visit them, and recompress them if
-  ;; you alter and save them.
+  ;; you alter and save them.  This mode is necssary when your Elisp files are
+  ;; compressed as `.el.gz' files, which is often the default for Elisp bundled
+  ;; with Emacs.
   (auto-compression-mode 1)
 #+end_src
 
