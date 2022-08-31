@@ -112,6 +112,13 @@ This is where I define new variables needed throughout my configuration.
       "The current global line number setting. Either `absolute' or `relative'."))
 #+end_src
 
+* Create Directories
+Create directories that must be present for our Emacs configuration to function.
+
+#+begin_src emacs-lisp
+  (make-directory my/emacs-plugin-dir 'and-parents)
+#+end_src
+
 * Language/Encoding
 Language and encoding parameters for this particular Emacs instance.
 
