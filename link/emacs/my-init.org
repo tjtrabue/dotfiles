@@ -551,6 +551,10 @@ edited location, as opposed to opening them at the beginning of the file.
 
   ;; Turns on column numbers in mode line.
   (column-number-mode 1)
+
+  ;; Automatically uncompress files when you visit them, and recompress them if
+  ;; you alter and save them.
+  (auto-compression-mode 1)
 #+end_src
 
 * Key Bindings
@@ -869,16 +873,16 @@ straight-pull-all=
   ;; The straight.el branch to clone.
   (setq straight-repository-branch "master")
   (let ((bootstrap-file
-          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
         (bootstrap-version 5))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
-            (concat
-              "https://raw.githubusercontent.com/raxod502/straight.el/"
-              straight-repository-branch
-              "/install.el")
-            'silent 'inhibit-cookies)
+           (concat
+            "https://raw.githubusercontent.com/raxod502/straight.el/"
+            straight-repository-branch
+            "/install.el")
+           'silent 'inhibit-cookies)
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (with-no-warnings
@@ -903,10 +907,10 @@ straight-pull-all=
     ;; If you have set straight-use-package-by-default to t, this is
     ;; unnecessary.
     (straight-use-package
-      ;; Override the MELPA recipe in order to get all Elisp files for
-      ;; use-package. For some reason, the MELPA recipe excludes several
-      ;; important source files.
-      '(use-package :type git :host github :repo "jwiegley/use-package"
+     ;; Override the MELPA recipe in order to get all Elisp files for
+     ;; use-package. For some reason, the MELPA recipe excludes several
+     ;; important source files.
+     '(use-package :type git :host github :repo "jwiegley/use-package"
         :files (:defaults))))
 #+end_src
 

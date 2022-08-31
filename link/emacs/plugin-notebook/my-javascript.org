@@ -7,12 +7,16 @@
 #+STARTUP: fold
 
 Javascript is perhaps the mode widely used programming language in the world
-today. I don't like it, but it is very important to be able to work with
-Javascript in your favorite editor. This is my Emacs configuration for
-Javascript integration.
+today. I don't like it, but it is important to be able to work with Javascript
+in your favorite editor. This is my Emacs configuration for Javascript
+integration.
 
 * indium
-  Indium is a fully featured Javascript development environment for Emacs.
+  Indium is a fully featured Javascript development environment for Emacs. It is
+  old, however, and newer Javascript development tools such as the TypeScript
+  Language Server have obsoleted this project to a large extent.
+
+  *NOTE:* Indium appears unmaintained on GitHub.
 
 ** Installation Instructions
    Indium runs on a client-server architecture. Thus, you need to install the
@@ -21,7 +25,9 @@ Javascript integration.
 
 ** =use-package= specification
    #+begin_src emacs-lisp
-     (use-package indium)
+     (use-package indium
+       ;; Indium appears unmaintained.
+       :disabled)
    #+end_src
 
 * npm-mode
