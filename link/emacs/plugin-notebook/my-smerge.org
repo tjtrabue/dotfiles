@@ -5,9 +5,9 @@
 #+tags:
 #+STARTUP: fold
 
-=smerge-mode= is a minor mode for resolving merge conflicts in a file. Simply
-activate =smerge-mode= and use Smerge's awesome keybindings to simplify your
-merge conflict resolutions!
+=smerge-mode= is a built-in minor mode for resolving merge conflicts in a
+file. Simply activate =smerge-mode= and use Smerge's awesome keybindings to
+simplify your merge conflict resolutions!
 
 #+begin_src emacs-lisp
   (use-package smerge-mode
