@@ -137,6 +137,7 @@ link/config/TabNine/*
 my-init.el
 cedet-rc.el
 **/plugin-notebook/*.el
+**/plugin-notebook/*.html
 
 # Emacs straight package manager
 link/emacs/straight/build*
