@@ -29,6 +29,8 @@ and more.
     (my/user-leader-def markdown-mode-map
       "C-l" 'markdown-follow-link-at-point)
     (general-def 'normal markdown-mode-map
+      "<<" 'markdown-promote
+      ">>" 'markdown-demote
       "g l" 'markdown-follow-link-at-point)
     :custom
     (markdown-enable-wiki-links t))
