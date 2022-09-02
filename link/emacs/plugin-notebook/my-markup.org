@@ -17,8 +17,7 @@ Major mode for editing Markdown files, complete with a plethora of functions for
 inserting links, following links, navigating files quickly, changing headers,
 and more.
 
-*NOTE:* The =edit-indirect= package is needed to edit code blocks with =C-c
-C-'=.
+*NOTE:* You need the =edit-indirect= package to edit code blocks with =C-c C-'=.
 
 #+begin_src emacs-lisp
   (use-package markdown-mode
@@ -26,6 +25,11 @@ C-'=.
     :mode
     ;; Render README files as GitHub-flavored Markdown.
     ("README\\.md\\'" . gfm-mode)
+    :hook
+    (markdown-mode . (lambda ()
+                       (general-def 'normal 'local
+                         "M-j" 'markdown-move-down
+                         "M-k" 'markdown-move-up)))
     :general
     (my/user-leader-def markdown-mode-map
       "C-l" 'markdown-follow-link-at-point)
