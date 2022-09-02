@@ -1,0 +1,13 @@
+#+title:   YAML: YAML Ain't Markup Language!
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:09:02
+#+tags:
+#+STARTUP: fold
+
+Configuration for editing and interacting with YAML files.
+
+* yaml-mode
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src

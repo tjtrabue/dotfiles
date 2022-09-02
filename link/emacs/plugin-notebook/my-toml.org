@@ -6,7 +6,14 @@
 #+tags:
 #+STARTUP: fold
 
-Plugins and configuration for TOML support in Emacs.
+Plugins and configuration for TOML support in Emacs. TOML serves primarily as a
+configuration language. The Rust programming language makes prolific use of TOML
+files for configuring projects.
+
+* toml
+#+begin_src emacs-lisp
+  (use-package toml)
+#+end_src
 
 * toml-mode
   =toml-mode= is a major mode for editing TOML files.

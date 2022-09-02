@@ -1,0 +1,13 @@
+#+title:   JSON: Javascript Object Notation
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:09:02
+#+tags:
+#+STARTUP: fold
+
+Plugins for editing and interacting with JSON files.
+
+* json-mode
+#+begin_src emacs-lisp
+  (use-package json-mode)
+#+end_src
