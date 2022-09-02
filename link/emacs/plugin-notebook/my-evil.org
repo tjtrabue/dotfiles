@@ -686,9 +686,9 @@ main features of =lispyville=:
        ;; Split and join s-exps
        "\\" 'lispy-split
        "|" 'lispy-join
-       ;; Delimiter navigation
-       "{" 'lispyville-previous-opening
-       "}" 'lispyville-next-closing
+       ;; Function navigation
+       "{" 'lispyville-backward-function-begin
+       "}" 'lispyville-forward-function-begin
        ;; List navigation
        "(" 'lispyville-backward-list-begin
        ")" 'lispyville-forward-list-begin
