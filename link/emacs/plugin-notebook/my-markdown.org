@@ -33,7 +33,13 @@ and more.
       ">>" 'markdown-demote
       "g l" 'markdown-follow-link-at-point)
     :custom
-    (markdown-enable-wiki-links t))
+    (markdown-enable-wiki-links t)
+    :config
+    ;; Use this many spaces to indent lists.
+    ;; NOTE: Should be 4 spaces because Markdown sometimes require 4 spaces to
+    ;;       correctly render nested lists.
+    (setq markdown-list-indent-width 4)
+    (setq markdown-toc-indentation-space tab-width))
 #+end_src
 
 * markdown-toc
