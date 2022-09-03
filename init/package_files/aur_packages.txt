@@ -35,7 +35,7 @@ polybar-git
 roswell
 swift-bin
 thunderbird-nightly-bin
-ttf-nerd-fonts-symbols
+ttf-nerd-fonts-symbols-2048-em-mono
 up
 vmtouch-git
 yank
