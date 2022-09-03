@@ -293,6 +293,7 @@ link/config/kdeconnect
 link/config/kded5rc
 link/config/kdedefaults
 link/config/kdeglobals
+link/config/kfontinstuirc
 link/config/kglobalshortcutsrc
 link/config/khelpcenterrc
 link/config/khotkeysrc
