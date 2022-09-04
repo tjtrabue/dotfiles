@@ -679,10 +679,6 @@ main features of =lispyville=:
   standard evil backspace function."
     (interactive "P")
     (if (bolp)
-        ;; The lispyville backspace function does not join and move
-        ;; point back to the end of the previous line when you press
-        ;; backspace at the beginning of a line, so we should revert to
-        ;; the standard evil backspace function.
         (evil-delete-backward-char-and-join count)
       (call-interactively 'lispyville-delete-char-or-splice-backwards)))
 
