@@ -168,13 +168,18 @@ maintained.
 #+end_src
 
 * git-timemachine
-Step through historic versions of git controlled file using Emacs.  All you
-must do is visit a git-controlled file and invoke =git-timemachine= or
-=git-timemachine-toggle= Check the documentation for the default keybindings.
+Step through historic versions of git controlled file using Emacs.  All you must
+do is visit a git-controlled file and invoke =git-timemachine= or
+=git-timemachine-toggle=. Check the documentation for the default keybindings.
 
 #+begin_src emacs-lisp
   (use-package git-timemachine
-    :commands (git-timemachine git-timemachine-toggle))
+    :commands (git-timemachine git-timemachine-toggle)
+    ;; The MELPA package is out of date because the project moved from GitLab to
+    ;; Codehub.
+    :straight
+    (git-timemachine :host github
+                     :repo "emacsmirror/git-timemachine"))
 #+end_src
 
 * git-link
