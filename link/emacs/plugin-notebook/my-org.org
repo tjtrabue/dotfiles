@@ -14,6 +14,8 @@ The ubiquitous =org-mode=.
 
 #+begin_src emacs-lisp
   (use-package org
+    :ensure nil
+    :straight nil
     :mode ("\\.org\\'" . org-mode)
     :hook
     (org-mode .
