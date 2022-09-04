@@ -7,15 +7,16 @@
 Plugins for extending Emacs with version control capabilities.
 
 * vc
-General version control plugin for Emacs.
+General version control plugin for Emacs. =vc-mode= is agnostic to any
+particular version control system, providing functions that work for Git, SVN,
+Mercurial, and more.
 
 #+begin_src emacs-lisp
-  ;; General version control plugin for Emacs.
   (use-package vc)
 #+end_src
 
 * git-modes
-The following plugin contains major modes for editing various Git file types.
+The following plugin contains major modes for editing Git file types.
 
 #+begin_src emacs-lisp
   (use-package git-modes)
@@ -67,7 +68,7 @@ porcelain exists in Magit.
 #+end_src
 
 * magit-todos
-Lists TODOs and related comments in the =magit-status= buffer.
+Lists =TODO= items and related comments in the =magit-status= buffer.
 
 #+begin_src emacs-lisp
   (use-package magit-todos

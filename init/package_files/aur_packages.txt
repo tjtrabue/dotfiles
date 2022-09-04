@@ -9,12 +9,12 @@ brave-bin
 clj-kondo
 clojure-lsp-bin
 code-minimap-bin
-drive-git
 elixir-ls-git
 emacs-native-comp-git-enhanced
 findimagedupes
 flat-remix
 flutter-git
+gdrive
 glow-bin
 icons-in-terminal
 jdtls
