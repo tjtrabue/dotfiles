@@ -105,8 +105,13 @@ Adds Git Large File Storage capabilities to Magit.
 #+end_src
 
 * forge
-A plugin for =magit= to interface with numerous Git hosts, such as GitHub,
-GitLab, and more.
+A seriously powerful =magit= plugin for interfacing with numerous Git "forges",
+such as GitHub, GitLab, and more.
+
+Forge fetches issues, pull-requests and other data using the forge’s API and
+stores that in a local database. Additionally it fetches the pull-request
+references using Git. Forge implements features that use this data, but
+third-party packages can also use the database and pull-request refs.
 
 ** Configuring Authentication with GitHub
 First, you need to [[https://github.com/settings/tokens][create a Personal Authentication Token (PAT) on GitHub]]. You
@@ -121,6 +126,15 @@ YOUR_GITHUB_TOKEN=
 specifier.
 
 After this, you should be able to use =forge= and all of its features.
+
+** Using forge in a local repository
+To start using Forge in a certain repository visit the Magit status buffer for
+that repository and type =f n= (=forge-pull=). Alternatively, you can use =M-x
+forge-add-repository=, which makes it possible to add a forge repository without
+pulling all topics and even without having to clone the respective Git
+repository.
+
+*NOTE:* You must set up a token before you can add the first repository.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
@@ -177,9 +191,15 @@ GitLab, BitBucket, etc.
 * ghub
 =ghub= is an Emacs Lisp library for interacting with the web APIs, both REST and
 GraphQL, for a number of "forges", such as GitHub, GitLab, BitBucket, and
-more. It is managed by the Magit team as a separate project. =ghub= is
-complementary to =forge=, it is not an alternative, as =ghub= is much simpler
-and is designed for quick and easy access to Git forge resources.
+more. The Magit team maintains =ghub= as a separate project. =ghub= is a
+complementary package to =forge=, not an alternative. =ghub= is much simpler
+than =forge=, designed for quick and easy access to Git forge resources.
+
+Ghub abstracts access to API resources using only a handful of basic functions
+such as =ghub-get=. These are convenience wrappers around
+=ghub-request=. Additional forge-specific wrappers like =glab-put=, =gtea-put=,
+=gogs-post= and =buck-delete= are also available. Ghub does not provide any
+resource-specific functions, with the exception of =FORGE-repository-id=.
 
 #+begin_src emacs-lisp
   (use-package ghub)
