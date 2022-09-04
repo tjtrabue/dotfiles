@@ -179,7 +179,19 @@ do is visit a git-controlled file and invoke =git-timemachine= or
     ;; Codehub.
     :straight
     (git-timemachine :host github
-                     :repo "emacsmirror/git-timemachine"))
+                     :repo "emacsmirror/git-timemachine")
+    :general
+    (general-def 'normal git-timemachine-mode-map
+      "?" 'git-timemachine-help
+      "W" 'git-timemachine-kill-revision
+      "b" 'git-timemachine-blame
+      "c" 'git-timemachine-show-commit
+      "g" 'git-timemachine-show-nth-revision
+      "n" 'git-timemachine-show-next-revision
+      "p" 'git-timemachine-show-previous-revision
+      "q" 'git-timemachine-quit
+      "t" 'git-timemachine-show-revision-fuzzy
+      "w" 'git-timemachine-kill-abbreviated-revision))
 #+end_src
 
 * git-link
