@@ -51,17 +51,16 @@ porcelain exists in Magit.
       ;; "q" 'my/magit-kill-buffers
       )
     (my/evil-leader-def
-      "gD"  'magit-diff-dwim
-      "gP"  'magit-push
-      "gR"  'magit-reset
-      "gc"  'magit-commit
-      "gd"  'magit-dispatch
-      "gg"  'magit-status
-      "gm"  'magit-merge
-      "gp"  'magit-pull
-      "gr"  'magit-rebase
-      "gs"  'magit-stage-modified
-      "gtt" 'git-timemachine-toggle)
+      "gD" 'magit-diff-dwim
+      "gP" 'magit-push
+      "gR" 'magit-reset
+      "gc" 'magit-commit
+      "gd" 'magit-dispatch
+      "gg" 'magit-status
+      "gm" 'magit-merge
+      "gp" 'magit-pull
+      "gr" 'magit-rebase
+      "gs" 'magit-stage-modified)
     :custom
     ;; List of symbols for actions that Magit should not confirm, or t.
     (magit-no-confirm '(stage-all-changes unstage-all-changes)))
@@ -191,7 +190,9 @@ do is visit a git-controlled file and invoke =git-timemachine= or
       "p" 'git-timemachine-show-previous-revision
       "q" 'git-timemachine-quit
       "t" 'git-timemachine-show-revision-fuzzy
-      "w" 'git-timemachine-kill-abbreviated-revision))
+      "w" 'git-timemachine-kill-abbreviated-revision)
+    (my/evil-leader-def
+      "gt" 'git-timemachine))
 #+end_src
 
 * git-link

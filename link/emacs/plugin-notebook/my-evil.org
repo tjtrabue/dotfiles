@@ -249,10 +249,6 @@ seen. For these reasons, I recommend using =general= and foregoing
      "dd" #'dired
      ;; eshell
      "es" #'eshell-below
-     ;; Git/Magit
-     "gg" #'magit-status
-     "gd" #'magit-dispatch
-     "gtt" #'git-timemachine-toggle
      ;; ace-window
      "jk" #'ace-window
      ;; Killing buffers
