@@ -106,20 +106,19 @@ Adds Git Large File Storage capabilities to Magit.
 
 * forge
 A plugin for =magit= to interface with numerous Git hosts, such as GitHub,
-GitLab, and many more.
+GitLab, and more.
 
 ** Configuring Authentication with GitHub
-First, you need to create a Personal Authentication Token (PAT) on GitHub. You
+First, you need to [[https://github.com/settings/tokens][create a Personal Authentication Token (PAT) on GitHub]]. You
 need to specify certain scopes to when you create your PAT, I'd go ahead and
-check all of the boxes.
-Next, copy and save your token to your =~/.authinfo= file in
-a line like this:
+check all of the boxes.  Next, copy and save your token to your =~/.authinfo=
+file in a line like this:
 
 =machine api.github.com login YOUR_GITHUB_USERNAME^forge password
 YOUR_GITHUB_TOKEN=
 
-Note that the =^forge= after your GitHub username is important! That is a
-package specifier.
+*NOTE:* the =^forge= after your GitHub username is important! That is a package
+specifier.
 
 After this, you should be able to use =forge= and all of its features.
 
