@@ -36,9 +36,10 @@
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set the default font for all of Emacs."
-  (set-face-attribute 'default nil
+  (set-face-attribute
+    'default nil
     :family my-font-family ;; The font's name
-    :height 110        ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
+    :height 110 ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
     :weight 'semi-bold ;; Style
     :width 'normal))
 
@@ -50,9 +51,11 @@ FRAME is not used directly, but its presence is necessary for this function to
 be attached to the 'window-size-change-functions' hook.
 
 Adjust the font size of an Emacs frame based on the monitor's size."
-  (let ((width-px (display-pixel-width)) ; Monitor width
-         (font-point 11) ;; Font point size for standard screen
-         (font-height))
+  (let
+    (
+      (width-px (display-pixel-width)) ; Monitor width
+      (font-point 11) ;; Font point size for standard screen
+      (font-height))
     ;; Select the font point based on the monitor's resolution.
     (when (= width-px 3840) ;; Very Large display
       (setq font-point 20))
@@ -63,15 +66,14 @@ Adjust the font size of an Emacs frame based on the monitor's size."
     ;; The face ':height' attribute is 10 * the font point.
     (setq font-height (* 10 font-point))
     ;; Adjust default font size.
-    (set-face-attribute 'default nil
-      :height font-height)
+    (set-face-attribute 'default nil :height font-height)
     ;; Also adjust line number font size
     (when (facep 'linum)
-      (set-face-attribute 'linum nil
-        :height font-height))
+      (set-face-attribute 'linum nil :height font-height))
     ;; Also adjust relative line number font size
     (when (facep 'linum-relative-current-face)
-      (set-face-attribute 'linum-relative-current-face nil
+      (set-face-attribute
+        'linum-relative-current-face nil
         :height font-height))))
 
 (provide 'my-font)
