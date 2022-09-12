@@ -897,6 +897,11 @@ straight-pull-all=
     (with-no-warnings
       (load bootstrap-file nil 'nomessage))
 
+    ;; Register more Git project hosting sites with Straight.el.
+    ;; TODO: Remove these host additions once straight.el includes them by
+    ;;       default.
+    (add-to-list 'straight-hosts '(codeberg "codeberg.org" ".git"))
+
     ;; Refresh package repositories
     (when (not (fboundp 'straight-pull-recipe-repositories))
       ;; Sometimes straight.el does not include the convenience function

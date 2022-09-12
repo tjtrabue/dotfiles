@@ -88,3 +88,26 @@ both to =C-c C-d d= and =C-c C-d C-d= by default.
       ;; calling 'helpful-at-point instead of the standard Emacs help function .
       [remap elisp-slime-nav-describe-elisp-thing-at-point] 'helpful-at-point))
 #+end_src
+
+* elisp-autofmt
+=elisp-autofmt= is a utility to auto-format Emacs Lisp code. At the time of this
+writing, it is still under development and not particularly stable. Make sure to
+stay on top of this package's new features and changing API.
+
+#+begin_src emacs-lisp
+  (use-package elisp-autofmt
+    :straight
+    (elisp-autofmt
+     :type git
+     :host codeberg
+     :repo "ideasman42/emacs-elisp-autofmt"
+     :files (:defaults "elisp-autofmt"))
+    :commands (elisp-autofmt-mode)
+    :hook (emacs-lisp-mode . elisp-autofmt-mode)
+    :general
+    (my/evil-leader-def emacs-lisp-mode-map
+      "=" (lambda ()
+            "Run elisp-autofmt-buffer manually."
+            (interactive)
+            (elisp-autofmt-buffer))))
+#+end_src
