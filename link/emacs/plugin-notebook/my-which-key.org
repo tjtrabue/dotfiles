@@ -4,16 +4,19 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
-=which-key= is a plugin that displays key completions after you type an
-incomplete key command (a prefix) in a popup.
+=which-key-mode= is a global minor mode that, when active, displays key
+completions after you type an incomplete key command (i.e., a prefix) in a
+popup. In an editor as keyboard-driven as Emacs I simply can't live without it!
 
 #+begin_src emacs-lisp
   (use-package which-key
+    :demand t
     :custom
     ;; The delay between pressing a key and which-key suggesting further keys
     (which-key-idle-delay 1.0)
     ;; Once which-key is active, shorten the delay for further suggestions
     (which-key-idle-secondary-delay 0.05)
-    :init
+    :config
+    ;; Enables which-key globally
     (which-key-mode 1))
 #+end_src
