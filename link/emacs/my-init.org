@@ -450,13 +450,9 @@ concept of a window in Microsoft Windows or macOS lingo. The method(s) used
 below are the most portable.
 
 #+begin_src emacs-lisp
-  (let (;; Get desired frame height and width as fraction of total monitor size.
-        (frame-height-pixels (truncate (* (display-pixel-height) 0.96)))
-        (frame-width-pixels (truncate (* (display-pixel-width) 0.99))))
-    (when (eq system-type 'darwin)
-      ;; Adjust default frame size on macOS.
-      (setq initial-frame-alist `((height . (text-pixels . ,frame-height-pixels))
-                                  (width . (text-pixels . ,frame-width-pixels))))))
+  (when (eq system-type 'darwin)
+    ;; Maximize Emacs' initial frame on macOS.
+    (add-to-list 'initial-frame-alist `(fullscreen . maximized)))
 #+end_src
 
 * Font Configuration
@@ -847,16 +843,6 @@ These hooks run after Emacs saves a file.
             (lambda ()
               ;; Update any GTAGS files if necessary.
               (my-gtags-update-hook-fn)))
-#+end_src
-
-** window-size-change hooks
-Hooks that run whenever the window size changes.
-
-#+begin_src emacs-lisp
-  ;; NOTE: Most of the time, Emacs seems to take care of zooming the font size
-  ;;       by itself. Only uncomment this hook if you notice a very small font
-  ;;       size on large monitors.
-  ;; (add-hook 'window-size-change-functions #'my-font-adjust-font-size)
 #+end_src
 
 * Package Manager
