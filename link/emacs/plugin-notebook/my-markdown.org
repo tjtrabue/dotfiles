@@ -33,7 +33,28 @@ and more.
       ">>" 'markdown-demote
       "g l" 'markdown-follow-link-at-point)
     :custom
+    ;; When non-nil, font lock inline LaTeX math expressions.
+    ;; Toggle this option with `C-c C-x C-e'.
+    (markdown-enable-math t)
+    ;; Whether to only place ATX header hashmarks (#) on the left side (if t) or
+    ;; both sides (if nil) of a header title.
+    (markdown-asymmetric-header t)
+    ;; Whether to abbreviate URLs by default. Toggle this option with
+    ;; `C-c C-x C-m'.
+    (markdown-hide-urls t)
+    ;; When non-nil, fontify fenced code blocks using the native major mode.  You
+    ;; can customize the language-to-mode mapping by setting the variable
+    ;; `markdown-code-lang-modes'.
+    (markdown-fontify-code-blocks-natively t)
     (markdown-enable-wiki-links t)
+    ;; When non-nil, GFM task list items with [X] instead of [x].  Useful for
+    ;; compatibility with org-mode, which doesn't appear to recognize the
+    ;; lowercase variant.
+    (markdown-gfm-uppercase-checkbox t)
+    ;; When non-nil, enable highlighting syntax like Obsidian, Quilt.
+    (markdown-enable-highlighting-syntax t)
+    ;; When non-nil, fontify the whole line for headings.
+    (markdown-fontify-whole-heading-line t)
     :config
     ;; Use this many spaces to indent lists.
     ;; NOTE: Should be 4 spaces because Markdown sometimes require 4 spaces to
