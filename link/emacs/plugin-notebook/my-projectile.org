@@ -35,9 +35,7 @@ software development.
     ;; when searching for projects.
     (projectile-project-search-path (list my/workspace-dir my/practice-dir))
     ;; Add top-level folders for Projectile to ignore.
-    (projectile-ignored-projects (list "~/"
-                                       "~/Downloads/"
-                                       "~/Dropbox/"))
+    (projectile-ignored-projects '("~/" "~/Downloads/" "~/Dropbox/"))
     :init
     ;; Enable projectile globally.  It's important to keep this here!!! Do not
     ;; create an after-init-hook for projectile because it doesn't work
