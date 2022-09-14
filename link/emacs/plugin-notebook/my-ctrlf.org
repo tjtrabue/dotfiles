@@ -10,30 +10,29 @@
 itself as a replacement for =isearch=, but it is also trying to evolve into a
 replacement for plugins like Swiper and Helm Swoop.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package ctrlf
-      :after evil-collection
-      :demand t
-      :general
-      (general-def
-        ;; Remap standard Emacs isearch keybinding
-        "C-s" 'ctrlf-forward-default)
-      (general-def 'normal
-        ;; Remap standard Emacs isearch keybinding
-        "C-s" 'ctrlf-forward-default
-        ;; Remap evil-search keys to ctrlf.
-        ;; ctrlf integrates fully with evil-search history,
-        ;; but you must set evil-search-module to 'evil-search
-        "/" 'ctrlf-forward-default
-        "?" 'ctrlf-backward-default)
-      :custom
-      ;; Use fuzzy search and regular expressions by default.
-      (ctrlf-default-search-style 'fuzzy-regexp)
-      :config
-      ;; Enable ctrlf-mode globally
-      (ctrlf-mode 1)
-      ;; We want to use VI-style navigation for search results.
-      (add-to-list 'ctrlf-minibuffer-bindings '("C-j" . ctrlf-forward-default))
-      (add-to-list 'ctrlf-minibuffer-bindings '("C-k" . ctrlf-backward-default)))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package ctrlf
+    :after evil-collection
+    :demand t
+    :general
+    (general-def
+      ;; Remap standard Emacs isearch keybinding
+      "C-s" 'ctrlf-forward-default)
+    (general-def 'normal
+      ;; Remap standard Emacs isearch keybinding
+      "C-s" 'ctrlf-forward-default
+      ;; Remap evil-search keys to ctrlf.
+      ;; ctrlf integrates fully with evil-search history,
+      ;; but you must set evil-search-module to 'evil-search
+      "/" 'ctrlf-forward-default
+      "?" 'ctrlf-backward-default)
+    :custom
+    ;; Use fuzzy search and regular expressions by default.
+    (ctrlf-default-search-style 'fuzzy-regexp)
+    :config
+    ;; Enable ctrlf-mode globally
+    (ctrlf-mode 1)
+    ;; We want to use VI-style navigation for search results.
+    (add-to-list 'ctrlf-minibuffer-bindings '("C-j" . ctrlf-forward-default))
+    (add-to-list 'ctrlf-minibuffer-bindings '("C-k" . ctrlf-backward-default)))
+#+end_src

@@ -50,6 +50,7 @@ link/config/broot/*
 
 # LSP / Visual Studio Code metadata {{{
 .vscode/
+link/lsp/.cache/
 # }}}
 
 # Eclipse {{{

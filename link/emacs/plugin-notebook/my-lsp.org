@@ -129,7 +129,7 @@ documentation on hover, syntax linting and error checking, etc.
     :config
     ;; Directory regexps to ignore when establishing file watches.
     (mapc (lambda (pattern)
-           t (add-to-list 'lsp-file-watch-ignored-directories pattern))
+            (add-to-list 'lsp-file-watch-ignored-directories pattern))
           '("~/" "~/Downloads/"))
     ;; Register extra LSP servers and map them to major modes.
     (my-custom-lsp-add-language-ids)
