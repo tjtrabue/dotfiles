@@ -4,9 +4,9 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
-Adds cool colors to delimiters such as parentheses, braces, brackets, etc.
-in order to highlight their depth relative to one another.  Super handy for
-ELisp and other delimiter-heavy languages.
+=rainbow-delimiters-mode= adds cool colors to delimiters such as parentheses,
+braces, brackets, etc.  in order to highlight their depth relative to one
+another.  Super handy for Lisp and other delimiter-heavy languages.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
