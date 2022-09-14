@@ -31,15 +31,24 @@ software development.
     (projectile-enable-caching nil)
     ;; Figure out completion system to use automatically.
     (projectile-completion-system 'auto)
-    ;; Lis of directory paths (and optional depths) that projectile should use
+    ;; List of directory paths (and optional depths) that projectile should use
     ;; when searching for projects.
-    (projectile-project-search-path `(,my/workspace-dir ,my/practice-dir))
+    (projectile-project-search-path (list my/workspace-dir my/practice-dir))
+    ;; Add top-level folders for Projectile to ignore.
+    (projectile-ignored-projects (list "~/"
+                                       "~/Downloads/"
+                                       "~/Dropbox/"))
     :init
     ;; Enable projectile globally.  It's important to keep this here!!! Do not
     ;; create an after-init-hook for projectile because it doesn't work
     ;; fully. You'll experience weird errors if you do this.
-    (projectile-global-mode +1)
+    (projectile-global-mode 1)
     :config
-    ;; Add extra ignored directories here.
-    (add-to-list 'projectile-globally-ignored-directories my/straight-home-dir))
+    ;; Add folder paths to ignore within a project.
+    ;; These are different from the `projectile-ignored-projects' folders, which
+    ;; are a list of top-level project folders to ignore. These are subfolders
+    ;; to ignore within a Projectile project.
+    (mapc  (lambda (pattern)
+             (add-to-list 'projectile-globally-ignored-directories pattern))
+           (list my/straight-repos-dir)))
 #+end_src

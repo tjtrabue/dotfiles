@@ -127,6 +127,10 @@ documentation on hover, syntax linting and error checking, etc.
     ;; Set up DAP mode hooks.
     (my-custom-lsp-add-dap-mode-tool-hooks)
     :config
+    ;; Directory regexps to ignore when establishing file watches.
+    (mapc (lambda (pattern)
+           t (add-to-list 'lsp-file-watch-ignored-directories pattern))
+          '("~/" "~/Downloads/"))
     ;; Register extra LSP servers and map them to major modes.
     (my-custom-lsp-add-language-ids)
     (my-custom-lsp-register-lsp-servers))
