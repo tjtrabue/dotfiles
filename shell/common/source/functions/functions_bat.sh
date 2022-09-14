@@ -28,10 +28,9 @@ install_bat_extras() {
   local batExtrasUrl="https://github.com/eth-p/bat-extras.git"
   local batExtrasDest="${WS:-${HOME}/workspace}"
   local batExtrasDir="${batExtrasDest}/bat-extras"
-  local batExtrasBinDest="${HOME}/.local/bin"
-  local script
+  local batExtrasPrefix="${HOME}/.local"
 
-  mkdir -p "${batExtrasDest}" "${batExtrasBinDest}"
+  mkdir -p "${batExtrasDest}"
 
   if [ ! -d "${batExtrasDir}" ]; then
     log_info "Cloning bat extras..."
@@ -40,12 +39,11 @@ install_bat_extras() {
     git -C "${batExtrasDir}" pull
   fi
 
-  log_info "Installing bat-extras scripts to: ${batExtrasBinDest}/"
-  for script in "${batExtrasDir}/src"/*.sh; do
-    # Remove the ".sh" extension from the bat scripts as we install them.
-    install -m 755 -T "${script}" \
-      "${batExtrasBinDest}"/$(basename -s '.sh' "${script}")
-  done
+  log_info "Installing bat-extras to: ${BLUE}${batExtrasPrefix}${NC}"
+  (
+    cd "${batExtrasDir}" || return 1
+    ./build.sh --install --prefix="${batExtrasPrefix}"
+  )
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=1:foldnestmax=1
