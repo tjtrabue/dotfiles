@@ -32,6 +32,10 @@ and more.
       "<<" 'markdown-promote
       ">>" 'markdown-demote
       "g l" 'markdown-follow-link-at-point)
+    (general-def 'insert markdown-mode-map
+      ;; Use Tab to cycle markdown table rows/columns.
+      "TAB"   'markdown-cycle
+      "<tab>" 'markdown-cycle)
     :custom
     ;; When non-nil, font lock inline LaTeX math expressions.
     ;; Toggle this option with `C-c C-x C-e'.
