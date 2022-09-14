@@ -14,13 +14,18 @@ ELisp and other delimiter-heavy languages.
     ;; Add mode hooks for rainbow-delimiters-mode
     ;; NOTE: Do NOT use prog-mode!
     ((c-mode
+      c-mode-common
       c++-mode
       clojure-mode
+      elixir-mode
       emacs-lisp-mode
       haskell-mode
       java-mode
       json-mode
+      kotlin-mode
       lisp-mode
-      sh-mode)
+      ruby-mode
+      sh-mode
+      swift-mode)
      . rainbow-delimiters-mode))
 #+end_src
