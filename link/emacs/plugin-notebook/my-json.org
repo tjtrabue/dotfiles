@@ -11,3 +11,10 @@ Plugins for editing and interacting with JSON files.
 #+begin_src emacs-lisp
   (use-package json-mode)
 #+end_src
+
+* json-reformat
+An auto-formatting tool for JSON that works with =json-mode=.
+
+#+begin_src emacs-lisp
+  (use-package json-reformat)
+#+end_src

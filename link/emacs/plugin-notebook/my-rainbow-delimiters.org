@@ -12,11 +12,15 @@ ELisp and other delimiter-heavy languages.
   (use-package rainbow-delimiters
     :hook
     ;; Add mode hooks for rainbow-delimiters-mode
-    ;; NOTE: Do NOT use prog-mode)!
-    ((clojure-mode
+    ;; NOTE: Do NOT use prog-mode!
+    ((c-mode
+      c++-mode
+      clojure-mode
       emacs-lisp-mode
       haskell-mode
+      java-mode
+      json-mode
       lisp-mode
       sh-mode)
-      . rainbow-delimiters-mode))
+     . rainbow-delimiters-mode))
 #+end_src
