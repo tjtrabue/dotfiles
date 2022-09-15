@@ -140,6 +140,10 @@ file in your project's root directory with the following content:
       "=" 'cider-format-buffer
       "<" 'cider-eval-last-sexp
       ">" 'cider-eval-last-sexp-and-replace)
+    (my/user-leader-def cider-mode-map
+      ;; For some reason `cider-jack-in' doesn't have a default binding.
+      ;; I like `C-c C-j'.
+      "C-j" 'cider-jack-in)
     (general-def 'normal cider-mode-map
       "gs" 'cider-find-var
       "gi" 'cider-find-resource
