@@ -158,6 +158,12 @@ A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
     "Open the current impatient-mode buffer preview in a browser."
     (interactive)
     (let ((impatient-base-url "http://localhost:8080/imp/live/"))
+      ;; Make sure simple-httpd server has started
+      (when (not (httpd-running-p))
+        (httpd-start))
+      ;; Make sure impatient-mode is active for the current buffer
+      (when (not (bound-and-true-p impatient-mode))
+        (impatient-mode 1))
       (browse-url (concat impatient-base-url
                           (file-name-nondirectory (buffer-file-name))
                           "/"))))
