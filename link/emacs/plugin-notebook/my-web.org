@@ -5,138 +5,175 @@
 #+STARTUP: fold
 
 * htmlize
-  =htmlize.el= converts a buffer's text and decorations to HTML.
+=htmlize.el= converts a buffer's text and decorations to HTML.
 
-  #+begin_src emacs-lisp
-    (use-package htmlize)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
 
 * web-mode
-  =web-mode= is the godfather of all website code editing modes in Emacs.
-  It is mainly for editing web templates, such as =.jsp= or =.php= files.
-  I recommend using =web-mode= instead of =html-mode= or =mhtml-mode=.
-  There is a bug in =mhtml-mode= where typing a comment causes Emacs to hang.
+=web-mode= is the godfather of all website code editing modes in Emacs.  It is
+mainly for editing web templates, such as =.jsp= or =.php= files.  I recommend
+using =web-mode= instead of =html-mode= or =mhtml-mode=.  There is a bug in
+=mhtml-mode= where typing a comment causes Emacs to hang.
 
-  #+begin_src emacs-lisp
-    (use-package web-mode
-      :mode
-      ;; Automatically start files with the following file extensions in web-mode
-      ;; HTML
-      (("\\.html?\\'" . web-mode)
-       ;; PHP template files (virtually the same thing as .php files)
-       ("\\.phtml\\'" . web-mode)
-       ;; Other PHP template files
-       ("\\.tpl\\.php\\'" . web-mode)
-       ;; ASP.NET, Grails, JSP template files
-       ("\\.[agj]sp\\'" . web-mode)
-       ;; More ASP.NET template files
-       ("\\.as[cp]x\\'" . web-mode)
-       ;; Ruby Script template
-       ("\\.erb\\'" . web-mode)
-       ;; Mustache templating system
-       ("\\.mustache\\'" . web-mode)
-       ;; Django template
-       ("\\.djhtml\\'" . web-mode)
-       ;; Embedded Elixir template.
-       ("\.html\\.eex\\'" . web-mode)))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :mode
+    ;; Automatically start files with the following file extensions in web-mode
+    ;; HTML
+    (("\\.html?\\'" . web-mode)
+     ;; PHP template files (virtually the same thing as .php files)
+     ("\\.phtml\\'" . web-mode)
+     ;; Other PHP template files
+     ("\\.tpl\\.php\\'" . web-mode)
+     ;; ASP.NET, Grails, JSP template files
+     ("\\.[agj]sp\\'" . web-mode)
+     ;; More ASP.NET template files
+     ("\\.as[cp]x\\'" . web-mode)
+     ;; Ruby Script template
+     ("\\.erb\\'" . web-mode)
+     ;; Mustache templating system
+     ("\\.mustache\\'" . web-mode)
+     ;; Django template
+     ("\\.djhtml\\'" . web-mode)
+     ;; Embedded Elixir template.
+     ("\.html\\.eex\\'" . web-mode)))
+#+end_src
 
 * emmet-mode
-  This is Emacs' Emmet package.
-  The default expand key for emmet snippets is =C-j=.
+This is Emacs' Emmet package.  The default expand key for Emmet snippets is
+=C-j=.
 
-  #+begin_src emacs-lisp
-    (use-package emmet-mode
-      :hook
-      ;; Auto start Emmet in certain modes, such as any markup language or CSS
-      ((css-mode sgml-mode web-mode) . emmet-mode)
-      :config
-      ;; Emmet mode hooks
-      (add-hook 'emmet-mode-hook (lambda ()
-                                     ;; Move the cursor between the first empty
-                                     ;; quotes after expanding
-                                     (setq emmet-move-cursor-between-quotes t))))
+#+begin_src emacs-lisp
+  (use-package emmet-mode
+    :hook
+    ;; Auto start Emmet in certain modes, such as any markup language or CSS
+    ((css-mode sgml-mode web-mode) . emmet-mode)
+    :config
+    ;; Emmet mode hooks
+    (add-hook 'emmet-mode-hook (lambda ()
+                                 ;; Move the cursor between the first empty
+                                 ;; quotes after expanding
+                                 (setq emmet-move-cursor-between-quotes t))))
 
-  #+end_src
+#+end_src
 
 * restclient
-  Awesome REST client for Emacs!
-  #+begin_src emacs-lisp
-    (use-package restclient)
-  #+end_src
+Awesome REST client for Emacs!
+
+#+begin_src emacs-lisp
+  (use-package restclient)
+#+end_src
 
 * verb
-  Verb is a package for Emacs which allows you to organize and send HTTP
-  requests. More than that, it helps you create full blown REST APIs similar to
-  Swagger/OpenAPI for Java, only Verb operates on Org mode files instead of code
-  comments. Verb includes:
+Verb is a package for Emacs which allows you to organize and send HTTP
+requests. More than that, it helps you create full blown REST APIs similar to
+Swagger/OpenAPI for Java, only Verb operates on Org mode files instead of code
+comments. Verb includes:
 
-  - Multiple HTTP calls per files, each specified in its own Org mode heading,
-  - A templating system for URLs based on Emacs Lisp,
-  - Hierarchical organization of requests, which allows for more templating,
-  - Easy system for specifying request headers and request body,
-  - Interactive system for examining response headers,
-  - Ability to resend old requests,
-  - Much more.
+- Multiple HTTP calls per files, each specified in its own Org mode heading,
+- A templating system for URLs based on Emacs Lisp,
+- Hierarchical organization of requests, which allows for more templating,
+- Easy system for specifying request headers and request body,
+- Interactive system for examining response headers,
+- Ability to resend old requests,
+- Much more.
 
 ** Notes
-   The package introduces a new minor mode, Verb mode, which works as an
-   extension to =org-mode=. The core idea is to organize specifications for HTTP
-   requests using Org's tree structure. Properties defined in the child headings
-   extend or sometimes override properties defined in the parent headings - this
-   way, it is easy to define many HTTP request specifications without having to
-   repeat common components as URL hosts, authentication headers, ports,
-   etc. Verb tries to combine the usefulness of Org mode with the common
-   functionality provided by other HTTP clients. However, very little knowledge
-   of Org mode is needed to use Verb.
+The package introduces a new minor mode, Verb mode, which works as an
+extension to =org-mode=. The core idea is to organize specifications for HTTP
+requests using Org's tree structure. Properties defined in the child headings
+extend or sometimes override properties defined in the parent headings - this
+way, it is easy to define many HTTP request specifications without having to
+repeat common components as URL hosts, authentication headers, ports,
+etc. Verb tries to combine the usefulness of Org mode with the common
+functionality provided by other HTTP clients. However, very little knowledge
+of Org mode is needed to use Verb.
 
-   Verb requires at least Emacs version 25 to work.
+Verb requires at least Emacs version 25 to work.
 
 ** =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package verb
-      :after org
-      :hook
-      (org-mode . (lambda ()
-                    (define-key org-mode-map (kbd "C-c C-v") verb-command-map)))
-      :custom
-      ;; Automatically kill old response buffers when new responses arrive.
-      (verb-auto-kill-response-buffers t))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package verb
+    :after org
+    :hook
+    (org-mode . (lambda ()
+                  (define-key org-mode-map (kbd "C-c C-v") verb-command-map)))
+    :custom
+    ;; Automatically kill old response buffers when new responses arrive.
+    (verb-auto-kill-response-buffers t))
+#+end_src
 
 * ob-restclient
-  Extension for =restclient.el= for org-babel support.
-  With this, you can press =C-c C-c= in a restclient source block
-  to execute a REST query:
+Extension for =restclient.el= for org-babel support.  With this, you can press
+=C-c C-c= in a restclient source block to execute a REST query:
 
-  #+BEGIN_SRC restclient
-    GET http://example.com
-  #+END_SRC
+#+begin_src restclient :tangle no
+  GET http://example.com
+#+end_src
 
-  #+RESULTS:
-  #+BEGIN_SRC html
-    <!doctype html>
-    <html>
-      <head>
-        ...
-      </head>
-    </html>
-  #+END_SRC
+#+RESULTS:
+#+begin_src html :tangle no
+  <!doctype html>
+  <html>
+    <head>
+      ...
+    </head>
+  </html>
+#+end_src
 
-  #+begin_src emacs-lisp
-    (use-package ob-restclient
-      :config
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '((restclient . t))))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package ob-restclient
+    :config
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((restclient . t))))
+#+end_src
 
 * skewer-mode
-  Provides a live development environemnt for JavaScript, CSS, and HTML from
-  within Emacs.
+Provides a live development environment for JavaScript, CSS, and HTML from
+within Emacs.
 
-  #+begin_src emacs-lisp
-    (use-package skewer-mode
-      :config
-      (skewer-setup))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package skewer-mode
+    :config
+    (skewer-setup))
+#+end_src
+
+* impatient-mode
+A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
+=htmlize=.
+
+** Usage
+- Open an HTML file in Emacs,
+- Run =M-x httpd-start= to enable the web server provided by =simple-httpd=,
+- Publish the HTML buffer by enabling the minor mode =impatient-mode=,
+- In a browser, navigate to https://localhost:8080/imp/ and select a published
+  buffer.
+
+** Functions
+#+begin_src emacs-lisp
+  (defun my/browse-impatient-url-of-buffer ()
+    "Open the current impatient-mode buffer preview in a browser."
+    (interactive)
+    (let ((impatient-base-url "http://localhost:8080/imp/live/"))
+      (browse-url (concat impatient-base-url
+                          (file-name-nondirectory (buffer-file-name))
+                          "/"))))
+#+end_src
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package impatient-mode
+    :after htmlize
+    :hook
+    ((html-mode
+      mhtml-mode
+      web-mode) . (lambda ()
+      (httpd-start)
+      (impatient-mode 1)))
+    :general
+    (my/user-leader-def impatient-mode-map
+      "C-o" 'my/browse-impatient-url-of-buffer))
+#+end_src
