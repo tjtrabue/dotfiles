@@ -20,62 +20,62 @@ keymap.
 
 * Hydras
 ** hydra-zoom
-   This is a simple, nearly trivial hydra used as an example and starting point
-   for creating more complex specimens. All that =hydra-zoom= accomplishes is
-   defining a zoom in/out hydra for the global keymap.
+This is a simple, nearly trivial hydra used as an example and starting point for
+creating more complex specimens. All that =hydra-zoom= accomplishes is defining
+a zoom in/out hydra for the global keymap.
 
-   #+begin_src emacs-lisp
-     (defun my/define-hydra-zoom ()
-       "Wrapper function for defhydra hydra-zoom"
+#+begin_src emacs-lisp
+  (defun my/define-hydra-zoom ()
+    "Wrapper function for defhydra hydra-zoom"
 
-       (defhydra hydra-zoom (global-map "C-*")
-         "Zoom in/out in the current window:"
-         ("k" text-scale-increase "in")
-         ("j" text-scale-decrease "out")))
-   #+end_src
+    (defhydra hydra-zoom (global-map "C-*")
+      "Zoom in/out in the current window:"
+      ("k" text-scale-increase "in")
+      ("j" text-scale-decrease "out")))
+#+end_src
 
 ** hydra-resize-window
-   This hydra resizes the current window using VI keys.
+This hydra resizes the current window using VI keys.
 
-   #+begin_src emacs-lisp
-     (defun my/define-hydra-resize-window ()
-       "Wrapper function for defhydra hydra-resize-window."
-       (defhydra hydra-resize-window (evil-normal-state-map "C-]")
-         "Resize window with VI keys"
-         ("h" shrink-window-horizontally "shrink horizontally")
-         ("j" shrink-window "shrink vertically")
-         ("k" enlarge-window "enlarge vertically")
-         ("l" enlarge-window-horizontally "enlarge horizontally")))
-   #+end_src
+#+begin_src emacs-lisp
+  (defun my/define-hydra-resize-window ()
+    "Wrapper function for defhydra hydra-resize-window."
+    (defhydra hydra-resize-window (global-map "C-]")
+      "Resize window with VI keys"
+      ("h" shrink-window-horizontally "shrink horizontally")
+      ("j" shrink-window "shrink vertically")
+      ("k" enlarge-window "enlarge vertically")
+      ("l" enlarge-window-horizontally "enlarge horizontally")))
+#+end_src
 
 ** hydra-expand-region
-   This hydra expands and contracts the active region by semantic units using
-   the =expand-region= plugin.
+This hydra expands and contracts the active region by semantic units using the
+=expand-region= plugin.
 
-   #+begin_src emacs-lisp
-     (defun my/define-hydra-expand-region ()
-       "Wrapper function for defhydra hydra-expand-region."
-       (defhydra hydra-expand-region (evil-normal-state-map "C-=")
-         "Expand/contract visual region."
-         ("=" er/expand-region "Expand region")
-         ("-" er/contract-region "Contract region")))
-   #+end_src
+#+begin_src emacs-lisp
+  (defun my/define-hydra-expand-region ()
+    "Wrapper function for defhydra hydra-expand-region."
+    (defhydra hydra-expand-region (global-map "C-=")
+      "Expand/contract visual region."
+      ("=" er/expand-region "Expand region")
+      ("-" er/contract-region "Contract region")))
+#+end_src
 
 * Activate hydras
-  #+begin_src emacs-lisp
-    (defun my/define-hydras ()
-      "Load custom hydra definitions."
-      (interactive)
-      (my/define-hydra-zoom)
-      (my/define-hydra-resize-window)
-      (my/define-hydra-expand-region))
-  #+end_src
+#+begin_src emacs-lisp
+  (defun my/define-hydras ()
+    "Load custom hydra definitions."
+    (interactive)
+    (my/define-hydra-zoom)
+    (my/define-hydra-resize-window)
+    (my/define-hydra-expand-region))
+#+end_src
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package hydra
-      :after evil-collection
-      :demand t
-      :config
-      (my/define-hydras))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package hydra
+    :after evil-collection
+    :demand t
+    :config
+    (my/define-hydras))
+#+end_src

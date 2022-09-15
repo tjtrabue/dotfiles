@@ -37,6 +37,7 @@ expo-cli
 graphql-language-service-server
 indium
 intelephense
+jsonlint
 localtunnel
 lua-fmt
 markdownlint
