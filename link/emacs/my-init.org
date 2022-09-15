@@ -590,6 +590,9 @@ Custom key bindings.
 Key bindings available in any major mode.
 
 #+begin_src emacs-lisp
+  ;; Indent according to major mode after pressing Enter.
+  (global-set-key (kbd "RET") #'newline-and-indent)
+
   ;; Find file at point ("g f" in evil-mode)
   ;; (global-set-key (kbd "C-c f p") #'ffap)
 
