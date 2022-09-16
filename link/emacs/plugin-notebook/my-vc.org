@@ -39,11 +39,15 @@ porcelain exists in Magit.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  ;; I've configured most keybindings for Magit in `my-evil.el' under
-  ;; evil-leader's config section.
   (use-package magit
-    :after evil-collection
+    :hook
+    ;; Automatically refresh the magit-status buffer whenever we save a buffer to
+    ;; a file in the active repository.
+    (after-save . magit-after-save-refresh-status)
     :general
+    (general-def
+      ;; Global binding for summoning the Magit transient popup for reading keys.
+      "C-x M-g" 'magit-dispatch)
     (general-def '(normal emacs) magit-status-mode-map
       ;; This helps get rid of Magit buffers as we dismiss the *magit-status*
       ;; buffer, which keeps our buffer list clean.
@@ -62,6 +66,10 @@ porcelain exists in Magit.
       "gr" 'magit-rebase
       "gs" 'magit-stage-modified)
     :custom
+    ;; If non-nil and either `global-auto-revert-mode' or `magit-auto-revert-mode'
+    ;; is active, Magit immediately reverts buffers by explicitely calling
+    ;; `auto-revert-buffers' after running Git for side-effects.
+    (magit-auto-revert-immediately t)
     ;; List of symbols for actions that Magit should not confirm, or t.
     (magit-no-confirm '(stage-all-changes unstage-all-changes)))
 #+end_src
