@@ -28,7 +28,7 @@ a zoom in/out hydra for the global keymap.
   (defun my/define-hydra-zoom ()
     "Wrapper function for defhydra hydra-zoom"
 
-    (defhydra hydra-zoom (global-map "C-*")
+    (defhydra hydra-zoom (global-map "C-/")
       "Zoom in/out in the current window:"
       ("k" text-scale-increase "in")
       ("j" text-scale-decrease "out")))
