@@ -141,6 +141,19 @@ within Emacs.
     (skewer-setup))
 #+end_src
 
+* simple-httpd
+A small HTTP server abstraction for Emacs.
+
+#+begin_src emacs-lisp
+  (use-package simple-httpd
+    :custom
+    ;; Sets the host for the web server
+    ;; nil    -> 0.0.0.0
+    ;; local  -> localhost
+    ;; <else> -> string hostname
+    (httpd-host 'local))
+#+end_src
+
 * impatient-mode
 A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
 =htmlize=.
@@ -157,14 +170,23 @@ A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
   (defun my/browse-impatient-url-of-buffer ()
     "Open the current impatient-mode buffer preview in a browser."
     (interactive)
-    (let ((impatient-base-url "http://localhost:8080/imp/live/"))
+    (let ((impatient-host (cl-case httpd-host
+                            ((nil) "0.0.0.0")
+                            ((local) "localhost")
+                            (otherwise httpd-host)))
+          (impatient-port (number-to-string httpd-port))
+          (impatient-live-resource "/imp/live/"))
       ;; Make sure simple-httpd server has started
       (when (not (httpd-running-p))
         (httpd-start))
       ;; Make sure impatient-mode is active for the current buffer
       (when (not (bound-and-true-p impatient-mode))
         (impatient-mode 1))
-      (browse-url (concat impatient-base-url
+      (browse-url (concat "http://"
+                          impatient-host
+                          ":"
+                          impatient-port
+                          impatient-live-resource
                           (file-name-nondirectory (buffer-file-name))
                           "/"))))
 #+end_src
@@ -172,7 +194,6 @@ A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package impatient-mode
-    :after htmlize
     :hook
     ((html-mode
       mhtml-mode
