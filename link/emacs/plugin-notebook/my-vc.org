@@ -71,7 +71,12 @@ porcelain exists in Magit.
     ;; `auto-revert-buffers' after running Git for side-effects.
     (magit-auto-revert-immediately t)
     ;; List of symbols for actions that Magit should not confirm, or t.
-    (magit-no-confirm '(stage-all-changes unstage-all-changes)))
+    (magit-no-confirm '(stage-all-changes
+                        unstage-all-changes
+                        resurrect
+                        untrack
+                        rename
+                        set-and-push)))
 #+end_src
 
 * magit-todos
