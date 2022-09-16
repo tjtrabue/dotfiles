@@ -48,5 +48,5 @@ software development.
     ;; to ignore within a Projectile project.
     (mapc  (lambda (pattern)
              (add-to-list 'projectile-globally-ignored-directories pattern))
-           (list my/straight-repos-dir)))
+           (list (concat my/straight-repos-dir ".*"))))
 #+end_src
