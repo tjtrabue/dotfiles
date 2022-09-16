@@ -40,10 +40,6 @@ porcelain exists in Magit.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package magit
-    :hook
-    ;; Automatically refresh the magit-status buffer whenever we save a buffer to
-    ;; a file in the active repository.
-    (after-save . magit-after-save-refresh-status)
     :general
     (general-def
       ;; Global binding for summoning the Magit transient popup for reading keys.
@@ -69,7 +65,8 @@ porcelain exists in Magit.
     ;; If non-nil and either `global-auto-revert-mode' or `magit-auto-revert-mode'
     ;; is active, Magit immediately reverts buffers by explicitely calling
     ;; `auto-revert-buffers' after running Git for side-effects.
-    (magit-auto-revert-immediately t)
+    ;; NOTE: Can slow down performance when editing files with magit-status open.
+    (magit-auto-revert-immediately nil)
     ;; List of symbols for actions that Magit should not confirm, or t.
     (magit-no-confirm '(stage-all-changes
                         unstage-all-changes
