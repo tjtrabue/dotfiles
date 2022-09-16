@@ -45,6 +45,9 @@ This is where I define new variables needed throughout my configuration.
     (defvar my/elisp-lib-dir (file-truename
                               (concat user-emacs-directory "/require"))
       "Directory for custom Emacs Lisp library files.")
+    (defvar my/private-elisp-dir (file-truename
+                                  (concat user-emacs-directory "/private"))
+      "Directory containing private config for my local environment.")
     (defvar my/local-repos-dir (file-truename
                                 (concat user-emacs-directory "/local-repos"))
       "Directory for local `straight' repos.")
@@ -867,6 +870,23 @@ These hooks run after Emacs saves a file.
             (lambda ()
               ;; Update any GTAGS files if necessary.
               (my-gtags-update-hook-fn)))
+#+end_src
+
+* Load Private Configuration
+There are times when we need to write environment-specific configuration
+containing sensitive information, such as usernames and passwords. My solution
+is to create an untracked directory =~/.emacs.d/private/= containing all of the
+Emacs configuration I want to keep private to my current machine, and load that
+configuration here if it is present.
+
+#+begin_src emacs-lisp
+  (when (file-directory-p my/private-elisp-dir)
+    (my/apply-to-dir-files my/private-elisp-dir "\\.el$"
+                           (lambda (f &rest args)
+                             "Make use of `load''s extensionless file loading
+    feature for Elisp files. This means `load' will first look for an .elc file,
+    then for a .el file in lieu of that."
+                             (load (file-name-sans-extension f) args))))
 #+end_src
 
 * Package Manager
