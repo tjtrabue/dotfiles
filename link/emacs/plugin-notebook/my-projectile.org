@@ -25,6 +25,9 @@ software development.
     (general-def 'normal 'override
       ;; Use C-p to search for files in project
       "C-p" 'projectile-find-file)
+    (general-def projectile-command-map
+      ;; Handy for refreshing Projectile's list of known projects.
+      "n" 'projectile-discover-projects-in-search-path)
     :custom
     ;; Whether to cache files to improve performance. If you cache files,
     ;; Projectile may not find newly added project files until you restart Emacs.
