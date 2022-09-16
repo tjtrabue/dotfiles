@@ -2,8 +2,10 @@
 
 # batdiff aliases:
 if [ -x "$(command -v batdiff)" ]; then
-  # Always use the delta command to view diffs.
-  alias batdiff="batdiff --delta"
+  if [ -x "$(command -v delta)" ]; then
+    # Use the delta command to view diffs when available.
+    alias batdiff="batdiff --delta"
+  fi
 fi
 
 # vim:foldenable:foldmethod=marker:foldlevel=0
