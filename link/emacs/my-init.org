@@ -1040,7 +1040,7 @@ and hooks in a way that defers loading the package.
       ;; Toggle relative/absolute line numbers.
       "N"  (lambda ()
              (interactive)
-             (if (eq my/line-number-state 'absolute)
+             (if (eq display-line-numbers t)
                  (progn
                    (setq my/line-number-state 'relative
                          display-line-numbers 'relative
