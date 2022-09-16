@@ -1040,12 +1040,14 @@ and hooks in a way that defers loading the package.
       ;; Toggle relative/absolute line numbers.
       "N"  (lambda ()
              (interactive)
-             (if (eq display-line-numbers t)
+             (if (eq my/line-number-state 'absolute)
                  (progn
                    (setq my/line-number-state 'relative
-                         display-line-numbers 'relative))
+                         display-line-numbers 'relative
+                         display-line-numbers-type 'relative))
                (setq my/line-number-state 'absolute
-                     display-line-numbers t)))))
+                     display-line-numbers t
+                     display-line-numbers-type t)))))
 #+end_src
 
 * Load External Configuration Files
