@@ -201,16 +201,15 @@ by an arbitrary succession of additional key strokes to call a predefined
 function. It's similar in nature to Emacs' =key-chord= plugin.
 
 *** Prefer =general.el= to =evil-leader=
-*NOTE:* =general= provides a better method for defining Emacs keybindings in
-general (no pun intended), including leader-like keybindings. Not only this,
-but =evil-leader= is, unfortunately, quite badly documented. =general=, on
-the other hand, is one of the best documented Emacs plugins I've ever
-seen. For these reasons, I recommend using =general= and foregoing
-=evil-leader= altogether.
+=general= provides a better method for defining Emacs keybindings in general (no
+pun intended), including leader-like keybindings. Not only this, but
+=evil-leader= is badly documented. =general=, on the other hand, is one of the
+best documented Emacs plugins I've ever seen. For these reasons, I recommend
+using =general= and foregoing =evil-leader= altogether.
 
 #+begin_src emacs-lisp
   (use-package evil-leader
-    ;; Disabled in favor of general.
+    ;; Disabled in favor of general.el
     :disabled
     :demand t
     :init
@@ -267,7 +266,7 @@ seen. For these reasons, I recommend using =general= and foregoing
 #+end_src
 
 ** evil-collection
-Used to provide default Vim keybindings for all standard Emacs modes.
+Provides default Vim keybindings for all standard Emacs modes.
 
 #+begin_src emacs-lisp
   (use-package evil-collection
