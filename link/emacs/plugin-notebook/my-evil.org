@@ -285,8 +285,10 @@ Used to provide default Vim keybindings for all standard Emacs modes.
       ;; We never need to insert digraphs!
       "C-k")
     :custom
-    ;; Whether or not to use Vim keys in the minibuffer.
+    ;; Whether to use Vim keys in the minibuffer.
     (evil-collection-setup-minibuffer t)
+    ;; Whether to set up Org functions in calendar keymap.
+    (evil-collection-calendar-want-org-bindings t)
     :config
     (evil-collection-init))
 #+end_src
