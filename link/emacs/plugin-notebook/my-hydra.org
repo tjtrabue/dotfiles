@@ -28,6 +28,7 @@ a zoom in/out hydra for the global keymap.
   (defun my/define-hydra-zoom ()
     "Wrapper function for defhydra hydra-zoom"
 
+    ;; NOTE: This overrides the default `undo' keybinding.
     (defhydra hydra-zoom (global-map "C-/")
       "Zoom in/out in the current window:"
       ("k" text-scale-increase "in")
