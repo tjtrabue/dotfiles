@@ -271,8 +271,6 @@ Used to provide default Vim keybindings for all standard Emacs modes.
 
 #+begin_src emacs-lisp
   (use-package evil-collection
-    :after evil
-    :demand t
     :general
     (general-unbind
       ;; We do not need to kill a line with C-k anymore since we're using
@@ -287,7 +285,7 @@ Used to provide default Vim keybindings for all standard Emacs modes.
     :custom
     ;; Whether or not to use Vim keys in the minibuffer.
     (evil-collection-setup-minibuffer t)
-    :config
+    :init
     (evil-collection-init))
 #+end_src
 
