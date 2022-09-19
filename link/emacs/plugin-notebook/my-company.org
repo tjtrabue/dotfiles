@@ -348,3 +348,13 @@ Elixir-related major modes that are not covered by =lsp-mode=, such as
     ;; The major mode used to kick off company-elixir
     (company-elixir-major-mode #'inf-elixir-mode))
 #+end_src
+
+** company-restclient
+Company completion backend for =restclient-mode= using the =know-your-http-well=
+Emacs Lisp library.
+
+#+begin_src emacs-lisp
+  (use-package company-restclient
+    :init
+    (my/add-company-backends-for-mode 'restclient-mode '(company-restclient)))
+#+end_src
