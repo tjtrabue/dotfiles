@@ -808,8 +808,8 @@ These commands run whenever Emacs finds a file of any programming language.
   (add-hook 'prog-mode-hook (lambda ()
                               ;; Make hyperlinks clickable.
                               (goto-address-mode 1)
-                              ;; Turn various keywords into pretty programming symbols,
-                              ;; such as "lambda" -> "λ" in lisp-mode.
+                              ;; Turn various keywords into pretty programming
+                              ;; symbols, such as "lambda" -> "λ" in lisp-mode.
                               (prettify-symbols-mode 1)
                               ;; Show invisible characters.
                               (whitespace-mode 1)))

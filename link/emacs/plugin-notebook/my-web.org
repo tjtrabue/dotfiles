@@ -63,7 +63,9 @@ This is Emacs' Emmet package.  The default expand key for Emmet snippets is
 Awesome REST client for Emacs!
 
 #+begin_src emacs-lisp
-  (use-package restclient)
+  (use-package restclient
+    ;; Treat files with `.restclient' extension as restclient query sheets.
+    :mode ("\\.restclient\\'" . restclient-mode))
 #+end_src
 
 * verb
