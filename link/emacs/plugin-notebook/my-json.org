@@ -5,9 +5,11 @@
 #+tags:
 #+STARTUP: fold
 
-Plugins for editing and interacting with JSON files.
+Plugins for editing and interacting with JSON documents.
 
 * json-mode
+Major mode for editing JSON documents.
+
 #+begin_src emacs-lisp
   (use-package json-mode)
 #+end_src
@@ -21,7 +23,7 @@ whilst editing a JSON file in =json-mode= invokes =json-reformat=.
 #+end_src
 
 * jq-mode
-Major mode for editing =jq= scripts.
+Major mode for editing =jq= scripts. =jq= is a JSON parser for the commandline.
 
 #+begin_src emacs-lisp
   (use-package jq-mode
@@ -29,7 +31,7 @@ Major mode for editing =jq= scripts.
 #+end_src
 
 * jq.el
-Emacs bindings to =jq=.
+Emacs bindings to =jq=. I haven't found much use for this library.
 
 #+begin_src emacs-lisp
   (use-package jq
