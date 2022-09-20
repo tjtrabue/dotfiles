@@ -692,6 +692,24 @@ Custom functions, both standard and interactive.
   (defun my/use-mu4e-p ()
     "Return T if the system is configured for `mu4e'. Return NIL otherwise."
     (and (executable-find "mu") (executable-find "mbsync")))
+
+  (defun my/toggle-line-number-type ()
+    "Toggle absolute/relative line numbers in all open buffers."
+    (interactive)
+    ;; Figure out global line number state for all buffer.
+    (if (eq my/line-number-state 'absolute)
+        (setq my/line-number-state 'relative
+              display-line-numbers-type 'relative)
+      (setq my/line-number-state 'absolute
+            display-line-numbers-type t))
+    ;; Apply new line number type to all open buffers.
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        ;; Only operate on buffers that display line numbers..
+        (when (bound-and-true-p display-line-numbers-mode)
+          (if (eq my/line-number-state 'relative)
+              (setq display-line-numbers 'relative)
+            (setq display-line-numbers t))))))
 #+end_src
 
 * Environment Variables
@@ -1058,21 +1076,7 @@ and hooks in a way that defers loading the package.
       "bj" 'bookmark-jump
       "bs" 'bookmark-set
       ;; Toggle relative/absolute line numbers.
-      "N"  (lambda ()
-             (interactive)
-             ;; Apply line number type change to all open buffers.
-             (dolist (buffer (buffer-list))
-               (with-current-buffer buffer
-                 ;; Only operate on buffers that display line numbers..
-                 (when (bound-and-true-p display-line-numbers-mode)
-                   (if (eq display-line-numbers t)
-                       (progn
-                         (setq my/line-number-state 'relative
-                               display-line-numbers 'relative
-                               display-line-numbers-type 'relative))
-                     (setq my/line-number-state 'absolute
-                           display-line-numbers t
-                           display-line-numbers-type t))))))))
+      "N"  'my/toggle-line-number-type))
 #+end_src
 
 * Load External Configuration Files
