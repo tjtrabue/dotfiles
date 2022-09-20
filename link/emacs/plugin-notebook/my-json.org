@@ -19,3 +19,23 @@ whilst editing a JSON file in =json-mode= invokes =json-reformat=.
 #+begin_src emacs-lisp
   (use-package json-reformat)
 #+end_src
+
+* jq-mode
+Major mode for editing =jq= scripts.
+
+#+begin_src emacs-lisp
+  (use-package jq-mode
+    :mode ("\\.jq\\'" . jq-mode))
+#+end_src
+
+* jq.el
+Emacs bindings to =jq=.
+
+#+begin_src emacs-lisp
+  (use-package jq
+    :straight
+    (jq :type git :host github :repo "p-baleine/jq.el"
+        :pre-build (("cmake" ".")
+                    ("cmake" "--build" "."))
+        :files (:defaults "jq-impl*" "libjq*" "libonig*")))
+#+end_src
