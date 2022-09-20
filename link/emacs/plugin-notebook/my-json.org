@@ -33,6 +33,8 @@ Emacs bindings to =jq=.
 
 #+begin_src emacs-lisp
   (use-package jq
+    ;; Not terribly useful and hard to install.
+    :disabled
     :straight
     (jq :type git :host github :repo "p-baleine/jq.el"
         :pre-build (("cmake" ".")
