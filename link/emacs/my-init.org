@@ -1060,14 +1060,19 @@ and hooks in a way that defers loading the package.
       ;; Toggle relative/absolute line numbers.
       "N"  (lambda ()
              (interactive)
-             (if (eq display-line-numbers t)
-                 (progn
-                   (setq my/line-number-state 'relative
-                         display-line-numbers 'relative
-                         display-line-numbers-type 'relative))
-               (setq my/line-number-state 'absolute
-                     display-line-numbers t
-                     display-line-numbers-type t)))))
+             ;; Apply line number type change to all open buffers.
+             (dolist (buffer (buffer-list))
+               (with-current-buffer buffer
+                 ;; Only operate on buffers that display line numbers..
+                 (when (bound-and-true-p display-line-numbers-mode)
+                   (if (eq display-line-numbers t)
+                       (progn
+                         (setq my/line-number-state 'relative
+                               display-line-numbers 'relative
+                               display-line-numbers-type 'relative))
+                     (setq my/line-number-state 'absolute
+                           display-line-numbers t
+                           display-line-numbers-type t))))))))
 #+end_src
 
 * Load External Configuration Files
