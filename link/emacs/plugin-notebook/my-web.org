@@ -60,8 +60,24 @@ This is Emacs' Emmet package.  The default expand key for Emmet snippets is
 #+end_src
 
 * restclient
-Awesome REST client for Emacs!
+Awesome REST client for Emacs! One of the best plugins for Emacs by far! Check
+out the [[https://github.com/pashky/restclient.el][documentation]] for examples and usage.
 
+** POST with =Content-Type: application/x-www-form-urlencoded=
+=restclient-mode= has problems with POST requests whose bodies are neither
+=text/xml= nor =application/json=. For instance, if you'd like to make a POST
+request with a body type of =application/x-www-form-urlencoded=, you must place
+a comment line immediately following your request body:
+
+#+begin_src restclient :tangle no
+  POST https://example.com/some-resource
+  content-type: application/x-www-form-urlencoded
+
+  key1=value1&key2=value2
+  # MUST end body with a comment to avoid adding extra newlines to payload!
+#+end_src
+
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package restclient
     ;; Treat files with `.restclient' extension as restclient query sheets.
