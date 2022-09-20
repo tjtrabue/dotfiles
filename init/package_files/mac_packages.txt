@@ -1,6 +1,7 @@
 aspell
 awscli
 binutils
+bison
 broot
 buildpacks/tap/pack
 clang-format
@@ -16,6 +17,7 @@ exa
 exiftool
 fd
 findutils
+flex
 fzy
 gawk
 gcc
