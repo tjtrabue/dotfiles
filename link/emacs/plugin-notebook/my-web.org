@@ -91,6 +91,7 @@ a comment line immediately following your request body:
     ;; Treat files with `.restclient' extension as restclient query sheets.
     :mode ("\\.restclient\\'" . restclient-mode)
     :config
+    ;; Needed for parsing JSON responses to piece together variables.
     (require 'restclient-jq))
 #+end_src
 
