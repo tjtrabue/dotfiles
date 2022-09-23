@@ -6,8 +6,8 @@
 
 =LaTeX= plugins and configuration for Emacs.
 
-* auctex
-AucTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
+* AUCTeX
+AUCTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
 integration systems of all time. Its features are too numerous to mention here,
 but I highly recommend you peruse the online documentation, and maybe work
 through a tutorial or two.
