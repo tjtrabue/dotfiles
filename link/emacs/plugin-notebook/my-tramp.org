@@ -89,9 +89,9 @@ process from has a remote =default-directory=.
   #+end_src
 
 * Plugins
-** docker-tramp
-   Offers the TRAMP method =docker= for interacting with running Docker
-   containers.
+** tramp-docker
+   This is an integrated package that offers the TRAMP method =docker= for
+   interacting with running Docker containers.
 
    Use =C-x C-f /docker:user@container:/path/to/file=, where =user= is the user
    you want to use inside of the container (optional), and =container= is the
@@ -101,7 +101,9 @@ process from has a remote =default-directory=.
    =/sudo:root@localhost|docker:user@container:/path/to/file=
 
    #+begin_src emacs-lisp
-     (use-package docker-tramp)
+     (use-package tramp-docker
+       :ensure nil
+       :straight nil)
    #+end_src
 
 ** kubernetes-tramp
