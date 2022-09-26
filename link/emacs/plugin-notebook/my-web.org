@@ -115,7 +115,6 @@ Extension for =restclient.el= for org-babel support.  With this, you can press
 
 #+begin_src emacs-lisp
   (use-package ob-restclient
-    :after restclient
     :config
     (org-babel-do-load-languages
      'org-babel-load-languages
