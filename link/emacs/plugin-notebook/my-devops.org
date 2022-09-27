@@ -7,32 +7,32 @@
 Various dev-ops packages and configuration for Emacs.
 
 * ansible
-  #+begin_src emacs-lisp
-    (use-package ansible)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package ansible)
+#+end_src
 
 * docker
-  #+begin_src emacs-lisp
-    (use-package docker
-      :general
-      (my/user-leader-def
-        "d" 'docker))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package docker
+    :general
+    (my/user-leader-def
+      "d" 'docker))
+#+end_src
 
 * dockerfile-mode
-  Major mode for interacting with Dockerfiles.
+Major mode for interacting with Dockerfiles.
 
-  #+begin_src emacs-lisp
-    (use-package dockerfile-mode
-      :mode "Dockerfile\\'")
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode
+    :mode "Dockerfile\\'")
+#+end_src
 
 * kubernetes
-  A Magit-style interface to the Kubernetes command-line client.
-  There is also a =kubernetes-evil= plugin for evil-mode support.
-  See =my-evil= for its configuration.
+A Magit-style interface to the Kubernetes command-line client.
+There is also a =kubernetes-evil= plugin for evil-mode support.
+See =my-evil= for its configuration.
 
-  #+begin_src emacs-lisp
-    (use-package kubernetes
-      :commands kubernetes-overview)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package kubernetes
+    :commands kubernetes-overview)
+#+end_src
