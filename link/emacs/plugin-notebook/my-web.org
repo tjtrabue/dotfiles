@@ -80,18 +80,19 @@ a comment line immediately following your request body:
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package restclient
-    :straight
-    (restclient :type git
-                :host github
-                :repo "pashky/restclient.el"
-                ;; For some reason, the default recipe for restclient.el does not
-                ;; include the restclient-helm or restclient-jq libs, so we have
-                ;; to override the file list here.
-                :files (:defaults))
     ;; Treat files with `.restclient' extension as restclient query sheets.
-    :mode ("\\.restclient\\'" . restclient-mode)
+    :mode ("\\.restclient\\'" . restclient-mode))
+#+end_src
+
+* restclient-jq
+Provides JSON parsing capabilities for =restclient-mode=. Requires the =jq= CLI
+tool.
+
+#+begin_src emacs-lisp
+  (use-package restclient-jq
+    :after restclient
+    :demand t
     :config
-    ;; Needed for parsing JSON responses to piece together variables.
     (require 'restclient-jq))
 #+end_src
 
