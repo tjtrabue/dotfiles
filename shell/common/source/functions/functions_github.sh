@@ -11,6 +11,7 @@ if [ -x "$(command -v gh)" ]; then
     local title="${*}"
     local projectIdentifier="$(__get_project_identifier)"
     local taskNumber="$(__get_task_number)"
+    local finalTitle
 
     if [ -z "${projectIdentifier}" ]; then
       err "Could not determine project identifier."
@@ -23,7 +24,10 @@ if [ -x "$(command -v gh)" ]; then
       return 3
     fi
 
-    gh pr create --title "${projectIdentifier}-${taskNumber}: ${title}"
+    finalTitle="${projectIdentifier}-${taskNumber}: ${title}"
+
+    log_info "Creating PR with title: ${CYAN}${finalTitle}${NC}"
+    gh pr create --title "${finalTitle}"
   }
 fi
 
