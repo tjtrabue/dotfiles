@@ -83,6 +83,7 @@ __update_pyenv() {
 
 __install_python2_packages() {
   log_info "Installing Python 2.x packages"
+
   if [ -f "${PYTHON2_PACKAGES_FILE}" ]; then
     python2 -m pip install --user --upgrade -r "${PYTHON2_PACKAGES_FILE}"
   else
@@ -93,6 +94,7 @@ __install_python2_packages() {
 
 __install_python3_packages() {
   log_info "Installing Python 3.y packages"
+
   if [ -f "${PYTHON3_PACKAGES_FILE}" ]; then
     python3 -m pip install --user --upgrade -r "${PYTHON3_PACKAGES_FILE}"
   else
@@ -103,14 +105,20 @@ __install_python3_packages() {
 
 __update_python2_packages() {
   log_info "Updating Python 2.x packages"
-  pip2 freeze --local | grep -v '^\-e' |
-    cut -d = -f 1 | xargs -n1 pip2 install --user --upgrade
+
+  pip2 freeze --local |
+    grep -v '^\-e' |
+    cut -d = -f 1 |
+    xargs -n1 pip2 install --user --upgrade
 }
 
 __update_python3_packages() {
   log_info "Updating Python 3 packages"
-  python3 -m pip list --outdated --format=freeze | grep -v '^\-e' |
-    cut -d = -f 1 | xargs -n1 python3 -m pip install --user --upgrade
+
+  python3 -m pip list --outdated --format=freeze |
+    grep -v '^\-e' |
+    cut -d = -f 1 |
+    xargs -n1 python3 -m pip install --user --upgrade
 }
 
 # Return 0 if PIP installed for Python 2.X

@@ -77,9 +77,6 @@ process from has a remote =default-directory=.
    #+end_src
 
 * =use-package= specification
-  TRAMP is built-in to Emacs, but it's nice to work with TRAMP in a
-  =use-package= specification.
-
   #+begin_src emacs-lisp
     (use-package tramp
       :custom
@@ -89,7 +86,7 @@ process from has a remote =default-directory=.
   #+end_src
 
 * Plugins
-** tramp-docker
+** tramp-container
    This is an integrated package that offers the TRAMP method =docker= for
    interacting with running Docker containers.
 
@@ -101,27 +98,15 @@ process from has a remote =default-directory=.
    =/sudo:root@localhost|docker:user@container:/path/to/file=
 
    #+begin_src emacs-lisp
-     (use-package tramp-docker
+     (use-package tramp-container
        :ensure nil
        :straight nil)
-   #+end_src
-
-** kubernetes-tramp
-   =kubernetes-tramp= offers a TRAMP method for Docker containers deployed in a
-   Kubernetes cluster.
-
-   =C-x C-f /kubectl:container:/path/to/file=
-
-   where =container= is the name of the container.
-
-   #+begin_src emacs-lisp
-     (use-package kubernetes-tramp)
    #+end_src
 
 ** vagrant-tramp
    =vagrant-tramp= adds an Emacs TRAMP method for Vagrant boxes. As far as
    Vagrant is concerned, the TRAMP =vagrant= method behaves like the built-in
-   =vagrant ssh= command does. The =vagrant-tramp= method simply provides
+   =vagrant ssh= command. The =vagrant-tramp= method simply provides
    auto-completion and a wrapper around =vagrant ssh= for connecting to boxes.
 
    #+begin_src emacs-lisp
