@@ -26,7 +26,6 @@ ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
 marksman-bin
-neovim-git
 nonicons-font
 numix-circle-icon-theme-git
 optimus-manager
