@@ -1,0 +1,4 @@
+{:text-document-sync-kind :full
+ :linters {:clj-kondo  {:level :on
+                        :report-duplicates true}
+           :clj-depend {:level :on}}}
