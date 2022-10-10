@@ -24,9 +24,6 @@ to a massive decrease in Emacs' performance. I recommend that you disable
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package aggressive-indent
-      ;; Disabled until PR #157 merges: https://github.com/Malabarba/aggressive-indent-mode/pull/157
-      ;; Should be any day now!
-      :disabled
       :hook
       ;; Probably don't want to enable aggressive-indent mode globally.  It's
       ;; helpful, but it doesn't always play nicely with automatic code
