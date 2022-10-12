@@ -30,4 +30,10 @@ bumpmavenpatch() {
   mvn versions:set -DnewVersion="${newVersion}" -DgenerateBackupPoms=false
 }
 
+# Resolve dependencies for a Maven project. You should be in the root directory
+# of your project before running this command.
+mvnresolve() {
+  mvn dependency:resolve
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
