@@ -12,6 +12,8 @@
 alias newb="git checkout -b"
 alias delb="git branch -D"
 alias currb="git rev-parse --abbrev-ref HEAD"
+# Switch last
+alias swl="sw -1"
 # }}}
 
 # Info {{{
