@@ -271,6 +271,7 @@ link/config/QtProject.conf
 link/config/Trolltech.conf
 link/config/Unknown\ Organization/
 link/config/akregatorrc
+link/config/baloofileinformationrc
 link/config/baloofilerc
 link/config/bluedevilglobalrc
 link/config/discoverrc
@@ -299,6 +300,7 @@ link/config/kglobalshortcutsrc
 link/config/khelpcenterrc
 link/config/khotkeysrc
 link/config/khtml
+link/config/kinfocenterrc
 link/config/kmail2rc
 link/config/kmixctrlrc
 link/config/kmixrc

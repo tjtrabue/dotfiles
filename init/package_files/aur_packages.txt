@@ -19,6 +19,7 @@ glow-bin
 icons-in-terminal
 jdtls
 kotlin-language-server-git
+kwin-bismuth-bin
 lazygit-git
 libgccjit
 lightdm-webkit-theme-aether
