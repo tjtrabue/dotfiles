@@ -121,6 +121,24 @@ install_optimus_manager() {
   sudo systemctl enable --now optimus-manager
 }
 
+# This function is my best effort at designing an automated firmware updater
+# for Arch Linux. However, it usually does not work 100% as expected. It will
+# update the firmware, but it will fail to reinstall the bootloader. I don't
+# think there is an automated way of doing this. To rescue your system after
+# updating the firmware, follow these steps (assuming you're using GRUB with a
+# UEFI system):
+#
+#   1. Plug in an Arch Linux live USB as a rescue OS
+#   2. Mount all important filesystems:
+#     i.   /dev/<your_device>3 /mnt
+#     ii.  /dev/<your_device>1 /mnt/efi
+#     iii. /dev/<your_device>4 /mnt/home
+#   3. arch-chroot /mnt
+#   4. grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+#   4. grub-mkconfig -o /boot/grub/grub.cfg
+#
+# Grub should now be reinstalled and re-configured, so reboot the system and you
+# should be good to go.
 arch_update_firmware() {
   local response=false
 
@@ -133,7 +151,7 @@ sure you have your bootloader in good working order!
 
 Are you sure you wish to continue? [y/n]
 EOF
-  read -r response
+    read -r response
   done
 
   if echo "${response}" | grep -q '[Nn]'; then
