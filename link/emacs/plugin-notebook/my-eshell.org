@@ -642,3 +642,11 @@ more-helpful local prompt."
                               (eshell/alias "up" "eshell-up $1")
                               (eshell/alias "pk" "eshell-up-peek $1"))))
    #+end_src
+
+** aweshell
+Cool enhancements for eshell.
+
+#+begin_src emacs-lisp
+  (use-package aweshell
+    :straight (aweshell :type git :host github :repo "manateelazycat/aweshell"))
+#+end_src
