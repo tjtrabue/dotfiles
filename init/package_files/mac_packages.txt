@@ -39,6 +39,7 @@ gzip
 hadolint
 httpie
 hunspell
+imagemagick
 isync
 jq
 kakoune
@@ -48,6 +49,7 @@ kubectl
 lazygit
 leapp
 lens
+libxml2
 llvm
 lua-language-server
 mactex
