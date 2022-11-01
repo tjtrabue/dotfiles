@@ -13,7 +13,7 @@ install_starship() {
 
   if [ ! -x "$(command -v starship)" ]; then
     log_info "Installing starship Prompt"
-    curl -fsSL "${starshipUrl}" | bash
+    curl -fsSL "${starshipUrl}" | sh
   else
     warn "starship command already found on path!"
   fi

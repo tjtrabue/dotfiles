@@ -25,7 +25,7 @@ add_extra_os_vars() {
     ;;
   esac
 
-  if [ ! -s "${extraVarsFile}" ]; then
+  if [ ! -f "${extraVarsFile}" ]; then
     __init_var_overrides_file
   else
     # Make a backup of the ~/.var_overrides file, just in case.

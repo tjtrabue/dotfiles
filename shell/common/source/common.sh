@@ -93,7 +93,6 @@ __src_os() {
     ;;
   "Darwin")
     __src_standard_subdirs_under_dir "${macSrcDir}"
-    alias_homebrew_gcc_executables
     ;;
   *)
     # This warning will quickly become annoying, but is sometimes useful.

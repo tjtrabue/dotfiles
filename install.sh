@@ -39,6 +39,10 @@ declare APPS="${HOME}/applications"
 # Third party archives directory
 declare ARCHIVES="${APPS}/archives"
 
+# The file containing paths to use when dynamically constructing the
+# PATH environment variable.
+declare PATH_FILE="${HOME}/.path"
+
 # Program flags
 
 # Force all actions that would otherwise involve answering a prompt
@@ -56,6 +60,7 @@ declare LOG_TO_FILE=""
 prepare_for_os() {
   set_dotfiles_variables
   source_common_defs
+  init_path_file
 
   log_info "Checking for additional preparation steps for OS..."
   local osName="$(uname -s)"
@@ -68,21 +73,28 @@ prepare_for_os() {
     log_info "No preparation function found for OS type: ${osName}"
     ;;
   esac
+
+  export_path
+  spath
+}
+
+init_path_file() {
+  local pathFileSrc="${DOTFILES_COPY}/dotfiles_to_copy/.path"
+
+  if [ ! -f "${PATH_FILE}" ]; then
+    log_info "Copying initial path file to: ${PATH_FILE}"
+    cp "${pathFileSrc}" "${PATH_FILE}"
+  fi
 }
 
 # macOS specific preparation.
 prepare_for_macos() {
+  local macPathFile="${DOTFILES_COPY}/path_files/mac_path"
+
   log_info "Preparing for macOS installation"
-  source "${COMMON_SOURCE}/mac/functions/functions_mac.sh"
-  # Make sure developer tools are installed
-  install_mac_developer_tools
-  # Make sure homebrew is installed.
-  install_homebrew
-  # Install all the regular GNU CLI tools.
-  install_gnu_cli_tools_for_mac
-  # Make sure the CLI tools we reference throughout this install script are the
-  # GNU versions, not the BSD versions which come standard on macOS.
-  create_gnu_cli_tool_aliases_for_mac
+  . "${COMMON_SOURCE}/mac/functions/functions_mac.sh"
+  command cat "${macPathFile}" >>"${PATH_FILE}"
+  rmduplines "${PATH_FILE}"
 }
 # }}}
 
@@ -348,10 +360,10 @@ main() {
 prepare_for_os
 
 # Parse CLI Options {{{
-args=$(getopt -o hvfk: \
+declare args=$(getopt -o hvfk: \
   --long help,verbose,force,fake-home: \
-  -n 'install.sh' \
-  -- "$@")
+  -n 'install.sh' -- "$@" \
+)
 eval set -- "$args"
 
 # extract options and their arguments into variables.

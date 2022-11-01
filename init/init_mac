@@ -39,9 +39,6 @@ main() {
   install_homebrew
   # Install the most important tools first.
   install_gnu_cli_tools_for_mac
-  # Make sure the GNU CLI tools are used instead of the terrible BSD versions
-  # which are used by default.
-  create_gnu_cli_tool_aliases_for_mac
   # Make sure the GNU CLI tools are available with standard names
   src
   # Install remaining macOS packages.

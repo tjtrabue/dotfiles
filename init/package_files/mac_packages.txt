@@ -49,6 +49,7 @@ lazygit
 leapp
 lens
 llvm
+lua-language-server
 mactex
 meld
 mu
@@ -59,7 +60,7 @@ openssh
 p4v
 parallel
 plantuml
-postgres
+postgresql
 pyenv
 ranger
 rclone
@@ -89,4 +90,5 @@ wget
 xmlstarlet
 yank
 yq
+zlib
 zsh

@@ -145,21 +145,29 @@ __get_ls_colorflag() {
 
 # Installs a custom ls colors database from the LS_COLORS Git repository.
 install_custom_ls_colors() {
-  local installDir="/tmp/LS_COLORS"
-  local lscolorsScript="${HOME}/.local/share/lscolors.sh"
-  local tarballUrl="https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master"
+  local installDir="${HOME}/.ls_colors"
+  local lscolorsScript="${installDir}/lscolors.sh"
+  local repoUrl="https://github.com/trapd00r/LS_COLORS.git"
 
-  log_info "Installing custom LS_COLORS theme at:" \
-    "${GREEN}${lscolorsScript}${NC}"
+  if [ -d "${installDir}" ]; then
+    git -C "${installDir}" clean -df
+    git -C "${installDir}" restore .
+    git -C "${installDir}" pull
+  else
+    log_info "Installing custom LS_COLORS theme at:" \
+      "${GREEN}${installDir}${NC}"
+    git clone "${repoUrl}" "${installDir}"
+  fi
 
-  mkdir -p "${installDir}"
-  curl -L "${tarballUrl}" | tar xzf - --directory="${installDir}" --strip=1
-  (cd "${installDir}" && make install)
+  (
+    cd "${installDir}" 
+    make install
+  )
 }
 
 # Export LS_COLORS with the appropriate color settings for the current shell.
 src_dircolors_for_profile() {
-  local lscolorsScript="${HOME}/.local/share/lscolors.sh"
+  local lscolorsScript="${HOME}/.ls_colors/lscolors.sh"
 
   if [ ! -f "${lscolorsScript}" ]; then
     install_custom_ls_colors

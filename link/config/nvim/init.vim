@@ -658,7 +658,7 @@ call s:SourcePluginConfigFile('neogit.config.lua')
 call s:SourcePluginConfigFile('neogit.config.vim')
 call s:SourcePluginConfigFile('git-blame.config.vim')
 call s:SourcePluginConfigFile('barbar.config.vim')
-call s:SourcePluginConfigFile('nvim-hlslens.config.vim')
+call s:SourcePluginConfigFile('nvim-hlslens.config.lua')
 call s:SourcePluginConfigFile('formatter.config.lua')
 call s:SourcePluginConfigFile('ranger.config.vim')
 
