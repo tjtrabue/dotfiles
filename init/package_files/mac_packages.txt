@@ -5,7 +5,7 @@ bison
 broot
 buildpacks/tap/pack
 clang-format
-clojure/tools/clojure
+clojure
 cmatrix
 code-minimap
 coreutils
