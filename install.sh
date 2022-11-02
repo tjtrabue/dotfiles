@@ -340,6 +340,13 @@ source_common_defs() {
   done
 }
 
+# Initialize extra application configuration.
+run_init_scripts() {
+  log_info "Running initialization scripts"
+
+  runinit emacs
+}
+
 # Main that calls all subroutines
 main() {
   setup
@@ -350,6 +357,7 @@ main() {
   link_config
   link_lsp_config
   link_gpg_config
+  run_init_scripts
   add_extra_os_vars
   add_extra_paths_to_path_file
 }
