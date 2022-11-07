@@ -373,4 +373,9 @@ link/config/lazygit/state.yml
 link/config/git-cola
 # }}}
 
+# AWS {{{
+# VPN Client
+link/config/AWSVPNClient/
+# }}}
+
 # vim:foldenable:foldmethod=marker
