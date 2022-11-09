@@ -58,7 +58,7 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-log-io nil)
     ;; Increase the number of simultaneously watchable files
     ;; (the default number is 1000).
-    ;; If nil, then no warning is printed for any number of files.
+    ;; If nil, then lsp-mode will not print warnings for any number of files.
     (lsp-file-watch-threshold nil)
     ;; The length that lsp-mode waits to begin completion. Most of the
     ;; time the variable you want to tweak is company-idle-delay, not this
@@ -92,6 +92,10 @@ documentation on hover, syntax linting and error checking, etc.
                   ;; Enable which-key integration for lsp-mode
                   (lsp-enable-which-key-integration)
 
+                  (general-def 'local
+                    ;; Use LSP find definition function instead of
+                    ;; xref-goto-definition.
+                    "M-." 'lsp-find-definition)
                   ;; Override evil g-prefixed keybindings with LSP navigation and
                   ;; code action commands. We have to make these buffer-local
                   ;; bindings because that's the only way they will take
