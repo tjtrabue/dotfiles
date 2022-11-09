@@ -416,6 +416,9 @@ nnoremap <A-k> :m .-2<CR>==
 " Make 'Y' yank to the end of the current line.
 " This makes 'Y' behave more like other 'capital letter' commands.
 nnoremap Y y$
+
+" Toggle relative/absolute line numbers.
+nnoremap <leader>N :set relativenumber!<CR>
 " }}}
 
 " Insert Mode Mappings {{{
