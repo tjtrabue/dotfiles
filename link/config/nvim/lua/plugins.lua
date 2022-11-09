@@ -106,10 +106,11 @@ packer.startup(
     -- Minimap {{{
 
     -- Attempt to install the code-minimap Rust package upon update/install.
-    use {
+    -- Does not behave well when closing windows and buffers.
+    --[[ use {
       "wfxr/minimap.vim"
       -- run = ":!cargo install --locked code-minimap"
-    }
+    } ]]
     -- }}}
 
     -- Git  {{{

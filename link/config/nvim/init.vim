@@ -721,7 +721,7 @@ call s:SourcePluginConfigFile('nvim-lint.config.lua')
 call s:SourcePluginConfigFile('pgsql.config.vim')
 
 " Minimap plugin
-call s:SourcePluginConfigFile('minimap.config.vim')
+" call s:SourcePluginConfigFile('minimap.config.vim')
 
 " Markdown preview
 call s:SourcePluginConfigFile('markdown-preview.config.vim')
