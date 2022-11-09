@@ -13,10 +13,14 @@ fact, many modern LSP servers also provide a DAP server.
     :after (lsp-mode lsp-treemacs)
     :hook
     ((dap-stopped . (lambda (arg)
-      ;; Automatically trigger the built-in dap-mode hydra when the debugger
-      ;; hits a breakpoint.
-      (call-interactively #'dap-hydra)))
-    (lsp-mode . (lambda ()
-      ;; Automatically configure dap-mode with default settings
-      (dap-auto-configure-mode 1)))))
+                      ;; Automatically trigger the built-in dap-mode hydra when the debugger
+                      ;; hits a breakpoint.
+                      (call-interactively #'dap-hydra)))
+     (lsp-mode . (lambda ()
+                   ;; Automatically configure dap-mode with default settings
+                   (dap-auto-configure-mode 1)))
+     ;; Require programming language specific DAP setup.
+     ((js-mode js2-mode web-mode) . (lambda ()
+                                      (require 'dap-chrome)
+                                      (dap-chrome-setup)))))
 #+end_src
