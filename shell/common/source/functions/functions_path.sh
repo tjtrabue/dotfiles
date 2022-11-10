@@ -100,10 +100,30 @@ eval_path_var_from_file() {
 # Source a path variable from a static, automatically generated file into the
 # current shell session. This is much faster than dynamically evaluating the
 # path variable each time the variable's value is needed.
+#
+# This function uses a hashing algorithm to determine whether or not the entries
+# in the given path file have changed (added, removed, or modified), and if they
+# have, this function will re-create the static path file to keep it up-to-date
+# with the entries in the path file.
 spath() {
   local binPathFile=${PATH_FILE:-${HOME}/.path}
   local pathFile="${1:-${binPathFile}}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
+  local pathHashFile="${pathFile}_hash"
+  local pathHash
+
+  if [ -f "${pathHashFile}" ]; then
+    pathHash="$(__spath_get_path_file_hash)"
+  else
+    __spath_write_path_file_hash
+    export_path "${pathFile}"
+  fi
+
+  if [ -n "${pathHash}" ] &&
+     [ "${pathHash}" != "$(__spath_generate_hash_for_path_file)" ]; then
+    export_path "${pathFile}"
+    __spath_write_path_file_hash
+  fi
 
   # Make sure the static path file exists. If not, create it.
   if [ ! -f "${staticPathFile}" ]; then
@@ -112,6 +132,40 @@ spath() {
 
   log_debug "Sourcing static path file: ${MAGENTA}${staticPathFile}${NC}"
   . "${staticPathFile}"
+}
+
+# Retrieve the hash digest for the PATH file, if the hash exists. If not, return
+# an error code.
+__spath_get_path_file_hash() {
+  local binPathFile=${PATH_FILE:-${HOME}/.path}
+  local pathFile="${1:-${binPathFile}}"
+  local pathHashFile="${pathFile}_hash"
+
+  if [ ! -f "${pathHashFile}" ]; then
+    err "No PATH hash file found at: ${BLUE}${pathHashFile}${NC}"
+    return 1
+  fi
+
+  cat "${pathHashFile}" | tr -d '\n'
+}
+
+# Write the hash digest for a given path file (or ~/.path by default) to a file.
+__spath_write_path_file_hash() {
+  local binPathFile=${PATH_FILE:-${HOME}/.path}
+  local pathFile="${1:-${binPathFile}}"
+  local pathHashFile="${pathFile}_hash"
+  local hash="$(__spath_generate_hash_for_path_file "${pathFile}")"
+
+  log_info "Writing hash ${CYAN}${hash}${NC} to: ${BLUE}${pathHashFile}${NC}"
+  printf '%s' "${hash}" >"${pathHashFile}"
+}
+
+# Generate a hash digest for for a given path file (or ~/.path by default).
+__spath_generate_hash_for_path_file() {
+  local binPathFile=${PATH_FILE:-${HOME}/.path}
+  local pathFile="${1:-${binPathFile}}"
+
+  md5 "${pathFile}" | awk '{print $4}'
 }
 
 # Echo a path variable (PATH by default) and its value to stdout.

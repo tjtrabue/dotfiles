@@ -1,13 +1,12 @@
 @babel/cli
 @babel/core
+@babel/eslint-parser
 @babel/node
 @babel/parser
-@babel/polyfill
 @mermaid-js/mermaid-cli
 @prettier/plugin-ruby
 @prettier/plugin-xml
 @tailwindcss/language-server
-babel-eslint
 bash-language-server
 bible
 caniuse-cmd
