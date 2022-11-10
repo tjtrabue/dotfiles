@@ -106,23 +106,23 @@ eval_path_var_from_file() {
 # have, this function will re-create the static path file to keep it up-to-date
 # with the entries in the path file.
 spath() {
-  local binPathFile=${PATH_FILE:-${HOME}/.path}
+  local binPathFile="${PATH_FILE:-${HOME}/.path}"
   local pathFile="${1:-${binPathFile}}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
   local pathHashFile="${pathFile}_hash"
   local pathHash
 
   if [ -f "${pathHashFile}" ]; then
-    pathHash="$(__spath_get_path_file_hash)"
+    pathHash="$(__spath_get_path_file_hash "${pathFile}")"
   else
-    __spath_write_path_file_hash
+    __spath_write_path_file_hash "${pathFile}"
     export_path "${pathFile}"
   fi
 
   if [ -n "${pathHash}" ] &&
-     [ "${pathHash}" != "$(__spath_generate_hash_for_path_file)" ]; then
+     [ "${pathHash}" != "$(__spath_generate_hash_for_path_file "${pathFile}")" ]; then
     export_path "${pathFile}"
-    __spath_write_path_file_hash
+    __spath_write_path_file_hash "${pathFile}"
   fi
 
   # Make sure the static path file exists. If not, create it.
