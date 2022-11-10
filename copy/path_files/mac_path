@@ -1,6 +1,7 @@
-$(brew --prefix)/opt/binutils/bin
-$(brew --prefix)/opt/gnu-getopt/bin
-$(brew --prefix)/opt/openssh/bin
+/Library/Apple/usr/bin
+/Library/Developer/CommandLineTools/usr/bin
+/System/Volumes/Data/usr/local/bin
+/usr/local/texlive/*/**/bin
+$(brew --prefix)/bin
+$(brew --prefix)/opt/*/**/bin
 $(brew --prefix)/opt/*/**/gnubin
-$(brew --prefix)/opt/llvm/bin
-$(brew --prefix)/opt/util-linux/bin

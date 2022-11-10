@@ -225,6 +225,9 @@ use_homebrew_path() {
 /usr/bin/core_perl
 /usr/bin/vendor_perl
 /usr/sbin
+/System/Volumes/Data/usr/local/bin
+/Library/Apple/usr/bin
+/Library/Developer/CommandLineTools/usr/bin
 /usr/local/bin
 /usr/local/sbin
 $(brew --prefix)/bin
