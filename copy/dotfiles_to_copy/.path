@@ -34,6 +34,8 @@ ${HOME}/.pyenv/shims
 ${HOME}/.rvm/bin
 ${HOME}/.rvm/rubies/default/bin
 ${HOME}/.rvm/gems/default/bin
+# Uncomment once NVM is installed and a default node version is set.
+# ${HOME}/.nvm/versions/node/$(nvm version default)/bin
 ${HOME}/.roswell/bin
 ${HOME}/.asdf/bin
 ${HOME}/.asdf/shims
