@@ -218,7 +218,7 @@ EOF
 #
 # You can undo this operation by running `spath` in the terminal.
 use_minimal_mac_path() {
-  export PATH="$(cat <<EOF | tr '\n' ':' | sed 's/:$//'
+  export PATH="$(cat <<EOF | sed '/^\s*#/d' | tr '\n' ':' | sed 's/:$//'
 /bin
 /sbin
 /usr/bin
