@@ -217,7 +217,7 @@ EOF
 # macOS version of those tools (i.e., libtool).
 #
 # You can undo this operation by running `spath` in the terminal.
-use_homebrew_path() {
+use_minimal_mac_path() {
   export PATH="$(cat <<EOF | tr '\n' ':' | sed 's/:$//'
 /bin
 /sbin
