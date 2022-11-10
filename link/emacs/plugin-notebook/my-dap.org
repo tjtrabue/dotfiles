@@ -22,5 +22,8 @@ fact, many modern LSP servers also provide a DAP server.
      ;; Require programming language specific DAP setup.
      ((js-mode js2-mode web-mode) . (lambda ()
                                       (require 'dap-chrome)
-                                      (dap-chrome-setup)))))
+                                      (dap-chrome-setup))))
+    :general
+    (general-def lsp-command-map
+      "d h" 'dap-hydra))
 #+end_src
