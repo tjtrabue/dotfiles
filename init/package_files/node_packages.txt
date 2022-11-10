@@ -50,6 +50,7 @@ prettier-plugin-toml
 shadow-cljs
 speed-test
 sql-formatter
+serve
 stylelint
 tern
 tldr
