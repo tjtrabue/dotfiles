@@ -211,4 +211,25 @@ Done cleaning Xcode caches! Restart Xcode and follow these instructions:
 EOF
 }
 
+# Export the PATH variable specifically for building Homebrew or macOS
+# executables that could not otherwise be built using the standard PATH. This
+# can happen if PATH includes GNU utilities that conflict with the assumed
+# macOS version of those tools (i.e., libtool).
+#
+# You can undo this operation by running `spath` in the terminal.
+use_homebrew_path() {
+  export PATH="$(cat <<EOF | tr '\n' ':' | sed 's/:$//'
+/bin
+/sbin
+/usr/bin
+/usr/bin/core_perl
+/usr/bin/vendor_perl
+/usr/sbin
+/usr/local/bin
+/usr/local/sbin
+$(brew --prefix)/bin
+EOF
+  )"
+}
+
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
