@@ -11,6 +11,7 @@ cmatrix
 code-minimap
 coreutils
 datamash
+deno
 diffutils
 docker
 ed

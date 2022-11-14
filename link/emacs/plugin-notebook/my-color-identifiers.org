@@ -12,8 +12,8 @@ easily identify them in a file.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package color-identifiers-mode
-    :demand t
-    :config
-    ;; Turn on color-identifiers-mode globally.
-    (global-color-identifiers-mode 1))
+    :hook
+    ;; only turn on color-identifiers-mode for major modes that benefit
+    ;; from it. color-identifiers-mode can slow down fontification.
+    ((clojure-mode emacs-lisp-mode) . color-identifiers-mode))
 #+end_src
