@@ -55,7 +55,6 @@ stylelint
 tern
 tldr
 typescript
-typescript-language-server
 vim-language-server
 vls
 vscode-langservers-extracted
