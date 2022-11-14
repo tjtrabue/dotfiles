@@ -12,6 +12,11 @@ Citre is an advanced Emacs front-end for readtags.
 Open a file in your project, and run =M-x citre-update-this-tage-file=. If Citre
 can't find a tags file for your project, it will guide you through creating one.
 
+To update the tags file later, run the same command again: =M-x
+citre-update-this-tags-file=. Subsequent runs will not prompt you for
+configuration. To change the recipe you used to generate the tags file, execute
+=M-x citre-edit-tags-file-recipe=.
+
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package citre
