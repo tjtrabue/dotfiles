@@ -6,7 +6,7 @@ broot
 buildpacks/tap/pack
 clang-format
 clojure
-clojure-lsp
+clojure-lsp/brew/clojure-lsp-native
 cmatrix
 code-minimap
 coreutils

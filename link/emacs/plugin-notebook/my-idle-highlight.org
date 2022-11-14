@@ -1,0 +1,16 @@
+#+title:   Automatically highlight thing at point when idle
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:11:14
+#+tags:    highlight idle lightweight
+#+STARTUP: fold
+
+A small, lightweight package for highlighting the thing at point on an idle
+timer, making it more performant than alternatives.
+
+#+begin_src emacs-lisp
+  (use-package idle-highlight-mode
+    :demand t
+    :config
+    (global-idle-highlight-mode 1))
+#+end_src

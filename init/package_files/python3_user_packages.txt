@@ -6,6 +6,7 @@ cmakelint
 cookiecutter
 cpplint
 django
+epc
 eyed3
 flake8
 glances
@@ -13,6 +14,7 @@ grip
 ipython
 jedi
 mdv3
+orjson
 pipenv
 powerline-gitstatus
 powerline-status
@@ -22,6 +24,7 @@ pynvim
 python-language-server
 pywal
 rebound-cli
+six
 sqlformat
 thefuck
 ueberzug

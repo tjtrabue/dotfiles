@@ -21,6 +21,7 @@ __pycache__
 Desktop.ini
 
 # Ctags
+/.tags/
 tags
 tags.lock
 tags.temp
