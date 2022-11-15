@@ -49,6 +49,8 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-keymap-prefix "C-c l")
     (lsp-enable-snippet t)
     (lsp-semantic-tokens-enable t)
+    ;; Max number of on-idle token requests to be dispatched simultaneously.
+    (lsp-semantic-tokens-max-concurrent-idle-requests 4)
     (lsp-enable-semantic-highlighting t)
     ;; Whether to include all info returned by document/onHover in the eldoc
     ;; echo area rather than simply basic info.
@@ -68,6 +70,10 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-enable-on-type-formatting t)
     ;; Automatically enable lenses if the server supports them.
     (lsp-lens-enable t)
+    ;; Whether to filter incomplete results.
+    (lsp-completion-filter-on-incomplete nil)
+    ;; Whether to filter initial results from the server.
+    (lsp-completion-sort-initial-results nil)
     ;;; bash-language-server
     (lsp-bash-highlight-parsing-errors t)
     ;;; clangd
@@ -86,6 +92,31 @@ documentation on hover, syntax linting and error checking, etc.
     ;; It's best to install it yourself.
     (lsp-clients-lua-language-server-bin
      (executable-find "lua-language-server"))
+    ;;; typescript-language-server
+    ;; Disable tsserver from automatically fetching missing type definitions
+    ;; (@types packages) from external modules.
+    (lsp-clients-typescript-disable-automatic-typing-acquisition t)
+    ;; Max size of V8's old memory section in megabytes.
+    (lsp-clients-typescript-max-ts-server-memory 4096)
+    (lsp-javascript-display-parameter-type-hints t)
+    (lsp-javascript-display-parameter-name-hints-when-argument-matches-name t)
+    ;; Can be 'none, 'literals, or 'all
+    ;; (lsp-javascript-display-parameter-name-hints 'all)
+    (lsp-javascript-display-enum-member-value-hints t)
+    (lsp-javascript-display-return-type-hints t)
+    (lsp-javascript-display-variable-type-hints t)
+    ;; Enable/disable semantic checking of JavaScript files.
+    (lsp-javascript-implicit-project-config-check-js t)
+    (lsp-javascript-update-imports-on-file-move-enabled 'always)
+    ;; Whether to format buffers using the langserver.
+    ;; Enabling this option can greatly slow down performance for large projects.
+    (lsp-javascript-format-enable nil)
+    (lsp-typescript-format-enable nil)
+    ;; Enable/disable automatic updating of import paths when you rename or move a
+    ;; file. Requires TypeScript 2.9 or newer.
+    (lsp-typescript-update-imports-on-file-move-enabled 'always)
+    ;; Who wants to fill out surveys?
+    (lsp-typescript-surveys-enabled nil)
     :hook
     ;; NOTE: We set language mode hooks in the Functions section of this file.
     (lsp-mode . (lambda ()

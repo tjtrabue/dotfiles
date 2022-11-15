@@ -47,14 +47,16 @@ npm-check-updates
 prettier
 prettier-plugin-elm
 prettier-plugin-toml
+pyright
+serve
 shadow-cljs
 speed-test
 sql-formatter
-serve
 stylelint
 tern
 tldr
 typescript
+typescript-language-server
 vim-language-server
 vls
 vscode-langservers-extracted

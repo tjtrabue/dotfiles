@@ -33,12 +33,18 @@
 ;; Common Lisp emulation library
 (require 'cl-lib)
 
-(defvar my-custom-lsp-format-major-mode-blacklist '(clojure-mode
-                                                     cperl-mode
-                                                     lua-mode
-                                                     perl-mode
-                                                     python-mode
-                                                     sh-mode)
+(defvar my-custom-lsp-format-major-mode-blacklist
+  '
+  (clojure-mode
+    cperl-mode
+    javascript-mode
+    js-mode
+    js2-mode
+    lua-mode
+    perl-mode
+    python-mode
+    sh-mode
+    typescript-mode)
 
   "List of major modes to ignore when activating lsp-format hooks, usually
 because the LSP server for these major modes does not yet support document
@@ -46,45 +52,47 @@ formatting, or because their formatters are lacking in features. Thankfully
 the reformatter package provides a generic interface for creating formatters
 for any programming language that supports a formatting tool.")
 
-(defvar my-custom-lsp-enabled-modes '(c++-mode
-                                       c-mode
-                                       clojure-mode
-                                       cmake-mode
-                                       cperl-mode
-                                       css-mode
-                                       dart-mode
-                                       dockerfile-mode
-                                       elixir-mode
-                                       go-mode
-                                       haskell-mode
-                                       haskell-literate-mode
-                                       html-mode
-                                       java-mode
-                                       javascript-mode
-                                       js-mode
-                                       json-mode
-                                       LaTeX-mode
-                                       latex-mode
-                                       less-css-mode
-                                       ;; lisp-mode
-                                       lua-mode
-                                       markdown-mode
-                                       mhtml-mode
-                                       objc-mode
-                                       perl-mode
-                                       php-mode
-                                       python-mode
-                                       ruby-mode
-                                       scss-mode
-                                       sh-mode
-                                       sql-mode
-                                       swift-mode
-                                       terraform-mode
-                                       TeX-latex-mode
-                                       tex-mode
-                                       web-mode
-                                       xml-mode
-                                       yaml-mode)
+(defvar my-custom-lsp-enabled-modes
+  '
+  (c++-mode
+    c-mode
+    clojure-mode
+    cmake-mode
+    cperl-mode
+    css-mode
+    dart-mode
+    dockerfile-mode
+    elixir-mode
+    go-mode
+    haskell-mode
+    haskell-literate-mode
+    html-mode
+    java-mode
+    javascript-mode
+    js-mode
+    json-mode
+    LaTeX-mode
+    latex-mode
+    less-css-mode
+    ;; lisp-mode
+    lua-mode
+    markdown-mode
+    mhtml-mode
+    objc-mode
+    perl-mode
+    php-mode
+    python-mode
+    ruby-mode
+    scss-mode
+    sh-mode
+    sql-mode
+    swift-mode
+    terraform-mode
+    TeX-latex-mode
+    tex-mode
+    web-mode
+    xml-mode
+    yaml-mode)
   "List of all major modes allowing `lsp-mode' to run as a minor mode.")
 
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
@@ -103,26 +111,28 @@ MODE that runs `lsp-format-buffer' before saving the buffer's file."
   "Add hooks to the major modes specified in `my-lsp-enabled-modes' to
 automatically start lsp-mode when editing files associated with those major
 modes, as well as format buffers on save."
-  (mapc (lambda (mode)
-          ;; This is necessary for providing closure-like behavior
-          (lexical-let ((mode mode)
-                         (hook-name (concat (symbol-name mode) "-hook")))
-            (add-hook (intern hook-name)
-              (lambda ()
-                ;; Shorten company prefix and reduce completion delay since LSP
-                ;; servers are very efficient backends.
-                (setq-local company-minimum-prefix-length 1)
-                ;; (setq-local company-idle-delay 0.0)
-                ;; Automatically start lsp when you visit a relevant file
-                (lsp-deferred)
-                ;; Enable auto-revert to keep files up to date with filesystem.
-                (auto-revert-mode 1)
-                ;; Format lsp-mode buffers on save.
-                (my-custom-lsp-add-format-on-save-hook mode)))))
+  (mapc
+    (lambda (mode)
+      ;; This is necessary for providing closure-like behavior
+      (lexical-let
+        ((mode mode) (hook-name (concat (symbol-name mode) "-hook")))
+        (add-hook (intern hook-name)
+          (lambda ()
+            ;; Shorten company prefix and reduce completion delay since LSP
+            ;; servers are very efficient backends.
+            (setq-local company-minimum-prefix-length 1)
+            ;; (setq-local company-idle-delay 0.0)
+            ;; Automatically start lsp when you visit a relevant file
+            (lsp-deferred)
+            ;; Enable auto-revert to keep files up to date with filesystem.
+            (auto-revert-mode 1)
+            ;; Format lsp-mode buffers on save.
+            (my-custom-lsp-add-format-on-save-hook mode)))))
     my-custom-lsp-enabled-modes))
 
 ;;;###autoload
-(defun my-custom-lsp-check-lsp-enabled-for-mode-p (mode &optional all &rest modes)
+(defun my-custom-lsp-check-lsp-enabled-for-mode-p
+  (mode &optional all &rest modes)
   "Return non-nil if a specific MODE is enabled for `lsp-mode' based on the
 value of `my-lsp-enabled-modes'.
 
@@ -137,10 +147,10 @@ modes are present in `my-enabled-mode-for-lsp'. If ALL is nil, then the result
 of this function will be non-nil if any of the supplied major modes are in the
 list."
   (if modes
-      (let ((full-modes (cons mode modes)))
-        (if all
-            (not (cl-set-difference full-modes my-custom-lsp-enabled-modes))
-          (cl-intersection full-modes my-custom-lsp-enabled-modes)))
+    (let ((full-modes (cons mode modes)))
+      (if all
+        (not (cl-set-difference full-modes my-custom-lsp-enabled-modes))
+        (cl-intersection full-modes my-custom-lsp-enabled-modes)))
     (member mode my-custom-lsp-enabled-modes)))
 
 ;;;###autoload
@@ -148,8 +158,7 @@ list."
   "Add hooks for various languages to pull in `dap-mode' tools to aid in
 debugging."
   ;; Add C++ DAP tools when entering c++-mode
-  (add-hook 'c++-mode-hook (lambda ()
-                             (require 'dap-cpptools))))
+  (add-hook 'c++-mode-hook (lambda () (require 'dap-cpptools))))
 
 ;;;###autoload
 (defun my-custom-lsp-register-lsp-servers ()
@@ -162,16 +171,17 @@ debugging."
   ;; Register cl-lsp as a language server for Common Lisp.
   ;; You'll probably need to install it with roswell.
   (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection "cl-lsp")
-    :activation-fn (lsp-activate-on "lisp")
-    :server-id 'cl-lsp)))
+    (make-lsp-client
+      :new-connection (lsp-stdio-connection "cl-lsp")
+      :activation-fn (lsp-activate-on "lisp")
+      :server-id 'cl-lsp)))
 
 ;;;###autoload
 (defun my-custom-lsp-add-language-ids ()
   "Add extra language ID specifications for `lsp-mode'."
   (setq lsp-language-id-configuration
-    (append my-custom-lsp-language-id-configuration
+    (append
+      my-custom-lsp-language-id-configuration
       lsp-language-id-configuration)))
 
 (provide 'my-custom-lsp)
