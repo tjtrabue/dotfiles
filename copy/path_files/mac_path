@@ -2,6 +2,7 @@
 /Library/Developer/CommandLineTools/usr/bin
 /System/Volumes/Data/usr/local/bin
 /usr/local/texlive/*/**/bin
-$(brew --prefix)/bin
 $(brew --prefix)/opt/*/**/bin
 $(brew --prefix)/opt/*/**/gnubin
+$(brew --prefix)/bin
+$(brew --prefix)/sbin

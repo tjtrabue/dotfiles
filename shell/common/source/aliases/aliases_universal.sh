@@ -46,6 +46,9 @@ alias ag="ag --hidden"
 # fi
 # }}}
 
+# Copy working directory to clipboard.
+alias cwd="pwd | tr -d '\n' | clipboard"
+
 ###########################################################################
 ##                          Aliases taken from                           ##
 ##                        mathiasbynens/dotfiles                         ##
