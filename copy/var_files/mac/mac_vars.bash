@@ -10,16 +10,22 @@ export HOMEBREW_CC="clang"
 export HOMEBREW_CXX="clang++"
 # }}}
 
-# Homebrew LLVM {{{
+# C/C++ compiler options {{{
 
-# Using the standard LLVM with macOS is annoying. If you are using Xcode and
-# have installed the Command Line Developer Tools along with Xcode, then the
-# version of Clang that you use is actually the one that comes with Xcode.
-# If you want to use the version of Clang installed via Homebrew, you need to
-# uncomment the following two lines:
-export LDFLAGS="${LDFLAGS} -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
-export CPPFLAGS="${CPPFLAGS} -I/usr/local/opt/llvm/include"
+# Should be either 'clang' or 'gcc'.
+export CC="clang"
 
+if [ "${CC}" = "gcc" ]; then
+  # Add header and library paths for GCC.
+  export CPATH="$(brew --prefix)/opt/gcc/include/c++/12"
+  export LIBRARY_PATH="$(brew --prefix)/opt/gcc/lib/gcc/current"
+elif [ -d "$(brew --prefix)/opt/llvm" ]; then
+  # Add header and library paths for brew-installed LLVM.
+  # These paths are not standard in macOS since new versions of macOS ship with
+  # their own version of LLVM.
+  export CPATH="$(brew --prefix)/opt/llvm/include"
+  export LIBRARY_PATH="$(brew --prefix)/opt/llvm/lib"
+fi
 # }}}
 
 # Emacs Plus {{{
