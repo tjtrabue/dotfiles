@@ -135,10 +135,6 @@ packer.startup(
     use {"rafamadriz/friendly-snippets"}
     -- }}}
 
-    use {"haya14busa/incsearch.vim"}
-
-    use {"haya14busa/incsearch-easymotion.vim"}
-
     -- Multiple cursor support
     use {"mg979/vim-visual-multi"}
 
