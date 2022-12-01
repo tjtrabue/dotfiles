@@ -29,23 +29,4 @@ nmap t <Plug>(easymotion-bd-t)
 nmap L <Plug>(easymotion-overwin-line)
 " }}}
 
-" incsearch integration {{{
-
-" When you search with '/' or '?' and press C-l instead of RET, you will be
-" prompted to move to search results with easymotion.
-function! s:incsearch_config(...) abort
-  return incsearch#util#deepextend(deepcopy({
-  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-  \   'keymap': {
-  \     "\<C-l>": '<Over>(easymotion)'
-  \   },
-  \   'is_expr': 0
-  \ }), get(a:, 1, {}))
-endfunction
-
-noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
-noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
-noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
-" }}}
-
 " vim:foldenable:foldmethod=marker:foldlevel=0
