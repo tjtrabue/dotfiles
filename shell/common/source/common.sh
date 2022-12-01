@@ -171,8 +171,8 @@ __src() {
   __src_machine_local_files
 
   # export the dynamically constructed $PATH variable from the entries in
-  # ~/.path.
-  spath
+  # ~/.path, as well as CPATH and LIBRARY_PATH if available.
+  spath_all
 
   # Source the dynamically generated ~/.luapath file.
   src_lua_path

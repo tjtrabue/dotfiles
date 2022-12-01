@@ -44,5 +44,7 @@ Plugins and configuration for programming in Python.
   Emacs Jupyter Notebook plugin.
 
   #+begin_src emacs-lisp
-    (use-package ein)
+    (use-package ein
+      ;; Encountering error: "Wrong type argument: listp, let"
+      :disabled)
   #+end_src

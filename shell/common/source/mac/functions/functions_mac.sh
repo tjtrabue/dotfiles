@@ -109,12 +109,14 @@ install_emacs_plus_for_macos() {
   local emacsPlusVersion="29"
   local icon="dragon-icon"
 
-  PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig" CC=gcc CPPFLAGS="-L$(brew --prefix)/lib/gcc/current -lgccjit" brew install "emacs-plus@${emacsPlusVersion}" \
+  PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig" brew install -vd --cc gcc-12 "emacs-plus@${emacsPlusVersion}" \
+    --with-ctags \
     --with-xwidgets \
     --with-mailutils \
     --with-dbus \
     --with-native-comp \
     --with-debug \
+    --with-poll \
     "--with-${icon}"
 }
 
@@ -142,9 +144,9 @@ EOF
 # This is a GUI-enabled, feature-rich, nightly build of Emacs, and the most
 # dependable bleeding-edge version of Emacs for macOS that I am aware of.
 # It is much easier to install than emacs-plus.
-install_emacs_app_nightly_for_macos() {
+install_emacs_app_for_macos() {
   brew tap jimeh/emacs-builds
-  brew install --cask emacs-app-nightly
+  brew install --cask emacs-app-good
 }
 
 # Enables hidden files in Finder by default.
@@ -218,7 +220,8 @@ EOF
 #
 # You can undo this operation by running `spath` in the terminal.
 use_minimal_mac_path() {
-  export PATH="$(cat <<EOF | sed '/^\s*#/d' | tr '\n' ':' | sed 's/:$//'
+  export PATH="$(
+    cat <<EOF | sed '/^\s*#/d' | tr '\n' ':' | sed 's/:$//'
 /bin
 /sbin
 /usr/bin

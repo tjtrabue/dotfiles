@@ -1,0 +1,14 @@
+#+title:   EmacSQL: Emacs front-end for SQL DBs
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2022:12:01
+#+tags:
+#+STARTUP: fold
+
+This package is required by Magit and Org Roam. I mainly include this dependency
+directly because it does not always build correctly, and I need to pull it down
+and build it myself first.
+
+#+begin_src emacs-lisp
+  (use-package emacsql)
+#+end_src

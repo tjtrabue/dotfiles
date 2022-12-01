@@ -63,6 +63,9 @@ This is where I define new variables needed throughout my configuration.
     (defvar user-fonts-dir (file-truename
                             (concat (getenv "HOME") "/.local/share/fonts"))
       "Fonts directory for the current user")
+    (defvar my/static-path-file (file-truename
+                                 (concat (getenv "HOME") "/.path_static"))
+      "The compiled PATH file used to quickly determine PATH.")
     (defvar my/straight-home-dir (file-truename
                                   (concat user-emacs-directory "/straight"))
       "Home directory for the straight package manager.")
@@ -988,31 +991,35 @@ user's =$PATH=, making sure that all external executable available to the
 user are also within Emacs' reach.
 
 #+begin_src emacs-lisp
-  ;; When launched as a graphical application, Emacs typically inherits a default
-  ;; PATH variable, not the user's.  This can be annoying when it comes to
-  ;; launching external applications from within Emacs.  This plugin solves the
-  ;; problem by manually importing the user's PATH variable and using it as the
-  ;; value of Emacs exec-path variable.
-  (use-package exec-path-from-shell
-    :demand t
-    :init
-    ;; Whether to output debug info to the *Messages* buffer.
-    ;; NOTE: This variable is not customizable.
-    (setq exec-path-from-shell-debug nil)
-    :custom
-    ;; How long to wait before warning about long startup time for shell.
-    (exec-path-from-shell-warn-duration-millis 500)
-    :config
-    ;; Only run this plugin for macOS, Linux, or Cygwin systems.
-    (when (member system-type '(gnu gnu/linux darwin cygwin))
-      ;; Make sure to use the lean version of our login shell profile to
-      ;; avoid timing out or excessive memory consumption.
-      (setenv "USE_LEAN_PROFILE" "true")
-      ;; Set $PATH by running the user's login shell.
-      (exec-path-from-shell-initialize)
-      ;; Remove USE_LEAN_PROFILE environment variable once it has served its
-      ;; purpose.
-      (setenv "USE_LEAN_PROFILE" nil)))
+    (if (and (member system-type '(gnu gnu/linux darwin cygwin))
+             (file-exists-p my/static-path-file))
+     (setenv "PATH" (substitute-env-vars
+                      (shell-command-to-string "cat ~/.path_static | grep '^\s*PATH=' | sed -e 's/PATH=//' -e 's/\"//g'")))
+     ;; When launched as a graphical application, Emacs typically inherits a default
+     ;; PATH variable, not the user's.  This can be annoying when it comes to
+     ;; launching external applications from within Emacs.  This plugin solves the
+     ;; problem by manually importing the user's PATH variable and using it as the
+     ;; value of Emacs exec-path variable.
+     (use-package exec-path-from-shell
+       :demand t
+       :init
+       ;; Whether to output debug info to the *Messages* buffer.
+       ;; NOTE: This variable is not customizable.
+       (setq exec-path-from-shell-debug nil)
+       :custom
+       ;; How long to wait before warning about long startup time for shell.
+       (exec-path-from-shell-warn-duration-millis 500)
+       :config
+       ;; Only run this plugin for macOS, Linux, or Cygwin systems.
+       (when (member system-type '(gnu gnu/linux darwin cygwin))
+         ;; Make sure to use the lean version of our login shell profile to
+         ;; avoid timing out or excessive memory consumption.
+         (setenv "USE_LEAN_PROFILE" "true")
+         ;; Set $PATH by running the user's login shell.
+         (exec-path-from-shell-initialize)
+         ;; Remove USE_LEAN_PROFILE environment variable once it has served its
+         ;; purpose.
+         (setenv "USE_LEAN_PROFILE" nil))))
 #+end_src
 
 ** use-package-chords

@@ -15,4 +15,8 @@ if [ -x "$(command -v gupdatedb)" ]; then
   alias updatedb="gupdatedb --localpaths=/ --prunepaths='/Volumes /System'"
 fi
 
+# Emacs inherits several environment variables whose values may prove to be
+# problematic.
+alias emacs="unset CPATH; unset LIBRARY_PATH; emacs"
+
 # vim:foldenable:foldmethod=marker:foldlevel=0

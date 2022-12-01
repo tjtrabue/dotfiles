@@ -97,6 +97,20 @@ eval_path_var_from_file() {
   export "${pathVar?}"
 }
 
+# Source all known path files.
+# ~/.path     - PATH file
+# ~/.cpp_path - C/C++ preprocessor path file
+# ~/.lib_path - C/C++ library path file
+spath_all() {
+  spath "${HOME}/.path" "PATH"
+  if [ -f "${HOME}/.cpp_path" ]; then
+    spath "${HOME}/.cpp_path" "CPATH"
+  fi
+  if [ -f "${HOME}/.lib_path" ]; then
+    spath "${HOME}/.lib_path" "LIBRARY_PATH"
+  fi
+}
+
 # Source a path variable from a static, automatically generated file into the
 # current shell session. This is much faster than dynamically evaluating the
 # path variable each time the variable's value is needed.
@@ -108,6 +122,7 @@ eval_path_var_from_file() {
 spath() {
   local binPathFile="${PATH_FILE:-${HOME}/.path}"
   local pathFile="${1:-${binPathFile}}"
+  local pathVar="${2:-PATH}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
   local pathHashFile="${pathFile}_hash"
   local pathHash
@@ -116,18 +131,18 @@ spath() {
     pathHash="$(__spath_get_path_file_hash "${pathFile}")"
   else
     __spath_write_path_file_hash "${pathFile}"
-    export_path "${pathFile}"
+    export_path "${pathFile}" "${pathVar}"
   fi
 
   if [ -n "${pathHash}" ] &&
      [ "${pathHash}" != "$(__spath_generate_hash_for_path_file "${pathFile}")" ]; then
-    export_path "${pathFile}"
+    export_path "${pathFile}" "${pathVar}"
     __spath_write_path_file_hash "${pathFile}"
   fi
 
   # Make sure the static path file exists. If not, create it.
   if [ ! -f "${staticPathFile}" ]; then
-    export_path "${pathFile}"
+    export_path "${pathFile}" "${pathVar}"
   fi
 
   log_debug "Sourcing static path file: ${MAGENTA}${staticPathFile}${NC}"
