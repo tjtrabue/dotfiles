@@ -986,40 +986,47 @@ for =use-package= that we want to make use of in our =use-package=
 statements.
 
 ** exec-path-from-shell
-This plugin sets Emacs' own =$PATH= environment variable in sync with the
-user's =$PATH=, making sure that all external executable available to the
-user are also within Emacs' reach.
+Keep Emacs' own =PATH= environment variable in sync with the user's =PATH=,
+making sure that all external executable available to the user are also within
+Emacs' reach.
+
+*NOTE:* Running =exec-path-from-shell= can be slow since it has to spawn an
+external shell process and parse the =PATH= environment variable from that
+process. I prefer to parse my =PATH= from the =~/.path_static= file, since that
+path is already calculated.
 
 #+begin_src emacs-lisp
-    (if (and (member system-type '(gnu gnu/linux darwin cygwin))
-             (file-exists-p my/static-path-file))
-     (setenv "PATH" (substitute-env-vars
-                      (shell-command-to-string "cat ~/.path_static | grep '^\s*PATH=' | sed -e 's/PATH=//' -e 's/\"//g'")))
-     ;; When launched as a graphical application, Emacs typically inherits a default
-     ;; PATH variable, not the user's.  This can be annoying when it comes to
-     ;; launching external applications from within Emacs.  This plugin solves the
-     ;; problem by manually importing the user's PATH variable and using it as the
-     ;; value of Emacs exec-path variable.
-     (use-package exec-path-from-shell
-       :demand t
-       :init
-       ;; Whether to output debug info to the *Messages* buffer.
-       ;; NOTE: This variable is not customizable.
-       (setq exec-path-from-shell-debug nil)
-       :custom
-       ;; How long to wait before warning about long startup time for shell.
-       (exec-path-from-shell-warn-duration-millis 500)
-       :config
-       ;; Only run this plugin for macOS, Linux, or Cygwin systems.
-       (when (member system-type '(gnu gnu/linux darwin cygwin))
-         ;; Make sure to use the lean version of our login shell profile to
-         ;; avoid timing out or excessive memory consumption.
-         (setenv "USE_LEAN_PROFILE" "true")
-         ;; Set $PATH by running the user's login shell.
-         (exec-path-from-shell-initialize)
-         ;; Remove USE_LEAN_PROFILE environment variable once it has served its
-         ;; purpose.
-         (setenv "USE_LEAN_PROFILE" nil))))
+  (if (and (member system-type '(gnu gnu/linux darwin cygwin))
+           (file-exists-p my/static-path-file))
+      ;; If we have compiled our `~/.path_static` file, use the PATH in that file
+      ;; because using that PATH is much faster than calculating it dynmaically.
+      (setenv "PATH" (substitute-env-vars
+                      (shell-command-to-string "cat ~/.path_static | grep '^\s*PATH=' | sed -e 's/^\s*PATH=//' -e 's/\"//g'")))
+    ;; When launched as a graphical application, Emacs typically inherits a
+    ;; default PATH variable, not the user's.  This can be annoying when it comes
+    ;; to launching external applications from within Emacs.  This plugin solves
+    ;; the problem by manually importing the user's PATH variable and using it as
+    ;; the value of Emacs exec-path variable.
+    (use-package exec-path-from-shell
+      :demand t
+      :init
+      ;; Whether to output debug info to the *Messages* buffer.
+      ;; NOTE: This variable is not customizable.
+      (setq exec-path-from-shell-debug nil)
+      :custom
+      ;; How long to wait before warning about long startup time for shell.
+      (exec-path-from-shell-warn-duration-millis 500)
+      :config
+      ;; Only run this plugin for macOS, Linux, or Cygwin systems.
+      (when (member system-type '(gnu gnu/linux darwin cygwin))
+        ;; Make sure to use the lean version of our login shell profile to
+        ;; avoid timing out or excessive memory consumption.
+        (setenv "USE_LEAN_PROFILE" "true")
+        ;; Set $PATH by running the user's login shell.
+        (exec-path-from-shell-initialize)
+        ;; Remove USE_LEAN_PROFILE environment variable once it has served its
+        ;; purpose.
+        (setenv "USE_LEAN_PROFILE" nil))))
 #+end_src
 
 ** use-package-chords
