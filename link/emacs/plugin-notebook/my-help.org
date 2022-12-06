@@ -14,6 +14,8 @@ help system.
 
 #+begin_src emacs-lisp
   (use-package helpful
+    ;; Disabled due to "Wrong type argument: listp, 1".  Wait for maintainers to
+    ;; fix this issue and then reactivate this plugin.
     :disabled
     :general
     (general-def
