@@ -1093,6 +1093,65 @@ and hooks in a way that defers loading the package.
       "N"  'my/toggle-line-number-type))
 #+end_src
 
+** org
+We should load =org= now to avoid version mismatch errors that could occur if we
+try to load =org= later.
+
+#+begin_src emacs-lisp
+  (use-package org
+    :mode ("\\.org\\'" . org-mode)
+    :hook
+    (org-mode .
+              (lambda ()
+                ;; Disable whitespace mode for org mode.
+                (whitespace-mode -1)))
+    :general
+    (my/user-leader-def
+      ;; These bindings should be available everywhere.  We'll want to use them
+      ;; outside of org-mode.
+      "C-c o l" 'org-store-link
+      "C-c o a" 'org-agenda)
+    :custom
+    (org-hide-leading-stars t)
+    ;; Only show headings when visiting a new Org file.
+    (org-startup-folded 'fold)
+    ;; Open Org mode buffers with `org-indent-mode' enabled.
+    (org-startup-indented t)
+    ;; Directory used by Org only in rare circumstances, such as when filing
+    ;; away remember notes.
+    (org-directory my/org-dir)
+    ;; Pressing return while point is over a hyperlink will open the link in
+    ;; the user's web browser.
+    (org-return-follows-link t)
+    ;; Record a timestamp when a TODO item is marked as done.
+    (org-log-done 'time)
+    ;; Set Org agenda files to a list of files and/or directories.
+    (org-agenda-files `(,my/org-agenda-dir))
+    ;; Whether to prompt the user for confirmation before evaluating source
+    ;; blocks.
+    (org-confirm-babel-evaluate nil)
+    ;; Whether to keep images their original size or to shrink them to fit their
+    ;; corresponding Org mode buffer.
+    (org-image-actual-width nil)
+    ;; PlantUML configuration
+    ;; Whether to use the PlantUML JAR file or the executable.
+    ;;   'plantuml -> use executable
+    ;;   'jar -> use JAR file
+    (org-plantuml-exec-mode 'plantuml)
+    (org-plantuml-executable-path (executable-find "plantuml"))
+    :init
+    ;; Make sure the Org notes directory is present.
+    (make-directory my/org-dir t)
+    ;; Also create the agenda directory.
+    (make-directory my/org-agenda-dir t)
+    :config
+    ;; Required for expand-region.
+    (require 'org-fold)
+    ;; Register PlantUML as an Org-compatible language for source blocks.
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
+#+end_src
+
 * Load External Configuration Files
 Load additional Emacs configuration files from my custom plugins directories.
 Most of these files correspond directly to third-party dependencies from MELPA.

@@ -79,6 +79,9 @@ process from has a remote =default-directory=.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package tramp
+      ;; Use built-in Tramp.
+      :ensure nil
+      :straight nil
       :custom
       ;; Cache sudo password for the day.
       (password-cache t)

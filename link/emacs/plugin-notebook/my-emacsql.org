@@ -5,7 +5,7 @@
 #+tags:
 #+STARTUP: fold
 
-This package is required by Magit and Org Roam. I mainly include this dependency
+This package is required by Magit and Org Roam. I include this dependency
 directly because it does not always build correctly, and I need to pull it down
 and build it myself first.
 

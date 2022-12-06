@@ -9,68 +9,7 @@ enables Emacs users to engage in literate programming, a method of software
 development where source code is embedded into explanatory, notebook-like
 textual documents and evaluated as needed or all at once.
 
-* =use-package= specification
-The ubiquitous =org-mode=.
-
-#+begin_src emacs-lisp
-  (use-package org
-    :ensure nil
-    :straight nil
-    :mode ("\\.org\\'" . org-mode)
-    :hook
-    (org-mode .
-              (lambda ()
-                ;; Disable whitespace mode for org mode.
-                (whitespace-mode -1)))
-    :general
-    (my/user-leader-def
-      ;; These bindings should be available everywhere.  We'll want to use them
-      ;; outside of org-mode.
-      "C-c o l" 'org-store-link
-      "C-c o a" 'org-agenda)
-    :custom
-    (org-hide-leading-stars t)
-    ;; Only show headings when visiting a new Org file.
-    (org-startup-folded 'fold)
-    ;; Open Org mode buffers with `org-indent-mode' enabled.
-    (org-startup-indented t)
-    ;; Directory used by Org only in rare circumstances, such as when filing
-    ;; away remember notes.
-    (org-directory my/org-dir)
-    ;; Pressing return while point is over a hyperlink will open the link in
-    ;; the user's web browser.
-    (org-return-follows-link t)
-    ;; Record a timestamp when a TODO item is marked as done.
-    (org-log-done 'time)
-    ;; Set Org agenda files to a list of files and/or directories.
-    (org-agenda-files `(,my/org-agenda-dir))
-    ;; Whether to prompt the user for confirmation before evaluating source
-    ;; blocks.
-    (org-confirm-babel-evaluate nil)
-    ;; Whether to keep images their original size or to shrink them to fit their
-    ;; corresponding Org mode buffer.
-    (org-image-actual-width nil)
-    ;; PlantUML configuration
-    ;; Whether to use the PlantUML JAR file or the executable.
-    ;;   'plantuml -> use executable
-    ;;   'jar -> use JAR file
-    (org-plantuml-exec-mode 'plantuml)
-    (org-plantuml-executable-path (executable-find "plantuml"))
-    :init
-    ;; Make sure the Org notes directory is present.
-    (make-directory my/org-dir t)
-    ;; Also create the agenda directory.
-    (make-directory my/org-agenda-dir t)
-    :config
-    ;; Required for expand-region.
-    (require 'org-fold)
-    ;; Register PlantUML as an Org-compatible language for source blocks.
-    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
-#+end_src
-
-* Plugins
-** org-bullets
+* org-bullets
 Use fancy bullets in =org-mode=.
 
 #+begin_src emacs-lisp
@@ -98,7 +37,7 @@ activation.
     :demand t)
 #+end_src
 
-** org-roam
+* org-roam
 =org-roam= is an amazing plugin that integrates some of Roam's advanced note
 taking features into =org-mode=. =org-roam= depends on a custom SQLite
 database running behind the scenes to support its intelligent,
@@ -114,13 +53,13 @@ database into your favorite version control system. Once pulled down,
 =org-roam= will completely recreate your database from the metadata in your
 repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam database on GitHub]].
 
-*** Variables
+** Variables
 #+begin_src emacs-lisp
   (defvar my/org-roam-dir (file-truename (concat user-emacs-directory "roam-notes"))
     "The directory acting as my `org-roam' database.")
 #+end_src
 
-*** =use-package= specification
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package org-roam
     :after (emacsql org)
@@ -150,7 +89,7 @@ repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam databas
     (org-roam-db-autosync-enable))
 #+end_src
 
-** org-super-agenda
+* org-super-agenda
 Improved Org agenda that allows you to break your agenda items up into
 sections.
 
@@ -159,7 +98,7 @@ sections.
     :after org)
 #+end_src
 
-** org-download
+* org-download
 Utility for moving downloaded images into Org buffers.
 
 #+begin_src emacs-lisp
@@ -175,7 +114,7 @@ Utility for moving downloaded images into Org buffers.
     (make-directory org-download-image-dir t))
 #+end_src
 
-** org-preview-html
+* org-preview-html
 Preview org files in Emacs rendered as HTML.
 
 #+begin_src emacs-lisp
@@ -183,7 +122,7 @@ Preview org files in Emacs rendered as HTML.
     :after org)
 #+end_src
 
-** org-tree-slide
+* org-tree-slide
 Give beautiful presentations from regular Org mode buffers! This is a
 must-have plugin for the Org enthusiast.
 
@@ -203,7 +142,7 @@ navigate slides.
       "C-<" 'org-tree-slide-move-previous-tree))
 #+end_src
 
-** ob-mermaid
+* ob-mermaid
 Generate mermaid diagrams from =org-babel= source blocks. Adding a source
 block is easy. Simple guard your mermaid code with a code block similar to
 this: =#+begin_src mermaid :file output_file.png=
@@ -228,7 +167,7 @@ Supports the following properties:
         (ob-mermaid-cli-path (executable-find "mmdc")))
     #+end_src
 
-** ox-gfm
+* ox-gfm
 This is a small exporter based on the Markdown exporter already existing in
 Org mode.
 
@@ -240,7 +179,7 @@ Org mode.
     (require 'ox-gfm nil t))
 #+end_src
 
-** org-sticky-header
+* org-sticky-header
 Keep the =org-mode= header for the current section at the top of the buffer.
 
 #+begin_src emacs-lisp
@@ -257,7 +196,7 @@ Keep the =org-mode= header for the current section at the top of the buffer.
     (org-sticky-header-heading-star "◉"))
 #+end_src
 
-** org-web-tools
+* org-web-tools
 A library of Org mode functions for inserting copied URLs into Org buffers,
 processing HTML into Org syntax, and much more. A very powerful package!
 
