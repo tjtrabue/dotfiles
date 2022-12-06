@@ -20,7 +20,16 @@ start_postgres() {
   local dataDir="${prefix}/var/postgres"
 
   log_info "Starting PostgreSQL server for data dir: ${BLUE}${dataDir}${NC}"
-  pg_sql -D "${dataDir}" start
+  pg_ctl -D "${dataDir}" start
+}
+
+# Stop the PostgreSQL server.
+stop_postgres() {
+  local prefix="/usr/local"
+  local dataDir="${prefix}/var/postgres"
+
+  log_info "Stopping PostgreSQL server"
+  pg_ctl -D "${dataDir}" stop
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
