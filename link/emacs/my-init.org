@@ -1001,7 +1001,7 @@ path is already calculated.
       ;; If we have compiled our `~/.path_static` file, use the PATH in that file
       ;; because using that PATH is much faster than calculating it dynmaically.
       (setenv "PATH" (substitute-env-vars
-                      (shell-command-to-string "cat ~/.path_static | grep '^\s*PATH=' | sed -e 's/^\s*PATH=//' -e 's/\"//g'")))
+                      (shell-command-to-string (concat "cat " my/static-path-file " | grep '^\s*PATH=' | sed -e 's/^\s*PATH=//' -e 's/\"//g'"))))
     ;; When launched as a graphical application, Emacs typically inherits a
     ;; default PATH variable, not the user's.  This can be annoying when it comes
     ;; to launching external applications from within Emacs.  This plugin solves
