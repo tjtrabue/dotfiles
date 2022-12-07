@@ -36,6 +36,9 @@ regardless of its particular dialect.
         "]"
         "{"
         "}")
+      :custom
+      ;; Make lispy compatible with the following Lisp minor modes.
+      (lispy-compat '(edebug cider))
       :init
       ;; Whether to consider all open parens in the window, rather than just the
       ;; open parens in the current defun.
