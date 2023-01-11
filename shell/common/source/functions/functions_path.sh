@@ -179,8 +179,14 @@ __spath_write_path_file_hash() {
 __spath_generate_hash_for_path_file() {
   local binPathFile=${PATH_FILE:-${HOME}/.path}
   local pathFile="${1:-${binPathFile}}"
+  local hashCmd="md5sum ${pathFile} | awk '{print \$1}'"
 
-  md5 "${pathFile}" | awk '{print $4}'
+  if [ ! -x "$(command -v md5sum)" ]; then
+    # macOS uses a different command to generate MD5 hashes.
+    hashCmd="md5 ${pathFile} | awk '{print \$4}'"
+  fi
+
+  eval "${hashCmd}"
 }
 
 # Echo a path variable (PATH by default) and its value to stdout.
