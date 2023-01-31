@@ -218,9 +218,11 @@ src_luarocks_module_path() {
 
 # Write additional paths to the ~/.path file depending on the operating system.
 add_extra_paths_to_path_file() {
-  local extraPathFilesDir="${DOTFILES_COPY}/path_files"
+  local dotHome="${DOTFILES_HOME:-${HOME}/.dotfiles}"
+  local dotCopy="${DOTFILES_COPY:-${dotHome}/copy}"
+  local extraPathFilesDir="${dotCopy}/path_files"
   local os="$(uname -s)"
-  local extraPathsFile
+  local extraPathsFile="NONE"
 
   log_info 'Looking for extra executable paths to add to $PATH...'
   case "${os}" in

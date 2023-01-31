@@ -69,15 +69,23 @@ mkbin() {
   chmod 755 "$executableName"
 }
 
-# Return parent shell interpreter currently running, such as "bash", "zsh",
-# or even "python" or "php".
+# Return the name of the currently running shell interpreter.
 currentshell() {
-  local parentInterpreter="$(ps -ho args='' -p "$$")"
+  local userShell="${SHELL}"
 
-  # Shave off leading '-' character.
-  basename "$(printf "%s" "${parentInterpreter}" |
-    sed 's/^\s*-//' |
-    cut -d' ' -f1)"
+  if [ -z "${userShell}" ]; then
+    userShell="${0}"
+  fi
+
+  if [ -z "${userShell}" ]; then
+    userShell="$(ps -ho args='' "$$")"
+  fi
+
+  if [ -n "${userShell}" ]; then
+    printf '%s' "$(basename "${userShell}")"
+  else
+    printf ''
+  fi
 }
 
 # Run a command over multiple lines of input from stdin or from a file

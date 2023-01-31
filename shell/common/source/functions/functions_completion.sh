@@ -151,7 +151,7 @@ __add_custom_zsh_git_completions() {
 
 # Install additional Zsh command line completions
 __add_extra_zsh_completions() {
-  local repoUrl="git://github.com/zsh-users/zsh-completions.git"
+  local repoUrl="https://github.com/zsh-users/zsh-completions"
   local repoDir="${HOME}/.zsh_completions"
 
   log_info "Adding extra Zsh completions"

@@ -139,12 +139,16 @@ __src_readline_init_file() {
 
 # Source all functions and alias files for any POSIX-compliant shell.
 __src() {
-  local parentInterpreter="$(ps -ho args='' -p "$$")"
-  # Shave off leading '-' character.
-  local currentShell="$(basename "$(printf "%s" "${parentInterpreter}" |
-    sed 's/^\s*-//' |
-    cut -d' ' -f1)")"
-  local srcDir
+  local srcDir=""
+
+  # Source .vars, .var_overrides, and .dirs.
+  __src_env_setup_files
+
+  # Source all alias/function/other files common to all shells.
+  __src_standard_subdirs_under_dir "${COMMON_SOURCE}"
+
+  # Figure out which UNIX shell we are using.
+  local currentShell="$(currentshell)"
 
   # Determine in which directory our shell-specific aliases and functions
   # reside.
@@ -156,12 +160,7 @@ __src() {
     srcDir="${DOTFILES_ZSH}/source"
   fi
 
-  # Source .vars, .var_overrides, and .dirs.
-  __src_env_setup_files
-
-  # Source all alias/function/other files, both in the common source directory
-  # and in current shell's source directory.
-  __src_standard_subdirs_under_dir "${COMMON_SOURCE}"
+  # Source all alias/function/other files specific to the user's current shell.
   __src_standard_subdirs_under_dir "${srcDir}"
 
   # Source OS-specific aliases and functions.

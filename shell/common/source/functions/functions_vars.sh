@@ -4,7 +4,8 @@
 add_extra_os_vars() {
   local userVars="${VAR_OVERRIDES_FILE:-${HOME}/.var_overrides}"
   local os="$(getdistro)"
-  local dotCopy="${DOTFILES_COPY:-${DOTFILES_HOME}/copy}"
+  local dotHome="${DOTFILES_HOME:-${HOME}/.dotfiles}"
+  local dotCopy="${DOTFILES_COPY:-${dotHome}/copy}"
   local extraVarsDir="${dotCopy}/var_files"
   local extraVarsLinuxDir="${extraVarsDir}/linux"
   local extraVarsMacDir="${extraVarsDir}/mac"
@@ -25,14 +26,16 @@ add_extra_os_vars() {
     ;;
   esac
 
-  if [ ! -f "${extraVarsFile}" ]; then
-    __init_var_overrides_file
+  # Backup the var_overrides file before proceeding.
+  if [ -f "${userVars}" ]; then
+    cp -f "${userVars}"{,.bak}
   else
-    # Make a backup of the ~/.var_overrides file, just in case.
-    cp "${userVars}"{,.bak}
+    __init_var_overrides_file "${userVars}"
   fi
 
-  __inject_var_file_contents_into_var_overrides "${extraVarsFile}"
+  if [ -f "${extraVarsFile}" ]; then
+    __inject_var_file_contents_into_var_overrides "${extraVarsFile}"
+  fi
 
   log_info "Done injecting additional OS variables"
 }
@@ -59,9 +62,10 @@ __inject_var_file_contents_into_var_overrides() {
 }
 
 __init_var_overrides_file() {
-  local userVars="${VAR_OVERRIDES_FILE:-${HOME}/.var_overrides}"
+  local userVars="${1:-${HOME}/.var_overrides}"
 
-  # Create the ~/.var_overrides file if necessary with basic information.
+  log_info "Initializing empty var overrides file: ${BLUE}${userVars}${NC}"
+
   command cat <<EOF >>"${userVars}"
 #!/bin/sh
 

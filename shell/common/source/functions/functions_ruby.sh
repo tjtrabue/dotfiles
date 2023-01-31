@@ -23,10 +23,8 @@ add_gem_bin_dirs_to_path() {
 
 # Install Ruby Version Manager (rvm) for any supported platform.
 install_rvm() {
-  local rvmHome="${RVM_DIR:-${HOME}/.rvm}"
-
-  install_tool_from_url_and_script "rvm" "${rvmHome}" \
-    "https://get.rvm.io"
+  # Download RVM, and do not add boilerplate to shell RC files.
+  \curl -sSL "https://get.rvm.io" | bash -s -- --ignore-dotfiles
 }
 
 # Use rvm to install the latest ruby.
