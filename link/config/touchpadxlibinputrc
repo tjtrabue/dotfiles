@@ -5,3 +5,8 @@ tapToClick=true
 
 [Synaptics TM3418-002]
 pointerAcceleration=0.2
+
+[Synaptics TM3512-010]
+naturalScroll=true
+pointerAcceleration=0.01
+tapToClick=true

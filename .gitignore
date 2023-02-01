@@ -381,4 +381,8 @@ link/config/git-cola
 link/config/AWSVPNClient/
 # }}}
 
+# rclone cloud file tool {{{
+link/config/rclone/rclone.conf
+# }}}
+
 # vim:foldenable:foldmethod=marker
