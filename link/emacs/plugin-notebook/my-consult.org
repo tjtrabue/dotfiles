@@ -20,7 +20,7 @@ myriad systems benefit from Consult's functions.
 
 * What is Consult really?
   Consult fulfills the same role for Ido, Selectrum, Vertico, and more that
-  Counsel fills for Ivy. You can think of Selectrum/Vertico, Consult, and Embark
+  Counsel does for Ivy. You can think of Selectrum/Vertico, Consult, and Embark
   as a similar tool suite to Ivy, Counsel, and Swiper, although these triplets
   do not match up one-to-one. The main difference between these two tool suites
   is that Ivy, Counsel, and Swiper are exclusive to one another, not integrating
