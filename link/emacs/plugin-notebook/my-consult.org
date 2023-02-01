@@ -57,10 +57,13 @@ completion buffer to some category. For example:
       :general
       (my/user-leader-def
         ;; C-c bindings (mode-specific-map)
+        "M-x" 'consult-mode-command
         "h" 'consult-history
-        "m" 'consult-mode-command
         "B" 'consult-bookmark
-        "k" 'consult-kmacro)
+        "i" 'consult-info
+        [remap Info-search] 'consult-info
+        "k" 'consult-kmacro
+        "m" 'consult-man)
       (general-def
         ;; orig. repeat-complex-command
         "C-x M-:" 'consult-complex-command
@@ -80,8 +83,6 @@ completion buffer to some category. For example:
         ;; Other custom bindings
         ;; orig. yank-pop
         "M-y" 'consult-yank-pop
-        ;; orig. apropos-command
-        "<help> a" 'consult-apropos
         ;; M-g bindings (goto-map)
         "M-g e" 'consult-compile-error
         ;; Alternative: consult-flycheck
@@ -103,7 +104,7 @@ completion buffer to some category. For example:
         "M-s G" 'consult-git-grep
         "M-s r" 'consult-ripgrep
         "M-s l" 'consult-line
-        "M-s m" 'consult-multi-occur
+        "M-s L" 'consult-line-multi
         "M-s k" 'consult-keep-lines
         "M-s u" 'consult-focus-lines
         ;; recentf
@@ -113,6 +114,7 @@ completion buffer to some category. For example:
       (general-def 'normal
         ;; Use better consult-buffer over switch-to-buffer
         "C-e" 'consult-buffer)
+      ;; Isearch integration
       (general-def isearch-mode-map
         ;; orig. isearch-edit-string
         "M-e" 'consult-isearch-history
@@ -122,6 +124,12 @@ completion buffer to some category. For example:
         "M-s l" 'consult-line
         ;; needed by consult-line to detect isearch
         "M-s L" 'consult-line-multi)
+      ;; Minibuffer history
+      (general-def minibuffer-local-map
+        ;; orig. next-matching-history-element
+        "M-s" 'consult-history
+        ;; orig. previous-matching-history-element
+        "M-r" 'consult-history)
       (my/evil-leader-def
         ;; Open the fancy consult-buffer navigator.
         "cb" 'consult-bookmark)
@@ -132,45 +140,56 @@ completion buffer to some category. For example:
       (completion-list-mode . consult-preview-at-point-mode)
       ;; The :init configuration is always executed (Not lazy)
       :init
+      ;; Optionally configure the register formatting. This improves the register
+      ;; preview for `consult-register', `consult-register-load',
+      ;; `consult-register-store' and the Emacs built-ins.
+      (setq register-preview-delay 0.5
+            register-preview-function #'consult-register-format)
       ;; Optionally tweak the register preview window.
       ;; This adds thin lines, sorting and hides the mode line of the window.
       (advice-add #'register-preview :override #'consult-register-window)
       ;; Configure other variables and modes in the :config section,
       ;; after lazily loading the package.
-      :custom
-      ;; Optionally configure the register formatting. This improves the register
-      ;; preview for `consult-register', `consult-register-load',
-      ;; `consult-register-store' and the Emacs built-ins.
-      (register-preview-delay 0.5)
-      (register-preview-function #'consult-register-format)
       ;; Use Consult to select xref locations with preview
-      (xref-show-xrefs-function #'consult-xref)
-      (xref-show-definitions-function #'consult-xref)
+      (setq xref-show-xrefs-function #'consult-xref
+            xref-show-definitions-function #'consult-xref)
+      :custom
       ;; Optionally configure the narrowing key.
       ;; Both < and C-+ work reasonably well.
       (consult-narrow-key "<")
-      ;; Optionally configure a function which returns the project root directory.
-      (consult-project-root-function #'projectile-project-root)
       ;; Optionally configure preview. The default value
       ;; is 'any, such that any key triggers the preview.
-      (consult-preview-key (kbd "C-;"))
-      ;; Improve the standard completion in region function
-      (completion-in-region-function #'consult-completion-in-region)
+      ;; (consult-preview-kkey (kbd "C-;"))
       ;; (consult-preview-key 'any)
       ;; (consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
       :config
+      ;; Use `consult-completion-in-region' if Vertico is enabled.
+      ;; Otherwise use the default `completion--in-region' function.
+      (setq completion-in-region-function
+            (lambda (&rest args)
+              (apply (if vertico-mode
+                         #'consult-completion-in-region
+                       #'completion--in-region)
+                     args)))
       ;; For some commands and buffer sources it is useful to configure the
       ;; :preview-key on a per-command basis using the `consult-customize' macro.
       (consult-customize
-       consult-theme
-       :preview-key 'any
-       consult-grep consult-git-grep consult-ripgrep
+       ;; For the following Consult commands, debounce the preview to avoid stuttery
+       ;; UI behavior.
+       consult-ripgrep consult-git-grep consult-grep
        consult-bookmark consult-recent-file consult-xref
-       :preview-key (kbd "C-;"))
+       consult--source-bookmark consult--source-file-register
+       consult--source-recent-file consult--source-project-recent-file
+       :preview-key '(:debounce 0.2 any))
       ;; Optionally make narrowing help available in the minibuffer.
       ;; You may want to use `embark-prefix-help-command' or which-key instead.
-      (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
+      (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+      ;; Use Projectile as backend for `consult-project-function'.
+      (autoload 'projectile-project-root "projectile")
+      (setq consult-project-function (lambda (_) (projectile-project-root))))
   #+end_src
+
+  #+RESULTS:
 
 * Plugins
 ** consult-dir
