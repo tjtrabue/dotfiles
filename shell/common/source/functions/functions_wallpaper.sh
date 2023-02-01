@@ -41,8 +41,8 @@ create_wallpaper_archive() {
 update_wallpaper_in_google_drive() {
   local wallpaperArchiveFile="${HOME}/wallpaper.tar.gz"
 
-  if [ ! -x "$(command -v gdrive)" ]; then
-    err "${BLUE}gdrive${NC} is required to upload files to Google Drive."
+  if [ ! -x "$(command -v rclone)" ]; then
+    err "${CYAN}rclone${NC} is required to upload files to Google Drive."
     return 1
   fi
 
@@ -50,7 +50,9 @@ update_wallpaper_in_google_drive() {
   create_wallpaper_archive "${wallpaperArchiveFile}"
 
   # Upload the new archive
-  gdrive upload "${wallpaperArchiveFile}"
+  # NOTE: The name of the configured Google Drive rclone remote must be 'drive'.
+  rclone copy "${wallpaperArchiveFile}" \
+    "drive:$(basename "${wallpaperArchiveFile}")"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

@@ -272,6 +272,7 @@ link/config/QtProject.conf
 link/config/Trolltech.conf
 link/config/Unknown\ Organization/
 link/config/akregatorrc
+link/config/arkrc
 link/config/baloofileinformationrc
 link/config/baloofilerc
 link/config/bluedevilglobalrc
@@ -298,11 +299,13 @@ link/config/kded5rc
 link/config/kdedefaults
 link/config/kdeglobals
 link/config/kfontinstuirc
+link/config/kgetrc
 link/config/kglobalshortcutsrc
 link/config/khelpcenterrc
 link/config/khotkeysrc
 link/config/khtml
 link/config/kinfocenterrc
+link/config/kioslaverc
 link/config/kmail2rc
 link/config/kmixctrlrc
 link/config/kmixrc
@@ -327,6 +330,7 @@ link/config/plasmashellrc
 link/config/powermanagementprofilesrc
 link/config/sddmthemeinstallerrc
 link/config/session/
+link/config/signond/
 link/config/specialmailcollectionsrc
 link/config/spectaclerc
 link/config/systemsettingsrc
