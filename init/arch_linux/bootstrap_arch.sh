@@ -298,9 +298,11 @@ echo "LANG=en_US.UTF-8" >"${MOUNT_ROOT}/etc/locale.conf"
 
 # Add admin user and set password {{{
 info_log "Configuring users and groups"
-info_log "Adding user ${USERNAME}"
+info_log "Adding user ${USERNAME}, and assigning to default groups"
 arch-chroot "${MOUNT_ROOT}" useradd -mU -G \
   wheel,uucp,video,audio,storage,games,input "${USERNAME}"
+info_log "Creating autologin group and adding ${USERNAME} to it"
+arch-chroot "${MOUNT_ROOT}" groupadd -r -U "${USERNAME}" autologin
 
 info_log "Changing pasword for ${USERNAME}"
 arch-chroot "${MOUNT_ROOT}" chpasswd <<<"${USERNAME}:${PASSWORD}"

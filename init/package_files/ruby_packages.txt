@@ -1,2 +1,4 @@
 colorls
+fusuma
+fusuma-plugin-sendkey
 neovim

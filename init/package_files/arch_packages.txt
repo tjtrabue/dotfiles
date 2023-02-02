@@ -206,6 +206,7 @@ xorg-xinput
 xscreensaver
 xsel
 xterm
+ydotool
 yq
 zathura
 zathura-pdf-poppler
