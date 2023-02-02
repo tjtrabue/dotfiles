@@ -27,9 +27,29 @@ through a tutorial or two.
           ;; Compile to PDF by default
           TeX-PDF-mode t
           ;; Do not ask for permission before saving TeX files when compiling
-          TeX-save-query nil)
+          TeX-save-query nil
+          TeX-show-compilation nil
+          TeX-file-extensions '("Rnw"
+                                "rnw"
+                                "Snw"
+                                "snw"
+                                "tex"
+                                "sty"
+                                "cls"
+                                "ltx"
+                                "texi"
+                                "texinfo"
+                                "dtx"))
     ;; Allow AUCTeX to work with multiple files like a project
-    (setq-default TeX-master nil)
+    (setq-default TeX-master nil
+                  ;; Use the XeTeX engine by default, which assumes Unicode and
+                  ;; works better out of the box.
+                  TeX-engine 'xetex)
+    ;; Expand the `"' character into csquotes macros.  This requires that the
+    ;; `babel' package be loaded after the `csquotes' package.
+    (setq LaTeX-csquotes-open-quote "\\enquote{"
+          LaTeX-csquotes-close-quote "}")
+    (setq reftex-plug-into-AUCTeX '(t t t t t))
     ;; Revert pdf-view after compilation
     (add-hook 'TeX-after-compilation-finished-functions
               #'TeX-revert-document-buffer))
