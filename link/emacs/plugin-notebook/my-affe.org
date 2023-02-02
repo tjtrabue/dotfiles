@@ -7,8 +7,8 @@
 
 AFFE provides features similar to =fzf=, but is written in pure Elisp. It
 depends on Consult, and works best when plugged with Orderless for ranking and
-sorting results.  AFFE also functions best alongside the =rg= commandline utility,
-which greatly enhances AFFE's performance.
+sorting results.  AFFE also functions best alongside the =rg= commandline
+utility, which greatly enhances AFFE's performance.
 
 AFFE provides two functions: =affe-grep= for searching text, and =affe-find= for
 finding files by name.
@@ -29,10 +29,12 @@ finding files by name.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package affe
+    :after consult
     :commands (affe-grep affe-find)
     :general
     (general-def 'normal 'override
-      "C-r" 'affe-grep)
+      "C-r" 'affe-grep
+      "M-r" 'affe-find)
     :custom
     ;; Change how affe's regex engine behaves, including sorting/filtering.
     ;; The default value is:
@@ -40,5 +42,5 @@ finding files by name.
     (affe-regexp-compiler #'affe-orderless-regexp-compiler)
     :config
     ;; ; Manual preview key for `affe-grep'
-    (consult-customize affe-grep :preview-key (kbd "M-.")))
+    (consult-customize affe-grep :preview-key '("C-n")))
 #+end_src

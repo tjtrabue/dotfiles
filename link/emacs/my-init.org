@@ -234,7 +234,7 @@ auto-save feature for buffers.
     (when (not (file-directory-p dir))
       (make-directory dir t)))
   (setq backup-directory-alist
-        `(("." . ,(file-truename my/emacs-backup-dir))))
+        `((".*" . ,(file-truename (concat my/emacs-backup-dir "/")))))
   (setq auto-save-file-name-transforms
         `((".*" ,(file-truename (concat my/emacs-auto-saves-dir "/")) t)))
   (setq auto-save-list-file-prefix
@@ -908,6 +908,25 @@ configuration here if it is present.
     feature for Elisp files. This means `load' will first look for an .elc file,
     then for a .el file in lieu of that."
                              (load (file-name-sans-extension f) args))))
+#+end_src
+
+* Periodically Purge Backup/Temp Files
+We do not want to clutter up our backup and temporary file directories with old,
+stale files. We should periodically purge old files from these directories.
+
+#+begin_src emacs-lisp
+  (message "Deleting old backup and auto-save files...")
+  (let ((week (* 60 60 24 7))
+        (current (float-time (current-time))))
+    (dolist (file (append (directory-files
+                           (concat (file-truename my/emacs-backup-dir) "/") t)
+                          (directory-files
+                           (concat (file-truename my/emacs-auto-saves-dir) "/") t)))
+      (when (and (backup-file-name-p file)
+                 (> (- current (float-time (nth 5 (file-attributes file))))
+                    week))
+        (message "%s" file)
+        (delete-file file))))
 #+end_src
 
 * Package Manager
