@@ -33,7 +33,9 @@ pack-cli-bin
 polybar-git
 roswell
 swift-bin
+texlive-latexindent-meta
 thunderbird-nightly-bin
+tllocalmgr
 ttf-nerd-fonts-symbols-2048-em-mono
 up
 vmtouch-git
