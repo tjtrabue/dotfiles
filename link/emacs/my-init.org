@@ -911,7 +911,7 @@ configuration here if it is present.
 #+end_src
 
 * Periodically Purge Backup/Temp Files
-We do not want to clutter up our backup and temporary file directories with old,
+We do not want to clutter up our backup and auto-save file directories with old,
 stale files. We should periodically purge old files from these directories.
 
 #+begin_src emacs-lisp
