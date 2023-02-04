@@ -11,6 +11,12 @@ install_digestif_lsp() {
   local destDir="${prefix}/bin"
   local digestifPath="${destDir}/digestif"
 
+  if [ -x "${digestifPath}" ]; then
+    warn "${CYAN}digestif${NC} wrapper already exists in expected location." \
+      "Exiting."
+    return 1
+  fi
+
   log_info "Installing digestif wrapper script to: ${BLUE}${digestifPath}${NC}"
   mkdir -p "${destDir}"
   curl -sL -o "${digestifPath}" -- "${digestifWrapperUrl}"
