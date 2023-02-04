@@ -247,11 +247,8 @@ the =~/.plsense= configuration file containing the proper settings.
 ** company-auctex
 #+begin_src emacs-lisp
   (use-package company-auctex
-    :after (auctex company)
     :hook
-    (tex-mode . (lambda ()
-                  (add-to-list 'company-backends 'company-auctex)
-                  (company-auctex-init))))
+    ((latex-mode tex-mode) . company-auctex-init))
 #+end_src
 
 ** company-lsp

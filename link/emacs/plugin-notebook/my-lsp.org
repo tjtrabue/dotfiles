@@ -123,6 +123,8 @@ documentation on hover, syntax linting and error checking, etc.
     (lsp-typescript-update-imports-on-file-move-enabled 'always)
     ;; Who wants to fill out surveys?
     (lsp-typescript-surveys-enabled nil)
+    ;;; digestif LaTeX LSP
+    (lsp-tex-server 'digestif)
     :hook
     ;; NOTE: We set language mode hooks in the Functions section of this file.
     (lsp-mode . (lambda ()
