@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+declare DOTFILES_LINK="${DOTFILES_REPO}/link"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC}
+
+Initialize Clojure configuration files.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+
+link_dot_clojure_dir() {
+  local dotClojureDir="${DOTFILES_LINK}/clojure"
+  local dotClojureTarget="${HOME}/.clojure"
+
+  if [ ! -h "${dotClojureTarget}" ]; then
+    log_info "Linking clojure global config dir to:" \
+      "${BLUE}${dotClojureTarget}${NC}"
+    ln -sf "${dotClojureDir}" "${dotClojureTarget}"
+  fi
+}
+
+link_shadow_cljs_dir() {
+  local shadowCljsConfigDir="${DOTFILES_LINK}/shadow-cljs"
+  local shadowCljsConfigTarget="${HOME}/.shadow-cljs"
+
+  if [ ! -h "${shadowCljsConfigTarget}" ]; then
+    log_info "Linking shadow-cljs config dir to:" \
+      "${BLUE}${shadowCljsConfigTarget}${NC}"
+    ln -sf "${shadowCljsConfigDir}" "${shadowCljsConfigTarget}"
+  fi
+}
+
+main() {
+  print_header "Initializing Clojure"
+  link_dot_clojure_dir
+  link_shadow_cljs_dir
+  log_info "Done"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
