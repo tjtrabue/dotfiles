@@ -176,11 +176,12 @@ completion buffer to some category. For example:
       (consult-customize
        ;; For the following Consult commands, debounce the preview to avoid stuttery
        ;; UI behavior.
-       consult-ripgrep consult-git-grep consult-grep
+       consult-theme consult-ripgrep consult-git-grep consult-grep
+       :preview-key '(:debounce 0.2 any)
        consult-bookmark consult-recent-file consult-xref
        consult--source-bookmark consult--source-file-register
        consult--source-recent-file consult--source-project-recent-file
-       :preview-key '(:debounce 0.2 any))
+       :preview-key '(:debounce 0.4 any))
       ;; Optionally make narrowing help available in the minibuffer.
       ;; You may want to use `embark-prefix-help-command' or which-key instead.
       (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
@@ -188,8 +189,6 @@ completion buffer to some category. For example:
       (autoload 'projectile-project-root "projectile")
       (setq consult-project-function (lambda (_) (projectile-project-root))))
   #+end_src
-
-  #+RESULTS:
 
 * Plugins
 ** consult-dir
@@ -254,7 +253,17 @@ awesome =consult=-ing read front end for =projectile= functions.
     :init
     (advice-add #'consult-projectile-find-file
                 :after
-                #'my/add-current-buffer-to-perspective))
+                #'my/add-current-buffer-to-perspective)
+    :config
+    (consult-customize
+     ;; Set preview key for consult-projectile UIs:
+     consult-projectile
+     consult-projectile-find-file
+     consult-projectile-recentf
+     consult-projectile--source-projectile-buffer
+     consult-projectile--source-projectile-file
+     consult-projectile--source-projectile-recentf
+     :preview-key '(:debounce 0.4 any)))
 #+end_src
 
 ** consult-yasnippet

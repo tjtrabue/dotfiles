@@ -102,7 +102,9 @@ Create a split pane with an updatable LateX preview. Not performant, so I don't
 use this plugin often.
 
 #+begin_src emacs-lisp
-  (use-package latex-preview-pane)
+  (use-package latex-preview-pane
+    ;; Not necessary, and apparently unmaintained.
+    :disabled)
 #+end_src
 
 ** math-preview
