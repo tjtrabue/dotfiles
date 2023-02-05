@@ -157,4 +157,17 @@ Try manually starting the agent by running these commands:
 EOF
 }
 
+# Copy the user's SSH public key to the clipboard.
+copy_ssh_pub_key() {
+  local sshDir="${HOME}/.ssh"
+  local sshPubKeyFile="${1:-${sshDir}/id_rsa.pub}"
+
+  if [ ! -f "${sshPubKeyFile}" ]; then
+    err "No SSH public key file found at: ${BLUE}${sshPubKeyFile}${NC}"
+    return 1
+  fi
+
+  cat "${sshPubKeyFile}" | tr -d '\n' | clipboard
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
