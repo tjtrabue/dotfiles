@@ -12,7 +12,7 @@ amazing LaTeX live-preview plugins for over a decade, but Emacs has never had an
 even semi-decent counterpart. But! We are Lisp hackers, and we always, always
 find a way to do what we want, regardless of how stupid the solution is.
 
-To get a live preview in Emacs, do this:
+To get a live-preview in Emacs, do this:
 
 - Open your =.tex= file in Emacs,
 - Make sure you've compiled the file at least once using AUCTeX,
@@ -20,9 +20,16 @@ To get a live preview in Emacs, do this:
   run the following command: =latexmk -pvc -pdf <file name>=. This command
   re-compiles the output PDF whenever you make changes to the source =.tex= file,
 - Now, open the compiled =.pdf= file in a PDF viewing program capable of
-  reloading on-the-fly, such as Evince or Zathura,
-- Return to Emacs, make a change to the file, save the file, and watch your PDF
-  viewer update in real time!
+  reloading on-the-fly, such as Evince or Zathura, by pressing =C-c C-c= and
+  selecting =View=,
+  - You can change the default PDF viewing program AUCTeX uses by setting
+    =output-pdf= to your favorite viewer in =TeX-view-program-selection=:
+    #+begin_src emacs-lisp :tangle no
+      (push (list 'output-pdf "Zathura")
+                          TeX-view-program-selection)
+    #+end_src
+- In your =.tex= file, make a change, save the file, and watch your PDF viewer
+  update in real time!
 
 Voila! You now have an almost-instant preview of your TEX document.
 
