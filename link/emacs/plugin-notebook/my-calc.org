@@ -1,0 +1,21 @@
+#+title:   Calculator Config/Plugins
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2023:02:06
+#+tags: calc calculator
+#+STARTUP: fold
+
+Emacs has some pretty sweet built-in calculator features, as well as some even
+sweeter plugins.
+
+* literate-calc-mode
+Displays inline results for calculations, supports variables and updates as you
+type (if you want). Also works in your favourite markup mode.
+
+#+begin_src emacs-lisp
+  (use-package literate-calc-mode
+    :hook
+    ((markdown-mode
+      org-mode)
+     . literate-calc-minor-mode))
+#+end_src

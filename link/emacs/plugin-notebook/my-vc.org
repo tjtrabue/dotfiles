@@ -160,7 +160,7 @@ maintained.
   (use-package diff-hl
     :demand t
     :hook
-    ;; These hooks are needed for Magit 2.4 and newer.
+    ;; Need these hooks for Magit 2.4 and newer.
     ((magit-pre-refresh . diff-hl-magit-pre-refresh)
      (magit-post-refresh . diff-hl-magit-post-refresh))
     :config

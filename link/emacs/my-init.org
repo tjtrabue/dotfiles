@@ -1179,6 +1179,9 @@ your org file.
 The tangling process happens asynchronously so it will not block your emacs
 session.
 
+If =org-auto-tangle-mode= is on, it will try to automatically tangle your org
+files if they contain a non-nil value for the =#+auto_tangle:= option.
+
 #+begin_src emacs-lisp
   (use-package org-auto-tangle
     :hook

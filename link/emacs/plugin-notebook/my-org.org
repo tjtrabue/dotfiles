@@ -179,6 +179,22 @@ Org mode.
     (require 'ox-gfm nil t))
 #+end_src
 
+* org-ql
+This package provides a query language for Org files. It offers two syntax
+styles: Lisp-like sexps and search engine-like keywords.
+
+It includes three libraries: The =org-ql= library is flexible and may be used as
+a backend for other tools. The libraries =org-ql-search= and =helm-org-ql= (a
+separate package) provide interactive search commands and saved views.
+
+=org-ql= is a /very/ feature-rich package, and quite complex. It takes some time
+to learn, but if you make prolific use of Org mode, =org-ql= can be a
+game-changer.
+
+#+begin_src emacs-lisp
+  (use-package org-ql)
+#+end_src
+
 * org-sticky-header
 Keep the =org-mode= header for the current section at the top of the buffer.
 
@@ -194,6 +210,13 @@ Keep the =org-mode= header for the current section at the top of the buffer.
     (org-sticky-header-full-path 'full)
     ;; The prefix string for the sticky header-line.
     (org-sticky-header-heading-star "◉"))
+#+end_src
+
+* org-trello
+Minor mode to synchronize org-mode buffer and a Trello board.
+
+#+begin_src emacs-lisp
+  (use-package org-trello)
 #+end_src
 
 * org-web-tools
