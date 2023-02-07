@@ -1171,6 +1171,23 @@ try to load =org= later.
     (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
 #+end_src
 
+** org-auto-tangle
+=org-auto-tangle= is a simple emacs package that allows you to automatically
+tangle org files on save. You do this by adding the option =#+auto_tangle: t= in
+your org file.
+
+The tangling process happens asynchronously so it will not block your emacs
+session.
+
+#+begin_src emacs-lisp
+  (use-package org-auto-tangle
+    :hook
+    (org-mode . org-auto-tangle-mode)
+    :custom
+    ;; Whether to use auto-tangle as the default behavior for all org buffers.
+    (org-auto-tangle-default t))
+#+end_src
+
 * Load External Configuration Files
 Load additional Emacs configuration files from my custom plugins directories.
 Most of these files correspond directly to third-party dependencies from MELPA.

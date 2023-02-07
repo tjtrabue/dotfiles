@@ -9,12 +9,12 @@ Here we place plugins for managing whitespace across files as you edit them. The
 ability to edit an existing file while both respecting existing whitespace
 content and not introducing more trailing whitespace is a mark of a seasoned and
 professional software developer. This practice accomplishes two important tasks:
-first, it ensures that any commits you make to a code base have as few edited
-lines as is necessary, and second, it keeps your code contributions clean.
+first, it ensures that any commits you make to a codebase have as few edited
+lines as necessary, and second, it keeps your code contributions clean.
 
 * whitespace-cleanup-mode
-  Cleans trailing whitespace on buffer save, but only for lines of code that
-  have been edited.
+Cleans trailing whitespace when saving a buffer, but only for edited lines of
+code.
 
 #+begin_src emacs-lisp
   (use-package whitespace-cleanup-mode
@@ -24,12 +24,12 @@ lines as is necessary, and second, it keeps your code contributions clean.
 #+end_src
 
 * clean-aindent-mode
-  This minor mode makes sure to trim trailing whitespace left over once you hit
-  Return on your keyboard and =electric-indent-mode= places your cursor at an
-  indented column on the new line. Normally, if you use your navigation keys to
-  move the cursor off of that indented location, then the whitespace is left
-  hanging there. However, with =clean-aindent-mode= those spaces will be removed
-  once your cursor moves away.
+This minor mode makes sure to trim trailing whitespace left over once you press
+Return on your keyboard and =electric-indent-mode= places your cursor at an
+indented column on the new line. Normally, if you use your navigation keys to
+move the cursor off of that indented location, Emacs preserves any trailing
+spaces.  However, =clean-aindent-mode= will remove those spaces once your cursor
+moves away.
 
 #+begin_src emacs-lisp
   (use-package clean-aindent-mode
@@ -46,15 +46,14 @@ lines as is necessary, and second, it keeps your code contributions clean.
 #+end_src
 
 * dtrt-indent
-  An Emacs minor mode that guesses the indentation offset originally used for
-  creating source code files and transparently adjusts the corresponding
-  settings in Emacs, making it more convenient to edit foreign files.
+An Emacs minor mode that guesses the indentation offset originally used for
+creating source code files and transparently adjusts the corresponding settings
+in Emacs, making it more convenient to edit foreign files.
 
 #+begin_src emacs-lisp
   (use-package dtrt-indent
-    :demand t
+    :hook
+    ((prog-mode text-mode) . dtrt-indent-mode)
     :custom
-    (dtrt-indent-verbosity 0)
-    :config
-    (dtrt-indent-mode 1))
+    (dtrt-indent-verbosity 0))
 #+end_src

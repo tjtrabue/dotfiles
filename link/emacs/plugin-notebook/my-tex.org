@@ -110,7 +110,7 @@ use this plugin often.
 ** math-preview
 Preview LaTeX math equations inline.
 
-*** math-preview npm package installation
+*** =math-preview= NPM package installation
 This plugin requires the external =math-preview= Node.js package in order to
 function. Install it with the following command:
 
