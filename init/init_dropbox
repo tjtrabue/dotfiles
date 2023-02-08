@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC}
+
+Initialize Dropbox in as automated a way as possible.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+
+install_dropbox__arch_linux() {
+  log_info "Initializing Dropbox for Arch Linux"
+
+  if [ -x "$(command -v dropbox)" ]; then
+    warn "dropbox client already installed. Terminating."
+    return 1
+  fi
+
+  # This package is an unnamed dependency for the dropbox client.
+  sudo pacman -S --noconfirm python-gpgme
+  # Use the AUR helper to install the dropbox client.
+  aurhi dropbox
+}
+
+install_dropbox__linux() {
+  local distro="$(getdistro)"
+
+  log_info "Installing Dropbox for a Linux distribution"
+  case "${distro}" in
+  "Arch Linux")
+    install_dropbox__arch_linux
+    ;;
+  *)
+    err "Unsupported Linux distro: ${MAGENTA}${distro}${NC}"
+    return 1
+    ;;
+  esac
+}
+
+install_dropbox() {
+  local osType="$(getostype)"
+
+  case "${osType}" in
+  "Linux")
+    install_dropbox__linux
+    ;;
+  *)
+    err "Unsupported OS type: ${MAGENTA}${osType}${NC}"
+    return 1
+    ;;
+  esac
+}
+
+main() {
+  print_header "Initializing Dropbox"
+  install_dropbox
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n 'init_<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
