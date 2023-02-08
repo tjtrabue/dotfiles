@@ -1,0 +1,20 @@
+#+title:   Emacs Bookmarks Configuration
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2023:02:08
+#+tags:    bookmark bookmarks
+#+STARTUP: fold
+
+From the Emacs manual:
+
+#+BEGIN_QUOTE
+  Bookmarks are somewhat like registers in that they record positions you can
+  jump to. Unlike registers, they have long names, and they persist
+  automatically from one Emacs session to the next. The prototypical use of
+  bookmarks is to record where you were reading in various files.
+#+END_QUOTE
+
+* bookmark-plus
+#+begin_src emacs-lisp
+  (use-package bookmark-plus)
+#+end_src
