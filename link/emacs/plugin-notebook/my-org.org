@@ -213,7 +213,9 @@ Keep the =org-mode= header for the current section at the top of the buffer.
 #+end_src
 
 * org-trello
-Minor mode to synchronize org-mode buffer and a Trello board.
+=org-trello= is a minor mode that synchronizes org-mode buffers and a Trello
+board. It has [[https://org-trello.github.io/][copious documentation online at its website]], so please check it
+out for more details.
 
 #+begin_src emacs-lisp
   (use-package org-trello)

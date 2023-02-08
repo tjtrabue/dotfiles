@@ -40,11 +40,7 @@ This file adds some enhancements to Emacs' undo functionality.
 
   #+begin_src emacs-lisp
     (use-package undo-fu
-      :after evil-collection
-      :general
-      (general-def 'normal
-        "u" 'undo-fu-only-undo
-        "U" 'undo-fu-only-redo))
+      :after evil-collection)
   #+end_src
 
 * undo-fu-session

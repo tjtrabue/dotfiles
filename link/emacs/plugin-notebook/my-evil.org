@@ -119,6 +119,9 @@ The Evil mode plugin itself.
       ;; the window.
       "H" 'evil-window-top
       "L" 'evil-window-bottom
+      ;; Redo last edit. Normally bound to `C-r', but I use that for searching
+      ;; within a project.
+      "U" 'evil-redo
       ;; I like this shortcut for switching buffers.
       "C-e" 'switch-to-buffer
       ;; Only scroll half a page up/down with C-b and C-f instead of a
@@ -186,6 +189,8 @@ The Evil mode plugin itself.
     (setq-default evil-shift-width tab-width
                   ;; '>>' and '<<' should round indent to the next nearest tab stop.
                   evil-shift-round t)
+    ;; Use undo-fu as evil's undo/redo system.
+    (setq evil-undo-system 'undo-fu)
     :config
     ;; Enable evil-mode globally
     (evil-mode 1)
