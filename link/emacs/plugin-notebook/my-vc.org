@@ -45,8 +45,7 @@ porcelain exists in Magit.
     (git-commit-setup . (lambda ()
                           ;; We want to shrink the line length down to something
                           ;; befitting a Git commit message.
-                          (setq-local fill-column 50)
-                          (message "=== in git-commit-setup-hook ===")))
+                          (setq fill-column 50)))
     :general
     (general-def
       ;; Global binding for summoning the Magit transient popup for reading keys.
@@ -83,7 +82,11 @@ porcelain exists in Magit.
                         set-and-push))
     ;; Length at which Emacs highlights the commit summary line in COMMIT_EDITMSG
     ;; to indicate that the line is too long.
-    (git-commit-summary-max-length 50))
+    (git-commit-summary-max-length 50)
+    :config
+    ;; Automatically call `git-commit-setup' whenever the user opens a Git commit
+    ;; message buffer.
+    (global-git-commit-mode 1))
 #+end_src
 
 * magit-todos

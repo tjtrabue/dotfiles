@@ -69,7 +69,7 @@ different perspective, and more.
       ;; Automatically resume the main perspective after x seconds.  The delay is
       ;; necessary to allow Emacs time to initialize before resuming the previous
       ;; perspective.
-      (run-with-timer 1 nil #'persp-state-load persp-state-default-file))
+      (run-with-timer 2 nil #'persp-state-load persp-state-default-file))
   #+end_src
 
 * Plugins

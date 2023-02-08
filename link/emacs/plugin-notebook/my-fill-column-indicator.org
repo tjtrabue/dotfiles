@@ -8,11 +8,11 @@ Draws a Vim-like vertical ruler at the number indicated by the =fill-column=
 variable.
 
 #+begin_src emacs-lisp
-(use-package fill-column-indicator
-  ;; WARNING: Highly problematic right now.
-  ;; :hook
-  ;; ;; Draw ruler automatically in all editing modes
-  ;; ;; (May want to change this later)
-  ;; ((prog-mode text-mode) . fci-mode)
-  )
+  (use-package fill-column-indicator
+    ;; WARNING: Highly problematic and no longer maintained.
+    :disabled
+    :hook
+    ;; Draw ruler automatically in all editing modes
+    ;; (May want to change this later)
+    ((prog-mode text-mode) . fci-mode))
 #+end_src
