@@ -40,12 +40,6 @@ porcelain exists in Magit.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package magit
-    :hook
-    ;; Runs when Magit sets up the commit message buffer.
-    (git-commit-setup . (lambda ()
-                          ;; We want to shrink the line length down to something
-                          ;; befitting a Git commit message.
-                          (setq fill-column 50)))
     :general
     (general-def
       ;; Global binding for summoning the Magit transient popup for reading keys.
@@ -79,14 +73,38 @@ porcelain exists in Magit.
                         resurrect
                         untrack
                         rename
-                        set-and-push))
+                        set-and-push)))
+#+end_src
+
+* git-commit
+=git-commit.el= is a Magit sub-package containing much of the setup/teardown
+logic for creating Git commits. I like to configure this package separately from
+the main Magit package.
+
+#+begin_src emacs-lisp
+  (use-package git-commit
+    :after magit
+    :ensure nil
+    :straight nil
+    :demand t
+    ;; :hook
+    ;; ;; Runs when Magit sets up the commit message buffer.
+    ;; (git-commit-setup . (lambda ()
+    ;;                       ;; We want to shrink the line length down to something
+    ;;                       ;; befitting a Git commit message.
+    ;;                       (setq fill-column 50)))
+    :custom
     ;; Length at which Emacs highlights the commit summary line in COMMIT_EDITMSG
     ;; to indicate that the line is too long.
     (git-commit-summary-max-length 50)
     :config
     ;; Automatically call `git-commit-setup' whenever the user opens a Git commit
     ;; message buffer.
-    (global-git-commit-mode 1))
+    (global-git-commit-mode 1)
+    (add-hook 'git-commit-setup-hook (lambda ()
+                                       ;; We want to shrink the line length down to something
+                                       ;; befitting a Git commit message.
+                                       (setq fill-column 50))))
 #+end_src
 
 * magit-todos
