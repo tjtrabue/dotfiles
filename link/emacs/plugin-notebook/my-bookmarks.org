@@ -1,4 +1,4 @@
-#+title:   Emacs Bookmarks Configuration
+#+title:   Emacs Bookmarks Configuration/Plugins
 #+author:  Thomas Trabue
 #+email:   tom.trabue@gmail.com
 #+date:    2023:02:08
@@ -7,14 +7,19 @@
 
 From the Emacs manual:
 
-#+BEGIN_QUOTE
+#+begin_quote
   Bookmarks are somewhat like registers in that they record positions you can
   jump to. Unlike registers, they have long names, and they persist
   automatically from one Emacs session to the next. The prototypical use of
   bookmarks is to record where you were reading in various files.
-#+END_QUOTE
+#+end_quote
 
-* bookmark-plus
+* Bookmark+
+=bookmark+= is an enhancement suite for Emacs' built-in bookmark system, a la
+=dired+=. It's a big package, so read up on its [[https://www.emacswiki.org/emacs/BookmarkPlus][documentation]] for information on
+how to use it.
+
 #+begin_src emacs-lisp
-  (use-package bookmark-plus)
+  (use-package bookmark+
+    :demand t)
 #+end_src

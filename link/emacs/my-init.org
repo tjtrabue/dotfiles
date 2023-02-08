@@ -1103,13 +1103,27 @@ and hooks in a way that defers loading the package.
       "C-x C-l" 'find-library)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
+      ;; Evaluating s-exps
       "<" 'eval-last-sexp
       ">" 'eval-print-last-sexp
+      ;; Toggle relative/absolute line numbers.
+      "N"  'my/toggle-line-number-type
+      ;; Bookmarks
       "bd" 'bookmark-delete
       "bj" 'bookmark-jump
+      "bl" 'list-bookmarks
       "bs" 'bookmark-set
-      ;; Toggle relative/absolute line numbers.
-      "N"  'my/toggle-line-number-type))
+      ;; Buffer
+      "bb" 'switch-to-buffer
+      "bk" 'kill-this-buffer
+      "kk" 'kill-buffer
+      ;; Dired
+      "dd" 'dired
+      ;; eshell
+      "es" 'eshell-below
+      ;; File
+      "lf" 'load-file
+      "of" 'org-babel-load-file))
 #+end_src
 
 ** org
