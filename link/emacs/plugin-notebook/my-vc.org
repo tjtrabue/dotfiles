@@ -87,12 +87,12 @@ the main Magit package.
     :ensure nil
     :straight nil
     :demand t
-    ;; :hook
-    ;; ;; Runs when Magit sets up the commit message buffer.
-    ;; (git-commit-setup . (lambda ()
-    ;;                       ;; We want to shrink the line length down to something
-    ;;                       ;; befitting a Git commit message.
-    ;;                       (setq fill-column 50)))
+    :hook
+    (git-commit-setup . (lambda ()
+                          ;; We want to shrink the line length down
+                          ;; to something befitting a Git commit
+                          ;; message.
+                          (setq fill-column 50)))
     :custom
     ;; Length at which Emacs highlights the commit summary line in COMMIT_EDITMSG
     ;; to indicate that the line is too long.
@@ -100,11 +100,7 @@ the main Magit package.
     :config
     ;; Automatically call `git-commit-setup' whenever the user opens a Git commit
     ;; message buffer.
-    (global-git-commit-mode 1)
-    (add-hook 'git-commit-setup-hook (lambda ()
-                                       ;; We want to shrink the line length down to something
-                                       ;; befitting a Git commit message.
-                                       (setq fill-column 50))))
+    (global-git-commit-mode 1))
 #+end_src
 
 * magit-todos
