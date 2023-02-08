@@ -14,7 +14,7 @@ To interact with =perspective.el=, type the command prefix (detailed in the
 =use-package= specification below), and then observe the =which-key= guide for a
 list of available commands. These commands include adding a buffer to the
 current perspective, removing a buffer from the perspective, switching to a
-different perspective, and many more.
+different perspective, and more.
 
 * perspective.el vs persp-mode package
   You may be wondering why there are two different packages offering the
@@ -69,7 +69,7 @@ different perspective, and many more.
       ;; Automatically resume the main perspective after x seconds.  The delay is
       ;; necessary to allow Emacs time to initialize before resuming the previous
       ;; perspective.
-      (run-with-timer 3 nil #'persp-state-load persp-state-default-file))
+      (run-with-timer 1 nil #'persp-state-load persp-state-default-file))
   #+end_src
 
 * Plugins
