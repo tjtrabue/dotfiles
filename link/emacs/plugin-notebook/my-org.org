@@ -37,6 +37,20 @@ activation.
     :demand t)
 #+end_src
 
+* org-cliplink
+A simple command that takes a URL from the clipboard and inserts an org-mode
+link with a title of a page found by the URL into the current buffer. It's a
+little limited, but it's handy for getting URLs into an Org document, which you
+can edit later.
+
+#+begin_src emacs-lisp
+  (use-package org-cliplink
+    :after org
+    :general
+    (my/user-leader-def org-mode-map
+      "L" 'org-cliplink))
+#+end_src
+
 * org-roam
 =org-roam= is an amazing plugin that integrates some of Roam's advanced note
 taking features into =org-mode=. =org-roam= depends on a custom SQLite
@@ -192,7 +206,8 @@ to learn, but if you make prolific use of Org mode, =org-ql= can be a
 game-changer.
 
 #+begin_src emacs-lisp
-  (use-package org-ql)
+  (use-package org-ql
+    :after org)
 #+end_src
 
 * org-sticky-header
@@ -218,7 +233,8 @@ board. It has [[https://org-trello.github.io/][copious documentation online at i
 out for more details.
 
 #+begin_src emacs-lisp
-  (use-package org-trello)
+  (use-package org-trello
+    :after org)
 #+end_src
 
 * org-web-tools
