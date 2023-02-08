@@ -44,6 +44,16 @@ install_dropbox__arch_linux() {
   sudo pacman -S --noconfirm python-gpgme
   # Use the AUR helper to install the dropbox client.
   aurhi dropbox
+  # Activate the Systemd module to get Dropbox to start up when the computer
+  # boots up.
+  sudo systemctl enable --now "dropbox@${USER}"
+
+  # This hack is a workaround to keep the Dropbox client from automatically
+  # updating. If the client updates itself, it breaks on Arch Linux.
+  # What we're doing here is removing the Dropbox metadata directory, and
+  # recreating it with read-only permissions.
+  rm -rf "${HOME}/.dropbox-dist"
+  install -dm0 "${HOME}/.dropbox-dist"
 }
 
 install_dropbox__linux() {
