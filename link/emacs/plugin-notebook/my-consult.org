@@ -178,10 +178,11 @@ completion buffer to some category. For example:
        ;; UI behavior.
        consult-theme consult-ripgrep consult-git-grep consult-grep
        :preview-key '(:debounce 0.2 any)
-       consult-bookmark consult-recent-file consult-xref
-       consult--source-bookmark consult--source-file-register
-       consult--source-recent-file consult--source-project-recent-file
-       :preview-key '(:debounce 0.4 any))
+       consult-bookmark consult-xref consult--source-bookmark
+       :preview-key '(:debounce 0.4 any)
+       consult--source-file-register consult--source-recent-file
+       consult--source-project-recent-file consult-recent-file
+       :preview-key '("C-n"))
       ;; Optionally make narrowing help available in the minibuffer.
       ;; You may want to use `embark-prefix-help-command' or which-key instead.
       (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
@@ -263,7 +264,7 @@ awesome =consult=-ing read front end for =projectile= functions.
      consult-projectile--source-projectile-buffer
      consult-projectile--source-projectile-file
      consult-projectile--source-projectile-recentf
-     :preview-key '(:debounce 0.4 any)))
+     :preview-key '("C-n")))
 #+end_src
 
 ** consult-yasnippet
