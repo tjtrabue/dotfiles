@@ -139,6 +139,7 @@ pulseaudio
 pulseaudio-alsa
 pulsemixer
 python
+python-gpgme
 python-pip
 ranger
 rclone

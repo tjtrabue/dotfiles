@@ -273,6 +273,7 @@ link/config/Trolltech.conf
 link/config/Unknown\ Organization/
 link/config/akregatorrc
 link/config/arkrc
+link/config/autostart/dropbox.desktop
 link/config/baloofileinformationrc
 link/config/baloofilerc
 link/config/bluedevilglobalrc
@@ -305,6 +306,7 @@ link/config/khelpcenterrc
 link/config/khotkeysrc
 link/config/khtml
 link/config/kinfocenterrc
+link/config/kiorc
 link/config/kioslaverc
 link/config/kmail2rc
 link/config/kmixctrlrc
@@ -313,6 +315,7 @@ link/config/konquerorrc
 link/config/korgacrc
 link/config/krunnerrc
 link/config/kscreenlockerrc
+link/config/kservicemenurc
 link/config/ksmserverrc
 link/config/ktimezonedrc
 link/config/kwalletmanager5rc
@@ -320,6 +323,7 @@ link/config/kwalletrc
 link/config/kwinrc
 link/config/kxkbrc
 link/config/okularpartrc
+link/config/okularrc
 link/config/phishingurlrc
 link/config/plasma-localerc
 link/config/plasma-org.kde.plasma.desktop-appletsrc

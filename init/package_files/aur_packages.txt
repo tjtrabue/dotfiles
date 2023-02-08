@@ -9,6 +9,7 @@ brave-bin
 clj-kondo
 clojure-lsp-bin
 code-minimap-bin
+dropbox
 elixir-ls-git
 emacs-git
 findimagedupes
