@@ -56,10 +56,14 @@ This hydra expands and contracts the active region by semantic units using the
 #+begin_src emacs-lisp
   (defun my/define-hydra-expand-region ()
     "Wrapper function for defhydra hydra-expand-region."
-    (defhydra hydra-expand-region (global-map "C-=")
+    (defhydra hydra-expand-region ()
       "Expand/contract visual region"
       ("=" er/expand-region "Expand region")
-      ("-" er/contract-region "Contract region")))
+      ("-" er/contract-region "Contract region"))
+    ;; We bind the hydra key separately so that pressing the binding immediately
+    ;; expands the region, as well as activates the hydra.
+    (general-def
+      "C-=" 'hydra-expand-region/er/expand-region))
 #+end_src
 
 ** hydra-org-todo
