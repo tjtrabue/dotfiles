@@ -30,7 +30,7 @@ a zoom in/out hydra for the global keymap.
 
     ;; NOTE: This overrides the default `undo' keybinding.
     (defhydra hydra-zoom (global-map "C-/")
-      "Zoom in/out in the current window:"
+      "Zoom in/out in the current window"
       ("k" text-scale-increase "in")
       ("j" text-scale-decrease "out")))
 #+end_src
@@ -57,9 +57,25 @@ This hydra expands and contracts the active region by semantic units using the
   (defun my/define-hydra-expand-region ()
     "Wrapper function for defhydra hydra-expand-region."
     (defhydra hydra-expand-region (global-map "C-=")
-      "Expand/contract visual region."
+      "Expand/contract visual region"
       ("=" er/expand-region "Expand region")
       ("-" er/contract-region "Contract region")))
+#+end_src
+
+** hydra-org-todo
+Cycles through todo states for an Org file entry.
+
+#+begin_src emacs-lisp
+  (defun my/define-hydra-org-todo ()
+    "Wrapper function for defhydra hydra-org-todo."
+    ;; Notice that we don't bind any keys in the hydra definition because this
+    ;; hydra only contains one binding: "t". We bind to this command directly
+    ;; after we define the hydra.
+    (defhydra hydra-org-todo ()
+      "Cycle org todo states"
+      ("t" org-todo))
+    (general-def org-mode-map
+      "C-c C-t" 'hydra-org-todo/org-todo))
 #+end_src
 
 * Activate hydras
@@ -69,7 +85,8 @@ This hydra expands and contracts the active region by semantic units using the
     (interactive)
     (my/define-hydra-zoom)
     (my/define-hydra-resize-window)
-    (my/define-hydra-expand-region))
+    (my/define-hydra-expand-region)
+    (my/define-hydra-org-todo))
 #+end_src
 
 * =use-package= specification

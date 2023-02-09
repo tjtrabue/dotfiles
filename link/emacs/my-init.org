@@ -1142,8 +1142,8 @@ try to load =org= later.
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
       ;; outside of org-mode.
-      "C-c o l" 'org-store-link
-      "C-c o a" 'org-agenda)
+      "M-o l" 'org-store-link
+      "M-o a" 'org-agenda)
     :custom
     (org-hide-leading-stars t)
     ;; Only show headings when visiting a new Org file.
