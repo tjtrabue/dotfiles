@@ -1139,6 +1139,10 @@ try to load =org= later.
                 ;; Disable whitespace mode for org mode.
                 (whitespace-mode -1)))
     :general
+    (general-def org-mode-map
+      ;; Mainly used to cycle through todo states.
+      "C-M-l" 'org-shiftright
+      "C-M-h" 'org-shiftleft)
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
       ;; outside of org-mode.
