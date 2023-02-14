@@ -62,6 +62,48 @@ lines, etc.). They mimic Vim's operators, but are much more customizeable.
             (set-marker fixup-mark nil))))))
 #+end_src
 
+* Define macros
+Custom =evil-mode= macros.
+
+#+begin_src emacs-lisp
+  (defmacro my/evil-adjust-point (&rest body)
+    "Adjust point, run expressions in BODY, and restore `evil-state'.
+
+  This is useful when encountering off-by-one location errors in
+  interactive functions while using `evil-mode', such as
+  `eval-print-last-sexp'. By default, when in `evil-normal-state'
+  with the cursor on a closing parenthesis, `eval-print-last-sexp'
+  will not realize that point should be at the end of the sexp, and
+  will fail to work.  However, if you surround that expression like
+  so:
+
+  (my/evil-adjust-point
+    (eval-print-last-sexp)
+
+  then that expression will work as expected in any evil state."
+    `(pcase evil-state
+       ('normal (progn
+                  (evil-append 1)
+                  ,@body
+                  (evil-normal-state)))
+       ('visual (progn
+                  (evil-append 1)
+                  ,@body
+                  (evil-visual-restore)))
+       (_ ,@body)))
+#+end_src
+
+* Define functions
+Custom =evil-mode= functions.
+
+#+begin_src emacs-lisp
+  (defun my/evil-eval-and-replace-last-sexp ()
+    "Replace the preceding sexp with its value."
+    (interactive)
+    (my/evil-adjust-point
+     (my/eval-and-replace)))
+#+end_src
+
 * Custom advice functions
 Evil mode functions will call these advice functions back automatically based
 on their parameters.
@@ -114,6 +156,9 @@ The Evil mode plugin itself.
     ;;   (general-def [evil states] [keymap] key def ...)
     ;;
     ;; where elements in [] are optional but must appear in the specified order.
+    (general-def
+      ;; Evaluate sexp at or before point and replace it with its value.
+      "C-x E" 'my/evil-eval-and-replace-last-sexp)
     (general-def 'normal
       ;; Use the good old Vim commands to move the cursor to the top or bottom of
       ;; the window.

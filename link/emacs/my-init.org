@@ -725,24 +725,9 @@ Custom functions, both standard and interactive.
 
   (defun my/eval-and-replace ()
     "Replace the preceding sexp with its value."
-    (interactive)
     (let ((value (eval (preceding-sexp))))
       (backward-kill-sexp)
       (insert (format "%S" value))))
-
-  (defun my/evil-eval-and-replace-last-sexp ()
-    "Replace the preceding sexp with its value."
-    (interactive)
-    (pcase evil-state
-      ('normal (progn
-                 (evil-append 1)
-                 (my/eval-and-replace)
-                 (evil-normal-state)))
-      ('visual (progn
-                 (evil-append 1)
-                 (my/eval-and-replace)
-                 (evil-visual-restore)))
-      (_ (my/eval-and-replace))))
 #+end_src
 
 * Environment Variables
@@ -1129,8 +1114,6 @@ and hooks in a way that defers loading the package.
     (general-evil-setup)
     ;;; Set universal keybindings with General
     (general-def
-      ;; Replace an Elisp expression with its evaluated result.
-      "C-x E" 'my/evil-eval-and-replace-last-sexp
       ;; Nobody uses downcase-region, anyway.
       "C-x C-l" 'find-library
       ;; Kill the current buffer.
