@@ -727,25 +727,22 @@ Custom functions, both standard and interactive.
     "Replace the preceding sexp with its value."
     (interactive)
     (let ((value (eval (preceding-sexp))))
-      (kill-sexp -1)
+      (backward-kill-sexp)
       (insert (format "%S" value))))
 
   (defun my/evil-eval-and-replace-last-sexp ()
-    "Replace the preceding sexp with its value.
-
-  This function preserves the user's current `evil-state', and will
-  account for a closing paren being directly under the evil-mode
-  cursor."
+    "Replace the preceding sexp with its value."
     (interactive)
-    (evil-save-state
-      ;; We need to move point ahead one column if we're in normal or visual state,
-      ;; and the cursor is directly over a closing paren.
-      (if (and (member evil-state '(normal visual))
-               (string= ")" (string (char-after))))
-          (save-excursion
-            (forward-char)
-            (my/eval-and-replace))
-        (my/eval-and-replace))))
+    (pcase evil-state
+      ('normal (progn
+                 (evil-append 1)
+                 (my/eval-and-replace)
+                 (evil-normal-state)))
+      ('visual (progn
+                 (evil-append 1)
+                 (my/eval-and-replace)
+                 (evil-visual-restore)))
+      (_ (my/eval-and-replace))))
 #+end_src
 
 * Environment Variables
