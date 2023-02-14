@@ -5,8 +5,8 @@
 #+STARTUP: fold
 
 Org is one of Emacs' killer apps: a powerful ORGanizer and much more, Org
-enables Emacs users to engage in literate programming, a method of software
-development where source code is embedded into explanatory, notebook-like
+enables Emacs users to engage in /literate programming/, a method of software
+development where engineers embed source code into explanatory, notebook-like
 textual documents and evaluated as needed or all at once.
 
 * org-bullets
@@ -38,10 +38,10 @@ activation.
 #+end_src
 
 * org-cliplink
-A simple command that takes a URL from the clipboard and inserts an org-mode
-link with a title of a page found by the URL into the current buffer. It's a
-little limited, but it's handy for getting URLs into an Org document, which you
-can edit later.
+=org-cliplink= is a simple function that takes a URL from the clipboard and
+inserts an org-mode link into the current buffer, the title of which comes from
+the page title found from the URL. It's a little limited, but it's handy for
+getting URLs into an Org document, which you can edit later.
 
 #+begin_src emacs-lisp
   (use-package org-cliplink
