@@ -435,6 +435,15 @@ LanguageServerProtocol clients and servers.
     (setq read-extended-command-predicate #'command-completion-default-include-p)
     ;; Automatically native compile all packages installed with package.el
     (setq package-native-compile t))
+
+  ;; Emacs supports editing text in languages that order text horizontally
+  ;; right-to-left, such as Hebrew or Arabic. If you do not work in a language
+  ;; such as these, you can improve Emacs' performance if you tell it to assume
+  ;; all languages display left-to-right by default, resulting in fewer line scans
+  ;; necessary to display text.
+  (setq-default bidi-paragraph-direction 'left-to-right)
+  (if (version<= "27.1" emacs-version)
+      (setq bidi-inhibit-bpa t))
 #+end_src
 
 * Set fringe width
