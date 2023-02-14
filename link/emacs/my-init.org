@@ -722,6 +722,30 @@ Custom functions, both standard and interactive.
           (if (eq my/line-number-state 'relative)
               (setq display-line-numbers 'relative)
             (setq display-line-numbers t))))))
+
+  (defun my/eval-and-replace ()
+    "Replace the preceding sexp with its value."
+    (interactive)
+    (let ((value (eval (preceding-sexp))))
+      (kill-sexp -1)
+      (insert (format "%S" value))))
+
+  (defun my/evil-eval-and-replace-last-sexp ()
+    "Replace the preceding sexp with its value.
+
+  This function preserves the user's current `evil-state', and will
+  account for a closing paren being directly under the evil-mode
+  cursor."
+    (interactive)
+    (evil-save-state
+      ;; We need to move point ahead one column if we're in normal or visual state,
+      ;; and the cursor is directly over a closing paren.
+      (if (and (member evil-state '(normal visual))
+               (string= ")" (string (char-after))))
+          (save-excursion
+            (forward-char)
+            (my/eval-and-replace))
+        (my/eval-and-replace))))
 #+end_src
 
 * Environment Variables
@@ -1108,8 +1132,12 @@ and hooks in a way that defers loading the package.
     (general-evil-setup)
     ;;; Set universal keybindings with General
     (general-def
+      ;; Replace an Elisp expression with its evaluated result.
+      "C-x E" 'my/evil-eval-and-replace-last-sexp
       ;; Nobody uses downcase-region, anyway.
-      "C-x C-l" 'find-library)
+      "C-x C-l" 'find-library
+      ;; Kill the current buffer.
+      "C-M-k" 'kill-this-buffer)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
       ;; Evaluating s-exps

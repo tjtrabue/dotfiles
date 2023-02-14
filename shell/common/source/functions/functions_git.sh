@@ -258,6 +258,11 @@ swi() {
       -e '^(${defaultRemote}/)?HEAD\$' |
     sort -u"
 
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
   # Prioritized list of fuzzy search tools used to select the branch.
   if [ -x "$(command -v fzf)" ]; then
     branch="$(eval "${branchListingCommand}" | fzf)"
