@@ -57,7 +57,7 @@ offering you relevant actions to use on a target determined by the context:
                                (setq-local show-trailing-whitespace nil)
                                (whitespace-mode -1)))
       :general
-      (general-def
+      (general-def 'override
         "M-o" 'embark-act
         "M-u" 'embark-dwim
         "M-m" 'my/embark-act-noquit
