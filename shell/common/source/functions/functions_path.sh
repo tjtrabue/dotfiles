@@ -125,7 +125,7 @@ spath() {
   local pathVar="${2:-PATH}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
   local pathHashFile="${pathFile}_hash"
-  local pathHash
+  local pathHash=""
 
   if [ -f "${pathHashFile}" ]; then
     pathHash="$(__spath_get_path_file_hash "${pathFile}")"
