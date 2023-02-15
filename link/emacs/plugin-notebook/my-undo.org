@@ -9,47 +9,53 @@
 This file adds some enhancements to Emacs' undo functionality.
 
 * undo-tree
-  A visual tree system for fully utilizing Emacs' undo/redo system inspired by
-  Vim. To use =undo-tree=, call =M-x undo-tree-mode= (or
-  =global-undo-tree-mode=), and then use =C-x u= to call =undo-tree-visualize=,
-  the function that displays the tree of edits made to the current buffer.
+A visual tree system for fully utilizing Emacs' undo/redo system inspired by
+Vim. To use =undo-tree=, call =M-x undo-tree-mode= (or
+=global-undo-tree-mode=), and then use =C-x u= to call =undo-tree-visualize=,
+the function that displays the tree of edits made to the current buffer.
 
-  #+begin_src emacs-lisp
-    (use-package undo-tree
-      ;; undo-tree can cause errors due to its history file feature. It's mostly
-      ;; fine, but the errors can get annoying.
-      :disabled
-      :demand t
-      :general
-      (my/evil-leader-def
-        "ut" 'undo-tree-visualize)
-      :custom
-      ;; Whether to show diffs when browsing through undo tree
-      (undo-tree-visualizer-diff t)
-      ;; Whether to save undo history to file
-      (undo-tree-auto-save-history t)
-      ;; Whether to show relative timestamps in undo tree
-      (undo-tree-visualizer-timestamps t)
-      :config
-      (global-undo-tree-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    ;; undo-tree can cause errors due to its history file feature. It's mostly
+    ;; fine, but the errors can get annoying.
+    :disabled
+    :demand t
+    :general
+    (my/evil-leader-def
+      "ut" 'undo-tree-visualize)
+    :custom
+    ;; Whether to show diffs when browsing through undo tree
+    (undo-tree-visualizer-diff t)
+    ;; Whether to save undo history to file
+    (undo-tree-auto-save-history t)
+    ;; Whether to show relative timestamps in undo tree
+    (undo-tree-visualizer-timestamps t)
+    :config
+    (global-undo-tree-mode 1))
+#+end_src
 
 * undo-fu
-  A simple plugin providing linear undo/redo actions. It does not interfere with
-  Emacs' internal undo data.
+A simple plugin providing linear undo/redo actions. It does not interfere with
+Emacs' internal undo data.
 
-  #+begin_src emacs-lisp
-    (use-package undo-fu
-      :after evil-collection)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package undo-fu
+    :after evil-collection)
+#+end_src
 
 * undo-fu-session
-  Saves =undo-fu='s data across Emacs sessions so that Emacs remembers undo
-  history after restarting.
+Saves =undo-fu='s data across Emacs sessions so that Emacs remembers undo
+history after restarting.
 
-  #+begin_src emacs-lisp
-    (use-package undo-fu-session
-      :demand t
-      :config
-      (global-undo-fu-session-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package undo-fu-session
+    :demand t
+    :custom
+    ;; Whether to write linear undo history, omitting branches which were
+    ;; themselves undone.
+    (undo-fu-session-linear t)
+    ;; Number of undo history files to store; nil to remove limit entirely.
+    (undo-fu-session-file-limit 500)
+    :config
+    (global-undo-fu-session-mode 1))
+#+end_src
