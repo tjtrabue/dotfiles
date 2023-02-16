@@ -6,6 +6,7 @@ gcc
 htop
 imagemagick
 libbz2-dev
+libgccjit-11-dev
 libgccjit0
 libgit2
 libgit2-dev
