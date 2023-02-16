@@ -20,6 +20,7 @@ neovim
 nodejs
 npm
 openbox
+parallel
 ripgrep
 shellcheck
 socat

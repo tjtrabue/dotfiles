@@ -23,9 +23,28 @@ install_emacs_arch() {
   )
 }
 
+# Install emacs from source
+install_emacs_source() {
+  local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
+  local emacsDest="${WS:-${HOME}/workspace}/emacs"
+
+  mkdir -p "$(dirname "${emacsDest}")"
+  log_info "Cloning/Updating Emacs Git Repo"
+  clone_or_update_git_repo "${emacsGitUrl}" "${emacsDest}"
+  (
+    log_info "Installing latest Emacs" && \
+    cd "${emacsDest}" && \
+    ./autogen.sh && \
+    ./configure --with-json --with-tree-sitter --with-xwidgets \
+      --with-imagemagick --with-mailutils --with-native-compilation=aot \
+      --with-pgt && \
+    make -j$(nproc) && \
+    sudo make install
+  )
+}
+
 main() {
-  # install_emacs_arch
-  echoe "Hello, world!"
+  print_header "Installing Emacs (the best editor!)"
 }
 # }}}
 
