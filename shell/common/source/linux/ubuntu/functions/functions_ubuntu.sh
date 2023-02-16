@@ -40,4 +40,19 @@ install_latest_emacs() {
   )
 }
 
+# Install the lazygit commandline Git porcelain for an Ubuntu distribution.
+install_lazygit_ubuntu() {
+  local lazygitVersion="$(curl -s \
+    "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" |
+    grep -Po '"tag_name":\s*"v\K[^"]*'
+  )"
+  (
+    log_info "Downloading latest lazygit version" && \
+    curl -sL -o lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${lazygitVersion}_Linux_x86_64.tar.gz" && \
+    tar -zxvf lazygit.tar.gz lazygit && \
+    sudo install lazygit /usr/local/bin && \
+    rm -f 'lazygit.tar.gz' 'lazygit'
+  )
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

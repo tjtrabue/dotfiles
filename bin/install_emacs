@@ -51,6 +51,9 @@ remove_old_emacs_installation() {
     (
       cd "${emacsDir}" && \
       sudo make uninstall
+      git restore .
+      git restore --cached .
+      git clean -df
     )
   fi
 }
@@ -59,6 +62,15 @@ remove_old_emacs_installation() {
 install_emacs_source() {
   local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
   local emacsDest="${WS}/emacs"
+  local configureCmd="./configure --with-json --with-tree-sitter \
+      --with-xwidgets --with-imagemagick --with-mailutils \
+      --with-native-compilation=aot"
+
+  if ! pgrep "tty.*Xorg"; then
+    # If we are not running an X server, use the Pure GTK version of Emacs.
+    # Note, PGTK does not work with X, but seems to work great for Weyland.
+    configureCmd="${configureCmd} --with-pgtk"
+  fi
 
   if [ -d "${emacsDest}" ]; then
     remove_old_emacs_installation "${emacsDest}"
