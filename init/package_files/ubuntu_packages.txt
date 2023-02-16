@@ -4,9 +4,17 @@ bzip2
 clang
 gcc
 htop
+imagemagick
 libbz2-dev
+libgccjit0
 libgit2
 libgit2-dev
+libmagickwand-dev
+libtree-sitter-dev
+libtree-sitter0
+libwebkit2gtk-4.1-0
+libwebkit2gtk-4.1-dev
+locate
 neovim
 nodejs
 npm

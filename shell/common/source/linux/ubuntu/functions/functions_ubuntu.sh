@@ -14,4 +14,22 @@ install_bat() {
   fi
 }
 
+# Intall the latest version of Emacs from source.
+install_latest_emacs() {
+  local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
+  local emacsDest="${WS}/emacs"
+
+  log_info "Installing Emacs for Ubuntu"
+  git clone "${emacsGitUrl}" "${emacsDest}"
+  (
+    cd "${emacsDest}" && \
+    ./autogen.sh && \
+    ./configure --with-json --with-tree-sitter --with-xwidgets \
+      --with-imagemagick --with-mailutils --with-native-compilation=aot \
+      --with-pgt && \
+    make -j$(nproc) && \
+    sudo make install
+  )
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
