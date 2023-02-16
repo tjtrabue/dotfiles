@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
-set -Eeuo pipefail
 
 # Variables {{{
-DOTFILES_REPO="${HOME}/.dotfiles"
+declare DOTFILES_REPO="${HOME}/.dotfiles"
+declare WS
 # }}}
 
 # Imports {{{
@@ -12,23 +13,57 @@ DOTFILES_REPO="${HOME}/.dotfiles"
 # }}}
 
 # Functions {{{
-install_emacs_arch() {
-  local workspaceDir="${WS:-${HOME}/workspace}"
-  local emacsPackageName="emacs-native-comp-git-enhanced"
-  (
-    cd "${workspaceDir}"
-    paru -G "${emacsPackageName}"
-    cd "${emacsPackageName}"
-    makepkg -si
-  )
+_help() {
+  command cat <<EOF
+${THIS_EXEC}
+
+Install the Emacs from its master branch.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+
+set_global_vars() {
+  log_info "Settings global variables"
+  WS="${WS:-${HOME}/workspace}"
+}
+
+make_dirs() {
+  log_info "Creating necessary directories"
+  mkdir -p "${WS}"
+}
+
+setup() {
+  set_global_vars
+  make_dirs
+}
+
+remove_old_emacs_installation() {
+  local emacsDir="${1}"
+
+  if [ -d "${emacsDir}" ]; then
+    log_info "Removing old Emacs installation at: ${BLUE}${emacsDir}${NC}"
+    (
+      cd "${emacsDir}" && \
+      sudo make uninstall
+    )
+  fi
 }
 
 # Install emacs from source
 install_emacs_source() {
   local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
-  local emacsDest="${WS:-${HOME}/workspace}/emacs"
+  local emacsDest="${WS}/emacs"
 
-  mkdir -p "$(dirname "${emacsDest}")"
+  if [ -d "${emacsDest}" ]; then
+    remove_old_emacs_installation "${emacsDest}"
+  fi
+
   log_info "Cloning/Updating Emacs Git Repo"
   clone_or_update_git_repo "${emacsGitUrl}" "${emacsDest}"
   (
@@ -45,7 +80,34 @@ install_emacs_source() {
 
 main() {
   print_header "Installing Emacs (the best editor!)"
+  setup
+  install_emacs_source
 }
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n 'install_emacs' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
 # }}}
 
 main "${@}"
