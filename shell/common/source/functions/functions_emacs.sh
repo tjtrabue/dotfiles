@@ -65,7 +65,6 @@ eclient() {
 shutdown_emacsdaemon() {
   emacsclient -e "(kill-emacs)"
 }
-}
 
 # Checkout the configured default branch for each repository cloned by the
 # straight.el package manager and update each repo. This is useful for when one
