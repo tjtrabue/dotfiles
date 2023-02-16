@@ -860,6 +860,29 @@ link_git_hooks() {
 }
 # }}}
 
+# git-delta {{{
+update_or_install_git_delta() {
+  local gitDeltaUrl="https://github.com/dandavison/delta/releases/download/0.15.0/delta-0.15.0-x86_64-unknown-linux-gnu.tar.gz"
+  local gitDeltaTarFilename="$(basename "${gitDeltaUrl}")"
+  local gitDeltaDownloadDir="${HOME}"
+  local gitDeltaDirname="${gitDeltaTarFilename/.tar.gz/}"
+  local gitDeltaInstallPrefix="${HOME}/.local"
+
+  (
+    cd "${gitDeltaDownloadDir}" && \
+    log_info "Downloading latest git-delta" && \
+    curl -sL -o "${gitDeltaTarFilename}" "${gitDeltaUrl}" && \
+    log_info "Extracting git-delta archive" && \
+    tar -zxvf "${gitDeltaTarFilename}" && \
+    log_info "Moving delta to ${gitDeltaInstallPrefix}/bin/" && \
+    mv "${gitDeltaDirname}/delta" "${gitDeltaInstallPrefix}/bin/delta" && \
+    log_info "Removing downloaded artifacts" && \
+    rm -rf "${gitDeltaDirname:?}" && \
+    rm -f "${gitDeltaTarFilename:?}"
+  )
+}
+# }}}
+
 # Git environment for shell {{{
 
 # Prepare any extra Git-related shell functions for the current shell.
