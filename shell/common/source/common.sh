@@ -80,6 +80,7 @@ __src_dir() {
 # Source OS-specific function/alias files.
 __src_os() {
   local archSrcDir="${LINUX_SOURCE_DIR}/arch"
+  local ubuntuSrcDir="${LINUX_SOURCE_DIR}/ubuntu"
   local macSrcDir="${COMMON_SOURCE}/mac"
   local osType
   local os
@@ -104,6 +105,9 @@ __src_os() {
   case "${os}" in
   "Arch Linux")
     __src_standard_subdirs_under_dir "${archSrcDir}"
+    ;;
+  "Ubuntu")
+    __src_standard_subdirs_under_dir "${ubuntuSrcDir}"
     ;;
   *)
     # This warning will quickly become annoying, but is sometimes useful.
