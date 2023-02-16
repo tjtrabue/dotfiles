@@ -2,7 +2,6 @@ bat
 build-essential
 bzip2
 clang
-exa
 gcc
 htop
 imagemagick
