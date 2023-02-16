@@ -861,7 +861,7 @@ link_git_hooks() {
 # }}}
 
 # git-delta {{{
-update_or_install_git_delta() {
+install_or_update_git_delta() {
   local gitDeltaUrl="https://github.com/dandavison/delta/releases/download/0.15.0/delta-0.15.0-x86_64-unknown-linux-gnu.tar.gz"
   local gitDeltaTarFilename="$(basename "${gitDeltaUrl}")"
   local gitDeltaDownloadDir="${HOME}"

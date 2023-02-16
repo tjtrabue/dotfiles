@@ -15,13 +15,21 @@ install_bat() {
 }
 
 # Intall the latest version of Emacs from source.
+#
+# If installing on Windows for WSL, see the following page for instructions:
+# https://github.com/hubisan/emacs-wsl
+#
+# As well as the following article on using Linux GUI apps on Windows:
+# https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps
 install_latest_emacs() {
   local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
-  local emacsDest="${WS}/emacs"
+  local emacsDest="${WS:-${HOME}/workspace}/emacs"
 
-  log_info "Installing Emacs for Ubuntu"
-  git clone "${emacsGitUrl}" "${emacsDest}"
+  mkdir -p "$(dirname "${emacsDest}")"
+  log_info "Cloning/Updating Emacs Git Repo"
+  clone_or_update_git_repo "${emacsGitUrl}" "${emacsDest}"
   (
+    log_info "Installing latest Emacs for Ubuntu" && \
     cd "${emacsDest}" && \
     ./autogen.sh && \
     ./configure --with-json --with-tree-sitter --with-xwidgets \
