@@ -896,4 +896,25 @@ src_git_for_profile() {
 }
 # }}}
 
+# URL {{{
+# Turn the default HTTPS Git remote URL into an SSH URL.
+githttptossh() {
+  local originFetch=""
+  local originFetchSsh=""
+  local defaultRemote="$(defaultremote)"
+
+  originFetch="$(git remote -v |
+    grep -e "${defaultRemote}" -e 'fetch' |
+    awk '{print $2}')"
+
+  if echo "${originFetch}" | grep -q '^https'; then
+    originFetchSsh="$(echo "${originFetch}" |
+      sed 's|https://github.com/|git@github.com:|')"
+    log_info "Setting fetch/pull URL for ${MAGENTA}${defaultRemote}${NC} to:" \
+      "${CYAN}${originFetchSsh}${NC}"
+    git remote set-url origin "${originFetchSsh}"
+  fi
+}
+# }}}
+
 # vim:foldenable:foldmethod=marker:foldlevel=0
