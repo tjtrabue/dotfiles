@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Install all Ubuntu APT packages.
+install_ubuntu_packages() {
+  local ubuntuPackagesFile="${DOTFILES_PACKAGES_DIR}/ubuntu_packages.txt"
+
+  log_info "Installing Ubuntu packages from: ${BLUE}${ubuntuPackagesFile}${NC}"
+  eval "sudo apt install -y $(build_package_cmd_line_from_file "${ubuntuPackagesFile}")"
+}
+
 # Install the bat commandline utility to replace cat(1).
 install_bat_ubuntu() {
   local batInstallDest="${HOME}/.local/bin"
