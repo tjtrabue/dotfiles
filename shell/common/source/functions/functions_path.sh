@@ -230,10 +230,13 @@ add_extra_paths_to_path_file() {
     log_info "Adding extra executable paths for macOS."
     extraPathsFile="${extraPathFilesDir}/mac_path"
     ;;
-  *)
-    log_info "No extra executable paths found."
-    ;;
   esac
+
+  # Add extra paths when using Windows Subsystem for Linux.
+  if [ -n "${WSLENV}" ]; then
+    log_info "Adding extra executable paths for WSL."
+    extraPathsFile="${extraPathFilesDir}/wsl_path"
+  fi
 
   if [ -f "${extraPathsFile}" ]; then
     cat "${extraPathsFile}" >>"${PATH_FILE}"

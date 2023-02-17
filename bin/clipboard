@@ -119,11 +119,17 @@ clipboard__get_clipboard_executable() {
   "Linux")
     CLIPBOARD_EXEC="xclip"
     ;;
-  *)
-    echoe "ERROR: Could not determine clipboard CLI executable for OS: ${os}"
-    return 1
-    ;;
   esac
+
+  # Check if we are using Windows Subsystem for Linux.
+  if [ -n "${WSLENV}" ]; then
+    CLIPBOARD_EXEC="clip.exe"
+  fi
+
+  if [ -z "${CLIPBOARD_EXEC}" ]; then
+    err "Could not determine clipboard executable for OS: ${GREEN}${os}${NC}"
+    return 1
+  fi
 }
 
 # Some clipboard CLI tools, such as xclip, require optional arguments to work
@@ -131,14 +137,13 @@ clipboard__get_clipboard_executable() {
 clipboard__get_clipboard_executable_options() {
   local os="$(get_os_type)"
 
-  case "${os}" in
-  "Linux")
+  if [ "${os}" = 'Linux' ] && [ -z "${WSLENV}" ]; then
     CLIPBOARD_EXEC_OPTS="-selection clipboard"
-    ;;
-  *)
+  elif [ -n "${WSLENV}" ]; then
     CLIPBOARD_EXEC_OPTS=""
-    ;;
-  esac
+  else
+    CLIPBOARD_EXEC_OPTS=""
+  fi
 }
 
 # Make sure the executable that interacts with the system clipboard exists on

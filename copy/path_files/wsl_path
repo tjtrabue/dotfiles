@@ -1,0 +1,3 @@
+# These are WSL-specific binary dirs
+/mnt/c/Windows/SysWOW64
+/mnt/c/Windows/SysWOW64/WindowsPowerShell/v1.0
