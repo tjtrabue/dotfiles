@@ -6,6 +6,7 @@ caca-utils
 clang
 clang-format
 clang-tidy
+fonts-noto
 gcc
 highlight
 htop

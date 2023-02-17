@@ -40,4 +40,10 @@ alias vzrc="edit \${ZDOTDIR}/.zshrc"
 alias vi3="edit \${USER_CONF}/i3/config"
 # }}}
 
+# Emacs {{{
+
+# Start emacs with a maximized initial frame.
+alias emacs="emacs -mm"
+# }}}
+
 # vim:foldmethod=marker
