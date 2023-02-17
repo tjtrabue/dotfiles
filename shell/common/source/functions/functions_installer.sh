@@ -75,4 +75,27 @@ __install_tool_generic() {
   fi
 }
 
+# Create a command line of package names from a file ready to use in a package
+# manager install command.
+build_package_cmd_line_from_file() {
+  local packageFile="${1}"
+
+  if [ -z "${packageFile}" ]; then
+    err "No package file provided"
+    return 1
+  elif [ ! -f "${packageFile}" ]; then
+    err "Cannot create command line from ${BLUE}${packageFile}${NC};" \
+      "no such file"
+    return 2
+  fi
+
+  log_info "Building command line to install packages from:" \
+    "${BLUE}${packageFile}${NC}"
+
+  grep -E -v '^\s*#' "${packageFile}" |
+    rmduplines |
+    tr '\n' ' ' |
+    sed -E -e 's/^\s*//' -e 's/\s*$//'
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

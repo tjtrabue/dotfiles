@@ -131,4 +131,9 @@ __python3_pip_installed() {
   python3 -m pip --version >>/dev/null 2>&1
 }
 
+# Update the PIP installation for our version of Python3.
+python3_update_pip() {
+  python3 -m pip install --upgrade pip
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
