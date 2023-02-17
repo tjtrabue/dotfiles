@@ -902,8 +902,14 @@ src_git_for_profile() {
 githttptossh() {
   local originFetch=""
   local originFetchSsh=""
-  local defaultRemote="$(defaultremote)"
+  local defaultRemote=""
 
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
+  defaultRemote="$(defaultremote)"
   originFetch="$(git remote -v |
     grep -e "${defaultRemote}" -e 'fetch' |
     awk '{print $2}' |
@@ -924,8 +930,14 @@ githttptossh() {
 gitsshtohttp() {
   local originFetch=""
   local originFetchHttp=""
-  local defaultRemote="$(defaultremote)"
+  local defaultRemote=""
 
+  if ! isgitrepo; then
+    err "Not in a Git repository"
+    return 1
+  fi
+
+  defaultRemote="$(defaultremote)"
   originFetch="$(git remote -v |
     grep -e "${defaultRemote}" -e 'fetch' |
     awk '{print $2}' |

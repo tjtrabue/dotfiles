@@ -40,24 +40,28 @@ Here's what you'll need to do:
 
   *Incoming Server*
 
+  |----------------------+----------------------|
   | Setting              | Value                |
-  | ---                  | ---                  |
+  |----------------------+----------------------|
   | Protocol             | IMAP                 |
   | Hostname             | imap.gmail.com       |
   | Port                 | 993                  |
   | Connection Security  | SSL/TLS              |
   | Authentiation Method | Normal Password      |
   | Username             | <your email address> |
+  |----------------------+----------------------|
 
   *Outgoing Server*
 
+  |----------------------+----------------------|
   | Setting              | Value                |
-  | ---                  | ---                  |
+  |----------------------+----------------------|
   | Hostname             | smtp.gmail.com       |
   | Port                 | 587                  |
   | Connection Security  | STARTTLS             |
   | Authentiation Method | Normal Password      |
   | Username             | <your email address> |
+  |----------------------+----------------------|
 
   You should now be able to click *Re-Test* and verify that Thunderbird can
   authenticate with your email server.
