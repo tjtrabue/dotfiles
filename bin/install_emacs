@@ -80,10 +80,15 @@ install_emacs_source() {
     cd "${emacsDest}" && \
     export CC="gcc" CXX="g++" && \
     ./autogen.sh && \
-    ./configure --with-json --with-tree-sitter --with-xwidgets \
-      --with-imagemagick --with-mailutils --with-native-compilation=aot \
+    ./configure --with-json \
+      --without-compress-install \
+      --with-tree-sitter \
+      --with-xwidgets \
+      --with-imagemagick \
+      --with-mailutils \
+      --with-native-compilation=aot \
       --with-pgt && \
-    make -j$(nproc) && \
+    make -j"$(nproc)" && \
     sudo make install
   )
 }
