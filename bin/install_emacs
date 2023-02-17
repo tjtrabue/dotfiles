@@ -7,9 +7,12 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare DOTFILES_REPO="${HOME}/.dotfiles"
 declare WS
+
+declare EMACS_GIT_URL="https://github.com/emacs-mirror/emacs.git"
+declare EMACS_DEST="${WS}/emacs"
 # }}}
 
-# Logging variables
+# Logging variables {{{
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
 # }}}
@@ -56,12 +59,10 @@ setup() {
 }
 
 remove_old_emacs_installation() {
-  local emacsDir="${1}"
-
-  if [ -d "${emacsDir}" ]; then
-    log_info "Removing old Emacs installation at: ${BLUE}${emacsDir}${NC}"
+  if [ -d "${EMACS_DEST}" ]; then
+    log_info "Removing old Emacs installation at: ${BLUE}${EMACS_DEST}${NC}"
     (
-      cd "${emacsDir}" && \
+      cd "${EMACS_DEST}" && \
       sudo make uninstall
     )
   fi
@@ -72,8 +73,6 @@ remove_old_emacs_installation() {
 # will change depending on you OS. Check my ubuntu_packages.txt and
 # arch_packages.txt files to get a good idea of what you'll need.
 install_emacs__source() {
-  local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
-  local emacsDest="${WS}/emacs"
   local configureCmd="./configure \
     --without-compress-install \
     --with-json \
@@ -89,15 +88,15 @@ install_emacs__source() {
     configureCmd="${configureCmd} --with-pgtk"
   fi
 
-  if [ -d "${emacsDest}" ]; then
-    remove_old_emacs_installation "${emacsDest}"
+  if [ -d "${EMACS_DEST}" ]; then
+    remove_old_emacs_installation
   fi
 
   log_info "Cloning/Updating Emacs Git Repo"
-  clone_or_update_git_repo "${emacsGitUrl}" "${emacsDest}"
+  clone_or_update_git_repo "${EMACS_GIT_URL}" "${EMACS_DEST}"
   (
     log_info "Installing latest Emacs" && \
-    cd "${emacsDest}" && \
+    cd "${EMACS_DEST}" && \
     export CC="gcc" CXX="g++" && \
     ./autogen.sh && \
     eval "${configureCmd}" && \
