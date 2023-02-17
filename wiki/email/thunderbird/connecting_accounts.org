@@ -1,11 +1,21 @@
+#+title:   Connecting Accounts to Thunderbird
+#+author:  Thomas Trabue
+#+email:   tom.trabue@gmail.com
+#+date:    2023:02:17
+#+tags:    email thunderbird gmail
+#+STARTUP: fold
+
+Here we discuss in detail how to add email and calendar accounts to the
+Thunderbird email client.
+
 * Connecting a Gmail Account
 
-Thunderbird makes it easy to connect a personal Gmail account. Simply follow
-the instructions in the new account wizard and you should be good to go, even
-if you have setup 2-factor authentication for your Gmail account.
+Thunderbird makes it easy to connect a personal Gmail account. Simply follow the
+instructions in the new account wizard and you should be good to go, even if you
+have setup 2-factor authentication for your Gmail account.
 
-If you are connecting a corporate/student/work email account that uses Gmail
-as their mail provider, you usually have a few more hoops to jump through.
+If you are connecting a corporate/student/work email account that uses Gmail as
+their mail provider, you usually have a few more hoops to jump through.
 Thankfully, this is still a relatively easy process to complete.
 
 ** Connecting a Work/School Gmail Account

@@ -1160,6 +1160,10 @@ try to load =org= later.
       ;; Mainly used to cycle through todo states.
       "C-M-l" 'org-shiftright
       "C-M-h" 'org-shiftleft)
+    (general-def 'insert org-mode-map
+      ;; Cycle/continue to next option depending on context.  This moves through
+      ;; fields in a table, opens/closes org headings, etc.
+      "C-l" 'org-cycle)
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
       ;; outside of org-mode.
