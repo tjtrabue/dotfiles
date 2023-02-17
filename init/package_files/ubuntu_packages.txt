@@ -32,6 +32,7 @@ ranger
 ripgrep
 shellcheck
 socat
+texlive-full
 unzip
 w3m
 x11-xserver-utils

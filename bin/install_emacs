@@ -81,6 +81,7 @@ install_emacs_source() {
   (
     log_info "Installing latest Emacs" && \
     cd "${emacsDest}" && \
+    export CC="gcc" CXX="g++" && \
     ./autogen.sh && \
     ./configure --with-json --with-tree-sitter --with-xwidgets \
       --with-imagemagick --with-mailutils --with-native-compilation=aot \
