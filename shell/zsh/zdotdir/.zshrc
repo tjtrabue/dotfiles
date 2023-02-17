@@ -3,9 +3,6 @@
 # Make sure that file creation occurs with the normal permissions.
 umask 022
 
-# Allow as many open file descriptors as possible.
-ulimit -n "$(ulimit -Sn)"
-
 # Set variables {{{
 # History
 # The history file that lists previously run commands.

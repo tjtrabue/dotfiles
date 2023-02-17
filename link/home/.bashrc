@@ -3,9 +3,6 @@
 # Make sure that file creation occurs with the normal permissions.
 umask 022
 
-# Allow as many open file descriptors as possible.
-ulimit -n "$(ulimit -Sn)"
-
 # PATH {{{
 # IMPORTANT: This PATH may be overriden by the spath function. This only exists
 # in order to make sure that certain necessary executables are found before
