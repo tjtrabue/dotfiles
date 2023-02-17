@@ -123,9 +123,8 @@ install_sdkman_packages() {
   fi
 
   log_info "Installing SDKMAN packages"
-  # Install default open-source Java distribution.
-  # NOTE: You'll want to install a newer one, as well.
-  sdk install java
+  # Install latest GraalVM JDK.
+  sdk install java "$(sdk list java | grep 'GraalVM' | awk '{print $NF}')"
   # Install default Groovy version.
   sdk install groovy
   # Maven is the most popular Java build and dependency management tool.
@@ -165,7 +164,7 @@ add_sdkman_java_candidates_to_jenv() {
     if [ -d "${dir}" ] && [ ! -h "${dir}" ]; then
       d="$(basename "${dir}")"
       log_info "Adding java candidate ${GREEN}${d}${NC} to jenv"
-      jenv add "${d}"
+      jenv add "${dir}"
     fi
   done
 }

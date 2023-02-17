@@ -38,4 +38,5 @@ w3m
 x11-xserver-utils
 xauth
 xorg
+zathura-ps
 zip

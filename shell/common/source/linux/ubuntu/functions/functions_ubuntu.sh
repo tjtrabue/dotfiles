@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install the bat commandline utility to replace cat(1).
-install_bat() {
+install_bat_ubuntu() {
   local batInstallDest="${HOME}/.local/bin"
 
   sudo apt install bat
@@ -53,6 +53,18 @@ install_lazygit_ubuntu() {
     sudo install lazygit /usr/local/bin && \
     rm -f 'lazygit.tar.gz' 'lazygit'
   )
+}
+
+# Install GitHub command line tools for an Ubuntu distribution.
+install_gh_tools_ubuntu() {
+  type -p curl >/dev/null || sudo apt install curl -y
+  curl -fsSL 'https://cli.github.com/packages/githubcli-archive-keyring.gpg' |
+  sudo dd of='/usr/share/keyrings/githubcli-archive-keyring.gpg' && \
+  sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg && \
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" |
+  sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
+  sudo apt update && \
+  sudo apt install gh -y
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
