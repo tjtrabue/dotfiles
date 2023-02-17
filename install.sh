@@ -61,19 +61,6 @@ prepare_for_os() {
   set_dotfiles_variables
   source_common_defs
   init_path_file
-
-  log_info "Checking for additional preparation steps for OS..."
-  local osName="$(uname -s)"
-
-  case "${osName}" in
-  "Darwin")
-    prepare_for_macos
-    ;;
-  *)
-    log_info "No preparation function found for OS type: ${osName}"
-    ;;
-  esac
-
   export_path
   spath
 }
@@ -85,16 +72,6 @@ init_path_file() {
     log_info "Copying initial path file to: ${PATH_FILE}"
     cp "${pathFileSrc}" "${PATH_FILE}"
   fi
-}
-
-# macOS specific preparation.
-prepare_for_macos() {
-  local macPathFile="${DOTFILES_COPY}/path_files/mac_path"
-
-  log_info "Preparing for macOS installation"
-  . "${COMMON_SOURCE}/mac/functions/functions_mac.sh"
-  command cat "${macPathFile}" >>"${PATH_FILE}"
-  rmduplines "${PATH_FILE}"
 }
 # }}}
 
