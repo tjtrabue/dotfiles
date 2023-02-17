@@ -19,7 +19,7 @@ set_max_no_open_files() {
       "${sysctlConfFile}"
   else
     printf '%s=%s' "fs.file-max" "${maxNoOpenFiles}" |
-      sudo tee -a "${sysctlConfFile}"
+      sudo tee -a "${sysctlConfFile}" >>/dev/null 2>&1
   fi
 
   sudo sysctl -p
