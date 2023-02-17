@@ -1,11 +1,15 @@
 #!/bin/sh
 
 # It's often quite necessary to increase Linux's limit for open files per shell
-# session, as the default is usually too small for modern applications.
+# session, as the default is usually too small for modern applications. This
+# low threshold can lead to problems where a user launches a large GUI
+# application from the command line, only for the app to crash and the terminal
+# to print a message stating something along the lines of "too many open file".
+#
 # You may need to reboot your computer after making these changes for them to
 # take effect.
 set_max_no_open_files() {
-  local maxNoOpenFiles="${1:-10240}"
+  local maxNoOpenFiles="${1:-51200}"
   local sysctlConfFile="/etc/sysctl.conf"
 
   log_info "Setting the max number of open files to:" \
