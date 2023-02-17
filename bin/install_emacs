@@ -51,9 +51,6 @@ remove_old_emacs_installation() {
     (
       cd "${emacsDir}" && \
       sudo make uninstall
-      git restore .
-      git restore --cached .
-      git clean -df
     )
   fi
 }
@@ -66,7 +63,7 @@ install_emacs_source() {
       --with-xwidgets --with-imagemagick --with-mailutils \
       --with-native-compilation=aot"
 
-  if ! pgrep "tty.*Xorg"; then
+  if ! pgrep "tty.*Xorg" >>/dev/null 2>&1; then
     # If we are not running an X server, use the Pure GTK version of Emacs.
     # Note, PGTK does not work with X, but seems to work great for Weyland.
     configureCmd="${configureCmd} --with-pgtk"
