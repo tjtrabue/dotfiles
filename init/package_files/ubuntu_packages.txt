@@ -29,6 +29,7 @@ parallel
 poppler-utils
 ranger
 ripgrep
+rlwrap
 shellcheck
 socat
 texlive-full
