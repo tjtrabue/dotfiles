@@ -898,6 +898,7 @@ src_git_for_profile() {
 
 # URL {{{
 # Turn the default HTTPS Git remote URL into an SSH URL.
+# This function's inverse is gitsshtohttp.
 githttptossh() {
   local originFetch=""
   local originFetchSsh=""
@@ -905,14 +906,38 @@ githttptossh() {
 
   originFetch="$(git remote -v |
     grep -e "${defaultRemote}" -e 'fetch' |
-    awk '{print $2}')"
+    awk '{print $2}' |
+    tr -d '\n')"
 
   if echo "${originFetch}" | grep -q '^https'; then
     originFetchSsh="$(echo "${originFetch}" |
-      sed 's|https://github.com/|git@github.com:|')"
+      sed -E -e 's|https://([^.]+\.[a-z]{3})/|git@\1:|' -e 's/(\.git).*$/\1/' |
+      tr -d '\n')"
     log_info "Setting fetch/pull URL for ${MAGENTA}${defaultRemote}${NC} to:" \
       "${CYAN}${originFetchSsh}${NC}"
     git remote set-url origin "${originFetchSsh}"
+  fi
+}
+
+# Turn the default SSH Git remote URL into an HTTPS URL.
+# This function's inverse is githttptossh.
+gitsshtohttp() {
+  local originFetch=""
+  local originFetchHttp=""
+  local defaultRemote="$(defaultremote)"
+
+  originFetch="$(git remote -v |
+    grep -e "${defaultRemote}" -e 'fetch' |
+    awk '{print $2}' |
+    tr -d '\n')"
+
+  if echo "${originFetch}" | grep -q '^git@'; then
+    originFetchHttp="$(echo "${originFetch}" |
+      sed -E -e 's|git@([^.]+\.[a-z]{3}):|https://\1/|' -e 's/(\.git).*$/\1/' |
+      tr -d '\n')"
+    log_info "Setting fetch/pull URL for ${MAGENTA}${defaultRemote}${NC} to:" \
+      "${CYAN}${originFetchHttp}${NC}"
+    git remote set-url origin "${originFetchHttp}"
   fi
 }
 # }}}
