@@ -4,8 +4,14 @@ set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare DOTFILES_REPO="${HOME}/.dotfiles"
 declare WS
+# }}}
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
 # }}}
 
 # Imports {{{
@@ -18,6 +24,12 @@ _help() {
 ${THIS_EXEC}
 
 Install the Emacs from its master branch.
+
+If installing on Windows for WSL, see the following page for instructions:
+  https://github.com/hubisan/emacs-wsl
+
+As well as the following article on using Linux GUI apps on Windows:
+  https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -55,13 +67,21 @@ remove_old_emacs_installation() {
   fi
 }
 
-# Install emacs from source
-install_emacs_source() {
+# Install emacs from source. This option is pretty hard to make portable, but
+# I've done the best I can. You will need a lot of dependencies, and their names
+# will change depending on you OS. Check my ubuntu_packages.txt and
+# arch_packages.txt files to get a good idea of what you'll need.
+install_emacs__source() {
   local emacsGitUrl="https://github.com/emacs-mirror/emacs.git"
   local emacsDest="${WS}/emacs"
-  local configureCmd="./configure --with-json --with-tree-sitter \
-      --with-xwidgets --with-imagemagick --with-mailutils \
-      --with-native-compilation=aot"
+  local configureCmd="./configure \
+    --without-compress-install \
+    --with-json \
+    --with-tree-sitter \
+    --with-xwidgets \
+    --with-imagemagick \
+    --with-mailutils \
+    --with-native-compilation=aot"
 
   if ! pgrep "tty.*Xorg" >>/dev/null 2>&1; then
     # If we are not running an X server, use the Pure GTK version of Emacs.
@@ -80,23 +100,22 @@ install_emacs_source() {
     cd "${emacsDest}" && \
     export CC="gcc" CXX="g++" && \
     ./autogen.sh && \
-    ./configure --with-json \
-      --without-compress-install \
-      --with-tree-sitter \
-      --with-xwidgets \
-      --with-imagemagick \
-      --with-mailutils \
-      --with-native-compilation=aot \
-      --with-pgt && \
+    eval "${configureCmd}" && \
     make -j"$(nproc)" && \
     sudo make install
   )
 }
 
+install_emacs_using_best_option() {
+  # TODO: Investigate other alternatives for a modern, portable installation
+  #       process for Emacs.
+  install_emacs__source
+}
+
 main() {
   print_header "Installing Emacs (the best editor!)"
   setup
-  install_emacs_source
+  install_emacs_using_best_option
 }
 # }}}
 
