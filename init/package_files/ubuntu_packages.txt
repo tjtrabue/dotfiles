@@ -33,6 +33,7 @@ rlwrap
 shellcheck
 socat
 texlive-full
+tree
 unzip
 w3m
 x11-xserver-utils
