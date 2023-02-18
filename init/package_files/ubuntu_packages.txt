@@ -1,3 +1,4 @@
+aspell
 atool
 autoconf
 automake
@@ -15,9 +16,12 @@ dpkg-dev
 fonts-noto
 gcc
 gcc-10
+global
 gvfs
 highlight
 htop
+hunspell
+hunspell-en-us
 imagemagick
 language-pack-en-base
 libacl1-dev

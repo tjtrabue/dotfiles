@@ -47,8 +47,9 @@ your operating system.
 
 #+begin_src emacs-lisp
   (use-package flyspell
-    :after ispell
-    :demand t
+    :hook
+    ((text-mode . flyspell-mode)
+     (prog-mode . flyspell-prog-mode))
     :init
     (setq ispell-program-name
           ;; Prefer aspell over hunspell since aspell is faster
