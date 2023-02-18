@@ -192,15 +192,17 @@ maintained.
      (magit-post-refresh . diff-hl-magit-post-refresh))
     :config
     ;; Enable diff-hl globally.
-    (global-diff-hl-mode)
+    (global-diff-hl-mode 1)
+    ;; Provide diff highlighting for vc-dir-mode buffers.
+    (diff-hl-dir-mode 1)
     ;; Provide similar functionality in dired-mode.
-    (diff-hl-dired-mode)
+    (diff-hl-dired-mode 1)
     ;; Update highlights on the fly instead of after each file write. Much
     ;; more useul than the default behavior.
-    (diff-hl-flydiff-mode)
+    (diff-hl-flydiff-mode 1)
     ;; Makes the fringe/margin react to mouse clicks to show the corresponding
     ;; hunk.
-    (diff-hl-show-hunk-mouse-mode))
+    (diff-hl-show-hunk-mouse-mode 1))
 #+end_src
 
 * git-timemachine
