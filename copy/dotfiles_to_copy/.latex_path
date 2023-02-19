@@ -1,3 +1,5 @@
 # Paths containing additional LaTeX classes.
 # These paths get compiled into the TEXINPUTS environment variable.
+/usr/share/texlive/texmf-dist/tex//
 ${HOME}/share/latex//
+.

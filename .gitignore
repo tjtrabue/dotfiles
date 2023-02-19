@@ -9,13 +9,6 @@ backup/
 # Ignore the test directory, used for developing test scripts:
 test/
 
-# Python {{{
-# Compiled Python files
-*.pyc
-# Python cache
-__pycache__
-# }}}
-
 # Folder view configuration files
 .DS_Store
 Desktop.ini
@@ -26,7 +19,7 @@ tags
 tags.lock
 tags.temp
 
-# Ignore all log files
+# Log files
 *.log
 
 # Compiled object files
@@ -42,6 +35,19 @@ tags.temp
 *.jpg
 *.jpeg
 *.png
+
+# Compiled documents
+*.pdf
+
+# Compiled executables
+*.out
+
+# Python {{{
+# Compiled Python files
+*.pyc
+# Python cache
+__pycache__
+# }}}
 
 # broot {{{
 # Don't ignore the config file, but ignore everything else
@@ -398,6 +404,7 @@ link/config/rclone/rclone.conf
 *.aux
 *.fdb_latexmk
 *.fls
+*.xmpi
 auto/
 # }}}
 

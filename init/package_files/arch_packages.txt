@@ -104,7 +104,6 @@ man-pages
 mediainfo
 meld
 meson
-mlocate
 nano
 neofetch
 neomutt
@@ -133,6 +132,7 @@ picom
 plantuml
 plasma
 plasma-wayland-session
+plocate
 poppler
 postgresql
 pulseaudio
