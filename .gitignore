@@ -393,4 +393,12 @@ link/config/AWSVPNClient/
 link/config/rclone/rclone.conf
 # }}}
 
+# Tex/LaTeX {{{
+# LaTeX compilation files.
+*.aux
+*.fdb_latexmk
+*.fls
+auto/
+# }}}
+
 # vim:foldenable:foldmethod=marker

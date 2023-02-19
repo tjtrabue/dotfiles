@@ -162,6 +162,7 @@ libxt-dev
 libyajl2
 locate
 mediainfo
+mlocate
 neovim
 nodejs
 npm
