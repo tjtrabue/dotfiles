@@ -1,0 +1,3 @@
+# Paths containing additional LaTeX classes.
+# These paths get compiled into the TEXINPUTS environment variable.
+${HOME}/share/latex//

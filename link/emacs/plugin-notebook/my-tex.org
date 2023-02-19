@@ -26,7 +26,7 @@ To get a live-preview in Emacs, do this:
     =output-pdf= to your favorite viewer in =TeX-view-program-selection=:
     #+begin_src emacs-lisp :tangle no
       (push (list 'output-pdf "Zathura")
-                          TeX-view-program-selection)
+            TeX-view-program-selection)
     #+end_src
 - In your =.tex= file, make a change, save the file, and watch your PDF viewer
   update in real time!

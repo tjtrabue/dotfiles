@@ -12,6 +12,16 @@ dotsync() {
   rmbsyml "${HOME}"
 }
 
+# Make sure all one-time-transfer dotfiles are present in the user's HOME dir.
+# This operation does not overwrite existing dotfiles in HOME.
+dotcopy() {
+  local dotfilesCopy="${DOTFILES_COPY:-${DOTFILES_HOME}/copy}"
+  local oneTimeTransfersDir="${dotfilesCopy}/dotfiles_to_copy"
+
+  # Copy one-time-transfer files if they have not already been copied.
+  cp -n -t "${HOME}" "${oneTimeTransfersDir}"/.*
+}
+
 # Create a new dotfile, link it to your home directory, and open it for editing
 # in your configured editor.
 # The input filename may have the '.' prefix or may omit the '.'. Any leading
