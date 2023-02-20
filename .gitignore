@@ -405,7 +405,10 @@ link/config/rclone/rclone.conf
 *.fdb_latexmk
 *.fls
 *.xmpi
-auto/
+
+# Resume-specific files
+/misc/professional/auto/
+/misc/professional/creationdate.lua
 # }}}
 
 # vim:foldenable:foldmethod=marker
