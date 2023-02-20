@@ -28,4 +28,42 @@ install_digestif_lsp() {
   digestif
 }
 
+# Intall the latest TeX Live distribution on a UNIX OS. This is the preferred
+# approach to installing TeX Live, since system package repositories usually
+# contain out-of-date versions that are incompatible with the latest TeX Live
+# package repositories, meaning you cannot automatically install package using
+# `tlmgr install <package>'.
+#
+# To uninstall this distribution, the directories you must remove will be named
+# with the scheme:
+#   /usr/local/texlive/YYYY
+#   ~/.texliveYYYY
+install_latest_texlive_distribution() {
+  local tempDir="/tmp"
+  local texliveDownloadUrl="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
+  local tarFileName="install-tl-unx.tar.gz"
+
+  log_info "Installing latest TeX Live distribution"
+  (
+    cd "${tempDir}" && \
+    wget "${texliveDownloadUrl}" && \
+    zcat "${tarFileName}" | tar xf - && \
+    (
+      cd install-tl-* && \
+      sudo perl ./install-tl --no-interaction
+    )
+  ) && \
+  rm -rf "${tempDir:?}"/install-tl-* && \
+  cat <<EOF
+Done! Do not forget to prepend this to your PATH:
+  /usr/local/texlive/YYYY/bin/PLATFORM,
+For example:
+   /usr/local/texlive/2022/bin/x86_64-linux
+You will also want to add these to your MANPATH file (~/.man_path):
+  /usr/local/texlive/2022/texmf-dist/doc/man
+and your INFOPATH file (~/.info_path):
+  /usr/local/texlive/2022/texmf-dist/doc/info
+EOF
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

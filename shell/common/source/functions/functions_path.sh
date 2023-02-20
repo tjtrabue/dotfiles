@@ -105,6 +105,14 @@ spath_all() {
   # These path files should always exist.
   spath "${HOME}/.path" "PATH"
 
+  if [ -f "${HOME}/.man_path" ]; then
+    spath "${HOME}/.man_path" "MANPATH"
+  fi
+
+  if [ -f "${HOME}/.info_path" ]; then
+    spath "${HOME}/.info_path" "INFOPATH"
+  fi
+
   if [ -f "${HOME}/.cpp_path" ]; then
     spath "${HOME}/.cpp_path" "CPATH"
   fi

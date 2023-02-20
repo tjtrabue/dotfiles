@@ -34,15 +34,15 @@ OPTIONS:
 EOF
 }
 
-make_latex_directories() {
-  log_info "Creating user texmf directory tree with root:" \
-    "${BLUE}${USER_TEXMF_DIR}${NC}"
-  mkdir -p "${USER_TEXMF_DIR}/latex"
+# Create directory structure for user packages.
+init_usertree() {
+  tlmgr init-usertree
 }
 
 main() {
   print_header "Initializing LateX Configuration"
-  make_latex_directories
+  install_latest_texlive_distribution
+  init_usertree
 }
 # }}}
 
