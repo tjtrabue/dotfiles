@@ -34,8 +34,9 @@ install_digestif_lsp() {
 # package repositories, meaning you cannot automatically install package using
 # `tlmgr install <package>'.
 #
-# To uninstall this distribution, the directories you must remove will be named
-# with the scheme:
+# To uninstall this distribution, the cleanest solution is to use
+# `sudo tlmgr remove --all --force'. If that does not work, the directories you
+# must remove will be named with the scheme:
 #   /usr/local/texlive/YYYY
 #   ~/.texliveYYYY
 install_latest_texlive_distribution() {

@@ -8,6 +8,35 @@ This Org document contains my primary Emacs configuration. =~/.emacs= only holds
 pieces of code necessary to prepare and load this file. You can find my full
 dotfiles repository [[https://github.com/tjtrabue/dotfiles][here]].
 
+* NOTE: Slow Emacs Initial Load
+
+When running a fresh Emacs installation with all the goodies for the first time
+(things like AOT native compilation, jitted trampolines, etc.), Emacs will
+probably take a very, very long time to fully load due to the insane number of
+Elisp files Emacs must compile to native code. I'm talking many hours, possibly
+a day. This can be discouraging, but it is nothing to worry about. Here are some
+tips for ensuring Emacs does, in fact, finish compiling your Elisp files and
+becomes useable:
+
+- Make sure to set the max number of open file descriptors in
+  =/etc/security/limits.conf= to something pretty high:
+
+  #+begin_quote
+    * soft nofile 8192
+    * hard nofile 65535
+  #+end_quote
+
+- Run Emacs in daemon-mode from the command line to keep track of the native
+  compilation process:
+
+  #+begin_src shell :tangle no
+    # First, set the number of open file descriptors to a high value:
+    ulimit -Sn 8192
+    ulimit -Hn 65535
+    # Then, run Emacs in server-mode and keep it in the terminal's foreground:
+    emacs --fg-daemon
+  #+end_src
+
 * Require statements
 These are =require= directives used to import Elisp modules used heavily by
 plugins and my custom code. Please only list the most important modules
