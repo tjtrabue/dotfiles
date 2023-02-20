@@ -58,12 +58,10 @@ install_latest_texlive_distribution() {
   cat <<EOF
 Done! Do not forget to prepend this to your PATH:
   /usr/local/texlive/YYYY/bin/PLATFORM,
-For example:
-   /usr/local/texlive/2022/bin/x86_64-linux
-You will also want to add these to your MANPATH file (~/.man_path):
-  /usr/local/texlive/2022/texmf-dist/doc/man
+You will also want to add these to your mandb config file (/etc/manpath.config):
+  /usr/local/texlive/YYYY/texmf-dist/doc/man
 and your INFOPATH file (~/.info_path):
-  /usr/local/texlive/2022/texmf-dist/doc/info
+  /usr/local/texlive/YYYY/texmf-dist/doc/info
 EOF
 }
 
