@@ -14,7 +14,7 @@ src_user_limits_for_profile() {
 
 __set_user_max_open_file_descriptors() {
   local nofileSoftLimit="${1:-8192}"
-  local nofileHardLimit="${2:-200000}"
+  local nofileHardLimit="${2:-65535}"
 
   log_info "Setting max open file descriptor limits:" \
     "${YELLOW}soft${NC} = ${GREEN}${nofileSoftLimit}${NC}," \
