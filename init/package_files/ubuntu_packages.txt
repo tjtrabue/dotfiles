@@ -16,7 +16,6 @@ dpkg-dev
 fonts-noto
 gcc
 gcc-10
-glances
 global
 gvfs
 highlight
