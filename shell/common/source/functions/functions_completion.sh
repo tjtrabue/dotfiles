@@ -34,6 +34,7 @@ add_bash_completions() {
   __add_pack_completions_for_bash
   __add_gh_completions_for_bash
   __add_gradle_completions_for_bash
+  __add_rust_completions_for_bash
 }
 
 # Add any extra Zsh completions.
@@ -49,6 +50,7 @@ add_zsh_completions() {
   __add_pack_completions_for_zsh
   __add_gh_completions_for_zsh
   __add_gradle_completions_for_zsh
+  __add_rust_completions_for_zsh
 }
 
 # Add extra Fish shell completions.
@@ -416,6 +418,32 @@ __add_gradle_completions_for_zsh() {
   fi
 
   fpath=("${gradleCompletionHome}" $fpath)
+}
+
+# Rust command line tools completions for Bash.
+__add_rust_completions_for_bash() {
+  local userBashCompletionsDir="${HOME}/.local/share/bash-completion/completions"
+
+  log_info "Activating Rust completions for Zsh"
+  if [ -x "$(command -v rustup)" ]; then
+    mkdir -p "${userBashCompletionsDir}"
+    rustup completions bash cargo >>"${userBashCompletionsDir}/cargo"
+    rustup completions bash rustup >>"${userBashCompletionsDir}/rustup"
+  fi
+}
+
+# Rust command line tools completions for Zsh.
+__add_rust_completions_for_zsh() {
+  local zshCompletionDir="$(__get_zsh_completion_dir)"
+
+  log_info "Activating Rust completions for Zsh"
+  mkdir -p "${zshCompletionDir}"
+  if [ -x "$(command -v rustup)" ] && [ ! -f "${zshCompletionDir}/_cargo" ]; then
+    rustup completions zsh cargo >"${zshCompletionDir}/_cargo"
+  fi
+  if [ -x "$(command -v rustup)" ] && [ ! -f "${zshCompletionDir}/_rustup" ]; then
+    rustup completions zsh rustup >"${zshCompletionDir}/_rustup"
+  fi
 }
 
 __clone_gradle_completions_repo() {
