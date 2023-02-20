@@ -104,7 +104,6 @@ eval_path_var_from_file() {
 spath_all() {
   # These path files should always exist.
   spath "${HOME}/.path" "PATH"
-  spath "${HOME}/.latex_path" "TEXINPUTS"
 
   if [ -f "${HOME}/.cpp_path" ]; then
     spath "${HOME}/.cpp_path" "CPATH"
