@@ -3,18 +3,16 @@
 # Set user-limits for things such as max number of open file descriptors.
 # The defaults for many of these settings are quite small.
 src_user_limits_for_profile() {
-  local nofileSoftLimit="${1:-8192}"
-  local nofileHardLimit="${2:-200000}"
+  log_info "Setting user resource limits"
 
   if [ -n "$(command -v ulimit)" ]; then
-    __set_user_max_open_file_descriptors \
-      "${nofileSoftLimit}" "${nofileHardLimit}"
+    __set_user_max_open_file_descriptors
   fi
 }
 
 __set_user_max_open_file_descriptors() {
-  local nofileSoftLimit="${1:-8192}"
-  local nofileHardLimit="${2:-65535}"
+  local nofileSoftLimit="8192"
+  local nofileHardLimit="65535"
 
   log_info "Setting max open file descriptor limits:" \
     "${YELLOW}soft${NC} = ${GREEN}${nofileSoftLimit}${NC}," \
