@@ -49,8 +49,9 @@ install_latest_texlive_distribution() {
     wget "${texliveDownloadUrl}" && \
     zcat "${tarFileName}" | tar xf - && \
     (
-      cd install-tl-* && \
-      sudo perl ./install-tl --no-interaction
+      cd "$(find "${tempDir}" -maxdepth 1 -mindepth 1 \
+        -type d -name 'install-tl-*')" && \
+      sudo perl ./install-tl --no-interaction --paper=letter
     )
   ) && \
   rm -rf "${tempDir:?}"/install-tl-* && \
