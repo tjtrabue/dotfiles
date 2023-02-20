@@ -1116,6 +1116,8 @@ and hooks in a way that defers loading the package.
     (general-def
       ;; Nobody uses downcase-region, anyway.
       "C-x C-l" 'find-library
+      ;; Much easier than `C-x 4 C-f'
+      "C-x F" 'find-file-other-window
       ;; Kill the current buffer.
       "C-M-k" 'kill-this-buffer)
     ;; Evil leader shortcuts:
