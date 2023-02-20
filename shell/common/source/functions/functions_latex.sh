@@ -51,7 +51,7 @@ install_latest_texlive_distribution() {
     (
       cd "$(find "${tempDir}" -maxdepth 1 -mindepth 1 \
         -type d -name 'install-tl-*')" && \
-      sudo perl ./install-tl --no-interaction --paper=letter
+      sudo perl ./install-tl --no-interaction
     )
   ) && \
   rm -rf "${tempDir:?}"/install-tl-* && \
