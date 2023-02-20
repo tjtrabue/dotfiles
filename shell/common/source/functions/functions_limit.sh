@@ -1,5 +1,28 @@
 #!/bin/sh
 
+# Set user-limits for things such as max number of open file descriptors.
+# The defaults for many of these settings are quite small.
+src_user_limits_for_profile() {
+  local nofileSoftLimit="${1:-8192}"
+  local nofileHardLimit="${2:-200000}"
+
+  if [ -n "$(command -v ulimit)" ]; then
+    __set_user_max_open_file_descriptors \
+      "${nofileSoftLimit}" "${nofileHardLimit}"
+  fi
+}
+
+__set_user_max_open_file_descriptors() {
+  local nofileSoftLimit="${1:-8192}"
+  local nofileHardLimit="${2:-200000}"
+
+  log_info "Setting max open file descriptor limits:" \
+    "${YELLOW}soft${NC} = ${GREEN}${nofileSoftLimit}${NC}," \
+    "${YELLOW}hard${NC} = ${GREEN}${nofileHardLimit}${NC}"
+  ulimit -Sn "${nofileSoftLimit}"
+  ulimit -Hn "${nofileHardLimit}"
+}
+
 # It's often quite necessary to increase Linux's limit for open files per shell
 # session, as the default is usually too small for modern applications. This
 # low threshold can lead to problems where a user launches a large GUI

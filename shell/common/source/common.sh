@@ -192,6 +192,7 @@ __src_agents() {
 # AFTER we've constructed our custom $PATH, otherwise their work will be
 # overwritten.
 __src_extra_environment_profiles() {
+  src_user_limits_for_profile
   src_dircolors_for_profile
   src_dart_for_profile
   src_git_for_profile
