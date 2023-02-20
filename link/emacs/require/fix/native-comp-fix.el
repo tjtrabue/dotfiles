@@ -1,4 +1,4 @@
-;;; org-functions-fix.el --- summary -*- lexical-binding: t -*-
+;;; native-comp-fix.el --- summary -*- lexical-binding: t -*-
 
 ;; Author:
 ;; Maintainer:
@@ -32,16 +32,19 @@
 
 ;;; Commentary:
 
-;; Advice to fix obsolete versions of org-mode functions used by some
-;; third-party libraries.
+;; This file provides some var definitions needed for straight.el to native-
+;; compile plugins
 
 ;;; Code:
 
-(define-advice org-macro-initialize-templates
-  (:filter-args (ll) fix-org-macro-initialize-templates)
-  "New `org-macro-initialize-templates' doesn't take any arguments."
-  nil)
+(defvar native-comp-deferred-compilation-deny-list nil
+  "We need to define this variable in order for Straight.el to native-compile
+  packages properly.
 
-(provide 'org-functions-fix)
+  Should remove this var as soon as Emacs updates. Try updating Emacs,
+  removing the require statement for this package, and see if Emacs behaves
+  correctly.")
 
-;;; org-functions-fix.el ends here
+(provide 'native-comp-fix)
+
+;;; native-comp-fix.el ends here

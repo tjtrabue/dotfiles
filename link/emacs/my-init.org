@@ -220,6 +220,9 @@ become unnecessary and may be safely removed.
   ;; Add dummy values to fix `helpful' and `color-identifiers' dependency on
   ;; read-symbol-positions-list
   (require 'symbol-positions-fix)
+  ;; Add dummy variables needed to get native compilation to work, especially
+  ;; for Straight.el. This should be able to go away pretty soon.
+  (require 'native-comp-fix)
 #+end_src
 
 * Configure Backup Dirs/Auto-Saves
