@@ -407,8 +407,11 @@ link/config/rclone/rclone.conf
 *.xmpi
 
 # Resume-specific files
-/misc/professional/auto/
+# We only want to version-control the encrypted version.
+# No peeking!
+/misc/professional/resume.tex
 /misc/professional/creationdate.lua
+/misc/professional/auto/
 # }}}
 
 # vim:foldenable:foldmethod=marker
