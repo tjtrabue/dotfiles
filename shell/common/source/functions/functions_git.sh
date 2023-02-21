@@ -958,7 +958,7 @@ gitsshtohttp() {
 
 # Install the lazygit commandline Git porcelain for an Ubuntu distribution.
 install_lazygit() {
-  local lazygitVersion="$(curl -s \
+  local lazygitVersion="$(curl -sL \
     "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" |
     grep -Po '"tag_name":\s*"v\K[^"]*'
   )"
@@ -970,6 +970,7 @@ install_lazygit() {
     rm -f 'lazygit.tar.gz' 'lazygit'
   )
 }
+
 # }}}
 
 # vim:foldenable:foldmethod=marker:foldlevel=0
