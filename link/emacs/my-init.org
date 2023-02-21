@@ -1058,7 +1058,7 @@ straight-pull-all=
         :files (:defaults))))
 #+end_src
 
-* Install packages needed on startup
+* Install Packages Needed on Startup
 Some packages are important to load right at the get-go, either because we
 want their functionality right now, or because they provide extra keywords
 for =use-package= that we want to make use of in our =use-package=
@@ -1161,6 +1161,10 @@ and hooks in a way that defers loading the package.
     (general-def
       ;; Nobody uses downcase-region, anyway.
       "C-x C-l" 'find-library
+      ;; Compile command for the current buffer.
+      "M-c" 'compile
+      ;; Kill the running compilation process.
+      "M-C" 'kill-compilation
       ;; Much easier than `C-x 4 C-f'
       "C-x F" 'find-file-other-window
       ;; Kill the current buffer.
