@@ -1244,7 +1244,7 @@ try to load =org= later.
                                    "NEXT(n)"
                                    "WAITING(w@)"
                                    "INACTIVE(i@)"
-                                   "MEETING(m@)"
+                                   "MEETING(m)"
                                    "|"
                                    "DONE(d)"
                                    "CANCELLED(c@)")))
