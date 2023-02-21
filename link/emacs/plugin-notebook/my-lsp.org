@@ -14,7 +14,13 @@ blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
 Because it was growing too large, I refactored my custom LSP mode configuration
 to the =my-custom-lsp.el= file.
 
-* Notes about specific LSP servers
+* lsp-mode
+=lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
+heavy lifting of starting up Language Servers and managing connections to
+them, not to mention all the fancy UI stuff regarding completions,
+documentation on hover, syntax linting and error checking, etc.
+
+** Notes about specific LSP servers
 - *CCLS*: Available as an AUR packge on Arch Linux. This LSP server requires
   the =ccls= Emacs package from MELPA, as well.
 - *EmmyLua LanguageServer*: Available as an AUR packge on Arch Linux.  Make
@@ -22,19 +28,13 @@ to the =my-custom-lsp.el= file.
   the =~/.emacs.d/= directory.
 - *haskell-language-server*: Install with =ghcup=.
 
-* Diagnosing performance issues
+** Diagnosing performance issues
 If you experience slow performance while using =lsp-mode=, run the command =M-x
 lsp-doctor= for specific recommendations on how you can speed up
 =lsp-mode=. These recommendations include default Emacs variables you can tune,
 recompiling Emacs with native JSON parsing support, and more. Best of all,
 =lsp-doctor= tells you which recommendations your Emacs setup already meets, and
 which ones you do not yet satisfy.
-
-* lsp-mode
-=lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
-heavy lifting of starting up Language Servers and managing connections to
-them, not to mention all the fancy UI stuff regarding completions,
-documentation on hover, syntax linting and error checking, etc.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
