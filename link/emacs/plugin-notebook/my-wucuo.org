@@ -15,7 +15,6 @@ specified time interval.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package wucuo
-      :after flyspell
       :hook
       ((prog-mode text-mode) . wucuo-start)
       :custom

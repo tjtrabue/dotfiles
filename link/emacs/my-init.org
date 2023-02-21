@@ -1232,8 +1232,17 @@ try to load =org= later.
     ;; Pressing return while point is over a hyperlink will open the link in
     ;; the user's web browser.
     (org-return-follows-link t)
-    ;; Record a timestamp when a TODO item is marked as done.
+    ;; Record a timestamp when a todo item is marked as done.
     (org-log-done 'time)
+    ;; The keywords to use when cycling through org-todo.
+    (org-todo-keywords '((sequence "TODO"
+                                   "NEXT"
+                                   "WAITING"
+                                   "INACTIVE"
+                                   "MEETING"
+                                   "|"
+                                   "DONE"
+                                   "CANCELLED")))
     ;; Set Org agenda files to a list of files and/or directories.
     (org-agenda-files `(,my/org-agenda-dir))
     ;; Whether to prompt the user for confirmation before evaluating source
