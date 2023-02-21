@@ -26,7 +26,14 @@ _help() {
   command cat <<EOF
 ${THIS_EXEC}
 
-Install the Emacs from its master branch.
+Install Emacs from its master branch.
+
+You will need to install lots of build dependencies, and unfortunately the list
+changes pretty drastically depending on your OS. Some generic advice for
+building Emacs from source:
+
+- Make sure you have libgccjit installed, and make sure its version matches
+  your GCC version. Otherwise, the configure step will fail.
 
 If installing on Windows for WSL, see the following page for instructions:
   https://github.com/hubisan/emacs-wsl
