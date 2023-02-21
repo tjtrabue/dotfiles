@@ -1220,6 +1220,8 @@ try to load =org= later.
       ;; outside of org-mode.
       "M-o l" 'org-store-link
       "M-o a" 'org-agenda)
+    (my/evil-leader-def
+      "oa" 'org-agenda)
     :custom
     (org-hide-leading-stars t)
     ;; Only show headings when visiting a new Org file.
