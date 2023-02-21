@@ -405,6 +405,10 @@ link/config/rclone/rclone.conf
 *.fdb_latexmk
 *.fls
 *.xmpi
+# Region preview files
+*_region_.tex
+# LaTeX preview folders
+*.prv/
 
 # Resume-specific files
 # We only want to version-control the encrypted version.

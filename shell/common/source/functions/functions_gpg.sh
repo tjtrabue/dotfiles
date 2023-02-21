@@ -131,6 +131,10 @@ gpgsymenc() {
     return 2
   fi
 
+  if [ -f "${encryptedFileName}" ]; then
+    mv -f "${encryptedFileName}" "${fileName}.bak"
+  fi
+
   gpg --batch \
     --output "${encryptedFileName}"  \
     --passphrase "${passphrase}" \
@@ -149,6 +153,10 @@ gpgsymdec() {
   elif [ -z "${passphrase}" ]; then
     err "No passphrase provided"
     return 2
+  fi
+
+  if [ -f "${fileName}" ]; then
+    mv -f "${fileName}" "${fileName}.bak"
   fi
 
   gpg --batch \

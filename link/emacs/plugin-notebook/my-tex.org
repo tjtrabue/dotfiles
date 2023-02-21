@@ -19,6 +19,8 @@ To get a live-preview in Emacs, do this:
 - In a terminal window, navigate to the directory containing the =.tex= file and
   run the following command: =latexmk -pvc -pdf <file name>=. This command
   re-compiles the output PDF whenever you make changes to the source =.tex= file,
+  - Alternatively, in your =.tex= buffer, run =M-x compile= and use the above
+    command as your =compile-command=.
 - Now, open the compiled =.pdf= document in a viewing program capable of
   reloading on-the-fly:
   - *Option 1:* Open the PDF in an Emacs buffer (if you have =pdftools= installed)
