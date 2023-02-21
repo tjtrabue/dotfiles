@@ -47,9 +47,9 @@ your operating system.
 
 #+begin_src emacs-lisp
   (use-package flyspell
+    ;; NOTE: Activating flyspell-prog-mode can really slow down editing.
     :hook
-    ((text-mode . flyspell-mode)
-     (prog-mode . flyspell-prog-mode))
+    (text-mode . flyspell-mode)
     :init
     (setq ispell-program-name
           ;; Prefer aspell over hunspell since aspell is faster

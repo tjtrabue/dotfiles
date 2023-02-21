@@ -320,6 +320,9 @@ Provides default Vim keybindings for all standard Emacs modes.
     (general-unbind 'insert
       ;; We never need to insert digraphs!
       "C-k")
+    (general-def org-mode-map
+      ;; A better todo item insert function for evil-mode.
+      [remap org-insert-todo-heading] 'evil-org-org-insert-todo-heading-respect-content-below)
     :custom
     ;; Whether to use Vim keys in the minibuffer.
     (evil-collection-setup-minibuffer t)

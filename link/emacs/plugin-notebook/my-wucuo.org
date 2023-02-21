@@ -15,10 +15,6 @@ specified time interval.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package wucuo
-      ;; Unnecessary in modern Emacs. Flyspell used to be a lot slower and more
-      ;; computationally intensive, but most modern Emacs distributions can handle
-      ;; on-the-fly spell-checking just fine.
-      :disabled
       :after flyspell
       :hook
       ((prog-mode text-mode) . wucuo-start)
