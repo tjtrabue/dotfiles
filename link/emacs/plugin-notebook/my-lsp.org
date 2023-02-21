@@ -36,6 +36,7 @@ heavy lifting of starting up Language Servers and managing connections to
 them, not to mention all the fancy UI stuff regarding completions,
 documentation on hover, syntax linting and error checking, etc.
 
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :after evil-collection
@@ -180,8 +181,8 @@ documentation on hover, syntax linting and error checking, etc.
     (my-custom-lsp-register-lsp-servers))
 #+end_src
 
-* Plugins
-** ccls
+** Plugins
+*** ccls
 *NOTE*: Currently deprecated in favor of =clangd=, which seems much more
 feature-rich as of now.
 
@@ -204,14 +205,14 @@ is already present and ready to use. Many other LSP systems would complain if
 your source code references a =.h= file that is not yet physically present on
 your file system.
 
-*** variables
+**** variables
 #+begin_src emacs-lisp
   (defvar my/ccls-compile-commands-map (make-hash-table :test 'equal)
     "Hash table associating build tool names to their associated internal
   data structure used to generate the debug cache for CCLS.")
 #+end_src
 
-*** structures
+**** structures
 #+begin_src emacs-lisp
   (cl-defstruct my/ccls-gen-compile-commands
     "Structure defining a generic CCLS command and arguments for generating the
@@ -220,7 +221,7 @@ your file system.
     command args)
 #+end_src
 
-*** helper functions
+**** helper functions
 #+begin_src emacs-lisp
   (defun my/insert-semicolon-eol ()
     "Insert ';' at the end of the current line and moves point to EOL."
@@ -272,7 +273,7 @@ your file system.
         (error "ERROR: Not in a projectile project."))))
 #+end_src
 
-*** =use-package= specification
+**** =use-package= specification
 #+begin_src emacs-lisp
   ;; NOTE: If a C/C++ file is opened in Emacs and CCLS fails to
   ;;       provide its services automatically then most likely CCLS
@@ -311,7 +312,7 @@ your file system.
     (push ".ccls-cache" projectile-globally-ignored-directories))
 #+end_src
 
-** lsp-dart
+*** lsp-dart
 Integrates the fantastic Dart Analysis Server, a fully featured LSP server, into
 Dart workflows.
 
@@ -321,7 +322,7 @@ Dart workflows.
     (dart-mode lsp-mode))
 #+end_src
 
-** lsp-haskell
+*** lsp-haskell
 
 #+begin_src emacs-lisp
   ;; NOTE: This plugin requires haskell-language-server to be installed on your
@@ -332,21 +333,21 @@ Dart workflows.
     ((haskell-mode haskell-literate-mode) . lsp))
 #+end_src
 
-** lsp-java
+*** lsp-java
 
 #+begin_src emacs-lisp
   (use-package lsp-java
     :after lsp-mode)
 #+end_src
 
-** lsp-origami
+*** lsp-origami
 
 #+begin_src emacs-lisp
   (use-package lsp-origami
     :after lsp-mode)
 #+end_src
 
-** lsp-pyright
+*** lsp-pyright
 =pyright= Python LSP server integration with =lsp-mode=. =pyright= is a
 static code analysis engine and LSP server for Python that has been gaining
 traction after =python-language-server= became a bit stagnant.
@@ -360,7 +361,7 @@ traction after =python-language-server= became a bit stagnant.
                      (lsp-deferred))))
 #+end_src
 
-** lsp-sourcekit
+*** lsp-sourcekit
 Lsp-SourceKit is Apple's LSP provider for Swift, Objective C, and other
 languages. This plugin not only provides an LSP implementation, but additional
 features such as semantic highlighting.
@@ -375,7 +376,7 @@ features such as semantic highlighting.
      (string-trim (shell-command-to-string "xcrun --find sourcekit-lsp"))))
 #+end_src
 
-** lsp-treemacs
+*** lsp-treemacs
 Sync =treemacs= file explorer with the LSP server.
 
 #+begin_src emacs-lisp
@@ -399,7 +400,7 @@ Sync =treemacs= file explorer with the LSP server.
       "t t" 'lsp-treemacs-type-hierarchy))
 #+end_src
 
-** lsp-ui
+*** lsp-ui
 =lsp-ui= provides a fancy user interface for LSP's diagnostic and
 documentation features. It provides documentation on hover in a dedicated
 floating window, a sidebar for diagnostics and LSP code actions, and more.
@@ -452,4 +453,34 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
     (lsp-ui-doc-use-webkit nil)
     ;; Automatically refresh the menu
     (lsp-ui-imenu-auto-refresh t))
+#+end_src
+
+* lsp-bridge
+=lsp-bridge= is a super fast LSP client for Emacs that leverages Python's
+threading technology to build caches that bridge Emacs and the LSP server. The
+goal is to provide a smooth completion experience without compromising Emacs'
+performance.
+
+At the time of this writing, =lsp-bridge= is still in its infancy, and
+=lsp-mode= offers a better overall experience. I'd keep my eye on the project,
+though, and consider switching to =lsp-bridge= once they work out the kinks.
+
+** Installation Notes
+=lsp-bridge= requires Emacs 28+.
+
+** Dependencies
+*** Python
+#+begin_src shell :tangle no
+  python3 -m pip install --user --upgrade epc orjson six
+#+end_src
+
+*** Elisp
+- =posframe=
+- =markdown-mode=
+- =yasnippet=
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package lsp-bridge
+    :disabled)
 #+end_src

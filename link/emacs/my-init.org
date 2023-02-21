@@ -242,8 +242,6 @@ they are necessary evil, not main configuration code, and as such will soon
 become unnecessary and may be safely removed.
 
 #+begin_src emacs-lisp
-  ;; Fix `make-obsolete' functions argument list issues.
-  (require 'em28-obsolete-functions-fix)
   ;; Fix certain org-mode function argument list issues.
   (require 'org-functions-fix)
   ;; Add dummy values to fix `helpful' and `color-identifiers' dependency on
