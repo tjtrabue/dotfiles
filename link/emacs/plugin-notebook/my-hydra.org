@@ -90,7 +90,9 @@ Cycles through todo states for an Org file entry.
     (my/define-hydra-zoom)
     (my/define-hydra-resize-window)
     (my/define-hydra-expand-region)
-    (my/define-hydra-org-todo))
+    ;; It's better to use org-todo's menu keys instead.
+    ;; (my/define-hydra-org-todo)
+    )
 #+end_src
 
 * =use-package= specification

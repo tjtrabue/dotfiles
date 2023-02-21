@@ -1236,15 +1236,18 @@ try to load =org= later.
     (org-return-follows-link t)
     ;; Record a timestamp when a todo item is marked as done.
     (org-log-done 'time)
-    ;; The keywords to use when cycling through org-todo.
-    (org-todo-keywords '((sequence "TODO"
-                                   "NEXT"
-                                   "WAITING"
-                                   "INACTIVE"
-                                   "MEETING"
+    ;; The keywords to use when cycling through org-todo. In the parentheses, the
+    ;; letter is a key you press to immediately transition a todo to the
+    ;; appropriate state. The `@' character means we should capture a note when
+    ;; entering that state.
+    (org-todo-keywords '((sequence "TODO(t)"
+                                   "NEXT(n)"
+                                   "WAITING(w@)"
+                                   "INACTIVE(i@)"
+                                   "MEETING(m@)"
                                    "|"
-                                   "DONE"
-                                   "CANCELLED")))
+                                   "DONE(d)"
+                                   "CANCELLED(c@)")))
     ;; Set Org agenda files to a list of files and/or directories.
     (org-agenda-files `(,my/org-agenda-dir))
     ;; Whether to prompt the user for confirmation before evaluating source
