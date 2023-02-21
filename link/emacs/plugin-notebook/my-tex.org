@@ -48,11 +48,16 @@ through a tutorial or two.
     :mode ("\\.tex\\'" . TeX-latex-mode)
     :hook
     (LaTeX-mode . (lambda ()
-                    (visual-line-mode 1)
-                    (flyspell-mode 1)
-                    (reftex-mode 1)
-                    (push (list 'output-pdf "Zathura")
-                          TeX-view-program-selection)))
+                    (let ((file-name (file-name-nondirectory buffer-file-name)))
+                      (visual-line-mode 1)
+                      (flyspell-mode 1)
+                      (reftex-mode 1)
+                      (push (list 'output-pdf "Zathura")
+                            TeX-view-program-selection)
+                      ;; Make the standard compile command compile the TeX file
+                      ;; into a PDF.
+                      (setq-local compile-command
+                                  (concat "latexmk -pvc -pdf " file-name)))))
     :init
     (setq TeX-auto-save t
           TeX-parse-self t

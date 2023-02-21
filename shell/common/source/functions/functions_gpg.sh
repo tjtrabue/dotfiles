@@ -117,4 +117,44 @@ gpgexport() {
   gpg --armor --export "${secretKeyId}"
 }
 
+# Encrypt a file using symmetric encryption.
+gpgsymenc() {
+  local fileName="${1}"
+  local passphrase="${2}"
+  local encryptedFileName="${3:-${fileName}.gpg}"
+
+  if [ -z "${fileName}" ]; then
+    err "No filename provided for encryption"
+    return 1
+  elif [ -z "${passphrase}" ]; then
+    err "No passphrase provided"
+    return 2
+  fi
+
+  gpg --batch \
+    --output "${encryptedFileName}"  \
+    --passphrase "${passphrase}" \
+    --symmetric "${fileName}"
+}
+
+# Decrypt a file previously encrypted using symmetric encryption.
+gpgsymdec() {
+  local encryptedFileName="${1}"
+  local passphrase="${2}"
+  local fileName="${3:-${encryptedFileName%.gpg}}"
+
+  if [ -z "${encryptedFileName}" ]; then
+    err "No filename provided for decryption"
+    return 1
+  elif [ -z "${passphrase}" ]; then
+    err "No passphrase provided"
+    return 2
+  fi
+
+  gpg --batch \
+    --output "${fileName}"  \
+    --passphrase "${passphrase}" \
+    --decrypt "${encryptedFileName}"
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
