@@ -7,6 +7,9 @@ alias emacs="command emacs -mm"
 # `emacsclient'
 alias emd="command emacs --daemon"
 
+# Kill a running emacs daemon.
+alias killemd="command emacsclient -e '(kill-emacs)'"
+
 # Connect to a running Emacs server.
 alias emc="command emacsclient"
 
