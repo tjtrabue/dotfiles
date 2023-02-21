@@ -130,11 +130,12 @@ where systems like =format-all= fall short. Thanks, Steve!
 
 * Apheleia
 Apheleia is a wicked fast code auto-formatter plugin for Emacs. Apheleia's main
-selling point is that all formatting is done without moving point. Only a few
-formatters come pre-configured, such as Black, Prettier, and Gofmt. You must set
-all other formatters manually using the =apheleia-formatters= alist and
-=apheleia-mode-alist= to automatically activate these formatters for major modes
-and filetypes. Check their docstrings for more details.
+selling point is that it does all its formatting without moving point. Apheleia
+only comes pre-configured with a few formatters, such as Black, Prettier, and
+Gofmt. You must set all other formatters manually using the
+=apheleia-formatters= alist and =apheleia-mode-alist= to automatically activate
+these formatters for major modes and filetypes. Check their docstrings for more
+details.
 
 ** Variables
 #+begin_src emacs-lisp
@@ -245,6 +246,9 @@ and filetypes. Check their docstrings for more details.
 #+begin_src emacs-lisp
   (use-package apheleia
     :demand t
+    :general
+    (my/evil-leader-def
+      "=" 'apheleia-format-buffer)
     :config
     (apheleia-global-mode 1)
     (my/apheleia-add-formatters my/apheleia-custom-formatters)

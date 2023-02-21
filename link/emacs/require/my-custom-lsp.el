@@ -34,17 +34,21 @@
 (require 'cl-lib)
 
 (defvar my-custom-lsp-format-major-mode-blacklist
-  '
-  (clojure-mode
-    cperl-mode
-    javascript-mode
-    js-mode
-    js2-mode
-    lua-mode
-    perl-mode
-    python-mode
-    sh-mode
-    typescript-mode)
+  '(LaTeX-mode
+     TeX-latex-mode
+     TeX-mode
+     clojure-mode
+     cperl-mode
+     javascript-mode
+     js-mode
+     js2-mode
+     latex-mode
+     lua-mode
+     perl-mode
+     python-mode
+     sh-mode
+     tex-mode
+     typescript-mode)
 
   "List of major modes to ignore when activating lsp-format hooks, usually
 because the LSP server for these major modes does not yet support document
@@ -53,46 +57,45 @@ the reformatter package provides a generic interface for creating formatters
 for any programming language that supports a formatting tool.")
 
 (defvar my-custom-lsp-enabled-modes
-  '
-  (c++-mode
-    c-mode
-    clojure-mode
-    cmake-mode
-    cperl-mode
-    css-mode
-    dart-mode
-    dockerfile-mode
-    elixir-mode
-    go-mode
-    haskell-mode
-    haskell-literate-mode
-    html-mode
-    java-mode
-    javascript-mode
-    js-mode
-    json-mode
-    LaTeX-mode
-    latex-mode
-    less-css-mode
-    ;; lisp-mode
-    lua-mode
-    markdown-mode
-    mhtml-mode
-    objc-mode
-    perl-mode
-    php-mode
-    python-mode
-    ruby-mode
-    scss-mode
-    sh-mode
-    sql-mode
-    swift-mode
-    terraform-mode
-    TeX-latex-mode
-    tex-mode
-    web-mode
-    xml-mode
-    yaml-mode)
+  '(LaTeX-mode
+     TeX-latex-mode
+     c++-mode
+     c-mode
+     clojure-mode
+     cmake-mode
+     cperl-mode
+     css-mode
+     dart-mode
+     dockerfile-mode
+     elixir-mode
+     go-mode
+     haskell-literate-mode
+     haskell-mode
+     html-mode
+     java-mode
+     javascript-mode
+     js-mode
+     json-mode
+     latex-mode
+     less-css-mode
+     ;; lisp-mode
+     lua-mode
+     markdown-mode
+     mhtml-mode
+     objc-mode
+     perl-mode
+     php-mode
+     python-mode
+     ruby-mode
+     scss-mode
+     sh-mode
+     sql-mode
+     swift-mode
+     terraform-mode
+     tex-mode
+     web-mode
+     xml-mode
+     yaml-mode)
   "List of all major modes allowing `lsp-mode' to run as a minor mode.")
 
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))

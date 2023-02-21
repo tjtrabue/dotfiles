@@ -100,7 +100,7 @@ install_emacs__source() {
     export CC="gcc" CXX="g++" && \
     ./autogen.sh && \
     eval "${configureCmd}" && \
-    make -j"$(nproc)" && \
+    make -j"$(nproc)" trampolines && \
     sudo make install
   )
 }

@@ -28,7 +28,7 @@ gpgagent() {
   if [ -f "${gpgAgentFile}" ]; then
     __load_existing_gpg_agent_from_file
 
-    if ! __check_gpg_agent_running; then
+    if ! __is_gpg_agent_running; then
       # If the gpg-agent file's information is stale, we will need to start a
       # new gpg-agent and recreate the gpg-agent information file.
       log_info "Killing any lingering gpg-agent processes..."
@@ -44,7 +44,7 @@ gpgagent() {
   __set_current_tty_for_gpg
 }
 
-__check_gpg_agent_running() {
+__is_gpg_agent_running() {
   pgrep gpg-agent >>/dev/null 2>&1
 }
 
@@ -94,7 +94,7 @@ link_gpg_config() {
   fi
 
   log_info "Linking ${BLUE}${gpgConfFile}${NC} to ${BLUE}${gpgConfTarget}${NC}"
-  mkdir -p "${gnupgHome}"
+  mkdir --mode=700 "${gnupgHome}"
   ln -sf "${gpgConfFile}" "${gpgConfTarget}"
 }
 

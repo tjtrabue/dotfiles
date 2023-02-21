@@ -476,6 +476,13 @@ LanguageServerProtocol clients and servers.
   (setq-default bidi-paragraph-direction 'left-to-right)
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
+
+  ;;; EasyPG settings (Emacs' front-end for GPG)
+  ;; Whether to cache the user's passphrases for symmetrically encrypted files.
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+  ;; How to prompt the user for passphrases.
+  ;; 'loopback means to query passphrases through the minibuffer.
+  (setq epg-pinentry-mode 'loopback)
 #+end_src
 
 * Set fringe width
