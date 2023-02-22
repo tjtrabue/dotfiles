@@ -40,6 +40,7 @@ thunderbird-nightly-bin
 tllocalmgr
 ttf-nerd-fonts-symbols-2048-em-mono
 up
+vale-git
 vmtouch-git
 yank
 zprint-bin
