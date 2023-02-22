@@ -10,12 +10,16 @@ Account gmail
 
 MaildirStore gmail-local
 Subfolders Verbatim
-Path ~/Mail/
-Inbox ~/Mail/Inbox
+Path ~/Mail/gmail/
+Inbox ~/Mail/gmail/Inbox
+Trash ~/Mail/gmail/Trash
 
 Channel gmail
-Master :gmail-remote:
-Slave :gmail-local:
+Far :gmail-remote:
+Near :gmail-local:
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
-Create Both
 SyncState *
+Create Both
+Expunge Both
+CopyArrivalDate yes
+Sync All

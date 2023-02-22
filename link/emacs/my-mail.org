@@ -6,7 +6,7 @@
 
 This is my Emacs email configuration file.
 
-* mu4e
+* =mu4e=
 =mu4e= is a =maildir=-based email client for Emacs. Quite different from
 programs like =gnus=, which get their information from a remote server, =mu4e=
 relies on an offline IMAP sync of the user's email account for reading email.
@@ -30,6 +30,40 @@ with one another. This is best accomplished by installing =mu= as a system
 package, which will build and install both =mu= and a compatible version of
 =mu4e=, removing the hassle of manually installing interoperable versions of the
 two tools.
+
+** =mu4e= Setup
+*** Dependencies
+Please check online for an updated list of dependencies, but some /system
+packages/ that you will definitely need are:
+
+- =maildir-utils= (some repositories store it as =mu=)
+- =isync= (some repositories store it as =mbsync=)
+
+*** Setting up =isync=/=mbsync=
+=mbsync= is the executable program that keeps your local Maildir in sync with
+your remote mail server. =mu4e= depends on =mbsync= to stay up-to-date. To set
+it up,
+
+- Make sure to symlink the =.mbsyncrc= file from this =dotfiles= repo to
+  =~/.mbsyncrc= (should happen by default after running =install.sh=),
+- Create an app password for your email account (or just use your regular
+  password if you don't have 2FA set up, but holy crap, man, get 2FA!),
+- Copy the password to =~/.password.crt=,
+- Run the command =mbsync <account name>= (for instance, =mbsync gmail=).
+
+The initial sync can, and probably will take a very long time, so be ready for
+that.
+
+*NOTE:* The above approach to storing passwords is probably the simplest, but it
+is far from secure. Keeping a password unencrypted in a text file is a terrible
+idea. For added security, you could set up the =pass= program to store your
+passwords securely, and call into =pass= in =~/.mbsyncrc= instead of the simple
+(and awful) =cat ~/.password.crt= command.
+
+*** Resources
+The following are some great resources for configuring =mu4e=:
+
+- [[https://miikanissi.com/blog/email-setup-with-mbsync-mu4e][Miika Nissi's post on mu4e in Emacs]]
 
 ** =use-package= specification
 #+begin_src emacs-lisp

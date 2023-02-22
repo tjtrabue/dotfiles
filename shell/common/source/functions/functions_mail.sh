@@ -26,6 +26,16 @@ mutt() {
   fi
 }
 
+# Get the filesystem ready to set up Maildir programs, such as `mu4e'.
+create_maildir_folders() {
+  local maildirRoot="${HOME}/Mail"
+  local gmailAccountDir="${maildirRoot}/gmail"
+
+  log_info "Creating Maildir folders at: ${BLUE}${maildirRoot}${NC}"
+
+  mkdir -p "${gmailAccountDir}"
+}
+
 # Install maildir utils (mu) and accompanying tools, such as mu4e, which
 # provides Emacs integration with mu. It is best to install mu from source
 # since the compiled versions in most package repositories tend to lag behind.
