@@ -17,7 +17,9 @@ relies on an offline IMAP sync of the user's email account for reading email.
 using your distribution's package manager. =mu4e= is simply a collection of =mu=
 bindings for Emacs. If your package repositories do not contain =mu= or
 =maildir-utils=, you must install =mu= from source. Check the [[https://github.com/djcb/mu][GitHub repository]]
-for manual installation instructions if you must go that route.
+for manual installation instructions if you must go that route, but be warned:
+installing =mu= from source is no easy task. Try your hardest to find an
+alternative installation method first.
 
 *** Why you shouldn't install =mu4e= with straight.el
 While it is theoretically /possible/ to install both =mu= and =mu4e= using
@@ -64,6 +66,10 @@ passwords securely, and call into =pass= in =~/.mbsyncrc= instead of the simple
 The following are some great resources for configuring =mu4e=:
 
 - [[https://miikanissi.com/blog/email-setup-with-mbsync-mu4e][Miika Nissi's post on mu4e in Emacs]]
+
+** Mail account passwords
+Mu4e looks for your password file in:
+=~/.password-store/<smtp.host.tld>:<port>/<mail account name>=
 
 ** =use-package= specification
 #+begin_src emacs-lisp
@@ -126,27 +132,27 @@ The following are some great resources for configuring =mu4e=:
             (my/remote-mail-trash-dir  . ?t)
             (my/remote-mail-drafts-dir . ?d)
             (my/remote-mail-refile-dir . ?a)))
-   :config
-   ;; Set up contexts for email accounts
-   (setq mu4e-contexts
-        (list
-         (make-mu4e-context
-          :name "gmail"
-          :match-func
-      (lambda (msg)
-            (when msg
-              (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
-          :vars `((user-mail-address . "tom.trabue@gmail.com")
-                  (user-full-name    . "Thomas Trabue")
-                  (smtpmail-smtp-server  . "smtp.gmail.com")
-                  (smtpmail-smtp-service . "587")
-                  (smtpmail-stream-type  . ssl)
-                  (smtpmail-smtp-user . "tom.trabue@gmail.com")
-                  (mu4e-compose-signature . "ttrabue")
-                  (mu4e-drafts-folder  . "gmail/Drafts")
-                  (mu4e-sent-folder  . "gmail/Sent")
-                  (mu4e-refile-folder  . "gmail/Archive")
-                  (mu4e-trash-folder  . "gmail/Trash"))))))
+    :config
+    ;; Set up contexts for email accounts
+    (setq mu4e-contexts
+          (list
+           (make-mu4e-context
+            :name "gmail"
+            :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+            :vars `((user-mail-address . "tom.trabue@gmail.com")
+                    (user-full-name    . "Thomas Trabue")
+                    (smtpmail-smtp-server  . "smtp.gmail.com")
+                    (smtpmail-smtp-service . "587")
+                    (smtpmail-stream-type  . ssl)
+                    (smtpmail-smtp-user . "tom.trabue@gmail.com")
+                    (mu4e-compose-signature . "ttrabue")
+                    (mu4e-drafts-folder  . "gmail/Drafts")
+                    (mu4e-sent-folder  . "gmail/Sent")
+                    (mu4e-refile-folder  . "gmail/Archive")
+                    (mu4e-trash-folder  . "gmail/Trash"))))))
 #+end_src
 
 ** Plugins
