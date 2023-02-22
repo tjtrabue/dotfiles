@@ -65,6 +65,24 @@ setup() {
   make_dirs
 }
 
+# We should only remove the Emacs backup repository if the installation
+# succeeded.
+remove_emacs_backup_repository() {
+  local emacsBackup="${EMACS_DEST}.bak"
+
+  if [ -d "${emacsBackup}" ]; then
+    log_info "Removing Emacs backup repository"
+    rm -rf "${emacsBackup}"
+  fi
+}
+
+# Make a backup of the emacs repository before we uninstall anything, just so
+# we'll have a backup to work from if something goes wrong.
+backup_emacs_repository() {
+  log_info "Backing up Emacs repository"
+  cp -rf "${EMACS_DEST}"{,.bak}
+}
+
 remove_old_emacs_installation() {
   if [ -d "${EMACS_DEST}" ]; then
     log_info "Removing old Emacs installation at: ${BLUE}${EMACS_DEST}${NC}"
@@ -96,6 +114,7 @@ install_emacs__source() {
   fi
 
   if [ -d "${EMACS_DEST}" ]; then
+    backup_emacs_repository
     remove_old_emacs_installation
   fi
 
@@ -109,7 +128,8 @@ install_emacs__source() {
     eval "${configureCmd}" && \
     make -j"$(nproc)" trampolines && \
     sudo make install
-  )
+  ) && \
+  remove_emacs_backup_repository
 }
 
 install_emacs_using_best_option() {
