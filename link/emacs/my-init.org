@@ -1158,6 +1158,9 @@ and hooks in a way that defers loading the package.
     ;; code more descriptive, however.
     (general-evil-setup)
     ;;; Set universal keybindings with General
+    (general-unbind
+      ;; Unbind some keys to make room for my custom keybindings.
+      "M-c")
     (general-def
       ;; Nobody uses downcase-region, anyway.
       "C-x C-l" 'find-library
