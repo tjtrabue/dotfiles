@@ -80,9 +80,10 @@ The following are some great resources for configuring =mu4e=:
     ;; Load mu4e
     (require 'mu4e)
     ;; Set the user's mail dir if not already set from environment variable.
-    (defvar my/mail-dir (getenv "MAIL_DIR") "Local email folder.")
+    (defvar my/mail-dir (file-truename (concat (getenv "MAIL_DIR") "/gmail"))
+      "Local email folder.")
     (if (not my/mail-dir)
-        (setq my/mail-dir (file-truename (concat my/home-dir "/Mail"))))
+        (setq my/mail-dir (file-truename (concat my/home-dir "/Mail/gmail"))))
     (defvar my/remote-mail-inbox-dir "/Inbox"
       "Email inbox directory on remote server.")
     (defvar my/remote-mail-drafts-dir "/[Gmail]/Drafts"
@@ -95,11 +96,26 @@ The following are some great resources for configuring =mu4e=:
       "Remote Trash email directory on remote server.")
     ;; This is set to 't' to avoid mail syncing issues when using mbsync.
     (setq mu4e-change-filenames-when-moving t
+          ;; Never reply to self.
+          mu4e-compose-dont-reply-to-self t
+          mu4e-compose-keep-self-cc nil
+          ;; Configure the function to use for sending mail.
+          message-send-mail-function 'smtpmail-send-it
+          ;; Don't keep message buffers around.
+          message-kill-buffer-on-exit t
+          ;; Display options.
+          mu4e-view-show-images t
+          mu4e-view-show-addresses t
+          ;; Don't ask for a context when opening mu4e.
+          mu4e-context-policy 'pick-first
+          ;; Don't ask to quit.
+          mu4e-confirm-quit nil
           ;; Refresh mail using isync every 10 minutes.
           mu4e-update-interval (* 10 60)
           mu4e-get-mail-command "mbsync -a"
-          ;; mu4e-maildir my/mail-dir
 
+          ;; mu4e folder configuration:
+          ;; mu4e-maildir my/mail-dir
           mu4e-drafts-folder my/remote-mail-drafts-dir
           mu4e-sent-folder my/remote-mail-sent-dir
           mu4e-refile-folder my/remote-mail-refile-dir
@@ -109,7 +125,28 @@ The following are some great resources for configuring =mu4e=:
             (my/remote-mail-sent-dir   . ?s)
             (my/remote-mail-trash-dir  . ?t)
             (my/remote-mail-drafts-dir . ?d)
-            (my/remote-mail-refile-dir . ?a))))
+            (my/remote-mail-refile-dir . ?a)))
+   :config
+   ;; Set up contexts for email accounts
+   (setq mu4e-contexts
+        (list
+         (make-mu4e-context
+          :name "<mail account name>"
+          :match-func
+      (lambda (msg)
+            (when msg
+              (string-prefix-p "/<mail account dir>" (mu4e-message-field msg :maildir))))
+          :vars `((user-mail-address . "<mail address>")
+                  (user-full-name    . "<mail full name>")
+                  (smtpmail-smtp-server  . "<smtp.host.tld>")
+                  (smtpmail-smtp-service . "<smtp port>")
+                  (smtpmail-stream-type  . ssl)
+                  (smtpmail-smtp-user . "<email username>")
+                  (mu4e-compose-signature . "<email signature>")
+                  (mu4e-drafts-folder  . "<mail account dir>/<draft dir>")
+                  (mu4e-sent-folder  . "<mail account dir>/<sent dir>")
+                  (mu4e-refile-folder  . "<mail account dir>/<archive dir>")
+                  (mu4e-trash-folder  . "<mail account dir>/<trash dir>"))))))
 #+end_src
 
 ** Plugins

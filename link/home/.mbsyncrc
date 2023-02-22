@@ -2,6 +2,9 @@ IMAPAccount gmail
 Host imap.gmail.com
 User tom.trabue@gmail.com
 PassCmd "cat ~/.password.crt"
+# To use an encrypted password stored in a file, you could use something like
+# the following command:
+# PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -10,6 +13,7 @@ Account gmail
 
 MaildirStore gmail-local
 Subfolders Verbatim
+# The trailing "/" on Path is important
 Path ~/Mail/gmail/
 Inbox ~/Mail/gmail/Inbox
 Trash ~/Mail/gmail/Trash
@@ -17,9 +21,15 @@ Trash ~/Mail/gmail/Trash
 Channel gmail
 Far :gmail-remote:
 Near :gmail-local:
+# Exclude everything under the internal [Gmail] folder, except the interesting
+# folders
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
-SyncState *
+# Automatically create missing mailboxes, both locally and on the server
 Create Both
+# Sync the movement of messages between folders and deletions, add after making
+# sure the sync works
 Expunge Both
+# Save the synchronization state files in the relevant directory
+SyncState *
 CopyArrivalDate yes
 Sync All
