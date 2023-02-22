@@ -23,6 +23,7 @@ htop
 hunspell
 hunspell-en-us
 imagemagick
+isync
 language-pack-en-base
 libacl1-dev
 libasound2
@@ -161,6 +162,8 @@ libxslt1.1
 libxt-dev
 libyajl2
 locate
+maildir-utils
+mailutils
 mediainfo
 neovim
 nodejs
