@@ -121,7 +121,7 @@ Mu4e looks for your password file in:
           mu4e-get-mail-command "mbsync -a"
 
           ;; mu4e folder configuration:
-          ;; mu4e-maildir my/mail-dir
+          mu4e-maildir my/mail-dir
           mu4e-drafts-folder my/remote-mail-drafts-dir
           mu4e-sent-folder my/remote-mail-sent-dir
           mu4e-refile-folder my/remote-mail-refile-dir
