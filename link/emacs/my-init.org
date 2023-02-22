@@ -1162,9 +1162,11 @@ and hooks in a way that defers loading the package.
       ;; Nobody uses downcase-region, anyway.
       "C-x C-l" 'find-library
       ;; Compile command for the current buffer.
-      "M-c" 'compile
+      "M-c c" 'compile
+      ;; Re-run the previous compile command.
+      "M-c r" 'recompile
       ;; Kill the running compilation process.
-      "M-C" 'kill-compilation
+      "M-c k" 'kill-compilation
       ;; Much easier than `C-x 4 C-f'
       "C-x F" 'find-file-other-window
       ;; Kill the current buffer.
