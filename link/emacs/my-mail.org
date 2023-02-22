@@ -131,22 +131,22 @@ The following are some great resources for configuring =mu4e=:
    (setq mu4e-contexts
         (list
          (make-mu4e-context
-          :name "<mail account name>"
+          :name "gmail"
           :match-func
       (lambda (msg)
             (when msg
-              (string-prefix-p "/<mail account dir>" (mu4e-message-field msg :maildir))))
-          :vars `((user-mail-address . "<mail address>")
-                  (user-full-name    . "<mail full name>")
-                  (smtpmail-smtp-server  . "<smtp.host.tld>")
-                  (smtpmail-smtp-service . "<smtp port>")
+              (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+          :vars `((user-mail-address . "tom.trabue@gmail.com")
+                  (user-full-name    . "Thomas Trabue")
+                  (smtpmail-smtp-server  . "smtp.gmail.com")
+                  (smtpmail-smtp-service . "587")
                   (smtpmail-stream-type  . ssl)
-                  (smtpmail-smtp-user . "<email username>")
-                  (mu4e-compose-signature . "<email signature>")
-                  (mu4e-drafts-folder  . "<mail account dir>/<draft dir>")
-                  (mu4e-sent-folder  . "<mail account dir>/<sent dir>")
-                  (mu4e-refile-folder  . "<mail account dir>/<archive dir>")
-                  (mu4e-trash-folder  . "<mail account dir>/<trash dir>"))))))
+                  (smtpmail-smtp-user . "tom.trabue@gmail.com")
+                  (mu4e-compose-signature . "ttrabue")
+                  (mu4e-drafts-folder  . "gmail/Drafts")
+                  (mu4e-sent-folder  . "gmail/Sent")
+                  (mu4e-refile-folder  . "gmail/Archive")
+                  (mu4e-trash-folder  . "gmail/Trash"))))))
 #+end_src
 
 ** Plugins
