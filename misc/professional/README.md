@@ -14,6 +14,7 @@ file, working with the decrypted version in Emacs, and then, once you are ready
 to commit a new version, use GPG to encrypt the resume using this command:
 
 ```shell
+# Use standard AES256 symmetric encryption.
 gpg --batch --output resume.tex.gpg --passphrase <passphrase> \
   --symmetric resume.tex
 ```
