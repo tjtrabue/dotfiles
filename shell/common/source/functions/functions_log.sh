@@ -117,6 +117,51 @@ log_to_file() {
 no_log_to_file() {
   unset LOG_TO_FILE
 }
+
+# Set the global LOG_LEVEL to the specified level.
+# Input should be one of: "err", "warn", "info", "debug".
+set_log_level() {
+  local logLevel="${1}"
+
+  if [ -z "${logLevel}" ]; then
+    err "No log level input provided."
+    return 1
+  fi
+
+  case "${logLevel}" in
+    "err" | "error")
+      log_info "Setting log level to ${RED}ERROR${NC}"
+      export LOG_LEVEL=1
+      ;;
+    "warn" | "warning")
+      log_info "Setting log level to ${YELLOW}WARNING${NC}"
+      export LOG_LEVEL=2
+      ;;
+    "info")
+      log_info "Setting log level to ${GREEN}INFO${NC}"
+      export LOG_LEVEL=3
+      ;;
+    "debug")
+      log_info "Setting log level to ${MAGENTA}DEBUG${NC}"
+      export LOG_LEVEL=4
+      ;;
+    *)
+      err "Log level ${YELLOW}${logLevel}${NC} not recognized."
+      return 2
+      ;;
+  esac
+}
+# }}}
+
+# Test logging functions {{{
+# Test all logging functions
+log_test() {
+  log_debug "debug"
+  log_info "info"
+  warn "warning"
+  err "error"
+  succ "success"
+}
 # }}}
 
 # Private functions {{{
@@ -276,44 +321,6 @@ __log() {
   if [ -f "${logToFile}" ]; then
     echoe "${output}" >>"${logToFile}"
   fi
-}
-
-# Set the global LOG_LEVEL to the specified level.
-# Input should be one of: "err", "warn", "info", "debug".
-set_log_level() {
-  local logLevel="${1}"
-
-  if [ -z "${logLevel}" ]; then
-    err "No log level input provided."
-    return 1
-  fi
-
-  case "${logLevel}" in
-    "err" | "error")
-      export LOG_LEVEL=1
-      ;;
-    "warn" | "warning")
-      export LOG_LEVEL=2
-      ;;
-    "info")
-      export LOG_LEVEL=3
-      ;;
-    "debug")
-      export LOG_LEVEL=4
-      ;;
-    *)
-      err "Log level ${YELLOW}${logLevel}${NC} not recognized."
-      return 2
-      ;;
-  esac
-}
-
-# Test all logging functions
-log_test() {
-  log_info "info"
-  warn "warning"
-  err "error"
-  succ "success"
 }
 # }}}
 
