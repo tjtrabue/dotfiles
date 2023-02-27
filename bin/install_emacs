@@ -78,11 +78,9 @@ setup() {
 # We should only remove the Emacs backup repository if the installation
 # succeeded.
 remove_emacs_backup_repository() {
-  local emacsBackup="${EMACS_DEST}.bak"
-
-  if [ -d "${emacsBackup}" ]; then
+  if [ -d "${EMACS_BACKUP}" ]; then
     log_info "Removing Emacs backup repository"
-    rm -rf "${emacsBackup}"
+    rm -rf "${EMACS_BACKUP}"
   fi
 }
 
@@ -90,7 +88,7 @@ remove_emacs_backup_repository() {
 # we'll have a backup to work from if something goes wrong.
 backup_emacs_repository() {
   log_info "Backing up Emacs repository"
-  cp -rf "${EMACS_DEST}"{,.bak}
+  cp -rf "${EMACS_DEST}" "${EMACS_BACKUP}"
 }
 
 remove_old_emacs_installation() {
