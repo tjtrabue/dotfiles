@@ -69,12 +69,17 @@ mkbin() {
   chmod 755 "$executableName"
 }
 
-# Return the name of the currently running shell interpreter.
+# Return the name of the currently running shell interpreter, such as "bash" or
+# "zsh".
 currentshell() {
-  local userShell="${SHELL}"
+  local userShell="$(ps -p $$ | awk '$1 != "PID" {print $(NF)}')"
 
   if [ -z "${userShell}" ]; then
     userShell="${0}"
+  fi
+
+  if [ -z "${userShell}" ]; then
+    userShell="${SHELL}"
   fi
 
   if [ -z "${userShell}" ]; then
