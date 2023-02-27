@@ -3,11 +3,11 @@
 # name: org header
 # key: header
 # --
-#+title:   $1
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    ${2:`(shell-command-to-string "echo -n $(date +%Y:%m:%d)")`}
-#+tags:    $3
+#+TITLE:   $1
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    ${2:`(shell-command-to-string "date +%Y-%m-%d | tr -d '\n'")`}
+#+TAGS:    $3
 #+STARTUP: fold
 
 $0
