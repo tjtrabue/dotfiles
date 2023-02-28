@@ -19,6 +19,15 @@ alias pacq="sudo pacman -Q"
 alias pacup="sudo pacman -Syyu"
 # }}}
 
+# AUR package build/install {{{
+
+# Build the package and install it, resolving all dependencies beforehand, and
+# cleaning up temporary build files afterward.
+# Pass '-f' to this command to force rebuilding of an already built AUR repo
+# package.
+alias mpkg="makepkg -sic"
+# }}}
+
 # AUR helper {{{
 # 'aurh' is the alias for the user's selected AUR helper program
 alias aurh="${AUR_HELPER:-paru}"
