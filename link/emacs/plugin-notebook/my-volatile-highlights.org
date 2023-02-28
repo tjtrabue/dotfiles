@@ -10,8 +10,8 @@ Provides visual feedback to certain editor actions.
 #+begin_src emacs-lisp
   (use-package volatile-highlights
     ;; Doesn't seem to work on modern Emacs.
-    :disabled
-    :after (evil-collection undo-tree)
+    ;; :disabled
+    :after evil-collection
     :demand t
     :config
     (volatile-highlights-mode 1)
@@ -24,6 +24,7 @@ Provides visual feedback to certain editor actions.
     ;;--------------------------------------------------------------------------
     ;; Supporting undo-tree.
     ;;--------------------------------------------------------------------------
-    (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
-    (vhl/install-extension 'undo-tree))
+    ;; (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
+    ;; (vhl/install-extension 'undo-tree)
+    )
 #+end_src
