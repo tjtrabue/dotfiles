@@ -51,7 +51,6 @@ completion buffer to some category. For example:
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package consult
-      :after projectile
       :demand t
       ;; Replace bindings. Lazily loaded due by `use-package'.
       :general
@@ -239,7 +238,6 @@ awesome =consult=-ing read front end for =projectile= functions.
 
 #+begin_src emacs-lisp
   (use-package consult-projectile
-    :after (consult projectile)
     :general
     (general-def 'normal 'override
       ;; Use consult-projectile instead of projectile-find-file

@@ -30,6 +30,7 @@ finding files by name.
 #+begin_src emacs-lisp
   (use-package affe
     :after consult
+    :demand t
     :commands (affe-grep affe-find)
     :general
     (general-def 'normal 'override
