@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Emacs installer script.
+#
+# All of the functions in this file are prefixed with "ie" to show they are
+# privately namespaced to this script, and thus should not conflict with
+# functions defined in other parts of my dotfiles repository.
+
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -9,6 +15,7 @@ declare DOTFILES_REPO="${HOME}/.dotfiles"
 declare WS
 
 # Build options
+declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
 
 # Emacs location variables
@@ -52,6 +59,11 @@ USAGE:
 OPTIONS:
   -h | --help
     Print the help message (this message) and exit.
+
+  --prefix=PREFIX_DIR
+    Install all Emacs files under prefix directory PREFIX_DIR. PREFIX_DIR
+    defaults to '/usr/local', meaning that this script will install Emacs files
+    to '/usr/local/bin', '/usr/local/lib', etc.
 
   -p | --pgtk
     Compile Emacs with Pure GTK support. This is not recommended if you will be
@@ -116,6 +128,24 @@ ie__mac_build_options() {
 }
 # }}}
 
+ie__confirm_installation() {
+  local configureCmd="${1}"
+  local response=""
+
+  while ! printf '%s' "${response}" | grep -q '[YyNn]'; do
+    command cat <<EOF
+Installing Emacs using the following configuration:
+
+$(printf '%s' "${configureCmd}" | sed -E 's/\s+/\n  /g')
+
+Continue? [y/n]
+EOF
+    read -r response
+  done
+
+  printf '%s' "${response}" | grep -q '[Yy]'
+}
+
 # Install emacs from source. This option is pretty hard to make portable, but
 # I've done the best I can. You will need a lot of dependencies, and their names
 # will change depending on you OS. Check my ubuntu_packages.txt and
@@ -123,6 +153,7 @@ ie__mac_build_options() {
 ie__install_from_source() {
   local osType="$(getostype)"
   local configureCmd="./configure \
+    --prefix=${INSTALL_PREFIX} \
     --enable-year2038 \
     --without-compress-install \
     --with-json \
@@ -149,6 +180,11 @@ ie__install_from_source() {
     configureCmd="${configureCmd} --with-x"
   fi
 
+  if ! ie__confirm_installation "${configureCmd}"; then
+    err "Installation terminated by user."
+    return 1
+  fi
+
   if [ -d "${EMACS_DEST}" ]; then
     ie__backup_emacs_repository
     ie__uninstall_old_emacs_installation
@@ -168,21 +204,15 @@ ie__install_from_source() {
     ie__remove_emacs_backup_repository
 }
 
-ie__install_emacs_using_best_option() {
-  # TODO: Investigate other alternatives for a modern, portable installation
-  #       process for Emacs.
-  ie__install_from_source
-}
-
 main() {
   print_header "Installing Emacs (the best editor!)"
   ie__setup
-  ie__install_emacs_using_best_option
+  ie__install_from_source
 }
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hp --long help,pgtk -n 'install_emacs' -- "$@")
+args=$(getopt -o hp --long help,pgtk,prefix: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -197,6 +227,18 @@ while true; do
     log_info "Building with Pure GTK support"
     USE_PGTK=true
     shift
+    ;;
+
+  --prefix)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      INSTALL_PREFIX="$2"
+      shift 2
+      ;;
+    esac
     ;;
 
   --)
