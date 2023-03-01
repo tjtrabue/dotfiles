@@ -14,9 +14,13 @@ help system.
 
 #+begin_src emacs-lisp
   (use-package helpful
-    ;; Disabled due to "Wrong type argument: listp, 1".  Wait for maintainers to
-    ;; fix this issue and then reactivate this plugin.
-    :disabled
+    :straight
+    (helpful :type git :host github :repo "Wilfred/helpful"
+             ;; We need to disable native-compilation for helpful because
+             ;; `helpful.el' contains a compile-time error. May want to
+             ;; re-investigate this issue at a later date, but for now this
+             ;; appears to fix the problem.
+             :build (:not native-compile))
     :general
     (general-def
       ;; Replace standard help functions with helpful functions.
