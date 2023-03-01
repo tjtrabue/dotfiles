@@ -34,6 +34,8 @@ declare LOG_LEVEL=3
 # }}}
 
 # Functions {{{
+
+# Help {{{
 _help() {
   command cat <<EOF
 ${THIS_EXEC}
@@ -67,10 +69,12 @@ OPTIONS:
 
   -p | --pgtk
     Compile Emacs with Pure GTK support. This is not recommended if you will be
-    running Emacs in an X Windows session. Pure GTK works well for Weyland, and
+    running Emacs in an X Windows session. Pure GTK works well for Wayland, and
     for Emacs running as part of WSL on Windows.
 EOF
 }
+
+# }}}
 
 # Setup/Cleanup Functions {{{
 ie__set_global_vars() {
@@ -119,12 +123,13 @@ ie__uninstall_old_emacs_installation() {
 # OS-specific options {{{
 ie__linux_build_options() {
   log_info "Adding Linux build options"
-  printf '%s' '--with-x-toolkit=gtk3'
+  printf '%s' "--with-x-toolkit=gtk3 \
+    --without-xaw3d"
 }
 
 ie__mac_build_options() {
   log_info "Adding macOS build options"
-  printf '%s' '--with-ns'
+  printf '%s' "--with-ns"
 }
 # }}}
 
@@ -134,7 +139,7 @@ ie__confirm_installation() {
 
   while ! printf '%s' "${response}" | grep -q '[YyNn]'; do
     command cat <<EOF
-Installing Emacs using the following configuration:
+This script will now install Emacs using the following configuration:
 
 $(printf '%s' "${configureCmd}" | sed -E 's/\s+/\n  /g')
 
@@ -146,12 +151,11 @@ EOF
   printf '%s' "${response}" | grep -q '[Yy]'
 }
 
-# Install emacs from source. This option is pretty hard to make portable, but
-# I've done the best I can. You will need a lot of dependencies, and their names
-# will change depending on you OS. Check my ubuntu_packages.txt and
-# arch_packages.txt files to get a good idea of what you'll need.
-ie__install_from_source() {
-  local osType="$(getostype)"
+# Put together the options to pass to the './configure' script created by
+# running './autogen.sh' in the Emacs repository root. Return the entire command
+# to be evaluated for the configure step.
+ie__construct_configure_cmd() {
+  local osType=""
   local configureCmd="./configure \
     --prefix=${INSTALL_PREFIX} \
     --enable-year2038 \
@@ -160,7 +164,10 @@ ie__install_from_source() {
     --with-tree-sitter \
     --with-xwidgets \
     --with-imagemagick \
-    --with-native-compilation=aot"
+    --with-native-compilation=aot \
+    --program-transform-name=s/\([ec]tags\)/\1.emacs/"
+
+  osType="$(getostype)"
 
   # Add OS-specific build options to the configure command.
   case "${osType}" in
@@ -179,6 +186,19 @@ ie__install_from_source() {
     # System.
     configureCmd="${configureCmd} --with-x"
   fi
+
+  log_info "Congifuring Emacs with command: ${GREEN}${configureCmd}${NC}"
+  printf '%s' "${configureCmd}"
+}
+
+# Install emacs from source. This option is pretty hard to make portable, but
+# I've done the best I can. You will need a lot of dependencies, and their names
+# will change depending on you OS. Check my ubuntu_packages.txt and
+# arch_packages.txt files to get a good idea of what you'll need.
+ie__install_from_source() {
+  local configureCmd=""
+
+  configureCmd="$(ie__construct_configure_cmd)"
 
   if ! ie__confirm_installation "${configureCmd}"; then
     err "Installation terminated by user."
