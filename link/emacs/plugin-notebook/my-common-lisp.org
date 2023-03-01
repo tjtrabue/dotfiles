@@ -4,9 +4,13 @@
 #+date:   2020:05:26
 #+STARTUP: fold
 
-Contains configuration for the SLIME (Superior Lisp Interaction
-Mode for Emacs) package used to integrate Emacs with Common Lisp.
-SLIME essentially turns Emacs into a Common Lisp IDE.
+Emacs can become a full-fledged Common Lisp IDE with the right
+configuration. This file contains all of the plugins and customization necessary
+to make Emacs the greatest Common Lisp editor this side of the solar system!
+
+The two main Common Lisp integration plugins are SLIME and SLY, which are
+alternatives to one another. SLY is newer and more powerful, though, so I would
+stick with SLY unless you have a reason not to.
 
 * Functions
 ** General purpose Lisp functions
@@ -25,14 +29,14 @@ SLIME essentially turns Emacs into a Common Lisp IDE.
 #+end_src
 
 * SLY
-SLY is a fork of SLIME with some enhancements. I recommend using SLY over
-SLIME since SLY has fixed many long-standing bugs in SLIME's code.
+SLY is a fork of SLIME with some enhancements. I recommend using SLY over SLIME
+since SLY has fixed many long-standing bugs in SLIME's code.
 
-Both SLIME and SLY are actively maintained, so which one you decide to use is
-a matter of preference. However, SLY's development team is far more dedicated
-to timely bug fixes and support tickets than SLIME's team. SLY is also much
-more feature-rich than SLIME, and has an absolutely beautiful system
-architecture that allows it to adapt gracefully to new environments.
+Both SLIME and SLY are actively maintained, so which one you decide to use is a
+matter of preference. However, SLY's development team is far more dedicated to
+timely bug fixes and support tickets than SLIME's team. SLY is also much more
+feature-rich than SLIME, and has an absolutely beautiful system architecture
+that allows it to adapt gracefully to new environments.
 
 The default key combination for =sly-prefix-map= is =C-c= by itself.
 
@@ -70,9 +74,9 @@ Thank you so much for the your contributions, Mihai!
   (defun eval-grab-output (string)
     (let ((res nil))
       (sly-eval-async `(slynk:eval-and-grab-output ,string)
-                      (lambda (result)
-                        (cl-destructuring-bind (output value) result
-                          (setf res (car (read-from-string value))))))
+        (lambda (result)
+          (cl-destructuring-bind (output value) result
+            (setf res (car (read-from-string value))))))
       (while (null res)
         (sleep-for 0.1))
       res))
@@ -351,11 +355,11 @@ The Superior Lisp Interaction Mode for Emacs (SLIME) turns Emacs into a Common
 Lisp IDE.
 
 SLIME, although still powerful and semi-regularly updated, has conceded ground
-in recent years to SLY, which is a fork of SLIME that has become the more
-modern and feature-rich Common Lisp enhancement suite for Emacs (see my
-section on SLY for more information and configuration). SLIME will most likely
-remain in use for years to come, but in all likelihood SLY will overtake it as
-the more relevant and useful plugin.
+in recent years to SLY, which is a fork of SLIME that has become the more modern
+and feature-rich Common Lisp enhancement suite for Emacs (see my section on SLY
+for more information and configuration). SLIME will most likely remain in use
+for years to come, but in all likelihood SLY will overtake it as the more
+relevant and useful plugin.
 
 ** Useful commands (many have a SLY equivalent)
 These commands can supercharge your workflow! Many of them have a SLY
@@ -377,8 +381,9 @@ equivalent, so be sure to look for them using =C-h f=.
 
   In particular, note that =slime-who-specializes= lists the methods of a given
   class, which answers a common complaint coming from people used to languages
-  from the Algol family: the ability to complete the methods of the foo class
-  by typing =foo.<TAB>=.
+  from the Algol family: the ability to complete the methods of the foo class by
+  typing =foo.<TAB>=.
+
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package slime
