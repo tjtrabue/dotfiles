@@ -42,6 +42,7 @@ libcairo2
 libcanberra-gtk3-0
 libcanberra-gtk3-module
 libcanberra0
+libcurl4-openssl-dev
 libdatrie1
 libdb5.3
 libdbus-1-dev
