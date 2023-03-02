@@ -209,5 +209,20 @@ clone_roam_notes() {
   git clone "${roamNotesRepoUrl}" "${roamNotesHome}"
 }
 
+# Install the Cask package manager and build tool for Emacs.
+# Cask is much like Maven for Emacs Lisp projects.
+install_emacs_cask() {
+  local caskGitUrl="https://github.com/cask/cask"
+  local ws="${WS:-${HOME}/workspace}"
+  local caskDest="${ws}/cask"
+
+  clone_or_update_git_repo "${caskGitUrl}" "${caskDest}"
+  (
+    log_info "Installing Cask for Emacs" &&
+    cd "${caskDest}" &&
+    make install
+  )
+}
+
 # Modeline for this file (leave it commented!)
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

@@ -49,6 +49,7 @@ main() {
   link_emacs_config_files
   make_emacs_directories
   clone_roam_notes
+  install_emacs_cask
   log_info "Done"
 }
 # }}}
