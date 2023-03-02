@@ -124,5 +124,8 @@ code, so it's never confused by comments or `foo-bar' matching `foo'.
     :demand t
     :straight
     (elisp-refs :type git :host github :repo "Wilfred/elisp-refs"
+                ;; Straight.el cannot seem to generate the autoloads for
+                ;; elisp-refs, so we should skip that step of the build process.
+                ;; We should investigate this issue further.
                 :build (:not autoloads)))
 #+end_src
