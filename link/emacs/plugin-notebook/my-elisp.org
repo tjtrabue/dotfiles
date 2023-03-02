@@ -117,7 +117,7 @@ stay on top of this package's new features and changing API.
 or variables. Unlike a dumb text search, =elisp-refs.el= actually parses the
 code, so it's never confused by comments or `foo-bar' matching `foo'.
 
-=helpful= requires this package.
+[[file:~/.emacs.d/plugin-notebook/my-help.org::helpful][helpful]] requires this package.
 
 #+begin_src emacs-lisp
   (use-package elisp-refs
