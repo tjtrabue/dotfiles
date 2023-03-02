@@ -14,16 +14,9 @@ help system.
 
 #+begin_src emacs-lisp
   (use-package helpful
-    :disabled
-    :straight
-    (helpful :type git :host github :repo "Wilfred/helpful"
-             ;; We need to disable native-compilation for helpful because
-             ;; `helpful.el' contains a compile-time error. May want to
-             ;; re-investigate this issue at a later date, but for now this
-             ;; appears to fix the problem.
-             :build (:not native-compile))
+    :after elisp-refs
     :general
-    (general-def
+    (general-def 'override
       ;; Replace standard help functions with helpful functions.
       "C-h f" 'helpful-callable
       "C-h v" 'helpful-variable

@@ -111,3 +111,18 @@ stay on top of this package's new features and changing API.
             (interactive)
             (elisp-autofmt-buffer))))
 #+end_src
+
+* elisp-refs
+=elisp-refs.el= is an Emacs package for finding references to functions, macros
+or variables. Unlike a dumb text search, =elisp-refs.el= actually parses the
+code, so it's never confused by comments or `foo-bar' matching `foo'.
+
+=helpful= requires this package.
+
+#+begin_src emacs-lisp
+  (use-package elisp-refs
+    :demand t
+    :straight
+    (elisp-refs :type git :host github :repo "Wilfred/elisp-refs"
+                :build (:not autoloads)))
+#+end_src
