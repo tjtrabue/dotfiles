@@ -200,10 +200,10 @@ A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
   (defun my/browse-impatient-url-of-buffer ()
     "Open the current impatient-mode buffer preview in a browser."
     (interactive)
-    (let ((impatient-host (cl-case httpd-host
-                            ((nil) "0.0.0.0")
-                            ((local) "localhost")
-                            (otherwise httpd-host)))
+    (let ((impatient-host (pcase httpd-host
+                            ('(nil) "0.0.0.0")
+                            ('(local) "localhost")
+                            (_ httpd-host)))
           (impatient-port (number-to-string httpd-port))
           (impatient-live-resource "/imp/live/"))
       ;; Make sure simple-httpd server has started

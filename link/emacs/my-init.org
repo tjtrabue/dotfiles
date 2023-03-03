@@ -489,6 +489,17 @@ LanguageServerProtocol clients and servers.
   ;; How to prompt the user for passphrases.
   ;; 'loopback means to query passphrases through the minibuffer.
   (setq epg-pinentry-mode 'loopback)
+
+  ;;; Browser
+  ;; Set default browser to the first of a ranked list of programs.
+  (setq browse-url-generic-program (seq-some #'executable-find
+                                             '("brave"
+                                               "chromium"
+                                               "firefox"
+                                               "chrome")))
+  ;; Determines the default web browser function to use when opening a URL via
+  ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
+  (setq browse-url-browser-function #'browse-url-generic)
 #+end_src
 
 * Set fringe width
