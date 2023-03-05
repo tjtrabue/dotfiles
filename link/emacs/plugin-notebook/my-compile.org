@@ -1,0 +1,98 @@
+#+title:  File/Project Compilation
+#+author: Tom Trabue
+#+email:  tom.trabue@gmail.com
+#+date:   2020:05:25
+#+STARTUP: fold
+
+Emacs has great built-in support for running asynchronous tasks through its
+=compile= interface, which are really generic build commands, not necessarily
+for code compilation. The plugins in this file enhance Emacs' compilation
+capabilities.
+
+* auto-compile
+Automatically compile Emacs Lisp files on save and/or load.
+
+#+begin_src emacs-lisp
+(use-package auto-compile
+  :demand t
+  :config
+  (auto-compile-on-load-mode 1)
+  (auto-compile-on-save-mode 1))
+#+end_src
+
+* multi-compile
+Multi-target interface to =compile=.
+
+** Usage
+The central configuration point for =multi-compile= is =multi-compile-alist=, a
+variable that maps triggers to a list of possible compilation commands.
+
+#+begin_src emacs-lisp :tangle no
+(setq multi-compile-alist '(
+    (Trigger1 . (("menu item 1" . "command 1")
+                ("menu item 2" . "command 2")
+                ("menu item 3" . "command 3")))
+
+    (Trigger2 . (("menu item 4" "command 4" (expression returns a directory for the compilation))
+                 ("menu item 5" "command 5" (expression returns a directory for the compilation))))
+...
+    ))
+#+end_src
+
+A *trigger* is either:
+
+- A major-mode
+- A file/buffer name pattern
+- An expression that returns =t= or =nil=
+
+A *command* is either:
+
+- A string representing an external command to run
+- An extended syntax that can be used for long or complicated commands:
+  - If the command consists of a list, the elements of the list are expected to
+    be strings and will be joined with a space. This is a convenience syntax
+    that may be desirable to avoid extremely long command strings. For instance,
+    if the command consists of long paths or many options, it may be desirable
+    that each path or option exist on its own line. This extended command syntax
+    is supported both with and without the optional compilation directory
+    expression.
+
+In addition, there are *templates* a number of command templates you may use in
+your command string(s):
+
+- =%path= - "/tmp/prj/file.rs" (full path)
+- =%dir= - "/tmp/prj/"
+- =%file-name= - "file.rs"
+- =%file-sans= - "file"
+- =%file-ext= - "rs"
+- =%make-dir= - (Look up the directory hierarchy from current file for a
+  directory containing "Makefile") - "/tmp/"
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package multi-compile
+    :commands multi-compile-run
+    :custom
+    (multi-compile-alist (delete-dups
+                          (append multi-compile-alist
+                                  '(
+                                    ((memq major-mode '(sh-mode shell-mode)).
+                                     (("run script" . "sh %file-name"))))))))
+#+end_src
+
+* fancy-compilation
+This is a minimalist package that enhances compilation-mode in the following
+ways:
+
+- Support color output.
+- Support progress updates on a single line (as used by =ninja=, =sphinx= and
+  many other build systems).
+- Use scrolling behavior similar to most terminals.
+- Optionally use foreground & background independent of theme colors.
+
+#+begin_src emacs-lisp
+  (use-package fancy-compilation
+    :demand t
+    :config
+    (fancy-compilation-mode 1))
+#+end_src
