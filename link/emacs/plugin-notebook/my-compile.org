@@ -72,12 +72,13 @@ your command string(s):
 #+begin_src emacs-lisp
   (use-package multi-compile
     :commands multi-compile-run
-    :custom
-    (multi-compile-alist (delete-dups
-                          (append multi-compile-alist
-                                  '(
-                                    ((memq major-mode '(sh-mode shell-mode)).
-                                     (("run script" . "sh %file-name"))))))))
+    :init
+    (setq multi-compile-alist '(
+                                ("\\.el\\'" .
+                                 (("byte compile" . "emacs --batch --eval '(byte-compile-file \"%file-name\")'")
+                                  ("native compile" . "emacs --batch --eval '(native-compile \"%file-name\")'")))
+                                ((memq major-mode '(sh-mode shell-mode)) .
+                                 (("run script" . "sh %file-name"))))))
 #+end_src
 
 * fancy-compilation

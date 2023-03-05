@@ -78,3 +78,27 @@ that expands the snippet based on the abbreviation before point.
       ;; the top level to be used in conjunction with yas-maybe-expand.
       (global-set-key (kbd "C-c y") 'helm-yas-complete))
   #+end_src
+
+* auto-yasnippet
+Auto-YASnippet is a hybrid of keyboard macros and YASnippet. You create the
+snippet on the go and it'll be ready to use immediately. Because you're not
+leaving the current buffer the workflow is very fast.
+
+All you do is enter the code you'd enter anyway but placing ~ chars where you`d
+like YASnippet fields and mirrors to be.
+
+#+begin_src emacs-lisp
+  (use-package auto-yasnippet
+    :after yasnippet
+    :general
+    (my/user-leader-def yas-minor-mode-map
+      "y TAB" 'aya-expand
+      "y SPC" 'aya-expand-from-history
+      "y c"   'aya-clear-history
+      "y d"   'aya-delete-from-history
+      "y j"   'aya-next-in-history
+      "y k"   'aya-previous-in-history
+      "y o"   'aya-open-line
+      "y s"   'aya-persist-snippet
+      "y w"   'aya-create))
+#+end_src
