@@ -333,6 +333,7 @@ link/config/okularrc
 link/config/phishingurlrc
 link/config/plasma-localerc
 link/config/plasma-org.kde.plasma.desktop-appletsrc
+link/config/plasma-welcomerc
 link/config/plasma.emojierrc
 link/config/plasmanotifyrc
 link/config/plasmarc
