@@ -1,0 +1,28 @@
+#+TITLE:   Text Alignment Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-03-05
+#+TAGS:
+#+STARTUP: fold
+
+Emacs comes with a number of functions for aligning text in columns, such as:
+
+- =align=
+- =align-current=
+- =align-entire=
+- =align-newline-and-indent=
+- =align-regexp=
+
+However, sometimes we need a little more power. That's where these plugins come
+in.
+
+* ialign
+Interactive/visual plugin for Emacs' built-in =align-regexp=.
+
+#+begin_src emacs-lisp
+  (use-package ialign
+    :commands ialign
+    :general
+    (general-def
+      "C-x l" 'ialign))
+#+end_src
