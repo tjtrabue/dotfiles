@@ -75,10 +75,12 @@ your command string(s):
     :init
     (setq multi-compile-alist '(
                                 ("\\.el\\'" .
-                                 (("byte compile" . "emacs --batch --eval '(byte-compile-file \"%file-name\")'")
-                                  ("native compile" . "emacs --batch --eval '(native-compile \"%file-name\")'")))
+                                 (("byte-compile file" .
+                                   "emacs --batch --eval '(byte-compile-file \"%file-name\")'")
+                                  ("native-compile file" .
+                                   "emacs --batch --eval '(native-compile \"%file-name\")'")))
                                 ((memq major-mode '(sh-mode shell-mode)) .
-                                 (("run script" . "sh %file-name"))))))
+                                 (("run shell script" . "sh %file-name"))))))
 #+end_src
 
 * fancy-compilation
