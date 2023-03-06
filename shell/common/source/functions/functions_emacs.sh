@@ -179,6 +179,35 @@ __update_straight_repo() {
   fi
 }
 
+# Remove a package installed with Straight.el.
+straight_rm_repo() {
+  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
+  local straightHome="${emacsHome}/straight"
+  local straightRepos="${straightHome}/repos"
+  local straightBuild="${straightHome}/build"
+  local repo="$1"
+
+  if [ -z "${repo}" ]; then
+    err "No repo provided"
+    return 1
+  fi
+
+  if [ ! -d "${straightRepos}/${repo}" ]; then
+    err "Straight repo ${BLUE}${repo}${NC} does not exist"
+    return 2
+  fi
+
+  if [ ! -d "${straightBuild}/${repo}" ]; then
+    err "Straight build dir ${BLUE}${repo}${NC} does not exist"
+    return 3
+  fi
+
+  log_info "Removing straight repo: ${BLUE}${repo}${NC}"
+
+  rm -rf "${straightRepos}/${repo:?}"
+  rm -rf "${straightBuild}/${repo:?}"
+}
+
 # Clone my personal roam-notes database.
 clone_roam_notes() {
   local emacsHome="${EMACS_HOME:-${HOME}/.emacs.d}"
@@ -219,8 +248,8 @@ install_emacs_cask() {
   clone_or_update_git_repo "${caskGitUrl}" "${caskDest}"
   (
     log_info "Installing Cask for Emacs" &&
-    cd "${caskDest}" &&
-    make install
+      cd "${caskDest}" &&
+      make install
   )
 }
 
