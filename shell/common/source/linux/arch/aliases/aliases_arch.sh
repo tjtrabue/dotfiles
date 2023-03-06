@@ -25,7 +25,7 @@ alias pacup="sudo pacman -Syyu"
 # cleaning up temporary build files afterward.
 # Pass '-f' to this command to force rebuilding of an already built AUR repo
 # package.
-alias mpkg="makepkg -sic"
+alias mpkg="makepkg -sicC"
 # }}}
 
 # AUR helper {{{
