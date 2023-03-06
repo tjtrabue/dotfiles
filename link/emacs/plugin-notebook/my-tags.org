@@ -5,6 +5,11 @@
 #+tags:    ctags readtags universal
 #+STARTUP: fold
 
+Ctags are a universal mechanism for storing semantic information about a
+codebase's source code files in a database file called a Ctags file. Ctags
+provide variable and function references, autocompletion, go-to-definition, and
+many other features in a language-agnostic manner.
+
 * Citre
 Citre is an advanced Emacs front-end for readtags.
 
@@ -21,11 +26,16 @@ configuration. To change the recipe you used to generate the tags file, execute
 #+begin_src emacs-lisp
   (use-package citre
     :demand t
+    :commands
+    (citre-jump citre-jump-back citre-peek citre-update-this-tags-file)
     :custom
     (citre-use-project-root-when-creating-tags t)
     ;; Prompt for CTags languages instead of asking the user to edit the command
     ;; line.
     (citre-prompt-language-for-ctags-command t)
+    ;; Set this if you use project management plugin like projectile.  It's
+    ;; used for things like displaying paths relatively, see its docstring.
+    (citre-project-root-function #'projectile-project-root)
     :config
     (require 'citre-config))
 #+end_src

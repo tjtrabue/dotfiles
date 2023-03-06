@@ -1,0 +1,36 @@
+#+TITLE:   Emacs Kill Ring
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-03-06
+#+TAGS:
+#+STARTUP: fold
+
+This file contains extra plugins and configuration for the Emacs kill ring. The
+kill ring is essentially the Emacs clipboard, but it behaves a bit differently
+than most system clipboards. From the Emacs manual:
+
+#+begin_quote
+The kill ring is a list of blocks of text that were previously killed. There is
+only one kill ring, shared by all buffers, so you can kill text in one buffer
+and yank it in another buffer. This is the usual way to move text from one
+buffer to another. (There are several other methods: for instance, you could
+store the text in a register; see Registers. See Accumulating Text, for some
+other ways to move text around.)
+
+The maximum number of entries in the kill ring is controlled by the variable
+=kill-ring-max=. The default is 60. If you make a new kill when this limit has
+been reached, Emacs makes room by deleting the oldest entry in the kill ring.
+
+The actual contents of the kill ring are stored in a variable named =kill-ring=;
+you can view the entire contents of the kill ring with =C-h v kill-ring=.
+#+end_quote
+
+* browse-kill-ring
+Visually browse and yank from the kill ring.
+
+#+begin_src emacs-lisp
+  (use-package browse-kill-ring
+    ;; consult-yank-pop works better with my current setup.
+    :disabled
+    :commands browse-kill-ring)
+#+end_src
