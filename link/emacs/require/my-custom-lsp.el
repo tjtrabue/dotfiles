@@ -117,20 +117,18 @@ modes, as well as format buffers on save."
   (mapc
     (lambda (mode)
       ;; This is necessary for providing closure-like behavior
-      (lexical-let
-        ((mode mode) (hook-name (concat (symbol-name mode) "-hook")))
-        (add-hook (intern hook-name)
-          (lambda ()
-            ;; Shorten company prefix and reduce completion delay since LSP
-            ;; servers are very efficient backends.
-            (setq-local company-minimum-prefix-length 1)
-            ;; (setq-local company-idle-delay 0.0)
-            ;; Automatically start lsp when you visit a relevant file
-            (lsp-deferred)
-            ;; Enable auto-revert to keep files up to date with filesystem.
-            (auto-revert-mode 1)
-            ;; Format lsp-mode buffers on save.
-            (my-custom-lsp-add-format-on-save-hook mode)))))
+      (add-hook (intern (concat (symbol-name mode) "-hook"))
+        (lambda ()
+          ;; Shorten company prefix and reduce completion delay since LSP
+          ;; servers are very efficient backends.
+          (setq-local company-minimum-prefix-length 1)
+          ;; (setq-local company-idle-delay 0.0)
+          ;; Automatically start lsp when you visit a relevant file
+          (lsp-deferred)
+          ;; Enable auto-revert to keep files up to date with filesystem.
+          (auto-revert-mode 1)
+          ;; Format lsp-mode buffers on save.
+          (my-custom-lsp-add-format-on-save-hook mode))))
     my-custom-lsp-enabled-modes))
 
 ;;;###autoload
