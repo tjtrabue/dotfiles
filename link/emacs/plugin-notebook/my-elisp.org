@@ -97,13 +97,13 @@ stay on top of this package's new features and changing API.
 #+begin_src emacs-lisp
   (use-package elisp-autofmt
     :straight
-    (elisp-autofmt
-     :type git
-     :host codeberg
-     :repo "ideasman42/emacs-elisp-autofmt"
-     :files (:defaults "elisp-autofmt"))
-    :commands (elisp-autofmt-mode)
-    :hook (emacs-lisp-mode . elisp-autofmt-mode)
+    (elisp-autofmt :type git :host codeberg :repo "ideasman42/emacs-elisp-autofmt"
+                   :files (:defaults "elisp-autofmt*"))
+    :commands (elisp-autofmt-buffer elisp-autofmt-mode)
+    ;; NOTE: `elisp-autofmt-mode' adds a function to `before-save-hook' that
+    ;; messes with `aggressive-indent-mode'. Thus, I don't recommend you turn on
+    ;; `elisp-autofmt-mode' unless you're not using `aggressive-indent-mode'.
+    ;; :hook (emacs-lisp-mode . elisp-autofmt-mode)
     :general
     (my/evil-leader-def emacs-lisp-mode-map
       "=" (lambda ()
