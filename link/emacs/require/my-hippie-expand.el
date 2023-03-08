@@ -55,9 +55,9 @@
   (my-hook-fns-add-hook-for-major-modes
     (lambda ()
       (setq-local hippie-expand-try-functions-list
-        (append hippie-expand-try-functions-list
-          '(try-complete-lisp-symbol-partially
-             try-complete-lisp-symbol))))
+        (append '(try-complete-lisp-symbol-partially
+                   try-complete-lisp-symbol)
+          hippie-expand-try-functions-list )))
     my/lisp-major-modes))
 
 ;; Set up Lisp mode hooks for hippie-expand.
