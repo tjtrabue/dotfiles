@@ -50,14 +50,30 @@
      ;; try-expand-line
      ))
 
+(defun my-hippie-expand--add-expand-funcs (new-hippie-expand-funcs)
+  "Prepend list NEW-HIPPIE-EXPAND-FUNCS to `hippie-expand-try-functions-list'.
+
+If using Yasnippets, place `yas-hippie-try-expand' at the front of
+`hippie-expand-try-functions-list'."
+  (setq-local hippie-expand-try-functions-list
+    (delete-dups (if (or (bound-and-true-p yas-minor-mode)
+                       (bound-and-true-p yas-global-mode))
+                   ;; Place Yasnippet expand function at the beginning of expand
+                   ;; functions list to make sure snippet expansion gets
+                   ;; priority.
+                   (append '(yas-hippie-try-expand)
+                     new-hippie-expand-funcs
+                     (remove 'yas-hippie-try-expand
+                       hippie-expand-try-functions-list))
+                   (append new-hippie-expand-funcs
+                     hippie-expand-try-functions-list)))))
+
 (defun my-hippie-expand-set-lisp-hooks ()
   "Create hooks to add `hippie-expand' functions specific to Lisp major modes."
   (my-hook-fns-add-hook-for-major-modes
     (lambda ()
-      (setq-local hippie-expand-try-functions-list
-        (append '(try-complete-lisp-symbol-partially
-                   try-complete-lisp-symbol)
-          hippie-expand-try-functions-list )))
+      (my-hippie-expand--add-expand-funcs '(try-complete-lisp-symbol-partially
+                                             try-complete-lisp-symbol)))
     my/lisp-major-modes))
 
 ;; Set up Lisp mode hooks for hippie-expand.
