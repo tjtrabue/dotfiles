@@ -336,6 +336,7 @@ link/config/plasma-org.kde.plasma.desktop-appletsrc
 link/config/plasma-welcomerc
 link/config/plasma.emojierrc
 link/config/plasmanotifyrc
+link/config/plasmaparc
 link/config/plasmarc
 link/config/plasmashellrc
 link/config/powermanagementprofilesrc
