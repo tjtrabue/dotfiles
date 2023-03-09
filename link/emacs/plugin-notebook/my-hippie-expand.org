@@ -59,6 +59,7 @@ functions.
     :after evil-collection
     :ensure nil
     :straight nil
+    :commands hippie-expand
     :general
     (general-def '(normal insert)
       ;; The primary HippieExpand keybinding.
