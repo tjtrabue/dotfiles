@@ -37,14 +37,12 @@
 
 ;; Adjust the list of functions that hippie-expand will try when invoked.
 (setq hippie-expand-try-functions-list
-  '(
-     try-expand-dabbrev
+  '(try-expand-dabbrev
      try-expand-dabbrev-all-buffers
      ;; try-expand-dabbrev-from-kill
      ;; try-complete-lisp-symbol-partially
      ;; try-complete-lisp-symbol
-     try-complete-file-name-partially
-     try-complete-file-name
+     try-complete-file-name-partially try-complete-file-name
      ;; try-expand-all-abbrevs
      ;; try-expand-list
      ;; try-expand-line
@@ -53,27 +51,28 @@
 (defun my-hippie-expand--add-expand-funcs (new-hippie-expand-funcs)
   "Prepend list NEW-HIPPIE-EXPAND-FUNCS to `hippie-expand-try-functions-list'.
 
-If using Yasnippets, place `yas-hippie-try-expand' at the front of
-`hippie-expand-try-functions-list'."
+If using Yasnippets, place `yas-hippie-try-expand' at the front
+of `hippie-expand-try-functions-list' to ensure that snippet
+expansion gets priority over other expansions."
   (setq-local hippie-expand-try-functions-list
-    (delete-dups (if (or (bound-and-true-p yas-minor-mode)
-                       (bound-and-true-p yas-global-mode))
-                   ;; Place Yasnippet expand function at the beginning of expand
-                   ;; functions list to make sure snippet expansion gets
-                   ;; priority.
-                   (append '(yas-hippie-try-expand)
-                     new-hippie-expand-funcs
-                     (remove 'yas-hippie-try-expand
-                       hippie-expand-try-functions-list))
-                   (append new-hippie-expand-funcs
-                     hippie-expand-try-functions-list)))))
+    (delete-dups
+      (if (or (bound-and-true-p yas-minor-mode)
+            (bound-and-true-p yas-global-mode))
+        ;; Place Yasnippet hippie-expand function at the beginning of expand
+        ;; functions list to make sure snippet expansion gets priority.
+        (append
+          '(yas-hippie-try-expand) new-hippie-expand-funcs
+          (remove
+            'yas-hippie-try-expand hippie-expand-try-functions-list))
+        (append
+          new-hippie-expand-funcs hippie-expand-try-functions-list)))))
 
 (defun my-hippie-expand-set-lisp-hooks ()
   "Create hooks to add `hippie-expand' functions specific to Lisp major modes."
   (my-hook-fns-add-hook-for-major-modes
     (lambda ()
-      (my-hippie-expand--add-expand-funcs '(try-complete-lisp-symbol-partially
-                                             try-complete-lisp-symbol)))
+      (my-hippie-expand--add-expand-funcs
+        '(try-complete-lisp-symbol-partially try-complete-lisp-symbol)))
     my/lisp-major-modes))
 
 ;; Set up Lisp mode hooks for hippie-expand.
@@ -83,7 +82,8 @@ If using Yasnippets, place `yas-hippie-try-expand' at the front of
 (defun my-hippie-expand-or-tab (arg)
   "Invoke `tab-to-tab-stop' or `hippie-expand' with the relevant prefix ARG."
   (interactive "*P")
-  (if (or (bolp) (string-match-p "[[:space:]]" (byte-to-string (preceding-char))))
+  (if (or (bolp)
+        (string-match-p "[[:space:]]" (byte-to-string (preceding-char))))
     ;; If point is at beginning of line or previous character is blank, insert a
     ;; tab or number of spaces; otherwise, try to expand text with
     ;; `hippie-expand'.

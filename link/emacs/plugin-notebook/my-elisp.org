@@ -100,16 +100,30 @@ stay on top of this package's new features and changing API.
     (elisp-autofmt :type git :host codeberg :repo "ideasman42/emacs-elisp-autofmt"
                    :files (:defaults "elisp-autofmt*"))
     :commands (elisp-autofmt-buffer elisp-autofmt-mode)
-    ;; NOTE: `elisp-autofmt-mode' adds a function to `before-save-hook' that
-    ;; messes with `aggressive-indent-mode'. Thus, I don't recommend you turn on
-    ;; `elisp-autofmt-mode' unless you're not using `aggressive-indent-mode'.
-    ;; :hook (emacs-lisp-mode . elisp-autofmt-mode)
+    :hook (emacs-lisp-mode . elisp-autofmt-mode)
     :general
     (my/evil-leader-def emacs-lisp-mode-map
       "=" (lambda ()
             "Run elisp-autofmt-buffer manually."
             (interactive)
-            (elisp-autofmt-buffer))))
+            (elisp-autofmt-buffer)))
+    :custom
+    ;; This is a function that determines when/if Elisp
+    ;; code should be auto-formatted on save.
+    ;; The user may set it to one of the following pre-defined values:
+    ;;
+    ;; - 'always: Always format on save.
+    ;; - 'elisp-autofmt-check-elisp-autofmt-exists: Only reformat
+    ;;   when ".elisp-autofmt" exists in some parent dir of project.
+    ;;
+    ;; In addition to these symbols, you may specify a custom function yourself.
+    ;;
+    ;; I have noticed that auto-formatting on save messes with
+    ;; `aggressive-indent-mode''s hooks, so I prefer to disable the auto-format
+    ;; feature altogether in favor of manually formatting buffers.
+    (elisp-autofmt-on-save-p (lambda ()
+                               "Never auto-format Elisp buffers on save."
+                               nil)))
 #+end_src
 
 * elisp-refs
