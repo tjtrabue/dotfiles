@@ -183,10 +183,6 @@ The Evil mode plugin itself.
     (general-unbind 'insert
       ;; Get rid of annoying evil-paste-from-register binding.
       "C-r")
-    (general-def 'insert
-      ;; TAB should try expanding or fall back on self-insertion.
-      "TAB"   'my-hippie-expand-or-tab
-      "<tab>" 'my-hippie-expand-or-tab)
     ;; Evil ":" command minibuffer keys
     (general-def 'insert evil-ex-completion-map
       "TAB"   'evil-ex-completion

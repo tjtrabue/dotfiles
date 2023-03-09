@@ -237,8 +237,6 @@ custom Emacs Lisp libraries.
   (require 'my-gtags)
   ;; straight.el convenience functions.
   (require 'my-straight-helpers)
-  ;; My hippie-expand customizations.
-  (require 'my-hippie-expand)
   ;; Custom completing-read functions.
   (require 'my-completing-read)
 #+end_src
