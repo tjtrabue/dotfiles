@@ -1090,11 +1090,6 @@ path is already calculated.
       ;; because using that PATH is much faster than calculating it dynmaically.
       (setenv "PATH" (substitute-env-vars
                       (shell-command-to-string (concat "cat " my/static-path-file " | grep '^\s*PATH=' | sed -e 's/^\s*PATH=//' -e 's/\"//g'"))))
-    ;; When launched as a graphical application, Emacs typically inherits a
-    ;; default PATH variable, not the user's.  This can be annoying when it comes
-    ;; to launching external applications from within Emacs.  This plugin solves
-    ;; the problem by manually importing the user's PATH variable and using it as
-    ;; the value of Emacs exec-path variable.
     (use-package exec-path-from-shell
       :demand t
       :init
