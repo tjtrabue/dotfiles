@@ -205,5 +205,5 @@ Correct misspelled words using your favorite completion interface.
     :after flyspell
     :general
     (general-def flyspell-mode-map
-      "C-;" 'flyspell-correct-wrapper))
+      "C-." 'flyspell-correct-wrapper))
 #+end_src

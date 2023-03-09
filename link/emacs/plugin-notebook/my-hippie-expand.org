@@ -60,6 +60,9 @@ functions.
     :ensure nil
     :straight nil
     :general
+    (general-def '(normal insert)
+      ;; The primary HippieExpand keybinding.
+      "C-;" 'hippie-expand)
     (general-def 'insert
       ;; TAB should try expanding or fall back on self-insertion.
       "TAB"   'my/hippie-expand-or-tab
