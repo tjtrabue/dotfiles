@@ -1089,7 +1089,10 @@ path is already calculated.
       ;; If we have compiled our `~/.path_static` file, use the PATH in that file
       ;; because using that PATH is much faster than calculating it dynmaically.
       (setenv "PATH" (substitute-env-vars
-                      (shell-command-to-string (concat "cat " my/static-path-file " | grep '^\s*PATH=' | sed -e 's/^\s*PATH=//' -e 's/\"//g'"))))
+                      (shell-command-to-string
+                       (concat "cat " my/static-path-file " | "
+                               "grep '^\\s*PATH=' | "
+                               "sed -e 's/^\\s*PATH=//' -e 's/\"//g'"))))
     (use-package exec-path-from-shell
       :demand t
       :init
