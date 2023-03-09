@@ -68,7 +68,7 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     ;; Must load company after Yasnippet and HippieExpand because we want TAB to
     ;; cycle company completions. If company loads before Hippie and Yasnippet the
     ;; TAB keybinding will not work correctly.
-    :after (evil-collection yasnippet)
+    :after (evil-collection hippie-exp yasnippet)
     :demand t
     :general
     (general-def (company-active-map company-search-map)
