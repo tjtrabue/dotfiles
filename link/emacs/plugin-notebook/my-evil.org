@@ -794,7 +794,7 @@ main features of =lispyville=:
        "gC" 'lispyville-comment-or-uncomment
        "gy" 'lispyville-comment-and-clone-dwim)
       (general-define-key
-       :states '(normal visual motion)
+       :states '(normal visual operator motion)
        :keymaps mode-map
        ;; Use uppercase variants of Evil movement keys to traverse lisp atoms.
        [remap evil-forward-WORD-begin]  'lispyville-forward-atom-begin
