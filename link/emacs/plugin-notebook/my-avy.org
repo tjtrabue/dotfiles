@@ -14,12 +14,21 @@ as being actively maintained, making =avy= the better alternative.
   (use-package avy
     :after evil-collection
     :general
-    (general-def '(normal motion)
-      ;; Remap standard f/F t/T evil keybindings to avy motions.
+    (general-def 'normal
+      ;; In Evil's normal state, remap standard f/F evil keybindings to avy
+      ;; motions.
       "f" 'evil-avy-goto-char
       "F" 'evil-avy-goto-word-1
       ;; Jump to line based on an abbreviation.
       "L" 'evil-avy-goto-line)
+    (general-def 'operator
+      ;; Avy keybindings are not good for creating keyboard macros, so in operator
+      ;; state map we should not remap f/F or t/T to Avy. I have found that it is
+      ;; fine to remap f/F and t/T in normal state, but Vim's standard definitions
+      ;; for f/F and t/T are very useful when defining macros, and Avy motions are
+      ;; non-deterministic, so they do not make for good macros.
+      "C-'" 'evil-avy-goto-char
+      "M-'" 'evil-avy-goto-word-1)
     :custom
     ;; How avy's overlay appears near matches.
     (avy-style 'at-full)
