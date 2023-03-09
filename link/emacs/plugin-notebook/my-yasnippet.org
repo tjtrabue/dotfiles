@@ -16,7 +16,8 @@ that expands the snippet based on the abbreviation before point.
   #+begin_src emacs-lisp
     (use-package yasnippet
       :demand t
-      :commands yas-minor-mode
+      :commands
+      (yas-minor-mode yas-global-mode)
       :general
       (general-unbind yas-minor-mode-map
         "TAB"
@@ -31,12 +32,29 @@ that expands the snippet based on the abbreviation before point.
       (yas-buffer-local-condition yas-not-string-or-comment-condition)
       ;; How Yasnippet prompts the user for a snippet
       (yas-prompt-functions '(yas-completing-prompt))
-      :init
-      ;; Integrate yasnippet with hippie-expand
-      (add-to-list 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
       :config
       (yas-global-mode 1)
-      (yas-reload-all))
+      (yas-reload-all)
+      ;; Integrate Yasnippet with hippie-expand.  We want to add the Yasnippet
+      ;; expand function to hippie-expand's expand function list when we turn
+      ;; Yasnippet on, and remove that expansion function when we turn Yasnippet
+      ;; off.
+      (add-hook 'yas-global-mode-hook
+                (lambda ()
+                  (if (bound-and-true-p yas-global-mode)
+                      (add-to-list 'hippie-expand-try-functions-list
+                                   'yas-hippie-try-expand)
+                    (setq hippie-expand-try-functions-list
+                          (remove 'yas-hippie-try-expand
+                                  hippie-expand-try-functions-list)))))
+      (add-hook 'yas-minor-mode-hook
+                (lambda ()
+                  (if (bound-and-true-p yas-minor-mode)
+                      (add-to-list 'hippie-expand-try-functions-list
+                                   'yas-hippie-try-expand)
+                    (setq-local hippie-expand-try-functions-list
+                                (remove 'yas-hippie-try-expand
+                                        hippie-expand-try-functions-list))))))
   #+end_src
 
 * yasnippet-snippets
