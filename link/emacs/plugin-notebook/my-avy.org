@@ -14,11 +14,13 @@ as being actively maintained, making =avy= the better alternative.
   (use-package avy
     :after evil-collection
     :general
-    (general-def 'normal
-      ;; In Evil's normal state, remap standard f/F evil keybindings to avy
-      ;; motions.
+    (general-def '(normal visual)
+      ;; In Evil's normal state, remap standard f/F and t/F evil keybindings to
+      ;; Avy motions.
       "f" 'evil-avy-goto-char
       "F" 'evil-avy-goto-word-1
+      "t" 'evil-avy-goto-char-2
+      "T" 'evil-avy-goto-word-0
       ;; Jump to line based on an abbreviation.
       "L" 'evil-avy-goto-line)
     (general-def 'operator
