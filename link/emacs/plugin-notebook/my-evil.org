@@ -759,7 +759,7 @@ main features of =lispyville=:
        "M-[" 'lispyville-barf
        "M-]" 'lispyville-slurp)
       (general-define-key
-       :states 'insert
+       :states '(insert replace)
        :keymaps mode-map
        "["   'lispy-brackets
        "]"   'lispy-right-nostring
