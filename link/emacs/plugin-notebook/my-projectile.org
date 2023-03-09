@@ -24,9 +24,7 @@ software development.
       "p" '(:keymap projectile-command-map))
     (general-def 'normal 'override
       ;; Use C-p to search for files in project
-      "C-p" 'projectile-find-file
-      ;; Open a project directory in dired buffer.
-      "C-M-p" 'projectile-find-dir)
+      "C-p" 'projectile-find-file)
     (general-def projectile-command-map
       ;; Handy for refreshing Projectile's list of known projects.
       "n" 'projectile-discover-projects-in-search-path)

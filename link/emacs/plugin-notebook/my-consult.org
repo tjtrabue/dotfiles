@@ -243,9 +243,7 @@ awesome =consult=-ing read front end for =projectile= functions.
     :general
     (general-def 'normal 'override
       ;; Use consult-projectile instead of projectile-find-file
-      "C-p" 'consult-projectile
-      ;; Open a project directory in dired.
-      "C-M-p" 'consult-projectile-find-dir)
+      "C-p" 'consult-projectile)
     (general-def '(global-map projectile-command-map)
       [remap projectile-find-file]        'consult-projectile
       [remap projectile-find-dir]         'consult-projectile-find-dir
