@@ -792,7 +792,15 @@ main features of =lispyville=:
        :keymaps mode-map
        "gc" 'lispyville-comment-or-uncomment-line
        "gC" 'lispyville-comment-or-uncomment
-       "gy" 'lispyville-comment-and-clone-dwim)))
+       "gy" 'lispyville-comment-and-clone-dwim)
+      (general-define-key
+       :states '(normal visual motion)
+       :keymaps mode-map
+       ;; Use uppercase variants of Evil movement keys to traverse lisp atoms.
+       [remap evil-forward-WORD-begin]  'lispyville-forward-atom-begin
+       [remap evil-backward-WORD-begin] 'lispyville-backward-atom-begin
+       [remap evil-forward-WORD-end]    'lispyville-forward-atom-end
+       [remap evil-backward-WORD-end]   'lispyville-backward-atom-end)))
 
   (defun my/set-lispyville-lispy-keys ()
     "Use `lispy-define-key' to set extra keybindings for `lispyville'."
@@ -856,10 +864,13 @@ main features of =lispyville=:
                                 ;; Use M-(, M-{, and M-[ to wrap Lisp objects in
                                 ;; delimiters.
                                 wrap
-                                ;; Use w, b, u, and ge to move semantically across
-                                ;; Lisp objects, and W, B, U, and gE to move
+                                ;; Use w, b, e, and ge to move semantically across
+                                ;; Lisp objects, and W, B, E, and gE to move
                                 ;; across standard evil text objects.
-                                atom-movement
+                                ;; NOTE: I map uppercase Evil movement keys to
+                                ;; atom motions instead because I find it
+                                ;; preferrable.
+                                ;; atom-movement
                                 ;; Extra text object motions
                                 text-objects
                                 ;; Extra bindings
