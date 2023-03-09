@@ -65,7 +65,7 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package company
-    :after evil-collection
+    :after (evil-collection yasnippet)
     :demand t
     :general
     (general-def (company-active-map company-search-map)
