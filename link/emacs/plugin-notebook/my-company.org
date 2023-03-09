@@ -65,6 +65,9 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package company
+    ;; Must load company after Yasnippet and HippieExpand because we want TAB to
+    ;; cycle company completions. If company loads before Hippie and Yasnippet the
+    ;; TAB keybinding will not work correctly.
     :after (evil-collection yasnippet)
     :demand t
     :general
