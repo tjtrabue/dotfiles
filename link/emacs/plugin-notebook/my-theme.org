@@ -58,17 +58,18 @@ functions to provide a single point of theme configuration."
   hook.
 
   #+begin_src emacs-lisp
-    (add-hook 'my/theme-after-load-hook (lambda ()
-                                          ;; It's important to load org-beautify-theme after the main theme has
-                                          ;; loaded.
-                                          (with-eval-after-load "org-beautify-theme"
-                                            (if (not (custom-theme-enabled-p 'org-beautify-theme))
-                                                (load-theme 'org-beautify t)))
-                                          ;; NOTE: Not currently using beacon (it's slow
-                                          ;; as heck!)
-                                          (with-eval-after-load "beacon"
-                                            ;; Make beacon's color match the cursor's color in the current theme.
-                                            (setq beacon-color (face-attribute 'cursor :background)))))
+    (add-hook 'my/theme-after-load-hook
+              (lambda ()
+                ;; It's important to load org-beautify-theme after the main theme
+                ;; has loaded.
+                (with-eval-after-load "org-beautify-theme"
+                  (if (not (custom-theme-enabled-p 'org-beautify-theme))
+                      (load-theme 'org-beautify t)))
+                ;; NOTE: Not currently using beacon (it's slow as heck!)
+                (with-eval-after-load "beacon"
+                  ;; Make beacon's color match the cursor's color in the current
+                  ;; theme.
+                  (setq beacon-color (face-attribute 'cursor :background)))))
   #+end_src
 
 * Theme Packages
