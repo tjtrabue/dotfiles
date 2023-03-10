@@ -14,13 +14,8 @@ much more limited in terms of configuration.
 #+begin_src emacs-lisp
   (use-package highlight-indent-guides
     :hook
-    ;; Only use indnet guides when programming.
-    (prog-mode . (lambda ()
-                   (when (not (memq major-mode '(web-mode)))
-                     ;; Do not activate highlight-indent-guides-mode for certrain
-                     ;; major modes, as the indent guides tend to look ugly in
-                     ;; these modes.
-                     (highlight-indent-guides-mode 1))))
+    ;; Only use indent guides when programming.
+    (prog-mode . highlight-indent-guides-mode)
     :custom
     ;; Only highlight the first character of each indent level instead of the
     ;; entire column. This works better with minimap-mode.
