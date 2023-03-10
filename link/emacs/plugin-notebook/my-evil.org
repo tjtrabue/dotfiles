@@ -371,6 +371,9 @@ Increment or decrement numbers at point.
   (use-package evil-numbers
     :demand t
     :general
+    (general-def 'normal
+      "g+" 'evil-numbers/inc-at-pt
+      "g-" 'evil-numbers/dec-at-pt)
     (my/user-leader-def 'normal
       "+" 'evil-numbers/inc-at-pt
       "-" 'evil-numbers/dec-at-pt))
