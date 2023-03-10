@@ -1,7 +1,7 @@
 #+TITLE:  Common Lisp Configuration/Plugins
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 Emacs can become a full-fledged Common Lisp IDE with the right

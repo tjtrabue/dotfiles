@@ -1,7 +1,7 @@
 #+TITLE:    D Programming Language Configuration
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:06
+#+DATE:     2021-07-06
 #+TAGS:
 #+STARTUP: fold
 

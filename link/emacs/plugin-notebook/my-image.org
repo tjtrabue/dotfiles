@@ -1,7 +1,7 @@
 #+TITLE:    Image Plugins/Configuration
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:08:20
+#+DATE:     2021-08-20
 #+TAGS:
 #+STARTUP: fold
 

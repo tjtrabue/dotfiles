@@ -1,7 +1,7 @@
 #+TITLE:   Symbol Overlay: Highlight and Operate on Symbols Quickly
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:03:18
+#+DATE:    2022-03-18
 #+TAGS:    highlight symbol overlay
 #+STARTUP: fold
 

@@ -1,7 +1,7 @@
 #+TITLE:  Spaceline: Fancy SpaceMacs-Inspired Modeline
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2020:05:26
+#+DATE:     2020-05-26
 #+TAGS:     spaceline modeline theme colors
 #+STARTUP: fold
 

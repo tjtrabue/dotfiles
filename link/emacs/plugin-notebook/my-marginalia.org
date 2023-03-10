@@ -1,7 +1,7 @@
 #+TITLE:    Marginalia: Annotate Completions in Minibuffer
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:21
+#+DATE:     2021-07-21
 #+TAGS:
 #+STARTUP: fold
 

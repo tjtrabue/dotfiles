@@ -1,7 +1,7 @@
 #+TITLE:  Powerline Modeline for Emacs
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 Powerline is perhaps the most popular statusline theme for UNIX programs.  It

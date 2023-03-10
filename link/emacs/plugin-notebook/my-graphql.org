@@ -1,7 +1,7 @@
 #+TITLE:   GraphQL: Advanced Web API Design Spec
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:01:24
+#+DATE:    2022-01-24
 #+TAGS:    api graphql web
 #+STARTUP: fold
 

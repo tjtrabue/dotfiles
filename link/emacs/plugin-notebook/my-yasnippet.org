@@ -1,7 +1,7 @@
 #+TITLE:  Yasnippet Snippet System
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 =yasnippet= is the snippet engine for Emacs. It behaves in a similar fashion to

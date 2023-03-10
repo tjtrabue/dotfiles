@@ -1,7 +1,7 @@
 #+TITLE:  Regular Expression Configuration
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 Plugins and configuration for regular expression support within Emacs.

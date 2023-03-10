@@ -1,7 +1,7 @@
 #+TITLE:    Sublime Text Style Minimap
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:31
+#+DATE:     2021-07-31
 #+TAGS:
 #+STARTUP: fold
 

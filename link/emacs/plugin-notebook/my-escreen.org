@@ -1,7 +1,7 @@
 #+TITLE:   escreen: Emacs Window Management
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:06:23
+#+DATE:    2020-06-23
 #+TAGS:    escreen window manager management
 #+STARTUP: fold
 

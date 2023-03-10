@@ -1,7 +1,7 @@
 #+TITLE:    CTRLF: Fast, Efficient In-Buffer Search
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:16
+#+DATE:     2021-07-16
 #+TAGS:
 #+STARTUP: fold
 

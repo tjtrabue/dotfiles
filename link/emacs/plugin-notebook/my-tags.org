@@ -1,7 +1,7 @@
 #+TITLE:   Ctags, readtags, and other tags plugins
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:11:14
+#+DATE:    2022-11-14
 #+TAGS:    ctags readtags universal
 #+STARTUP: fold
 

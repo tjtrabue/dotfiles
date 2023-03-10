@@ -1,7 +1,7 @@
 #+TITLE:    TOML: Tom's Obvious Modeling Language
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2020:12:23
+#+DATE:     2020-12-23
 #+TAGS:
 #+STARTUP: fold
 

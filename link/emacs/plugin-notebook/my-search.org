@@ -1,7 +1,7 @@
 #+TITLE: Emacs Search Plugins
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:06:08
+#+DATE:   2020-06-08
 #+TAGS:
 #+STARTUP: fold
 

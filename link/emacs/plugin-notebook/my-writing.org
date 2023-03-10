@@ -1,7 +1,7 @@
 #+TITLE:   English Grammar Configuration/Plugins
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:07:06
+#+DATE:    2022-07-06
 #+TAGS:
 #+STARTUP: fold
 

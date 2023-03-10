@@ -1,7 +1,7 @@
 #+TITLE:   COMINT: Generic REPL Mode
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2021:07:13
+#+DATE:    2021-07-13
 #+TAGS:
 #+STARTUP: fold
 

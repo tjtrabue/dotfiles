@@ -1,7 +1,7 @@
 #+TITLE:  Flymake (the Flycheck predecessor)
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 =flymake= is the largely outdated syntax checker built-in to Emacs.

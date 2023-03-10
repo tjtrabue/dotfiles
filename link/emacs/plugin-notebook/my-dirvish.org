@@ -1,7 +1,7 @@
 #+TITLE:   Dirvish: A Polished Dired with Batteries Included
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:07:29
+#+DATE:    2022-07-29
 #+TAGS:
 #+STARTUP: fold
 

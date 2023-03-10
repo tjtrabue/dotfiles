@@ -1,7 +1,7 @@
 #+TITLE:  Dev Ops Configuration/Plugins
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 Various dev-ops packages and configuration for Emacs.

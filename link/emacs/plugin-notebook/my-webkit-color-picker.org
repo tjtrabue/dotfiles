@@ -1,7 +1,7 @@
 #+TITLE:  Xwidget Color Picker
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 This is a cool color picker written as an Xwidget.

@@ -1,7 +1,7 @@
 #+TITLE:   Swift Programming Language Configuration/Plugins
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2021:11:30
+#+DATE:    2021-11-30
 #+TAGS:    swift apple macos
 #+STARTUP: fold
 

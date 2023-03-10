@@ -1,7 +1,7 @@
 #+TITLE:    Cycle Camel Case, UPCASE, Snake Case, etc.
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:14
+#+DATE:     2021-07-14
 #+TAGS:
 #+STARTUP: fold
 

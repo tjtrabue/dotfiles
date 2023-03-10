@@ -1,7 +1,7 @@
 #+TITLE:   YAML: YAML Ain't Markup Language!
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:09:02
+#+DATE:    2022-09-02
 #+TAGS:
 #+STARTUP: fold
 

@@ -1,7 +1,7 @@
 #+TITLE:   Corfu: Completion Overlay Region FUnction
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2021:09:18
+#+DATE:    2021-09-18
 #+TAGS:
 #+STARTUP: fold
 

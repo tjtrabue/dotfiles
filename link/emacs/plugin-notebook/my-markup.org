@@ -1,7 +1,7 @@
 #+TITLE:  Configuration for Markup Languages
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 Plugins for various markup/serialization languages, such as HTML.

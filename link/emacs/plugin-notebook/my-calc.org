@@ -1,7 +1,7 @@
 #+TITLE:   Calculator Config/Plugins
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2023:02:06
+#+DATE:    2023-02-06
 #+TAGS:    calc calculator
 #+STARTUP: fold
 

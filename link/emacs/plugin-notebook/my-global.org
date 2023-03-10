@@ -1,7 +1,7 @@
 #+TITLE:   GNU Global Emacs Integration
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:06:08
+#+DATE:    2020-06-08
 #+TAGS:    gnu-global ggtags
 #+STARTUP: fold
 

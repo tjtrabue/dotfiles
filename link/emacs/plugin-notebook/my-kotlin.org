@@ -1,7 +1,7 @@
 #+TITLE:   Kotlin Configuration/Plugins
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2021:11:19
+#+DATE:    2021-11-19
 #+TAGS:    kotlin android
 #+STARTUP: fold
 

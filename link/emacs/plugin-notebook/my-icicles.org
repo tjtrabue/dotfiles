@@ -1,7 +1,7 @@
 #+TITLE:    Icicles: Text Completion
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2020:08:22
+#+DATE:     2020-08-22
 #+TAGS:     icicles minibuffer text
 #+STARTUP: fold
 

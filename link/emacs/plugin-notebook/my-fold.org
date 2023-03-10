@@ -1,7 +1,7 @@
 #+TITLE:   Code Folding Configuration/Plugins
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:05:26
+#+DATE:    2020-05-26
 #+STARTUP: fold
 
 Here you will find plugins that allow Emacs to /fold/, or hide sections of code

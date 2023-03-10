@@ -1,7 +1,7 @@
 #+TITLE:    Frame Management Configuration/Plugins
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:08:26
+#+DATE:     2021-08-26
 #+TAGS:
 #+STARTUP:  fold
 

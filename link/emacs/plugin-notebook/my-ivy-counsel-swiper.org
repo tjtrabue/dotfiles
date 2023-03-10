@@ -1,7 +1,7 @@
 #+TITLE:  Ivy, Counsel, Swiper: Narrowing Search Framework
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 These three plugins are a great alternative to =helm=. =ivy= is the primary

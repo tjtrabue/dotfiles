@@ -1,7 +1,7 @@
 #+TITLE:  Dired: the Directory Editor
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 Plugins and configuration for Emacs' built-in directory editor and file

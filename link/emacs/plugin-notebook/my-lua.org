@@ -1,7 +1,7 @@
 #+TITLE:  Lua Configuration/Plugins
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 This file contains all Emacs configuration related to the Lua programming language.

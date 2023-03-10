@@ -1,7 +1,7 @@
 #+TITLE:  Ace Navigation
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 Configuration for the fantastic ace modes, such as =ace-jump-mode= used to

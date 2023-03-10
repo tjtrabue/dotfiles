@@ -1,7 +1,7 @@
 #+TITLE:  Projectile Project Management
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 Projectile is a project management plugin for Emacs that helps you perform

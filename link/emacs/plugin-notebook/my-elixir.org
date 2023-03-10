@@ -1,7 +1,7 @@
 #+TITLE:  Elixir Configuration/Plugins
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 Emacs plugins providing integration with Elixir, a functional programming

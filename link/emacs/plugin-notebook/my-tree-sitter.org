@@ -1,7 +1,7 @@
 #+TITLE:    tree-sitter: Faster Syntax Parsing/Highlighting
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2020:12:11
+#+DATE:     2020-12-11
 #+TAGS:
 #+STARTUP:  fold
 

@@ -1,7 +1,7 @@
 #+TITLE:    TRAMP: Interact with Remote Resources
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:13
+#+DATE:     2021-07-13
 #+TAGS:
 #+STARTUP: fold
 

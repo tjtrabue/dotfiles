@@ -1,7 +1,7 @@
 #+TITLE:   Use Typographic Ligatures in Emacs
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:01:18
+#+DATE:    2022-01-18
 #+TAGS:    font ligature
 #+STARTUP: fold
 

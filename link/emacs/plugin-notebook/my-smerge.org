@@ -1,7 +1,7 @@
 #+TITLE:   Smerge: Resolve Merge Conflicts with Style
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:08:31
+#+DATE:    2022-08-31
 #+TAGS:
 #+STARTUP: fold
 

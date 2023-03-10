@@ -1,7 +1,7 @@
 #+TITLE:   C and C++ Configuration
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:11:29
+#+DATE:    2020-11-29
 #+TAGS:    c cpp c++
 #+STARTUP: fold
 

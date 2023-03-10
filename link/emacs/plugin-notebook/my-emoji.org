@@ -1,7 +1,7 @@
 #+TITLE:   Emoji Support for Emacs
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2021:09:19
+#+DATE:    2021-09-19
 #+TAGS:
 #+STARTUP: fold
 

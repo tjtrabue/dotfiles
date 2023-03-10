@@ -1,7 +1,7 @@
 #+TITLE:   ESUP: Profile Startup without Leaving Emacs
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:08:16
+#+DATE:    2020-08-16
 #+TAGS:    profile profiler startup
 #+STARTUP: fold
 

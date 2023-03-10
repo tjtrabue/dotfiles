@@ -1,7 +1,7 @@
 #+TITLE:    Selectrum: Modern Alternative to Helm, Ivy, Ido
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:01:21
+#+DATE:     2021-01-21
 #+TAGS:
 #+STARTUP: fold
 

@@ -1,7 +1,7 @@
 #+TITLE:  Debug Adapter Protocol
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:25
+#+DATE:   2020-05-25
 #+STARTUP: fold
 
 =dap= is a generic API for designing and interfacing with programming language

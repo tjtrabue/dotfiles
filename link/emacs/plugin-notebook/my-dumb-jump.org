@@ -1,7 +1,7 @@
 #+TITLE:  Dumb Jump: Better Jump-to-Definition Tool
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:08:03
+#+DATE:   2020-08-03
 #+TAGS:
 #+STARTUP: fold
 

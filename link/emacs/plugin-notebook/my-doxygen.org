@@ -1,7 +1,7 @@
 #+TITLE:   Doxygen Documentation System
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:11:29
+#+DATE:    2020-11-29
 #+TAGS:    doxygen comment documentation
 #+STARTUP: fold
 

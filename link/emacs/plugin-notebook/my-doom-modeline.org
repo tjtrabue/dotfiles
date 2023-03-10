@@ -1,7 +1,7 @@
 #+TITLE:   Modeline from Doom Emacs
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2021:01:22
+#+DATE:    2021-01-22
 #+TAGS:    modeline theme doom
 #+STARTUP: fold
 

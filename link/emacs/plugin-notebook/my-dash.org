@@ -1,7 +1,7 @@
 #+TITLE:    dash.el: Modern API for Emacs
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:11
+#+DATE:     2021-07-11
 #+TAGS:
 #+STARTUP: fold
 

@@ -1,7 +1,7 @@
 #+TITLE:  CEDET: Emacs Development Environment
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:06:19
+#+DATE:   2020-06-19
 #+TAGS:   c c++ cpp cedet java
 #+STARTUP: fold
 

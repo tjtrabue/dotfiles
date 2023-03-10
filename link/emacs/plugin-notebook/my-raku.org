@@ -1,7 +1,7 @@
 #+TITLE:    Raku Programming Language Configuration
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:03
+#+DATE:     2021-07-03
 #+TAGS:
 #+STARTUP: fold
 

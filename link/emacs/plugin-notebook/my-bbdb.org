@@ -1,7 +1,7 @@
 #+TITLE:    Big Brother Database: Address Book
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:08:23
+#+DATE:     2021-08-23
 #+TAGS:
 #+STARTUP: fold
 

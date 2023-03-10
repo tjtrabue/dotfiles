@@ -1,7 +1,7 @@
 #+TITLE:    Automatically Keep Code Indented
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:14
+#+DATE:     2021-07-14
 #+TAGS:
 #+STARTUP: fold
 

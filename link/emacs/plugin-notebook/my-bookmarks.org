@@ -1,7 +1,7 @@
 #+TITLE:   Emacs Bookmarks Configuration/Plugins
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2023:02:08
+#+DATE:    2023-02-08
 #+TAGS:    bookmark bookmarks
 #+STARTUP: fold
 

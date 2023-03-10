@@ -1,7 +1,7 @@
 #+TITLE:    Ranger File Manager for Emacs
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:15
+#+DATE:     2021-07-15
 #+TAGS:
 #+STARTUP: fold
 

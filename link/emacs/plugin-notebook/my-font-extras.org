@@ -1,7 +1,7 @@
 #+TITLE:   Extra Font Configuration
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2020:07:28
+#+DATE:    2020-07-28
 #+TAGS:    font ligature
 #+STARTUP: fold
 

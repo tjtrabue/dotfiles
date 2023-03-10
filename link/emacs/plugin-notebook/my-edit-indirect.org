@@ -1,7 +1,7 @@
 #+TITLE:   Edit code blocks in separate window
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:04:06
+#+DATE:    2022-04-06
 #+TAGS:    edit indirect markdown
 #+STARTUP: fold
 

@@ -1,7 +1,7 @@
 #+TITLE:   Rotate window arrangements in a frame
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:08:07
+#+DATE:    2022-08-07
 #+TAGS:
 #+STARTUP: fold
 

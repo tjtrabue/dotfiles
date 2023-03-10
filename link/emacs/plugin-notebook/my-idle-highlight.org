@@ -1,7 +1,7 @@
 #+TITLE:   Automatically highlight thing at point when idle
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
-#+DATE:    2022:11:14
+#+DATE:    2022-11-14
 #+TAGS:    highlight idle lightweight
 #+STARTUP: fold
 

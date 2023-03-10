@@ -1,7 +1,7 @@
 #+TITLE:    Smartparens: Automatic Delimiter Insertion
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:03:10
+#+DATE:     2021-03-10
 #+TAGS:
 #+STARTUP: fold
 

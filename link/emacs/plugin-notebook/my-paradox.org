@@ -1,7 +1,7 @@
 #+TITLE:  Paradox Package Interface
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:05:26
+#+DATE:   2020-05-26
 #+STARTUP: fold
 
 Paradox is a modernized package UI for Emacs that can act as a drop-in

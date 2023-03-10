@@ -1,7 +1,7 @@
 #+TITLE:  Manage System Packages from Emacs
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:06:25
+#+DATE:   2020-06-25
 #+TAGS:   os operating-system
 #+STARTUP: fold
 

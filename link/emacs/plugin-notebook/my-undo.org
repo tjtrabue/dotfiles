@@ -1,7 +1,7 @@
 #+TITLE:    Undo Features and Plugins for Emacs
 #+AUTHOR:   Tom Trabue
 #+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021:07:17
+#+DATE:     2021-07-17
 #+TAGS:
 #+STARTUP:  fold
 

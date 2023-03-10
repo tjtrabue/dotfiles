@@ -1,7 +1,7 @@
 #+TITLE:  PDF Tools for Emacs
 #+AUTHOR: Tom Trabue
 #+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020:08:03
+#+DATE:   2020-08-03
 #+TAGS:   pdf tools
 #+STARTUP: fold
 
