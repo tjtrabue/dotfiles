@@ -5,30 +5,16 @@ emacs_rm_backups() {
     -regex ".*(~)|(.*#.*)$" -delete
 }
 
-# Completely clean the ~/.emacs.d/ directory to prepare it for a reset.
-emacs_wipe_config_dir() {
+# Get rid of cache directores under ~/.emacs.d/ to help get rid of unusual
+# behavior.
+emacs_rm_caches() {
   local emacsHome="${HOME}/.emacs.d"
 
-  rm -rf "${emacsHome}/auto-save-list" \
-    "${emacsHome}/backups" \
-    "${emacsHome}/el-get" \
-    "${emacsHome}/eln-cache" \
-    "${emacsHome}/persp-confs" \
-    "${emacsHome}/semanticdb" \
-    "${emacsHome}/transient" \
-    "${emacsHome}/straight/build" \
-    "${emacsHome}/straight/repos" \
-    ;
-
-  rm -f "${emacsHome}/company-statistics-cache.el" \
-    "${emacsHome}/ede-projects.el" \
-    "${emacsHome}/forge-database.sqlite" \
-    "${emacsHome}/places" \
-    "${emacsHome}/projectile-bookmarks.eld" \
-    "${emacsHome}/recentf" \
-    "${emacsHome}/srecode-map.el" \
-    "${emacsHome}/straight/build-cache.el" \
-    ;
+  log_info "Deleting Emacs cache directories"
+  rm -f "${emacsHome}/persp-state.el"
+  rm -rf "${emacaHome}/.cache"
+  rm -rf "${emacaHome}/eln-cache"
+  rm -rf "${emacaHome}/elisp-autofmt-cache"
 }
 
 # Start Emacs in Gnus mode to read email/news.
