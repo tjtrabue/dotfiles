@@ -1,7 +1,7 @@
-#+title: The Hydra Keyboard Macro System
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:5:25
+#+TITLE: The Hydra Keyboard Macro System
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:5:25
 #+STARTUP: fold
 
 This file contains Plugins and configuration for the hydra hotkey macro package.

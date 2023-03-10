@@ -1,9 +1,8 @@
-#+title:    Powerthesaurus Integration for Emacs
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:28
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Powerthesaurus Integration for Emacs
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:28
+#+TAGS:
 #+STARTUP: fold
 
 =emacs-powerthesaurus= defines three interactive functions:

@@ -1,8 +1,8 @@
-#+title:    tree-sitter: Faster Syntax Parsing/Highlighting
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:12:11
-#+tags:
+#+TITLE:    tree-sitter: Faster Syntax Parsing/Highlighting
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2020:12:11
+#+TAGS:
 #+STARTUP:  fold
 
 =tree-sitter= is an incremental parsing system, and is not specific to Emacs.

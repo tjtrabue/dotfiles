@@ -1,8 +1,8 @@
-#+title:  C# Configuration/Plugins
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:06:25
-#+tags:
+#+TITLE:  C# Configuration/Plugins
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:06:25
+#+TAGS:
 #+STARTUP: fold
 
 C# has long been Microsoft's pride and joy in the domain of application

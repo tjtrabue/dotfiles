@@ -1,8 +1,8 @@
-#+title:   Automatically highlight thing at point when idle
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:11:14
-#+tags:    highlight idle lightweight
+#+TITLE:   Automatically highlight thing at point when idle
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:11:14
+#+TAGS:    highlight idle lightweight
 #+STARTUP: fold
 
 A small, lightweight package for highlighting the thing at point on an idle

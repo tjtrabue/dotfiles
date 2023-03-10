@@ -1,9 +1,8 @@
-#+title:    Vertical Highlights for Indentation Levels
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:03:08
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Vertical Highlights for Indentation Levels
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:03:08
+#+TAGS:
 #+STARTUP: fold
 
 Provides vertical lines highlighting which character begins an indentation level

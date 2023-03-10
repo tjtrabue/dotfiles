@@ -2,7 +2,6 @@
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2021:07:03
-#+property: header-args:emacs-lisp :lexical t
 #+tags:     
 #+STARTUP: fold
 

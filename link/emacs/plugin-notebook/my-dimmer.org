@@ -1,7 +1,7 @@
-#+title:  Dimmer: Dim Inactive Windows
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:27
+#+TITLE:  Dimmer: Dim Inactive Windows
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:27
 #+STARTUP: fold
 
 =dimmer= dynamically adjusts inactive windows in Emacs to be dimmer than the

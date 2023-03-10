@@ -1,9 +1,8 @@
-#+title:    wgrep: edit grep buffer and apply changes to files
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:28
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    wgrep: edit grep buffer and apply changes to files
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:28
+#+TAGS:
 #+STARTUP: fold
 
 =wgrep= allows you to edit a =grep= buffer and apply those changes to the file

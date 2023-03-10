@@ -1,8 +1,8 @@
-#+title:   JSON: Javascript Object Notation
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:09:02
-#+tags:
+#+TITLE:   JSON: Javascript Object Notation
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:09:02
+#+TAGS:
 #+STARTUP: fold
 
 Plugins for editing and interacting with JSON documents.

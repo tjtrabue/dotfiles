@@ -1,9 +1,8 @@
-#+title:    Orderless: Smart Completion Backend
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:01:21
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Orderless: Smart Completion Backend
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:01:21
+#+TAGS:
 #+STARTUP: fold
 
 =orderless= provides an orderless completion style that divides the pattern into

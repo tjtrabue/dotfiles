@@ -1,7 +1,7 @@
-#+title:   The Extensible VI Layer (evil)
-#+author:  Tom Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2020:05:25
+#+TITLE:   The Extensible VI Layer (evil)
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020:05:25
 #+STARTUP: fold
 
 Evil, or =evil-mode=, is the Extensible VI Layer (AKA the only way to use

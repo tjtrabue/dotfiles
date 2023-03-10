@@ -1,9 +1,8 @@
-#+title:    TOML: Tom's Obvious Modeling Language
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:12:23
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    TOML: Tom's Obvious Modeling Language
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2020:12:23
+#+TAGS:
 #+STARTUP: fold
 
 Plugins and configuration for TOML support in Emacs. TOML serves primarily as a

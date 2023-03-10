@@ -1,8 +1,8 @@
-#+title:  CEDET: Emacs Development Environment
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:06:19
-#+tags:   c c++ cpp cedet java
+#+TITLE:  CEDET: Emacs Development Environment
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:06:19
+#+TAGS:   c c++ cpp cedet java
 #+STARTUP: fold
 
 =CEDET= is a Collection of Emacs Development Environment Tools. It's...large, to

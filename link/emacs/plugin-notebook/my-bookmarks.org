@@ -1,8 +1,8 @@
-#+title:   Emacs Bookmarks Configuration/Plugins
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2023:02:08
-#+tags:    bookmark bookmarks
+#+TITLE:   Emacs Bookmarks Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023:02:08
+#+TAGS:    bookmark bookmarks
 #+STARTUP: fold
 
 From the Emacs manual:

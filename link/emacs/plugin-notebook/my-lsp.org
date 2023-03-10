@@ -1,7 +1,7 @@
-#+title:  Language Server Protocol Client for Emacs
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:25
+#+TITLE:  Language Server Protocol Client for Emacs
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:25
 #+STARTUP: fold
 
 Language Server Protocol client (=lsp-mode=) configuration.  It is highly

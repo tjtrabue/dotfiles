@@ -1,9 +1,8 @@
-#+title:    ESUP: Profile Startup without Leaving Emacs
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:08:16
-#+property: header-args:emacs-lisp :lexical t
-#+tags:     profile profiler startup
+#+TITLE:   ESUP: Profile Startup without Leaving Emacs
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020:08:16
+#+TAGS:    profile profiler startup
 #+STARTUP: fold
 
 =ESUP= is the Emacs Start-Up Profiler. It does not currently work with my

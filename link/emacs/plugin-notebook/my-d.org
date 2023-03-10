@@ -1,9 +1,8 @@
-#+title:    D Programming Language Configuration
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:06
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    D Programming Language Configuration
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:06
+#+TAGS:
 #+STARTUP: fold
 
 The D programming language is a bit of an odd bird. It's most similar to C++,

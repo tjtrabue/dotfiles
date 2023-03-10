@@ -1,9 +1,8 @@
-#+title:    Wucuo: Faster Spell Checking
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:31
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Wucuo: Faster Spell Checking
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:31
+#+TAGS:
 #+STARTUP: fold
 
 =wucuo= is a fast wrapper around =flyspell= designed to keep your workflow

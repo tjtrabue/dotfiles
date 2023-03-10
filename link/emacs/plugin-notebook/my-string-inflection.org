@@ -1,9 +1,8 @@
-#+title:    Cycle Camel Case, UPCASE, Snake Case, etc.
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:14
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Cycle Camel Case, UPCASE, Snake Case, etc.
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:14
+#+TAGS:
 #+STARTUP: fold
 
 =string-inflection= is a cool little plugin that allows you to cycle a string

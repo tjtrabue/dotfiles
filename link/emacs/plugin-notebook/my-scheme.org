@@ -1,9 +1,8 @@
-#+title:    Scheme Configuration/Plugins
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:23
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Scheme Configuration/Plugins
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:23
+#+TAGS:
 #+STARTUP: fold
 
 Scheme is one of the oldest dialects of Lisp still in use, and, along with

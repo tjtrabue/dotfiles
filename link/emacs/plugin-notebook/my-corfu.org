@@ -1,8 +1,8 @@
-#+title:   Corfu: Completion Overlay Region FUnction
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2021:09:18
-#+tags:
+#+TITLE:   Corfu: Completion Overlay Region FUnction
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2021:09:18
+#+TAGS:
 #+STARTUP: fold
 
 =corfu= is a minimal completion overlay that uses Emacs' built-in =capf=

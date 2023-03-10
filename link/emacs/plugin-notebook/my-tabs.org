@@ -1,9 +1,8 @@
-#+title:   Editor Tabs for the Emacs UI
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:06:12
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:   Editor Tabs for the Emacs UI
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:06:12
+#+TAGS:
 #+STARTUP: fold
 
 This file contains plugins and configuration for editor tabs similar to those

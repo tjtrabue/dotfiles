@@ -1,9 +1,8 @@
-#+title:    rebox2: Box Editing in Emacs
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:09:19
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    rebox2: Box Editing in Emacs
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2020:09:19
+#+TAGS:
 #+STARTUP: fold
 
 =rebox2= is a plugin for seamlessly editing boxed comments in Emacs.

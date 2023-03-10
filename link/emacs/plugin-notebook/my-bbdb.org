@@ -1,9 +1,8 @@
-#+title:    Big Brother Database: Address Book
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:08:23
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Big Brother Database: Address Book
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:08:23
+#+TAGS:
 #+STARTUP: fold
 
 The Insidious Big Brother Database is an address book for email and snail mail

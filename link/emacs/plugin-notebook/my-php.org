@@ -1,7 +1,7 @@
-#+title:  PHP Configuration/Plugins
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:26
+#+TITLE:  PHP Configuration/Plugins
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:26
 #+STARTUP: fold
 
 Emacs plugins and configuration for the PHP dynamic web programming language.

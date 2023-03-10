@@ -1,8 +1,8 @@
-#+title:   Kotlin Configuration/Plugins
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2021:11:19
-#+tags:    kotlin android
+#+TITLE:   Kotlin Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2021:11:19
+#+TAGS:    kotlin android
 #+STARTUP: fold
 
 Kotlin is a strong, statically typed, multi-paradigm programming language built

@@ -1,9 +1,8 @@
-#+title:    Vertico: Minimal Completion UI
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:21
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Vertico: Minimal Completion UI
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:21
+#+TAGS:
 #+STARTUP: fold
 
 =vertico= provides a Helm-like completion UI for several completion frameworks,

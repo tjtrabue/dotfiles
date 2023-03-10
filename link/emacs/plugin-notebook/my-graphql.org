@@ -1,8 +1,8 @@
-#+title:   GraphQL: Advanced Web API Design Spec
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:01:24
-#+tags:    api graphql web
+#+TITLE:   GraphQL: Advanced Web API Design Spec
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:01:24
+#+TAGS:    api graphql web
 #+STARTUP: fold
 
 GraphQL is an improvement upon the ReST web API specification, providing a

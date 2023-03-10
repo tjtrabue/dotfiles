@@ -1,8 +1,8 @@
-#+title:   Calculator Config/Plugins
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2023:02:06
-#+tags: calc calculator
+#+TITLE:   Calculator Config/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023:02:06
+#+TAGS:    calc calculator
 #+STARTUP: fold
 
 Emacs has some pretty sweet built-in calculator features, as well as some even

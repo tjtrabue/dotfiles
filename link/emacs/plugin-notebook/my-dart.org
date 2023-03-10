@@ -1,9 +1,8 @@
-#+title:    Dart Programming Language Config/Plugins
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:12:23
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Dart Programming Language Config/Plugins
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2020:12:23
+#+TAGS:
 #+STARTUP: fold
 
 Plugins and configuration for the Dart programming language.

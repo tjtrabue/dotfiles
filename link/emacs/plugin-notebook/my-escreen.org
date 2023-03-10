@@ -1,8 +1,8 @@
-#+title:  escreen: Emacs Window Management
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:06:23
-#+tags:   escreen window manager management
+#+TITLE:   escreen: Emacs Window Management
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020:06:23
+#+TAGS:    escreen window manager management
 #+STARTUP: fold
 
 =escreen= is essentially an Emacs version of GNU Screen (which has been

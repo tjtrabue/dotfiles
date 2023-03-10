@@ -1,8 +1,8 @@
-#+title:   English Grammar Configuration/Plugins
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:07:06
-#+tags:
+#+TITLE:   English Grammar Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:07:06
+#+TAGS:
 #+STARTUP: fold
 
 Even programmers (or pro-grammars!) need to know how to write! These Emacs

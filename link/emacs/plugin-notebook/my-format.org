@@ -1,7 +1,7 @@
-#+title:  Code Formatting Plugins
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:25
+#+TITLE:  Code Formatting Plugins
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:25
 #+STARTUP: fold
 
 Assorted code formatting plugins.

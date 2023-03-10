@@ -1,9 +1,8 @@
-#+title:    Marginalia: Annotate Completions in Minibuffer
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:21
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Marginalia: Annotate Completions in Minibuffer
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:21
+#+TAGS:
 #+STARTUP: fold
 
 This package provides =marginalia-mode= which adds marginalia to the minibuffer

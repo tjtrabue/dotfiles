@@ -1,8 +1,8 @@
-#+title:   AFFE: Asynchronous Fuzzy Finder for Emacs
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:07:02
-#+tags:
+#+TITLE:   AFFE: Asynchronous Fuzzy Finder for Emacs
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:07:02
+#+TAGS:
 #+STARTUP: fold
 
 AFFE provides features similar to =fzf=, but is written in pure Elisp. It

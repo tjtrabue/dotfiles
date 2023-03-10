@@ -1,9 +1,8 @@
-#+title:    Color Identifiers Uniquely to Differentiate Them
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:11
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Color Identifiers Uniquely to Differentiate Them
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:11
+#+TAGS:
 #+STARTUP: fold
 
 This is a minor mode that uniquely colors variable/function names in order to

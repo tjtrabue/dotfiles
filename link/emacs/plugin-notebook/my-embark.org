@@ -1,9 +1,8 @@
-#+title:    Embark: Universal Context Menu for Emacs
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:21
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Embark: Universal Context Menu for Emacs
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:21
+#+TAGS:
 #+STARTUP: fold
 
 Embark provides a sort of right-click contextual menu for Emacs, accessed

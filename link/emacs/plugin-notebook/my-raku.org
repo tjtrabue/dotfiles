@@ -1,9 +1,8 @@
-#+title:    Raku Programming Language Configuration
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:03
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Raku Programming Language Configuration
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:03
+#+TAGS:
 #+STARTUP: fold
 
 Raku is the official name for what was once known as Perl 6. It is the successor

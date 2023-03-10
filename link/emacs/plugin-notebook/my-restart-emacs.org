@@ -1,7 +1,7 @@
-#+title:  Restart Emacs from Within Emacs
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:26
+#+TITLE:  Restart Emacs from Within Emacs
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:26
 #+STARTUP: fold
 
 Pretty straightforward. This package provides a function called =restart-emacs=

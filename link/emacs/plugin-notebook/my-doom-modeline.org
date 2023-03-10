@@ -1,9 +1,8 @@
-#+title:    Modeline from Doom Emacs
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:01:22
-#+property: header-args:emacs-lisp :lexical t
-#+tags: modeline theme doom
+#+TITLE:   Modeline from Doom Emacs
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2021:01:22
+#+TAGS:    modeline theme doom
 #+STARTUP: fold
 
 =doom-modeline= allows any Emacs configuration to use the fancy, modular

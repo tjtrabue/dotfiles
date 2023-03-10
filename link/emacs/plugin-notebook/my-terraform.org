@@ -1,9 +1,8 @@
-#+title:    Terraform: Infrastructure as Code
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:06:12
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Terraform: Infrastructure as Code
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:06:12
+#+TAGS:
 #+STARTUP: fold
 
 Terraform is a modular, technology-agnostic infrastructure provisioning

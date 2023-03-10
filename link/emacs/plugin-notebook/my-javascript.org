@@ -1,9 +1,8 @@
-#+title:    Javascript Configuration/Plugins
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:16
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Javascript Configuration/Plugins
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:16
+#+TAGS:
 #+STARTUP: fold
 
 Javascript is perhaps the mode widely used programming language in the world

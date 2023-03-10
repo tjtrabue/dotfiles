@@ -1,9 +1,8 @@
-#+title:    Perl Configuration/Plugins
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:08:18
-#+property: header-args:emacs-lisp :lexical t
-#+tags:     perl cperl raku plsense pde perly-sense
+#+TITLE:    Perl Configuration/Plugins
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2020:08:18
+#+TAGS:     perl cperl raku plsense pde perly-sense
 #+STARTUP: fold
 
 Here's my Perl configuration for Emacs. If there's one thing I've discovered in

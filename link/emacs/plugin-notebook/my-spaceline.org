@@ -1,9 +1,8 @@
-#+title:  Spaceline: Fancy SpaceMacs-Inspired Modeline
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2020:05:26
-#+property: header-args:emacs-lisp :lexical t
-#+tags:     spaceline modeline theme colors
+#+TITLE:  Spaceline: Fancy SpaceMacs-Inspired Modeline
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2020:05:26
+#+TAGS:     spaceline modeline theme colors
 #+STARTUP: fold
 
 Use Spacemacs' pretty modeline without using Spacemacs itself.  This is one of

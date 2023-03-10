@@ -1,7 +1,7 @@
-#+title:  Use Multiple Cursors in Emacs
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:25
+#+TITLE:  Use Multiple Cursors in Emacs
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:25
 #+STARTUP: fold
 
 This is a Sublime Text-like multiple cursors plugin for Emacs, and it's

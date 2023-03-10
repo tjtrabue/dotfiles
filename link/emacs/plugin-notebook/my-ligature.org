@@ -1,8 +1,8 @@
-#+title:   Use Typographic Ligatures in Emacs
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:01:18
-#+tags:    font ligature
+#+TITLE:   Use Typographic Ligatures in Emacs
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:01:18
+#+TAGS:    font ligature
 #+STARTUP: fold
 
 Ligatures are special composite characters rendered in order to represent two or

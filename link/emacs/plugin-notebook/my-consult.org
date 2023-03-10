@@ -1,9 +1,8 @@
-#+title:    Consult: Non-Opinionated Completion Sources
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:17
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Consult: Non-Opinionated Completion Sources
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:17
+#+TAGS:
 #+STARTUP: fold
 
 Yet another completion framework for Emacs. Jeez, you think there would be

@@ -1,8 +1,8 @@
-#+title:   Markdown Configuration/Plugins
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:09:02
-#+tags:
+#+TITLE:   Markdown Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:09:02
+#+TAGS:
 #+STARTUP: fold
 
 Plugins for editing and interacting with Markdown files.

@@ -1,8 +1,8 @@
-#+title:  ECB: Emacs Code Browser
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:06:22
-#+tags:   ecb code browser
+#+TITLE:   ECB: Emacs Code Browser
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020:06:22
+#+TAGS:    ecb code browser
 #+STARTUP: fold
 
 =ECB= is another old Emacs package similar and complementary to =CEDET= used to

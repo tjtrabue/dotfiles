@@ -1,9 +1,8 @@
-#+title:    Perspective: Named Workspaces for Emacs
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:22
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Perspective: Named Workspaces for Emacs
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:22
+#+TAGS:
 #+STARTUP: fold
 
 =perspective.el= is a workspace management package for Emacs. It provides

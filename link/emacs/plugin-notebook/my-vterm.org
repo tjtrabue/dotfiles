@@ -1,7 +1,7 @@
-#+title:  vterm Terminal Emulator
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:26
+#+TITLE:  vterm Terminal Emulator
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:26
 #+STARTUP: fold
 
 =vterm= is a full on terminal emulator for Emacs. It is not at all like

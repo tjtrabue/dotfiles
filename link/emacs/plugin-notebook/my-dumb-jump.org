@@ -1,8 +1,8 @@
-#+title:  Dumb Jump: Better Jump-to-Definition Tool
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:08:03
-#+tags:
+#+TITLE:  Dumb Jump: Better Jump-to-Definition Tool
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:08:03
+#+TAGS:
 #+STARTUP: fold
 
 =dumb-jump= is a jump-to-definition package that uses =grep=, =ag=, and =rg= to

@@ -1,7 +1,7 @@
-#+title:  The Flycheck Syntax Checker
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:25
+#+TITLE:  The Flycheck Syntax Checker
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:25
 #+STARTUP: fold
 
 =flycheck= is a phenomenal general-purpose syntax checker that uses a plugin

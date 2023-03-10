@@ -1,8 +1,8 @@
-#+title:   Ctags, readtags, and other tags plugins
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:11:14
-#+tags:    ctags readtags universal
+#+TITLE:   Ctags, readtags, and other tags plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:11:14
+#+TAGS:    ctags readtags universal
 #+STARTUP: fold
 
 Ctags are a universal mechanism for storing semantic information about a

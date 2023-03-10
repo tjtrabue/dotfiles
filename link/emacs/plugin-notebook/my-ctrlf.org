@@ -1,9 +1,8 @@
-#+title:    CTRLF: Fast, Efficient In-Buffer Search
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:07:16
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    CTRLF: Fast, Efficient In-Buffer Search
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:07:16
+#+TAGS:
 #+STARTUP: fold
 
 =ctrlf= is an Emacs plugin for fast text searching within a buffer. It brands

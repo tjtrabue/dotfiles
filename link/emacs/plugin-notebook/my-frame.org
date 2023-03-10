@@ -1,9 +1,8 @@
-#+title:    Frame Management Configuration/Plugins
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:08:26
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Frame Management Configuration/Plugins
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:08:26
+#+TAGS:
 #+STARTUP:  fold
 
 A number of frame-related plugins and their associated configuration can be

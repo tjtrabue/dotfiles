@@ -1,9 +1,8 @@
-#+title:    Smartparens: Automatic Delimiter Insertion
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:03:10
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Smartparens: Automatic Delimiter Insertion
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:03:10
+#+TAGS:
 #+STARTUP: fold
 
 =smartparens= is a popular Emacs plugin that automatically inserts closing

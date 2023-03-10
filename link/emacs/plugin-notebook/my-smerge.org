@@ -1,8 +1,8 @@
-#+title:   Smerge: Resolve Merge Conflicts with Style
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2022:08:31
-#+tags:
+#+TITLE:   Smerge: Resolve Merge Conflicts with Style
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2022:08:31
+#+TAGS:
 #+STARTUP: fold
 
 =smerge-mode= is a built-in minor mode for resolving merge conflicts in a

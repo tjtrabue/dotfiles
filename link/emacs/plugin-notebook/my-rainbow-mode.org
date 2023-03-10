@@ -1,7 +1,7 @@
-#+title:  Rainbow Mode
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:26
+#+TITLE:  Rainbow Mode
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:26
 #+STARTUP: fold
 
 Colorize color names/hex codes in buffers to help you visualize what actual

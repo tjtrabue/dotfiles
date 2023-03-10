@@ -1,9 +1,8 @@
-#+title:    Selectrum: Modern Alternative to Helm, Ivy, Ido
-#+author:   Tom Trabue
-#+email:    tom.trabue@gmail.com
-#+date:     2021:01:21
-#+property: header-args:emacs-lisp :lexical t
-#+tags:
+#+TITLE:    Selectrum: Modern Alternative to Helm, Ivy, Ido
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:01:21
+#+TAGS:
 #+STARTUP: fold
 
 =selectrum= is a great replacement for =helm=, =ivy=, and =ido=. It's a newer,

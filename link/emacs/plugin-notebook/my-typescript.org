@@ -1,7 +1,7 @@
-#+title:  Typescript configuration/plugins
-#+author: Tom Trabue
-#+email:  tom.trabue@gmail.com
-#+date:   2020:05:26
+#+TITLE:  Typescript configuration/plugins
+#+AUTHOR: Tom Trabue
+#+EMAIL:  tom.trabue@gmail.com
+#+DATE:   2020:05:26
 #+STARTUP: fold
 
 Typescript is a statically-typed programming language that transpiles to
