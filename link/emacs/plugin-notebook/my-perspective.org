@@ -24,6 +24,27 @@ different perspective, and more.
   multiple frames, but it is less configurable and can be frustrating since it
   seizes control of Emacs in some invasive ways.
 
+* Functions
+#+begin_src emacs-lisp
+  (defun my/persp-switch-start-lsp-servers ()
+    "Start LSP server(s) when switching perspectives, if applicable.
+
+  We do this because switching perspectives seems to deactivate LSP
+  servers by default.  This function checks each buffer in the
+  switched-to perspective for a registered LSP server, and if it
+  has one, enables the server."
+    (mapc (lambda (buffer)
+            (with-current-buffer buffer
+              (when (and
+                     ;; Make sure we are dealing with a buffer
+                     ;; visiting a file.
+                     (buffer-file-name)
+                     (bound-and-true-p lsp-mode)
+                     (memq major-mode my-custom-lsp-enabled-modes))
+                (lsp-deferred))))
+          (persp-current-buffers)))
+#+end_src
+
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package perspective
@@ -63,16 +84,9 @@ different perspective, and more.
       ;; Where perspective.el saves its configuration
       (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
       :config
-      (add-hook 'persp-switch-hook
-                (lambda ()
-                  "Start the major-mode's language server when switching
-                  perspectives, if applicable.  We do this because
-                  switching perspectives seems to deactivate the LSP
-                  server by default."
-                  (when (and (bound-and-true-p lsp-mode)
-                             (boundp 'my-custom-lsp-enabled-modes)
-                             (memq major-mode my-custom-lsp-enabled-modes))
-                    (lsp))))
+      ;; Enable LSP server(s) when switching perspectives to work around the fact
+      ;; that perspective.el disables LSP servers when switching.
+      (add-hook 'persp-switch-hook #'my/persp-switch-start-lsp-servers)
       ;; Turn on persp-mode globally
       (persp-mode 1)
       ;; Automatically resume the main perspective after x seconds.  The delay is

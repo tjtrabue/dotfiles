@@ -38,7 +38,13 @@ using =web-mode= instead of =html-mode= or =mhtml-mode=.  There is a bug in
      ;; Django template
      ("\\.djhtml\\'" . web-mode)
      ;; Embedded Elixir template.
-     ("\.html\\.eex\\'" . web-mode)))
+     ("\.html\\.eex\\'" . web-mode))
+    :config
+    (with-eval-after-load "highlight-indent-guides"
+      ;; Turn on highlight-indent-guides-mode specially for web-mode since having
+      ;; web-mode inherit the hook from prog-mode makes the highlight guides look
+      ;; ugly.  Adding this hook seems to fix the problem.
+      (add-hook 'web-mode-hook #'highlight-indent-guides-mode)))
 #+end_src
 
 * emmet-mode

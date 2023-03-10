@@ -15,7 +15,6 @@ csslint
 cssmodules-language-server
 dockerfile-language-server-nodejs
 dot-language-server
-emmet-ls
 eslint
 eslint-config-angular
 eslint-config-eslint
