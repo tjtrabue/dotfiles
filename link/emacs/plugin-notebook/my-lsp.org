@@ -81,6 +81,9 @@ which ones you do not yet satisfy.
     ;; on and off, causing lines to move up and down, making for a frustrating
     ;; editing experience.
     (lsp-lens-enable nil)
+    ;; UI feedback for available code actions presented in the modeline.
+    ;; The default is '(count icon).
+    (lsp-modeline-code-actions-segments '(count icon name))
     ;;; bash-language-server
     (lsp-bash-highlight-parsing-errors t)
     ;;; clangd
@@ -142,6 +145,9 @@ which ones you do not yet satisfy.
                   ;; bindings because that's the only way they will take
                   ;; precedence over evil's motion state bindings in normal state.
                   (general-def 'normal 'local
+                    ;; Edit each semantic match for the symbol at point in
+                    ;; parallel with iedit.
+                    "g'" 'lsp-iedit-highlights
                     "gD" 'lsp-find-declaration
                     "gH" 'lsp-treemacs-call-hierarchy
                     "gR" 'lsp-find-references
