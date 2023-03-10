@@ -63,6 +63,15 @@ different perspective, and more.
       ;; Where perspective.el saves its configuration
       (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
       :config
+      (add-hook 'persp-switch-hook
+                (lambda ()
+                  "Enable `lsp-mode' when switching perspectives if applicable.
+                  We do this because switching perspectives seems to
+                  deactivate `lsp-mode' by default."
+                  (when (and (bound-and-true-p lsp-mode)
+                             (boundp 'my-custom-lsp-enabled-modes)
+                             (memq major-mode my-custom-lsp-enabled-modes))
+                    (lsp))))
       ;; Turn on persp-mode globally
       (persp-mode 1)
       ;; Automatically resume the main perspective after x seconds.  The delay is
