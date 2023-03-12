@@ -26,9 +26,7 @@ python-language-server
 pywal
 rebound-cli
 six
-sqlformat
 thefuck
-ueberzug
 vim-vint
 virtualenvwrapper
 yamlfmt
