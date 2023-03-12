@@ -75,6 +75,11 @@ which ones you do not yet satisfy.
     (lsp-completion-filter-on-incomplete nil)
     ;; Whether to filter initial results from the server.
     (lsp-completion-sort-initial-results nil)
+    ;; Whether to automatically try to guess all projects' root directories
+    ;; rather than prompt the user for them.
+    ;; WARNING: Setting this variable to non-nil can be risky if you are not
+    ;; following standard Emacs project conventions!
+    (lsp-auto-guess-root t)
     ;; Whether to enable Code Lens by default if the LSP server supports that
     ;; feature. I find Code Lens to cause the UI to behave erratically, so I
     ;; prefer to keep it off by default. For instance, ref counts tend to flicker
