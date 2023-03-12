@@ -40,7 +40,9 @@ different perspective, and more.
                      ;; visiting a file.
                      (buffer-file-name)
                      (bound-and-true-p lsp-mode)
-                     (memq major-mode my-custom-lsp-enabled-modes))
+                     ;; Check if buffer's major-mode is a derived mode of one of
+                     ;; our enabled major-modes for LSP integration.
+                     (apply #'derived-mode-p my-custom-lsp-enabled-modes))
                 (lsp-deferred))))
           (persp-current-buffers)))
 #+end_src
