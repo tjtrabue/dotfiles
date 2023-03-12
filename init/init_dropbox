@@ -36,7 +36,7 @@ install_dropbox__arch_linux() {
   log_info "Initializing Dropbox for Arch Linux"
 
   if [ -x "$(command -v dropbox)" ]; then
-    warn "dropbox client already installed. Terminating."
+    warn "Dropbox client already installed. Terminating."
     return 1
   fi
 

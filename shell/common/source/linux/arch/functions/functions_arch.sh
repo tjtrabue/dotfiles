@@ -159,14 +159,14 @@ EOF
     return 1
   fi
 
-  fwupdmgr refresh
+  fwupdmgr refresh --force
   fwupdmgr update
 
   # We must re-configure grub after updating the firmware.
-  __configure_grub
+  configure_grub
 }
 
-__configure_grub() {
+configure_grub() {
   log_info "Installing GRUB bootloader"
   sudo grub-install \
     --target=x86_64-efi \
