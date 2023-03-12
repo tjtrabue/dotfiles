@@ -33,7 +33,8 @@ create_wallpaper_archive() {
     mv "${wallpaperArchiveFile}" "${wallpaperArchiveFile}.bak"
   fi
 
-  tar -czvf "${wallpaperArchiveFile}" "${wallpaperDir}"
+  tar -C "${wallpaperDir}/.." -czvf "${wallpaperArchiveFile}" \
+    "$(basename "${wallpaperDir}")"
 }
 
 # Create a compressed TAR archive of the desktop wallpaper directory, and upload
