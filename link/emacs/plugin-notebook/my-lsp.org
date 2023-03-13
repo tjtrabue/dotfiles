@@ -452,6 +452,8 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
     (lsp-ui-peek-enable t)
     ;; Show documentation for the thing at point
     (lsp-ui-doc-enable t)
+    ;; Whether to include object type/signature in frame
+    (lsp-ui-doc-include-signature t)
     ;; How long to wait before showing documentation in a floating window
     (lsp-ui-doc-delay 0.5)
     ;; Where to display the documentation tooltip
