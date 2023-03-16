@@ -37,7 +37,6 @@
   '(LaTeX-mode
      TeX-latex-mode
      TeX-mode
-     clojure-mode
      cperl-mode
      javascript-mode
      js-mode

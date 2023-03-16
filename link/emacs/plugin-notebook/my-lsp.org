@@ -69,8 +69,14 @@ which ones you do not yet satisfy.
     (lsp-idle-delay 0.000)
     ;; Whether to perform code formatting while typing
     (lsp-enable-on-type-formatting t)
-    ;; Automatically enable lenses if the server supports them.
+    ;; Whether to enable Code Lens by default if the LSP server supports that
+    ;; feature. I find Code Lens to cause the UI to behave erratically, so I
+    ;; prefer to keep it off by default. For instance, ref counts tend to flicker
+    ;; on and off, causing lines to move up and down, making for a frustrating
+    ;; editing experience.
     (lsp-lens-enable t)
+    ;; Where to place the Code Lens annotation in relation to its subject.
+    (lsp-lens-place-position #'above-line)
     ;; Whether to filter incomplete results.
     (lsp-completion-filter-on-incomplete nil)
     ;; Whether to filter initial results from the server.
@@ -80,12 +86,6 @@ which ones you do not yet satisfy.
     ;; WARNING: Setting this variable to non-nil can be risky if you are not
     ;; following standard Emacs project conventions!
     (lsp-auto-guess-root t)
-    ;; Whether to enable Code Lens by default if the LSP server supports that
-    ;; feature. I find Code Lens to cause the UI to behave erratically, so I
-    ;; prefer to keep it off by default. For instance, ref counts tend to flicker
-    ;; on and off, causing lines to move up and down, making for a frustrating
-    ;; editing experience.
-    (lsp-lens-enable nil)
     ;; UI feedback for available code actions presented in the modeline.
     ;; The default is '(count icon).
     (lsp-modeline-code-actions-segments '(count icon name))

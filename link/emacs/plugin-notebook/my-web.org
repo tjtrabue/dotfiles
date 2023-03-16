@@ -224,12 +224,6 @@ A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package impatient-mode
-    :hook
-    ((html-mode
-      mhtml-mode
-      web-mode) . (lambda ()
-      (httpd-start)
-      (impatient-mode 1)))
     :general
     (my/user-leader-def impatient-mode-map
       "C-o" 'my/browse-impatient-url-of-buffer))
