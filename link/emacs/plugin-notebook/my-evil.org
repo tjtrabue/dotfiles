@@ -764,13 +764,19 @@ main features of =lispyville=:
       (general-define-key
        :states '(insert replace)
        :keymaps mode-map
-       "["   'lispy-brackets
-       "]"   'lispy-right-nostring
-       "{"   'lispy-braces
-       "}"   'lispy-right-nostring
+       ;; lispy pair insertion commands tend to mess with the CIDER nREPL, so I
+       ;; prefer to use plain old self-insert-command for inserting parentheses,
+       ;; braces, and brackets.
+       "("   'self-insert-command
+       ")"   'self-insert-command
+       "{"   'self-insert-command
+       "}"   'self-insert-command
+       "["   'self-insert-command
+       "]"   'self-insert-command
        "DEL" 'my/lispyville-delete-backward-char-and-join
        ;; Remap our favorite normal mode chord to lispyville's version of ESC.
        (general-chord "jk") 'lispyville-normal-state)
+
       (general-define-key
        :states '(normal insert)
        :keymaps mode-map

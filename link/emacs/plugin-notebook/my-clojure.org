@@ -209,7 +209,9 @@ file in your project's root directory with the following content:
     ;; 'prompt means to prompt, t means always save, nil means never save.
     (cider-save-file-on-load t)
     :init
-    (dolist (hook '(clojure-mode-hook clojurec-mode-hook clojurescript-mode-hook))
+    (dolist (hook '(cider-mode-hook cider-repl-mode-hook))
+      ;; Use fuzzy matching to display CIDER Company completions.
+      (add-hook hook #'cider-company-enable-fuzzy-completion)
       (add-hook hook (lambda ()
                        ;; Disable LSP Company completion in clojure-mode because
                        ;; we want to use CIDER's completion instead since
@@ -221,10 +223,7 @@ file in your project's root directory with the following content:
                        ;;
                        ;; Re-investigate this issue later and see if it still
                        ;; persists.
-                       (setq-local lsp-enable-completion-at-point nil))))
-    (dolist (hook '(cider-mode-hook cider-repl-mode-hook))
-      ;; Enable fuzzy completion for Company in CIDER modes.
-      (add-hook hook #'cider-company-enable-fuzzy-completion))
+                       (setq-local lsp-completion-enable nil))))
     :config
     ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
     ;; You must set these variables in :config instead of :custom due to a loading
