@@ -401,6 +401,11 @@ link/config/AWSVPNClient/
 link/config/rclone/rclone.conf
 # }}}
 
+# ActiveState {{{
+link/config/activestate/
+link/config/autostart/state-svc.desktop
+# }}}
+
 # Tex/LaTeX {{{
 # LaTeX compilation files.
 *.aux
