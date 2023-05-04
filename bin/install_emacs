@@ -14,6 +14,11 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare DOTFILES_REPO="${HOME}/.dotfiles"
 declare WS
 
+# Compiler options
+declare IE_GCC_VERSION=""
+declare IE_CC="gcc"
+declare IE_CXX="g++"
+
 # Build options
 declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
@@ -59,6 +64,11 @@ USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
+  -g VERSION | --gcc-version=VERSION
+    Use the specified numeric VERSION of the GCC and G++ compilers.
+    If this option is not specified, this program uses the system's default
+    versions of GCC and G++.
+
   -h | --help
     Print the help message (this message) and exit.
 
@@ -76,6 +86,24 @@ EOF
 
 # }}}
 
+# Security Checks {{{
+
+# Make sure the user has their specified versions of GCC and G++ installed
+# before proceeding.
+ie__check_gcc_version() {
+  if [ -z "$(command -v "${IE_CC}")" ]; then
+    err "Could not find GCC version ${CYAN}${IE_GCC_VERSION}${NC} installed" \
+      "on system."
+    exit 1
+  elif [ -z "$(command -v "${IE_CXX}")" ]; then
+    err "Could not find G++ version ${CYAN}${IE_GCC_VERSION}${NC} installed" \
+      "on system."
+    exit 1
+  fi
+  log_info "Using GCC and G++ version: ${CYAN}${IE_GCC_VERSION}${NC}"
+}
+# }}}
+
 # Setup/Cleanup Functions {{{
 ie__set_global_vars() {
   log_info "Settings global variables"
@@ -90,6 +118,8 @@ ie__make_dirs() {
 ie__setup() {
   ie__set_global_vars
   ie__make_dirs
+  # Safety and security checks:
+  ie__check_gcc_version
 }
 
 # We should only remove the Emacs backup repository if the installation
@@ -109,11 +139,13 @@ ie__backup_emacs_repository() {
 }
 
 # Delete an existing Emacs installation built from source.
+# We delete from the backup Emacs directory because that is the one containing
+# our old Emacs build.
 ie__uninstall_old_emacs_installation() {
-  if [ -d "${EMACS_DEST}" ]; then
-    log_info "Removing old Emacs installation at: ${BLUE}${EMACS_DEST}${NC}"
+  if [ -d "${EMACS_BACKUP}" ]; then
+    log_info "Removing old Emacs installation at: ${BLUE}${EMACS_BACKUP}${NC}"
     (
-      cd "${EMACS_DEST}" &&
+      cd "${EMACS_BACKUP}" &&
         sudo make uninstall
     )
   fi
@@ -187,7 +219,7 @@ ie__construct_configure_cmd() {
     configureCmd="${configureCmd} --with-x"
   fi
 
-  log_info "Congifuring Emacs with command: ${GREEN}${configureCmd}${NC}"
+  log_info "Will configure Emacs build with: ${GREEN}${configureCmd}${NC}"
   printf '%s' "${configureCmd}"
 }
 
@@ -215,13 +247,13 @@ ie__install_from_source() {
   (
     log_info "Installing latest Emacs" &&
       cd "${EMACS_DEST}" &&
-      export CC="gcc" CXX="g++" &&
+      export CC="${IE_CC}" CXX="${IE_CXX}" &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
-      make -j"$(nproc)" trampolines &&
+      make bootstrap -j"$(nproc)" &&
       sudo make install
   ) &&
-    ie__remove_emacs_backup_repository
+  ie__remove_emacs_backup_repository
 }
 
 main() {
@@ -232,12 +264,26 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hp --long help,pgtk,prefix: -n 'install_emacs' -- "$@")
+args=$(getopt -o g:hp --long gcc-version:,help,pgtk,prefix: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
+  -g | --gcc-version)
+    case "$2" in
+      "")
+        shift 2
+        ;;
+      *)
+        IE_GCC_VERSION="${2}"
+        IE_CC="gcc-${IE_GCC_VERSION}"
+        IE_CXX="g++-${IE_GCC_VERSION}"
+        shift 2
+        ;;
+    esac
+    ;;
+
   -h | --help)
     _help
     exit 0
