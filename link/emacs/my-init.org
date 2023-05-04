@@ -1202,6 +1202,7 @@ and hooks in a way that defers loading the package.
       ;; eshell
       "es" 'eshell-below
       ;; File
+      "ff" 'find-file
       "lf" 'load-file
       "of" 'org-babel-load-file))
 #+end_src
