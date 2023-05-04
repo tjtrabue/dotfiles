@@ -29,8 +29,8 @@
 
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
-(add-to-list 'load-path
-  (file-truename (concat user-emacs-directory "straight/build/org")))
+(add-to-list
+  'load-path (file-truename (concat user-emacs-directory "straight/build/org")))
 
 ;; JIT settings to speed up startup.
 ;; https://tychoish.com/post/towards-faster-emacs-start-times/
@@ -64,16 +64,15 @@
 
 ;; Define and set variables
 (eval-when-compile
-  (defconst my/home-dir (getenv "HOME") "User's home directory path.")
-  (defconst my/dotfiles-dir
-    (file-truename (concat my/home-dir "/.dotfiles"))
+  (defconst my/home-dir (getenv "HOME")
+    "User's home directory path.")
+  (defconst my/dotfiles-dir (file-truename (concat my/home-dir "/.dotfiles"))
     "tjtrabue's dotfiles repository directory which houses the primary
   Emacs config.")
   (defconst my/dotfiles-emacs-dir
     (file-truename (concat my/dotfiles-dir "/link/emacs"))
     "Main Emacs directory in tjtrabue's dotfiles repository.")
-  (defconst my/emacsrc
-    (file-truename (concat (getenv "HOME") "/.emacs"))
+  (defconst my/emacsrc (file-truename (concat (getenv "HOME") "/.emacs"))
     "The main Emacs config file in the user's home directory.")
   (defconst my/main-emacs-init-org
     (file-truename (concat my/dotfiles-emacs-dir "/my-init.org"))
@@ -85,16 +84,14 @@
     (byte-compile-dest-file my/main-emacs-init-el)
     "My compiled Emacs configuration file byte-compiled from
 `main-emacs-init-el'.")
-  (defconst my/use-straight
-    t
+  (defconst my/use-straight t
     "Whether to use straight.el instead of Emacs' built-in package manager."))
 
 ;; Define functions to help us get started compiling and loading our other
 ;; files.
 (defsubst my/file-not-exists-or-newer-than-other-p (file other)
   "Return non-nil if FILE does not exist or is newer than OTHER file."
-  (or
-    (not (file-exists-p file))
+  (or (not (file-exists-p file))
     (equal (nth 4 (file-attributes file)) (list 0 0))
     (file-newer-than-file-p file other)))
 
@@ -127,11 +124,9 @@ Return the name of the ELC-FILE."
 This function will call `byte-compile-file' on FILE's ancestor if FILE's
 extension is '.elc', and will call `org-babel-tangle-file' on the ancestor if
 FILE's extension is '.el'."
-  (let
-    (
-      (file-ext (file-name-extension file))
-      (file-name (file-name-sans-extension file))
-      (ancestor-file nil))
+  (let ((file-ext (file-name-extension file))
+         (file-name (file-name-sans-extension file))
+         (ancestor-file nil))
     (cond
       ((string= "elc" file-ext)
         ;; If we're examining a compiled Elisp file, check it against its
@@ -157,7 +152,7 @@ Any additional args ARGS are passed to FN."
 ;; Load extra packages using Emacs 24's package system.
 ;; NOTE: Currently disabled since we use straight.el to manage our packages.
 (if (and (not my/use-straight) (>= emacs-major-version 24))
-  ;;; IF we want to use the built-in package manager...
+    ;;; IF we want to use the built-in package manager...
   (progn
     ;; Package configuration
     (require 'package)
@@ -171,9 +166,10 @@ Any additional args ARGS are passed to FN."
     ;; (add-to-list 'package-archives
     ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
     (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-    (add-to-list 'package-archives
-      '("marmalade" . "https://marmalade-repo.org/packages/")
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+      t)
+    (add-to-list
+      'package-archives '("marmalade" . "https://marmalade-repo.org/packages/")
       t)
     (package-initialize)
     ;; Automatically install packages using use-package
