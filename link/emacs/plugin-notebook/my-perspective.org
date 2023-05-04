@@ -62,7 +62,11 @@ different perspective, and more.
       (general-def
         "C-x b" 'persp-switch-to-buffer
         "C-x k" 'persp-kill-buffer*
-        "C-e" 'persp-switch-to-buffer)
+        "C-e" 'persp-switch-to-buffer
+        "C-M-k" (lambda ()
+                  "Kill the current buffer for the active persepective."
+                  (interactive)
+                  (persp-kill-buffer* (current-buffer))))
       ;; Set evil-leader keys for perspective.el
       (my/evil-leader-def
         ;; Remappings of standard evil-leader shortcuts
