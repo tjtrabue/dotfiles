@@ -666,7 +666,6 @@ call s:SourcePluginConfigFile('ranger.config.vim')
 call s:SourcePluginConfigFile('nvim-tree.config.lua')
 " call s:SourcePluginConfigFile('chadtree.config.vim')
 
-call s:SourcePluginConfigFile('indent-guides.config.lua')
 " Currently not using fzf. Using telescope.nvim instead.
 " call s:SourcePluginConfigFile('fzf.config.vim')
 call s:SourcePluginConfigFile('telescope.config.lua')

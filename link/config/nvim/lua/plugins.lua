@@ -231,7 +231,7 @@ packer.startup(
     -- }}}
 
     -- UI {{{
-    use {"glepnir/indent-guides.nvim"}
+    use {"lukas-reineke/indent-blankline.nvim"}
     use {"nvim-lua/popup.nvim"}
     use {"kevinhwang91/nvim-hlslens"}
     use {"liuchengxu/vim-which-key"}
