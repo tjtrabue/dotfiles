@@ -33,6 +33,7 @@ cups-pdf
 datamash
 dejagnu
 dialog
+dkms
 dmenu
 dnsutils
 docbook2x
@@ -91,6 +92,7 @@ light-locker
 lightdm
 lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
+linux-headers
 lld
 llvm
 lsof
@@ -118,6 +120,7 @@ npm
 ntfs-3g
 ntp
 numlockx
+nvidia-dkms
 openjdk-doc
 openjdk8-doc
 openssh
