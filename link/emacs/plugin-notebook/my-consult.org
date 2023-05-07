@@ -38,15 +38,6 @@ completion buffer to some category. For example:
 2. Type the =consult-narrow-key= (usually =<= or =C-+=)
 3. Type =p= to narrow the completion buffer to project buffers
 
-* Functions
-
-#+begin_src emacs-lisp
-  (defun my/add-current-buffer-to-perspective ()
-    "Advising function to add the buffer to the current perspective."
-    (when (bound-and-true-p persp-mode)
-      (persp-add-buffer (current-buffer))))
-#+end_src
-
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package consult

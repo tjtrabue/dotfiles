@@ -26,6 +26,24 @@ different perspective, and more.
 
 * Functions
 #+begin_src emacs-lisp
+  (defun my/add-current-buffer-to-perspective ()
+    "Advising function to add the current buffer to the active perspective."
+    (interactive)
+    (when (and (bound-and-true-p persp-mode)
+               (not (persp-is-current-buffer (current-buffer))))
+      (persp-add-buffer (current-buffer))))
+
+  (defun my/remove-current-buffer-from-perspective ()
+    "Advising function to remove the current buffer to the active perspective.
+
+  This function checks to see if the current buffer is part of the active
+  perspective before it tries to remove the buffer from the current perspective."
+    (interactive)
+    (when (and (bound-and-true-p persp-mode)
+               (buffer-file-name)
+               (persp-is-current-buffer (current-buffer)))
+      (persp-remove-buffer (current-buffer))))
+
   (defun my/persp-switch-start-lsp-servers ()
     "Start LSP server(s) when switching perspectives, if applicable.
 
@@ -93,6 +111,12 @@ different perspective, and more.
       ;; Enable LSP server(s) when switching perspectives to work around the fact
       ;; that perspective.el disables LSP servers when switching.
       (add-hook 'persp-switch-hook #'my/persp-switch-start-lsp-servers)
+      ;; Add any opened file buffers to current perspective.
+      (add-hook 'find-file-hook #'my/add-current-buffer-to-perspective)
+      ;; Remove the buffer from the perspective when we kill-this-buffer.
+      (advice-add #'kill-this-buffer
+                  :before
+                  #'my/remove-current-buffer-from-perspective)
       ;; Turn on persp-mode globally
       (persp-mode 1)
       ;; Automatically resume the main perspective after x seconds.  The delay is

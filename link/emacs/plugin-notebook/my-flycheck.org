@@ -32,6 +32,7 @@ is simple to do.
     ;;   lines   -> highlight the entire line (faster)
     (flycheck-highlighting-mode 'lines)
     ;; List of symbols used to determine when flycheck runs.
+    ;; NOTE: Firing on idle-change can degrade Emacs' performance!
     ;;
     ;;   save -> Check syntax immediately after the buffer was saved.
     ;;
@@ -47,7 +48,7 @@ is simple to do.
     ;;
     ;;   mode-enabled -> Check syntax immediately when variable flycheck-mode is
     ;;                   non-nil.
-    (flycheck-check-syntax-automatically '(save)))
+    (flycheck-check-syntax-automatically '(save mode-enabled)))
 #+end_src
 
 * flyspell
