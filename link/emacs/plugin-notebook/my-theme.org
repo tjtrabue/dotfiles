@@ -64,12 +64,7 @@ functions to provide a single point of theme configuration."
                 ;; has loaded.
                 (with-eval-after-load "org-beautify-theme"
                   (if (not (custom-theme-enabled-p 'org-beautify-theme))
-                      (load-theme 'org-beautify t)))
-                ;; NOTE: Not currently using beacon (it's slow as heck!)
-                (with-eval-after-load "beacon"
-                  ;; Make beacon's color match the cursor's color in the current
-                  ;; theme.
-                  (setq beacon-color (face-attribute 'cursor :background)))))
+                      (load-theme 'org-beautify t)))))
   #+end_src
 
 * Theme Packages
@@ -108,6 +103,8 @@ functions to provide a single point of theme configuration."
 ** =use-package= specification
    #+begin_src emacs-lisp
      (use-package theme-magic
+       ;; Not currently used.
+       :disabled
        :config
        ;; This global minor mode automatically updates your Linux theme
        ;; whenever Emacs' theme changes.

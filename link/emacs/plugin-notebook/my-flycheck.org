@@ -30,7 +30,24 @@ is simple to do.
     ;;   symbols -> highlight the problematic symbol, if any, or act like columns
     ;;   sexps   -> highlight a full expression, if any, or act like columns
     ;;   lines   -> highlight the entire line (faster)
-    (flycheck-highlighting-mode 'symbols))
+    (flycheck-highlighting-mode 'lines)
+    ;; List of symbols used to determine when flycheck runs.
+    ;;
+    ;;   save -> Check syntax immediately after the buffer was saved.
+    ;;
+    ;;   idle-change -> Check syntax a short time (see flycheck-idle-change-delay)
+    ;;                  after the last change to the buffer.
+    ;;
+    ;;   idle-buffer-switch -> Check syntax a short time
+    ;;                         (see flycheck-idle-buffer-switch-delay)
+    ;;                         after the user switches to a buffer.
+    ;;
+    ;;   new-line -> Check syntax immediately after a new line was inserted into
+    ;;               the buffer.
+    ;;
+    ;;   mode-enabled -> Check syntax immediately when variable flycheck-mode is
+    ;;                   non-nil.
+    (flycheck-check-syntax-automatically '(save)))
 #+end_src
 
 * flyspell
@@ -48,8 +65,8 @@ your operating system.
 #+begin_src emacs-lisp
   (use-package flyspell
     ;; NOTE: Activating flyspell-prog-mode can really slow down editing.
-    :hook
-    (text-mode . flyspell-mode)
+    ;; :hook
+    ;; (text-mode . flyspell-mode)
     :init
     (setq ispell-program-name
           ;; Prefer aspell over hunspell since aspell is faster

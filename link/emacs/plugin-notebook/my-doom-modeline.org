@@ -11,17 +11,21 @@ modeline from Doom Emacs.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package doom-modeline
-      :after (all-the-icons doom-themes)
+      ;; Greatly slows down Emacs performance right now (05/07/2023)
+      :disabled
+      :after (doom-themes nerd-icons)
       :demand t
       :custom
       ;; How tall the modeline should be (GUI only).
       (doom-modeline-height 35)
       ;; How wide the modeline bar should be (GUI only).
       (doom-modeline-bar-width 5)
+      ;; The style used by `doom-modeline-buffer-file-name'.
+      (doom-modeline-buffer-file-name-style 'file-name)
       ;; Use Unicode instead of ASCII as fallback if icons are not found.
       (doom-modeline-unicode-fallback t)
       ;; When in graphical Emacs, use HUD instead of standard bar.
-      (doom-modeline-hud (display-graphic-p))
+      (doom-modeline-hud nil)
       ;; Display GitHub notifications (requires `ghub' package).
       (doom-modeline-github t)
       ;; Whether display the indentation information (tabs/spaces and number of
@@ -29,6 +33,13 @@ modeline from Doom Emacs.
       (doom-modeline-indent-info t)
       ;; Show mu4e notifications (requires `mu4e-alert')
       (doom-modeline-mu4e (my/use-mu4e-p))
+      ;; If non nil the default perspective name is displayed in the mode-line.
+      (doom-modeline-display-default-persp-name t)
+      ;; Whether to display time in the modeline.
+      (doom-modeline-time nil)
+      ;; Whether display the misc segment on all mode lines.
+      ;; If nil, display only if the mode line is active.
+      (doom-modeline-display-misc-in-all-mode-lines nil)
       :config
       (doom-modeline-mode 1))
   #+end_src

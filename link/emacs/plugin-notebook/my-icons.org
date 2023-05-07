@@ -69,3 +69,11 @@ Add icons to completion candidates using the built in completion metadata functi
       :config
       (mode-icons-mode 1))
   #+end_src
+
+* nerd-icons
+After installing, make sure to run =M-x nerd-icons-install-fonts=.
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons
+    :demand t)
+#+end_src

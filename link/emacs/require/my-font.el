@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(defvar my-font-family "Caskaydia Cove Nerd Font"
+(defvar my-font-family "Cascadia Code PL"
   "The default font family used throughout Emacs.")
 
 ;;;###autoload

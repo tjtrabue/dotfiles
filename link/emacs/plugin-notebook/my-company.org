@@ -70,6 +70,9 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     ;; TAB keybinding will not work correctly.
     :after (evil-collection hippie-exp yasnippet)
     :demand t
+    :hook
+    ;; Turn on `company-mode' for programming.
+    ((prog-mode text-mode) . company-mode)
     :general
     (general-def (company-active-map company-search-map)
       "RET" 'company-complete-selection
@@ -115,8 +118,6 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
        company-preview-frontend
        company-echo-metadata-frontend))
     :config
-    ;; Enable company-mode for all buffers
-    (global-company-mode 1)
     ;; Tweak company backends.
     ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
     ;; slow to be anything other than harmful, especially for emacs-lisp-mode.

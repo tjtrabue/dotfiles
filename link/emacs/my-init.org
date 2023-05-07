@@ -383,11 +383,15 @@ LanguageServerProtocol clients and servers.
    whitespace-line-column my/line-width
    whitespace-style '(face lines-tail))
 
-  ;; Set smooth scrolling
-  ;; (also see the sublimity plugin configuration)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-  (setq mouse-wheel-progressive-speed nil)
-  (setq mouse-wheel-follow-mouse 't)
+  ;; Smooth-scrolling
+  (if (>= emacs-major-version 29)
+      ;; Use native smooth-scrolling (requires Emacs version >= 29)
+      (pixel-scroll-precision-mode 1)
+    ;; Otherwise, simulate smooth-scrolling with basic Emacs settings.
+    ;; (also see the sublimity plugin configuration)
+    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+    (setq mouse-wheel-progressive-speed nil)
+    (setq mouse-wheel-follow-mouse 't))
   (setq scroll-margin 0)
   (setq scroll-step 1)
   (setq scroll-conservatively 10000)
