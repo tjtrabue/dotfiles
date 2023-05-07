@@ -1,0 +1,17 @@
+#+TITLE:   Emacs Mode Line Configuration
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-05-07
+#+TAGS:
+#+STARTUP: fold
+
+The Mode Line is one of Emacs' key features: a thin ribbon at the bottom of the
+window that displays status information. This file is where we configure the
+Mode Line until our hearts are content.
+
+#+begin_src emacs-lisp
+  ;; Make the active mode line have a pseudo 3D effect (this assumes
+  ;; you are using the default mode line and not an extra package).
+  (custom-set-faces
+   '(mode-line ((t :box (:style released-button)))))
+#+end_src
