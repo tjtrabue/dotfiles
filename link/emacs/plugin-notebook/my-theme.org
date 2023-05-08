@@ -72,13 +72,16 @@ hook.
 #+end_src
 
 * Theme Packages
-These are some great themes from Emacs contributors. I marked the theme I
-currently use by appending =(active)= to the end of its =org-mode= heading.
+These are some great Emacs color themes from Emacs contributors.
 
 ** modus-themes
 Highly accessible and configurable color themes for Emacs. They conform to the
-standards of the [[https://www.w3.org/WAI/standards-guidelines/wcag/][Web Content Accessibility Guidelines]]. They are far more
-lightweight than themes in the =doom-themes= package.
+high standards of the [[https://www.w3.org/WAI/standards-guidelines/wcag/][Web Content Accessibility Guidelines]] and are thus a
+fantastic choice for users with vision impairment or looking to reduce eye
+strain. As of Emacs version 28.1, the Modus themes come prepackaged with
+Emacs. The Modus themes are far more lightweight than themes in the
+=doom-themes= package, and I have found them to greatly enhance Emacs'
+performance as compared to the =doom-themes=.
 
 *** Functions
 #+begin_src emacs-lisp

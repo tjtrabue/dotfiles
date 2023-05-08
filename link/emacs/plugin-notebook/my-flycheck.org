@@ -22,9 +22,13 @@ is simple to do.
     :custom
     ;; The allotted time before displaying errors at point.
     (flycheck-display-errors-delay 0.9)
-    ;; How many seconds flycheck waits before checking the buffer.
-    ;; Setting this value higher can speed up Emacs.
-    (flycheck-idle-change-delay 0.5)
+    ;; How many seconds Flycheck waits before checking the buffer.
+    ;; Setting the value higher may enhance Emacs' performance.
+    ;; Default value: 0.5
+    (flycheck-idle-change-delay 1.0)
+    ;; How many seconds Flycheck waits to check the buffer after the user has
+    ;; switched to a new buffer.
+    (flycheck-idle-buffer-switch-delay 2.0)
     ;; How to highlight perform highlighting.
     ;;   columns -> Highlight a single character
     ;;   symbols -> highlight the problematic symbol, if any, or act like columns
@@ -48,7 +52,7 @@ is simple to do.
     ;;
     ;;   mode-enabled -> Check syntax immediately when variable flycheck-mode is
     ;;                   non-nil.
-    (flycheck-check-syntax-automatically '(save mode-enabled)))
+    (flycheck-check-syntax-automatically '(save idle-change)))
 #+end_src
 
 * flyspell
