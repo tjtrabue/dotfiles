@@ -654,6 +654,9 @@ edited location, as opposed to opening them at the beginning of the file.
   ;; compressed as `.el.gz' files, which is often the default for Elisp bundled
   ;; with Emacs.
   (auto-compression-mode 1)
+
+  ;; Highlight the current line based on a customizable face.
+  (global-hl-line-mode 1)
 #+end_src
 
 * Key Bindings
