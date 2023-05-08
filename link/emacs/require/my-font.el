@@ -33,6 +33,12 @@
 (defvar my-font-family "Cascadia Code PL"
   "The default font family used throughout Emacs.")
 
+(defvar my-font-fixed-pitch-family "Cascadia Code PL"
+  "The default font family used for fixed-pitch font faces.")
+
+(defvar my-font-variable-pitch-family "DejaVu Serif"
+  "The default font family used for variable-pitch font faces.")
+
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set the default font for all of Emacs."
@@ -41,7 +47,18 @@
     :family my-font-family ;; The font's name
     :height 110        ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
     :weight 'semi-bold ;; Style
-    :width 'normal))
+    :width 'normal)
+  (set-face-attribute
+    'fixed-pitch nil
+    :family my-font-fixed-pitch-family ;; The font's name
+    :height 110        ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
+    :weight 'semi-bold ;; Style
+    :width 'normal)
+  (set-face-attribute
+    'variable-pitch nil
+    :family my-font-variable-pitch-family
+    :height 1.0
+    :weight 'semi-bold))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)

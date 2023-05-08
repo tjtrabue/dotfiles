@@ -172,8 +172,10 @@ throttled
 tidy
 tree
 tree-sitter
+ttc-iosevka
 ttf-cascadia-code
 ttf-croscore
+ttf-dejavu
 ttf-fira-code
 ttf-fira-mono
 ttf-hack
