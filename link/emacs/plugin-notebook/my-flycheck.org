@@ -62,7 +62,7 @@ is simple to do.
     ;;                   non-nil. I have found that using this option causes an
     ;;                   up-front slowdown when opening source code files, so I
     ;;                   tend not to use it.
-    (flycheck-check-syntax-automatically '(save)))
+    (flycheck-check-syntax-automatically '(save idle-change)))
 #+end_src
 
 * flyspell
