@@ -30,33 +30,54 @@
 
 ;;; Code:
 
-(defvar my-font-family "Cascadia Code PL"
-  "The default font family used throughout Emacs.")
+(defvar my-font-mono "Cascadia Code PL"
+  "The default font used throughout Emacs.")
 
-(defvar my-font-fixed-pitch-family "Cascadia Code PL"
-  "The default font family used for fixed-pitch font faces.")
+(defvar my-font-mono-fallback "DejaVu Sans Mono"
+  "The fallback default font used throughout Emacs.")
 
-(defvar my-font-variable-pitch-family "DejaVu Serif"
-  "The default font family used for variable-pitch font faces.")
+(defvar my-font-fixed-pitch my-font-mono
+  "The default font used for fixed-pitch font faces.")
+
+(defvar my-font-fixed-pitch-fallback my-font-mono-fallback
+  "The fallback font used for fixed-pitch font faces.")
+
+(defvar my-font-variable-pitch "Arkibal Serif"
+  "The default font used for variable-pitch font faces.")
+
+(defvar my-font-variable-pitch-fallback "DejaVu Serif"
+  "The fallback font to use for the variable pitch font.")
 
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set the default font for all of Emacs."
   (set-face-attribute
     'default nil
-    :family my-font-family ;; The font's name
-    :height 110        ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
-    :weight 'semi-bold ;; Style
+    ;; The name of the font.
+    :family (cond
+              ((find-font (font-spec :name my-font-mono))
+                my-font-mono)
+              (t my-font-mono-fallback))
+    ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
+    :height 110
+    ;; Style.
+    :weight 'semi-bold
     :width 'normal)
   (set-face-attribute
     'fixed-pitch nil
-    :family my-font-fixed-pitch-family ;; The font's name
-    :height 110        ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font)
-    :weight 'semi-bold ;; Style
+    :family (cond
+              ((find-font (font-spec :name my-font-fixed-pitch))
+                my-font-fixed-pitch)
+              (t my-font-fixed-pitch-fallback))
+    :height 110
+    :weight 'semi-bold
     :width 'normal)
   (set-face-attribute
     'variable-pitch nil
-    :family my-font-variable-pitch-family
+    :family (cond
+              ((find-font (font-spec :name my-font-variable-pitch))
+                my-font-variable-pitch)
+              (t my-font-variable-pitch-fallback))
     :height 1.0
     :weight 'semi-bold))
 
