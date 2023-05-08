@@ -16,7 +16,13 @@ is simple to do.
     :hook
     (prog-mode . flycheck-mode)
     :general
-    (my/evil-leader-def
+    ;; This is general.el's way of accomplishing :bind-keymap, but
+    ;; general's way is more flexible and integrates with its
+    ;; `general-describe-keybindings' function.
+    (my/user-leader-def flycheck-mode-map
+      "F" '(:keymap flycheck-command-map))
+    (my/evil-leader-def flycheck-mode-map
+      "fl" 'flycheck-list-errors
       "fn" 'flycheck-next-error
       "fp" 'flycheck-previous-error)
     :custom
