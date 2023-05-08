@@ -100,7 +100,7 @@
 
 Return the name of the ELISP-FILE."
   (if (not (string= (file-name-extension elisp-file) "el"))
-    (error "Argument is not an Elisp file."))
+    (error "Argument is not an Elisp file"))
   (let ((ancestor (concat (file-name-sans-extension elisp-file) ".org")))
     (when (my/file-not-exists-or-newer-than-other-p ancestor elisp-file)
       (org-babel-tangle-file ancestor))
@@ -111,7 +111,7 @@ Return the name of the ELISP-FILE."
 
 Return the name of the ELC-FILE."
   (if (not (string= (file-name-extension file) "elc"))
-    (error "Argument is not a compiled Elisp file."))
+    (error "Argument is not a compiled Elisp file"))
   (let ((ancestor (concat (file-name-sans-extension elc-file) ".el")))
     (when (my/file-not-exists-or-newer-than-other-p ancestor elc-file)
       ;; May need to update the .el (ancestor) file before compiling it.

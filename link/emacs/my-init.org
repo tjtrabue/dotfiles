@@ -789,6 +789,13 @@ Custom functions, both standard and interactive.
     (let ((value (eval (preceding-sexp))))
       (backward-kill-sexp)
       (insert (format "%S" value))))
+
+  (defun my/running-wsl-p ()
+    "Return non-nil if Emacs is running on Windows Subsystem for Linux."
+    (let ((case-fold-search t))
+      (or (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop")
+          (string-match "\\(microsoft\\|WSL\\)"
+                        (shell-command-to-string "uname -r | tr -d \"\n\"")))))
 #+end_src
 
 * Environment Variables

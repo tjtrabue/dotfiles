@@ -29,18 +29,20 @@ is simple to do.
     ;; The allotted time before displaying errors at point.
     (flycheck-display-errors-delay 0.9)
     ;; How many seconds Flycheck waits before checking the buffer.
-    ;; Setting the value higher may enhance Emacs' performance.
+    ;; Setting this value higher may enhance Emacs' performance.
     ;; Default value: 0.5
-    (flycheck-idle-change-delay 1.0)
+    (flycheck-idle-change-delay 0.5)
     ;; How many seconds Flycheck waits to check the buffer after the user has
     ;; switched to a new buffer.
-    (flycheck-idle-buffer-switch-delay 2.0)
+    ;; Settings this value higher may enhance Emacs' performance.
+    ;; Default value: 0.5
+    (flycheck-idle-buffer-switch-delay 0.5)
     ;; How to highlight perform highlighting.
     ;;   columns -> Highlight a single character
     ;;   symbols -> highlight the problematic symbol, if any, or act like columns
     ;;   sexps   -> highlight a full expression, if any, or act like columns
     ;;   lines   -> highlight the entire line (faster)
-    (flycheck-highlighting-mode 'lines)
+    (flycheck-highlighting-mode 'symbols)
     ;; List of symbols used to determine when flycheck runs.
     ;; NOTE: Firing on idle-change can degrade Emacs' performance!
     ;;
@@ -57,8 +59,10 @@ is simple to do.
     ;;               the buffer.
     ;;
     ;;   mode-enabled -> Check syntax immediately when variable flycheck-mode is
-    ;;                   non-nil.
-    (flycheck-check-syntax-automatically '(save idle-change)))
+    ;;                   non-nil. I have found that using this option causes an
+    ;;                   up-front slowdown when opening source code files, so I
+    ;;                   tend not to use it.
+    (flycheck-check-syntax-automatically '(save)))
 #+end_src
 
 * flyspell
@@ -145,6 +149,17 @@ running REPL in order to function. That makes =clj-kondo= is a great
                       (require 'flycheck-clj-kondo))))
 #+end_src
 
+** flycheck-color-mode-line
+An Emacs minor-mode for Flycheck which colors the mode line according to the
+Flycheck state of the current buffer.
+
+#+begin_src emacs-lisp
+  (use-package flycheck-color-mode-line
+    :after flycheck
+    :hook
+    (flycheck-mode . flycheck-color-mode-line-mode))
+#+end_src
+
 ** flycheck-haskell
 #+begin_src emacs-lisp
   (use-package flycheck-haskell
@@ -154,16 +169,26 @@ running REPL in order to function. That makes =clj-kondo= is a great
 #+end_src
 
 ** flycheck-inline
-Shows Flycheck output inline right beneath their reporting location.  This is
-an alternative to =flycheck-pos-tip=. I tend to like =flycheck-pos-tip=
-better, though.
+Show Flycheck errors inline at their reporting locations.  This is a simpler
+alternative to =flycheck-pos-tip=. I've found that the tooltips used by
+=flycheck-pos-tip= can be unreadably small. If you encounter that issue, use
+this plugin instead of =flycheck-pos-tip=.
 
 #+begin_src emacs-lisp
   (use-package flycheck-inline
-    :disabled
-    :after (flycheck quick-peek)
+    ;; We want to use flycheck-inline if we are on a Windows Subsystem for Linux
+    ;; environment because a lot of the time the tooltips used by flycheck-pos-tip
+    ;; are just too small.
+    :if (my/running-wsl-p)
+    :after flycheck
+    :demand t
     :hook
-    (flycheck-mode . flycheck-inline-mode))
+    (lsp-mode . (lambda ()
+                  ;; Disable flycheck-inline when using lsp-mode.
+                  ;; lsp-mode has a much nicer UI for diagnostics.
+                  (flycheck-inline-mode -1)))
+    :config
+    (global-flycheck-inline-mode 1))
 #+end_src
 
 ** flycheck-package
@@ -189,6 +214,8 @@ Shows the error at point in a =pos-tip= graphical popup.
 
 #+begin_src emacs-lisp
   (use-package flycheck-pos-tip
+    ;; Only use if we are not running under WSL.
+    :if (not (my/running-wsl-p))
     :after flycheck
     :hook
     (flycheck-mode . (lambda ()
