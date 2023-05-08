@@ -12,34 +12,34 @@ certain circumstances, such as when a buffer is saved to disk, or after a
 specified time interval.
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package wucuo
-      :hook
-      ((prog-mode text-mode) . wucuo-start)
-      :custom
-      ;; How wucuo operates.
-      ;; "fast": run `flyspell-region' in `after-save-hook' over visible region.
-      ;; "normal": run `flyspell-buffer' in `after-save-hook'.
-      (wucuo-flyspell-start-mode "fast")
-      ;; How many seconds wucuo waits before running spell-check.
-      (wucuo-update-interval 2)
-      :init
-      ;; Disable flyspell-mode before using wucuo
-      (when (bound-and-true-p flyspell-mode)
-        (flyspell-mode -1))
-      (when (bound-and-true-p flyspell-prog-mode)
-        (flyspell-prog-mode -1))
-      ;; Tell wucuo to ignore certain majore modes.
-      (setq wucuo-spell-check-buffer-predicate
-            (lambda ()
-              (not (memq major-mode
-                         '(dired-mode
-                           log-edit-mode
-                           compilation-mode
-                           help-mode
-                           profiler-report-mode
-                           speedbar-mode
-                           gud-mode
-                           calc-mode
-                           Info-mode))))))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package wucuo
+    :hook
+    ((prog-mode text-mode) . wucuo-start)
+    :custom
+    ;; How wucuo operates.
+    ;; "fast": run `flyspell-region' in `after-save-hook' over visible region.
+    ;; "normal": run `flyspell-buffer' in `after-save-hook'.
+    (wucuo-flyspell-start-mode "fast")
+    ;; How many seconds wucuo waits before running spell-check.
+    (wucuo-update-interval 2)
+    :init
+    ;; Disable flyspell-mode before using wucuo
+    (when (bound-and-true-p flyspell-mode)
+      (flyspell-mode -1))
+    (when (bound-and-true-p flyspell-prog-mode)
+      (flyspell-prog-mode -1))
+    ;; Tell wucuo to ignore certain majore modes.
+    (setq wucuo-spell-check-buffer-predicate
+          (lambda ()
+            (not (memq major-mode
+                       '(dired-mode
+                         log-edit-mode
+                         compilation-mode
+                         help-mode
+                         profiler-report-mode
+                         speedbar-mode
+                         gud-mode
+                         calc-mode
+                         Info-mode))))))
+#+end_src
