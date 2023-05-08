@@ -83,13 +83,18 @@ lightweight than themes in the =doom-themes= package.
 *** Functions
 #+begin_src emacs-lisp
   (defun my/modus-themes-custom-faces ()
+    "Customize faces for modus themes."
     (modus-themes-with-colors
       (custom-set-faces
        ;; Support Solaire.
-       `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
-       `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-unfocused)))
+       `(solaire-default-face ((,c :inherit default
+                                   :background ,bg-dim
+                                   :foreground ,fg-dim)))
+       `(solaire-line-number-face ((,c :inherit solaire-default-face
+                                       :foreground ,fg-dim)))
        `(solaire-hl-line-face ((,c :background ,bg-active)))
-       `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))))
+       `(solaire-org-hide-face ((,c :background ,bg-dim
+                                    :foreground ,bg-dim))))))
 #+end_src
 
 *** =use-package= specification
