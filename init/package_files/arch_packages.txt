@@ -180,6 +180,7 @@ ttf-fira-code
 ttf-fira-mono
 ttf-hack
 ttf-liberation
+ttf-nerd-fonts-symbols
 unzip
 upower
 vi

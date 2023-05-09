@@ -30,22 +30,22 @@
 
 ;;; Code:
 
-(defvar my-font-mono "Cascadia Code PL"
+(defvar my-font-mono-family "Cascadia Code PL"
   "The default font used throughout Emacs.")
 
-(defvar my-font-mono-fallback "DejaVu Sans Mono"
+(defvar my-font-mono-family-fallback "DejaVu Sans Mono"
   "The fallback default font used throughout Emacs.")
 
-(defvar my-font-fixed-pitch my-font-mono
+(defvar my-font-fixed-pitch-family my-font-mono-family
   "The default font used for fixed-pitch font faces.")
 
-(defvar my-font-fixed-pitch-fallback my-font-mono-fallback
+(defvar my-font-fixed-pitch-family-fallback my-font-mono-family-fallback
   "The fallback font used for fixed-pitch font faces.")
 
-(defvar my-font-variable-pitch "Arkibal Serif"
+(defvar my-font-variable-pitch-family "Arkibal Serif"
   "The default font used for variable-pitch font faces.")
 
-(defvar my-font-variable-pitch-fallback "DejaVu Serif"
+(defvar my-font-variable-pitch-family-fallback "DejaVu Serif"
   "The fallback font to use for the variable pitch font.")
 
 ;;;###autoload
@@ -55,9 +55,9 @@
     'default nil
     ;; The name of the font.
     :family (cond
-              ((find-font (font-spec :name my-font-mono))
-                my-font-mono)
-              (t my-font-mono-fallback))
+              ((member my-font-mono-family (font-family-list))
+                my-font-mono-family)
+              (t my-font-mono-family-fallback))
     ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
     :height 110
     ;; Style.
@@ -66,20 +66,24 @@
   (set-face-attribute
     'fixed-pitch nil
     :family (cond
-              ((find-font (font-spec :name my-font-fixed-pitch))
-                my-font-fixed-pitch)
-              (t my-font-fixed-pitch-fallback))
+              ((member my-font-fixed-pitch-family (font-family-list))
+                my-font-fixed-pitch-family)
+              (t my-font-fixed-pitch-family-fallback))
     :height 110
     :weight 'semi-bold
     :width 'normal)
   (set-face-attribute
     'variable-pitch nil
     :family (cond
-              ((find-font (font-spec :name my-font-variable-pitch))
-                my-font-variable-pitch)
-              (t my-font-variable-pitch-fallback))
+              ((member my-font-variable-pitch-family (font-family-list))
+                my-font-variable-pitch-family)
+              (t my-font-variable-pitch-family-fallback))
     :height 1.0
     :weight 'semi-bold))
+
+;; Set fallback font for glyphs not found in default font.
+(when (member "Symbols Nerd Font" (font-family-list))
+  (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)
