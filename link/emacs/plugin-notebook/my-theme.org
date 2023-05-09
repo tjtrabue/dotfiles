@@ -113,12 +113,12 @@ color names used by Modus]].
         (set-face-background 'highlight-indent-guides-odd-face bg-inactive)
         (set-face-background 'highlight-indent-guides-even-face bg-dim)
         (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
-        (set-face-background 'highlight-indent-guides-top-odd-face cyan-faint)
-        (set-face-background 'highlight-indent-guides-top-even-face cyan-faint)
-        (set-face-foreground 'highlight-indent-guides-top-character-face cyan-faint)
-        (set-face-background 'highlight-indent-guides-stack-odd-face magenta-faint)
-        (set-face-background 'highlight-indent-guides-stack-even-face magenta-faint)
-        (set-face-foreground 'highlight-indent-guides-stack-character-face magenta-faint))))
+        (set-face-background 'highlight-indent-guides-top-odd-face bg-lavender)
+        (set-face-background 'highlight-indent-guides-top-even-face bg-lavender)
+        (set-face-foreground 'highlight-indent-guides-top-character-face bg-lavender)
+        (set-face-background 'highlight-indent-guides-stack-odd-face bg-dim)
+        (set-face-background 'highlight-indent-guides-stack-even-face bg-dim)
+        (set-face-foreground 'highlight-indent-guides-stack-character-face bg-dim))))
 #+end_src
 
 *** =use-package= specification
