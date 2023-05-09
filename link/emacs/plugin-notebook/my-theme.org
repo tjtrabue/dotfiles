@@ -85,6 +85,12 @@ Emacs. The Modus themes are far more lightweight than themes in the
 =doom-themes= package, and I have found them to greatly enhance Emacs'
 performance as compared to the =doom-themes=.
 
+Modus uses special names for its color variables (i.e., =bg-main=, =fg-alt=,
+=blue-warmer=, etc). These variables are theme-independent, and are only
+available in certain contexts, such as within the body of a
+=modus-themes-with-colors= macro. Check the online documentation for a [[https://protesilaos.com/emacs/modus-themes-colors][list of
+color names used by Modus]].
+
 *** Functions
 #+begin_src emacs-lisp
   (defun my/modus-themes-custom-faces ()
