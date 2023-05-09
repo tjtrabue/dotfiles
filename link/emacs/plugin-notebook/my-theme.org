@@ -38,7 +38,9 @@ theme code added by customize.
 
   (defun my/activate-theme--modus ()
     "Activation/configuration function for modus theme."
-    (load-theme 'modus-vivendi t))
+    (load-theme 'modus-vivendi t)
+    ;; Set custom faces for the active Modus theme.
+    (my/modus-themes-custom-faces))
 
   (defun my/activate-theme ()
     "Activate my favorite color theme.
@@ -88,16 +90,23 @@ performance as compared to the =doom-themes=.
   (defun my/modus-themes-custom-faces ()
     "Customize faces for modus themes."
     (modus-themes-with-colors
-      (custom-set-faces
-       ;; Support Solaire.
-       `(solaire-default-face ((,c :inherit default
-                                   :background ,bg-dim
-                                   :foreground ,fg-dim)))
-       `(solaire-line-number-face ((,c :inherit solaire-default-face
-                                       :foreground ,fg-dim)))
-       `(solaire-hl-line-face ((,c :background ,bg-active)))
-       `(solaire-org-hide-face ((,c :background ,bg-dim
-                                    :foreground ,bg-dim))))))
+      (with-eval-after-load "solaire-mode"
+         ;; Support Solaire.
+        (custom-set-faces
+         `(solaire-default-face ((,c :inherit default
+                                     :background ,bg-dim
+                                     :foreground ,fg-dim)))
+         `(solaire-line-number-face ((,c :inherit solaire-default-face
+                                         :foreground ,fg-dim)))
+         `(solaire-hl-line-face ((,c :background ,bg-active)))
+         `(solaire-org-hide-face ((,c :background ,bg-dim
+                                      :foreground ,bg-dim)))))
+      (with-eval-after-load "highlight-indent-guides"
+        ;; Customize faces for `highlight-indent-guides-mode' since that mode
+        ;; cannot seem to figure out the faces on its own.
+        (set-face-background 'highlight-indent-guides-odd-face bg-inactive)
+        (set-face-background 'highlight-indent-guides-even-face bg-dim)
+        (set-face-foreground 'highlight-indent-guides-character-face bg-dim))))
 #+end_src
 
 *** =use-package= specification

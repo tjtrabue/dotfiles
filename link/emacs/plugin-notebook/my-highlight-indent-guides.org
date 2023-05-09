@@ -19,5 +19,16 @@ much more limited in terms of configuration.
     :custom
     ;; Only highlight the first character of each indent level instead of the
     ;; entire column. This works better with minimap-mode.
-    (highlight-indent-guides-method 'character))
+    (highlight-indent-guides-method 'character)
+    ;; Whether to calculuate the faces for the indent guides automatically based
+    ;; on the current theme. I have found that this method does not work well with
+    ;; the Modus themes, so be warned. You may need to set the faces manually.
+    (highlight-indent-guides-auto-enabled nil)
+    :config
+    ;; Set the faces for the indent guides manually.  This method requires setting
+    ;; the `highlight-indent-guides-auto-enabled' variable to nil.
+    (when (not highlight-indent-guides-auto-enabled)
+      (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+      (set-face-background 'highlight-indent-guides-even-face "dimgray")
+      (set-face-foreground 'highlight-indent-guides-character-face "dimgray")))
 #+end_src
