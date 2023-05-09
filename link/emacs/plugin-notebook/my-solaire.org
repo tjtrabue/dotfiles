@@ -9,10 +9,9 @@
 that you visit -- a slightly different background than those buffers that are
 less "real", such as popups, terminals, sidebars, etc.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package solaire-mode
-      :demand t
-      :config
-      (solaire-global-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package solaire-mode
+    :demand t
+    :config
+    (solaire-global-mode 1))
+#+end_src
