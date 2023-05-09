@@ -8,15 +8,11 @@ src_prompt_for_profile() {
 }
 
 # Install the cross-shell starship prompt.
-install_starship() {
+install_or_update_starship() {
   local starshipUrl="https://starship.rs/install.sh"
 
-  if [ ! -x "$(command -v starship)" ]; then
-    log_info "Installing starship Prompt"
-    curl -fsSL "${starshipUrl}" | sh
-  else
-    warn "starship command already found on path!"
-  fi
+  log_info "Installing starship Prompt"
+  curl -fsSL "${starshipUrl}" | sh
 }
 
 # Get starship prompt ready for whichever shell we are using.
@@ -29,7 +25,7 @@ src_starship_prompt_for_profile() {
   fi
 
   if [ ! -x "$(command -v starship)" ]; then
-    install_starship
+    install_or_update_starship
   fi
 
   # Only activate starship once for any given shell. If we try to activate it
