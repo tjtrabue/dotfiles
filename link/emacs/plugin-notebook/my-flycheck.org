@@ -176,10 +176,6 @@ this plugin instead of =flycheck-pos-tip=.
 
 #+begin_src emacs-lisp
   (use-package flycheck-inline
-    ;; We want to use flycheck-inline if we are on a Windows Subsystem for Linux
-    ;; environment because a lot of the time the tooltips used by flycheck-pos-tip
-    ;; are just too small.
-    :if (my/running-wsl-p)
     :after flycheck
     :demand t
     :hook
@@ -214,8 +210,8 @@ Shows the error at point in a =pos-tip= graphical popup.
 
 #+begin_src emacs-lisp
   (use-package flycheck-pos-tip
-    ;; Only use if we are not running under WSL.
-    :if (not (my/running-wsl-p))
+    ;; The tooltips used by flycheck-pos-tip are way too small.
+    :disabled
     :after flycheck
     :hook
     (flycheck-mode . (lambda ()
