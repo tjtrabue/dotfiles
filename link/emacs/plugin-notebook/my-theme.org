@@ -144,7 +144,7 @@ performance as compared to the =doom-themes=.
             (fg-line-number-inactive "gray50")
             (fg-line-number-active cyan-cooler)
             (bg-line-number-inactive unspecified)
-            (bg-line-number-active bg-dim)
+            (bg-line-number-active unspecified)
             ;; Make the current line of `hl-line-mode' a fine shade of
             ;; gray (though also see my `lin' package).
             (bg-hl-line bg-dim)
