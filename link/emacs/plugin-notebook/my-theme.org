@@ -112,7 +112,13 @@ color names used by Modus]].
         ;; cannot seem to figure out its faces on its own when using Modus themes.
         (set-face-background 'highlight-indent-guides-odd-face bg-inactive)
         (set-face-background 'highlight-indent-guides-even-face bg-dim)
-        (set-face-foreground 'highlight-indent-guides-character-face bg-dim))))
+        (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
+        (set-face-background 'highlight-indent-guides-top-odd-face cyan-faint)
+        (set-face-background 'highlight-indent-guides-top-even-face cyan-faint)
+        (set-face-foreground 'highlight-indent-guides-top-character-face cyan-faint)
+        (set-face-background 'highlight-indent-guides-stack-odd-face magenta-faint)
+        (set-face-background 'highlight-indent-guides-stack-even-face magenta-faint)
+        (set-face-foreground 'highlight-indent-guides-stack-character-face magenta-faint))))
 #+end_src
 
 *** =use-package= specification
