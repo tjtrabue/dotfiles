@@ -90,7 +90,7 @@
   "Inspired by https://emacs.stackexchange.com/a/44930/17066.
 
 FRAME is not used directly, but its presence is necessary for this function to
-be attached to the 'window-size-change-functions' hook.
+be attached to the `window-size-change-functions' hook.
 
 Adjust the font size of an Emacs frame based on the monitor's size."
   (let
