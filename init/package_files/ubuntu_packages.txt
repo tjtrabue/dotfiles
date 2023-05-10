@@ -31,6 +31,7 @@ hunspell
 hunspell-en-us
 imagemagick
 isync
+jq
 language-pack-en-base
 libacl1-dev
 libasound2

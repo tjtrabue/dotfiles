@@ -96,7 +96,7 @@ color names used by Modus]].
   (defun my/modus-themes-custom-faces ()
     "Customize faces for modus themes."
     (modus-themes-with-colors
-      (with-eval-after-load "solaire-mode"
+      (when (bound-and-true-p solaire-mode)
         ;; Support Solaire.
         (custom-set-faces
          `(solaire-default-face ((,c :inherit default
@@ -107,7 +107,7 @@ color names used by Modus]].
          `(solaire-hl-line-face ((,c :background ,bg-active)))
          `(solaire-org-hide-face ((,c :background ,bg-dim
                                       :foreground ,bg-dim)))))
-      (with-eval-after-load "highlight-indent-guides"
+      (when (bound-and-true-p highlight-indent-guides-mode)
         ;; Customize faces for `highlight-indent-guides-mode' since that mode
         ;; cannot seem to figure out its faces on its own when using Modus themes.
         (set-face-background 'highlight-indent-guides-odd-face bg-dim)
