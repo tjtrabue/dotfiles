@@ -31,7 +31,7 @@ much more limited in terms of configuration.
     ;;         (the indentation block of the line that the cursor is on).
     ;;   stack - Like `top', but also use a third color for all "ancestor"
     ;;           guides of the current guide.
-    (highlight-indent-guides-responsive 'top)
+    (highlight-indent-guides-responsive 'stack)
     :config
     ;; Set the faces for the indent guides manually.  This method requires setting
     ;; the `highlight-indent-guides-auto-enabled' variable to nil.
