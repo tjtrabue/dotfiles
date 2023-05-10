@@ -28,6 +28,13 @@ configuration. To change the recipe you used to generate the tags file, execute
     :demand t
     :commands
     (citre-jump citre-jump-back citre-peek citre-update-this-tags-file)
+    :general
+    (my/evil-leader-def
+      "zb" 'citre-jump-back
+      "zc" 'citre-create-tags-file
+      "zj" 'citre-jump
+      "zp" 'citre-peek
+      "zu" 'citre-update-this-tags-file)
     :custom
     (citre-use-project-root-when-creating-tags t)
     ;; Prompt for CTags languages instead of asking the user to edit the command
