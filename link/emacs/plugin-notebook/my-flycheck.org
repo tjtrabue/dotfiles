@@ -27,7 +27,7 @@ is simple to do.
       "fp" 'flycheck-previous-error)
     :custom
     ;; The allotted time before displaying errors at point.
-    (flycheck-display-errors-delay 0.9)
+    (flycheck-display-errors-delay 0.5)
     ;; How many seconds Flycheck waits before checking the buffer.
     ;; Setting this value higher may enhance Emacs' performance.
     ;; Default value: 0.5
