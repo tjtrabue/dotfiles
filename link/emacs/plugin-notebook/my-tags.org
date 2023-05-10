@@ -16,6 +16,9 @@ Citre is an advanced Emacs front-end for readtags.
 ** Usage
 Open a file in your project, and run =M-x citre-update-this-tage-file=. If Citre
 can't find a tags file for your project, it will guide you through creating one.
+For instance, the following command creates a good tags file for this =dotfiles=
+repository: =M-x citre-update-this-tags-file RET 3 RET
+Sh,Zsh,Lua,EmacsLisp,Org,Markdown RET=
 
 To update the tags file later, run the same command again: =M-x
 citre-update-this-tags-file=. Subsequent runs will not prompt you for
