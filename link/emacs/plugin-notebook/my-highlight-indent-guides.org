@@ -57,6 +57,9 @@ automatically. The guides can clutter the UI and look distracting.
     ;; If you want to enable indent guides automatically, uncomment this hook.
     ;; :hook
     ;; (prog-mode . highlight-indent-guides-mode)
+    :general
+    (my/evil-leader-def
+      "hi" 'highlight-indent-guides-mode)
     :custom
     ;; Only highlight the first character of each indent level instead of the
     ;; entire column. This works better with minimap-mode.
