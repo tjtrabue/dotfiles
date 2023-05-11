@@ -291,7 +291,8 @@ and allows users to customize the icons it displays alongside completion
 candidates. It also integrates with =company-quickhelp= for bringing up
 completion item documentation.
 
-*COMPATIBILITY:* =company-box= only works in GUI Emacs.
+*COMPATIBILITY:* =company-box= requires Emacs 26 or newer, and only works in GUI
+Emacs.
 
 *IMPORTANT PERFORMANCE NOTE:* I have noticed that enabling =company-box=
 /greatly/ increases input lag when using =company= completion, sometimes causing
