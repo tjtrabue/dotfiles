@@ -9,6 +9,8 @@ Provides visual feedback to certain editor actions.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package volatile-highlights
+    ;; Doesn't seem to work right now.
+    :disabled
     ;; Doesn't seem to work on modern Emacs.
     ;; :disabled
     :after evil-collection
