@@ -155,7 +155,9 @@ Flycheck state of the current buffer.
 
 #+begin_src emacs-lisp
   (use-package flycheck-color-mode-line
-    :after flycheck
+    ;; Only use this plugin if we have an appropriate mode line plugin.
+    ;; `flycheck-color-modeline' works best with `doom-modeline' or `powerline'.
+    :after (flycheck doom-modeline)
     :hook
     (flycheck-mode . flycheck-color-mode-line-mode))
 #+end_src
