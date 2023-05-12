@@ -50,6 +50,7 @@ feh
 ffmpegthumbnailer
 findutils
 firefox
+fop
 fwupd
 fzf
 fzy
@@ -182,6 +183,7 @@ ttf-fira-mono
 ttf-hack
 ttf-liberation
 ttf-nerd-fonts-symbols
+unixodbc
 unzip
 upower
 vi
@@ -191,6 +193,7 @@ w3m
 wget
 wireless_tools
 wpa_supplicant
+wxwidgets-gtk3
 xclip
 xcompmgr
 xdotool
