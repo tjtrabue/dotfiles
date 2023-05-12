@@ -29,6 +29,7 @@ configuration. To change the recipe you used to generate the tags file, execute
 #+begin_src emacs-lisp
   (use-package citre
     :demand t
+    :delight
     :commands
     (citre-jump citre-jump-back citre-peek citre-update-this-tags-file)
     :general
