@@ -228,9 +228,14 @@ color names used by Modus]].
 This is a /huge/ collection of Emacs themes contributed by the very gracious
 creator of Doom Emacs and several others.
 
+*NOTE:* Enabling one of the =doom-themes= can /greatly/ degrade Emacs'
+performance, especially when combined with =doom-modeline=! I highly recommend
+using a simpler theme. It's worth taking the UI hit for the sake of a
+buttery-smooth editing experience.
+
 #+begin_src emacs-lisp
   (use-package doom-themes
-    ;; Currently using `modus-themes'.
+    ;; Currently using `modus-themes' for performance reasons.
     :disabled
     :after all-the-icons
     :demand t
