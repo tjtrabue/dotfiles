@@ -146,6 +146,10 @@ the committing and (un)staging of files.
 
 #+begin_src emacs-lisp
   (use-package treemacs-all-the-icons
+    ;; This theme seems lacking in terms of icons and quality. I may need to fix
+    ;; my configuration for `all-the-icons', or this theme may just be more
+    ;; minimalist than I thought.
+    :disabled
     :after (treemacs all-the-icons)
     :demand t
     :config

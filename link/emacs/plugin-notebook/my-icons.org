@@ -5,11 +5,12 @@
 #+STARTUP: fold
 
 * all-the-icons
-  Use fancy dev icons in Emacs.  Very pretty!
+  Use fancy developer icons in Emacs.  Very pretty!
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
     :demand t
+    :if (display-graphic-p)
     :config
     (let ((icon-paths (mapcar (lambda (file-name)
                                 (expand-file-name file-name user-fonts-dir))
