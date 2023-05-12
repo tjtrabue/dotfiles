@@ -16,6 +16,7 @@ that expands the snippet based on the abbreviation before point.
   #+begin_src emacs-lisp
     (use-package yasnippet
       :demand t
+      :delight yas-minor-mode
       :commands
       (yas-minor-mode yas-global-mode)
       :general

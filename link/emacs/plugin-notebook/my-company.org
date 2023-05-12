@@ -70,6 +70,7 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     ;; TAB keybinding will not work correctly.
     :after (evil-collection hippie-exp yasnippet)
     :demand t
+    :delight
     :general
     (general-def (company-active-map company-search-map)
       "RET" 'company-complete-selection

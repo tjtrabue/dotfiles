@@ -514,21 +514,21 @@ clone_or_update_git_repo() {
 
 # Diff {{{
 
-# Show last diff for a given file
+# Show last diff either for a given file or for the entire last change set.
 lastchange() {
   local file="$1"
 
-  if [ -z "${file}" ]; then
-    err "No filename provided."
+  if [ -n "${file}" ] && [ ! -f "${file}" ] && [ ! -d "${file}" ]; then
+    err "No such file or directory: ${BLUE}${file}${NC}"
     return 1
   fi
 
-  if [ ! -f "${file}" ]; then
-    err "Path ${BLUE}${file}${NC} is not a file"
-    return 2
+  if [ -n "${file}" ]; then
+    git log -p -1 "${file}"
+  else
+    git log -p -1
   fi
 
-  git log -p -1 "${file}"
 }
 
 # An extended diff function leveraging powerful previewer tools such as bat.

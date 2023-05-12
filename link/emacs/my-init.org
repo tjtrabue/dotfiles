@@ -1176,15 +1176,15 @@ detailed above:
 *** Integration with =use-package=
 =delight= provides the =:delight= keyword for the =use-package= macro.  If you
 use =use-package= as your package configuration system, this is /by far/ the
-best way to use =delight=.
+best way to use =delight=. The following comes from the =use-package= README:
 
-If you pass the =:delight= keyword to =use-package= without an argument,
-=use-package= will hide the lighter text for the main mode provided by the
-plugin by doing its best to guess the =delight= spec for you. However, this will
-not work if the name of the minor mode provided by the package differs from the
-name of the package. Aside from the no-argument method of using =:delight=, the
-keyword behaves exactly like the =delight= function itself, although the
-=use-package= keyword is slightly more forgiving.
+#+begin_quote
+=delight= is invoked with the =:delight= keyword, which is passed a minor mode
+symbol, a replacement string or quoted mode-line data (in which case the minor
+mode symbol is guessed to be the package name with "-mode" appended at the end),
+both of these, or several lists of both. If no arguments are provided, the
+default mode name is hidden completely.
+#+end_quote
 
 *** =use-package= specification
 #+begin_src emacs-lisp
@@ -1192,7 +1192,8 @@ keyword behaves exactly like the =delight= function itself, although the
     :demand t
     :config
     ;; Remove lighter text for whitespace-mode
-    (delight '((whitespace-mode nil whitespace))))
+    (delight '((whitespace-mode nil whitespace)
+               (auto-fill-function nil simple))))
 #+end_src
 
 ** use-package-chords
@@ -1294,7 +1295,7 @@ try to load =org= later.
 #+begin_src emacs-lisp
   (use-package org
     :mode ("\\.org\\'" . org-mode)
-    :delight (org-src-mode nil org-src)
+    :delight org-src-mode
     :hook
     (org-mode .
               (lambda ()

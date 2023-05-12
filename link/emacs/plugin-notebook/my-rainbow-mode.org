@@ -9,6 +9,7 @@ color a name refers to.  Very handy!
 
 #+begin_src emacs-lisp
   (use-package rainbow-mode
+    :delight
     :hook
     ;; Automatically turn on rainbow-mode when editing a source code file
     ((prog-mode org-mode) . rainbow-mode))

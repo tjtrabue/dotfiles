@@ -35,6 +35,9 @@ aforementioned Vim plugins have.
   #+begin_src emacs-lisp
     (use-package smartparens
       :demand t
+      :delight
+      (smartparens-mode)
+      (smartparens-strict-mode)
       :hook
       ;; Enable strict mode for Lisp dialects.
       ((cider-repl-mode
