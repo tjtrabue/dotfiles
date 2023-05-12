@@ -303,8 +303,6 @@ cool, and looks beautiful, but you should use it at your own risk.
 
 #+begin_src emacs-lisp
   (use-package company-box
-    ;; Disabled for performance reasons. See note in description.
-    :disabled
     :after company
     :if (display-graphic-p)
     :hook

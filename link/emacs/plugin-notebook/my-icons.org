@@ -28,7 +28,8 @@
           (all-the-icons-install-fonts t))))
 #+end_src
 
-* all-the-icons-dired
+** Plugins
+*** all-the-icons-dired
   Use =all-the-icons= in =dired= mode, too.
 
 #+begin_src emacs-lisp
@@ -41,7 +42,7 @@
     (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
-* all-the-icons-ibuffer
+*** all-the-icons-ibuffer
   Use =all-the-icons= in the fancy =ibuffer-mode=, which is basically Dired for
   buffers.
 
@@ -52,13 +53,15 @@
       (ibuffer-mode . all-the-icons-ibuffer-mode))
   #+end_src
 
-* all-the-icons-completion
+*** all-the-icons-completion
 Add icons to completion candidates using the built in completion metadata functions.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-completion
-    :hook
-    (after-init . all-the-icons-completion-mode))
+    :after all-the-icons
+    :demand t
+    :config
+    (all-the-icons-completion-mode 1))
 #+end_src
 
 * mode-icons
