@@ -81,7 +81,9 @@
     :height 1.0
     :weight 'semi-bold))
 
-;; Set fallback font for glyphs not found in default font.
+;; Set fallback font for glyphs and emojis not found in default font.
+(when (member "Noto Color Emoji" (font-family-list))
+  (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 (when (member "Symbols Nerd Font" (font-family-list))
   (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
 
