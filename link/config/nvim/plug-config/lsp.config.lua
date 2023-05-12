@@ -2,6 +2,7 @@
 -- Must source this file after the `nvim-lspconfig` plugin loads.
 
 local fs = require("tjdot.fs")
+local str = require("tjdot.str")
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 
@@ -131,12 +132,14 @@ lspconfig.dotls.setup {
   on_attach = on_attach
 } ]]
 -- elixir-ls
-local elixir_ls_bin = fs.os_cmd_to_string("command -v elixir-ls")
-lspconfig.elixirls.setup {
-  capabilities = capabilities,
-  cmd = {elixir_ls_bin},
-  on_attach = on_attach
-}
+local elixir_ls_binary = fs.os_cmd_to_string("command -v elixir-ls")
+if not str.isempty(elixir_ls_binary) then
+  lspconfig.elixirls.setup {
+    capabilities = capabilities,
+    cmd = {elixir_ls_binary},
+    on_attach = on_attach
+  }
+end
 
 -- emmet-ls (for HTML templating/snippet expansion)
 lspconfig.emmet_ls.setup {
@@ -198,59 +201,61 @@ lspconfig.jsonls.setup {
 -- use anything else but this if you can. It is far too slow, and does not
 -- integrate well with non-VSCode editors.
 local kotlin_language_server_binary = fs.os_cmd_to_string("command -v kotlin-language-server")
-lspconfig.kotlin_language_server.setup {
-  capabilities = capabilities,
-  cmd = {kotlin_language_server_binary},
-  filetypes = {"kotlin"},
-  on_attach = on_attach,
-  root_dir = util.root_pattern("settings.gradle", "settings.gradle.kts", ".git"),
-  settings = {
-    -- Most of these settings are defaults, but for some reason it was necessary
-    -- to specify them to get the kotlin-language-server to work.
-    kotlin = {
-      compiler = {
-        jvm = {
-          target = "default"
-        }
-      },
-      completion = {
-        snippets = {
-          enabled = true
-        }
-      },
-      debounceTime = 250,
-      debugAdapter = {
-        path = ""
-      },
-      externalSources = {
-        autoConvertToKotlin = true,
-        useKlsScheme = true
-      },
-      indexing = {
-        enabled = true
-      },
-      languageServer = {
-        debugAttach = {
-          autoSuspend = false,
-          enabled = false,
-          port = 5005
+if not str.isempty(kotlin_language_server_binary) then
+  lspconfig.kotlin_language_server.setup {
+    capabilities = capabilities,
+    cmd = {kotlin_language_server_binary},
+    filetypes = {"kotlin"},
+    on_attach = on_attach,
+    root_dir = util.root_pattern("settings.gradle", "settings.gradle.kts", ".git"),
+    settings = {
+      -- Most of these settings are defaults, but for some reason it was necessary
+      -- to specify them to get the kotlin-language-server to work.
+      kotlin = {
+        compiler = {
+          jvm = {
+            target = "default"
+          }
         },
-        enabled = true,
-        path = kotlin_language_server_binary,
-        port = 0,
-        transport = "stdio"
-      },
-      linting = {
-        debounceTime = 250
-      },
-      snippetsEnabled = true,
-      trace = {
-        server = "off"
+        completion = {
+          snippets = {
+            enabled = true
+          }
+        },
+        debounceTime = 250,
+        debugAdapter = {
+          path = ""
+        },
+        externalSources = {
+          autoConvertToKotlin = true,
+          useKlsScheme = true
+        },
+        indexing = {
+          enabled = true
+        },
+        languageServer = {
+          debugAttach = {
+            autoSuspend = false,
+            enabled = false,
+            port = 5005
+          },
+          enabled = true,
+          path = kotlin_language_server_binary,
+          port = 0,
+          transport = "stdio"
+        },
+        linting = {
+          debounceTime = 250
+        },
+        snippetsEnabled = true,
+        trace = {
+          server = "off"
+        }
       }
-    }
-  },
-  single_file_support = true
-}
+    },
+    single_file_support = true
+  }
+end
 
 -- lua-language-server
 
@@ -258,36 +263,38 @@ local sumneko_binary = fs.os_cmd_to_string("command -v lua-language-server")
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-lspconfig.sumneko_lua.setup {
-  capabilities = capabilities,
-  -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-  cmd = {sumneko_binary},
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = "LuaJIT",
-        -- Setup your lua path
-        path = runtime_path
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {"vim"}
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        -- Neovim does not currently support third party tools
-        checkThirdParty = false
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false
+if not str.isempty(sumneko_binary) then
+  lspconfig.sumneko_lua.setup {
+    capabilities = capabilities,
+    -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+    cmd = {sumneko_binary},
+    settings = {
+      Lua = {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = "LuaJIT",
+          -- Setup your lua path
+          path = runtime_path
+        },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = {"vim"}
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = vim.api.nvim_get_runtime_file("", true),
+          -- Neovim does not currently support third party tools
+          checkThirdParty = false
+        },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false
+        }
       }
-    }
-  },
-  on_attach = on_attach
-}
+    },
+    on_attach = on_attach
+  }
+end
 
 -- Marksman Markdown LSP {{{
 lspconfig.marksman.setup {
@@ -332,14 +339,16 @@ lspconfig.sqlls.setup {
 -- sqls (SQL LanguageServer written in Go)
 -- To install sqls, run this command:
 --   go get github.com/lighttiger2505/sqls
-local sqls_cmd = fs.os_cmd_to_string("command -v sqls")
+local sqls_binary = fs.os_cmd_to_string("command -v sqls")
 local sqls_config_file = os.getenv("HOME") .. "/.config/sqls/config.yml"
 
-lspconfig.sqls.setup {
-  capabilities = capabilities,
-  cmd = {sqls_cmd, "-config", sqls_config_file},
-  on_attach = on_attach
-}
+if not str.isempty(sqls_binary) then
+  lspconfig.sqls.setup {
+    capabilities = capabilities,
+    cmd = {sqls_binary, "-config", sqls_config_file},
+    on_attach = on_attach
+  }
+end
 
 -- tailwind-css
 lspconfig.tailwindcss.setup {
