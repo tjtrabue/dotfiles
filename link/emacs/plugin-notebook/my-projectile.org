@@ -39,6 +39,11 @@ software development.
     (projectile-project-search-path (list my/workspace-dir my/practice-dir))
     ;; Add top-level folders for Projectile to ignore.
     (projectile-ignored-projects '("~/" "~/Downloads/" "~/Dropbox/"))
+    ;; Customize how Projectile reports project information in the mode line.  The
+    ;; default function is a bit verbose, and can clutter the mode line.
+    (projectile-mode-line-function (lambda ()
+                                     (format " Projectile[%s]"
+                                             (projectile-project-name))))
     :init
     ;; Enable projectile globally.  It's important to keep this here!!! Do not
     ;; create an after-init-hook for projectile because it doesn't work
