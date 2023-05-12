@@ -502,6 +502,12 @@ LanguageServerProtocol clients and servers.
   ;; Determines the default web browser function to use when opening a URL via
   ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
   (setq browse-url-browser-function #'browse-url-generic)
+
+  (when (display-graphic-p)
+    ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
+    ;; variable to 'resize-mode may improve the performance of plugins that use
+    ;; child frames.
+    (setq posframe-gtk-resize-child-frames 'resize-mode))
 #+end_src
 
 * Set fringe width
