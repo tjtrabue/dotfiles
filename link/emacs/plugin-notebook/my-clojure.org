@@ -255,6 +255,7 @@ necessary, Node.js dependencies are up-to-date and compatible and try again.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package clj-refactor
+    :delight
     :hook
     (clojure-mode .
                   (lambda ()

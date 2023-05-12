@@ -1295,7 +1295,9 @@ try to load =org= later.
 #+begin_src emacs-lisp
   (use-package org
     :mode ("\\.org\\'" . org-mode)
-    :delight org-src-mode
+    :delight
+    (org-src-mode)
+    (org-indent-mode)
     :hook
     (org-mode .
               (lambda ()

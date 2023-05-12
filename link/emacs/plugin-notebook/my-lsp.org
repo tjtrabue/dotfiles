@@ -40,11 +40,14 @@ which ones you do not yet satisfy.
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :after evil-collection
+    ;; Adjust mode line for LSP minor modes.
+    :delight
+    (lsp-lens-mode)
     ;; Commands used to autoload this package.
     :commands (lsp lsp-deferred)
     ;; Here you can change the package's customizable variables.
     :custom
-    ;;; General settings
+  ;;; General settings
     ;; Redefine lsp command prefix (default is "s-l" which messes with
     ;; most window managers).
     (lsp-keymap-prefix "C-c l")
@@ -89,9 +92,9 @@ which ones you do not yet satisfy.
     ;; UI feedback for available code actions presented in the modeline.
     ;; The default is '(count icon).
     (lsp-modeline-code-actions-segments '(count icon name))
-    ;;; bash-language-server
+  ;;; bash-language-server
     (lsp-bash-highlight-parsing-errors t)
-    ;;; clangd
+  ;;; clangd
     ;; Make sure to use all processor cores, and to report warnings.
     (lsp-clients-clangd-args `(,(concat "-j=" my/max-worker-processes)
                                "--background-index"
@@ -101,13 +104,13 @@ which ones you do not yet satisfy.
                                "--clang-tidy"
                                "--header-insertion-decorators=0"))
     (lsp-clients-clangd-executable (executable-find "clangd"))
-    ;;; lua-language-server
+  ;;; lua-language-server
     ;; lsp-mode can try to install lua-language-server automatically, but
     ;; I've noticed that version tends to be really slow.
     ;; It's best to install it yourself.
     (lsp-clients-lua-language-server-bin
      (executable-find "lua-language-server"))
-    ;;; typescript-language-server
+  ;;; typescript-language-server
     ;; Disable tsserver from automatically fetching missing type definitions
     ;; (@types packages) from external modules.
     (lsp-clients-typescript-disable-automatic-typing-acquisition t)
@@ -132,7 +135,7 @@ which ones you do not yet satisfy.
     (lsp-typescript-update-imports-on-file-move-enabled 'always)
     ;; Who wants to fill out surveys?
     (lsp-typescript-surveys-enabled nil)
-    ;;; LaTeX LSP settings
+  ;;; LaTeX LSP settings
     ;; Use texlab or digestif
     (lsp-tex-server 'digestif)
     :hook
@@ -189,7 +192,9 @@ which ones you do not yet satisfy.
           '("~/" "~/Downloads/"))
     ;; Register extra LSP servers and map them to major modes.
     (my-custom-lsp-add-language-ids)
-    (my-custom-lsp-register-lsp-servers))
+    (my-custom-lsp-register-lsp-servers)
+    ;; Make sure lsp-lens-mode lighter text does not get displayed.
+    (delight 'lsp-lens-mode nil 'lsp-lens))
 #+end_src
 
 ** Plugins
