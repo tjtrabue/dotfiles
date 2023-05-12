@@ -224,6 +224,9 @@ file in your project's root directory with the following content:
                        ;; Re-investigate this issue later and see if it still
                        ;; persists.
                        (setq-local lsp-completion-enable nil))))
+    ;; Turn on Enlighten feature for CIDER.  Enlighten evaluates definitions one
+    ;; at a time, and it disables the use of C-c C-k.
+    (add-hook 'cider-mode-hook #'cider-enlighten-mode)
     :config
     ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
     ;; You must set these variables in :config instead of :custom due to a loading
