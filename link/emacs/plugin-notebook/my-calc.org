@@ -14,6 +14,7 @@ type (if you want). Also works in your favourite markup mode.
 
 #+begin_src emacs-lisp
   (use-package literate-calc-mode
+    :delight literate-calc-minor-mode
     :hook
     ((markdown-mode
       org-mode)

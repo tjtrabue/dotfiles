@@ -16,6 +16,7 @@ regardless of its particular dialect.
 
   #+begin_src emacs-lisp
     (use-package lispy
+      :delight
       :hook
       ;; Load lispyj-mode for any LISP derived major mode.
       ;; IELM is the Emacs Lisp REPL.

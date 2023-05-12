@@ -305,6 +305,7 @@ Provides default Vim keybindings for all standard Emacs modes.
   (use-package evil-collection
     :after evil
     :demand t
+    :delight evil-collection-unimpaired-mode
     :general
     (general-unbind
       ;; We do not need to kill a line with C-k anymore since we're using
@@ -502,6 +503,7 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
   (use-package evil-snipe
     :demand t
     :after evil-collection
+    :delight evil-snipe-local-mode
     :hook
     ;; Turn off snipe in magit-mode for compatibility.
     (magit-mode . turn-off-evil-snipe-mode)
@@ -537,6 +539,7 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
 #+begin_src emacs-lisp
   (use-package evil-org
     :after (org evil-collection)
+    :delight
     :hook
     ((org-mode . evil-org-mode)
      (evil-org-mode . (lambda ()
@@ -821,6 +824,7 @@ main features of =lispyville=:
 #+begin_src emacs-lisp
   (use-package lispyville
     :after (evil-collection lispy)
+    :delight lispyville-mode
     :hook
     (lispy-mode .
                 (lambda ()

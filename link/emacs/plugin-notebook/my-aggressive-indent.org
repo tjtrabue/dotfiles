@@ -23,6 +23,7 @@ to a massive decrease in Emacs' performance. I recommend that you disable
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package aggressive-indent
+      :delight
       :hook
       ;; Probably don't want to enable aggressive-indent mode globally.  It's
       ;; helpful, but it doesn't always play nicely with automatic code

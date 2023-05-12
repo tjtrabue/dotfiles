@@ -15,6 +15,7 @@ around in Emacs buffers.
   #+begin_src emacs-lisp
     (use-package drag-stuff
       :demand t
+      :delight
       :general
       (general-def '(normal visual) drag-stuff-mode-map
         "M-k" 'drag-stuff-up

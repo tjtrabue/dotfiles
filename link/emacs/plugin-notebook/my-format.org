@@ -246,6 +246,7 @@ details.
 #+begin_src emacs-lisp
   (use-package apheleia
     :demand t
+    :delight apheleia-mode
     :general
     (my/evil-leader-def
       "=" 'apheleia-format-buffer)

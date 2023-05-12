@@ -17,6 +17,7 @@ words.
 
 #+begin_src emacs-lisp
   (use-package writegood-mode
+    :delight
     :hook
     (text-mode . writegood-mode))
 #+end_src

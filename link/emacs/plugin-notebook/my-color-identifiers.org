@@ -8,11 +8,11 @@
 This is a minor mode that uniquely colors variable/function names in order to
 easily identify them in a file.
 
-* =use-package= specification
 #+begin_src emacs-lisp
   (use-package color-identifiers-mode
+    :delight
     :hook
-    ;; only turn on color-identifiers-mode for major modes that benefit
-    ;; from it. color-identifiers-mode can slow down fontification.
+    ;; Only turn on `color-identifiers-mode' for major modes that benefit
+    ;; from it since this mode can slow down fontification.
     ((clojure-mode emacs-lisp-mode) . color-identifiers-mode))
 #+end_src

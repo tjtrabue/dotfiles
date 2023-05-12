@@ -1129,6 +1129,72 @@ path is already calculated.
         (setenv "USE_LEAN_PROFILE" nil))))
 #+end_src
 
+** delight
+=delight.el= allows users to remove or alter the lighter text for both major and
+minor modes in the Emacs mode line. Users may call =delight= directly with
+=use-package= by providing the =:delight= keyword to the =use-package= macro.
+
+*** Usage
+=delight.el= is easy to use and flexible, providing a single entrypoint into its
+API: the =delight= function, which takes one to three arguments.
+
+The first argument is a symbol representing the major or minor mode whose mode
+line test we would like to alter.
+
+The second argument is the replacement lighter text, or =nil= to remove the
+lighter altogether.
+
+The third argument will change depending on whether you are modifying a major or
+minor more. If you want to alter a major mode's lighter, the third argument is
+always the keyword =:major=. If you want to alter a minor mode's lighter, the
+third argument is a symbol representing the name of the feature that provides
+the minor mode.
+
+For example:
+
+#+begin_src emacs-lisp :tangle no
+  (require 'delight)
+  (delight 'abbrev-mode " Abv" 'abbrev)
+  (delight 'rainbow-mode)
+#+end_src
+
+The =delight= function also allows modifying the lighter text for multiple modes
+in a single function call. In this case, the sole argument to =delight= is a
+list of argument lists, each one representing a single call to =delight= as
+detailed above:
+
+#+begin_src emacs-lisp :tangle no
+  (require 'delight)
+  (delight '((abbrev-mode " Abv" abbrev)
+             (smart-tab-mode " \\t" smart-tab)
+             (eldoc-mode nil "eldoc")
+             (rainbow-mode)
+             (overwrite-mode " Ov" t)
+             (emacs-lisp-mode "Elisp" :major)))
+#+end_src
+
+*** Integration with =use-package=
+=delight= provides the =:delight= keyword for the =use-package= macro.  If you
+use =use-package= as your package configuration system, this is /by far/ the
+best way to use =delight=.
+
+If you pass the =:delight= keyword to =use-package= without an argument,
+=use-package= will hide the lighter text for the main mode provided by the
+plugin by doing its best to guess the =delight= spec for you. However, this will
+not work if the name of the minor mode provided by the package differs from the
+name of the package. Aside from the no-argument method of using =:delight=, the
+keyword behaves exactly like the =delight= function itself, although the
+=use-package= keyword is slightly more forgiving.
+
+*** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package delight
+    :demand t
+    :config
+    ;; Remove lighter text for whitespace-mode
+    (delight '((whitespace-mode nil whitespace))))
+#+end_src
+
 ** use-package-chords
 Adds =:chords= keyword to =use-package= for defining key-chords.
 
@@ -1228,6 +1294,7 @@ try to load =org= later.
 #+begin_src emacs-lisp
   (use-package org
     :mode ("\\.org\\'" . org-mode)
+    :delight (org-src-mode nil org-src)
     :hook
     (org-mode .
               (lambda ()
@@ -1315,6 +1382,7 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
 
 #+begin_src emacs-lisp
   (use-package org-auto-tangle
+    :delight
     :hook
     (org-mode . org-auto-tangle-mode)
     :custom

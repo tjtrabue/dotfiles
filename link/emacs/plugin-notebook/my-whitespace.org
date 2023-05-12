@@ -19,6 +19,7 @@ code.
 #+begin_src emacs-lisp
   (use-package whitespace-cleanup-mode
     :demand t
+    :delight
     :config
     (global-whitespace-cleanup-mode 1))
 #+end_src
@@ -52,6 +53,7 @@ in Emacs, making it more convenient to edit foreign files.
 
 #+begin_src emacs-lisp
   (use-package dtrt-indent
+    :delight
     :hook
     ((prog-mode text-mode) . dtrt-indent-mode)
     :custom

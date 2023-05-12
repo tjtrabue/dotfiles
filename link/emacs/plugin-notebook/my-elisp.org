@@ -39,6 +39,7 @@ Fix escapes in Emacs Lisp regular expressions.
 
 #+begin_src emacs-lisp
   (use-package easy-escape
+    :delight easy-escape-minor-mode
     :hook
     ((lisp-mode emacs-lisp-mode) . easy-escape-minor-mode))
 #+end_src
@@ -79,6 +80,7 @@ both to =C-c C-d d= and =C-c C-d C-d= by default.
 
 #+begin_src emacs-lisp
   (use-package elisp-slime-nav
+    :delight
     :hook
     ((emacs-lisp-mode ielm-mode) . elisp-slime-nav-mode)
     :general

@@ -11,6 +11,7 @@ popup. In an editor as keyboard-driven as Emacs I simply can't live without it!
 #+begin_src emacs-lisp
   (use-package which-key
     :demand t
+    :delight
     :custom
     ;; The delay between pressing a key and which-key suggesting further keys
     (which-key-idle-delay 1.0)
