@@ -246,14 +246,22 @@ details.
 #+begin_src emacs-lisp
   (use-package apheleia
     :demand t
+    ;; This is still important, even though we make a second call to `delight' in
+    ;; the `:config' block. See the note down there for more details.
     :delight
-    (apheleia-mode)
-    (apheleia-global-mode)
     :general
     (my/evil-leader-def
       "=" 'apheleia-format-buffer)
     :config
     (apheleia-global-mode 1)
+    ;; Apheleia is weird when it comes to lighter text.  It puts the full mode
+    ;; definitions in its autoloads file, meaning that the lighter text is already
+    ;; defined as soon as the package maanger load the autoloads file. However,
+    ;; due to a strange hook configuration, Apheleia will redefine `apheleia-mode'
+    ;; when you save your file, which will redefine the lighter text, as well.
+    ;; Thus, we need to make a second call to `delight' here to make sure our
+    ;; mode line respects our wishes.
+    (delight 'apheleia-mode nil 'apheleia-core)
     (my/apheleia-add-formatters my/apheleia-custom-formatters)
     (my/apheleia-map-modes-to-formatters my/apheleia-mode-formatters-alist)
     (my/apheleia-override-formatters))
