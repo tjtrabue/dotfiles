@@ -259,8 +259,8 @@ details.
     ;; defined as soon as the package maanger load the autoloads file. However,
     ;; due to a strange hook configuration, Apheleia will redefine `apheleia-mode'
     ;; when you save your file, which will redefine the lighter text, as well.
-    ;; Thus, we need to make a second call to `delight' here to make sure our
-    ;; mode line respects our wishes.
+    ;; Thus, we need to make a second call to `delight' here to make sure our mode
+    ;; line respects our wishes.
     (delight 'apheleia-mode nil 'apheleia-core)
     (my/apheleia-add-formatters my/apheleia-custom-formatters)
     (my/apheleia-map-modes-to-formatters my/apheleia-mode-formatters-alist)
