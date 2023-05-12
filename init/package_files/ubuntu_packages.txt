@@ -13,6 +13,7 @@ clang-tidy
 dbus-x11
 debhelper
 dpkg-dev
+elixir
 fonts-noto
 g++
 g++-12
@@ -165,6 +166,7 @@ libxinerama1
 libxkbcommon0
 libxml2
 libxml2-dev
+libxml2-utils
 libxpm-dev
 libxpm4
 libxrandr2
