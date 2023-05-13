@@ -38,7 +38,11 @@ software development.
     ;; when searching for projects.
     (projectile-project-search-path (list my/workspace-dir my/practice-dir))
     ;; Add top-level folders for Projectile to ignore.
-    (projectile-ignored-projects '("~/" "~/Downloads/" "~/Dropbox/"))
+    (projectile-ignored-projects (list (getenv "HOME")
+                                       (concat (getenv "HOME") "/Downloads/")
+                                       (concat (getenv "HOME") "/Dropbox/")
+                                       (concat (getenv "HOME") "/applications/")
+                                       my/straight-repos-dir))
     ;; Customize how Projectile reports project information in the mode line.  The
     ;; default function is a bit verbose, and can clutter the mode line.
     (projectile-mode-line-function (lambda ()
