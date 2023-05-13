@@ -23,6 +23,7 @@ Simple interface for running ExUnit tests from inside Emacs.
 
 #+begin_src emacs-lisp
   (use-package exunit
+    :delight
     :hook
     ;; Turn on exunit-mode when editing Elixir files
     (elixir-mode . exunit-mode))
