@@ -32,7 +32,6 @@ to a massive decrease in Emacs' performance. I recommend that you disable
       ((;; clojure-mode ; Agressive indent screws with clojure-lsp
         c-mode
         c++-mode
-        elixir-mode
         emacs-lisp-mode
         haskell-mode
         ielm-mode

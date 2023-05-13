@@ -77,5 +77,4 @@ software development.
            (list (concat my/straight-repos-dir ".*")))
     ;; Add newly opened project buffers to current perspective.
     (add-hook 'projectile-find-file-hook #'my/add-current-buffer-to-perspective))
-
 #+end_src
