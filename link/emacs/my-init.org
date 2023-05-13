@@ -802,6 +802,12 @@ Custom functions, both standard and interactive.
       (or (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop")
           (string-match "\\(microsoft\\|WSL\\)"
                         (shell-command-to-string "uname -r | tr -d \"\n\"")))))
+
+  (defun my/reload-dir-locals-for-current-buffer ()
+    "Reload vars in .dir-locals.el file for current buffer."
+    (interactive)
+    (let ((enable-local-variables :all))
+      (hack-dir-local-variables-non-file-buffer)))
 #+end_src
 
 * Environment Variables
