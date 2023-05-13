@@ -11,6 +11,20 @@ building and installing project artifacts, etc. Projectile is a project
 management super tool, and by far one of the most important Emacs plugins for
 software development.
 
+* Functions
+#+begin_src emacs-lisp
+  (with-eval-after-load "projectile"
+    (defun my/projectile-reload-dir-locals ()
+      "Reload .dir-locals.el for Projectile project buffers."
+      (interactive)
+      (dolist (buffer (projectile-project-buffers))
+        (with-current-buffer buffer
+          (when (buffer-file-name)
+            (my/reload-dir-locals-for-current-buffer))))))
+#+end_src
+
+* =use-package= specification
+
 #+begin_src emacs-lisp
   (use-package projectile
     ;; perspective.el overwrites projectile's command prefix, so we want to load
