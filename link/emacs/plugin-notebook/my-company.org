@@ -292,6 +292,11 @@ and allows users to customize the icons it displays alongside completion
 candidates. It also integrates with =company-quickhelp= for bringing up
 completion item documentation.
 
+I have noticed that =company-box= actually improves my experience with Company
+while coding with a language server that supports references, such as
+=clojure-lsp=. The child frames that =company-box= uses keep the completion
+window from jumping around when references are re-calculated.
+
 *COMPATIBILITY:* =company-box= requires Emacs 26 or newer, and only works in GUI
 Emacs.
 
@@ -305,6 +310,7 @@ cool, and looks beautiful, but you should use it at your own risk.
   (use-package company-box
     :after company
     :if (display-graphic-p)
+    :delight
     :hook
     (company-mode . company-box-mode)
     :custom
