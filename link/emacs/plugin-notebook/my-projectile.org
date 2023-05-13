@@ -67,6 +67,18 @@ software development.
     ;; create an after-init-hook for projectile because it doesn't work
     ;; fully. You'll experience weird errors if you do this.
     (projectile-global-mode 1)
+    ;; Mark all Projectile configuration commands as safe for local use.
+    (put 'projectile-project-configure-cmd 'safe-local-variable #'stringp)
+    (put 'projectile-project-compilation-cmd 'safe-local-variable #'stringp)
+    (put 'projectile-project-test-cmd 'safe-local-variable #'stringp)
+    (put 'projectile-project-install-cmd 'safe-local-variable #'stringp)
+    (put 'projectile-project-package-cmd 'safe-local-variable #'stringp)
+    (put 'projectile-project-run-cmd 'safe-local-variable #'stringp)
+    (put 'projectile-project-test-prefix 'safe-local-variable #'stringp)
+    (put 'projectile-project-test-suffix 'safe-local-variable #'stringp)
+    (put 'projectile-project-related-files-fn 'safe-local-variable #'functionp)
+    (put 'projectile-project-src-dir 'safe-local-variable #'stringp)
+    (put 'projectile-project-test-dir 'safe-local-variable #'stringp)
     :config
     ;; Add folder paths to ignore within a project.
     ;; These are different from the `projectile-ignored-projects' folders, which

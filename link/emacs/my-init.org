@@ -1292,6 +1292,7 @@ and hooks in a way that defers loading the package.
       "kk" 'kill-buffer
       ;; Dired
       "dd" 'dired
+      "dw" 'dired-other-window
       ;; eshell
       "es" 'eshell-below
       ;; File
