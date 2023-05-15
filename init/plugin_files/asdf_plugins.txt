@@ -2,5 +2,6 @@ elixir
 erlang
 java
 lua
+nodejs
 python
 ruby
