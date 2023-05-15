@@ -104,6 +104,16 @@ which ones you do not yet satisfy.
                                "--clang-tidy"
                                "--header-insertion-decorators=0"))
     (lsp-clients-clangd-executable (executable-find "clangd"))
+    ;;; elixir-ls
+    ;; The elixir-ls version to download from GitHub.
+    ;; https://github.com/elixir-lsp/elixir-ls/releases/
+    (lsp-elixir-ls-version "v0.14.6")
+    ;; Where to retrieve the elixir-ls distribution.
+    (lsp-elixir-ls-download-url
+     (format "https://github.com/elixir-lsp/elixir-ls/releases/download/%s/elixir-ls.zip"
+             lsp-elixir-ls-version))
+    ;; Automatically fetch project deps when compiling
+    (lsp-elixir-fetch-deps t)
   ;;; lua-language-server
     ;; lsp-mode can try to install lua-language-server automatically, but
     ;; I've noticed that version tends to be really slow.
@@ -185,6 +195,11 @@ which ones you do not yet satisfy.
     (my-custom-lsp-add-lsp-mode-hooks)
     ;; Set up DAP mode hooks.
     (my-custom-lsp-add-dap-mode-tool-hooks)
+    ;; Add extra hooks to run when lsp-mode activates:
+    (add-hook 'lsp-mode-hook (lambda ()
+                               ;; Turn on company-box-mode when using LSP.
+                               (when (bound-and-true-p company-mode)
+                                 (company-box-mode 1))))
     :config
     ;; Directory regexps to ignore when establishing file watches.
     (mapc (lambda (pattern)

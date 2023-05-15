@@ -311,8 +311,6 @@ cool, and looks beautiful, but you should use it at your own risk.
     :after company
     :if (display-graphic-p)
     :delight
-    :hook
-    (company-mode . company-box-mode)
     :custom
     ;; Max number of candidates to show in tooltip.
     ;; A large number can slow down rendering.

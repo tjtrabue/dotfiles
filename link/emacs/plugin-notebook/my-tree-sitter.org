@@ -12,6 +12,7 @@ highlighting.
 * tree-sitter
   #+begin_src emacs-lisp
     (use-package tree-sitter
+      :delight
       :demand t
       :config
       (require 'tree-sitter)

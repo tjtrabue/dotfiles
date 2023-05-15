@@ -148,6 +148,8 @@ libwebkit2gtk-4.1-dev
 libwebp-dev
 libwebpdemux2
 libwoff1
+libwxgtk-webview3.0-gtk3-dev
+libwxgtk3.0-gtk3-dev
 libx11-6
 libx11-xcb1
 libxau6
@@ -187,6 +189,9 @@ openbox
 parallel
 plocate
 poppler-utils
+postgresql
+postgresql-client
+postgresql-contrib
 procps
 quilt
 ranger

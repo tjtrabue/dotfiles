@@ -53,6 +53,12 @@ update_asdf_plugins() {
   asdf plugin update --all
 }
 
+# Build and install the latest Erlang/OTP using ASDF.
+asdf_install_erlang() {
+  export KERL_BUILD_DOCS="yes"
+  asdf install erlang latest
+}
+
 # Takes care of the nitty gritty sourcing logic for asdf.
 __src_asdf() {
   local currentShell="$(currentshell)"
