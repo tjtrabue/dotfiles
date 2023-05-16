@@ -100,6 +100,12 @@ for any programming language that supports a formatting tool.")
 (defvar my-custom-lsp-language-id-configuration '((lisp-mode . "lisp"))
   "List to be concatenated with `lsp-language-id-configuration'.")
 
+(defvar my-custom-lsp-company-box-enabled nil
+  "Non-nil if `company-box-mode' is active in `lsp-mode' buffers.
+
+You should not set this variable manually.  It is controlled by
+the `my-custom-lsp-company-box-toggle' function.")
+
 ;;;###autoload
 (defun my-custom-lsp-add-format-on-save-hook (mode)
   "This function adds a buffer local hook for the major mode represented by
@@ -165,6 +171,24 @@ debugging."
   "Register all custom LSP servers that we want."
   ;; CL-LSP still seems incompatible with Emacs.
   (my-custom-lsp--register-common-lisp-lsp-servers))
+
+;;;###autoload
+(defun my-custom-lsp-company-box-toggle ()
+  "Toggle `company-box-mode' for all `lsp-mode' buffers."
+  (interactive)
+  (when (functionp 'company-box-mode)
+    (if my-custom-lsp-company-box-enabled
+      ;; Disable company-box
+      (progn
+        (setq my-custom-lsp-company-box-enabled nil)
+        (dolist (buffer (buffer-list))
+          (with-current-buffer buffer
+            (company-box-mode -1))))
+      ;; Enable company-box
+      (setq my-custom-lsp-company-box-enabled t)
+      (dolist (buffer (buffer-list))
+        (with-current-buffer buffer
+          (company-box-mode 1))))))
 
 (defun my-custom-lsp--register-common-lisp-lsp-servers ()
   "Register Common Lisp languageservers for use with `lsp-mode'."

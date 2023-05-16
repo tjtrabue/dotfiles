@@ -196,11 +196,6 @@ which ones you do not yet satisfy.
     (my-custom-lsp-add-lsp-mode-hooks)
     ;; Set up DAP mode hooks.
     (my-custom-lsp-add-dap-mode-tool-hooks)
-    ;; Add extra hooks to run when lsp-mode activates:
-    (add-hook 'lsp-mode-hook (lambda ()
-                               ;; Turn on company-box-mode when using LSP.
-                               (when (bound-and-true-p company-mode)
-                                 (company-box-mode 1))))
     :config
     ;; Directory regexps to ignore when establishing file watches.
     (mapc (lambda (pattern)
