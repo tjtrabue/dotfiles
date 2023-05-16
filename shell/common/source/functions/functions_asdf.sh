@@ -57,6 +57,28 @@ update_asdf_plugins() {
 asdf_install_erlang() {
   export KERL_BUILD_DOCS="yes"
   asdf install erlang latest
+  asdf global erland "$(asdf latest erlang)"
+}
+
+# Install the latest Elixir version with ASDF and symlink it to
+# /home/build/elixir so elixir-ls can find the source files.
+asdf_install_elixir() {
+  local globalBuildDir="/home/build"
+  local globalElixirBuildDir="${globalBuildDir}/elixir"
+  local asdfDir="${HOME}/.asdf"
+  local latestElixirVersion
+  local asdfElixirInstallDir
+
+  log_info "Installing latest Elixir version with ASDF"
+  asdf install elixir latest
+  latestElixirVersion="$(asdf latest elixir)"
+  asdfElixirInstallDir="${asdfDir}/installs/elixir/${latestElixirVersion}"
+  asdf global elixir "${latestElixirVersion}"
+
+  log_info "Symlinking ${BLUE}${asdfElixirInstallDir}{NC} to" \
+    "${BLUE}${globalElixirBuildDir}${NC} for elixir-ls"
+  sudo mkdir -p "${globalBuildDir}"
+  sudo ln -s "${asdfElixirInstallDir}" "${globalElixirBuildDir}"
 }
 
 # Takes care of the nitty gritty sourcing logic for asdf.

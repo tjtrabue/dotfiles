@@ -110,8 +110,9 @@ which ones you do not yet satisfy.
     (lsp-elixir-ls-version "v0.14.6")
     ;; Where to retrieve the elixir-ls distribution.
     (lsp-elixir-ls-download-url
-     (format "https://github.com/elixir-lsp/elixir-ls/releases/download/%s/elixir-ls.zip"
-             lsp-elixir-ls-version))
+     (format "https://github.com/elixir-lsp/elixir-ls/releases/download/%s/elixir-ls-%s.zip"
+             lsp-elixir-ls-version
+             "1.14-25.1"))
     ;; Automatically fetch project deps when compiling
     (lsp-elixir-fetch-deps t)
   ;;; lua-language-server
