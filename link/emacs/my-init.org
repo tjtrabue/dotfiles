@@ -1179,7 +1179,7 @@ detailed above:
   (require 'delight)
   (delight '((abbrev-mode " Abv" abbrev)
              (smart-tab-mode " \\t" smart-tab)
-             (eldoc-mode nil "eldoc")
+             (eldoc-mode nil eldoc)
              (rainbow-mode)
              (overwrite-mode " Ov" t)
              (emacs-lisp-mode "Elisp" :major)))

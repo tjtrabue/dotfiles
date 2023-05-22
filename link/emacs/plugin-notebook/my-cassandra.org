@@ -1,0 +1,16 @@
+#+TITLE:   Cassandra DB Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-05-22
+#+TAGS:
+#+STARTUP: fold
+
+This file contains all of my plugins and configuration for interacting with
+Cassandra from within Emacs.
+
+* cql-mode
+Major mode for working with CQL (Cassandra Query Language) files.
+
+#+begin_src emacs-lisp
+  (use-package cql-mode)
+#+end_src
