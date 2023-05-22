@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Be extra strict, and fail if any irregularity is encountered.
-set -Eeuo pipefail
+set -o pipefail
 
 # The clipboard CLI command to use
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
