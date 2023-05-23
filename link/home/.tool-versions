@@ -1,3 +1,3 @@
 lua 5.1
-erlang 26.0
-elixir 1.15.0-rc.0-otp-26
+erlang 25.3.2
+elixir 1.14.5-otp-25
