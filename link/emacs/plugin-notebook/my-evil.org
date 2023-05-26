@@ -146,9 +146,11 @@ The Evil mode plugin itself.
                                    (setq display-line-numbers 'relative)))))
     :general
     ;; Use "jk" to escape from insert and replace states.
-    (general-define-key
-     :states '(insert replace)
-     (general-chord "jk") 'evil-normal-state)
+    ;; Currently using evil-escape for this feature, but I'm leaving the code
+    ;; commented in case we want to go back to general at some point.
+    ;; (general-define-key
+    ;;  :states '(insert replace)
+    ;;  (general-chord "jk") 'evil-normal-state)
     ;; `general-def' if a shorthand macro wrapper for `general-define-key' that
     ;; allows using positional parameters for evil states and keymaps.
     ;; Its usage is as follows:
@@ -336,8 +338,6 @@ evil's normal state from insert state.
 
 #+begin_src emacs-lisp
   (use-package evil-escape
-    ;; Using key-chord seems to work better.
-    :disabled
     :after evil-collection
     :demand t
     :custom
