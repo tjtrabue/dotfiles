@@ -336,6 +336,10 @@ Use key sequences to /escape/ from stock evil states and return to evil's
 normal state. This allows us to do things like typing "jk" to return to
 evil's normal state from insert state.
 
+I've found =evil-escape= to be preferrable to using =general-chord= or
+=keychord= because =evil-escape= works even when defining keyboard macros, while
+the latter plugins do not.
+
 #+begin_src emacs-lisp
   (use-package evil-escape
     :after evil-collection
