@@ -13,6 +13,25 @@ clean_nvim() {
   done
 }
 
+# Install Neovim's nightly build through the best means available.
+install_neovim_nightly() {
+  log_info "Installing Neovim nightly build"
+
+  if [ -n "$(command -v asdf)" ]; then
+    install_neovim_nightly_asdf
+  else
+    install_neovim_nightly_appimage
+  fi
+}
+
+# ASDF-VM provides a super clean and easy solution for installing the nightly
+# build of Neovim.
+install_neovim_nightly_asdf() {
+  log_info "Installing latest neovim with ASDF"
+  asdf uninstall neovim nightly
+  asdf install neovim nightly
+}
+
 # Installs the latest, greatest Neovim from the official site as an
 # appimage, and links the included executable to /usr/local/bin.
 install_neovim_nightly_appimage() {
