@@ -110,7 +110,10 @@ __download_latest_elixir_ls_dist() {
   # download, which is usually outdated.
   latestElixirLsDownloadUrl="$(curl -sL -H 'Accept: application/json' \
     "${elixirLsReleasesUrl}" |
-    jq '.assets | .[length - 2] | .browser_download_url')"
+    jq '.assets | .[].browser_download_url' |
+    sort |
+    grep -v '.*/elixir-ls\.zip' |
+    tail -1)"
 
   log_info "Downloading latest elixir-ls distribution"
   eval "curl -sL ${latestElixirLsDownloadUrl} -o ${elixirLsZipFile}"
