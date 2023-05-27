@@ -11,7 +11,7 @@ install_elixir_ls() {
 
   __check_elixir_installed &&
     __download_latest_elixir_ls_dist &&
-    __create_elixir_ls_launcher_scripts "${installPrefix}"
+    __link_elixir_ls_scripts "${installPrefix}"
 }
 
 # Make sure we have the correct executables before proceeding.
@@ -120,28 +120,17 @@ __download_latest_elixir_ls_dist() {
   rm -f "${elixirLsZipFile}"
 }
 
-__create_elixir_ls_launcher_scripts() {
+# Symlink the elixir-ls language server and debugger scripts to an executable
+# file directory.
+__link_elixir_ls_scripts() {
   local installPrefix="${1:-${HOME}}"
   local installBin="${installPrefix}/bin"
   local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
   local elixirLsLatest="${elixirLsHome}/latest"
 
-  install -dm0755 "${installBin}"
-  # Create an executable script to launch the language server
-  command cat <<EOF >"${installBin}/elixir-ls"
-#!/bin/sh
-
-exec ${elixirLsLatest}/language_server.sh
-EOF
-  chmod 755 "${installBin}/elixir-ls"
-
-  # Create an executable script to launch a debugger program for the LS.
-  command cat <<EOF >"${installBin}/elixir-ls-debug"
-#!/bin/sh
-
-exec ${elixirLsLatest}/debugger.sh
-EOF
-  chmod 755 "${installBin}/elixir-ls-debug"
+  log_info "Linking elixir-ls scripts"
+  ln -sf "${elixirLsLatest}/language_server.sh" "${installBin}/elixir-ls"
+  ln -sf "${elixirLsLatest}/debugger.sh" "${installBin}/elixir-ls-debug"
 }
 
 # Install the elixis-ls executables.
