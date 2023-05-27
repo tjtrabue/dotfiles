@@ -10,9 +10,8 @@ install_elixir_ls() {
   local installPrefix="${1:-${HOME}}"
 
   __check_elixir_installed &&
-    __clone_elixir_ls &&
-    __build_elixir_ls &&
-    __install_elixir_ls "${installPrefix}"
+    __download_latest_elixir_ls_dist &&
+    __create_elixir_ls_launcher_scripts "${installPrefix}"
 }
 
 # Make sure we have the correct executables before proceeding.
@@ -55,6 +54,94 @@ __build_elixir_ls() {
     mix deps.update --all
     mix compile
   )
+}
+
+# Rename previously downloaded versions of elixir-ls under ~/.elixir_ls in
+# preparation for downloading a new version.
+__increment_elixir_ls_version_dirs() {
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
+  local f
+  local previousNum
+
+  # Exit early if we have no previous elixir-ls versions to increment.
+  if ! ls "${elixirLsHome}"/previous_* >>/dev/null 2>&1; then
+    return 0
+  fi
+
+  log_info "Incrementing all previous elixir-ls versions"
+  (
+    # Increment previous elixir-ls versions in reverse so as not to
+    # inadvertently overwrite others.
+    cd "${elixirLsHome}" &&
+      while read -r f || [ -n "${f}" ]; do
+        previousNum="${f##*_}"
+        log_info "Incrementing previous ${MAGENTA}${previousNum}${NC} to" \
+          "${CYAN}$((previousNum + 1))${NC}"
+        mv "${f}" "previous_$((previousNum + 1))"
+      done <<<"$(find "${elixirLsHome}" -type d -regex '.*_[1-9][0-9]*' \
+        -exec basename '{}' \; |
+        sort -r)"
+  )
+}
+
+# Download the latest elixir-ls .zip bundle from GitHub.
+__download_latest_elixir_ls_dist() {
+  local githubApiUrl="https://api.github.com/repos"
+  local elixirLsReleasesUrl="${githubApiUrl}/elixir-lsp/elixir-ls/releases/latest"
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
+  local elixirLsDownloadDir="${elixirLsHome}/latest"
+  local elixirLsPrevious="${elixirLsHome}/previous_1"
+  local elixirLsZipFile="${elixirLsHome}/elixir_ls.zip"
+  local latestElixirLsDownloadUrl
+
+  __increment_elixir_ls_version_dirs
+
+  if [ -d "${elixirLsDownloadDir}" ]; then
+    log_info "Backing up previous version of elixir-ls to:" \
+      "${BLUE}${elixirLsPrevious}${NC}"
+    mv "${elixirLsDownloadDir}" "${elixirLsPrevious}"
+  fi
+
+  mkdir -p "${elixirLsDownloadDir}"
+
+  # We need to get the lastest download URL for the elixir-ls.
+  # It's a tricky, roundabout process, requiring us to check the second-to-last
+  # result in the list of latest releases. The last result is the default
+  # download, which is usually outdated.
+  latestElixirLsDownloadUrl="$(curl -sL -H 'Accept: application/json' \
+    "${elixirLsReleasesUrl}" |
+    jq '.assets | .[length - 2] | .browser_download_url')"
+
+  log_info "Downloading latest elixir-ls distribution"
+  eval "curl -sL ${latestElixirLsDownloadUrl} -o ${elixirLsZipFile}"
+  unzip -d "${elixirLsDownloadDir}" "${elixirLsZipFile}"
+
+  log_info "Cleaning up"
+  rm -f "${elixirLsZipFile}"
+}
+
+__create_elixir_ls_launcher_scripts() {
+  local installPrefix="${1:-${HOME}}"
+  local installBin="${installPrefix}/bin"
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
+  local elixirLsLatest="${elixirLsHome}/latest"
+
+  install -dm0755 "${installBin}"
+  # Create an executable script to launch the language server
+  command cat <<EOF >"${installBin}/elixir-ls"
+#!/bin/sh
+
+exec ${elixirLsLatest}/language_server.sh
+EOF
+  chmod 755 "${installBin}/elixir-ls"
+
+  # Create an executable script to launch a debugger program for the LS.
+  command cat <<EOF >"${installBin}/elixir-ls-debug"
+#!/bin/sh
+
+exec ${elixirLsLatest}/debugger.sh
+EOF
+  chmod 755 "${installBin}/elixir-ls-debug"
 }
 
 # Install the elixis-ls executables.
