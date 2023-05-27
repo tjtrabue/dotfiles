@@ -137,7 +137,13 @@ if not str.isempty(elixir_ls_binary) then
   lspconfig.elixirls.setup {
     capabilities = capabilities,
     cmd = {elixir_ls_binary},
-    on_attach = on_attach
+    on_attach = on_attach,
+    settings = {
+      elixirLS = {
+        dialyzerEnabled = true,
+        fetchDeps = true
+      }
+    }
   }
 end
 
