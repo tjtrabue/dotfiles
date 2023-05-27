@@ -59,7 +59,7 @@ __build_elixir_ls() {
 # Rename previously downloaded versions of elixir-ls under ~/.elixir_ls in
 # preparation for downloading a new version.
 __increment_elixir_ls_version_dirs() {
-  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls_installs}"
   local f
   local previousNum
 
@@ -88,7 +88,7 @@ __increment_elixir_ls_version_dirs() {
 __download_latest_elixir_ls_dist() {
   local githubApiUrl="https://api.github.com/repos"
   local elixirLsReleasesUrl="${githubApiUrl}/elixir-lsp/elixir-ls/releases/latest"
-  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls_installs}"
   local elixirLsDownloadDir="${elixirLsHome}/latest"
   local elixirLsPrevious="${elixirLsHome}/previous_1"
   local elixirLsZipFile="${elixirLsHome}/elixir_ls.zip"
@@ -128,7 +128,7 @@ __download_latest_elixir_ls_dist() {
 __link_elixir_ls_scripts() {
   local installPrefix="${1:-${HOME}}"
   local installBin="${installPrefix}/bin"
-  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls}"
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls_installs}"
   local elixirLsLatest="${elixirLsHome}/latest"
 
   log_info "Linking elixir-ls scripts"
