@@ -56,8 +56,8 @@ __build_elixir_ls() {
   )
 }
 
-# Rename previously downloaded versions of elixir-ls under ~/.elixir_ls in
-# preparation for downloading a new version.
+# Rename previously downloaded versions of elixir-ls under ~/.elixir_ls_installs
+# in preparation for downloading a new version.
 __increment_elixir_ls_version_dirs() {
   local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls_installs}"
   local f
@@ -116,10 +116,9 @@ __download_latest_elixir_ls_dist() {
     tail -1)"
 
   log_info "Downloading latest elixir-ls distribution"
-  eval "curl -sL ${latestElixirLsDownloadUrl} -o ${elixirLsZipFile}"
+  eval "curl -sL ${latestElixirLsDownloadUrl} -o ${elixirLsZipFile}" &&
   unzip -d "${elixirLsDownloadDir}" "${elixirLsZipFile}"
-
-  log_info "Cleaning up"
+  log_info "Cleaning up" &&
   rm -f "${elixirLsZipFile}"
 }
 
