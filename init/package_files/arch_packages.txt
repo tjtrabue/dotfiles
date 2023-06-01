@@ -50,6 +50,7 @@ feh
 ffmpegthumbnailer
 findutils
 firefox
+fontforge
 fop
 fwupd
 fzf
@@ -87,6 +88,7 @@ kio-gdrive
 kitty
 kubeadm
 kubectl
+libdvdcss
 libreoffice-fresh
 libxcrypt
 light-locker
@@ -134,6 +136,7 @@ parallel
 pass
 pdfjam
 perl-image-exiftool
+perl-tk
 picom
 plantuml
 plasma
@@ -157,15 +160,18 @@ rsync
 ruby
 rust
 scrot
+sdl
 shellcheck
 shfmt
 shotgun
 stack
 streamlink
+t1utils
 tar
 texinfo
 texlive-bin
 texlive-lang
+texlive-langgreek
 texlive-latexextra
 texlive-most
 texworks
@@ -190,6 +196,7 @@ vi
 vim
 vlc
 w3m
+wdiff
 wget
 wireless_tools
 wpa_supplicant
