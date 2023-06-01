@@ -252,4 +252,44 @@ __get_directory_for_alias() {
   done <"${dirAliasFile}"
 }
 
+# Create a new file to hold `cd' history under the /tmp/ directory, and store
+# the newly created file path in DIR_HIST_FILE environment variable. This file
+# will hold the number of previous `cd' directories equal to the DIR_HIST_LIMIT
+# environment variable.
+create_dir_hist_file() {
+  local numDirHistFilesToKeep=30
+
+  if [ -f "${DIR_HIST_FILE}" ]; then
+    warn "${CYAN}DIR_HIST_FILE${NC} variable already set to: " \
+      "${BLUE}${DIR_HIST_FILE}${NC}." \
+      "Not creating new file."
+    return 0
+  fi
+
+  {
+    export DIR_HIST_FILE="$(mktemp -t dir_hist.XXXXXXXXXX)" &&
+      printf "%s\n" "$(pwd)" >>"${DIR_HIST_FILE}" &&
+      log_info "Created ${CYAN}DIR_HIST_FILE${NC}:" \
+        "${BLUE}${DIR_HIST_FILE}${NC}" &&
+      __delete_old_dir_hist_files "${numDirHistFilesToKeep}"
+  } || {
+    err "Could not create ${CYAN}DIR_HIST_FILE${NC}"
+    return 1
+  }
+}
+
+# Keep only the n most recent directory history files. If no number is provided,
+# the default number to keep is 30.
+__delete_old_dir_hist_files() {
+  local numDirHistFilesToKeep="${1:-30}"
+  local dirHistFilePrefix="${DIR_HIST_FILE_PREFIX:-dir_hist}"
+
+  log_info "Deleting old dir hist files (keeping" \
+    "${GREEN}${numDirHistFilesToKeep}${NC} most recent files)"
+
+  ls -1tr "/tmp/${dirHistFilePrefix}"* |
+    head -n -$((numDirHistFilesToKeep - 1)) |
+    xargs -d '\n' rm -f --
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

@@ -229,6 +229,8 @@ src_all() {
   fix_ssh_auth_sock
   # Add more tab completions to shell environment.
   add_shell_completions
+  # Create a `cd' directory history file for the shell session.
+  create_dir_hist_file
   # This should come last!!!
   __src_extra_environment_profiles
 }
