@@ -287,8 +287,8 @@ __delete_old_dir_hist_files() {
   log_info "Deleting old dir hist files (keeping" \
     "${GREEN}${numDirHistFilesToKeep}${NC} most recent files)"
 
-  ls -1tr "/tmp/${dirHistFilePrefix}"* |
-    head -n -$((numDirHistFilesToKeep - 1)) |
+  command ls -1tr "/tmp/${dirHistFilePrefix}"* |
+    head -n -"${numDirHistFilesToKeep}" |
     xargs -d '\n' rm -f --
 }
 
