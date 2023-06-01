@@ -258,6 +258,8 @@ __get_directory_for_alias() {
 # environment variable.
 create_dir_hist_file() {
   local numDirHistFilesToKeep=30
+  local dirHistFileDir="${DIR_HIST_FILE_DIR:-/tmp}"
+  local dirHistFilePrefix="${DIR_HIST_FILE_PREFIX:-dir_hist}"
 
   if [ -f "${DIR_HIST_FILE}" ]; then
     warn "${CYAN}DIR_HIST_FILE${NC} variable already set to: " \
@@ -267,7 +269,9 @@ create_dir_hist_file() {
   fi
 
   {
-    export DIR_HIST_FILE="$(mktemp -t dir_hist.XXXXXXXXXX)" &&
+    mkdir -p "${dirHistFileDir}" &&
+      export DIR_HIST_FILE="$(mktemp -t "${dirHistFilePrefix}.XXXXXXXXXX" \
+        -p "${dirHistFileDir}")" &&
       printf "%s\n" "$(pwd)" >>"${DIR_HIST_FILE}" &&
       log_info "Created ${CYAN}DIR_HIST_FILE${NC}:" \
         "${BLUE}${DIR_HIST_FILE}${NC}" &&
