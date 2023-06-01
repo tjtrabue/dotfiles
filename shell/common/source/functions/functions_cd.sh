@@ -181,7 +181,7 @@ __do_cd_to_git_project_root() {
 # Write the current directory to the history file.
 __write_to_dir_hist() {
   local dirToWrite="${1}"
-  local dirHistFile="${DIR_HIST_FILE:-${HOME}/.dir_history}"
+  local dirHistFile="${DIR_HIST_FILE:-/tmp/dir_history}"
   local dirHistLimit="${DIR_HIST_LIMIT:-10}"
   local numLinesInHistory="$(__get_num_dir_hist_lines)"
   local latestDirFromHist="$(__get_dir_from_hist 1)"
@@ -204,7 +204,7 @@ __write_to_dir_hist() {
 
 # Return the number of lines in the DIR_HIST_FILE.
 __get_num_dir_hist_lines() {
-  local dirHistFile="${DIR_HIST_FILE:-${HOME}/.dir_history}"
+  local dirHistFile="${DIR_HIST_FILE:-/tmp/dir_history}"
 
   wc -l "${dirHistFile}" | awk '{print $1}'
 }
@@ -212,7 +212,7 @@ __get_num_dir_hist_lines() {
 # Get the nth entry from the DIR_HIST_FILE.
 __get_dir_from_hist() {
   local numDirsToGoBack="${1}"
-  local dirHistFile="${DIR_HIST_FILE:-${HOME}/.dir_history}"
+  local dirHistFile="${DIR_HIST_FILE:-/tmp/dir_history}"
   local numLinesInHistory="$(__get_num_dir_hist_lines)"
 
   if ! echo "${numDirsToGoBack}" | grep -E -q -- "[0-9]+"; then
