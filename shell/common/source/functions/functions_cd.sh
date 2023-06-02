@@ -286,12 +286,13 @@ create_dir_hist_file() {
 # the default number to keep is 30.
 __delete_old_dir_hist_files() {
   local numDirHistFilesToKeep="${1:-30}"
+  local dirHistFileDir="${DIR_HIST_FILE_DIR:-/tmp}"
   local dirHistFilePrefix="${DIR_HIST_FILE_PREFIX:-dir_hist}"
 
-  log_info "Deleting old dir hist files (keeping" \
-    "${GREEN}${numDirHistFilesToKeep}${NC} most recent files)"
+  log_info "Deleting old dir hist files in ${BLUE}${dirHistFileDir}${NC}" \
+    "(keeping ${GREEN}${numDirHistFilesToKeep}${NC} most recent files)"
 
-  command ls -1tr "/tmp/${dirHistFilePrefix}"* |
+  command ls -1tr "${dirHistFileDir}/${dirHistFilePrefix}"* |
     head -n -"${numDirHistFilesToKeep}" |
     xargs -d '\n' rm -f --
 }
