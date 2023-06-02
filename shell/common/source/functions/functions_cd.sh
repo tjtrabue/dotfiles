@@ -252,10 +252,11 @@ __get_directory_for_alias() {
   done <"${dirAliasFile}"
 }
 
-# Create a new file to hold `cd' history under the /tmp/ directory, and store
-# the newly created file path in DIR_HIST_FILE environment variable. This file
-# will hold the number of previous `cd' directories equal to the DIR_HIST_LIMIT
-# environment variable.
+# Create a new file to hold `cd' history under the directory specified using
+# the DIR_HIST_FILE_DIR environment variable (which defaults to /tmp when not
+# set explicitly), and store the newly created file path in the shell session
+# specific DIR_HIST_FILE environment variable. This file will hold the number
+# of previous `cd' directories equal to the DIR_HIST_LIMIT environment variable.
 create_dir_hist_file() {
   local numDirHistFilesToKeep=30
   local dirHistFileDir="${DIR_HIST_FILE_DIR:-/tmp}"
