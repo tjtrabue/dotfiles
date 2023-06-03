@@ -70,6 +70,11 @@ packer.startup(
     -- Packer can manage itself
     use {"wbthomason/packer.nvim"}
 
+    use {
+      "dhananjaylatkar/cscope_maps.nvim",
+      after = "which-key.nvim"
+    }
+
     use {"jparise/vim-graphql"}
 
     use {"edkolev/tmuxline.vim"}
