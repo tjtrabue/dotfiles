@@ -57,6 +57,8 @@
   (set-face-attribute
     'variable-pitch nil
     :family (cond
+              ((member "Neogrey" (font-family-list))
+                "Neogrey Medium")
               ((member "Arkibal Serif" (font-family-list))
                 "Arkibal Serif")
               (t "DejaVu Serif"))
