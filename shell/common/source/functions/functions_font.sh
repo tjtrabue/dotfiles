@@ -49,6 +49,15 @@ install_custom_fonts() {
   mkdir -p "${userFontsOtfDir}/Neogrey"
   cp -v -t "${userFontsOtfDir}/Neogrey" "${fontTempDir}/neogrey/"*.otf
 
+  # Install Arkibal Serif font
+  curl -sL --create-dirs \
+    "https://allbestfonts.com/wp-content/uploads/2017/12/elements-arkibal-serif-58UCG6-2017-03-03.zip" \
+    -o "${fontTempDir}/arkibal_serif/arkibal_serif.zip"
+  unzip "${fontTempDir}/arkibal_serif/arkibal_serif.zip"
+  mkdir -p "${userFontsOtfDir}/ArkibalSerif" "${userFontsTtfDir}/ArkibalSerif"
+  cp -v -t "${userFontsOtfDir}/ArkibalSerif" "${fontTempDir}/arkibal_serif/"*.otf
+  cp -v -t "${userFontsTtfDir}/ArkibalSerif" "${fontTempDir}/arkibal_serif/"*.ttf
+
   # Update font cache
   fc-cache -fv
 
