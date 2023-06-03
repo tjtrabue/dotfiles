@@ -30,24 +30,6 @@
 
 ;;; Code:
 
-(defvar my-font-mono-family "Cascadia Code PL"
-  "The default font used throughout Emacs.")
-
-(defvar my-font-mono-family-fallback "DejaVu Sans Mono"
-  "The fallback default font used throughout Emacs.")
-
-(defvar my-font-fixed-pitch-family my-font-mono-family
-  "The default font used for fixed-pitch font faces.")
-
-(defvar my-font-fixed-pitch-family-fallback my-font-mono-family-fallback
-  "The fallback font used for fixed-pitch font faces.")
-
-(defvar my-font-variable-pitch-family "Arkibal Serif"
-  "The default font used for variable-pitch font faces.")
-
-(defvar my-font-variable-pitch-family-fallback "DejaVu Serif"
-  "The fallback font to use for the variable pitch font.")
-
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set the default font for all of Emacs."
@@ -55,9 +37,9 @@
     'default nil
     ;; The name of the font.
     :family (cond
-              ((member my-font-mono-family (font-family-list))
-                my-font-mono-family)
-              (t my-font-mono-family-fallback))
+              ((member "Cascadia Code PL" (font-family-list))
+                "Cascadia Code PL")
+              (t "DejaVu Sans Mono"))
     ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
     :height 110
     ;; Style.
@@ -66,18 +48,18 @@
   (set-face-attribute
     'fixed-pitch nil
     :family (cond
-              ((member my-font-fixed-pitch-family (font-family-list))
-                my-font-fixed-pitch-family)
-              (t my-font-fixed-pitch-family-fallback))
+              ((member "Cascadia Code PL" (font-family-list))
+                "Cascadia Code PL")
+              (t "DejaVu Sans Mono"))
     :height 110
     :weight 'semi-bold
     :width 'normal)
   (set-face-attribute
     'variable-pitch nil
     :family (cond
-              ((member my-font-variable-pitch-family (font-family-list))
-                my-font-variable-pitch-family)
-              (t my-font-variable-pitch-family-fallback))
+              ((member "Arkibal Serif" (font-family-list))
+                "Arkibal Serif")
+              (t "DejaVu Serif"))
     :height 1.0
     :weight 'semi-bold))
 
