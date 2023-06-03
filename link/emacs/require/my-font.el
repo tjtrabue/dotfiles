@@ -33,37 +33,39 @@
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set the default font for all of Emacs."
-  (set-face-attribute
-    'default nil
-    ;; The name of the font.
-    :family (cond
-              ((member "Cascadia Code PL" (font-family-list))
-                "Cascadia Code PL")
-              (t "DejaVu Sans Mono"))
-    ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
-    :height 110
-    ;; Style.
-    :weight 'semi-bold
-    :width 'normal)
-  (set-face-attribute
-    'fixed-pitch nil
-    :family (cond
-              ((member "Cascadia Code PL" (font-family-list))
-                "Cascadia Code PL")
-              (t "DejaVu Sans Mono"))
-    :height 110
-    :weight 'semi-bold
-    :width 'normal)
-  (set-face-attribute
-    'variable-pitch nil
-    :family (cond
-              ((member "Neogrey" (font-family-list))
-                "Neogrey Medium")
-              ((member "Arkibal Serif" (font-family-list))
-                "Arkibal Serif")
-              (t "DejaVu Serif"))
-    :height 1.0
-    :weight 'semi-bold))
+  (let ((font-family-list (font-family-list)))
+    (set-face-attribute
+      'default nil
+      ;; The name of the font.
+      :family (cond
+                ((member "Cascadia Code PL" font-family-list)
+                  "Cascadia Code PL")
+                (t "DejaVu Sans Mono"))
+      ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
+      :height 110
+      ;; Style.
+      :weight 'semi-bold
+      :width 'normal)
+    (set-face-attribute
+      'fixed-pitch nil
+      :family (cond
+                ((member "Cascadia Code PL" font-family-list)
+                  "Cascadia Code PL")
+                (t "DejaVu Sans Mono"))
+      :height 110
+      :weight 'semi-bold
+      :width 'normal)
+    (set-face-attribute
+      'variable-pitch nil
+      :family (cond
+                ((member "Neogrey" font-family-list)
+                  "Neogrey Medium")
+                ((member "Arkibal Serif" font-family-list)
+                  "Arkibal Serif")
+                (t "DejaVu Serif"))
+      :height 1.0
+      :weight 'semi-bold
+      :width 'normal)))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (when (member "Noto Color Emoji" (font-family-list))
