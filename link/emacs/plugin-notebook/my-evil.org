@@ -344,6 +344,7 @@ the latter plugins do not.
   (use-package evil-escape
     :after evil-collection
     :demand t
+    :delight
     :custom
     ;; The key sequence used to return to evil's normal state.
     (evil-escape-key-sequence "jk")
