@@ -269,6 +269,9 @@ create_dir_hist_file() {
     return 0
   fi
 
+  # Remove the old ~/.dir_history file if present
+  test -f "${dirHistFileDir}" && rm -f "${dirHistFileDir}"
+
   {
     mkdir -p "${dirHistFileDir}" &&
       export DIR_HIST_FILE="$(mktemp -t "${dirHistFilePrefix}.XXXXXXXXXX" \
