@@ -288,7 +288,8 @@ ie__install_from_source() {
   fi
 
   if [ -d "${EMACS_DEST}" ]; then
-    ie__backup_emacs_repository
+    ie__backup_emacs_repository &&
+    ie__uninstall_old_emacs_installation
   fi
 
   log_info "Cloning/Updating Emacs Git Repo"
@@ -299,7 +300,6 @@ ie__install_from_source() {
       ./autogen.sh &&
       eval "${configureCmd}" &&
       make bootstrap -j"$(nproc)" &&
-      ie__uninstall_old_emacs_installation &&
       sudo make install
   ) &&
   ie__remove_emacs_backup_repository
