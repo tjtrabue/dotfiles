@@ -23,6 +23,7 @@ declare USE_MOLD_LINKER=false
 # Build options
 declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
+declare USE_LTO=false
 
 # Emacs location variables
 declare EMACS_GIT_URL="https://github.com/emacs-mirror/emacs.git"
@@ -73,6 +74,14 @@ OPTIONS:
   -h | --help
     Print the help message (this message) and exit.
 
+  -l | --use-lto
+    Enable link-time optimization. This build option is still experimental, and
+    may result in a slower Emacs.
+
+  -m | --use-mold
+    Use the Modern Linker (mold) instead of the standard linker. This requires
+    you to have mold installed on your machine.
+
   --prefix=PREFIX_DIR
     Install all Emacs files under prefix directory PREFIX_DIR. PREFIX_DIR
     defaults to '/usr/local', meaning that this script will install Emacs files
@@ -82,10 +91,6 @@ OPTIONS:
     Compile Emacs with Pure GTK support. This is not recommended if you will be
     running Emacs in an X Windows session. Pure GTK works well for Wayland, and
     for Emacs running as part of WSL on Windows.
-
-  -m | --use-mold
-    Use the Modern Linker (mold) instead of the standard linker. This requires
-    you to have mold installed on your machine.
 EOF
 }
 
@@ -173,6 +178,8 @@ ie__mac_build_options() {
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
 ie__construct_cc_options() {
+  CC="${IE_CC}"
+  CXX="${IE_CXX}"
   LD="$(command -v ld)"
   CFLAGS=""
   CXXFLAGS=""
@@ -181,23 +188,13 @@ ie__construct_cc_options() {
     LD="$(command -v mold)"
     CFLAGS="-fuse-ld=mold"
     CXXFLAGS="-fuse-ld=mold"
-  elif [ ! -x "$(command -v mold)" ]; then
+  elif "${USE_MOLD_LINKER}" && [ ! -x "$(command -v mold)" ]; then
     err "mold linker requested, but no mold executable found on PATH"
     return 1
   fi
 
-  command cat <<EOF
-Using the following compiler configuration:
-  CC = '${IE_CC}'
-  CXX = '${IE_CXX}'
-  LD = '${LD}'
-  CFLAGS = '${CFLAGS}'
-  CXXFLAGS = '${CXXFLAGS}'
-
-EOF
-
-  export CC="${IE_CC}"
-  export CXX="${IE_CXX}" &&
+  export CC
+  export CXX
   export LD
   export CFLAGS
   export CXXFLAGS
@@ -209,7 +206,15 @@ ie__confirm_installation() {
 
   while ! printf '%s' "${response}" | grep -q '[YyNn]'; do
     command cat <<EOF
-This script will now install Emacs using the following configuration:
+This script will now install Emacs using the following compiler options:
+
+CC = '${CC}'
+CXX = '$CXX}'
+LD = '${LD}'
+CFLAGS = '${CFLAGS}'
+CXXFLAGS = '${CXXFLAGS}'
+
+And the following configuration command:
 
 $(printf '%s' "${configureCmd}" | sed -E 's/\s+/\n  /g')
 
@@ -249,6 +254,10 @@ ie__construct_configure_cmd() {
     ;;
   esac
 
+  if "${USE_LTO}"; then
+    configureCmd="${configureCmd} --enable-link-time-optimization"
+  fi
+
   if "${USE_PGTK}"; then
     configureCmd="${configureCmd} --with-pgtk"
   elif [ "${osType}" = "Linux" ]; then
@@ -280,7 +289,6 @@ ie__install_from_source() {
 
   if [ -d "${EMACS_DEST}" ]; then
     ie__backup_emacs_repository
-    ie__uninstall_old_emacs_installation
   fi
 
   log_info "Cloning/Updating Emacs Git Repo"
@@ -291,6 +299,7 @@ ie__install_from_source() {
       ./autogen.sh &&
       eval "${configureCmd}" &&
       make bootstrap -j"$(nproc)" &&
+      ie__uninstall_old_emacs_installation &&
       sudo make install
   ) &&
   ie__remove_emacs_backup_repository
@@ -304,7 +313,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o g:hpm --long gcc-version:,help,pgtk,prefix:,use-mold -n 'install_emacs' -- "$@")
+args=$(getopt -o g:hlmp --long gcc-version:,help,use-lto,use-mold,pgtk,prefix: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -329,6 +338,18 @@ while true; do
     exit 0
     ;;
 
+  -l | --use-lto)
+    log_info "Enabling ${CYAN}link-time optimization${NC}"
+    USE_LTO=true
+    shift
+    ;;
+
+  -m | --use-mold)
+    log_info "Using ${CYAN}mold${NC} linker"
+    USE_MOLD_LINKER=true
+    shift
+    ;;
+
   -p | --pgtk)
     log_info "Building with Pure GTK support"
     USE_PGTK=true
@@ -345,12 +366,6 @@ while true; do
       shift 2
       ;;
     esac
-    ;;
-
-  --use-mold | -m)
-    log_info "Using ${CYAN}mold${NC} linker"
-    USE_MOLD_LINKER=true
-    shift
     ;;
 
   --)
