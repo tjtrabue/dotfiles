@@ -136,7 +136,7 @@ ie__setup() {
 # succeeded.
 ie__remove_emacs_backup_repository() {
   if [ -d "${EMACS_BACKUP}" ]; then
-    log_info "Removing Emacs backup repository"
+    log_info "Removing Emacs backup repository: ${BLUE}${EMACS_BACKUP}${NC}"
     rm -rf "${EMACS_BACKUP}"
   fi
 }
