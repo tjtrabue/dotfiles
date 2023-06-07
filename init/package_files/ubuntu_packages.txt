@@ -181,6 +181,7 @@ maildir-utils
 mailutils
 mediainfo
 meson
+mold
 mu4e
 neovim
 nodejs

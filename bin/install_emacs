@@ -14,10 +14,11 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare DOTFILES_REPO="${HOME}/.dotfiles"
 declare WS
 
-# Compiler options
+# Compiler/Linker options
 declare IE_GCC_VERSION=""
 declare IE_CC="gcc"
 declare IE_CXX="g++"
+declare USE_MOLD_LINKER=false
 
 # Build options
 declare INSTALL_PREFIX="/usr/local"
@@ -81,6 +82,10 @@ OPTIONS:
     Compile Emacs with Pure GTK support. This is not recommended if you will be
     running Emacs in an X Windows session. Pure GTK works well for Wayland, and
     for Emacs running as part of WSL on Windows.
+
+  -m | --use-mold
+    Use the Modern Linker (mold) instead of the standard linker. This requires
+    you to have mold installed on your machine.
 EOF
 }
 
@@ -165,6 +170,39 @@ ie__mac_build_options() {
 }
 # }}}
 
+# Construct C and C++ compiler/linker options, and export the appropriate
+# environment variables.
+ie__construct_cc_options() {
+  LD="$(command -v ld)"
+  CFLAGS=""
+  CXXFLAGS=""
+
+  if "${USE_MOLD_LINKER}" && [ -x "$(command -v mold)" ]; then
+    LD="$(command -v mold)"
+    CFLAGS="-fuse-ld=mold"
+    CXXFLAGS="-fuse-ld=mold"
+  elif [ ! -x "$(command -v mold)" ]; then
+    err "mold linker requested, but no mold executable found on PATH"
+    return 1
+  fi
+
+  command cat <<EOF
+Using the following compiler configuration:
+  CC = '${IE_CC}'
+  CXX = '${IE_CXX}'
+  LD = '${LD}'
+  CFLAGS = '${CFLAGS}'
+  CXXFLAGS = '${CXXFLAGS}'
+
+EOF
+
+  export CC="${IE_CC}"
+  export CXX="${IE_CXX}" &&
+  export LD
+  export CFLAGS
+  export CXXFLAGS
+}
+
 ie__confirm_installation() {
   local configureCmd="${1}"
   local response=""
@@ -232,6 +270,9 @@ ie__install_from_source() {
 
   configureCmd="$(ie__construct_configure_cmd)"
 
+  # Export appropriate C/C++ compiler environment variables
+  ie__construct_cc_options
+
   if ! ie__confirm_installation "${configureCmd}"; then
     err "Installation terminated by user."
     return 1
@@ -247,7 +288,6 @@ ie__install_from_source() {
   (
     log_info "Installing latest Emacs" &&
       cd "${EMACS_DEST}" &&
-      export CC="${IE_CC}" CXX="${IE_CXX}" &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
       make bootstrap -j"$(nproc)" &&
@@ -264,7 +304,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o g:hp --long gcc-version:,help,pgtk,prefix: -n 'install_emacs' -- "$@")
+args=$(getopt -o g:hpm --long gcc-version:,help,pgtk,prefix:,use-mold -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -305,6 +345,12 @@ while true; do
       shift 2
       ;;
     esac
+    ;;
+
+  --use-mold | -m)
+    log_info "Using ${CYAN}mold${NC} linker"
+    USE_MOLD_LINKER=true
+    shift
     ;;
 
   --)
