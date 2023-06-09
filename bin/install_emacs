@@ -23,9 +23,15 @@ declare USE_MOLD_LINKER=false
 # Build options
 declare DOCS_HTML=false
 declare DOCS_PDF=false
+declare EXTRA_CONFIG_ARGS=""
 declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
 declare USE_LTO=false
+
+# User/group options
+# The name of the user or group used for shared game score files.
+# Prefixing the user name with ':' specifies a group instead.
+declare GAME_USER=":games"
 
 # Emacs location variables
 declare EMACS_GIT_URL="https://github.com/emacs-mirror/emacs.git"
@@ -78,6 +84,16 @@ OPTIONS:
     Generate Emacs documentation in PDF format after compiling Emacs.
     This makes the same documentation from Emacs' Info system available for
     browsing from any program capable of rendering PDF documents.
+
+  -e ARGS | --extra-config ARGS
+    Add arbitrary arguments to pass to the configure command. The arguments must
+    be a space-separated string of options.
+
+    Example: ${THIS_EXEC} --extra-config '--without-xaw3d --with-gsettings'
+
+    NOTE: Be careful before using this option! Most of the useful configure
+    arguments are controlled through other options to this script, and you
+    should prefer those over passing your own arguments using this option.
 
   -g VERSION | --gcc-version=VERSION
     Use the specified numeric VERSION of the GCC and G++ compilers.
@@ -179,7 +195,7 @@ ie__uninstall_old_emacs_installation() {
 ie__linux_build_options() {
   log_info "Adding Linux build options"
   printf '%s' "--with-x-toolkit=gtk3 \
-    --without-xaw3d"
+    --without-gsettings"
 }
 
 ie__mac_build_options() {
@@ -187,6 +203,8 @@ ie__mac_build_options() {
   printf '%s' "--with-ns"
 }
 # }}}
+
+# Compile-From-Source Functions {{{
 
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
@@ -227,10 +245,30 @@ LD = '${LD}'
 CFLAGS = '${CFLAGS}'
 CXXFLAGS = '${CXXFLAGS}'
 
+EOF
+
+    command cat <<EOF
 And the following configuration command:
 
 $(printf '%s' "${configureCmd}" | sed -E 's/\s+/\n  /g')
 
+EOF
+
+    if "${DOCS_HTML}"; then
+      command cat <<EOF
+HTML documentation will be generated.
+
+EOF
+    fi
+
+    if "${DOCS_PDF}"; then
+      command cat <<EOF
+PDF documentation will be generated.
+
+EOF
+    fi
+
+    command cat <<EOF
 Continue? [y/n]
 EOF
     read -r response
@@ -253,6 +291,7 @@ ie__construct_configure_cmd() {
     --with-xwidgets \
     --with-imagemagick \
     --with-native-compilation=aot \
+    --with-gameuser=${GAME_USER} \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
   osType="$(getostype)"
@@ -279,6 +318,12 @@ ie__construct_configure_cmd() {
     configureCmd="${configureCmd} --with-x"
   fi
 
+  if [ -n "${EXTRA_CONFIG_ARGS}" ]; then
+    # If the user passed extra configure arguments on the command line, add them
+    # here.
+    configureCmd="${configureCmd} ${EXTRA_CONFIG_ARGS}"
+  fi
+
   log_info "Will configure Emacs build with: ${GREEN}${configureCmd}${NC}"
   printf '%s' "${configureCmd}"
 }
@@ -286,7 +331,7 @@ ie__construct_configure_cmd() {
 # Compile Emacs source code. Optionally, generate documentation in HTML/PDF
 # formats. This function presupposes that the user has already run the
 # configure command.
-ie__compile_emacs() {
+ie__build_emacs() {
   log_info "Compiling Emacs from source"
 
   make bootstrap -j"$(nproc)"
@@ -299,6 +344,24 @@ ie__compile_emacs() {
   if "${DOCS_PDF}"; then
     log_info "Generating ${MAGENTA}PDF${NC} documentation"
     make pdf -j"$(nproc)"
+  fi
+}
+
+# Run the `make install` commands necessary to install a freshly compiled Emacs
+# distribution.
+ie__install_emacs_build() {
+  log_info "Installing new Emacs build"
+
+  sudo make install
+
+  if "${DOCS_HTML}"; then
+    log_info "Installing generated HTML documentation"
+    sudo make install-html
+  fi
+
+  if "${DOCS_PDF}"; then
+    log_info "Installing generated PDF documentation"
+    sudo make install-pdf
   fi
 }
 
@@ -330,12 +393,13 @@ ie__install_from_source() {
       cd "${EMACS_DEST}" &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
-      ie__compile_emacs &&
+      ie__build_emacs &&
       ie__uninstall_old_emacs_installation &&
-      sudo make install
+      ie__install_emacs_build
   ) &&
   ie__remove_emacs_backup_repository
 }
+# }}}
 
 main() {
   print_header "Installing Emacs (the best editor!)"
@@ -345,7 +409,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o g:hlmp --long docs-html,docs-pdf,gcc-version:,help,use-lto,use-mold,pgtk,prefix: -n 'install_emacs' -- "$@")
+args=$(getopt -o e:g:hlmp --long docs-html,docs-pdf,extra-config:,gcc-version:,help,use-lto,use-mold,pgtk,prefix: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -370,6 +434,18 @@ while true; do
         IE_GCC_VERSION="${2}"
         IE_CC="gcc-${IE_GCC_VERSION}"
         IE_CXX="g++-${IE_GCC_VERSION}"
+        shift 2
+        ;;
+    esac
+    ;;
+
+  -e | --extra-config)
+    case "$2" in
+      "")
+        shift 2
+        ;;
+      *)
+        EXTRA_CONFIG_ARGS="${2}"
         shift 2
         ;;
     esac
@@ -404,7 +480,7 @@ while true; do
       shift 2
       ;;
     *)
-      INSTALL_PREFIX="$2"
+      INSTALL_PREFIX="${2}"
       shift 2
       ;;
     esac
@@ -416,7 +492,7 @@ while true; do
     ;;
 
   *)
-    err "Unknown option $1 to ${THIS_EXEC}"
+    err "Unknown option ${1} to ${THIS_EXEC}"
     exit 2
     ;;
   esac

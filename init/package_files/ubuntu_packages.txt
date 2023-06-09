@@ -10,6 +10,7 @@ caca-utils
 clang
 clang-format
 clang-tidy
+cscope
 dbus-x11
 debhelper
 dpkg-dev

@@ -27,6 +27,7 @@ cmus
 crictl
 critest
 crypto++
+cscope
 ctags
 cups
 cups-pdf
