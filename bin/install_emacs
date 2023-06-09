@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Emacs installer script.
+# This script installs Emacs from source.
 #
 # All of the functions in this file are prefixed with "ie" to show they are
 # privately namespaced to this script, and thus should not conflict with
@@ -53,13 +53,11 @@ declare LOG_LEVEL=3
 # Help {{{
 _help() {
   command cat <<EOF
-${THIS_EXEC}
+${THIS_EXEC} - Install Emacs from its master branch.
 
-Install Emacs from its master branch.
-
-You will need to install lots of build dependencies, and unfortunately the list
-changes pretty drastically depending on your OS. Some generic advice for
-building Emacs from source:
+You will need to install lots of build dependencies in order to run this script,
+and unfortunately the list changes pretty drastically depending on your OS. Some
+generic advice for building Emacs from source:
 
 - Make sure you have libgccjit installed, and make sure its version matches
   your GCC version. Otherwise, the configure step will fail.
@@ -69,6 +67,11 @@ If installing on Windows for WSL, see the following page for instructions:
 
 As well as the following article on using Linux GUI apps on Windows:
   https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps
+
+This Arch Linux AUR package's PKGBUILD script is also a great reference for
+understanding the Emacs compilation process, as well as common pitfalls you may
+encounter, and I highly recommend you read through the entire script:
+  https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=emacs-git
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -141,6 +144,15 @@ ie__check_gcc_version() {
   fi
   log_info "Using GCC and G++ version: ${CYAN}${IE_GCC_VERSION}${NC}"
 }
+
+# If the user requeests to use mold as the executable linker, make sure the user
+# has mold installed as it is not a standard GNU build tool.
+ie__check_mold() {
+  if "${USE_MOLD_LINKER}" && [ -z "$(command -v mold)" ]; then
+    err "Mold linker requested, but no mold executable found on PATH"
+    exit 1
+  fi
+}
 # }}}
 
 # Setup/Cleanup Functions {{{
@@ -209,19 +221,17 @@ ie__mac_build_options() {
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
 ie__construct_cc_options() {
-  CC="${IE_CC}"
-  CXX="${IE_CXX}"
+  CC="$(command -v "${IE_CC}")"
+  CXX="$(command -v "${IE_CXX}")"
   LD="$(command -v ld)"
   CFLAGS=""
   CXXFLAGS=""
 
-  if "${USE_MOLD_LINKER}" && [ -x "$(command -v mold)" ]; then
+  if "${USE_MOLD_LINKER}"; then
+    ie__check_mold
     LD="$(command -v mold)"
     CFLAGS="-fuse-ld=mold"
     CXXFLAGS="-fuse-ld=mold"
-  elif "${USE_MOLD_LINKER}" && [ ! -x "$(command -v mold)" ]; then
-    err "mold linker requested, but no mold executable found on PATH"
-    return 1
   fi
 
   export CC
