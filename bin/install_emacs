@@ -27,6 +27,7 @@ declare EXTRA_CONFIG_ARGS=""
 declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
 declare USE_LTO=false
+declare SOUND_SUPPORT=""
 
 # User/group options
 # The name of the user or group used for shared game score files.
@@ -123,6 +124,18 @@ OPTIONS:
     Compile Emacs with Pure GTK support. This is not recommended if you will be
     running Emacs in an X Windows session. Pure GTK works well for Wayland, and
     for Emacs running as part of WSL on Windows.
+
+  -s VALUE | --sound VALUE
+    Compile Emacs with sound support for backend with name VALUE.
+    This option is only valid for GNU/Linux, FreeBSD, NetBSD, MinGW, or Cygwin
+    builds.
+
+    VALUE must be one of:
+      - yes
+      - alsa
+      - oss
+      - bsd-ossaudio
+      - no
 EOF
 }
 
@@ -150,6 +163,28 @@ ie__check_gcc_version() {
 ie__check_mold() {
   if "${USE_MOLD_LINKER}" && [ -z "$(command -v mold)" ]; then
     err "Mold linker requested, but no mold executable found on PATH"
+    exit 1
+  fi
+}
+
+# Make sure the user passes a valid argument to the --sound flag.
+ie__check_sound() {
+  local osType
+
+  osType="$(getostype)"
+
+  case "${SOUND_SUPPORT}" in
+    "yes" | "alsa" | "oss" | "bsd-ossaudio" | "no")
+      ;;
+
+    *)
+      err "Unsupported sound backend: ${CYAN}${SOUND_SUPPORT}${NC}"
+      exit 1
+      ;;
+  esac
+
+  if [ "${osType}" = "Darwin" ]; then
+    err "Cannot specify sound option for Mac builds"
     exit 1
   fi
 }
@@ -320,6 +355,15 @@ ie__construct_configure_cmd() {
     configureCmd="${configureCmd} --enable-link-time-optimization"
   fi
 
+  if [ -n "${SOUND_SUPPORT}" ]; then
+    {
+      ie__check_sound &&
+      configureCmd="${configureCmd} --with-sound=${SOUND_SUPPORT}"
+    } || {
+      exit 1
+    }
+  fi
+
   if "${USE_PGTK}"; then
     configureCmd="${configureCmd} --with-pgtk"
   elif [ "${osType}" = "Linux" ]; then
@@ -419,7 +463,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o e:g:hlmp --long docs-html,docs-pdf,extra-config:,gcc-version:,help,use-lto,use-mold,pgtk,prefix: -n 'install_emacs' -- "$@")
+args=$(getopt -o e:g:hlmps: --long docs-html,docs-pdf,extra-config:,gcc-version:,help,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -478,12 +522,6 @@ while true; do
     shift
     ;;
 
-  -p | --pgtk)
-    log_info "Building with Pure GTK support"
-    USE_PGTK=true
-    shift
-    ;;
-
   --prefix)
     case "$2" in
     "")
@@ -491,6 +529,25 @@ while true; do
       ;;
     *)
       INSTALL_PREFIX="${2}"
+      shift 2
+      ;;
+    esac
+    ;;
+
+  -p | --pgtk)
+    log_info "Building with Pure GTK support"
+    USE_PGTK=true
+    shift
+    ;;
+
+  -s | --sound)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      log_info "Building with sound support for ${CYAN}${2}${NC}"
+      SOUND_SUPPORT="${2}"
       shift 2
       ;;
     esac
