@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Initialize the Windows Subsystem for Linux
+
 # Trap errors and print error message
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
@@ -20,7 +22,7 @@ declare LOG_LEVEL=3
 # Functions {{{
 _help() {
   command cat <<EOF
-${THIS_EXEC} | <insert description here>
+${THIS_EXEC} | Initialize the Windows Subsystem for Linux
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -31,8 +33,25 @@ OPTIONS:
 EOF
 }
 
+# Allow Linux GUI apps access to fonts installed on the main Windows OS.
+share_windows_fonts() {
+  local localFontConfigFile="/etc/fonts/local.conf"
+  local windowsFontsDir="/mnt/c/Windows/Fonts"
+
+  log_info "Creating conf file to access Windows Fonts: ${}"
+
+  sudo tee "${localFontConfigFile}" >>/dev/null 2>&1 <<EOF
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+    <dir>${windowsFontsDir}</dir>
+</fontconfig>
+EOF
+}
+
 main() {
-  print_header "Hello, world!"
+  print_header "Initializing the Windows Subsystem for Linux (WSL)"
+  share_windows_fonts
 }
 # }}}
 
