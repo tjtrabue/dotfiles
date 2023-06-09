@@ -47,6 +47,8 @@ share_windows_fonts() {
     <dir>${windowsFontsDir}</dir>
 </fontconfig>
 EOF
+
+  fc-cache -vf
 }
 
 main() {
