@@ -38,7 +38,7 @@ share_windows_fonts() {
   local localFontConfigFile="/etc/fonts/local.conf"
   local windowsFontsDir="/mnt/c/Windows/Fonts"
 
-  log_info "Creating conf file to access Windows Fonts: ${}"
+  log_info "Creating conf file to access Windows Fonts: ${windowsFontsDir}"
 
   sudo tee "${localFontConfigFile}" >>/dev/null 2>&1 <<EOF
 <?xml version="1.0"?>
