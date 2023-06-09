@@ -21,6 +21,8 @@ declare IE_CXX="g++"
 declare USE_MOLD_LINKER=false
 
 # Build options
+declare DOCS_HTML=false
+declare DOCS_PDF=false
 declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
 declare USE_LTO=false
@@ -66,6 +68,17 @@ USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
+  --docs-html
+    Generate Emacs documentation in HTML format after compiling Emacs.
+    This makes the same documentation from Emacs' Info system available for
+    browsing from any program capable of rendering HTML (usually a web
+    browser).
+
+  --docs-pdf
+    Generate Emacs documentation in PDF format after compiling Emacs.
+    This makes the same documentation from Emacs' Info system available for
+    browsing from any program capable of rendering PDF documents.
+
   -g VERSION | --gcc-version=VERSION
     Use the specified numeric VERSION of the GCC and G++ compilers.
     If this option is not specified, this program uses the system's default
@@ -209,7 +222,7 @@ ie__confirm_installation() {
 This script will now install Emacs using the following compiler options:
 
 CC = '${CC}'
-CXX = '$CXX}'
+CXX = '${CXX}'
 LD = '${LD}'
 CFLAGS = '${CFLAGS}'
 CXXFLAGS = '${CXXFLAGS}'
@@ -270,6 +283,25 @@ ie__construct_configure_cmd() {
   printf '%s' "${configureCmd}"
 }
 
+# Compile Emacs source code. Optionally, generate documentation in HTML/PDF
+# formats. This function presupposes that the user has already run the
+# configure command.
+ie__compile_emacs() {
+  log_info "Compiling Emacs from source"
+
+  make bootstrap -j"$(nproc)"
+
+  if "${DOCS_HTML}"; then
+    log_info "Generating ${MAGENTA}HTML${NC} documentation"
+    make html -j"$(nproc)"
+  fi
+
+  if "${DOCS_PDF}"; then
+    log_info "Generating ${MAGENTA}PDF${NC} documentation"
+    make pdf -j"$(nproc)"
+  fi
+}
+
 # Install emacs from source. This option is pretty hard to make portable, but
 # I've done the best I can. You will need a lot of dependencies, and their names
 # will change depending on you OS. Check my ubuntu_packages.txt and
@@ -288,8 +320,7 @@ ie__install_from_source() {
   fi
 
   if [ -d "${EMACS_DEST}" ]; then
-    ie__backup_emacs_repository &&
-    ie__uninstall_old_emacs_installation
+    ie__backup_emacs_repository
   fi
 
   log_info "Cloning/Updating Emacs Git Repo"
@@ -299,7 +330,8 @@ ie__install_from_source() {
       cd "${EMACS_DEST}" &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
-      make bootstrap -j"$(nproc)" &&
+      ie__compile_emacs &&
+      ie__uninstall_old_emacs_installation &&
       sudo make install
   ) &&
   ie__remove_emacs_backup_repository
@@ -313,12 +345,22 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o g:hlmp --long gcc-version:,help,use-lto,use-mold,pgtk,prefix: -n 'install_emacs' -- "$@")
+args=$(getopt -o g:hlmp --long docs-html,docs-pdf,gcc-version:,help,use-lto,use-mold,pgtk,prefix: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
+  --docs-html)
+    DOCS_HTML=true
+    shift
+    ;;
+
+  --docs-pdf)
+    DOCS_PDF=true
+    shift
+    ;;
+
   -g | --gcc-version)
     case "$2" in
       "")
