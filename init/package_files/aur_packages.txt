@@ -34,6 +34,7 @@ p4v
 pack-cli-bin
 polybar-git
 roswell
+slack-desktop
 swift-bin
 texlive-latexindent-meta
 texlive-most-doc

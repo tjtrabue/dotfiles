@@ -355,6 +355,10 @@ link/config/xsettingsd/
 link/config/kactivitymanagerd*
 # }}}
 
+# Slack {{{
+link/config/Slack/
+# }}}
+
 # Akonadi {{{
 link/config/akonadi/
 link/config/akonadi*
