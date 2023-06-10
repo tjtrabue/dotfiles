@@ -84,10 +84,69 @@ __increment_elixir_ls_version_dirs() {
   )
 }
 
+__download_elixir_ls_metadata() {
+  local githubApiUrl="https://api.github.com/repos"
+  local elixirLsReleasesUrl="${githubApiUrl}/elixir-lsp/elixir-ls/releases/latest"
+  local elixirLsReleaseJson="/tmp/elixir-ls-release.json"
+
+  log_info "Download elixir-ls release info file to:" \
+    "${BLUE}${elixirLsReleaseJson}${NC}"
+  curl -sL -H 'Accept: application/json' "${elixirLsReleasesUrl}" \
+    -o "${elixirLsReleaseJson}"
+}
+
+# Download a specific elixir-ls release, such as '1.14-25.1'.
+#
+# The downloaded ZIP file resides in:
+#   ~/.elixir_ls_installs/downloads/
+# The actual elixir-ls installation resides in:
+#   ~/.elixir_ls_installs/elixir-ls-VERSION/
+__download_elixir_ls_dist() {
+  local elixirLsVersionToDownload="${1:-latest}"
+  local elixirLsReleaseBasename="elixir-ls-${elixirLsVersionToDownload}"
+  local elixirLsReleaseJson="/tmp/elixir-ls-release.json"
+  local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls_installs}"
+  local elixirLsDownloadsDir="${elixirLsHome}/downloads"
+  local elixirLsReleaseZip="${elixirLsDownloadsDir}/${elixirLsReleaseBasename}.zip"
+  local elixirLsReleaseDir="${elixirLsHome}/${elixirLsReleaseBasename}"
+  local elixirLsReleaseDownloadUrl
+
+  if [ ! -f "${elixirLsReleaseJson}" ]; then
+    __download_elixir_ls_metadata
+  fi
+
+  if [ "${elixirLsVersionToDownload}" = 'latest' ]; then
+    log_info "Downloading ${MAGENTA}latest${NC} elixir-ls release"
+    elixirLsReleaseDownloadUrl="$(jq '.' "${elixirLsReleaseJson}" |
+      grep 'browser_download_url' |
+      sed 's/^\s*//' |
+      tail -2 |
+      head -1 |
+      awk '{print $2}' |
+      sed -e 's/^"//' -e 's/"$//')"
+  else
+    log_info "Downloading elixir-ls release:" \
+      "${MAGENTA}${elixirLsVersionToDownload}${NC}"
+    elixirLsReleaseDownloadUrl="$(jq '.' "${elixirLsReleaseJson}" |
+      grep "browser_download_url.*elixir-ls-${elixirLsVersionToDownload}\.zip" |
+      sed 's/^\s*//' |
+      awk '{print $2}' |
+      sed -e 's/^"//' -e 's/"$//')"
+  fi
+
+  curl -sL "${elixirLsReleaseDownloadUrl}" \
+    --create-dirs \
+    -o "${elixirLsDownloadsDir}/elixir-ls-${elixirLsVersionToDownload}.zip"
+
+  mkdir -p "${elixirLsReleaseDir}"
+  unzip -d "${elixirLsReleaseDir}" "${elixirLsReleaseZip}"
+}
+
 # Download the latest elixir-ls .zip bundle from GitHub.
 __download_latest_elixir_ls_dist() {
   local githubApiUrl="https://api.github.com/repos"
   local elixirLsReleasesUrl="${githubApiUrl}/elixir-lsp/elixir-ls/releases/latest"
+  local elixirLsReleaseJson="/tmp/elixir-ls-release.json"
   local elixirLsHome="${ELIXIR_LS_HOME:-${HOME}/.elixir_ls_installs}"
   local elixirLsDownloadDir="${elixirLsHome}/latest"
   local elixirLsPrevious="${elixirLsHome}/previous_1"
