@@ -170,10 +170,12 @@ streamlink
 t1utils
 tar
 texinfo
+texlive-basic
 texlive-bin
 texlive-lang
 texlive-langgreek
 texlive-latexextra
+texlive-mathscience
 texlive-most
 texworks
 the_silver_searcher
