@@ -3,6 +3,7 @@ atool
 autoconf
 automake
 bat
+bc
 bsd-mailx
 build-essential
 bzip2
