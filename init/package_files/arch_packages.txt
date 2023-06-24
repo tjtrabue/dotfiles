@@ -181,6 +181,7 @@ texworks
 the_silver_searcher
 throttled
 tidy
+tk
 tree
 tree-sitter
 ttc-iosevka
