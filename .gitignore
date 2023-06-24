@@ -430,4 +430,17 @@ link/config/autostart/state-svc.desktop
 /misc/professional/auto/
 # }}}
 
+# 1Password {{{
+link/config/1Password/
+# }}}
+
+# Browser {{{
+link/config/google-chrome-beta/
+link/config/google-chrome-unstable/
+link/config/google-chrome/
+link/config/microsoft-edge-dev/
+link/config/vivaldi-snapshot/
+link/config/vivaldi/
+# }}}
+
 # vim:foldenable:foldmethod=marker

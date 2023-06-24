@@ -2,6 +2,7 @@ Wand
 autopep8
 beautysh
 black
+build
 cmake-language-server
 cmakelint
 cookiecutter
@@ -12,6 +13,7 @@ eyed3
 flake8
 glances
 grip
+installer
 ipython
 jedi
 mdv3
@@ -29,6 +31,7 @@ six
 thefuck
 vim-vint
 virtualenvwrapper
+wheel
 yamlfmt
 yamllint
 yapf
