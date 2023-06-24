@@ -16,6 +16,7 @@ awesome
 aws-cli
 bash-completion
 bat
+bc
 biber
 broot
 cabal-install
