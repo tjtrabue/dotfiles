@@ -1,0 +1,26 @@
+#+TITLE:   Setting Up gcloud CLI
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-06-27
+#+TAGS:    wiki google cloud gcloud cli
+#+STARTUP: fold
+
+=gcloud= is the Google Cloud CLI tool, similar to the =aws= command for AWS.
+
+* Installation
+
+To set up =gcloud= on a new computer, install the =gcloud= CLI tool
+suite. Instructions for doing so will vary depending on your operating system or
+Linux distribution.
+
+* Configuration
+
+To configure =gcloud=, run the following command:
+
+#+begin_src sh
+  gcloud init
+#+end_src
+
+The ensuing prompts will walk you through the setup process. The process is
+simple: you will login to the appropriate Google account in your web browser,
+then you will select which Google Cloud project with which you wish to interact.

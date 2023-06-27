@@ -2,7 +2,7 @@
 #+author:   Tom Trabue
 #+email:    tom.trabue@gmail.com
 #+date:     2021:07:03
-#+tags:     
+#+tags:     wiki emacs org mode use package
 #+STARTUP: fold
 
 =use-package= is a marvel of a module management layer for Emacs, but it can be
