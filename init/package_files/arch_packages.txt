@@ -52,6 +52,7 @@ feh
 ffmpegthumbnailer
 findutils
 firefox
+flameshot
 fontforge
 fop
 fwupd
