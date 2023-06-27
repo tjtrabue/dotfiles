@@ -402,6 +402,10 @@ link/config/git-cola
 link/config/AWSVPNClient/
 # }}}
 
+# Google Cloud CLI {{{
+link/config/gcloud/
+# }}}
+
 # rclone cloud file tool {{{
 link/config/rclone/rclone.conf
 # }}}

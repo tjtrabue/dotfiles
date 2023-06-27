@@ -15,6 +15,7 @@ emacs-git
 findimagedupes
 flat-remix
 flutter-git
+google-cloud-cli
 icons-in-terminal
 jdtls
 kotlin-language-server-git
