@@ -11,92 +11,109 @@ snippet, followed by a /trigger/ for the snippet, which is a key or key chord
 that expands the snippet based on the abbreviation before point.
 
 * yasnippet
-  =yasnippet= itself.
+=yasnippet= itself.
 
-  #+begin_src emacs-lisp
-    (use-package yasnippet
-      :demand t
-      :delight yas-minor-mode
-      :commands
-      (yas-minor-mode yas-global-mode)
-      :general
-      (general-unbind yas-minor-mode-map
-        "TAB"
-        "<tab>")
-      (my/user-leader-def yas-minor-mode-map
-        "y e" 'yas-expand
-        "y f" 'yas-visit-snippet-file
-        "y i" 'yas-insert-snippet
-        "y n" 'yas-new-snippet)
-      :custom
-      ;; Condition evaluated whenever YAS tries to expand a key.
-      (yas-buffer-local-condition yas-not-string-or-comment-condition)
-      ;; How Yasnippet prompts the user for a snippet
-      (yas-prompt-functions '(yas-completing-prompt))
-      :config
-      ;; Integrate Yasnippet with hippie-expand.  We want to add the Yasnippet
-      ;; expand function to hippie-expand's expand function list when we turn
-      ;; Yasnippet on, and remove that expansion function when we turn Yasnippet
-      ;; off.
-      (add-hook 'yas-minor-mode-hook
-                (lambda ()
-                  (if (bound-and-true-p yas-minor-mode)
-                      (add-to-list 'hippie-expand-try-functions-list
-                                   'yas-hippie-try-expand)
-                    (setq-local hippie-expand-try-functions-list
-                                (remove 'yas-hippie-try-expand
-                                        hippie-expand-try-functions-list)))))
-      (add-hook 'yas-global-mode-hook
-                (lambda ()
-                  (if (bound-and-true-p yas-global-mode)
-                      (add-to-list 'hippie-expand-try-functions-list
-                                   'yas-hippie-try-expand)
-                    (setq hippie-expand-try-functions-list
-                          (remove 'yas-hippie-try-expand
-                                  hippie-expand-try-functions-list)))))
-      (yas-global-mode 1)
-      (yas-reload-all))
-  #+end_src
+** Known Issues
+*** 6/28/23: "Symbol's function definition is void: =(setf internal--with-suppressed-warnings)="
+Yasnippet GitHub issue #1166.
+
+Right now, there is an issue where Yasnippet's lack of lexical binding causes
+problems with the latest versions of Emacs, most likely do to a recent refactor
+of Emacs' macroexpand feature. As a workaround, place this line at the top of
+the =yasnippet.el= file:
+
+#+begin_src emacs-lisp :tangle no
+  ;; -*- lexical-binding: t -*-
+#+end_src
+
+Hopefully the maintainers will patch this issue soon. In the meantime, [[https://github.com/joaotavora/yasnippet/issues/1166][follow
+the issue on GitHub]] for updates.
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package yasnippet
+    :demand t
+    :delight yas-minor-mode
+    :commands
+    (yas-minor-mode yas-global-mode)
+    :general
+    (general-unbind yas-minor-mode-map
+      "TAB"
+      "<tab>")
+    (my/user-leader-def yas-minor-mode-map
+      "y e" 'yas-expand
+      "y f" 'yas-visit-snippet-file
+      "y i" 'yas-insert-snippet
+      "y n" 'yas-new-snippet)
+    :custom
+    ;; Condition evaluated whenever YAS tries to expand a key.
+    (yas-buffer-local-condition yas-not-string-or-comment-condition)
+    ;; How Yasnippet prompts the user for a snippet
+    (yas-prompt-functions '(yas-completing-prompt))
+    :config
+    ;; Integrate Yasnippet with hippie-expand.  We want to add the Yasnippet
+    ;; expand function to hippie-expand's expand function list when we turn
+    ;; Yasnippet on, and remove that expansion function when we turn Yasnippet
+    ;; off.
+    (add-hook 'yas-minor-mode-hook
+              (lambda ()
+                (if (bound-and-true-p yas-minor-mode)
+                    (add-to-list 'hippie-expand-try-functions-list
+                                 'yas-hippie-try-expand)
+                  (setq-local hippie-expand-try-functions-list
+                              (remove 'yas-hippie-try-expand
+                                      hippie-expand-try-functions-list)))))
+    (add-hook 'yas-global-mode-hook
+              (lambda ()
+                (if (bound-and-true-p yas-global-mode)
+                    (add-to-list 'hippie-expand-try-functions-list
+                                 'yas-hippie-try-expand)
+                  (setq hippie-expand-try-functions-list
+                        (remove 'yas-hippie-try-expand
+                                hippie-expand-try-functions-list)))))
+    (yas-global-mode 1)
+    (yas-reload-all))
+#+end_src
 
 * yasnippet-snippets
-  A big collection of pre-written snippets for =yasnippet=.
+A big collection of pre-written snippets for =yasnippet=.
 
-  #+begin_src emacs-lisp
-    (use-package yasnippet-snippets
-      :after yasnippet
-      :demand t)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package yasnippet-snippets
+    :after yasnippet
+    :demand t)
+#+end_src
 
 * common-lisp-snippets
-  Yasnippet snippets for Common Lisp.
+Yasnippet snippets for Common Lisp.
 
-  #+begin_src emacs-lisp
-    (use-package common-lisp-snippets
-      :after yasnippet
-      :demand t)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package common-lisp-snippets
+    :after yasnippet
+    :demand t)
+#+end_src
 
 * clojure-snippets
-  Yasnippet snippets for Clojure.
+Yasnippet snippets for Clojure.
 
-  #+begin_src emacs-lisp
-    (use-package clojure-snippets
-      :after yasnippet
-      :demand t)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package clojure-snippets
+    :after yasnippet
+    :demand t)
+#+end_src
 
 * helm-c-yasnippet
-  Use helm menu for yasnippet completions
+Use helm menu for yasnippet completions
 
-  #+begin_src emacs-lisp
-    (use-package helm-c-yasnippet
-      :after (helm yasnippet)
-      :config
-      (setq helm-yas-space-match-any-greedy t)
-      ;; Must use global-set-key here because this function must be defined at
-      ;; the top level to be used in conjunction with yas-maybe-expand.
-      (global-set-key (kbd "C-c y") 'helm-yas-complete))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package helm-c-yasnippet
+    :after (helm yasnippet)
+    :config
+    (setq helm-yas-space-match-any-greedy t)
+    ;; Must use global-set-key here because this function must be defined at
+    ;; the top level to be used in conjunction with yas-maybe-expand.
+    (global-set-key (kbd "C-c y") 'helm-yas-complete))
+#+end_src
 
 * auto-yasnippet
 Auto-YASnippet is a hybrid of keyboard macros and YASnippet. You create the

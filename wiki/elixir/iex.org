@@ -1,0 +1,17 @@
+#+TITLE:   IEx: The Interactive Elixir Shell
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023:06:28
+#+TAGS:    wiki elixir iex
+#+STARTUP: fold
+
+The Interactive Elixir shell (IEx) is a fantastic development tool that comes
+with each Elixir distribution. This guide seeks to shed some light on its finer
+features, as well as help with troubleshooting issues the reader may encounter
+while using IEx.
+
+* Cancelling a multiline command
+If you find yourself in a bad situation while typing out a multiline command,
+type =C-g=, the shortcut for "user switch command", followed by =i= (for
+interrupt), then finally by =c= (to reconnect to the job). This should cancel
+your command and drop you back into IEx shell session.
