@@ -63,6 +63,7 @@ git
 git-delta
 git-filter-repo
 github-cli
+glad
 global
 gnupg
 go
@@ -92,6 +93,7 @@ kitty
 kubeadm
 kubectl
 libdvdcss
+liblsp-r3d-glx-lib
 libreoffice-fresh
 libxcrypt
 light-locker
