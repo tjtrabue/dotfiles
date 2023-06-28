@@ -11,25 +11,8 @@ snippet, followed by a /trigger/ for the snippet, which is a key or key chord
 that expands the snippet based on the abbreviation before point.
 
 * yasnippet
-=yasnippet= itself.
+The =yasnippet= plugin itself.
 
-** Known Issues
-*** 6/28/23: "Symbol's function definition is void: =(setf internal--with-suppressed-warnings)="
-Yasnippet GitHub issue #1166.
-
-Right now, there is an issue where Yasnippet's lack of lexical binding causes
-problems with the latest versions of Emacs, most likely do to a recent refactor
-of Emacs' macroexpand feature. As a workaround, place this line at the top of
-the =yasnippet.el= file:
-
-#+begin_src emacs-lisp :tangle no
-  ;; -*- lexical-binding: t -*-
-#+end_src
-
-Hopefully the maintainers will patch this issue soon. In the meantime, [[https://github.com/joaotavora/yasnippet/issues/1166][follow
-the issue on GitHub]] for updates.
-
-** =use-package= specification
 #+begin_src emacs-lisp
   (use-package yasnippet
     :demand t
