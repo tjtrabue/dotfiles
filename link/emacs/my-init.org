@@ -1,7 +1,7 @@
-#+title:   Emacs Initialization File
-#+author:  Thomas Trabue
-#+email:   tom.trabue@gmail.com
-#+date:    2020:5:25
+#+TITLE:   Emacs Initialization File
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020:5:25
 #+STARTUP: fold
 
 This Org document contains my primary Emacs configuration. =~/.emacs= only holds
