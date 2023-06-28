@@ -447,4 +447,9 @@ link/config/vivaldi-snapshot/
 link/config/vivaldi/
 # }}}
 
+# Flameshot screenshot program {{{
+link/config/flameshot/
+link/config/flameshotrc
+# }}}
+
 # vim:foldenable:foldmethod=marker
