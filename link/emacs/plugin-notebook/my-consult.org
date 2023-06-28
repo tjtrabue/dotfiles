@@ -217,7 +217,7 @@ A set of Consult sources for Git files. =M-x consult-ls-git= is the primary
 command this package provides, showing file info for files changed in Git,
 staged files, tracked files, etc.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package consult-ls-git
     :after consult)
 #+end_src
