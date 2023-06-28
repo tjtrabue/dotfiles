@@ -1,0 +1,69 @@
+#+TITLE:    Troubleshooting Arch Linux Issues
+#+AUTHOR:   Tom Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     2021:01:22
+#+TAGS:     arch linux troubleshooting
+
+* Graphical Issues
+First thing's first, make sure you are using the correct driver for your
+purposes. If you are running multiple monitors, you almost always want to use
+the proprietary NVIDIA driver.
+
+** Black screen after system startup
+If you encounter a black screen after your system boots up, this is most likely
+an issue between your desktop environment/window manager and your graphics
+driver. Here are some general tips:
+
+- Make sure your graphics driver is up-to-date,
+- If you use the proprietary NVIDIA driver, make sure you followed all of the
+  setup steps in the Arch Linux Wiki (i.e., you've set all necessary kernel
+  parameters in your bootloader config file, your =/etc/mkinitcpio.conf= file
+  loads the correct modules, etc.),
+- Recreate your bootloader configuration (i.e., if you use GRUB, run =sudo
+  grub-mkconfig -o /boot/grub/grub.cfg=),
+- Regenerate your initial ramdisk environment by running =sudo mkinitcpio -P=,
+- If you're on a laptop and use =optimus-manager=, make sure it works by running
+  =optimus-manager --status=. If this command fails, make sure to re-install
+  =optimus-manager=, or fix whatever issues are keeping it from running
+  correctly.
+
+*** KDE
+Sometimes, after a major update, you must delete old KDE cache files in order
+for KDE to boot correctly. Check under =~/.cache/= and look for any KDE-related
+files and directories, and delete them all. After you remove the files, reboot
+and see if this resolves your issues.
+
+** Screen Discoloration under NVIDIA proprietary driver
+If you experience screen discoloration when a screen updates, such as when
+scrolling a browser, make sure you have the following options set in your
+=/etc/X11/xorg.conf.d/20-nvidia.conf= file. Note that your board name will
+most likely be different than what is listed below:
+
+#+begin_src sh
+  Section "Device"
+  Identifier     "Device0"
+  Driver         "nvidia"
+  VendorName     "NVIDIA Corporation"
+  BoardName      "GeForce GTX 1650 with Max-Q Design"
+  Option         "TripleBuffer" "True"
+  Option         "AllowIndirectGLXProtocol" "off"
+  EndSection
+#+end_src
+
+** Monitors not detected by xrandr or nvidia-settings
+If your monitors are not detected by running =xrandr -q= even though they are
+plugged in and powered on, then you can usually solve this problem by
+doing the following:
+
+- Make sure all monitors are plugged in and powered on,
+- If using a laptop with an NVIDIA graphics card, install and enable the
+  =optimus-manager= service,
+- Restart your computer and check =xrandr= and =nvidia-settings=,
+- If monitors are still not detected, put computer to sleep, let sit for
+  about 10 minutes, and then wake back up and check =xrandr= and
+  =nvidia-settings=.
+
+  Unfortunately, there are no surefire ways to force Linux to detect
+  monitors. All I can do is tell you what has worked for me in the past. This
+  issue is typically a sporadic and annoying one that thankfully tends to
+  resolve itself.
