@@ -25,7 +25,7 @@ of Emacs' macroexpand feature. As a workaround, place this line at the top of
 the =yasnippet.el= file:
 
 #+begin_src emacs-lisp :tangle no
-  ;; -*- lexical-binding: t -*-
+  ;;; -*- lexical-binding: t -*-
 #+end_src
 
 Hopefully the maintainers will patch this issue soon. In the meantime, [[https://github.com/joaotavora/yasnippet/issues/1166][follow
