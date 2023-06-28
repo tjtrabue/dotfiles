@@ -55,7 +55,7 @@ shutdown_emacsdaemon() {
 # Checkout the configured default branch for each repository cloned by the
 # straight.el package manager and update each repo. This is useful for when one
 # package that you desire declares another package you want to use as a
-# vdependency, and checks out a specific revision of the second package that
+# dependency, and checks out a specific revision of the second package that
 # messes up your Emacs configuration.
 straight_update_repos() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
@@ -109,7 +109,8 @@ __straight_update_repos_fast() {
   if [ -x "$(command -v parallel)" ]; then
     # Use GNU Parallel if available.
     find "${straightRepos}" -maxdepth 1 -mindepth 1 -type d |
-      parallel 'echo Updating repo: {/} && git -C {} pull -f'
+      parallel 'printf "%s: ${BLUE}%s${NC}\n" "Updating repo" "{/}" &&
+        git -C {} pull -f'
   else
     find "${straightRepos}" -maxdepth 1 -mindepth 1 -type d \
       -exec git -C '{}' pull -f \;
