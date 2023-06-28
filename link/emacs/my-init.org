@@ -1045,15 +1045,15 @@ straight-pull-all=
   ;; part of the `use-package' macro unnecessary.
   (setq straight-use-package-by-default t)
   ;; The straight.el branch to clone.
-  (setq straight-repository-branch "master")
+  (setq straight-repository-branch "develop")
   (let ((bootstrap-file
          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
+        (bootstrap-version 6))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
            (concat
-            "https://raw.githubusercontent.com/raxod502/straight.el/"
+            "https://raw.githubusercontent.com/radian-software/straight.el/"
             straight-repository-branch
             "/install.el")
            'silent 'inhibit-cookies)

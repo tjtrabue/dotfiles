@@ -68,7 +68,6 @@ different perspective, and more.
 * =use-package= specification
   #+begin_src emacs-lisp
     (use-package perspective
-      ;; :after evil-collection
       :demand t
       :hook
       ;; Save perspective to disk whenever the user kills Emacs.
