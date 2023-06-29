@@ -18,6 +18,7 @@ flutter-git
 google-cloud-cli
 icons-in-terminal
 jdtls
+kind
 kotlin-language-server-git
 kwin-bismuth-bin
 lazygit-git

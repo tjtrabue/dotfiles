@@ -8,7 +8,6 @@ cmakelint
 cookiecutter
 cpplint
 dbus-python
-django
 epc
 eyed3
 flake8
