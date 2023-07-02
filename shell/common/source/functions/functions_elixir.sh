@@ -18,7 +18,8 @@ install_elixir_ls() {
   __download_elixir_ls_dist "${elixirLsVersionToDownload}" &&
     while ! echo "${response}" | grep -q "[YyNn]"; do
       command cat <<EOF
-Would you like to set the current version of elixir-ls to ${elixirLsVersionToDownload}? [y/n]
+Would you like to set the current version of elixir-ls to:
+${GREEN}${elixirLsVersionToDownload}${NC}? [y/n]
 EOF
       read -r response
     done &&
@@ -126,6 +127,8 @@ __download_elixir_ls_dist() {
 
   mkdir -p "${elixirLsReleaseDir}"
   unzip -d "${elixirLsReleaseDir}" "${elixirLsReleaseZip}"
+
+  rm -f "${elixirLsReleaseJson}"
 }
 
 # Symlink the elixir-ls language server and debugger scripts to an executable
