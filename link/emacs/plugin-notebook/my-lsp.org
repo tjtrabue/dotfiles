@@ -446,6 +446,7 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
       [remap xref-find-definitions] 'lsp-ui-peek-find-definitions
       [remap xref-find-references] 'lsp-ui-peek-find-references)
     (general-def 'normal lsp-ui-mode-map
+      "K"  'lsp-ui-doc-glance
       "gd" 'lsp-ui-peek-find-definitions
       "gr" 'lsp-ui-peek-find-references)
     (general-def lsp-ui-peek-mode-map
