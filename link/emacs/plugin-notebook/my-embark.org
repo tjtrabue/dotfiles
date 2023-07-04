@@ -70,6 +70,7 @@ offering you relevant actions to use on a target determined by the context:
       ;; Show the Embark target at point via Eldoc.  You may adjust the Eldoc
       ;; strategy, if you want to see the documentation from multiple providers.
       (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+      (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
       :custom
       ;; This option controls whether or not embark dismisses the minibuffer after
       ;; `embark-act' finishes when the user invokes embark from the minibuffer.
