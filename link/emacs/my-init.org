@@ -15,22 +15,6 @@ If there are no subheadings below this one, you may assume there are no known
 issues and proceed without fear. I update this section regularly, so please
 check it frequently for important updates you must make to your configuration.
 
-** Yasnippet
-*** 6/28/23: "Symbol's function definition is void: =(setf internal--with-suppressed-warnings)="
-GitHub repository joaotavora/yasnippet issue #1166.
-
-Right now, there is an issue where Yasnippet's lack of lexical binding causes
-problems with the latest versions of Emacs, most likely do to a recent refactor
-of Emacs' macroexpand feature. As a workaround, place this line at the top of
-the =yasnippet.el= file:
-
-#+begin_src emacs-lisp :tangle no
-  ;;; -*- lexical-binding: t -*-
-#+end_src
-
-Hopefully the maintainers will patch this issue soon. In the meantime, [[https://github.com/joaotavora/yasnippet/issues/1166][follow
-the issue on GitHub]] for updates.
-
 * NOTE: Slow Emacs Initial Load
 When running a fresh Emacs installation with all the goodies for the first time
 (things like AOT native compilation, jitted trampolines, etc.), Emacs will
