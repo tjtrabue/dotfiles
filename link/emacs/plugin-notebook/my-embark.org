@@ -67,6 +67,9 @@ offering you relevant actions to use on a target determined by the context:
       :init
       ;; Optionally replace the key help with a completing-read interface
       (setq prefix-help-command #'embark-prefix-help-command)
+      ;; Show the Embark target at point via Eldoc.  You may adjust the Eldoc
+      ;; strategy, if you want to see the documentation from multiple providers.
+      (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
       :custom
       ;; This option controls whether or not embark dismisses the minibuffer after
       ;; `embark-act' finishes when the user invokes embark from the minibuffer.
