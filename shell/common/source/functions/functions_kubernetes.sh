@@ -1,5 +1,21 @@
 #!/bin/sh
 
+# Install the helm "package manager" for Kubernetes deployments.
+install_k8s_helm() {
+  local helmInstallerScriptUrl="https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3"
+
+  log_info "Installing Helm for Kubernetes"
+  curl -sL "${helmInstallerScriptUrl}" | bash
+
+  init_helm_repos
+}
+
+# Initialize a new helm installation with basic, project-agnostic repositories.
+init_helm_repos() {
+  log_info "Configuring Helm repositories"
+  helm repo add bitnami https://charts.bitnami.com/bitnami
+}
+
 # Add shell completion for helm.
 init_helm_completions() {
   local userShell="$(basename "${SHELL}")"

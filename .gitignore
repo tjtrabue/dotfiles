@@ -452,4 +452,8 @@ link/config/flameshot/
 link/config/flameshotrc
 # }}}
 
+# Helm (Kubernetes) {{{
+link/config/helm/
+# }}}
+
 # vim:foldenable:foldmethod=marker
