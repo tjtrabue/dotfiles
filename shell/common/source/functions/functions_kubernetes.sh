@@ -1,13 +1,19 @@
 #!/bin/sh
 
+# Install and configure Kubernetes CLI tools and environment settings.
+init_k8s() {
+  log_info "Initializing Kubernetes tools"
+  install_k8s_helm
+  init_helm_repos
+  init_helm_completions
+}
+
 # Install the helm "package manager" for Kubernetes deployments.
 install_k8s_helm() {
   local helmInstallerScriptUrl="https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3"
 
   log_info "Installing Helm for Kubernetes"
   curl -sL "${helmInstallerScriptUrl}" | bash
-
-  init_helm_repos
 }
 
 # Initialize a new helm installation with basic, project-agnostic repositories.
@@ -47,8 +53,10 @@ __init_helm_completions_bash() {
 }
 
 __init_helm_completions_zsh() {
+  local zshCompletionsDir="${ZSH_COMPLETIONS_DIR:-${HOME}/.zsh/completion}"
+
   log_info "Initializing helm completions for zsh"
-  helm completion zsh >"${fpath[1]}/_helm"
+  helm completion zsh >"${zshCompletionsDir}/_helm"
   source <(helm completion zsh)
 }
 
