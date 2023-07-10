@@ -40,6 +40,7 @@ dmenu
 dnsutils
 docbook2x
 docker
+docker-buildx
 docker-compose
 doxygen
 efibootmgr
