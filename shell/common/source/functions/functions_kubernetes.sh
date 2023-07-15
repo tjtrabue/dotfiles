@@ -12,8 +12,10 @@ init_k8s() {
 install_k8s_helm() {
   local helmInstallerScriptUrl="https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3"
 
-  log_info "Installing Helm for Kubernetes"
-  curl -sL "${helmInstallerScriptUrl}" | bash
+  if [ -z "$(command -v helm)" ]; then
+    log_info "Installing Helm for Kubernetes"
+    curl -sL "${helmInstallerScriptUrl}" | bash
+  fi
 }
 
 # Initialize a new helm installation with basic, project-agnostic repositories.

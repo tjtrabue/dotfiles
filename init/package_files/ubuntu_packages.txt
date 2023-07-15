@@ -29,6 +29,7 @@ gcc-12-locales
 gcc-12-multilib
 global
 google-cloud-cli
+google-cloud-sdk-gke-gcloud-auth-plugin
 gvfs
 highlight
 htop
