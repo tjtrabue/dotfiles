@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Help Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC} | <insert description here>
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+# }}}
+
+# Setup/Cleanup Functions {{{
+setup() {
+  install_ubuntu_packages
+}
+# }}}
+
+# Primary Functions {{{
+iu__init_ubuntu_keyring() {
+  log_info "Initializing Ubuntu keyring"
+  # Google Cloud
+  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" |
+    sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+}
+
+iu__import_ubuntu_public_keys() {
+  log_info "Importing Ubuntu public keys"
+
+  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg |
+    sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+}
+
+main() {
+  print_header "Initializing Ubuntu Linux distribution"
+  setup
+  iu__init_ubuntu_keyring
+  iu__import_ubuntu_public_keys
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n 'init_ubuntu' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
