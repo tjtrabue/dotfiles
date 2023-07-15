@@ -28,6 +28,7 @@ gcc-12-doc
 gcc-12-locales
 gcc-12-multilib
 global
+google-cloud-cli
 gvfs
 highlight
 htop
