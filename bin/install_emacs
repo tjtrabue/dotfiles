@@ -426,6 +426,12 @@ ie__install_emacs_build() {
 ie__install_from_source() {
   local configureCmd=""
 
+  if [ -d "${EMACS_DEST}" ]; then
+    ie__backup_emacs_repository
+  fi
+
+  clone_or_update_git_repo "${EMACS_GIT_URL}" "${EMACS_DEST}"
+
   configureCmd="$(ie__construct_configure_cmd)"
 
   # Export appropriate C/C++ compiler environment variables
@@ -436,12 +442,6 @@ ie__install_from_source() {
     return 1
   fi
 
-  if [ -d "${EMACS_DEST}" ]; then
-    ie__backup_emacs_repository
-  fi
-
-  log_info "Cloning/Updating Emacs Git Repo"
-  clone_or_update_git_repo "${EMACS_GIT_URL}" "${EMACS_DEST}"
   (
     log_info "Installing latest Emacs" &&
       cd "${EMACS_DEST}" &&
