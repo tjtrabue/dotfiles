@@ -35,6 +35,7 @@ add_bash_completions() {
   __add_gh_completions_for_bash
   __add_gradle_completions_for_bash
   __add_rust_completions_for_bash
+  __add_kubectl_completions_for_bash
 }
 
 # Add any extra Zsh completions.
@@ -51,6 +52,7 @@ add_zsh_completions() {
   __add_gh_completions_for_zsh
   __add_gradle_completions_for_zsh
   __add_rust_completions_for_zsh
+  __add_kubectl_completions_for_zsh
 }
 
 # Add extra Fish shell completions.
@@ -443,6 +445,22 @@ __add_rust_completions_for_zsh() {
   fi
   if [ -x "$(command -v rustup)" ] && [ ! -f "${zshCompletionDir}/_rustup" ]; then
     rustup completions zsh rustup >"${zshCompletionDir}/_rustup"
+  fi
+}
+
+# Kubernetes utility command line completions for Bash.
+__add_kubectl_completions_for_bash() {
+  if [ -n "$(command -v kubectl)" ]; then
+    log_info "Activating kubectl completions for ${MAGENTA}bash${NC}"
+    . <(kubectl completion bash)
+  fi
+}
+
+# Kubernetes utility command line completions for Zsh.
+__add_kubectl_completions_for_zsh() {
+  if [ -n "$(command -v kubectl)" ]; then
+    log_info "Activating kubectl completions for ${MAGENTA}zsh${NC}"
+    . <(kubectl completion zsh)
   fi
 }
 
