@@ -1,0 +1,29 @@
+#+TITLE:   Docker: Linux Container Runtime
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-07-17
+#+TAGS:
+#+STARTUP: fold
+
+Docker is, quite possibly, the single greatest software deployment innovation of
+the past 30 years. Instead of manually configuring applications to run on a
+particular machine, with all of the implied shared libraries and runtimes
+necessary for the application's to run, Docker abstracts the runtime
+environment, running the application in a /container/ which includes all
+required OS libraries, runtime environments, environment variables, and files.
+
+* docker
+#+begin_src emacs-lisp
+  (use-package docker
+    :general
+    (my/user-leader-def
+      "d" 'docker))
+#+end_src
+
+* dockerfile-mode
+Major mode for interacting with Dockerfiles.
+
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode
+    :mode "Dockerfile\\'")
+#+end_src

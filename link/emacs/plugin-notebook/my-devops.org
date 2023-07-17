@@ -10,19 +10,3 @@ Various dev-ops packages and configuration for Emacs.
 #+begin_src emacs-lisp
   (use-package ansible)
 #+end_src
-
-* docker
-#+begin_src emacs-lisp
-  (use-package docker
-    :general
-    (my/user-leader-def
-      "d" 'docker))
-#+end_src
-
-* dockerfile-mode
-Major mode for interacting with Dockerfiles.
-
-#+begin_src emacs-lisp
-  (use-package dockerfile-mode
-    :mode "Dockerfile\\'")
-#+end_src
