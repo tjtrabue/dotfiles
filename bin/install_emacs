@@ -6,7 +6,7 @@
 # privately namespaced to this script, and thus should not conflict with
 # functions defined in other parts of my dotfiles repository.
 
-set -uo pipefail
+set -u
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 # Variables {{{
@@ -28,6 +28,7 @@ declare INSTALL_PREFIX="/usr/local"
 declare USE_PGTK=false
 declare USE_LTO=false
 declare SOUND_SUPPORT=""
+declare NUM_THREADS="$(nproc)"
 
 # User/group options
 # The name of the user or group used for shared game score files.
@@ -106,6 +107,10 @@ OPTIONS:
 
   -h | --help
     Print the help message (this message) and exit.
+
+  -j NUM_THREADS | --jobs NUM_THREADS
+    The number of concurrent threads to run at once while building Emacs.
+    Defaults to the result of running the 'nproc' command.
 
   -l | --use-lto
     Enable link-time optimization. This build option is still experimental, and
@@ -388,7 +393,7 @@ ie__construct_configure_cmd() {
 ie__build_emacs() {
   log_info "Compiling Emacs from source"
 
-  make bootstrap -j"$(nproc)"
+  make bootstrap -j"${NUM_THREADS}"
 
   if "${DOCS_HTML}"; then
     log_info "Generating ${MAGENTA}HTML${NC} documentation"
@@ -463,7 +468,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o e:g:hlmps: --long docs-html,docs-pdf,extra-config:,gcc-version:,help,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
+args=$(getopt -o e:g:hj:lmps: --long docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -508,6 +513,19 @@ while true; do
   -h | --help)
     _help
     exit 0
+    ;;
+
+  -j | --jobs)
+    case "$2" in
+      "")
+        shift 2
+        ;;
+      *)
+        NUM_THREADS="${2}"
+        log_info "Using ${MAGENTA}${NUM_THREADS}${NC} build threads"
+        shift 2
+        ;;
+    esac
     ;;
 
   -l | --use-lto)
