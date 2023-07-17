@@ -1,0 +1,44 @@
+#+TITLE:   Kubernetes: Container Orchestration System
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-07-16
+#+TAGS:
+#+STARTUP: fold
+
+Kubernetes is a container orchestration system and application deployment super
+tool, turning the immensely complex realm of distributed application deployment
+on virtualized computing infrastructure into declarative configuration.
+
+* kubernetes.el
+A Magit-style interface to the Kubernetes command-line client.
+There is also a =kubernetes-evil= plugin for evil-mode support.
+See =my-evil= for its configuration.
+
+#+begin_src emacs-lisp
+  (use-package kubernetes
+    :commands kubernetes-overview)
+#+end_src
+
+* kubernetes-helm
+Not to be confused with the narrowing completion framework, Helm is a Kubernetes
+package manager, of sorts. It is a templating system for assembling different
+aspects of an application release into one package that developers can customize
+to suit their needs. =kubernetes-helm= provides Helm bindings for Emacs,
+specifically to:
+
+- update dependencies
+- install a chart
+- upgrade a chart
+- get the values of a deployed chart
+- get the status of a deployment
+- render chart template locally
+
+#+begin_src emacs-lisp
+  (use-package kubernetes-helm
+    :commands
+    (kubernetes-helm-dep-up
+     kubernetes-helm-install
+     kubernetes-helm-upgrade
+     kubernetes-helm-values
+     kubernetes-helm-template))
+#+end_src
