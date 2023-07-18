@@ -722,6 +722,9 @@ call s:SourcePluginConfigFile('pgsql.config.vim')
 
 " Markdown preview
 call s:SourcePluginConfigFile('markdown-preview.config.vim')
+
+" vim-markdown
+call s:SourcePluginConfigFile('vim-markdown.config.vim')
 " }}}
 
 " Source override config files {{{
