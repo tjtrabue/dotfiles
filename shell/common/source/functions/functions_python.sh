@@ -28,6 +28,17 @@ install_python_packages() {
   fi
 }
 
+# Poetry is a Python dependency and package manager.
+install_python_poetry() {
+  local zshCompletionFile="${ZDOTDIR}/completoin/_poetry"
+  curl -sSL https://install.python-poetry.org | python3 -
+
+  # Install poetry tab completions for shells.
+  if [ ! -f "${zshCompletionFile}" ]; then
+    poetry completions zsh > "${zshCompletionFile}"
+  fi
+}
+
 # Update all installed Python packages.
 # Handles Python 2.X and Python 3.Y.
 update_python_packages() {
