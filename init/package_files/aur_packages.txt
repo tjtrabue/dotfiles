@@ -43,6 +43,7 @@ texlive-latexindent-meta
 texlive-most-doc
 thunderbird-nightly-bin
 tllocalmgr
+ttf-ms-fonts
 ttf-nerd-fonts-symbols-2048-em-mono
 up
 vale-git
