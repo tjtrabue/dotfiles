@@ -124,8 +124,8 @@ packer.startup(
     use {"mhinz/vim-signify"}
     use {"kdheepak/lazygit.nvim"}
     use {
-      "TimUntersberger/neogit",
-      requires = "nvim-lua/plenary.nvim"
+      "NeogitOrg/neogit",
+      requires = {"nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim"}
     }
     use {"f-person/git-blame.nvim"}
     -- }}}
