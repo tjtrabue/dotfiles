@@ -233,6 +233,7 @@ shell/zsh/zdotdir/completion/_docker-compose
 shell/zsh/zdotdir/completion/_git
 shell/zsh/zdotdir/completion/git-completion.bash
 shell/zsh/zdotdir/completion/_gh
+shell/zsh/zdotdir/completion/_poetry
 # History file
 shell/zsh/zdotdir/.zsh_history
 # Saved sessions

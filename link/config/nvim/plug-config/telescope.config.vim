@@ -11,8 +11,8 @@ nnoremap <C-x>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fs <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <C-r> <cmd>lua require('telescope.builtin').live_grep()<cr>
 
-" Search for version-controlled files. Faster than `find_files()`.
-nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
+" Search for version-controlled files.
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 " }}}
 
 " Vim {{{

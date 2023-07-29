@@ -17,6 +17,7 @@ flat-remix
 flutter-git
 google-cloud-cli
 google-cloud-cli-gke-gcloud-auth-plugin
+hadolint-bin
 icons-in-terminal
 jdtls
 kind
