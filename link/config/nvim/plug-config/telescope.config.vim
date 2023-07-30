@@ -3,16 +3,16 @@
 " Files {{{
 
 " Search for files in project.
-nnoremap <ljader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <ljader>ff <cmd>lua require('telescope.builtin').find_files({hidden = true})<cr>
 " Emacs style binding for people used to `find-file`.
-nnoremap <C-x>f <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <C-x>f <cmd>lua require('telescope.builtin').find_files({hidden = true})<cr>
 
 " Search (with grep, ag, rg, etc.) through codebase in realtime.
 nnoremap <leader>fs <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <C-r> <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 " Search for version-controlled files.
-nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files({hidden = true})<cr>
 " }}}
 
 " Vim {{{

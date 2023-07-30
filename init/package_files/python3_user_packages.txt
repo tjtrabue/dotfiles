@@ -19,6 +19,7 @@ jedi
 mdv3
 orjson
 pipenv
+pipx
 powerline-gitstatus
 powerline-status
 proselint
