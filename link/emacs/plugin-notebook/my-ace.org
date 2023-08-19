@@ -42,3 +42,16 @@ select a link.
     :config
     (ace-link-setup-default))
 #+end_src
+
+* Ace Popup Menu
+Replaces the standard GUI popup menu (=x-popup-menu= by default) with something
+more useful. Instead of the basic right-click menu we're all used to,
+=ace-popup-menu= replaces our right-click with an ace-style menu that we
+interact with via home row hotkeys.
+
+#+begin_src emacs-lisp
+  (use-package ace-popup-menu
+    :demand t
+    :config
+    (ace-popup-menu-mode 1))
+#+end_src

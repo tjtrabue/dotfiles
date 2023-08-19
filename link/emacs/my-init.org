@@ -681,9 +681,6 @@ Key bindings available in any major mode.
   ;; Indent according to major mode after pressing Enter.
   (global-set-key (kbd "RET") #'newline-and-indent)
 
-  ;; Find file at point ("g f" in evil-mode)
-  ;; (global-set-key (kbd "C-c f p") #'ffap)
-
   ;; Change window size (Vim-like bindings)
   (global-set-key (kbd "S-C-l") #'enlarge-window-horizontally)
   (global-set-key (kbd "S-C-h") #'shrink-window-horizontally)
