@@ -2,10 +2,12 @@
 {perf_panel,#{fetch => 2,secs => 60}}.
 {allc_panel,#{fetch => 1,secs => 60}}.
 {app_panel,#{}}.
-{pro_panel,#{acc => false,interval => 10}}.
+{pro_panel,#{interval => 10,acc => false}}.
 {port_panel,#{}}.
-{tv_panel,#{sys_hidden => true,type => ets,unread_hidden => true}}.
-{trace_panel,#{match_specs =>
+{sock_panel,#{}}.
+{tv_panel,#{type => ets,sys_hidden => true,unread_hidden => true}}.
+{trace_panel,#{output => [],
+               match_specs =>
                    [{ms,funcs,
                         [[{name,"Return Trace"},
                           {term,[{'_',[],[{return_trace}]}]},
@@ -35,4 +37,4 @@
                          [{name,"From remote node"},
                           {term,[{['$1','_','_'],[{'=/=','$1',{node}}],[]}]},
                           {func,"fun([Node,_,_]) when Node=/=node() ->\n    true\nend"}]]}],
-               output => [],portflags => [],procflags => []}}.
+               portflags => [],procflags => []}}.

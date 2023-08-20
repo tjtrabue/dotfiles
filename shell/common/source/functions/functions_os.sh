@@ -131,4 +131,46 @@ __get_os_field() {
   getosinfo | grep "${field}:" | sed -E "s/^\s*${field}:\s*//"
 }
 
+# Full system update. This function is polymorphic on the user's OS type.
+fullup() {
+  local osType
+
+  osType="$(getostype)"
+
+  case "${osType}" in
+  "Darwin")
+    __macos_fullup
+    ;;
+  "Linux")
+    __linux_fullup
+    ;;
+  *)
+    err "Unknown OS type: ${GREEN}${osType}${NC}"
+    return 1
+    ;;
+  esac
+}
+
+# Perform macOS full system update.
+__macos_fullup() {
+  brewup
+}
+
+# Perform a Linux full system update based on the distribution.
+__linux_fullup() {
+  local distro
+
+  distro="$(getdistro)"
+
+  case "${distro}" in
+  "Arch Linux")
+    pacup --noconfirm && aurupdate --noconfirm
+    ;;
+  *)
+    err "Unknown Linux distribution: ${GREEN}${distro}${NC}"
+    return 1
+    ;;
+  esac
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1

@@ -111,11 +111,22 @@ get_aur_packages() {
 # file with `paru -G emacs-git` so we can edit it, then install it manually
 # with `makepkg -si`.
 aurupdate() {
-  local ignorePackages=(
+  # Additional flags to the AUR package manager CLI tool.
+  local extraFlags="$*"
+  local updateCmd
+  local ignorePackages
+
+  ignorePackages=(
     "emacs-git"
   )
+  updateCmd="aurhu --ignore=$(echo "${ignorePackages[*]}" | sed -E 's/\s+/,/')"
 
-  aurhu --ignore="$(echo "${ignorePackages[*]}" | sed -E 's/\s+/,/')"
+  if [ -n "${extraFlags}" ]; then
+    # Add user supplied flags to the command, if available.
+    updateCmd="${updateCmd} ${extraFlags}"
+  fi
+
+  eval "${updateCmd}"
 }
 
 # Download an AUR package but do not build/install
