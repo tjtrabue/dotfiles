@@ -1,0 +1,27 @@
+#+TITLE:   The Odin Programming Language
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-09-08
+#+TAGS:    odin
+#+STARTUP: fold
+
+From the Odin website:
+
+#+begin_quote
+Odin is a general-purpose programming language with distinct typing built for
+high performance, modern systems and data-oriented programming.
+
+Odin is the C alternative for the Joy of Programming.
+#+end_quote
+
+* odin-mode
+Major mode for editing source code files written in the Odin programming
+language.
+
+#+begin_src emacs-lisp
+  (use-package odin-mode
+    :mode ("\\.odin\\'" . odin-mode)
+    :straight
+    (odin-mode :type git :host github :repo "mattt-b/odin-mode"
+               :branch "master"))
+#+end_src
