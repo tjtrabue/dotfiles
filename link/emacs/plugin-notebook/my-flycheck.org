@@ -162,6 +162,16 @@ Flycheck state of the current buffer.
     (flycheck-mode . flycheck-color-mode-line-mode))
 #+end_src
 
+** flycheck-credo
+Flycheck checker for =credo=, a static code analyzer for Elixir.
+
+#+begin_src emacs-lisp
+  (use-package flycheck-credo
+    :after flycheck
+    :custom
+    (flycheck-elixir-credo-strict t))
+#+end_src
+
 ** flycheck-haskell
 #+begin_src emacs-lisp
   (use-package flycheck-haskell

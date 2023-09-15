@@ -9,13 +9,40 @@ language built on Erlang's BEAM virtual machine optimized for writing
 distributed, fault-tolerant applications that must contend with a vast multitude
 of concurrent processes.
 
-* elixir-mode
-The ubiquitous mode for working with Elixir files. =elixir-mode= provides
-font-locking, indentation, and navigation support for the Elixir programming
-language.
+* elixir-mode (deprecated)
+Major mode for working with Elixir files. =elixir-mode= provides font-locking,
+indentation, and navigation support for the Elixir programming language.
+
+NOTE: This package is for Emacs 29 and earlier. Starting with version 30, Emacs
+comes with a built-in Elixir major mode with tree-sitter support. You should use
+the built-in =elxir-mode= when possible.
 
 #+begin_src emacs-lisp
-  (use-package elixir-mode)
+  (use-package elixir-mode
+    :if (<= emacs-major-version 29))
+#+end_src
+
+* mix.el
+Minor mode for interacting with Mix (the Elixir build and lifecycle tool that
+comes with each Elixir SDK) from inside Emacs.
+
+To use mix, type the prefix key sequence (=C-c d= by default, but configurable
+by changing the key sequence bound to =mix-minor-mode-command-map=), followed by
+one of the following commands:
+
+- =e=: =mix-execute-task=
+- =d e=: =mix-execute-task= in an umbrella subproject.
+- =t=: =mix-test=
+- =d t=: =mix-test= in an umbrella subproject.
+- =o=: =mix-test-current-buffer=
+- =d o=: =mix-test-current-buffer= in an umbrella subproject.
+- =f=: =mix-test-current-test=
+- =d f=: =mix-test-current-test= in an umbrella subproject.
+- =l=: =mix-last-command=
+
+#+begin_src emacs-lisp
+  (use-package mix
+    :hook (elixir-mode . mix-minor-mode))
 #+end_src
 
 * exunit.el
