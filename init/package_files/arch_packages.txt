@@ -46,8 +46,8 @@ doxygen
 efibootmgr
 elixir
 evince
-exa
 expac
+eza
 fd
 feh
 ffmpegthumbnailer
@@ -83,8 +83,6 @@ inotify-tools
 iotop
 iproute2
 isync
-java-openjfx
-java-openjfx-doc
 jdk-openjdk
 jdk8-openjdk
 jq
@@ -141,7 +139,6 @@ pacman-contrib
 papirus-icon-theme
 parallel
 pass
-pdfjam
 perl-image-exiftool
 perl-tk
 picom
@@ -176,13 +173,7 @@ streamlink
 t1utils
 tar
 texinfo
-texlive-basic
-texlive-bin
-texlive-lang
-texlive-langgreek
-texlive-latexextra
-texlive-mathscience
-texlive-most
+texlive
 texworks
 the_silver_searcher
 throttled

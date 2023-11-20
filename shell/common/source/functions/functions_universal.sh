@@ -377,8 +377,8 @@ tre() {
     # Use fancy colorls tree command to show file tree, if we have colorls
     # installed.
     treeCmd="colorls --tree --color=always ${*}"
-  elif [ -x "$(command -v exa)" ]; then
-    treeCmd="exa --tree -a --color=always --git-ignore -I '${ignorePatterns}' ${*}"
+  elif [ -x "$(command -v eza)" ]; then
+    treeCmd="eza --tree -a --color=always --git-ignore -I '${ignorePatterns}' ${*}"
   elif [ -x "$(command -v tree)" ]; then
     # Use standard tree command
     treeCmd="tree -aC -I '${ignorePatterns}' --dirsfirst ${*}"

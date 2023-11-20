@@ -11,6 +11,7 @@ clj-kondo
 clojure-lsp-bin
 code-minimap-bin
 dropbox
+dropbox-cli
 emacs-git
 findimagedupes
 flat-remix
@@ -31,7 +32,7 @@ lua-emmy-language-server-bin
 lua-language-server-git
 marksman-bin
 neovim-nightly-bin
-nonicons-font
+nonicons-git
 numix-circle-icon-theme-git
 optimus-manager
 p4v
@@ -45,7 +46,8 @@ texlive-most-doc
 thunderbird-nightly-bin
 tllocalmgr
 ttf-ms-fonts
-ttf-nerd-fonts-symbols-2048-em-mono
+ttf-nerd-fonts-symbols
+ttf-nerd-fonts-symbols-mono
 up
 vale-git
 vmtouch-git
