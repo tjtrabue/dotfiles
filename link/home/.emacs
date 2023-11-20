@@ -30,7 +30,7 @@
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
 (add-to-list
-  'load-path (file-truename (concat user-emacs-directory "straight/build/org")))
+ 'load-path (file-truename (concat user-emacs-directory "straight/build/org")))
 
 ;; JIT settings to speed up startup.
 ;; https://tychoish.com/post/towards-faster-emacs-start-times/
@@ -60,7 +60,7 @@
 (with-eval-after-load "ob-emacs-lisp"
   ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
   (setq org-babel-default-header-args:emacs-lisp
-    '((:lexical . t) (:tangle . "yes"))))
+        '((:lexical . t) (:tangle . "yes"))))
 
 ;; Define and set variables
 (eval-when-compile
@@ -92,15 +92,15 @@
 (defsubst my/file-not-exists-or-newer-than-other-p (file other)
   "Return non-nil if FILE does not exist or is newer than OTHER file."
   (or (not (file-exists-p file))
-    (equal (nth 4 (file-attributes file)) (list 0 0))
-    (file-newer-than-file-p file other)))
+      (equal (nth 4 (file-attributes file)) (list 0 0))
+      (file-newer-than-file-p file other)))
 
 (defsubst my/tangle-config-artifact (elisp-file)
   "Tangle the ancestor to an ELISP-FILE.
 
 Return the name of the ELISP-FILE."
   (if (not (string= (file-name-extension elisp-file) "el"))
-    (error "Argument is not an Elisp file"))
+      (error "Argument is not an Elisp file"))
   (let ((ancestor (concat (file-name-sans-extension elisp-file) ".org")))
     (when (my/file-not-exists-or-newer-than-other-p ancestor elisp-file)
       (org-babel-tangle-file ancestor))

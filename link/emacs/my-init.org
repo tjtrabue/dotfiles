@@ -1310,6 +1310,9 @@ try to load =org= later.
 
 #+begin_src emacs-lisp
   (use-package org
+    ;; Use built-in Org version to avoid version compatibility issues.
+    :ensure nil
+    :straight nil
     :mode ("\\.org\\'" . org-mode)
     :delight
     (org-src-mode)

@@ -58,8 +58,10 @@
     (set-face-attribute
       'variable-pitch nil
       :family (cond
+                ;; https://www.dafont.com/neogrey.font
                 ((member "Neogrey" font-family-list)
                   "Neogrey Medium")
+                ;; https://freedafonts.com/arkibal-font/
                 ((member "Arkibal Serif" font-family-list)
                   "Arkibal Serif")
                 (t "DejaVu Serif"))
@@ -82,10 +84,10 @@ be attached to the `window-size-change-functions' hook.
 
 Adjust the font size of an Emacs frame based on the monitor's size."
   (let
-    (
-      (width-px (display-pixel-width)) ; Monitor width
-      (font-point 11) ;; Font point size for standard screen
-      (font-height))
+      (
+       (width-px (display-pixel-width)) ; Monitor width
+       (font-point 11) ;; Font point size for standard screen
+       (font-height))
     ;; Select the font point based on the monitor's resolution.
     (when (= width-px 3840) ;; Very Large display
       (setq font-point 20))
@@ -103,8 +105,8 @@ Adjust the font size of an Emacs frame based on the monitor's size."
     ;; Also adjust relative line number font size
     (when (facep 'linum-relative-current-face)
       (set-face-attribute
-        'linum-relative-current-face nil
-        :height font-height))))
+       'linum-relative-current-face nil
+       :height font-height))))
 
 (provide 'my-font)
 
