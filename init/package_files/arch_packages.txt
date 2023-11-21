@@ -171,6 +171,7 @@ shfmt
 shotgun
 stack
 streamlink
+sysfsutils
 t1utils
 tar
 texinfo
