@@ -130,7 +130,8 @@ npm
 ntfs-3g
 ntp
 numlockx
-nvidia-dkms
+nvidia
+nvidia-utils
 openjdk-doc
 openjdk8-doc
 openssh
@@ -197,6 +198,8 @@ upower
 vi
 vim
 vlc
+vulkan-intel
+vulkan-tools
 w3m
 wdiff
 wget

@@ -1,0 +1,21 @@
+[KDiskFree]
+Device=100
+Free=80
+Full%=50
+HeaderSectionIndices=0,1,2,3,4,5,6,7
+Icon=49
+MountPoint=120
+Size=80
+SortColumn=0
+SortOrder=0
+Type=80
+UsageBar=385
+
+[MainWindow]
+3 screens: Height=329
+3 screens: Width=948
+3 screens: XPosition=4804
+3 screens: YPosition=1282
+DP-1-0 DP-1-1 eDP-1=eDP-1
+State=AAAA/wAAAAD9AAAAAAAAA7QAAAEUAAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
