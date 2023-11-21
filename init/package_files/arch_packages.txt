@@ -210,9 +210,6 @@ wxwidgets-gtk3
 xclip
 xcompmgr
 xdotool
-xmobar
-xmonad
-xmonad-contrib
 xorg
 xorg-server
 xorg-server-xephyr

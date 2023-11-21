@@ -9,6 +9,15 @@
 # (i.e., terminal) which is not only logically incohesive with starting global
 # services, but could also cause duplicate service sessions to be created.
 
+if [ "${XDG_SESSION_DESKTOP}" = "plasma" ] ||
+  [ "${XDG_SESSION_DESKTOP}" = "plasma-wayland" ]; then
+  # Ignore this file for certain desktop environments (DEs), such as
+  # KDE Plasma and GNOME. These GUIs have their own variants of the services
+  # this file starts (compositors, audio services, etc.), so the settings in
+  # this file may start trample the DE's configuration.
+  return 0
+fi
+
 # Variables {{{
 DOTFILES_HOME="${HOME}/.dotfiles"
 # }}}
