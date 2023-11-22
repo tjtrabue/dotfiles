@@ -34,6 +34,7 @@ cups
 cups-pdf
 datamash
 dejagnu
+dex
 dialog
 dkms
 dmenu
