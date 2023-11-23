@@ -45,6 +45,28 @@ Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /
 EOF
 }
 
+make_nvidia_gpu_primary_rendering_device() {
+  local nvidiaDrmXorgFile="/etc/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf"
+  sudo tee "${nvidiaDrmXorgFile}" <<EOF &>/dev/null
+# Setup NVIDIA driver as the primary rendering provider for the Optimus device.
+Section "OutputClass"
+    Identifier "intel"
+    MatchDriver "i915"
+    Driver "modesetting"
+EndSection
+
+Section "OutputClass"
+    Identifier "nvidia"
+    MatchDriver "nvidia-drm"
+    Driver "nvidia"
+    Option "AllowEmptyInitialConfiguration"
+    Option "PrimaryGPU" "yes"
+    ModulePath "/usr/lib/nvidia/xorg"
+    ModulePath "/usr/lib/xorg/modules"
+EndSection
+EOF
+}
+
 configure_optimus_manager() {
   local baseOptimusConfigFile="/usr/share/optimus-manager.conf"
   local mainOptimusConfigFile="/etc/optimus-manager/optimus-manager.conf"
@@ -84,7 +106,7 @@ install_arch_nvidia_packages() {
 
 install_and_configure_packages() {
   install_arch_nvidia_packages
-  install_optimus_manager
+  # install_optimus_manager
 }
 
 main() {
@@ -92,6 +114,7 @@ main() {
   no_log_to_file
   install_and_configure_packages
   add_mkinitcpio_hook_for_nvidia
+  make_nvidia_gpu_primary_rendering_device
 }
 
 main "$@"
