@@ -646,6 +646,11 @@ infrastructure for Emacs.
                             (bound-and-true-p global-company-mode))
                     (company-mode -1)
                     (global-company-mode -1))
+                  ;; Disable syntax checking plugins that interfere with
+                  ;; lsp-bridge's syntax checking.
+                  (when (or (bound-and-true-p flycheck-inline-mode)
+                            (bound-and-true-p global-flycheck-inline-mode))
+                    (flycheck-inline-mode -1))
                   ;; Enable semantic tokens highlighting. See the Wiki for more
                   ;; information:
                   ;; https://github.com/manateelazycat/lsp-bridge/wiki/Semantic-Tokens
