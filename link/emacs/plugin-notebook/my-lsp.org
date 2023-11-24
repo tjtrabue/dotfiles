@@ -39,6 +39,7 @@ which ones you do not yet satisfy.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lsp-mode
+    :disabled
     :after evil-collection
     ;; Adjust mode line for LSP minor modes.
     :delight
@@ -486,14 +487,15 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
 #+end_src
 
 * lsp-bridge
-=lsp-bridge= is a super fast LSP client for Emacs that leverages Python's
+=lsp-bridge= is a /super fast/ LSP client for Emacs that leverages Python's
 threading technology to build caches that bridge Emacs and the LSP server. The
 goal is to provide a smooth completion experience without compromising Emacs'
 performance.
 
-At the time of this writing, =lsp-bridge= is still in its infancy, and
-=lsp-mode= offers a better overall experience. I'd keep my eye on the project,
-though, and consider switching to =lsp-bridge= once they work out the kinks.
+Aside from language server integration, =lsp-bridge= offers a great solution for
+generic completion, so =lsp-bridge= can function as an elegant replacement for
+=company-mode=, =corfu=, etc., which can greatly slim the user's plugin
+infrastructure for Emacs.
 
 ** Installation Notes
 =lsp-bridge= requires Emacs 28+.
@@ -501,7 +503,7 @@ though, and consider switching to =lsp-bridge= once they work out the kinks.
 ** Dependencies
 *** Python
 #+begin_src shell :tangle no
-  python3 -m pip install --user --upgrade epc orjson six
+  python3 -m pip install --user --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz
 #+end_src
 
 *** Elisp
@@ -512,5 +514,73 @@ though, and consider switching to =lsp-bridge= once they work out the kinks.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lsp-bridge
-    :disabled)
+    :demand t
+    :delight
+    :straight '(lsp-bridge
+                :type git :host github :repo "manateelazycat/lsp-bridge"
+                :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+                :build (:not compile))
+    :general
+    ;; Keys for `lsp-bridge-mode''s autocomplete popup:
+    (general-def acm-mode-map
+      "C-j" 'acm-select-next
+      "C-k" 'acm-select-prev
+      "C-l" 'acm-complete)
+    ;; Evil leader commands (each begins with ",w"):
+    (my/evil-leader-def lsp-bridge-mode-map
+      "wa"  'lsp-bridge-code-action
+      "wd"  'lsp-bridge-find-def
+      "wod" 'lsp-bridge-find-def-other-window
+      "wgl" 'lsp-bridge-diagnostic-list
+      "wgc" 'lsp-bridge-diagnostic-copy
+      "wh"  'lsp-bridge-signature-help-fetch
+      "wi"  'lsp-bridge-find-impl
+      "wpp" 'lsp-bridge-peek
+      "wR"  'lsp-bridge-find-references
+      "wr"  'lsp-bridge-rename
+      "wt"  'lsp-bridge-find-type-def
+      "ww"  'lsp-bridge-workspace-list-symbols)
+    (general-def lsp-bridge-peek-keymap
+      "C-k" 'lsp-bridge-peek-tree-previous-branch
+      "C-j" 'lsp-bridge-peek-tree-next-branch
+      "C-h" 'lsp-bridge-peek-tree-previous-node
+      "C-l" 'lsp-bridge-peek-tree-next-node)
+    :custom
+    ;; Whether the completion menu displays a help document.
+    (acm-enable-doc t)
+    ;; Whether and how to richly render Markdown for completion popups.
+    (acm-enable-doc-markdown-render 'async)
+    ;; Whether to show quick-access in completion menu.
+    (acm-enable-quick-access nil)
+    ;; Whether to allow number keys to select quick access candidates.
+    (acm-quick-access-use-number-select nil)
+  ;;; LSP C language server options:
+    (lsp-bridge-c-lsp-server "clangd")
+  ;;; LSP Python language server options:
+    (lsp-bridge-python-lsp-server "pyright")
+  ;;; LSP Python multi-language servers options:
+    (lsp-bridge-python-multi-lsp-server "pyright_ruff")
+  ;;; LSP TeX language server options:
+    (lsp-bridge-tex-lsp-server "digestif")
+    :init
+    (add-hook 'lsp-bridge-mode-hook
+              (lambda ()
+                ;; Initialization logic for lsp-bridge-mode:
+                (when (bound-and-true-p lsp-bridge-mode)
+                  ;; Disable other completion engines when enabling
+                  ;; lsp-bridge-mode because lsp-bridge-mode includes its own
+                  ;; sophisticated completion system, including a completion
+                  ;; backend, and completion frontend to multi-backend
+                  ;; integration.
+                  (when (bound-and-true-p lsp-mode) (lsp-mode -1))
+                  (when (or (bound-and-true-p company-mode)
+                            (bound-and-true-p global-company-mode))
+                    (company-mode -1)
+                    (global-company-mode -1))
+                  ;; Enable semantic tokens highlighting. See the Wiki for more
+                  ;; information:
+                  ;; https://github.com/manateelazycat/lsp-bridge/wiki/Semantic-Tokens
+                  (lsp-bridge-semantic-tokens-mode 1))))
+    ;; Enable `lsp-bridge' globally.
+    (global-lsp-bridge-mode))
 #+end_src

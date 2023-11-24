@@ -18,6 +18,7 @@ ipython
 jedi
 mdv3
 orjson
+paramiko
 pipenv
 pipx
 powerline-gitstatus
@@ -27,7 +28,9 @@ pylint
 pynvim
 python-language-server
 pywal
+rapidfuzz
 rebound-cli
+sexpdata
 six
 thefuck
 vim-vint

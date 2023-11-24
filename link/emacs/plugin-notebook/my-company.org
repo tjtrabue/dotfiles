@@ -65,6 +65,8 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package company
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     ;; Must load company after Yasnippet and HippieExpand because we want TAB to
     ;; cycle company completions. If company loads before Hippie and Yasnippet the
     ;; TAB keybinding will not work correctly.
@@ -183,6 +185,8 @@ Show quick documentation for company completions in a separate popup.
 
 #+begin_src emacs-lisp
   (use-package company-quickhelp
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :after company
     :hook
     (company-mode . company-quickhelp-mode)
@@ -203,6 +207,8 @@ Show quick documentation for company completions in a separate popup.
 ** company-web
 #+begin_src emacs-lisp
   (use-package company-web
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :after (company web-mode)
     :init
     (my/add-company-backends-for-mode 'web-mode '(company-web-html)))
@@ -211,6 +217,8 @@ Show quick documentation for company completions in a separate popup.
 ** company-try-hard
 #+begin_src emacs-lisp
   (use-package company-try-hard
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :after company
     :general
     (general-def 'insert
@@ -227,7 +235,9 @@ Show quick documentation for company completions in a separate popup.
 
 ** company-cabal
 #+begin_src emacs-lisp
-  (use-package company-cabal)
+  (use-package company-cabal
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled)
 #+end_src
 
 ** company-plsense
@@ -257,6 +267,8 @@ the =~/.plsense= configuration file containing the proper settings.
 ** company-auctex
 #+begin_src emacs-lisp
   (use-package company-auctex
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :hook
     ((latex-mode tex-mode) . company-auctex-init))
 #+end_src
@@ -308,6 +320,8 @@ cool, and looks beautiful, but you should use it at your own risk.
 
 #+begin_src emacs-lisp
   (use-package company-box
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :after company
     :if (display-graphic-p)
     :delight
@@ -325,6 +339,8 @@ cool, and looks beautiful, but you should use it at your own risk.
 
 #+begin_src emacs-lisp
   (use-package company-prescient
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :after (company prescient)
     :hook
     (company-mode . company-prescient-mode))
@@ -365,6 +381,8 @@ Emacs Lisp library.
 
 #+begin_src emacs-lisp
   (use-package company-restclient
+    ;; Currently disabled in favor of `lsp-bridge-mode'.
+    :disabled
     :init
     (my/add-company-backends-for-mode 'restclient-mode '(company-restclient)))
 #+end_src
