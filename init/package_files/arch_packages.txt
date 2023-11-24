@@ -64,6 +64,7 @@ gdb
 git
 git-delta
 git-filter-repo
+git-lfs
 github-cli
 glad
 global

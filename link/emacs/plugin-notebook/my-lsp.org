@@ -556,6 +556,8 @@ infrastructure for Emacs.
     (acm-quick-access-use-number-select nil)
   ;;; LSP C language server options:
     (lsp-bridge-c-lsp-server "clangd")
+  ;;; LSP Elixir language server options:
+    (lsp-bridge-elixir-lsp-server "lexical")
   ;;; LSP Python language server options:
     (lsp-bridge-python-lsp-server "pyright")
   ;;; LSP Python multi-language servers options:
