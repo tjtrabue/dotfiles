@@ -555,39 +555,49 @@ infrastructure for Emacs.
     :general
     ;; Standard LSP keybindings (beginning with `C-c'):
     (my/user-leader-def lsp-bridge-mode-map
-      "lwa"  'lsp-bridge-code-action
-      "lwd"  'lsp-bridge-find-def
-      "lwod" 'lsp-bridge-find-def-other-window
-      "lwgl" 'lsp-bridge-diagnostic-list
-      "lwgc" 'lsp-bridge-diagnostic-copy
-      "lwh"  'lsp-bridge-signature-help-fetch
-      "lwi"  'lsp-bridge-find-impl
-      "lwk"  'lsp-bridge-popup-documentation
-      "lwp"  'hydra-lsp-bridge-peek/lsp-bridge-peek
-      "lwR"  'lsp-bridge-find-references
-      "lwr"  'lsp-bridge-rename
-      "lws"  'lsp-bridge-restart-process
-      "lwt"  'lsp-bridge-find-type-def
-      "lww"  'lsp-bridge-workspace-list-symbols)
+      "l]"   'lsp-bridge-diagnostic-jump-next
+      "l["   'lsp-bridge-diagnostic-jump-prev
+      "la"   'lsp-bridge-code-action
+      "lD"   'lsp-bridge-find-def-return
+      "ld"   'lsp-bridge-find-def
+      "lod"  'lsp-bridge-find-def-other-window
+      "lgl"  'lsp-bridge-diagnostic-list
+      "lgc"  'lsp-bridge-diagnostic-copy
+      "lh"   'lsp-bridge-signature-help-fetch
+      "li"   'lsp-bridge-find-impl
+      "loi"  'lsp-bridge-find-impl-other-window
+      "lk"   'lsp-bridge-popup-documentation
+      "lp"   'hydra-lsp-bridge-peek/lsp-bridge-peek
+      "lR"   'lsp-bridge-find-references
+      "lr"   'lsp-bridge-rename
+      "lt"   'lsp-bridge-find-type-def
+      "lot"  'lsp-bridge-find-type-def-other-window
+      "lwl"  'lsp-bridge-workspace-list-symbols
+      "lws"  'lsp-bridge-restart-process)
     ;; Keys for `lsp-bridge-mode''s autocomplete popup:
     (general-def acm-mode-map
       "C-j" 'acm-select-next
       "C-k" 'acm-select-prev
       "C-l" 'acm-complete)
-    ;; Evil leader commands (each begins with ",w"):
+    ;; Evil leader commands (beginning with ","):
     (my/evil-leader-def lsp-bridge-mode-map
+      "w]"  'lsp-bridge-diagnostic-jump-next
+      "w["  'lsp-bridge-diagnostic-jump-prev
       "wa"  'lsp-bridge-code-action
+      "wD"  'lsp-bridge-find-def-return
       "wd"  'lsp-bridge-find-def
       "wod" 'lsp-bridge-find-def-other-window
       "wgl" 'lsp-bridge-diagnostic-list
       "wgc" 'lsp-bridge-diagnostic-copy
       "wh"  'lsp-bridge-signature-help-fetch
       "wi"  'lsp-bridge-find-impl
+      "woi" 'lsp-bridge-find-impl-other-window
       "wk"  'lsp-bridge-popup-documentation
       "wR"  'lsp-bridge-find-references
       "wr"  'lsp-bridge-rename
       "ws"  'lsp-bridge-restart-process
       "wt"  'lsp-bridge-find-type-def
+      "wot" 'lsp-bridge-find-type-def-other-window
       "ww"  'lsp-bridge-workspace-list-symbols)
     (general-def 'normal lsp-bridge-mode-map
       "K" 'lsp-bridge-popup-documentation)
@@ -621,6 +631,10 @@ infrastructure for Emacs.
     ;; Enable LSP completions inside Org code blocks.
     ;; May slow Emacs down.
     (lsp-bridge-enable-org-babel t)
+    ;; Fallback function in case LSP cannot find a definition.
+    (lsp-bridge-find-def-fallback-function #'citre-get-definitions)
+    ;; Fallback function in case LSP cannot find a reference.
+    (lsp-bridge-find-ref-fallback-function #'citre-get-references)
   ;;; LSP C language server options:
     (lsp-bridge-c-lsp-server "clangd")
   ;;; LSP Elixir language server options:
