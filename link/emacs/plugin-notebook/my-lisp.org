@@ -35,7 +35,10 @@ regardless of its particular dialect.
         "["
         "]"
         "{"
-        "}")
+        "}"
+        ;; These also interfere with my preferred Evil keybindings.
+        "C-j"
+        "C-k")
       :custom
       ;; Make lispy compatible with the following Lisp minor modes.
       (lispy-compat '(edebug cider))

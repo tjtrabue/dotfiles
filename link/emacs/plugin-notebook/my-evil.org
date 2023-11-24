@@ -846,11 +846,6 @@ main features of =lispyville=:
       ;; Remove default barf/slurp keybindings.
       "<"
       ">")
-    (general-unbind lispy-mode-map
-      ;; Originally lispy-newline-and-indent.
-      "C-j"
-      ;; Originally lispy-kill
-      "C-k")
     :custom
     ;; Setting this variable to t means lispyville motion commands, such as (, ),
     ;; {, }, etc.  automatically enter insert mode to make editing more fluid.

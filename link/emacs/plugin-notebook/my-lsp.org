@@ -511,9 +511,40 @@ infrastructure for Emacs.
 - =markdown-mode=
 - =yasnippet=
 
+** Hydras
+
+#+begin_src emacs-lisp
+  (defun my/define-hydra-lsp-bridge-peek ()
+    "Define the hydgra for `lsp-bridge-peek'."
+    (interactive "P")
+    (defhydra hydra-lsp-bridge-peek (:color pink :hint nil)
+      "
+  ^Primary^      ^Movement^            ^Actions^              ^Tree^
+  ^^^^^^^^------------------------------------------------------------------------
+  _P_:   peek    _j_: next line        _l_:        jump        _u_: next branch
+  _a_:   abort   _k_: prev line        _<return>_: jump        _i_: prev branch
+  _C-g_: abort   _J_: next file line   _j_:        jump back   _o_: next node
+  ^ ^            _K_: prev file line   ^ ^                     _p_: prev node
+  "
+      ("P"        lsp-bridge-peek)
+      ("a"        lsp-bridge-peek-abort :exit t)
+      ("C-g"      lsp-bridge-peek-abort :exit t)
+      ("j"        lsp-bridge-peek-list-next-line)
+      ("k"        lsp-bridge-peek-list-prev-line)
+      ("J"        lsp-bridge-peek-file-content-next-line)
+      ("K"        lsp-bridge-peek-file-content-prev-line)
+      ("l"        lsp-bridge-peek-jump)
+      ("<return>" lsp-bridge-peek-jump)
+      ("h"        lsp-bridge-peek-jump-back)
+      ("u"        lsp-bridge-peek-tree-next-branch)
+      ("i"        lsp-bridge-peek-tree-previous-branch)
+      ("o"        lsp-bridge-peek-tree-next-node)
+      ("p"        lsp-bridge-peek-tree-previous-node)))
+#+end_src
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lsp-bridge
+    :after hydra
     :demand t
     :delight
     :straight '(lsp-bridge
@@ -521,6 +552,22 @@ infrastructure for Emacs.
                 :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
                 :build (:not compile))
     :general
+    ;; Standard LSP keybindings (beginning with `C-c'):
+    (my/user-leader-def lsp-bridge-mode-map
+      "lwa"  'lsp-bridge-code-action
+      "lwd"  'lsp-bridge-find-def
+      "lwod" 'lsp-bridge-find-def-other-window
+      "lwgl" 'lsp-bridge-diagnostic-list
+      "lwgc" 'lsp-bridge-diagnostic-copy
+      "lwh"  'lsp-bridge-signature-help-fetch
+      "lwi"  'lsp-bridge-find-impl
+      "lwk"  'lsp-bridge-popup-documentation
+      "lwp"  'hydra-lsp-bridge-peek/lsp-bridge-peek
+      "lwR"  'lsp-bridge-find-references
+      "lwr"  'lsp-bridge-rename
+      "lws"  'lsp-bridge-restart-process
+      "lwt"  'lsp-bridge-find-type-def
+      "lww"  'lsp-bridge-workspace-list-symbols)
     ;; Keys for `lsp-bridge-mode''s autocomplete popup:
     (general-def acm-mode-map
       "C-j" 'acm-select-next
@@ -535,25 +582,44 @@ infrastructure for Emacs.
       "wgc" 'lsp-bridge-diagnostic-copy
       "wh"  'lsp-bridge-signature-help-fetch
       "wi"  'lsp-bridge-find-impl
-      "wpp" 'lsp-bridge-peek
+      "wk"  'lsp-bridge-popup-documentation
       "wR"  'lsp-bridge-find-references
       "wr"  'lsp-bridge-rename
+      "ws"  'lsp-bridge-restart-process
       "wt"  'lsp-bridge-find-type-def
       "ww"  'lsp-bridge-workspace-list-symbols)
+    (general-def 'normal lsp-bridge-mode-map
+      "K" 'lsp-bridge-popup-documentation)
     (general-def lsp-bridge-peek-keymap
-      "C-k" 'lsp-bridge-peek-tree-previous-branch
-      "C-j" 'lsp-bridge-peek-tree-next-branch
-      "C-h" 'lsp-bridge-peek-tree-previous-node
-      "C-l" 'lsp-bridge-peek-tree-next-node)
+      "C-j" 'lsp-bridge-peek-list-next-line
+      "C-k" 'lsp-bridge-peek-list-prev-line)
     :custom
+    ;; Whether to integrate with CITRE (a CTAGS engine for Emacs).
+    ;; Disabled by default.
+    (acm-enable-citre nil)
+    ;; The complete menu matching algorithm.  Anything that begins with
+    ;; "orderless-" requires Orderless to be installed first.
+    (acm-candidate-match-function #'orderless-flex)
     ;; Whether the completion menu displays a help document.
     (acm-enable-doc t)
     ;; Whether and how to richly render Markdown for completion popups.
     (acm-enable-doc-markdown-render 'async)
     ;; Whether to show quick-access in completion menu.
-    (acm-enable-quick-access nil)
+    (acm-enable-quick-access t)
+    ;; Enable tab-and-go completion. This means `acm-select-*' will select and
+    ;; preview another candidate, and further input will commit this candidate.
+    (acm-enable-preview t)
     ;; Whether to allow number keys to select quick access candidates.
     (acm-quick-access-use-number-select nil)
+    ;; The color of the completion window for light and dark modes:
+    (acm-frame-background-light-color "#f2f2f2")
+    (acm-frame-background-dark-color "#1e1e1e")
+    ;; Whether to automatically show the diagnostic under cursor in a tooltip.
+    ;; Default: nil
+    (lsp-bridge-enable-hover-diagnostic t)
+    ;; Enable LSP completions inside Org code blocks.
+    ;; May slow Emacs down.
+    (lsp-bridge-enable-org-babel t)
   ;;; LSP C language server options:
     (lsp-bridge-c-lsp-server "clangd")
   ;;; LSP Elixir language server options:
@@ -584,5 +650,6 @@ infrastructure for Emacs.
                   ;; https://github.com/manateelazycat/lsp-bridge/wiki/Semantic-Tokens
                   (lsp-bridge-semantic-tokens-mode 1))))
     ;; Enable `lsp-bridge' globally.
-    (global-lsp-bridge-mode))
+    (global-lsp-bridge-mode)
+    (my/define-hydra-lsp-bridge-peek))
 #+end_src
