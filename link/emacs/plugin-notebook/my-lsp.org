@@ -673,12 +673,6 @@ infrastructure for Emacs.
     ;; Enable `lsp-bridge' globally.
     (global-lsp-bridge-mode)
     (my/define-hydra-lsp-bridge-peek)
-    :config
-    ;; Change completion menu colors:
-    (set-face-attribute 'acm-frame-default-face nil
-                        :background (modus-themes-get-color-value 'bg-main))
-    (set-face-attribute 'acm-frame-select-face nil
-                        :background (modus-themes-get-color-value 'bg-dim))
     ;; Change peek window border colors:
     (set-face-attribute 'lsp-bridge-peek-border-face nil
                         :background (modus-themes-get-color-value 'bg-sage))
