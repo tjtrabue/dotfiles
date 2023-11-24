@@ -524,7 +524,7 @@ infrastructure for Emacs.
   _P_:   peek    _j_: next line        _l_:        jump        _u_: next branch
   _a_:   abort   _k_: prev line        _<return>_: jump        _i_: prev branch
   _C-g_: abort   _J_: next file line   _j_:        jump back   _o_: next node
-  ^ ^            _K_: prev file line   ^ ^                     _p_: prev node
+  ^ ^            _K_: prev file line   _t_:        through     _p_: prev node
   "
       ("P"        lsp-bridge-peek)
       ("a"        lsp-bridge-peek-abort :exit t)
@@ -536,6 +536,7 @@ infrastructure for Emacs.
       ("l"        lsp-bridge-peek-jump)
       ("<return>" lsp-bridge-peek-jump)
       ("h"        lsp-bridge-peek-jump-back)
+      ("t"        lsp-bridge-peek-through)
       ("u"        lsp-bridge-peek-tree-next-branch)
       ("i"        lsp-bridge-peek-tree-previous-branch)
       ("o"        lsp-bridge-peek-tree-next-node)
