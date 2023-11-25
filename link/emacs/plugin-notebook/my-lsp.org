@@ -619,11 +619,11 @@ infrastructure for Emacs.
       "F"        'lsp-bridge-ref-filter-mismatch-results
       "e"        'lsp-bridge-ref-switch-to-edit-mode
       "f"        'lsp-bridge-ref-filter-match-results
-      "h"        'lsp-bridge-ref-jump-next-file
+      "h"        'lsp-bridge-ref-jump-prev-file
       "i"        'lsp-bridge-ref-insert-current-line
       "j"        'lsp-bridge-ref-jump-next-keyword
       "k"        'lsp-bridge-ref-jump-prev-keyword
-      "l"        'lsp-bridge-ref-jump-prev-file
+      "l"        'lsp-bridge-ref-jump-next-file
       "q"        'lsp-bridge-ref-quit
       "r"        'lsp-bridge-ref-replace-all-matches
       "u"        'lsp-bridge-ref-unfilter
