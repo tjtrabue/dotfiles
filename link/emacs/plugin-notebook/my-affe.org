@@ -35,7 +35,7 @@ finding files by name.
     :general
     (general-def 'normal 'override
       "C-r" 'affe-grep
-      "M-r" 'affe-find)
+      "C-R" 'affe-find)
     :custom
     ;; Change how affe's regex engine behaves, including sorting/filtering.
     ;; The default value is:

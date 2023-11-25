@@ -765,10 +765,7 @@ main features of =lispyville=:
        ;; Kill quoted string or sexp including point.
        "C-'" 'lispy-kill-at-point
        ;; Mark symbols with M-m
-       "M-m" 'lispy-mark-symbol
-       ;; Slurp and barf shortcuts.
-       "M-[" 'lispyville-barf
-       "M-]" 'lispyville-slurp)
+       "M-m" 'lispy-mark-symbol)
       (general-define-key
        :states '(insert replace)
        :keymaps mode-map
@@ -845,7 +842,16 @@ main features of =lispyville=:
       "]"
       ;; Remove default barf/slurp keybindings.
       "<"
-      ">")
+      ">"
+      ;; Remove these keybindings because I use them for other actions, such as
+      ;; finding references.
+      "M-r"
+      "M-R"
+      ;; Remove wrap-with-delimiter keybindings because I use my own leader
+      ;; shortcuts.
+      "M-("
+      "M-["
+      "M-{")
     :custom
     ;; Setting this variable to t means lispyville motion commands, such as (, ),
     ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
