@@ -521,13 +521,12 @@ infrastructure for Emacs.
       "
   ^Primary^      ^Movement^            ^Actions^              ^Tree^
   ^^^^^^^^------------------------------------------------------------------------
-  _P_:   peek    _j_: next line        _l_:        jump        _u_: next branch
-  _a_:   abort   _k_: prev line        _<return>_: jump        _i_: prev branch
-  _C-g_: abort   _J_: next file line   _h_:        jump back   _o_: next node
-  ^ ^            _K_: prev file line   _t_:        through     _p_: prev node
+  _P_:   peek   _j_: next line        _l_:        jump        _u_: next branch
+  _q_:   abort  _k_: prev line        _<return>_: jump        _i_: prev branch
+  _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
+  ^ ^           _K_: prev file line   _t_:        through     _p_: prev node
   "
       ("P"        lsp-bridge-peek)
-      ("a"        lsp-bridge-peek-abort :exit t)
       ("C-g"      lsp-bridge-peek-abort :exit t)
       ("j"        lsp-bridge-peek-list-next-line)
       ("k"        lsp-bridge-peek-list-prev-line)
@@ -540,7 +539,8 @@ infrastructure for Emacs.
       ("u"        lsp-bridge-peek-tree-next-branch)
       ("i"        lsp-bridge-peek-tree-previous-branch)
       ("o"        lsp-bridge-peek-tree-next-node)
-      ("p"        lsp-bridge-peek-tree-previous-node)))
+      ("p"        lsp-bridge-peek-tree-previous-node)
+      ("q"        lsp-bridge-peek-abort :exit t)))
 #+end_src
 ** =use-package= specification
 #+begin_src emacs-lisp
@@ -699,7 +699,7 @@ infrastructure for Emacs.
     (my/define-hydra-lsp-bridge-peek)
     ;; Change peek window border colors:
     (set-face-attribute 'lsp-bridge-peek-border-face nil
-                        :background (modus-themes-get-color-value 'bg-sage))
+                        :background (modus-themes-get-color-value 'bg-ochre))
     ;; Change peek window Ace highlight colors for `lsp-bridge-peek-through':
     (set-face-attribute 'lsp-bridge-peek-ace-str-face nil
                         :background (modus-themes-get-color-value 'blue-intense)
