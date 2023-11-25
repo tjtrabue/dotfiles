@@ -833,25 +833,6 @@ main features of =lispyville=:
                   (lispyville-mode 1)
                   (my/set-lispyville-leader-keys)
                   (my/set-lispyville-mode-keys)))
-    :general
-    (general-unbind '(normal visual)
-      '(lispyville-mode-map evil-collection-lispy-mode-map)
-      ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
-      ;; unimpaired bindings.
-      "["
-      "]"
-      ;; Remove default barf/slurp keybindings.
-      "<"
-      ">"
-      ;; Remove these keybindings because I use them for other actions, such as
-      ;; finding references.
-      "M-r"
-      "M-R"
-      ;; Remove wrap-with-delimiter keybindings because I use my own leader
-      ;; shortcuts.
-      "M-("
-      "M-["
-      "M-{")
     :custom
     ;; Setting this variable to t means lispyville motion commands, such as (, ),
     ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
@@ -911,5 +892,28 @@ main features of =lispyville=:
     ;; Add lispyville special mode indicator to modeline.
     (add-to-list 'mode-line-misc-info
                  '(:eval (when (featurep 'lispyville)
-                           (lispyville-mode-line-string)))))
+                           (lispyville-mode-line-string))))
+    ;; Moved these down to the `:config' block because these keybindings were
+    ;; never getting unbound in the `:general' block. Besides, we do not lose any
+    ;; benefits of being in the `:general' block because these are not true
+    ;; keybindings, but "unbindings", so they are not useful for autoloading files
+    ;; from this package.
+    (general-unbind '(normal visual)
+      '(lispyville-mode-map evil-collection-lispy-mode-map)
+      ;; Get rid of "[" and "]" bindings in lispy-mode so that we can use
+      ;; unimpaired bindings.
+      "["
+      "]"
+      ;; Remove default barf/slurp keybindings.
+      "<"
+      ">"
+      ;; Remove these keybindings because I use them for other actions, such as
+      ;; finding references.
+      "M-r"
+      "M-R"
+      ;; Remove wrap-with-delimiter keybindings because I use my own leader
+      ;; shortcuts.
+      "M-("
+      "M-["
+      "M-{"))
 #+end_src

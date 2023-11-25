@@ -615,7 +615,7 @@ infrastructure for Emacs.
     (general-def 'normal lsp-bridge-ref-mode-map
       ;; Evil keybindings for interacting with the references buffer:
       "<return>" 'lsp-bridge-ref-open-file-and-stay
-      "<space>"  'lsp-bridge-ref-open-file
+      "SPC"      'lsp-bridge-ref-open-file
       "D"        'lsp-bridge-ref-remove-line-from-results
       "F"        'lsp-bridge-ref-filter-mismatch-results
       "e"        'lsp-bridge-ref-switch-to-edit-mode
