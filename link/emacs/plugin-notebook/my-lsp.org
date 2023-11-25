@@ -558,7 +558,8 @@ infrastructure for Emacs.
       "M-," 'lsp-bridge-find-def-return
       "M-]" 'lsp-bridge-diagnostic-jump-next
       "M-[" 'lsp-bridge-diagnostic-jump-prev
-      "M-r" 'lsp-bridge-find-references)
+      "M-r" 'lsp-bridge-find-references
+      "M-R" 'lsp-bridge-diagnostic-list)
     ;; Standard LSP keybindings (beginning with `C-c'):
     (my/user-leader-def lsp-bridge-mode-map
       "l]"  'lsp-bridge-diagnostic-jump-next
