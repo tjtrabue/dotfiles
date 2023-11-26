@@ -18,9 +18,9 @@ find_wallpaper_dupes() {
     return 1
   fi
 
+  log_info "Finding wallpaper image duplicates in: ${BLUE}${wallpaperDir}${NC}"
   findimagedupes --fingerprints "${wallpaperFingerprintDb}" \
-    --prune \
-    "${wallpaperDir}"
+    --prune --rescan "${wallpaperDir}"
 }
 
 # Create a compressed TAR archive of the desktop wallpaper directory.
@@ -33,8 +33,8 @@ create_wallpaper_archive() {
     mv "${wallpaperArchiveFile}" "${wallpaperArchiveFile}.bak"
   fi
 
-  tar -C "${wallpaperDir}/.." -czvf "${wallpaperArchiveFile}" \
-    "$(basename "${wallpaperDir}")"
+  tar -C "${wallpaperDir}/.." -czvf "$(basename "${wallpaperArchiveFile}")" \
+    "$(basename "${wallpaperDir}")"/*
 }
 
 # Create a compressed TAR archive of the desktop wallpaper directory, and upload
