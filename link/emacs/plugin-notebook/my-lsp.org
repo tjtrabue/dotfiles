@@ -559,7 +559,8 @@ infrastructure for Emacs.
       "M-]" 'lsp-bridge-diagnostic-jump-next
       "M-[" 'lsp-bridge-diagnostic-jump-prev
       "M-r" 'lsp-bridge-find-references
-      "M-R" 'lsp-bridge-diagnostic-list)
+      "M-R" 'lsp-bridge-diagnostic-list
+      "M-v" 'acm-select-next-page)
     ;; Standard LSP keybindings (beginning with `C-c'):
     (my/user-leader-def lsp-bridge-mode-map
       "l]"  'lsp-bridge-diagnostic-jump-next
@@ -629,6 +630,12 @@ infrastructure for Emacs.
       "r"        'lsp-bridge-ref-replace-all-matches
       "u"        'lsp-bridge-ref-unfilter
       "x"        'lsp-bridge-ref-filter-match-files)
+    ;; These keybindings take effect when the code actions popup menu is in use.
+    (general-def lsp-bridge-call-hierarchy-mode-map
+      ;; Use `C-j' and `C-k' to navigate the code actions and call hierarchy popup
+      ;; menus.
+      "C-j" 'lsp-bridge-call-hierarchy-next
+      "C-k" 'lsp-bridge-call-hierarchy-prev)
     :custom
     ;; Whether to integrate with CITRE (a CTAGS engine for Emacs).
     ;; Disabled by default.
