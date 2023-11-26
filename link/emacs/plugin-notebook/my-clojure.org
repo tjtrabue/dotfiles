@@ -85,6 +85,18 @@ file in your project's root directory with the following content:
     "Interactively prompt user for filters to apply to a test run."
     (interactive)
     (cider-test-run-loaded-tests 'prompt-for-filters))
+
+  (defun my/cider-doc-or-fallback-doc-function (&optional arg)
+    "Run `cider-doc', and if the call fails, run a fallback doc function.
+
+  The optional prefix ARG is passed on to `cider-doc'.  See that function's
+  documentation for more details."
+    (interactive "P")
+    (condition-case nil
+        (cider-doc arg)
+      (error (cond ((bound-and-true-p lsp-bridge-mode)
+                    (lsp-bridge-popup-documentation))
+                   nil))))
 #+end_src
 
 ** =use-package= specification
@@ -147,7 +159,8 @@ file in your project's root directory with the following content:
     (general-def 'normal cider-mode-map
       "gs" 'cider-find-var
       "gi" 'cider-find-resource
-      "gu" 'cider-xref-fn-refs)
+      "gu" 'cider-xref-fn-refs
+      "K"  'my/cider-doc-or-fallback-doc-function)
     ;; Clearing the whole REPL is a useful feature since the REPL gets slower
     ;; the larger it gets.
     (my/user-leader-def cider-repl-mode-map

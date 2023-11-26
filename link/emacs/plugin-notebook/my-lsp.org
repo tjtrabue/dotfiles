@@ -667,15 +667,15 @@ infrastructure for Emacs.
     (lsp-bridge-find-def-fallback-function #'citre-get-definitions)
     ;; Fallback function in case LSP cannot find a reference.
     (lsp-bridge-find-ref-fallback-function #'citre-get-references)
-    ;;; LSP C language server options:
+  ;;; LSP C language server options:
     (lsp-bridge-c-lsp-server "clangd")
-    ;;; LSP Elixir language server options:
+  ;;; LSP Elixir language server options:
     (lsp-bridge-elixir-lsp-server "lexical")
-    ;;; LSP Python language server options:
+  ;;; LSP Python language server options:
     (lsp-bridge-python-lsp-server "pyright")
-    ;;; LSP Python multi-language servers options:
+  ;;; LSP Python multi-language servers options:
     (lsp-bridge-python-multi-lsp-server "pyright_ruff")
-    ;;; LSP TeX language server options:
+  ;;; LSP TeX language server options:
     (lsp-bridge-tex-lsp-server "digestif")
     :init
     (add-hook 'lsp-bridge-mode-hook
@@ -704,11 +704,20 @@ infrastructure for Emacs.
     ;; Enable `lsp-bridge' globally.
     (global-lsp-bridge-mode)
     (my/define-hydra-lsp-bridge-peek)
-    ;; Change peek window border colors:
-    (set-face-attribute 'lsp-bridge-peek-border-face nil
-                        :background (modus-themes-get-color-value 'bg-ochre))
-    ;; Change peek window Ace highlight colors for `lsp-bridge-peek-through':
-    (set-face-attribute 'lsp-bridge-peek-ace-str-face nil
-                        :background (modus-themes-get-color-value 'blue-intense)
-                        :foreground (modus-themes-get-color-value 'fg-main)))
+    :config
+    (with-eval-after-load 'modus-themes
+      ;; Change peek window border colors:
+      (set-face-attribute 'lsp-bridge-peek-border-face nil
+                          :background (modus-themes-get-color-value 'bg-ochre))
+      ;; Change peek window Ace highlight colors for `lsp-bridge-peek-through':
+      (set-face-attribute 'lsp-bridge-peek-ace-str-face nil
+                          :background (modus-themes-get-color-value 'blue-intense)
+                          :foreground (modus-themes-get-color-value 'fg-main))
+      ;; Change underline colors for info, warnings, and errors.
+      (set-face-attribute 'lsp-bridge-diagnostics-info-face nil
+                          :underline `(:style wave :color ,(modus-themes-get-color-value 'green-intense)))
+      (set-face-attribute 'lsp-bridge-diagnostics-warning-face nil
+                          :underline `(:style wave :color ,(modus-themes-get-color-value 'yellow-intense)))
+      (set-face-attribute 'lsp-bridge-diagnostics-error-face nil
+                          :underline `(:style wave :color ,(modus-themes-get-color-value 'red-intense)))))
 #+end_src

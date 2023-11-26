@@ -25,6 +25,8 @@ is simple to do.
       "fl" 'flycheck-list-errors
       "fn" 'flycheck-next-error
       "fp" 'flycheck-previous-error)
+    (general-def flycheck-mode-map
+      "M-F" 'flycheck-display-error-at-point)
     :custom
     ;; The allotted time before displaying errors at point.
     (flycheck-display-errors-delay 0.5)

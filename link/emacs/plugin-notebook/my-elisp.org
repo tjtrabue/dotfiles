@@ -17,6 +17,20 @@ necessary.
     :commands ielm)
 #+end_src
 
+* eldoc [built-in]
+Display small documentation strings in the minibuffer.
+
+#+begin_src emacs-lisp
+  (use-package eldoc
+    :delight
+    :custom
+    ;; How to display messages in the echo area.  Eldoc can display the first
+    ;; returned message, or compose all of the returned messages into a single
+    ;; string.
+    (eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+    :init
+    (global-eldoc-mode 1))
+#+end_src
 * highlight-defined
 Highlights defined Elisp symbols. Recognizes Lisp function, built-in
 function, macro, face and variable names.

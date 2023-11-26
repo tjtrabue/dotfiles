@@ -18,15 +18,12 @@ The annotations are added based on the completion category. For example
 category. You can cycle between more or less detailed annotators with the
 command =marginalia-cycle=.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package marginalia
-      :demand t
-      :general
-      (general-def
-        "M-A" 'marginalia-cycle)
-      (general-def minibuffer-local-map
-        "M-A" 'marginalia-cycle)
-      :config
-      (marginalia-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :demand t
+    :general
+    (general-def minibuffer-local-map
+      "M-A" 'marginalia-cycle)
+    :config
+    (marginalia-mode 1))
+#+end_src
