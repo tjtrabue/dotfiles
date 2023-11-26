@@ -704,8 +704,7 @@ infrastructure for Emacs.
     ;; Enable `lsp-bridge' globally.
     (global-lsp-bridge-mode)
     (my/define-hydra-lsp-bridge-peek)
-    :config
-    (with-eval-after-load 'modus-themes
+    (with-eval-after-load "modus-themes"
       ;; Change peek window border colors:
       (set-face-attribute 'lsp-bridge-peek-border-face nil
                           :background (modus-themes-get-color-value 'bg-ochre))
