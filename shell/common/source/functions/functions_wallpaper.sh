@@ -25,16 +25,18 @@ find_wallpaper_dupes() {
 
 # Create a compressed TAR archive of the desktop wallpaper directory.
 create_wallpaper_archive() {
-  local wallpaperArchiveFile="${1:-${HOME}/wallpaper.tar.gz}"
+  local wallpaperArchiveFile="${1:-wallpaper.tar.gz}"
   local wallpaperDir="${WALLPAPER_DIR:-${HOME}/wallpaper}"
+  local prefixDir="$(dirname "${wallpaperDir}")"
 
-  if [ -f "${wallpaperArchiveFile}" ]; then
-    # Backup .tar.gz file if one is already present.
-    mv "${wallpaperArchiveFile}" "${wallpaperArchiveFile}.bak"
-  fi
-
-  tar -C "${wallpaperDir}/.." -czvf "$(basename "${wallpaperArchiveFile}")" \
-    "$(basename "${wallpaperDir}")"/*
+  (
+    cd "${prefixDir}" &&
+      if [ -f "${wallpaperArchiveFile}" ]; then
+        mv "${wallpaperArchiveFile}" "${wallpaperArchiveFile}.bak"
+      fi &&
+      tar -C "${prefixDir}" -czvf "${wallpaperArchiveFile}" \
+        "$(basename "${wallpaperDir}")"/*
+  )
 }
 
 # Create a compressed TAR archive of the desktop wallpaper directory, and upload
@@ -45,7 +47,7 @@ create_wallpaper_archive() {
 # https://rclone.org/drive/
 update_wallpaper_in_google_drive() {
   local rcloneRemote="${RCLONE_REMOTE:-drive}"
-  local wallpaperArchiveFile="${HOME}/wallpaper.tar.gz"
+  local wallpaperArchiveFile="wallpaper.tar.gz"
 
   if [ ! -x "$(command -v rclone)" ]; then
     err "${CYAN}rclone${NC} is required to upload files to Google Drive."
