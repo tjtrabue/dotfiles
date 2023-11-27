@@ -39,7 +39,12 @@ create_wallpaper_archive() {
 
 # Create a compressed TAR archive of the desktop wallpaper directory, and upload
 # the archive to Google drive.
+#
+# For information about how to configure rclone to interact with Google Drive,
+# see the official rclone documentation:
+# https://rclone.org/drive/
 update_wallpaper_in_google_drive() {
+  local rcloneRemote="${RCLONE_REMOTE:-drive}"
   local wallpaperArchiveFile="${HOME}/wallpaper.tar.gz"
 
   if [ ! -x "$(command -v rclone)" ]; then
@@ -52,8 +57,9 @@ update_wallpaper_in_google_drive() {
 
   # Upload the new archive
   # NOTE: The name of the configured Google Drive rclone remote must be 'drive'.
-  rclone copy "${wallpaperArchiveFile}" \
-    "drive:$(basename "${wallpaperArchiveFile}")"
+  rclone copyto --checksum --progress --update \
+    "${wallpaperArchiveFile}" \
+    "${rcloneRemote}:$(basename "${wallpaperArchiveFile}")"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
