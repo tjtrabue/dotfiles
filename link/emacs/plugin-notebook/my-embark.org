@@ -89,15 +89,14 @@ offering you relevant actions to use on a target determined by the context:
                      nil
                      (window-parameters (mode-line-format . none))))
       ;; Remove certain action hooks that run before Embark runs the action.
-      (setq embark-pre-action-hooks (seq-filter
-                                     (lambda (e)
-                                       (not (seq-contains-p
-                                             ;; I don't want Embark to prompt me for
-                                             ;; confirmation before killing a
-                                             ;; buffer.
-                                             '((kill-buffer embark--confirm))
-                                             e)))
-                                     embark-pre-action-hooks)))
+      (setq embark-pre-action-hooks
+            (seq-filter (lambda (e)
+                          (not (seq-contains-p
+                                ;; I don't want Embark to prompt me for confirmation
+                                ;; before killing a buffer.
+                                '((kill-buffer embark--confirm))
+                                e)))
+                        embark-pre-action-hooks)))
   #+end_src
 
 * Plugins
