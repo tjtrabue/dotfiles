@@ -50,7 +50,13 @@ software development.
     (projectile-completion-system 'auto)
     ;; List of directory paths (and optional depths) that projectile should use
     ;; when searching for projects.
-    (projectile-project-search-path (list my/workspace-dir my/practice-dir))
+    (projectile-project-search-path (list my/workspace-dir my/practice-dir
+                                          ;; Check all subdirectories of each
+                                          ;; directory in the Practice dir for
+                                          ;; projects because I often namespace a
+                                          ;; series of practice projects under a
+                                          ;; single directory in the Practice dir.
+                                          (cons my/practice-dir 2)))
     ;; Add top-level folders for Projectile to ignore.
     (projectile-ignored-projects (list (getenv "HOME")
                                        (concat (getenv "HOME") "/Downloads/")
