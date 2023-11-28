@@ -106,6 +106,8 @@ Thank you so much for the your contributions, Mihai!
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package sly
+    ;; Currently using SLIME.
+    :disabled
     :after evil
     :mode
     ;; Make Slynk config file recognized as Common Lisp.
@@ -387,15 +389,28 @@ equivalent, so be sure to look for them using =C-h f=.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package slime
-    :disabled
     :commands slime
     :hook
     ((lisp-mode . slime-mode)
      (inferior-lisp-mode . inferior-slime-mode))
+    :general
+    ;; The user may initiate these keybindings after pressing the SLIME prefix
+    ;; key, which is usually "C-c".
+    (general-def slime-prefix-map
+      "C-q" 'slime-repl-quit)
+    (general-def 'normal slime-mode-map
+      "K" 'slime-documentation-lookup)
+    :init
+    ;; Pull in the SLIME autoloads file.
+    ;; (require 'slime-autoloads)
+    ;; Set the path to the selected Common Lisp implementation executable.
+    ;; The user must set this variable before the package loads.
+    (setq inferior-lisp-program (my/get-inferior-lisp-program))
     :custom
-    ;; Set the program used to interact with Common Lisp.
-    (inferior-lisp-program (my/get-inferior-lisp-program))
     ;; Bring in almost every contributor package
     ;; (that's what slime-fancy does).
-    (slime-contribs '(slime-fancy)))
+    (slime-contribs '(slime-fancy))
+    ;; Transmit Unicode characters between Emacs and the Lisp system.
+    ;; This is important if you use SBCL.
+    (slime-net-coding-system 'utf-8-unix))
 #+end_src
