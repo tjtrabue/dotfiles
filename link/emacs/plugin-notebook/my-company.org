@@ -75,15 +75,14 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     ;; using `lsp-bridge''s autocompletion by default.
     (lisp-mode . company-mode)
     :general
+    (general-unbind (company-active-map company-search-map)
+      ;; We want to use TAB for hippie-expand, not cycling company.
+      "TAB"
+      "<tab>"
+      "<backtab>")
     (general-def (company-active-map company-search-map)
       "RET" 'company-complete-selection
       "<return>" 'company-complete-selection
-      ;; Tab cycles completion candidates, shift-tab cycles backwards.
-      "TAB" 'company-complete-common-or-cycle
-      "<tab>" 'company-complete-common-or-cycle
-      "<backtab>" (lambda ()
-                    (interactive)
-                    (company-complete-common-or-cycle -1))
       "C-l" 'company-complete-selection)
     (general-def 'insert (company-active-map company-search-map)
       ;; Use RET and TAB to complete company completions
