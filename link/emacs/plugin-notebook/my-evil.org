@@ -180,7 +180,9 @@ The Evil mode plugin itself.
       ;; Easily navigate defintions, references, etc.
       "gb" 'xref-go-back
       "gd" 'xref-find-definitions
-      "gr" 'xref-find-references)
+      "gr" 'xref-find-references
+      ;; Shortcut for ":wq<RET>"
+      "ZX" 'evil-save-and-close)
     ;; This form unbinds keys in given evil states and/or keymaps.
     (general-unbind 'insert
       ;; Get rid of annoying evil-paste-from-register binding.
