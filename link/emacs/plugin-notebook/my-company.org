@@ -65,14 +65,15 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package company
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     ;; Must load company after Yasnippet and HippieExpand because we want TAB to
     ;; cycle company completions. If company loads before Hippie and Yasnippet the
     ;; TAB keybinding will not work correctly.
     :after (evil-collection hippie-exp yasnippet)
-    :demand t
     :delight
+    :hook
+    ;; Currently only enabling `company-mode' in select major modes in favor of
+    ;; using `lsp-bridge''s autocompletion by default.
+    (lisp-mode . company-mode)
     :general
     (general-def (company-active-map company-search-map)
       "RET" 'company-complete-selection
@@ -119,7 +120,9 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
        company-echo-metadata-frontend))
     :config
     ;; Enable company-mode in every buffer.
-    (global-company-mode 1)
+    ;; NOTE: Currently only enabling `company-mode' in select major modes in favor
+    ;;       of using `lsp-bridge''s autocompletion by default.
+    ;; (global-company-mode 1)
     ;; Tweak company backends.
     ;; Trust me, you want NOTHING to do with Semantic!!! It is far too
     ;; slow to be anything other than harmful, especially for emacs-lisp-mode.
@@ -185,8 +188,6 @@ Show quick documentation for company completions in a separate popup.
 
 #+begin_src emacs-lisp
   (use-package company-quickhelp
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :after company
     :hook
     (company-mode . company-quickhelp-mode)
@@ -207,8 +208,6 @@ Show quick documentation for company completions in a separate popup.
 ** company-web
 #+begin_src emacs-lisp
   (use-package company-web
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :after (company web-mode)
     :init
     (my/add-company-backends-for-mode 'web-mode '(company-web-html)))
@@ -217,11 +216,9 @@ Show quick documentation for company completions in a separate popup.
 ** company-try-hard
 #+begin_src emacs-lisp
   (use-package company-try-hard
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :after company
     :general
-    (general-def 'insert
+    (general-def 'insert company-mode-map
       "C-<tab>" 'company-try-hard)
     (general-def 'insert company-active-map
       "C-<tab>" 'company-try-hard))
@@ -236,8 +233,7 @@ Show quick documentation for company completions in a separate popup.
 ** company-cabal
 #+begin_src emacs-lisp
   (use-package company-cabal
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled)
+    :after company)
 #+end_src
 
 ** company-plsense
@@ -267,8 +263,6 @@ the =~/.plsense= configuration file containing the proper settings.
 ** company-auctex
 #+begin_src emacs-lisp
   (use-package company-auctex
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :hook
     ((latex-mode tex-mode) . company-auctex-init))
 #+end_src
@@ -320,8 +314,6 @@ cool, and looks beautiful, but you should use it at your own risk.
 
 #+begin_src emacs-lisp
   (use-package company-box
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :after company
     :if (display-graphic-p)
     :delight
@@ -339,8 +331,6 @@ cool, and looks beautiful, but you should use it at your own risk.
 
 #+begin_src emacs-lisp
   (use-package company-prescient
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :after (company prescient)
     :hook
     (company-mode . company-prescient-mode))
@@ -381,8 +371,15 @@ Emacs Lisp library.
 
 #+begin_src emacs-lisp
   (use-package company-restclient
-    ;; Currently disabled in favor of `lsp-bridge-mode'.
-    :disabled
     :init
     (my/add-company-backends-for-mode 'restclient-mode '(company-restclient)))
+#+end_src
+
+** slime-company
+#+begin_src emacs-lisp
+    (use-package slime-company
+      :after (slime company)
+      :custom
+      (slime-company-completion 'fuzzy)
+      (slime-company-after-completion 'slime-company-just-one-space))
 #+end_src

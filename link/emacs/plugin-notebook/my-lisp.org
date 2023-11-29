@@ -27,6 +27,7 @@ regardless of its particular dialect.
         lisp-mode
         lisp-data-mode
         lisp-interaction-mode
+        slime-repl-mode
         sly-mrepl-mode)
        . lispy-mode)
       :general

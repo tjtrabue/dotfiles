@@ -254,6 +254,7 @@ the debugger like with calling =asdf:load-system= directly.
 
 #+begin_src emacs-lisp
   (use-package sly-asdf
+    :disabled
     :after sly
     :demand t)
 #+end_src
@@ -263,6 +264,7 @@ Allows you to download dependencies via Quicklisp from inside SLY.
 
 #+begin_src emacs-lisp
   (use-package sly-quicklisp
+    :disabled
     :after sly)
 #+end_src
 
@@ -271,6 +273,7 @@ Expand macros right inside source files!
 
 #+begin_src emacs-lisp
   (use-package sly-macrostep
+    :disabled
     :after sly)
 #+end_src
 
@@ -294,6 +297,7 @@ MREPL. To install =agnostic-lizard=, simply run:
 **** =use-package= specification
 #+begin_src emacs-lisp
   (use-package sly-stepper
+    :disabled
     :after sly
     :straight
     ;; This package is not yet available from MELPA.
@@ -313,6 +317,7 @@ file.
 
 #+begin_src emacs-lisp
   (use-package sly-named-readtables
+    :disabled
     :after sly)
 #+end_src
 
@@ -321,6 +326,7 @@ Adds ANSI color support to the SLY REPL.
 
 #+begin_src emacs-lisp
   (use-package sly-repl-ansi-color
+    :disabled
     :after sly
     :demand t
     :config
@@ -397,7 +403,8 @@ equivalent, so be sure to look for them using =C-h f=.
     ;; The user may initiate these keybindings after pressing the SLIME prefix
     ;; key, which is usually "C-c".
     (general-def slime-prefix-map
-      "C-q" 'slime-repl-quit)
+      "C-q" 'slime-repl-quit
+      "M-j" 'slime)
     (general-def 'normal slime-mode-map
       "K" 'slime-documentation-lookup)
     :init
@@ -406,10 +413,13 @@ equivalent, so be sure to look for them using =C-h f=.
     ;; Set the path to the selected Common Lisp implementation executable.
     ;; The user must set this variable before the package loads.
     (setq inferior-lisp-program (my/get-inferior-lisp-program))
+    ;; Turn on company-mode for SLIME buffers and the SLIME REPL.
+    (add-hook 'slime-repl-mode-hook #'company-mode)
     :custom
     ;; Bring in almost every contributor package
     ;; (that's what slime-fancy does).
-    (slime-contribs '(slime-fancy))
+    ;; `slime-company' is a separate MELPA package.
+    (slime-contribs '(slime-fancy slime-company))
     ;; Transmit Unicode characters between Emacs and the Lisp system.
     ;; This is important if you use SBCL.
     (slime-net-coding-system 'utf-8-unix))
