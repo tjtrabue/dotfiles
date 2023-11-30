@@ -400,6 +400,35 @@ equivalent, so be sure to look for them using =C-h f=.
     ((lisp-mode . slime-mode)
      (inferior-lisp-mode . inferior-slime-mode))
     :general
+    (my/evil-leader-def 'normal slime-repl-mode-map
+      ;; Use ",," in normal mode in the SLIME REPL to launch the shortcut menu.
+      ","  'slime-handle-repl-shortcut
+      ;; Compile (if necessary) and load a lisp file.
+      "sc" 'slime-repl-compile-and-load
+      ;; Change the current directory
+      "sd" 'slime-set-default-directory
+      ;; Push a new directory onto the directory stack.
+      "sU" 'slime-repl-push-directory
+      ;; Pop the current directory.
+      "sO" 'slime-repl-pop-directory
+      ;; Display help
+      "sh" 'slime-repl-shortcut-help
+      ;; Define a new global, special variable.
+      "sP" 'slime-repl-defparameter
+      ;; Change the current package
+      "sp" 'slime-repl-set-package
+      ;; Push a new package onto the package stack.
+      "su" 'slime-repl-push-package
+      ;; Pop the top of the package stack.
+      "so" 'slime-repl-pop-package
+      ;; Quit the current lisp
+      "sq" 'slime-repl-quit
+      ;; Restart the *inferior-lisp* process and reconnect SLIME.
+      "sr" 'slime-restart-inferior-lisp
+      ;; Print the current directory.
+      "sw" 'slime-pwd
+      ;; Quit all Lisps and close all SLIME buffers.
+      "sz" 'slime-repl-sayoonara)
     ;; The user may initiate these keybindings after pressing the SLIME prefix
     ;; key, which is usually "C-c".
     (general-def slime-prefix-map
