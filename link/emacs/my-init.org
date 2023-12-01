@@ -1390,7 +1390,7 @@ try to load =org= later.
     ;; This makes the title larger, and stand out more.
     (set-face-attribute 'org-document-title nil
                         :inherit 'org-level-1
-                        :height 1.80)
+                        :height 1.75)
     :config
     ;; Required for expand-region.
     (require 'org-fold)

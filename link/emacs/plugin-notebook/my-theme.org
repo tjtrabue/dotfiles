@@ -100,7 +100,7 @@ color names used by Modus]].
       ;; Change the font/size/color of Org mode titles so they stand out more.
       (set-face-attribute 'org-document-title nil
                           :inherit '(org-level-1 modus-themes-heading-0)
-                          :height 1.8)
+                          :height 1.75)
       (when (bound-and-true-p solaire-mode)
         ;; Support Solaire.
         (custom-set-faces
