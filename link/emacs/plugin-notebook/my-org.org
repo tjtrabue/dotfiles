@@ -32,6 +32,8 @@ by big ugly boxes. See file =my-theme.org= for this theme's activation.
 
 #+begin_src emacs-lisp
   (use-package org-beautify-theme
+    ;; 11/20/2023: This package appears broken in modern Org mode.
+    :disabled
     ;; Only use org-beautify-theme in GUI Emacs.
     :if (display-graphic-p)
     :after org
