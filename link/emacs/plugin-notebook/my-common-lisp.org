@@ -429,6 +429,10 @@ equivalent, so be sure to look for them using =C-h f=.
       "sw" 'slime-pwd
       ;; Quit all Lisps and close all SLIME buffers.
       "sz" 'slime-repl-sayoonara)
+    (general-def slime-repl-mode-map
+      ;; Cycle SLIME REPL history.
+      "C-j" 'slime-repl-next-input
+      "C-k" 'slime-repl-previous-input)
     ;; The user may initiate these keybindings after pressing the SLIME prefix
     ;; key, which is usually "C-c".
     (general-def slime-prefix-map
