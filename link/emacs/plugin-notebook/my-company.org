@@ -56,6 +56,21 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
          ;; duplicates from the resulting `company-backends' list.
          (delete-dups company-backends))))
 
+  (defun my/add-company-backend-with-yas (backend)
+    "Add a BACKEND to `company-backends' with Yasnippet integration.
+
+  This functions prepends the newly constructed group of backends
+  to `company-backends' in a buffer-local manner, so this function
+  has no global effect."
+    (let* ((backend-with-yas (my/company-backend-with-yas backend))
+           ;; Avoid duplicating the new backend in the list.
+           (backends (seq-remove (lambda (e)
+                                   (member e `(,backend ,backend-with-yas)))
+                                 company-backends)))
+      (setq-local company-backends
+                  (append (list backend-with-yas)
+                          backends))))
+
   (defun my/add-company-backends-for-mode (mode backends)
     "Add list of BACKENDS to`company-backends' for major mode MODE.
 
@@ -379,26 +394,15 @@ Emacs Lisp library.
 #+end_src
 
 ** slime-company
-SLIME completions for =company-mode=. SLIME is the premier Common Lisp
-development environment for Emacs, and this package integrates SLIME's
-autocompletion features into Company.
+SLIME completions for =company-mode=. Completions are only available when the
+SLIME REPL is active (i.e., connected to a Swank server).
 
 #+begin_src emacs-lisp
   (use-package slime-company
     :after (slime company)
     :hook
     ((slime-mode slime-repl-mode)
-     . (lambda ()
-         ;; Add '(company-slime :with company-yasnippet) to the list of
-         ;; Company backends without duplicating the entry.
-         (let* ((backend 'company-slime)
-                (backend-with-yas `(,backend :with company-yasnippet))
-                (backends (seq-remove (lambda (e)
-                                        (member e `(,backend ,backend-with-yas)))
-                                      company-backends)))
-           (setq-local company-backends
-                       (append (list backend-with-yas)
-                               backends)))))
+     . (lambda () (my/add-company-backend-with-yas 'company-slime)))
     :custom
     (slime-company-completion 'fuzzy)
     (slime-company-after-completion 'slime-company-just-one-space))

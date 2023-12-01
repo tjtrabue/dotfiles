@@ -458,4 +458,8 @@ link/config/flameshotrc
 link/config/helm/
 # }}}
 
+# Common Lisp {{{
+!link/config/common-lisp
+# }}}
+
 # vim:foldenable:foldmethod=marker
