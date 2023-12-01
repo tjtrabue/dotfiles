@@ -387,17 +387,18 @@ autocompletion features into Company.
   (use-package slime-company
     :after (slime company)
     :hook
-    (slime-mode . (lambda ()
-                    ;; Add '(company-slime :with company-yasnippet) to the list of
-                    ;; Company backends without duplicating the entry.
-                    (let* ((backend 'company-slime)
-                           (backend-with-yas `(,backend :with company-yasnippet))
-                           (backends (seq-remove (lambda (e)
-                                                   (member e `(,backend ,backend-with-yas)))
-                                                 company-backends)))
-                      (setq-local company-backends
-                                  (append (list backend-with-yas)
-                                          backends)))))
+    ((slime-mode slime-repl-mode)
+     . (lambda ()
+         ;; Add '(company-slime :with company-yasnippet) to the list of
+         ;; Company backends without duplicating the entry.
+         (let* ((backend 'company-slime)
+                (backend-with-yas `(,backend :with company-yasnippet))
+                (backends (seq-remove (lambda (e)
+                                        (member e `(,backend ,backend-with-yas)))
+                                      company-backends)))
+           (setq-local company-backends
+                       (append (list backend-with-yas)
+                               backends)))))
     :custom
     (slime-company-completion 'fuzzy)
     (slime-company-after-completion 'slime-company-just-one-space))

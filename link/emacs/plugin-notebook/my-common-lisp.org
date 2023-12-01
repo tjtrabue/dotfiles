@@ -12,6 +12,12 @@ The two main Common Lisp integration plugins are SLIME and SLY, which are
 alternatives to one another. SLY is newer and more powerful, though, so I would
 stick with SLY unless you have a reason not to.
 
+* Basic Configuration
+#+begin_src emacs-lisp
+  ;; Read the user's SBCL config file as a Common Lisp file.
+  (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
+#+end_src
+
 * Functions
 ** General purpose Lisp functions
 #+begin_src emacs-lisp
