@@ -444,8 +444,8 @@ equivalent, so be sure to look for them using =C-h f=.
     (general-def slime-prefix-map
       "C-q" 'slime-repl-quit
       "M-j" 'slime)
-    (general-def 'normal slime-mode-map
-      "K" 'slime-documentation-lookup)
+    (general-def 'normal '(slime-mode-map slime-repl-mode-map)
+      "K" 'slime-documentation)
     :init
     ;; Pull in the SLIME autoloads file.
     ;; (require 'slime-autoloads)
