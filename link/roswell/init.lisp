@@ -4,6 +4,9 @@
 ;; managed by Roswell, and acts as a drop-in replacement for many "rc" files
 ;; specific to particular Common Lisp implementations, like .sbclrc.
 
+;; A companion system to Quicklisp that helps users create new Common Lisp
+;; projects quickly with functions and templates.
+(ql:quickload :quickproject)
 ;; Needed for regex searching in Emacs SLY
 (ql:quickload :cl-ppcre)
 ;; Needed for some SLY plugins
