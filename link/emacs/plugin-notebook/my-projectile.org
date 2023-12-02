@@ -56,7 +56,12 @@ software development.
                                           ;; projects because I often namespace a
                                           ;; series of practice projects under a
                                           ;; single directory in the Practice dir.
-                                          (cons my/practice-dir 2)))
+                                          (cons my/practice-dir 2)
+                                          ;; Check the "~/workspace/lisp" dir for
+                                          ;; projects, as well.
+                                          (cons (file-truename
+                                                 (concat my/workspace-dir "/lisp"))
+                                                2)))
     ;; Add top-level folders for Projectile to ignore.
     (projectile-ignored-projects (list (getenv "HOME")
                                        (concat (getenv "HOME") "/Downloads/")
