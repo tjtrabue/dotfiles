@@ -95,6 +95,7 @@ kitty
 kubeadm
 kubectl
 libdvdcss
+libev
 liblsp-r3d-glx-lib
 libreoffice-fresh
 libxcrypt

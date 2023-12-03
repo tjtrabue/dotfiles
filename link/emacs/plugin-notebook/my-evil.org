@@ -721,6 +721,7 @@ main features of =lispyville=:
                 "ls" 'lispy-split
                 "lt" 'transpose-sexps
                 "lw" 'my/lispyville-wrap-round-and-insert
+                "lx" 'lispy-extract-defun
                 "ly" 'lispy-new-copy)))
           my/lisp-major-modes)
     t)

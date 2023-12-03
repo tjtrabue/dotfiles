@@ -442,7 +442,7 @@ equivalent, so be sure to look for them using =C-h f=.
     ;; The user may initiate these keybindings after pressing the SLIME prefix
     ;; key, which is usually "C-c".
     (general-def slime-prefix-map
-      "C-q" 'slime-repl-quit
+      "C-q" 'slime-repl-sayoonara
       "M-j" 'slime)
     (general-def 'normal '(slime-mode-map slime-repl-mode-map)
       "K" 'slime-documentation)
