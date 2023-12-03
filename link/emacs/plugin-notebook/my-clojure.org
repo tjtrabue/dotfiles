@@ -17,6 +17,14 @@ Major mode for editing Clojure files.
     ;; reason.
     (clojure-mode :type git :host github :repo "clojure-emacs/clojure-mode"
                   :files (:defaults))
+    :init
+    (add-hook 'clojure-mode-hook
+              (lambda ()
+                (let ((max-columns 100))
+                  ;; The Common Lisp style guide recommends 100 columns max instead of 80 due to Lisp
+                  ;; having longer, more descriptive names.
+                  (setq-local fill-column max-columns
+                              whitespace-line-column max-columns))))
     :config
     ;; Add extra syntax coloring (imprecise, but pretty)
     (require 'clojure-mode-extra-font-locking))

@@ -12,10 +12,21 @@ The two main Common Lisp integration plugins are SLIME and SLY, which are
 alternatives to one another. SLY is newer and more powerful, though, so I would
 stick with SLY unless you have a reason not to.
 
+If you are curious about the correct coding style for Common Lisp, you can find
+the style guide [[https:lisp-lang.org/style-guide][here]].
+
 * Basic Configuration
 #+begin_src emacs-lisp
   ;; Read the user's SBCL config file as a Common Lisp file.
   (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
+
+  (add-hook 'lisp-mode-hook
+            (lambda ()
+              (let ((max-columns 100))
+                ;; The Common Lisp style guide recommends 100 columns max instead of
+                ;; 80 due to Lisp having longer, more descriptive names.
+                (setq-local fill-column max-columns
+                            whitespace-line-column max-columns))))
 #+end_src
 
 * Functions

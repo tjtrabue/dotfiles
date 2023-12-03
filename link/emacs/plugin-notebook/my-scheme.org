@@ -8,6 +8,19 @@
 Scheme is one of the oldest dialects of Lisp still in use, and, along with
 Common Lisp, is one of the oldest programming languages still around today.
 
+* General Configuration
+Basic setup for =scheme-mode=.
+
+#+begin_src emacs-lisp
+  (add-hook 'scheme-mode-hook
+            (lambda ()
+              (let ((max-columns 100))
+                ;; The Common Lisp style guide recommends 100 columns max instead of 80 due to Lisp
+                ;; having longer, more descriptive names.
+                (setq-local fill-column max-columns
+                            whitespace-line-column max-columns))))
+#+end_src
+
 * Geiser
   Geiser turns Emacs into a powerful Scheme IDE. Thus, Geiser is quite similar
   to SLIME/SLY for Common Lisp, or CIDER for Clojure.

@@ -31,8 +31,8 @@ files and become useable:
   =/etc/security/limits.conf= to something pretty high:
 
   #+begin_quote
-    * soft nofile 8192
-    * hard nofile 65535
+  * soft nofile 8192
+  * hard nofile 65535
   #+end_quote
 
 - Run Emacs in daemon-mode from the command line to keep track of the native
@@ -900,6 +900,19 @@ These run after loading init files and handling the command line.
               (setq gc-cons-threshold 104857600) ;; 100 MB
               (setq gc-cons-percentage 0.1)
               (setq file-name-handler-alist last-file-name-handler-alist)))
+#+end_src
+
+** emacs-lisp hooks
+Hooks that run upon entering Emacs Lisp source code buffers.
+
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (let ((max-columns 100))
+                ;; The Common Lisp style guide recommends 100 columns max instead of 80 due to Lisp
+                ;; having longer, more descriptive names.
+                (setq-local fill-column max-columns
+                            whitespace-line-column max-columns))))
 #+end_src
 
 ** minibuffer-setup hooks
