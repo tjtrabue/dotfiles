@@ -96,6 +96,7 @@ kubeadm
 kubectl
 libdvdcss
 libev
+libfixposix
 liblsp-r3d-glx-lib
 libreoffice-fresh
 libxcrypt

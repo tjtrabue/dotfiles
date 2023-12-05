@@ -1,6 +1,7 @@
 # Please leave these lines in their respective order.
 sbcl-bin
 rove
+clack
 clhs
 # Language server packages
 cxxxr/lem
