@@ -450,27 +450,28 @@ equivalent, so be sure to look for them using =C-h f=.
       ;; Cycle SLIME REPL history.
       "C-j" 'slime-repl-next-input
       "C-k" 'slime-repl-previous-input)
-    ;; The user may initiate these keybindings after pressing the SLIME prefix
-    ;; key, which is usually "C-c".
+    ;; The user may initiate these keybindings after pressing the SLIME prefix key, which is usually
+    ;; "C-c".
     (general-def slime-prefix-map
       "C-q" 'slime-repl-sayoonara
       "M-j" 'slime)
     (general-def 'normal '(slime-mode-map slime-repl-mode-map)
       "K" 'slime-documentation)
     :init
-    ;; Pull in the SLIME autoloads file.
-    ;; (require 'slime-autoloads)
     ;; Set the path to the selected Common Lisp implementation executable.
     ;; The user must set this variable before the package loads.
     (setq inferior-lisp-program (my/get-inferior-lisp-program))
     ;; Turn on company-mode for SLIME buffers and the SLIME REPL.
-    (add-hook 'slime-repl-mode-hook #'company-mode)
+    (add-hook 'slime-repl-mode-hook (lambda ()
+                                      (company-mode 1)
+                                      ;; We don't want to see trailing whitespace in the REPL.
+                                      (setq-local show-trailing-whitespace nil)
+                                      (whitespace-mode -1)))
     :custom
-    ;; Bring in almost every contributor package
-    ;; (that's what slime-fancy does).
+    ;; Bring in almost every contributor package (that's what slime-fancy does).
     ;; `slime-company' is a separate MELPA package.
     (slime-contribs '(slime-fancy slime-company))
-    ;; Transmit Unicode characters between Emacs and the Lisp system.
-    ;; This is important if you use SBCL.
+    ;; Transmit Unicode characters between Emacs and the Lisp system.  This is important if you use
+    ;; SBCL.
     (slime-net-coding-system 'utf-8-unix))
 #+end_src

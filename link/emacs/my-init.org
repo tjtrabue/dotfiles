@@ -866,8 +866,7 @@ state change hooks like =evil-insert-state-entry-hook= and
 ** Buffer-menu-mode hooks
 #+begin_src emacs-lisp
   (add-hook 'Buffer-menu-mode-hook (lambda ()
-                                     ;; Disable whitespace visualization in Buffer
-                                     ;; menu.
+                                     ;; Disable whitespace visualization in Buffer menu.
                                      (setq-local show-trailing-whitespace nil)
                                      (whitespace-mode -1)))
 #+end_src
