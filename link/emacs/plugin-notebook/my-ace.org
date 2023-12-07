@@ -23,7 +23,7 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
       ;; Also use C-, to call ace-window
       "C-," 'ace-window)
     (my/evil-leader-def 'override
-      "aa" 'ace-window)
+      "ag" 'ace-window)
     :custom
     ;; Set window selection keys to the home row ones.
     (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
