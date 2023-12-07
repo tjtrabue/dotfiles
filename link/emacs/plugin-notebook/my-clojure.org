@@ -100,11 +100,11 @@ file in your project's root directory with the following content:
   The optional prefix ARG is passed on to `cider-doc'.  See that function's
   documentation for more details."
     (interactive "P")
-    (condition-case nil
-        (cider-doc arg)
-      (error (cond ((bound-and-true-p lsp-bridge-mode)
-                    (lsp-bridge-popup-documentation))
-                   nil))))
+    (cond
+     ((cider-current-connection)
+      (cider-doc arg))
+     (t
+      (lsp-bridge-popup-documentation))))
 #+end_src
 
 ** =use-package= specification
