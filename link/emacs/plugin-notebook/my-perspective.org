@@ -73,21 +73,19 @@ different perspective, and more.
       ;; Save perspective to disk whenever the user kills Emacs.
       (kill-emacs . persp-state-save)
       :general
-      (my/user-leader-def
+      (my/user-leader-def persp-mode-map
         ;; This is general.el's way of accomplishing :bind-keymap.
         "j" '(:keymap perspective-map))
-      (general-def
+      (general-def persp-mode-map
         "C-x b" 'persp-switch-to-buffer
         "C-x k" 'persp-kill-buffer*
-        "C-e" 'persp-switch-to-buffer
         "C-M-k" (lambda ()
                   "Kill the current buffer for the active persepective."
                   (interactive)
                   (persp-kill-buffer* (current-buffer))))
       ;; Set evil-leader keys for perspective.el
-      (my/evil-leader-def
+      (my/evil-leader-def persp-mode-map
         ;; Remappings of standard evil-leader shortcuts
-        "bb" 'persp-switch-to-buffer
         "kk" 'persp-kill-buffer*
         ;; Custom perspective evil-leader shortcuts
         "pL" 'persp-state-load

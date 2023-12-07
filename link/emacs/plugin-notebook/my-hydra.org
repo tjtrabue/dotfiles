@@ -40,13 +40,16 @@ This hydra resizes the current window using VI keys.
 
 #+begin_src emacs-lisp
   (defun my/define-hydra-resize-window ()
-    "Wrapper function for defhydra hydra-resize-window."
+    "Wrapper function for defhtdra hydra-resize-window."
     (defhydra hydra-resize-window (global-map "C-]")
       "Resize window with VI keys"
-      ("h" shrink-window-horizontally "shrink horizontally")
-      ("j" shrink-window "shrink vertically")
-      ("k" enlarge-window "enlarge vertically")
-      ("l" enlarge-window-horizontally "enlarge horizontally")))
+      ("h" shrink-window-horizontally "Shrink horizontally")
+      ("j" shrink-window "Shrink vertically")
+      ("k" enlarge-window "Enlarge vertically")
+      ("l" enlarge-window-horizontally "Enlarge horizontally")
+      ("q" nil "Quit" :exit t))
+    (my/evil-leader-def 'override
+      "ar" 'hydra-resize-window/body))
 #+end_src
 
 ** hydra-expand-region
