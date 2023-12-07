@@ -1268,9 +1268,8 @@ and hooks in a way that defers loading the package.
     ;;   general-otomap
     ;;   general-itomap
     ;;   general-tomap
-    ;; If you pass a non-nil argument to `general-evil-setup', you may omit the
-    ;; "general-" prefix for these macros. I find that leaving them in makes your
-    ;; code more descriptive, however.
+    ;; If you pass a non-nil argument to `general-evil-setup', you may omit the "general-" prefix for
+    ;; these macros. I find that leaving them in makes your code more descriptive, however.
     (general-evil-setup)
     ;;; Set universal keybindings with General
     (general-unbind
@@ -1299,6 +1298,11 @@ and hooks in a way that defers loading the package.
       ">" 'eval-print-last-sexp
       ;; Toggle relative/absolute line numbers.
       "N"  'my/toggle-line-number-type
+      ;; Window
+      "ad" 'delete-window
+      "af" 'delete-other-windows
+      "as" 'split-window-right
+      "aw" 'split-window-below
       ;; Bookmarks
       "bd" 'bookmark-delete
       "bj" 'bookmark-jump
