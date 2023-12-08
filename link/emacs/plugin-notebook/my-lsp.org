@@ -642,7 +642,7 @@ infrastructure for Emacs.
     (acm-enable-citre nil)
     ;; The complete menu matching algorithm.  Anything that begins with
     ;; "orderless-" requires Orderless to be installed first.
-    (acm-candidate-match-function #'orderless-flex)
+    (acm-candidate-match-function #'orderless-regexp)
     ;; Whether the completion menu displays a help document.
     (acm-enable-doc t)
     ;; Whether and how to richly render Markdown for completion popups.

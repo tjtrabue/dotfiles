@@ -13,6 +13,12 @@ many other features in a language-agnostic manner.
 * Citre
 Citre is an advanced Emacs front-end for readtags.
 
+** IMPORTANT: =lsp-bridge= Integration Bug
+12/7/2023: I have discovered a bug where, if the user enables CITRE along with
+=lsp-bridge= for a Clojure project and attempts to find a new (i.e.,
+non-existent) file, Emacs will hang indefinitely. I would recommend disabling
+this plugin if you use =lsp-bridge=.
+
 ** Usage
 Open a file in your project, and run =M-x citre-update-this-tage-file=. If Citre
 can't find a tags file for your project, it will guide you through creating one.
@@ -28,6 +34,9 @@ configuration. To change the recipe you used to generate the tags file, execute
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package citre
+    ;; Disabled due to lsp-bridge integration bug.
+    ;; See note above.
+    :disabled
     :demand t
     :delight
     :commands

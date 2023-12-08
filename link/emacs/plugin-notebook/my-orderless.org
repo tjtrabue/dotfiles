@@ -18,10 +18,10 @@ prefixes. By default, regexp and literal matches are enabled.
     :custom
     (completion-styles '(orderless basic))
     (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles basic partial-completion))))
+    (completion-category-overrides '((file (styles basic substring))
+                                     (project-file (styles basic substring))))
     (orderless-matching-styles '(orderless-literal
                                  orderless-regexp
-                                 orderless-flex
                                  ;; Prefixes: "re-re" ~ "recode-region",
                                  ;;                     "query-replace-regex"
                                  ;; orderless-prefixes

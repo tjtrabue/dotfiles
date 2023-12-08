@@ -286,7 +286,7 @@ necessary, Node.js dependencies are up-to-date and compatible and try again.
                     (clj-refactor-mode 1)
                     ;; This choice of keybinding leaves cider-macroexpand-1
                     ;; unbound
-                    (cljr-add-keybindings-with-prefix "C-c C-m")))
+                    (cljr-add-keybindings-with-prefix "C-c C-j")))
     :custom
     ;; disable clj-refactor adding ns to blank files.
     ;; This is for interoperability with lsp-mode.
