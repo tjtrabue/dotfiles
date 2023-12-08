@@ -25,9 +25,16 @@ prefixes. By default, regexp and literal matches are enabled.
                                  ;; Prefixes: "re-re" ~ "recode-region",
                                  ;;                     "query-replace-regex"
                                  ;; orderless-prefixes
+                                 ;;
                                  ;; Initialisms: "abc" ~ "alfred-batman-catwoman"
                                  ;; NOTE: Initialism regexps are really slow under
                                  ;;       the hood. You probably don't want them
                                  ;; orderless-initialism
+                                 ;;
+                                 ;; Flex:
+                                 ;; characters in the search string must appear in the candidate
+                                 ;; string, but not necessarily consecutively,  i.e, "abc" really
+                                 ;; means "a.*b.*c", so it would match "anybody can."
+                                 ;; orderless-flex
                                  )))
 #+end_src
