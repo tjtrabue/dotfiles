@@ -1343,7 +1343,11 @@ try to load =org= later.
     (org-mode .
               (lambda ()
                 ;; Disable whitespace mode for org mode.
-                (whitespace-mode -1)))
+                (whitespace-mode -1)
+                (setq-local show-trailing-whitespace nil)
+                ;; Tab width in Org mode buffers must be 8, for some reason.
+                ;; We need this setting in order to avoid Emacs erroring out.
+                (setq-local tab-width 8)))
     :general
     (general-def org-mode-map
       ;; Mainly used to cycle through todo states.

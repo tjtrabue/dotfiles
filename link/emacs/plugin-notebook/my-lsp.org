@@ -609,7 +609,15 @@ infrastructure for Emacs.
       "wot" 'lsp-bridge-find-type-def-other-window
       "ww"  'lsp-bridge-workspace-list-symbols)
     (general-def 'normal lsp-bridge-mode-map
-      "K" 'lsp-bridge-popup-documentation)
+      ;; Use unimpaired keybindings to navigate LSP diagnostics.  Both of the next pairs of mappings
+      ;; should be identical in meaning, but for some reason the mappings in the `flycheck-mode-map'
+      ;; seem to take precedence over `lsp-bridge-mode-map', so sometimes the `[remap ...]' calls are
+      ;; necessary for the `lsp-bridge-mode-map' keybindings to take effect.
+      "[c"                            'lsp-bridge-diagnostic-jump-prev
+      "]c"                            'lsp-bridge-diagnostic-jump-next
+      [remap flycheck-previous-error] 'lsp-bridge-diagnostic-jump-prev
+      [remap flycheck-next-error]     'lsp-bridge-diagnostic-jump-next
+      "K"                             'lsp-bridge-popup-documentation)
     (general-def lsp-bridge-peek-keymap
       "C-j" 'lsp-bridge-peek-list-next-line
       "C-k" 'lsp-bridge-peek-list-prev-line)
