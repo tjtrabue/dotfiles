@@ -26,7 +26,7 @@ find_wallpaper_dupes() {
 # Create a compressed TAR archive of the desktop wallpaper directory.
 create_wallpaper_archive() {
   local wallpaperArchiveFile="${1:-wallpaper.tar.gz}"
-  local wallpaperDir="${WALLPAPER_DIR:-${HOME}/wallpaper}"
+  local wallpaperDir="${2:-${HOME}/wallpaper}"
   local prefixDir="$(dirname "${wallpaperDir}")"
 
   (
@@ -48,6 +48,8 @@ create_wallpaper_archive() {
 update_wallpaper_in_google_drive() {
   local rcloneRemote="${RCLONE_REMOTE:-drive}"
   local wallpaperArchiveFile="wallpaper.tar.gz"
+  local wallpaperDir="${WALLPAPER_DIR:-${HOME}/wallpaper}"
+  local prefixDir="$(dirname "${wallpaperDir}")"
 
   if [ ! -x "$(command -v rclone)" ]; then
     err "${CYAN}rclone${NC} is required to upload files to Google Drive."
@@ -55,13 +57,17 @@ update_wallpaper_in_google_drive() {
   fi
 
   # Compress wallpaper into a .tar.gz archive.
-  create_wallpaper_archive "${wallpaperArchiveFile}"
+  create_wallpaper_archive "${wallpaperArchiveFile}" "${wallpaperDir}"
 
-  # Upload the new archive
-  # NOTE: The name of the configured Google Drive rclone remote must be 'drive'.
-  rclone copyto --checksum --progress --update \
-    "${wallpaperArchiveFile}" \
-    "${rcloneRemote}:$(basename "${wallpaperArchiveFile}")"
+  (
+    cd "${prefixDir}" &&
+      # Upload the new archive
+      # NOTE: The name of the configured Google Drive rclone remote must be
+      # 'drive'.
+      rclone copyto --checksum --progress --update \
+        "${wallpaperArchiveFile}" \
+        "${rcloneRemote}:$(basename "${wallpaperArchiveFile}")"
+  )
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

@@ -1310,6 +1310,7 @@ and hooks in a way that defers loading the package.
       "bs" 'bookmark-set
       ;; Buffer
       "bb" 'switch-to-buffer
+      "bd" 'evil-delete-buffer
       "bk" 'kill-this-buffer
       "kk" 'kill-buffer
       ;; Dired
@@ -1330,6 +1331,8 @@ try to load =org= later.
 #+begin_src emacs-lisp
   (use-package org
     ;; Use built-in Org version to avoid version compatibility issues.
+    ;; You may want to comment the `:ensure' and `:straight' directives
+    ;; from time to time in order to upgrade your Org version.
     :ensure nil
     :straight nil
     :mode ("\\.org\\'" . org-mode)
