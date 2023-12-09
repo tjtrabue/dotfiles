@@ -165,10 +165,10 @@ file in your project's root directory with the following content:
       ;; I like `C-c C-j'.
       "C-j" 'cider-jack-in)
     (general-def 'normal cider-mode-map
-      "gs" 'cider-find-var
-      "gi" 'cider-find-resource
-      "gu" 'cider-xref-fn-refs
-      "K"  'my/cider-doc-or-fallback-doc-function)
+      "gs"              'cider-find-var
+      "gi"              'cider-find-resource
+      "gu"              'cider-xref-fn-refs
+      [remap cider-doc] 'my/cider-doc-or-fallback-doc-function)
     ;; Clearing the whole REPL is a useful feature since the REPL gets slower
     ;; the larger it gets.
     (my/user-leader-def cider-repl-mode-map
