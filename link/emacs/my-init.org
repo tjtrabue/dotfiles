@@ -1287,7 +1287,9 @@ and hooks in a way that defers loading the package.
       ;; Much easier than `C-x 4 C-f'
       "C-x F" 'find-file-other-window
       ;; Kill the current buffer.
-      "C-M-k" 'kill-this-buffer)
+      "C-M-k" 'kill-this-buffer
+      ;; Duplicate the current line or region N times.
+      "C-S-p" 'duplicate-dwim)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
       ;; Move cursor to beginning/end of line.

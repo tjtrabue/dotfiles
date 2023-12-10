@@ -53,9 +53,10 @@ in Emacs, making it more convenient to edit foreign files.
 
 #+begin_src emacs-lisp
   (use-package dtrt-indent
+    :demand t
     :delight
-    :hook
-    ((prog-mode text-mode) . dtrt-indent-mode)
     :custom
-    (dtrt-indent-verbosity 0))
+    (dtrt-indent-verbosity 0)
+    :config
+    (dtrt-indent-global-mode 1))
 #+end_src
