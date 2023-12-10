@@ -1339,15 +1339,6 @@ try to load =org= later.
     :delight
     (org-src-mode)
     (org-indent-mode)
-    :hook
-    (org-mode .
-              (lambda ()
-                ;; Disable whitespace mode for org mode.
-                (whitespace-mode -1)
-                (setq-local show-trailing-whitespace nil)
-                ;; Tab width in Org mode buffers must be 8, for some reason.
-                ;; We need this setting in order to avoid Emacs erroring out.
-                (setq-local tab-width 8)))
     :general
     (general-def org-mode-map
       ;; Mainly used to cycle through todo states.
@@ -1365,10 +1356,11 @@ try to load =org= later.
     (my/evil-leader-def
       "oa" 'org-agenda)
     :custom
+    ;; Do not show all "*" characters for each heading, but instead show only the final "*".
     (org-hide-leading-stars t)
-    ;; Only show headings when visiting a new Org file.
+    ;; Whether to only show headings when visiting a new Org file.
     (org-startup-folded 'fold)
-    ;; Open Org mode buffers with `org-indent-mode' enabled.
+    ;; Whether to open Org mode buffers with `org-indent-mode' enabled.
     (org-startup-indented t)
     ;; Directory used by Org only in rare circumstances, such as when filing
     ;; away remember notes.
@@ -1405,6 +1397,13 @@ try to load =org= later.
     (org-plantuml-exec-mode 'plantuml)
     (org-plantuml-executable-path (executable-find "plantuml"))
     :init
+    (add-hook 'org-mode-hook
+              (lambda ()
+                ;; Disable whitespace mode for org mode.
+                (whitespace-mode -1)
+                (setq-local show-trailing-whitespace nil)
+                ;; Org mode requires a `tab-width' value of 8, for some reason.
+                (setq-local tab-width 8)))
     ;; Make sure the Org notes directory is present.
     (make-directory my/org-dir t)
     ;; Also create the agenda directory.

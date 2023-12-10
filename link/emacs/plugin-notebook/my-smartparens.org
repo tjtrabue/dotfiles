@@ -48,6 +48,7 @@ aforementioned Vim plugins have.
         ielm-mode
         lisp-mode
         lisp-interaction-mode
+        scheme-mode
         sly-mrepl-mode)
        . smartparens-strict-mode)
       :config

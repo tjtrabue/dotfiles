@@ -111,7 +111,7 @@ Return the name of the ELISP-FILE."
 
 Return the name of the ELC-FILE."
   (if (not (string= (file-name-extension file) "elc"))
-    (error "Argument is not a compiled Elisp file"))
+      (error "Argument is not a compiled Elisp file"))
   (let ((ancestor (concat (file-name-sans-extension elc-file) ".el")))
     (when (my/file-not-exists-or-newer-than-other-p ancestor elc-file)
       ;; May need to update the .el (ancestor) file before compiling it.
@@ -125,19 +125,19 @@ This function will call `byte-compile-file' on FILE's ancestor if FILE's
 extension is '.elc', and will call `org-babel-tangle-file' on the ancestor if
 FILE's extension is '.el'."
   (let ((file-ext (file-name-extension file))
-         (file-name (file-name-sans-extension file))
-         (ancestor-file nil))
+        (file-name (file-name-sans-extension file))
+        (ancestor-file nil))
     (cond
-      ((string= "elc" file-ext)
-        ;; If we're examining a compiled Elisp file, check it against its
-        ;; .el ancestor.
-        (setq ancestor-file (concat file-name ".el"))
-        (my/byte-compile-config-artifact file))
-      ((string= "el" file-ext)
-        ;; If we're examining a regular Elisp file, check it against its
-        ;; .org ancestor.
-        (setq ancestor-file (concat file-name ".org"))
-        (my/tangle-config-artifact file)))))
+     ((string= "elc" file-ext)
+      ;; If we're examining a compiled Elisp file, check it against its
+      ;; .el ancestor.
+      (setq ancestor-file (concat file-name ".el"))
+      (my/byte-compile-config-artifact file))
+     ((string= "el" file-ext)
+      ;; If we're examining a regular Elisp file, check it against its
+      ;; .org ancestor.
+      (setq ancestor-file (concat file-name ".org"))
+      (my/tangle-config-artifact file)))))
 
 (defsubst my/apply-to-dir-files (dir pattern fn &rest args)
   "Apply FN to all files in DIR matching regex PATTERN.
@@ -145,39 +145,39 @@ FILE's extension is '.el'."
 Any additional args ARGS are passed to FN."
   (require 'cl-lib)
   (cl-flet
-    ((apply-it (f) (funcall fn (concat (file-name-as-directory dir) f) args)))
+      ((apply-it (f) (funcall fn (concat (file-name-as-directory dir) f) args)))
     (if (file-directory-p dir)
-      (mapc #'apply-it (directory-files dir nil pattern)))))
+        (mapc #'apply-it (directory-files dir nil pattern)))))
 
 ;; Load extra packages using Emacs 24's package system.
 ;; NOTE: Currently disabled since we use straight.el to manage our packages.
 (if (and (not my/use-straight) (>= emacs-major-version 24))
-    ;;; IF we want to use the built-in package manager...
-  (progn
-    ;; Package configuration
-    (require 'package)
-    ;; Add extra package archives to the list of repositories.
-    ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
-    ;;       to change the URLs to simple HTTP in order for them to function.
-    ;;       If you must do this, also uncomment the two expressions below.
-    ;;       That will reset the archives list and allow you to only use
-    ;;       unsecured connections for package transfer.
-    ;; (setq package-archives nil)
-    ;; (add-to-list 'package-archives
-    ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
-      t)
-    (add-to-list
-      'package-archives '("marmalade" . "https://marmalade-repo.org/packages/")
-      t)
-    (package-initialize)
-    ;; Automatically install packages using use-package
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
-    (require 'use-package))
-  ;;; OTHERWISE...
+;;; IF we want to use the built-in package manager...
+    (progn
+      ;; Package configuration
+      (require 'package)
+      ;; Add extra package archives to the list of repositories.
+      ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+      ;;       to change the URLs to simple HTTP in order for them to function.
+      ;;       If you must do this, also uncomment the two expressions below.
+      ;;       That will reset the archives list and allow you to only use
+      ;;       unsecured connections for package transfer.
+      ;; (setq package-archives nil)
+      ;; (add-to-list 'package-archives
+      ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+      (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+                   t)
+      (add-to-list
+       'package-archives '("marmalade" . "https://marmalade-repo.org/packages/")
+       t)
+      (package-initialize)
+      ;; Automatically install packages using use-package
+      (unless (package-installed-p 'use-package)
+        (package-refresh-contents)
+        (package-install 'use-package))
+      (require 'use-package))
+;;; OTHERWISE...
   ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
   (setq package-enable-at-startup nil)
   ;; this tells package.el not to add those pesky customized variable settings

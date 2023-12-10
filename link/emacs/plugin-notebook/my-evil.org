@@ -160,7 +160,8 @@ The Evil mode plugin itself.
     ;; where elements in [] are optional but must appear in the specified order.
     (general-def
       ;; Evaluate sexp at or before point and replace it with its value.
-      "C-x E" 'my/evil-eval-and-replace-last-sexp)
+      "C-x E" 'my/evil-eval-and-replace-last-sexp
+      "C-S-d" 'evil-delete-whole-line)
     (general-def 'normal
       ;; Use the good old Vim commands to move the cursor to the top or bottom of
       ;; the window.
@@ -182,7 +183,7 @@ The Evil mode plugin itself.
       "gd" 'xref-find-definitions
       "gr" 'xref-find-references
       ;; Shortcut for ":w<RET>"
-      "ZC" 'evil-write
+      "ZC" 'save-buffer
       ;; Shortcut for ":wq<RET>"
       "ZX" 'evil-save-and-close)
     ;; This form unbinds keys in given evil states and/or keymaps.
