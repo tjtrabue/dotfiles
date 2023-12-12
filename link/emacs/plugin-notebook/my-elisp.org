@@ -70,7 +70,8 @@ For example: =(number-sequence 1 10)= results in: =1 2 3 4 5 6 7 8 9 10=
     (emacs-lisp-mode . eros-mode)
     :general
     (my/evil-leader-def
-      "<" 'eros-eval-last-sexp))
+      "<"  'eros-eval-last-sexp
+      "ee" 'eros-eval-last-sexp))
 #+end_src
 
 * elmacro
