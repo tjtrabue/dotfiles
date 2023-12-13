@@ -688,15 +688,16 @@ main features of =lispyville=:
           (reg evil-this-register)
           (yank-handler #'evil-yank-line-handler)
           (type 'line))
-      (cond ((evil-visual-state-p)
-             (setq beg evil-visual-beginning
-                   end evil-visual-end
-                   yank-handler #'evil-yank-block-handler
-                   type 'block)
-             (lispyville-yank beg end type reg yank-handler))
-            (t
-             (lispyville-yank-line beg end type reg yank-handler)))
-      (evil-paste-after count)))
+      (save-excursion
+        (cond ((evil-visual-state-p)
+               (setq beg evil-visual-beginning
+                     end evil-visual-end
+                     yank-handler #'evil-yank-block-handler
+                     type 'block)
+               (lispyville-yank beg end type reg yank-handler))
+              (t
+               (lispyville-yank-line beg end type reg yank-handler)))
+        (evil-paste-after count))))
 
   (defun my/set-lispyville-leader-keys ()
     "Set `evil-leader' keybindings for all lispy modes."
