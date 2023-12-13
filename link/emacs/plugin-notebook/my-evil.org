@@ -680,6 +680,24 @@ main features of =lispyville=:
     (lispy-kill)
     (evil-insert-state))
 
+  (defun my/lispyville-duplicate-dwim (count)
+    "Duplicate the current line or region COUNT times."
+    (interactive "P")
+    (let ((beg (pos-bol))
+          (end (pos-eol))
+          (reg evil-this-register)
+          (yank-handler #'evil-yank-line-handler)
+          (type 'line))
+      (cond ((evil-visual-state-p)
+             (setq beg evil-visual-beginning
+                   end evil-visual-end
+                   yank-handler #'evil-yank-block-handler
+                   type 'block)
+             (lispyville-yank beg end type reg yank-handler))
+            (t
+             (lispyville-yank-line beg end type reg yank-handler)))
+      (evil-paste-after count)))
+
   (defun my/set-lispyville-leader-keys ()
     "Set `evil-leader' keybindings for all lispy modes."
     (mapc (lambda (mode)
@@ -742,6 +760,9 @@ main features of =lispyville=:
   (defun my/set-lispyville-mode-keys ()
     "Set extra `evil-mode' keybindings for `lispyville-mode'."
     (let ((mode-map 'lispyville-mode-map))
+      (general-define-key
+       :keymaps mode-map
+       "C-S-p" 'my/lispyville-duplicate-dwim)
       (general-define-key
        :states 'normal
        :keymaps mode-map
