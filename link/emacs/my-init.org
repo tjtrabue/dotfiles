@@ -501,7 +501,8 @@ LanguageServerProtocol clients and servers.
   ;;; Browser
   ;; Set default browser to the first of a ranked list of programs.
   (setq browse-url-generic-program (seq-some #'executable-find
-                                             '("brave"
+                                             '("brave-beta"
+                                               "brave"
                                                "chromium"
                                                "firefox"
                                                "chrome")))

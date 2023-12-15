@@ -763,6 +763,10 @@ main features of =lispyville=:
     (let ((mode-map 'lispyville-mode-map))
       (general-define-key
        :keymaps mode-map
+       "C-S-h" 'lispyville-left
+       "C-S-j" 'lispy-down
+       "C-S-k" 'lispy-up
+       "C-S-l" 'lispyville-right
        "C-S-p" 'my/lispyville-duplicate-dwim)
       (general-define-key
        :states 'normal

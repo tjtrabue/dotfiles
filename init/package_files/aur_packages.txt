@@ -7,7 +7,7 @@ android-sdk-platform-tools
 android-studio
 arc-kde-git
 authy
-brave-bin
+brave-beta-bin
 clj-kondo
 clojure-lsp-bin
 code-minimap-bin
