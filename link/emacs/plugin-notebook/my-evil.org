@@ -175,6 +175,9 @@ The Evil mode plugin itself.
       "C-S-d" 'evil-delete-whole-line
       ;; Push text on current line down one line by adding a newline sequence above the current line.
       "C-S-n" 'my/evil-insert-newline-above)
+    (general-def 'override
+      ;; Select next window in a cyclical manner.
+      "C-," 'evil-window-next)
     (general-def 'normal
       ;; Use the good old Vim commands to move the cursor to the top or bottom of
       ;; the window.
