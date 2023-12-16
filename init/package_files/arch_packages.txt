@@ -138,6 +138,7 @@ nvidia
 nvidia-utils
 openjdk-doc
 openjdk8-doc
+openmp
 openssh
 openssl
 pacman-contrib

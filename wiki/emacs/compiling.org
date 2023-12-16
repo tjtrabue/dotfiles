@@ -1,0 +1,18 @@
+#+TITLE:   Compiling Emacs from Source
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-12-16
+#+TAGS:    emacs compiling compiler
+#+STARTUP: fold
+
+Compiling Emacs from source can be challenging. This guide seeks to alleviate
+common difficulties faced by users
+
+* Important Libs
+
+Users should install these libraries before compiling Emacs.
+
+- =imagemagick=
+- =jansson=
+- =libgccjit=
+- =openmp=
