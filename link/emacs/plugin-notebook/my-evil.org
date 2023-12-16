@@ -102,6 +102,16 @@ Custom =evil-mode= functions.
     (interactive)
     (my/evil-adjust-point
      (my/eval-and-replace)))
+
+  (defun my/evil-insert-newline-above (arg)
+    "Insert ARG newlines above point.
+
+    The effect of this function is to move all lines, from point
+    onward, down by ARG lines."
+    (interactive "p")
+    (let ((repeats arg))
+      (dotimes (_n repeats)
+        (evil-insert-newline-above))))
 #+end_src
 
 * Custom advice functions
@@ -161,7 +171,10 @@ The Evil mode plugin itself.
     (general-def
       ;; Evaluate sexp at or before point and replace it with its value.
       "C-x E" 'my/evil-eval-and-replace-last-sexp
-      "C-S-d" 'evil-delete-whole-line)
+      ;; Deletes the entire line, like "dd".
+      "C-S-d" 'evil-delete-whole-line
+      ;; Push text on current line down one line by adding a newline sequence above the current line.
+      "C-S-n" 'my/evil-insert-newline-above)
     (general-def 'normal
       ;; Use the good old Vim commands to move the cursor to the top or bottom of
       ;; the window.

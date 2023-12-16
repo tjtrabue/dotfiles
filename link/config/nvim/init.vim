@@ -419,6 +419,11 @@ nnoremap Y y$
 
 " Toggle relative/absolute line numbers.
 nnoremap <leader>N :set relativenumber!<CR>
+
+" ',m' moves to beginning of line.
+nnoremap <leader>m ^
+" ',.' moves to end of line.
+nnoremap <leader>. $
 " }}}
 
 " Insert Mode Mappings {{{
