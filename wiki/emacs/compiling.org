@@ -6,11 +6,11 @@
 #+STARTUP: fold
 
 Compiling Emacs from source can be challenging. This guide seeks to alleviate
-common difficulties faced by users
+common difficulties faced by users.
 
-* Important Libs
+* Important Libraries
 
-Users should install these libraries before compiling Emacs.
+Users should install these libraries before compiling Emacs:
 
 - =imagemagick=
 - =jansson=
