@@ -157,9 +157,11 @@ file in your project's root directory with the following content:
       "cu"  'cider-undef
       "cv"  'cider-version)
     (my/evil-leader-def cider-mode-map
-      "=" 'cider-format-buffer
-      "<" 'cider-eval-last-sexp
-      ">" 'cider-eval-last-sexp-and-replace)
+      "="   'cider-format-buffer
+      "<"   'cider-eval-last-sexp
+      ">"   'cider-eval-last-sexp-and-replace
+      "cjj" 'cider-jack-in
+      "cjs" 'cider-jack-in-cljs)
     (my/user-leader-def cider-mode-map
       ;; For some reason `cider-jack-in' doesn't have a default binding.
       ;; I like `C-c C-j'.
@@ -247,7 +249,9 @@ file in your project's root directory with the following content:
                        (setq-local lsp-completion-enable nil))))
     ;; Turn on Enlighten feature for CIDER.  Enlighten evaluates definitions one
     ;; at a time, and it disables the use of C-c C-k.
-    (add-hook 'cider-mode-hook #'cider-enlighten-mode)
+    ;; NOTE: `cider-enlighten-mode' disables `cider-mode-map', which is frustrating.
+    ;;       For this reason, I do not tend to enable `cider-enlighten-mode'.
+    ;; (add-hook 'cider-mode-hook #'cider-enlighten-mode)
     :config
     ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
     ;; You must set these variables in :config instead of :custom due to a loading
