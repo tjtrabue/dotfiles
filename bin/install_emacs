@@ -19,6 +19,7 @@ declare IE_GCC_VERSION=""
 declare IE_CC="gcc"
 declare IE_CXX="g++"
 declare USE_MOLD_LINKER=false
+declare USE_CLANG=false
 
 # Build options
 declare DOCS_HTML=false
@@ -79,6 +80,11 @@ USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
+  -c | --clang
+    Whether to use Clang to compile Emacs.
+    You may need to install extra development libraries, such as openmp, for
+    this option to work.
+
   --docs-html
     Generate Emacs documentation in HTML format after compiling Emacs.
     This makes the same documentation from Emacs' Info system available for
@@ -179,13 +185,12 @@ ie__check_sound() {
   osType="$(getostype)"
 
   case "${SOUND_SUPPORT}" in
-    "yes" | "alsa" | "oss" | "bsd-ossaudio" | "no")
-      ;;
+  "yes" | "alsa" | "oss" | "bsd-ossaudio" | "no") ;;
 
-    *)
-      err "Unsupported sound backend: ${CYAN}${SOUND_SUPPORT}${NC}"
-      exit 1
-      ;;
+  *)
+    err "Unsupported sound backend: ${CYAN}${SOUND_SUPPORT}${NC}"
+    exit 1
+    ;;
   esac
 
   if [ "${osType}" = "Darwin" ]; then
@@ -260,25 +265,50 @@ ie__mac_build_options() {
 
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
-ie__construct_cc_options() {
+ie__construct_cc_options_gcc() {
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
   LD="$(command -v ld)"
-  CFLAGS=""
-  CXXFLAGS=""
+  LDFLAGS=""
 
   if "${USE_MOLD_LINKER}"; then
     ie__check_mold
     LD="$(command -v mold)"
-    CFLAGS="-fuse-ld=mold"
-    CXXFLAGS="-fuse-ld=mold"
+    LDFLAGS="-fuse-ld=mold"
   fi
 
   export CC
   export CXX
   export LD
-  export CFLAGS
-  export CXXFLAGS
+  export LDFLAGS
+}
+
+# If the user desires to compile Emacs using LLVM/Clang, adjust the C/C++
+# environment variables to reflect that choice.
+ie__construct_cc_options_clang() {
+  CC="$(command -v clang)"
+  CXX="$(command -v clang++)"
+  CPP="${CC} -E"
+  LD="$(command -v lld)"
+  AR="$(command -v llvm-ar)"
+  AS="$(command -v llvm-as)"
+  LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt"
+
+  export CC
+  export CXX
+  export CPP
+  export LD
+  export AR
+  export AS
+  export LDFLAGS
+}
+
+ie__construct_cc_options() {
+  if "${USE_CLANG}"; then
+    ie__construct_cc_options_clang
+  else
+    ie__construct_cc_options_gcc
+  fi
 }
 
 ie__confirm_installation() {
@@ -289,11 +319,13 @@ ie__confirm_installation() {
     command cat <<EOF
 This script will now install Emacs using the following compiler options:
 
-CC = '${CC}'
-CXX = '${CXX}'
-LD = '${LD}'
-CFLAGS = '${CFLAGS}'
-CXXFLAGS = '${CXXFLAGS}'
+AR      = '${AR}'
+AS      = '${AS}'
+CPP     = '${CPP}'
+CC      = '${CC}'
+CXX     = '${CXX}'
+LD      = '${LD}'
+LDFLAGS = '${LDFLAGS}'
 
 EOF
 
@@ -342,6 +374,7 @@ ie__construct_configure_cmd() {
     --with-imagemagick \
     --with-native-compilation=aot \
     --with-gameuser=${GAME_USER} \
+    --with-wide-int \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
   osType="$(getostype)"
@@ -363,7 +396,7 @@ ie__construct_configure_cmd() {
   if [ -n "${SOUND_SUPPORT}" ]; then
     {
       ie__check_sound &&
-      configureCmd="${configureCmd} --with-sound=${SOUND_SUPPORT}"
+        configureCmd="${configureCmd} --with-sound=${SOUND_SUPPORT}"
     } || {
       exit 1
     }
@@ -452,11 +485,11 @@ ie__install_from_source() {
       cd "${EMACS_DEST}" &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
-      ie__build_emacs &&
-      ie__uninstall_old_emacs_installation &&
-      ie__install_emacs_build
+      ie__build_emacs
+    # ie__uninstall_old_emacs_installation &&
+    # ie__install_emacs_build
   ) &&
-  ie__remove_emacs_backup_repository
+    ie__remove_emacs_backup_repository
 }
 # }}}
 
@@ -468,12 +501,17 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o e:g:hj:lmps: --long docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
+args=$(getopt -o ce:g:hj:lmps: --long clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
+  -c | --clang)
+    USE_CLANG=true
+    shift
+    ;;
+
   --docs-html)
     DOCS_HTML=true
     shift
@@ -486,27 +524,27 @@ while true; do
 
   -g | --gcc-version)
     case "$2" in
-      "")
-        shift 2
-        ;;
-      *)
-        IE_GCC_VERSION="${2}"
-        IE_CC="gcc-${IE_GCC_VERSION}"
-        IE_CXX="g++-${IE_GCC_VERSION}"
-        shift 2
-        ;;
+    "")
+      shift 2
+      ;;
+    *)
+      IE_GCC_VERSION="${2}"
+      IE_CC="gcc-${IE_GCC_VERSION}"
+      IE_CXX="g++-${IE_GCC_VERSION}"
+      shift 2
+      ;;
     esac
     ;;
 
   -e | --extra-config)
     case "$2" in
-      "")
-        shift 2
-        ;;
-      *)
-        EXTRA_CONFIG_ARGS="${2}"
-        shift 2
-        ;;
+    "")
+      shift 2
+      ;;
+    *)
+      EXTRA_CONFIG_ARGS="${2}"
+      shift 2
+      ;;
     esac
     ;;
 
@@ -517,14 +555,14 @@ while true; do
 
   -j | --jobs)
     case "$2" in
-      "")
-        shift 2
-        ;;
-      *)
-        NUM_THREADS="${2}"
-        log_info "Using ${MAGENTA}${NUM_THREADS}${NC} build threads"
-        shift 2
-        ;;
+    "")
+      shift 2
+      ;;
+    *)
+      NUM_THREADS="${2}"
+      log_info "Using ${MAGENTA}${NUM_THREADS}${NC} build threads"
+      shift 2
+      ;;
     esac
     ;;
 
