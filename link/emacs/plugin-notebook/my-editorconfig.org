@@ -9,6 +9,9 @@ basic operations on different file types, such as indenting with spaces rather
 than tabs in all files except for Makefiles, or automatically wrapping text
 after typing a certain number of characters.
 
+This package depends on the =editorconfig= executable being discoverable on the
+user's =PATH= environment variable.
+
 * Variables
 #+begin_src emacs-lisp
   (defvar my/modes-to-format-with-editorconfig '(
@@ -39,7 +42,7 @@ after typing a certain number of characters.
     (my/add-editorconfig-format-hooks))
 #+end_src
 
-* editorconfig
+* =use=package= specification
 #+begin_src emacs-lisp
   (use-package editorconfig
     :demand t
