@@ -60,6 +60,11 @@ ij_kotlin_imports_layout = *,^
 # Makefiles must use tab characters instead of spaces for indentation
 indent_style = tab
 
+### Org documents ###
+[*.org]
+# Emacs requires Org files to have the default tab size of 8, for some reason.
+tab_width = 8
+
 ### Perl ###
 [*.{pl,plx}]
 # 4 spaces per indent in Perl code

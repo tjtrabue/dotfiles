@@ -44,6 +44,8 @@ so that each time they are saved they are formatted"
   (use-package editorconfig
     :demand t
     :delight
+    :custom
+    (editorconfig-exec-path (executable-find "editorconfig"))
     :config
     (editorconfig-mode 1))
 #+end_src
