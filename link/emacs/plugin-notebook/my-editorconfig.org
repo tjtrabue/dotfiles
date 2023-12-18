@@ -12,27 +12,27 @@ after typing a certain number of characters.
 * Variables
 #+begin_src emacs-lisp
   (defvar my/modes-to-format-with-editorconfig '(
-      ;; sh-mode
-  )
-  "Major modes to automatically format with `editorconfig-format-buffer'
-before saving. Formatting with editorconfig's utilities is only recommended
-if no 'smarter' code formatting tool exists for your programming language.")
+                                                 ;; sh-mode
+                                                 )
+    "Major modes to automatically format with `editorconfig-format-buffer'
+  before saving. Formatting with editorconfig's utilities is only recommended
+  if no 'smarter' code formatting tool exists for your programming language.")
 #+end_src
 
 * Functions
 #+begin_src emacs-lisp
   (defun my/add-editorconfig-format-hook ()
     "Add a single before-save-hook for formatting a buffer with editorconfig
-before saving."
+  before saving."
     (add-hook 'before-save-hook #'editorconfig-format-buffer 0 'local))
 
   (defun my/add-editorconfig-format-hooks ()
     "Add hooks to major modes listed in `my/modes-to-format-with-editorconfig'
-so that each time they are saved they are formatted"
+  so that each time they are saved they are formatted"
     (mapc (lambda (mode)
-          (let ((hook-name (concat (symbol-name mode) "-hook")))
-            (add-hook (intern hook-name) #'my/add-editorconfig-format-hook)))
-      my/modes-to-format-with-editorconfig))
+            (let ((hook-name (concat (symbol-name mode) "-hook")))
+              (add-hook (intern hook-name) #'my/add-editorconfig-format-hook)))
+          my/modes-to-format-with-editorconfig))
 
   (defun my/add-editorconfig-hooks ()
     "Add hooks for `editorconfig-mode'."
