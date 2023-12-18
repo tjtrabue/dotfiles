@@ -17,11 +17,13 @@ aws-cli
 bash-completion
 bat
 bc
+bear
 biber
 broot
 cabal-install
 chromium
 clang
+clazy
 clojure
 cmake
 cmus
@@ -179,6 +181,7 @@ streamlink
 sysfsutils
 t1utils
 tar
+texi2html
 texinfo
 texlive
 texlive-lang

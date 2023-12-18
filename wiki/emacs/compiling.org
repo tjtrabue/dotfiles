@@ -8,11 +8,55 @@
 Compiling Emacs from source can be challenging. This guide seeks to alleviate
 common difficulties faced by users.
 
-* Important Libraries
+* Install Important Tools/Libraries
 
-Users should install these libraries before compiling Emacs:
+Users should install these system packages before compiling Emacs:
 
+- =clang=
+- =gcc=
+- =giflib=
+- =gnutls=
 - =imagemagick=
 - =jansson=
 - =libgccjit=
+- =libgtk=
+- =libjpeg=
+- =libpng=
+- =libtiff=
+- =libx11=
+- =libxft=
+- =libxpm=
+- =ncurses=
 - =openmp=
+- =texinfo=
+- =tree-sitter=
+- =webp=
+
+Some of these are optional, but you may need them depending on the Emacs
+features you desire. Their names will also be slightly different depending on
+your operating system.
+
+* Emacs Native Compilation Support
+
+If you want to use the =--with-native-compilation= feature of Emacs, either
+=aot= or =jit=, you need to install the =libgccjit= library. Also of import is
+to make sure that your =gcc= and =libgccjit= versions *match*. That is, if you
+use =gcc= version 13, you must have version 13 of =libgccjit=.
+
+* Compiling Emacs with Clang
+
+If you wish to compile emacs using LLVM/Clang instead of GCC, make sure to
+install the =openmp= package (it may be named something like =libopenmp= or
+=libomp= depending on your operating system/distribution).
+
+You will also need to set the following environment variables before compiling:
+
+#+begin_src bash
+  export CC="/usr/sbin/clang" ;
+  export CXX="/usr/sbin/clang++" ;
+  export CPP="${CC} -E" ;
+  export LD="/usr/sbin/lld" ;
+  export AR="/usr/sbin/llvm-ar" ;
+  export AS="/usr/sbin/llvm-as" ;
+  export LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt" ;
+#+end_src
