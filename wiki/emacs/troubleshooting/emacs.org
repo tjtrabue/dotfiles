@@ -1,0 +1,30 @@
+#+TITLE:   Troubleshooting Emacs in General
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-12-18
+#+TAGS:    troubleshooting emacs
+#+STARTUP: fold
+
+Emacs is an old, highly intricate piece of software, and as such has plenty of
+mysterious behaviors from generations past. This can make troubleshooting Emacs'
+behavior hard. Thankfully, Emacs also happens to be the most dynamic and
+interactive editor ever conceived by man, coming fully equipped with a spate of
+wonderful debugging tools to drill down to the root of the issue. This guide
+details how to make use of those features, as well as outlines general debugging
+tips.
+
+* Figuring out when/where a variable gets set
+
+If you want to figure out how, when, and where a variable gets set in Emacs, use
+the function =debug-on-variable-change=. For instance, if you want to figure out
+which Elisp functions change the =tab-width= variable, add the following line to
+your =~/.emacs= file:
+
+#+begin_src emacs-lisp :tangle no
+    (debug-on-variable-change 'tab-width)
+#+end_src
+
+Restart Emacs, and the editor will pause and print a stack trace each time the
+=tab-width= variable's value changes. Note that Emacs will cease to continue
+interpretting Lisp code when the debug dialog window appears. To tell Emacs to
+continue running, buffer, press =c= to in the debug dialog.
