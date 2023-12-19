@@ -148,6 +148,7 @@ file in your project's root directory with the following content:
       "ch"  'cider-repl-shortcuts-help
       "cn"  'cider-repl-set-ns
       "cp"  'cider-repl-toggle-pretty-printing
+      "cq"  'cider-quit
       "cr"  'cider-run
       "cta" 'cider-test-run-loaded-tests
       "ctf" 'cider-test-run-ns-tests-with-filters
