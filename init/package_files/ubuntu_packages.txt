@@ -14,6 +14,7 @@ clang
 clang-format
 clang-tidy
 clang-tools
+clangd
 cscope
 dbus-x11
 debhelper
