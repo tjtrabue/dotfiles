@@ -449,7 +449,6 @@ ie__construct_configure_cmd() {
     --with-gameuser=${GAME_USER} \
     --with-wide-int \
     --without-compress-install \
-    --without-m17n-flt \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
   osType="$(getostype)"
