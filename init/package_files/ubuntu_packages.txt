@@ -5,6 +5,7 @@ autoconf
 automake
 bat
 bc
+bear
 bsd-mailx
 build-essential
 bzip2
@@ -12,6 +13,7 @@ caca-utils
 clang
 clang-format
 clang-tidy
+clang-tools
 cscope
 dbus-x11
 debhelper
@@ -22,7 +24,6 @@ g++
 g++-12
 g++-multilib
 gcc
-gcc-10
 gcc-12
 gcc-12-doc
 gcc-12-locales
@@ -49,6 +50,10 @@ libatk1.0-0
 libatspi2.0-0
 libbrotli1
 libbz2-dev
+libc++-dev
+libc++1
+libc++abi-dev
+libc++abi1
 libc6
 libc6-dev
 libcairo-gobject2
@@ -56,11 +61,13 @@ libcairo2
 libcanberra-gtk3-0
 libcanberra-gtk3-module
 libcanberra0
+libclang-dev
 libcurl4-openssl-dev
 libdatrie1
 libdb5.3
 libdbus-1-dev
 libdrm2
+libeffcee-dev
 libegl1
 libepoxy0
 libflac8
@@ -68,8 +75,6 @@ libfontconfig1
 libfreetype6
 libgbm1
 libgcc-s1
-libgccjit-10-dev
-libgccjit-11-dev
 libgccjit-12-dev
 libgccjit0
 libgdk-pixbuf2.0-0
@@ -105,6 +110,8 @@ liblockfile1
 libltdl7
 libm17n-0
 libm17n-dev
+libmagick++-dev
+libmagickcore-dev
 libmagickwand-dev
 libmpc3
 libmpfr6
@@ -114,6 +121,7 @@ libnss-mdns
 libnss-myhostname
 libnss-systemd
 libogg0
+libomp-dev
 liborc-0.4-0
 liboss4-salsa2
 libotf-dev
@@ -181,6 +189,10 @@ libxrender1
 libxslt1.1
 libxt-dev
 libyajl2
+lld
+lldb
+llvm
+llvm-dev
 locate
 maildir-utils
 mailutils

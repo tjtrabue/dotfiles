@@ -80,7 +80,7 @@ USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
-  -c | --clang
+  -c | --use-clang
     Whether to use Clang to compile Emacs.
     You may need to install extra development libraries, such as openmp, for
     this option to work.
@@ -215,7 +215,9 @@ ie__setup() {
   ie__set_global_vars
   ie__make_dirs
   # Safety and security checks:
-  ie__check_gcc_version
+  if ! "${USE_CLANG}"; then
+    ie__check_gcc_version
+  fi
 }
 
 # We should only remove the Emacs backup repository if the installation
@@ -223,7 +225,7 @@ ie__setup() {
 ie__remove_emacs_backup_repository() {
   if [ -d "${EMACS_BACKUP}" ]; then
     log_info "Removing Emacs backup repository: ${BLUE}${EMACS_BACKUP}${NC}"
-    rm -rf "${EMACS_BACKUP}"
+    sudo rm -rf "${EMACS_BACKUP}"
   fi
 }
 
@@ -269,31 +271,59 @@ ie__construct_cc_options_gcc() {
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
   LD="$(command -v ld)"
-  LDFLAGS=""
+  CPP=""
+  AR=""
+  AS=""
+  CPPFLAGS="${CPPFLAGS:-""}"
+  CFLAGS="${CFLAGS:-""}"
+  CXXFLAGS="${CXXFLAGS:-""}"
+  LDFLAGS="${LDFLAGS:-""}"
 
   if "${USE_MOLD_LINKER}"; then
     ie__check_mold
     LD="$(command -v mold)"
-    LDFLAGS="-fuse-ld=mold"
+    LDFLAGS+=" -fuse-ld=mold"
   fi
-
-  export CC
-  export CXX
-  export LD
-  export LDFLAGS
 }
 
 # If the user desires to compile Emacs using LLVM/Clang, adjust the C/C++
 # environment variables to reflect that choice.
 ie__construct_cc_options_clang() {
+  local nameOfMissingExecutable=""
+
   CC="$(command -v clang)"
   CXX="$(command -v clang++)"
   CPP="${CC} -E"
   LD="$(command -v lld)"
   AR="$(command -v llvm-ar)"
   AS="$(command -v llvm-as)"
-  LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt"
+  CPPFLAGS="${CPPFLAGS:-""}"
+  CFLAGS="${CFLAGS:-""}"
+  CXXFLAGS="${CXXFLAGS:-""}"
+  LDFLAGS+=" -fuse-ld=lld -rtlib=compiler-rt"
 
+  if [ ! -x "${CC}" ]; then
+    nameOfMissingExecutable="clang"
+  elif [ ! -x "${CXX}" ]; then
+    nameOfMissingExecutable="clang++"
+  elif [ -z "${CPP}" ]; then
+    nameOfMissingExecutable="clang -E"
+  elif [ ! -x "${LD}" ]; then
+    nameOfMissingExecutable="lld"
+  elif [ ! -x "${AR}" ]; then
+    nameOfMissingExecutable="llvm-ar"
+  elif [ ! -x "${AS}" ]; then
+    nameOfMissingExecutable="llvm-as"
+  fi
+
+  if [ -n "${nameOfMissingExecutable}" ]; then
+    err "${nameOfMissingExecutable} not found on PATH"
+    exit 1
+  fi
+}
+
+ie__export_cc_options() {
+  log_info "Exporting compiler environment variables"
   export CC
   export CXX
   export CPP
@@ -301,6 +331,9 @@ ie__construct_cc_options_clang() {
   export AR
   export AS
   export LDFLAGS
+  export CPPFLAGS
+  export CFLAGS
+  export CXXFLAGS
 }
 
 ie__construct_cc_options() {
@@ -309,6 +342,8 @@ ie__construct_cc_options() {
   else
     ie__construct_cc_options_gcc
   fi
+
+  ie__export_cc_options
 }
 
 ie__confirm_installation() {
@@ -319,17 +354,55 @@ ie__confirm_installation() {
     command cat <<EOF
 This script will now install Emacs using the following compiler options:
 
-AR      = '${AR}'
-AS      = '${AS}'
-CPP     = '${CPP}'
 CC      = '${CC}'
 CXX     = '${CXX}'
 LD      = '${LD}'
-LDFLAGS = '${LDFLAGS}'
-
 EOF
 
+    if [ -n "${CPP}" ]; then
+      command cat <<EOF
+CPP = '${CPP}'
+EOF
+    fi
+
+    if [ -n "${AR}" ]; then
+      command cat <<EOF
+AR = '${AR}'
+EOF
+    fi
+
+    if [ -n "${AS}" ]; then
+      command cat <<EOF
+AS = '${AS}'
+EOF
+    fi
+
+    if [ -n "${LDFLAGS}" ]; then
+      command cat <<EOF
+LDFLAGS = '${LDFLAGS}'
+EOF
+    fi
+
+    if [ -n "${CPPFLAGS}" ]; then
+      command cat <<EOF
+CPPFLAGS = '${CPPFLAGS}'
+EOF
+    fi
+
+    if [ -n "${CFLAGS}" ]; then
+      command cat <<EOF
+CFLAGS = '${CFLAGS}'
+EOF
+    fi
+
+    if [ -n "${CXXFLAGS}" ]; then
+      command cat <<EOF
+CXXFLAGS = '${CXXFLAGS}'
+EOF
+    fi
+
     command cat <<EOF
+
 And the following configuration command:
 
 $(printf '%s' "${configureCmd}" | sed -E 's/\s+/\n  /g')
@@ -367,14 +440,16 @@ ie__construct_configure_cmd() {
   local configureCmd="./configure \
     --prefix=${INSTALL_PREFIX} \
     --enable-year2038 \
-    --without-compress-install \
     --with-json \
     --with-tree-sitter \
     --with-xwidgets \
     --with-imagemagick \
+    --with-modules \
     --with-native-compilation=aot \
     --with-gameuser=${GAME_USER} \
     --with-wide-int \
+    --without-compress-install \
+    --without-m17n-flt \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
   osType="$(getostype)"
@@ -388,6 +463,10 @@ ie__construct_configure_cmd() {
     configureCmd="${configureCmd} $(ie__mac_build_options)"
     ;;
   esac
+
+  if "${USE_CLANG}"; then
+    configureCmd="${configureCmd} --enable-autodepend"
+  fi
 
   if "${USE_LTO}"; then
     configureCmd="${configureCmd} --enable-link-time-optimization"
@@ -485,9 +564,8 @@ ie__install_from_source() {
       cd "${EMACS_DEST}" &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
-      ie__build_emacs
-    # ie__uninstall_old_emacs_installation &&
-    # ie__install_emacs_build
+      ie__build_emacs &&
+      ie__install_emacs_build
   ) &&
     ie__remove_emacs_backup_repository
 }
@@ -501,13 +579,14 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o ce:g:hj:lmps: --long clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
+args=$(getopt -o ce:g:hj:lmps: --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
-  -c | --clang)
+  -c | --use-clang)
+    log_info "Using Clang compiler"
     USE_CLANG=true
     shift
     ;;
