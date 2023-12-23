@@ -110,24 +110,28 @@ Lists =TODO= items and related comments in the =magit-status= buffer.
   (use-package magit-todos
     :after magit
     :demand t
-    :hook
-    (magit-status-mode . (lambda ()
-                           (setq-local magit-todos-exclude-globs
-                                       '("*.a"
-                                         "*.class"
-                                         "*.elc"
-                                         "*.jar"
-                                         "*.o"
-                                         "*.so"
-                                         "*.tar.gz"
-                                         "*.tgz"
-                                         "*.zip"
-                                         ".git/"
-                                         "build/"
-                                         "dist/"
-                                         "elpa/"
-                                         "node_modules/"
-                                         "straight/"))))
+    :custom
+    (magit-todos-exclude-globs '("*.a"
+                                 "*.class"
+                                 "*.egg"
+                                 "*.egg-info/"
+                                 "*.elc"
+                                 "*.jar"
+                                 "*.min.js"
+                                 "*.o"
+                                 "*.so"
+                                 "*.tar.gz"
+                                 "*.tgz"
+                                 "*.zip"
+                                 ".git/"
+                                 "build/"
+                                 "dist/"
+                                 "elpa/"
+                                 "lib/"
+                                 "lib64/"
+                                 "node_modules/"
+                                 "sdist/"
+                                 "straight/"))
     :config
     (magit-todos-mode 1))
 #+end_src
