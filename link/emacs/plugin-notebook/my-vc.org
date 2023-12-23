@@ -104,7 +104,9 @@ the main Magit package.
 #+end_src
 
 * magit-todos
-Lists =TODO= items and related comments in the =magit-status= buffer.
+List =TODO= and other such comments (such as =FIXME=, =BUG=, etc.) in the
+=magit-status= buffer. See =magit-todos-keywords-list= for a complete listing of
+all supported keywords.
 
 #+begin_src emacs-lisp
   (use-package magit-todos
