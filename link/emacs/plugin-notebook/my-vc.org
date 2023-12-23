@@ -114,27 +114,43 @@ all supported keywords.
     :hook
     (magit-mode . magit-todos-mode)
     :custom
-    (magit-todos-exclude-globs '("*.a"
-                                 "*.class"
-                                 "*.egg"
-                                 "*.egg-info/"
-                                 "*.elc"
-                                 "*.jar"
-                                 "*.min.js"
-                                 "*.o"
-                                 "*.so"
+    (magit-todos-exclude-globs '(;; Archives
                                  "*.tar.gz"
                                  "*.tgz"
                                  "*.zip"
                                  ".git/"
+                                 ;; C/C++
+                                 "*.a"
+                                 "*.o"
+                                 "*.so"
+                                 ;; Emacs
+                                 "*.elc"
+                                 "elpa/"
+                                 "straight/"
+                                 ;; Java
+                                 "*.class"
+                                 "*.jar"
                                  "build/"
                                  "dist/"
-                                 "elpa/"
+                                 ;; Common Lisp
+                                 "*.fasl"
+                                 ;; Elixir
+                                 "*.beam"
+                                 "*.ez"
+                                 "erl_crash.dump"
+                                 ".elixir_ls/"
+                                 "_build/"
+                                 "cover/"
+                                 "deps/"
+                                 ;; Python
+                                 "*.egg"
+                                 "*.egg-info/"
                                  "lib/"
                                  "lib64/"
-                                 "node_modules/"
                                  "sdist/"
-                                 "straight/")))
+                                 ;; Node.js
+                                 "*.min.js"
+                                 "node_modules/")))
 #+end_src
 
 * magit-lfs
