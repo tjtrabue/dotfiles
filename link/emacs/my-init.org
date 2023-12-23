@@ -499,6 +499,9 @@ LanguageServerProtocol clients and servers.
   (setq epg-pinentry-mode 'loopback)
 
   ;;; Browser
+  ;; Determines the default web browser function to use when opening a URL via
+  ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
+  (setq browse-url-browser-function #'browse-url-generic)
   ;; Set default browser to the first of a ranked list of programs.
   (setq browse-url-generic-program (seq-some #'executable-find
                                              '("brave-beta"
@@ -506,9 +509,6 @@ LanguageServerProtocol clients and servers.
                                                "chromium"
                                                "firefox"
                                                "chrome")))
-  ;; Determines the default web browser function to use when opening a URL via
-  ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
-  (setq browse-url-browser-function #'browse-url-generic)
 
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this

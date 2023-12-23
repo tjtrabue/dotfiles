@@ -25,22 +25,6 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
     (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 #+end_src
 
-* Ace Link
-Quickly follow links in =help-mode=, =info-mode=, =woman-mode=, =eww-mode=,
-=compilation-mode=, and =custom-map-mode=.  Uses the =o= key by default to
-select a link.
-
-#+begin_src emacs-lisp
-  (use-package ace-link
-    :demand t
-    :general
-    ;; `C-c o' follows links in in `org-mode'
-    (my/user-leader-def org-mode-map
-      "o" 'ace-link-org)
-    :config
-    (ace-link-setup-default))
-#+end_src
-
 * Ace Popup Menu
 Replaces the standard GUI popup menu (=x-popup-menu= by default) with something
 more useful. Instead of the basic right-click menu we're all used to,

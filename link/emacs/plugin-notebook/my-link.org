@@ -1,0 +1,43 @@
+#+TITLE:   Link Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-12-22
+#+TAGS:    link ace hint follow url
+#+STARTUP: fold
+
+Instruct Emacs on how to handle "links" of different varieties.
+
+* Ace Link
+Quickly follow links in =help-mode=, =info-mode=, =woman-mode=, =eww-mode=,
+=compilation-mode=, and =custom-map-mode=.  Uses the =o= key by default to
+select a link.
+
+#+begin_src emacs-lisp
+  (use-package ace-link
+    ;; Disabled in favor of `link-hint', which is really just a more versatile version of this plugin.
+    :disabled
+    :demand t
+    :general
+    ;; `C-c o' follows links in in `org-mode'
+    (my/user-leader-def org-mode-map
+      "o" 'ace-link-org)
+    :config
+    (ace-link-setup-default))
+#+end_src
+
+* link-hint
+=link-hint= is a delightful plugin that intuitively understands how to open and
+copy most link types, be they file paths, URLs, Markdown links, Dired filenames,
+Xref items, or just about anything else one would consider a "link".
+
+[[https://github.com/noctuid/link-hint.el][Try it out!]]
+
+#+begin_src emacs-lisp
+  (use-package link-hint
+    :general
+    (general-def 'normal
+      "g z c" 'link-hint-copy-link-at-point
+      "g z o" 'link-hint-open-link-at-point
+      "g z C" 'link-hint-copy-link
+      "g z O" 'link-hint-open-link))
+#+end_src
