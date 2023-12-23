@@ -30,7 +30,7 @@
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
 (add-to-list
- 'load-path (file-truename (concat user-emacs-directory "straight/build/org")))
+  'load-path (file-truename (concat user-emacs-directory "straight/build/org")))
 
 ;; JIT settings to speed up startup.
 ;; https://tychoish.com/post/towards-faster-emacs-start-times/

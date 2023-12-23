@@ -311,11 +311,11 @@ commits. The popup only shows the PGP signature, not the commit message.
      git-messenger:popup-message
      git-messenger:popup-show)
     :general
-    (my/user-leader-def
-      "g S" 'git-messenger:popup-show-verbose
-      "g d" 'git-messenger:popup-diff
-      "g m" 'git-messenger:popup-message
-      "g s" 'git-messenger:popup-show)
+    (my/evil-leader-def
+      "g a" 'git-messenger:popup-message
+      "g b" 'git-messenger:popup-show
+      "g e" 'git-messenger:popup-diff
+      "g v" 'git-messenger:popup-show-verbose)
     :custom
     ;; Whether to use `magit-show-commit' for showing status/diff commands.
     (git-messenger:use-magit-popup t))
