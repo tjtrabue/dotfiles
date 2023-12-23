@@ -111,7 +111,8 @@ all supported keywords.
 #+begin_src emacs-lisp
   (use-package magit-todos
     :after magit
-    :demand t
+    :hook
+    (magit-mode . magit-todos-mode)
     :custom
     (magit-todos-exclude-globs '("*.a"
                                  "*.class"
@@ -133,9 +134,7 @@ all supported keywords.
                                  "lib64/"
                                  "node_modules/"
                                  "sdist/"
-                                 "straight/"))
-    :config
-    (magit-todos-mode 1))
+                                 "straight/")))
 #+end_src
 
 * magit-lfs
@@ -157,9 +156,8 @@ GitHub page for installation details]].
     ;; Only use this package if `git-delta' is installed.
     :if (executable-find "delta")
     :after magit
-    :demand t
-    :config
-    (magit-delta-mode 1))
+    :hook
+    (magit-mode . magit-delta-mode))
 #+end_src
 
 * forge

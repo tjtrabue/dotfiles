@@ -131,9 +131,14 @@
   # set to true if you're in a terminal w/ a light background color
   # (e.g. the default macOS terminal)
   light = false
-  line-numbers = true
+  # NOTE: Turning on line numbers messes with Magit diffs.
+  # line-numbers = true
   # Side-by-side diffs are helpful, but impractical on small viewports.
-  side-by-side = false
+  side-by-side = true
+  # Output all file paths relative to the current directory.
+  relative-paths = true
+  file-style = yellow
+  hunk-header-line = line-number syntax
 
 [diff]
   colorMoved = default
