@@ -129,6 +129,7 @@ network-manager-applet
 networkmanager
 ninja
 nodejs
+notmuch
 noto-fonts
 noto-fonts-emoji
 noto-fonts-extra

@@ -172,3 +172,11 @@ Get desktop notifications for =mu4e=.
       ;; Default to libnotify, otherwise
       (mu4e-alert-set-default-style 'libnotify)))
 #+end_src
+
+* notmuch
+A Notmuch mail client for Emacs. You must have the =notmuch= CLI tool installed
+and already configured in order to use this package.
+
+#+begin_src emacs-lisp
+  (use-package notmuch)
+#+end_src

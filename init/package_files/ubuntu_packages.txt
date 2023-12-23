@@ -203,6 +203,7 @@ mold
 mu4e
 neovim
 nodejs
+notmuch
 npm
 openbox
 parallel

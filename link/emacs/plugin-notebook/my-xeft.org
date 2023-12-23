@@ -1,0 +1,35 @@
+#+TITLE:   XEFT: Note Searching Tool
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-12-22
+#+TAGS:
+#+STARTUP: fold
+
+=xeft= is a Xapien-based note searching UI for Emacs.
+
+* Usage
+
+To use Xeft the note searching interface, install it and type =M-x xeft RET= to
+bring up the panel. If the dynamic module doesn't already exists, you are
+prompted to download or compile it automatically. If you choose to download the
+module, no more action is required. If you want to compile the module locally,
+refer to the next section for prerequisites for compiling the module.
+
+Once the Xeft buffer is up, type the search phrase in the first line. Press
+=C-n= and =C-p= to go through each file. You can preview a file in another
+window by pressing =SPC= on a file, or click the file with the mouse. Press
+=RET= to open the file in the current window.
+
+Directory =xeft-directory= stores note files, directory =xeft-database= stores
+the database. Xeft uses =xeft-default-extension= to create new files, and it
+ignores files with =xeft-ignore-extension=.
+
+By default, Xeft only searches for first level files in =xeft-directory=, to
+make it search recursively, set =xeft-recursive= to =t=. Also beware that Xeft
+ignores search phrases shorter than three characters, unless they are CJK
+characters.
+
+* =use-package= specification
+#+begin_src emacs-lisp
+  (use-package xeft)
+#+end_src
