@@ -36,8 +36,8 @@ Xref items, or just about anything else one would consider a "link".
   (use-package link-hint
     :general
     (general-def 'normal
-      "g z c" 'link-hint-copy-link-at-point
-      "g z o" 'link-hint-open-link-at-point
-      "g z C" 'link-hint-copy-link
-      "g z O" 'link-hint-open-link))
+      "g z x" 'link-hint-copy-link-at-point
+      "g z z" 'link-hint-open-link-at-point
+      "g z a" 'link-hint-copy-link
+      "g z s" 'link-hint-open-link))
 #+end_src
