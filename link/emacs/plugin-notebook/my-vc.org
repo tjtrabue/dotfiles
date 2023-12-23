@@ -140,6 +140,21 @@ Adds Git Large File Storage capabilities to Magit.
     :after magit)
 #+end_src
 
+* magit-delta
+Show syntax highlighting in Magit diffs.
+
+From what I can tell, this plugin requires the =git-delta= CLI tool. [[https://github.com/dandavison/delta][See the
+GitHub page for installation details]].
+
+#+begin_src emacs-lisp
+  (use-package magit-delta
+    :after magit
+    ;; Only use this package if `git-delta' is installed.
+    :if (executable-find "delta")
+    :hook
+    (magit-mode . magit-delta-mode))
+#+end_src
+
 * forge
 A seriously powerful =magit= plugin for interfacing with numerous Git "forges",
 such as GitHub, GitLab, and more.
