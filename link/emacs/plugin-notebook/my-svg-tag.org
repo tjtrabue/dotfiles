@@ -5,10 +5,29 @@
 #+TAGS:    svg tag mode font lock
 #+STARTUP: fold
 
-Replace specific keywords with cool SVG-rendered images.
-
-* =use-package= specification
+=svg-tag-mode= replaces specific keywords with cool SVG-rendered images.
 
 #+begin_src emacs-lisp
-  (use-package svg-tag-mode)
+  (use-package svg-tag-mode
+    :demand t
+    :hook
+    (org-mode . svg-tag-mode)
+    :custom
+    (svg-tag-tags `(
+                    (":TODO:"       . ((lambda (tag) (svg-tag-make tag :face 'org-todo
+                                                               :inverse t :margin 0 :beg 1 :end -1))))
+                    (":DONE:"       . ((lambda (tag) (svg-tag-make tag :face 'org-done
+                                                               :margin 0 :beg 1 :end -1))))
+                    (":DEPRECATED:" . ((lambda (tag) (svg-tag-make tag :face 'org-done
+                                                              :inverse t :margin 0 :beg 1 :end -1))))
+                    (":NOTE:"       . ((lambda (tag) (svg-tag-make tag :face 'org-warning
+                                                              :inverse t :margin 0 :beg 1 :end -1))))
+                    (":HACK:"       . ((lambda (tag) (svg-tag-make tag :face 'org-warning
+                                                              :inverse t :margin 0 :beg 1 :end -1))))
+                    (":KLUDGE:"     . ((lambda (tag) (svg-tag-make tag :face 'org-warning
+                                                              :margin 0 :beg 1 :end -1))))
+                    (":FIXME:"      . ((lambda (tag) (svg-tag-make tag :face 'org-todo
+                                                              :margin 0 :beg 1 :end -1))))
+                    (":BUG:"        . ((lambda (tag) (svg-tag-make tag :face 'org-todo
+                                                              :margin 0 :beg 1 :end -1)))))))
 #+end_src
