@@ -1360,10 +1360,6 @@ try to load =org= later.
       "M-o a" 'org-agenda)
     (my/evil-leader-def
       "oa" 'org-agenda)
-    ;; Leader shortcuts available when special-editing source blocks.
-    (my/evil-leader-def org-src-mode-map
-      "cc" 'org-edit-src-exit
-      "ck" 'org-edit-src-abort)
     :custom
     ;; Do not show all "*" characters for each heading, but instead show only the final "*".
     (org-hide-leading-stars t)
@@ -1413,6 +1409,16 @@ try to load =org= later.
                 (setq-local show-trailing-whitespace nil)
                 ;; Org mode requires a `tab-width' value of 8, for some reason.
                 (setq-local tab-width 8)))
+    (add-hook 'org-src-mode-hook
+              (lambda ()
+                ;; Fix Evil mode keybindings in Org's special-edit buffers (Source code buffers
+                ;; entered by pressing `C-c \'').
+                (evil-normalize-keymaps)
+                ;; Leader shortcuts available when special-editing source blocks.  We have to put
+                ;; these keybindings inside the hook after we normalize Evil's keybindings.
+                (my/evil-leader-def org-src-mode-map
+                  "cc" 'org-edit-src-exit
+                  "ck" 'org-edit-src-abort)))
     ;; Make sure the Org notes directory is present.
     (make-directory my/org-dir t)
     ;; Also create the agenda directory.
