@@ -1351,6 +1351,8 @@ try to load =org= later.
       ;; Cycle/continue to next option depending on context.  This moves through
       ;; fields in a table, opens/closes org headings, etc.
       "C-l" 'org-cycle)
+    (my/evil-leader-def org-mode-map
+      "cc" 'org-edit-special)
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
       ;; outside of org-mode.
@@ -1358,6 +1360,10 @@ try to load =org= later.
       "M-o a" 'org-agenda)
     (my/evil-leader-def
       "oa" 'org-agenda)
+    ;; Leader shortcuts available when special-editing source blocks.
+    (my/evil-leader-def org-src-mode-map
+      "cc" 'org-edit-src-exit
+      "ck" 'org-edit-src-abort)
     :custom
     ;; Do not show all "*" characters for each heading, but instead show only the final "*".
     (org-hide-leading-stars t)

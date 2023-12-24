@@ -173,7 +173,10 @@ GitHub page for installation details]].
     :if (executable-find "delta")
     :after magit
     :hook
-    (magit-mode . magit-delta-mode))
+    (magit-mode . magit-delta-mode)
+    :custom
+    (magit-delta-default-dark-theme "OneHalfDark")
+    (magit-delta-default-light-theme "OneHalfLight"))
 #+end_src
 
 * forge

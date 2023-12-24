@@ -1,0 +1,14 @@
+#+TITLE:   Replace Keywords with Cool SVG Images
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2023-12-23
+#+TAGS:    svg tag mode font lock
+#+STARTUP: fold
+
+Replace specific keywords with cool SVG-rendered images.
+
+* =use-package= specification
+
+#+begin_src emacs-lisp
+  (use-package svg-tag-mode)
+#+end_src

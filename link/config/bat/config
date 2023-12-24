@@ -5,7 +5,8 @@
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
 # for a list of all available themes
 # You can also set the BAT_THEME environment variable to change the color theme.
-#--theme="base16"
+# If set, BAT_THEME takes precedence over this setting.
+--theme="OneHalfDark"
 
 # Enable this to use italic text on the terminal. This is not supported on all
 # terminal emulators (like tmux, by default):
