@@ -9,6 +9,9 @@
 
 #+begin_src emacs-lisp
   (use-package svg-tag-mode
+    ;; This is a pretty, but not very useful plugin.  `hl-todo-mode' does everything I need. Until I
+    ;; find have a better use for this plugin, I will keep it disabled.
+    :disabled
     :demand t
     :hook
     (org-mode . svg-tag-mode)
