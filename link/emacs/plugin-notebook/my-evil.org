@@ -638,7 +638,8 @@ concert, if you so desire, but I prefer =evil-multiedit= for all use cases.
       "M-d" 'evil-multiedit-match-and-next
       "M-D" 'evil-multiedit-match-and-prev
       "M-n" 'evil-multiedit-next
-      "M-p" 'evil-multiedit-prev)
+      "M-p" 'evil-multiedit-prev
+      "M-s" 'evil-multiedit-match-all)
     (general-def 'insert
       "M-d" 'evil-multiedit-toggle-marker-here)
     (general-def 'visual
