@@ -69,6 +69,9 @@ Add icons to completion candidates using the built in completion metadata functi
 
   #+begin_src emacs-lisp
     (use-package mode-icons
+      ;; This is a CPU cycle-intensive plugin, especially when combined with LSP-bridge.  Only enable
+      ;; this mode if you are sure you want it, and that it does not grind Emacs to a halt.
+      :disabled
       :demand t
       :config
       (mode-icons-mode 1))

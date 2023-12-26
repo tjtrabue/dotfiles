@@ -32,27 +32,33 @@
 
 (defun my-font-get-font-plist (font)
   "Retrun the preferred configuration for symbol FONT."
-  (let ((font-family-list (font-family-list)))
+  (let ((font-family-list (font-family-list))
+         ;; Variable pitch fonts
+         ;; https://freedafonts.com/arkibal-font/
+         (arkibal-plist '(:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
+         ;; https://www.dafont.com/neogrey.font
+         (neogrey-plist '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
+         ;; https://freedesignresources.net/triakis-font-family-free-weight/
+         (triakis-plist '(:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
+         (dejavu-serif-plist  '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal))
+         ;; Default fonts
+         (cascadia-code-plist '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+         (dejavu-sans-plist '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
     (pcase font
       ('default
         (cond
-          ((member "Cascadia Code PL" font-family-list)
-            '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
-          (t
-            '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal))))
+          ((member (plist-get cascadia-code-plist :family) font-family-list)
+            cascadia-code-plist)
+          (t dejavu-sans-plist)))
       ('variable-pitch
         (cond
-          ;; https://freedafonts.com/arkibal-font/
-          ((member "Arkibal Serif" font-family-list)
-            '(:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
-          ;; https://www.dafont.com/neogrey.font
-          ((member "Neogrey" font-family-list)
-            '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
-          ;; https://freedesignresources.net/triakis-font-family-free-weight/
-          ((member "Triakis  Font" font-family-list)
-            '(:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
-          (t
-            '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal)))))))
+          ((member (plist-get arkibal-plist :family) font-family-list)
+            arkibal-plist)
+          ((member (plist-get neogrey-plist :family) font-family-list)
+            neogrey-plist)
+          ((member (plist-get triakis-plist :family) font-family-list)
+            triakis-plist)
+          (t dejavu-serif-plist))))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (when (member "Noto Color Emoji" (font-family-list))

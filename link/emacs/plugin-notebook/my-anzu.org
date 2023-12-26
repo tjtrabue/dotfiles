@@ -9,6 +9,7 @@
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package anzu
+    :delight
     :demand t
     :general
     (general-def
