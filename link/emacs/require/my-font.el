@@ -69,7 +69,7 @@
               ((member "Arkibal Serif" font-family-list)
                "Arkibal Serif")
               (t "DejaVu Serif"))
-     :height 150
+     :height 145
      :weight 'semi-bold
      :width 'normal)))
 
