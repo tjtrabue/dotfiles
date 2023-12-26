@@ -22,6 +22,7 @@ regardless of its particular dialect.
       ;; IELM is the Emacs Lisp REPL.
       ((cider-repl-mode
         clojure-mode
+        common-lisp-mode
         emacs-lisp-mode
         ielm-mode
         lisp-mode

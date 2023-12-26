@@ -35,24 +35,24 @@
   (let ((font-family-list (font-family-list)))
     (pcase font
       ('default
-       (cond
-        ((member "Cascadia Code PL" font-family-list)
-         '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
-        (t
-         '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal))))
+        (cond
+          ((member "Cascadia Code PL" font-family-list)
+            '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+          (t
+            '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal))))
       ('variable-pitch
-       (cond
-        ;; https://freedesignresources.net/triakis-font-family-free-weight/
-        ((member "Triakis  Font" font-family-list)
-         '(:family "Triakis  Font" :height 145 :weight semi-bold :width normal))
-        ;; https://www.dafont.com/neogrey.font
-        ((member "Neogrey" font-family-list)
-         '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
-        ;; https://freedafonts.com/arkibal-font/
-        ((member "Arkibal Serif" font-family-list)
-         '(:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
-        (t
-         '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal)))))))
+        (cond
+          ;; https://freedesignresources.net/triakis-font-family-free-weight/
+          ((member "Triakis  Font" font-family-list)
+            '(:family "Triakis  Font" :height 145 :weight semi-bold :width normal))
+          ;; https://www.dafont.com/neogrey.font
+          ((member "Neogrey" font-family-list)
+            '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
+          ;; https://freedafonts.com/arkibal-font/
+          ((member "Arkibal Serif" font-family-list)
+            '(:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
+          (t
+            '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal)))))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (when (member "Noto Color Emoji" (font-family-list))

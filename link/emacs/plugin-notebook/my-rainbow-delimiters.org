@@ -17,6 +17,7 @@ another.  Super handy for Lisp and other delimiter-heavy languages.
       c-mode-common
       c++-mode
       clojure-mode
+      common-lisp-mode
       elixir-mode
       emacs-lisp-mode
       haskell-mode

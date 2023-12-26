@@ -146,6 +146,7 @@ This is where I define new variables needed throughout my configuration.
         clojure-mode
         clojurec-mode
         clojurescript-mode
+        common-lisp-mode
         emacs-lisp-mode
         ielm-mode
         lisp-mode

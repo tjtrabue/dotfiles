@@ -210,6 +210,17 @@ details.
 
 ** Functions
 #+begin_src emacs-lisp
+  (defun my/apheleia-remove-default-mode-formatters ()
+    "Remove a few of the built-in formatters that I don't find useful.
+
+  For instance, Lisp code is notoriously difficult to autoformat,
+  and since `aggressive-indent-mode' keeps Lisp properly indented
+  as the user codes I remove Lisp-based major modes from Apheleia's
+  list of modes to autoformat."
+    (let ((modes-to-remove '(common-lisp-mode emacs-lisp-mode lisp-mode)))
+      (setq apheleia-mode-alist
+            (seq-remove (lambda (elt) (member (car elt) modes-to-remove)) apheleia-mode-alist))))
+
   (defun my/apheleia-add-formatters (formatter-name-alist)
     "Add apheleia formatters based on FORMATTER-NAME-ALIST.
 
@@ -262,6 +273,7 @@ details.
     ;; Thus, we need to make a second call to `delight' here to make sure our mode
     ;; line respects our wishes.
     (delight 'apheleia-mode nil 'apheleia-core)
+    (my/apheleia-remove-default-mode-formatters)
     (my/apheleia-add-formatters my/apheleia-custom-formatters)
     (my/apheleia-map-modes-to-formatters my/apheleia-mode-formatters-alist)
     (my/apheleia-override-formatters))
