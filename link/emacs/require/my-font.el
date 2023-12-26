@@ -35,39 +35,43 @@
   "Set the default font for all of Emacs."
   (let ((font-family-list (font-family-list)))
     (set-face-attribute
-      'default nil
-      ;; The name of the font.
-      :family (cond
-                ((member "Cascadia Code PL" font-family-list)
-                  "Cascadia Code PL")
-                (t "DejaVu Sans Mono"))
-      ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
-      :height 110
-      ;; Style.
-      :weight 'semi-bold
-      :width 'normal)
+     'default nil
+     ;; The name of the font.
+     :family (cond
+              ((member "Cascadia Code PL" font-family-list)
+               "Cascadia Code PL")
+              (t "DejaVu Sans Mono"))
+     ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
+     :height 110
+     ;; Style.
+     :weight 'semi-bold
+     ;; A symbol
+     :width 'normal)
     (set-face-attribute
-      'fixed-pitch nil
-      :family (cond
-                ((member "Cascadia Code PL" font-family-list)
-                  "Cascadia Code PL")
-                (t "DejaVu Sans Mono"))
-      :height 110
-      :weight 'semi-bold
-      :width 'normal)
+     'fixed-pitch nil
+     :family (cond
+              ((member "Cascadia Code PL" font-family-list)
+               "Cascadia Code PL")
+              (t "DejaVu Sans Mono"))
+     :height 110
+     :weight 'semi-bold
+     :width 'normal)
     (set-face-attribute
-      'variable-pitch nil
-      :family (cond
-                ;; https://www.dafont.com/neogrey.font
-                ((member "Neogrey" font-family-list)
-                  "Neogrey Medium")
-                ;; https://freedafonts.com/arkibal-font/
-                ((member "Arkibal Serif" font-family-list)
-                  "Arkibal Serif")
-                (t "DejaVu Serif"))
-      :height 1.0
-      :weight 'semi-bold
-      :width 'normal)))
+     'variable-pitch nil
+     :family (cond
+              ;; https://freedesignresources.net/triakis-font-family-free-weight/
+              ((member "Triakis  Font" font-family-list)
+               "Triakis  Font")
+              ;; https://www.dafont.com/neogrey.font
+              ((member "Neogrey" font-family-list)
+               "Neogrey Medium")
+              ;; https://freedafonts.com/arkibal-font/
+              ((member "Arkibal Serif" font-family-list)
+               "Arkibal Serif")
+              (t "DejaVu Serif"))
+     :height 150
+     :weight 'semi-bold
+     :width 'normal)))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (when (member "Noto Color Emoji" (font-family-list))
