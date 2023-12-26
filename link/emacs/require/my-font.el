@@ -44,7 +44,7 @@
         (cond
           ;; https://freedesignresources.net/triakis-font-family-free-weight/
           ((member "Triakis  Font" font-family-list)
-            '(:family "Triakis  Font" :height 145 :weight semi-bold :width normal))
+            '(:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
           ;; https://www.dafont.com/neogrey.font
           ((member "Neogrey" font-family-list)
             '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))

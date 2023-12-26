@@ -213,6 +213,8 @@ The Evil mode plugin itself.
     (general-def 'motion
       ;; Use ";" as an alias for "M-x"
       ";" 'execute-extended-command)
+    (my/evil-leader-def
+      "eE" 'my/evil-eval-and-replace-last-sexp)
     :init
     ;; NOTE: We must set variables for evil-mode's initialization in evil-leader's
     ;;       use-package directive because it loads first, and it in turn loads
