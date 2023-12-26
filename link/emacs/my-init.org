@@ -246,6 +246,8 @@ custom Emacs Lisp libraries.
   (require 'my-straight-helpers)
   ;; Custom completing-read functions.
   (require 'my-completing-read)
+  ;; Emacs' built-in tab line configuration.
+  (require 'my-tab-line)
 #+end_src
 
 * Load Hotfix Modules
@@ -1274,7 +1276,7 @@ and hooks in a way that defers loading the package.
     ;; If you pass a non-nil argument to `general-evil-setup', you may omit the "general-" prefix for
     ;; these macros. I find that leaving them in makes your code more descriptive, however.
     (general-evil-setup)
-    ;;; Set universal keybindings with General
+  ;;; Set universal keybindings with General
     (general-unbind
       ;; Unbind some keys to make room for my custom keybindings.
       "M-c")
