@@ -10,7 +10,6 @@ then operate on those symbols, such as go to definition, rename, etc. It was
 inspired by the =highlight-symbol= package, but =symbol-overlay= is much faster
 and more powerful.
 
-* =use-package= specification
 #+begin_src emacs-lisp
   (use-package symbol-overlay
     :general
@@ -19,5 +18,9 @@ and more powerful.
       ;; to use-package's `bind-keymap' directive.
       "O" '(:keymap symbol-overlay-map))
     (general-def symbol-overlay-map
-      "R" 'symbol-overlay-remove-all))
+      "R" 'symbol-overlay-remove-all)
+    (general-def '(normal visual)
+      ;; This is a good default renaming function.  LSP clients are typically better at refactoring,
+      ;; though, so you should remap this keybinding when you have an LSP client active.
+      "gr" 'symbol-overlay-rename))
 #+end_src

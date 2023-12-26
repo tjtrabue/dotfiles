@@ -197,7 +197,7 @@ The Evil mode plugin itself.
       ;; Easily navigate defintions, references, etc.
       "gb" 'xref-go-back
       "gd" 'xref-find-definitions
-      "gr" 'xref-find-references
+      "gR" 'xref-find-references
       ;; Shortcut for ":w<RET>"
       "ZC" 'save-buffer
       ;; Shortcut for ":wq<RET>"

@@ -561,6 +561,8 @@ infrastructure for Emacs.
       "M-r" 'lsp-bridge-find-references
       "M-R" 'lsp-bridge-diagnostic-list
       "M-v" 'acm-select-next-page)
+    (general-def '(normal visual) lsp-bridge-mode-map
+      "gr" 'lsp-bridge-rename)
     ;; Standard LSP keybindings (beginning with `C-c'):
     (my/user-leader-def lsp-bridge-mode-map
       "l]"  'lsp-bridge-diagnostic-jump-next

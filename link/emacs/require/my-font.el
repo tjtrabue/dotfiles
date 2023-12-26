@@ -30,54 +30,63 @@
 
 ;;; Code:
 
-;;;###autoload
-(defun my-font-set-default-font ()
-  "Set the default font for all of Emacs."
+(defun my-font-get-font-plist (font)
+  "Retrun the preferred configuration for symbol FONT."
   (let ((font-family-list (font-family-list)))
-    (set-face-attribute
-     'default nil
-     ;; The name of the font.
-     :family (cond
-              ((member "Cascadia Code PL" font-family-list)
-               "Cascadia Code PL")
-              (t "DejaVu Sans Mono"))
-     ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
-     :height 110
-     ;; Style.
-     :weight 'semi-bold
-     ;; A symbol
-     :width 'normal)
-    (set-face-attribute
-     'fixed-pitch nil
-     :family (cond
-              ((member "Cascadia Code PL" font-family-list)
-               "Cascadia Code PL")
-              (t "DejaVu Sans Mono"))
-     :height 110
-     :weight 'semi-bold
-     :width 'normal)
-    (set-face-attribute
-     'variable-pitch nil
-     :family (cond
-              ;; https://freedesignresources.net/triakis-font-family-free-weight/
-              ((member "Triakis  Font" font-family-list)
-               "Triakis  Font")
-              ;; https://www.dafont.com/neogrey.font
-              ((member "Neogrey" font-family-list)
-               "Neogrey Medium")
-              ;; https://freedafonts.com/arkibal-font/
-              ((member "Arkibal Serif" font-family-list)
-               "Arkibal Serif")
-              (t "DejaVu Serif"))
-     :height 145
-     :weight 'semi-bold
-     :width 'normal)))
+    (pcase font
+      ('default
+       (cond
+        ((member "Cascadia Code PL" font-family-list)
+         '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+        (t
+         '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal))))
+      ('variable-pitch
+       (cond
+        ;; https://freedesignresources.net/triakis-font-family-free-weight/
+        ((member "Triakis  Font" font-family-list)
+         '(:family "Triakis  Font" :height 145 :weight semi-bold :width normal))
+        ;; https://www.dafont.com/neogrey.font
+        ((member "Neogrey" font-family-list)
+         '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
+        ;; https://freedafonts.com/arkibal-font/
+        ((member "Arkibal Serif" font-family-list)
+         '(:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
+        (t
+         '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal)))))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (when (member "Noto Color Emoji" (font-family-list))
   (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 (when (member "Symbols Nerd Font" (font-family-list))
   (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
+
+;;;###autoload
+(defun my-font-set-default-font ()
+  "Set the default font for all of Emacs."
+  (let ((default-font-plist (my-font-get-font-plist 'default))
+         (variable-pitch-font-plist (my-font-get-font-plist 'variable-pitch)))
+    (set-face-attribute
+      'default nil
+      ;; The name of the font.
+      :family (plist-get default-font-plist :family)
+      ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
+      :height (plist-get default-font-plist :height)
+      ;; Style.
+      :weight (plist-get default-font-plist :weight)
+      ;; A symbol
+      :width  (plist-get default-font-plist :width))
+    (set-face-attribute
+      'fixed-pitch nil
+      :family (plist-get default-font-plist :family)
+      :height (plist-get default-font-plist :height)
+      :weight (plist-get default-font-plist :weight)
+      :width  (plist-get default-font-plist :width))
+    (set-face-attribute
+      'variable-pitch nil
+      :family (plist-get variable-pitch-font-plist :family)
+      :height (plist-get variable-pitch-font-plist :height)
+      :weight (plist-get variable-pitch-font-plist :weight)
+      :width  (plist-get variable-pitch-font-plist :width))))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)
@@ -88,10 +97,10 @@ be attached to the `window-size-change-functions' hook.
 
 Adjust the font size of an Emacs frame based on the monitor's size."
   (let
-      (
-       (width-px (display-pixel-width)) ; Monitor width
-       (font-point 11) ;; Font point size for standard screen
-       (font-height))
+    (
+      (width-px (display-pixel-width)) ; Monitor width
+      (font-point 11) ;; Font point size for standard screen
+      (font-height))
     ;; Select the font point based on the monitor's resolution.
     (when (= width-px 3840) ;; Very Large display
       (setq font-point 20))
@@ -109,8 +118,8 @@ Adjust the font size of an Emacs frame based on the monitor's size."
     ;; Also adjust relative line number font size
     (when (facep 'linum-relative-current-face)
       (set-face-attribute
-       'linum-relative-current-face nil
-       :height font-height))))
+        'linum-relative-current-face nil
+        :height font-height))))
 
 (provide 'my-font)
 
