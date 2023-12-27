@@ -657,6 +657,8 @@ infrastructure for Emacs.
     (acm-enable-doc t)
     ;; Whether and how to richly render Markdown for completion popups.
     (acm-enable-doc-markdown-render 'async)
+    ;; Whether to show icons in the completion menu.
+    (acm-enable-icon t)
     ;; Whether to show quick-access in completion menu.
     (acm-enable-quick-access t)
     ;; Enable tab-and-go completion. This means `acm-select-*' will select and

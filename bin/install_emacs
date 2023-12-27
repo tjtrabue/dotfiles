@@ -254,6 +254,7 @@ ie__uninstall_old_emacs_installation() {
 ie__linux_build_options() {
   log_info "Adding Linux build options"
   printf '%s' "--with-x-toolkit=gtk3 \
+    --with-cairo-xcb \
     --without-gsettings"
 }
 
@@ -443,6 +444,7 @@ ie__construct_configure_cmd() {
   local configureCmd="./configure \
     --prefix=${INSTALL_PREFIX} \
     --enable-year2038 \
+    --enable-gcc-warnings=warn-only \
     --with-json \
     --with-tree-sitter \
     --with-xwidgets \
@@ -451,6 +453,7 @@ ie__construct_configure_cmd() {
     --with-native-compilation=aot \
     --with-gameuser=${GAME_USER} \
     --with-wide-int \
+    --with-small-ja-dic \
     --without-compress-install \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
