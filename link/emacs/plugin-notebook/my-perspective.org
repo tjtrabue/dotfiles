@@ -63,6 +63,18 @@ different perspective, and more.
                      (apply #'derived-mode-p my-custom-lsp-enabled-modes))
                 (lsp-deferred))))
           (persp-current-buffers)))
+
+  (defun my/persp-tab-line-tabs-files ()
+    "Return list of current perspective's file buffers to display in the tab line.
+
+  See the documentation for `perspective.el' for further details."
+    (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
+      (seq-filter (lambda (buf)
+                    (or (buffer-file-name buf)
+                        (and (buffer-name buf)
+                             ;; Ignore *special* buffers (i.e, buffers that begin and end with "*")
+                             (not (string-match-p "^\s*\\*.*\\*\s*$" (buffer-name buf))))))
+                  current-persp-buffers)))
 #+end_src
 
 * =use-package= specification
@@ -119,7 +131,11 @@ different perspective, and more.
       ;; Automatically resume the main perspective after x seconds.  The delay is
       ;; necessary to allow Emacs time to initialize before resuming the previous
       ;; perspective.
-      (run-with-timer 1 nil #'persp-state-load persp-state-default-file))
+      (run-with-timer 1 nil #'persp-state-load persp-state-default-file)
+      (when (bound-and-true-p tab-line-mode)
+        ;; When using the tab-line to list buffers in visual tabs, only list
+        ;; buffers visiting files in the current perspective.
+        (setq tab-line-tabs-function #'my/persp-tab-line-tabs-files)))
   #+end_src
 
 * Plugins

@@ -354,7 +354,11 @@ Provides default Vim keybindings for all standard Emacs modes.
     ;; Whether to set up Org functions in calendar keymap.
     (evil-collection-calendar-want-org-bindings t)
     :config
-    (evil-collection-init))
+    (evil-collection-init)
+    (when (bound-and-true-p tab-line-mode)
+     (general-def 'normal evil-collection-unimpaired-mode-map
+      "[b" 'tab-line-switch-to-prev-tab
+      "]b" 'tab-line-switch-to-next-tab)))
 #+end_src
 
 ** evil-escape
