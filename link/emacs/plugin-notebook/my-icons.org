@@ -5,7 +5,7 @@
 #+STARTUP: fold
 
 * all-the-icons
-  Use fancy developer icons in Emacs.  Very pretty!
+Use fancy developer icons in Emacs.  Very pretty!
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
@@ -24,13 +24,13 @@
       ;; If you feel that not all font files are present in the fonts dir, then
       ;; simply type 'C-x C-e' after the (all-the-icons-install-fonts t) sexp
       ;; to redownload all files.
-      (if (member nil (mapcar 'file-exists-p icon-paths))
-          (all-the-icons-install-fonts t))))
+      (when (member nil (mapcar 'file-exists-p icon-paths))
+        (all-the-icons-install-fonts t))))
 #+end_src
 
 ** Plugins
 *** all-the-icons-dired
-  Use =all-the-icons= in =dired= mode, too.
+Use =all-the-icons= in =dired= mode, too.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
@@ -43,15 +43,15 @@
 #+end_src
 
 *** all-the-icons-ibuffer
-  Use =all-the-icons= in the fancy =ibuffer-mode=, which is basically Dired for
-  buffers.
+Use =all-the-icons= in the fancy =ibuffer-mode=, which is basically Dired for
+buffers.
 
-  #+begin_src emacs-lisp
-    (use-package all-the-icons-ibuffer
-      :after all-the-icons
-      :hook
-      (ibuffer-mode . all-the-icons-ibuffer-mode))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package all-the-icons-ibuffer
+    :after all-the-icons
+    :hook
+    (ibuffer-mode . all-the-icons-ibuffer-mode))
+#+end_src
 
 *** all-the-icons-completion
 Add icons to completion candidates using the built in completion metadata functions.
@@ -65,17 +65,12 @@ Add icons to completion candidates using the built in completion metadata functi
 #+end_src
 
 * mode-icons
-  Show an icon instead of the major mode name in the modeline.
+Show an icon instead of the major mode name in the modeline.
 
-  #+begin_src emacs-lisp
-    (use-package mode-icons
-      ;; This is a CPU cycle-intensive plugin, especially when combined with LSP-bridge.  Only enable
-      ;; this mode if you are sure you want it, and that it does not grind Emacs to a halt.
-      :disabled
-      :demand t
-      :config
-      (mode-icons-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package mode-icons
+    :demand t)
+#+end_src
 
 * nerd-icons
 After installing, make sure to run =M-x nerd-icons-install-fonts=.
