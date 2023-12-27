@@ -35,7 +35,7 @@
 
 (defun my-tab-line-tab-name-function (buffer &optional _buffers)
   "Print tab name for BUFFER with some leading space for readability."
-  (concat " " (buffer-name buffer)))
+  (concat " " (buffer-name buffer) " "))
 
 ;; If non-nil, calling `tab-line-switch-to-next-tab' on the last tab selects
 ;; the first tab, and vice versa.
@@ -43,6 +43,12 @@
 
 ;; Specify the function used to print the tab name in the tab line.
 (setq tab-line-tab-name-function #'my-tab-line-tab-name-function)
+
+;; Hide the "x" button next to each tab.
+(setq tab-line-close-button-show nil)
+
+;; Hide the "+" button to add a new tab.
+(setq tab-line-new-button-show nil)
 
 ;; Enable `tab-line-mode' globally.
 (global-tab-line-mode 1)

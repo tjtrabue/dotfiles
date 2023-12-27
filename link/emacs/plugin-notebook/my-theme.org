@@ -60,6 +60,7 @@ theme code added by customize.
         ;; Adjust tab-line faces after the theme loads.
         (set-face-attribute 'tab-line nil
                             :height 1.0
+                            :width 'expanded
                             ;; Increase the height of the tab line.
                             :box `(:line-width ,tab-line-box-height
                                                :color ,(face-attribute 'tab-line :background)
