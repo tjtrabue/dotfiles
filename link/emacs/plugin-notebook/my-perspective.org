@@ -68,21 +68,21 @@ different perspective, and more.
     "Return list of current perspective's file buffers to display in the tab line.
 
   See the documentation for `perspective.el' for further details."
-    (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
+    (let ((current-persp-buffers (persp-get-buffers (persp-current-name)))
+          ;; List of non-file buffer name regular expressions to allow.
+          (allowed-special-regexps '(;; Allow *scratch* buffer(s).
+                                     "^.*\\*.*scratch.*\\*.*$")))
       (seq-filter (lambda (buf)
                     (let ((buf-name (buffer-name buf))
                           (buf-file-name (buffer-file-name buf)))
                       (and
                        ;; First, make sure the buffer has a name.
                        buf-name
-                       ;; Remove Magit buffers
-                       (not (string-match-p "^\s*magit\\(:\\|-\\).*" buf-name))
                        ;; Include buffers visiting files
                        (or buf-file-name
-                           ;; Allow *scratch* buffer(s)
-                           (string-match-p ".*\\*scratch\\*.*" buf-name)
-                           ;; Ignore *special* buffers (i.e, buffers that begin with "*")
-                           (not (string-match-p "^\s*\\*.*" buf-name))))))
+                           (seq-some (lambda (regexp)
+                                       (string-match-p regexp buf-name))
+                                     allowed-special-regexps)))))
                   current-persp-buffers)))
 #+end_src
 
