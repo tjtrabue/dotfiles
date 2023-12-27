@@ -41,16 +41,18 @@ theme code added by customize.
     (load-theme 'modus-vivendi t)
     ;; Set custom faces for the active Modus theme.
     (my/modus-themes-custom-faces)
-    (let ((mode-line-height 3)
-          (tab-line-height 3))
+    (let ((mode-line-box-height 4)
+          (tab-line-box-height 4))
       ;; Change the size of the mode line.
       (set-face-attribute 'mode-line nil
-                          :box `(:line-width ,mode-line-height
+                          :height 1.1
+                          :box `(:line-width ,mode-line-box-height
                                              :color ,(face-attribute 'mode-line
                                                                      :background)
                                              :style nil))
       (set-face-attribute 'mode-line-inactive nil
-                          :box `(:line-width ,mode-line-height
+                          :height 1.1
+                          :box `(:line-width ,mode-line-box-height
                                              :color ,(face-attribute 'mode-line-inactive
                                                                      :background)
                                              :style nil))
@@ -59,7 +61,7 @@ theme code added by customize.
         (set-face-attribute 'tab-line nil
                             :height 1.0
                             ;; Increase the height of the tab line.
-                            :box `(:line-width ,tab-line-height
+                            :box `(:line-width ,tab-line-box-height
                                                :color ,(face-attribute 'tab-line :background)
                                                :style nil)))))
 
