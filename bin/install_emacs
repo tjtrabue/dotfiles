@@ -268,27 +268,30 @@ ie__mac_build_options() {
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
 ie__construct_cc_options_gcc() {
+  local cflagsCommon="-O3 -mtune=native -march=native"
+
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
   LD="$(command -v ld)"
-  CPP=""
-  AR=""
-  AS=""
+  CPP="$(command -v cpp)"
+  AR="$(command -v gcc-ar)"
+  AS="$(command -v as)"
   CPPFLAGS="${CPPFLAGS:-""}"
-  CFLAGS="${CFLAGS:-""}"
-  CXXFLAGS="${CXXFLAGS:-""}"
+  CFLAGS="${cflagsCommon} ${CFLAGS:-""}"
+  CXXFLAGS="${cflagsCommon} ${CXXFLAGS:-""}"
   LDFLAGS="${LDFLAGS:-""}"
 
   if "${USE_MOLD_LINKER}"; then
     ie__check_mold
     LD="$(command -v mold)"
-    LDFLAGS+=" -fuse-ld=mold"
+    LDFLAGS="${LDFLAGS} -fuse-ld=mold"
   fi
 }
 
 # If the user desires to compile Emacs using LLVM/Clang, adjust the C/C++
 # environment variables to reflect that choice.
 ie__construct_cc_options_clang() {
+  local cflagsCommon="-O3 -mtune=native -march=native"
   local nameOfMissingExecutable=""
 
   CC="$(command -v clang)"
@@ -298,9 +301,9 @@ ie__construct_cc_options_clang() {
   AR="$(command -v llvm-ar)"
   AS="$(command -v llvm-as)"
   CPPFLAGS="${CPPFLAGS:-""}"
-  CFLAGS="${CFLAGS:-""}"
-  CXXFLAGS="${CXXFLAGS:-""}"
-  LDFLAGS+=" -fuse-ld=lld -rtlib=compiler-rt"
+  CFLAGS="${cflagsCommon} ${CFLAGS:-""}"
+  CXXFLAGS="${cflagsCommon} ${CXXFLAGS:-""}"
+  LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt ${LDFLAGS:-""}"
 
   if [ ! -x "${CC}" ]; then
     nameOfMissingExecutable="clang"
