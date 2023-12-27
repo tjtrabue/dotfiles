@@ -79,7 +79,7 @@ different perspective, and more.
                        (not (string-match-p "^\s*magit\\(:\\|-\\).*" buf-name))
                        ;; Include buffers visiting files
                        (or buf-file-name
-                           ;; Ignore *special* buffers (i.e, buffers that begin and end with "*")
+                           ;; Ignore *special* buffers (i.e, buffers that begin with "*")
                            (not (string-match-p "^\s*\\*.*" buf-name))))))
                   current-persp-buffers)))
 #+end_src
