@@ -44,14 +44,6 @@
 ;; Specify the function used to print the tab name in the tab line.
 (setq tab-line-tab-name-function #'my-tab-line-tab-name-function)
 
-;; Tab Line Faces
-(set-face-attribute 'tab-line nil
-  :height 1.0
-  ;; Increase the height of the tab line.
-  :box `(:line-width 3
-          :color ,(face-attribute 'tab-line :background)
-          :style nil))
-
 ;; Enable `tab-line-mode' globally.
 (global-tab-line-mode 1)
 

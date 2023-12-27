@@ -46,7 +46,15 @@ theme code added by customize.
     "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
   functions to provide a single point of theme configuration."
-    (my/activate-theme--modus))
+    (my/activate-theme--modus)
+    (when (bound-and-true-p tab-line-mode)
+      ;; Adjust tab-line faces after the theme loads.
+      (set-face-attribute 'tab-line nil
+                          :height 1.0
+                          ;; Increase the height of the tab line.
+                          :box `(:line-width 3
+                                             :color ,(face-attribute 'tab-line :background)
+                                             :style nil))))
 #+end_src
 
 * Add advice to theme activation function
