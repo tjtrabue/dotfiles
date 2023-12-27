@@ -70,10 +70,15 @@ different perspective, and more.
   See the documentation for `perspective.el' for further details."
     (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
       (seq-filter (lambda (buf)
-                    (or (buffer-file-name buf)
-                        (and (buffer-name buf)
-                             ;; Ignore *special* buffers (i.e, buffers that begin and end with "*")
-                             (not (string-match-p "^\s*\\*.*\\*\s*$" (buffer-name buf))))))
+                    (let ((buf-name (buffer-name buf))
+                          (buf-file-name (buffer-file-name buf)))
+                      (and buf-name
+                           (not (string-match-p "^\s*magit\\(:\\|-\\).*" buf-name))
+                           (or buf-file-name
+                               (and buf-name
+                                    ;; Ignore *special* buffers (i.e, buffers that begin and end with
+                                    ;; "*")
+                                    (not (string-match-p "^\s*\\*.*\\*\s*$" buf-name)))))))
                   current-persp-buffers)))
 #+end_src
 
