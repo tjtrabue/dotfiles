@@ -526,10 +526,11 @@ between the edge of the frame and the first buffer. You can even set the width
 of the right and left fringes individually.
 
 #+begin_src emacs-lisp
-  ;; When called with a number, set the fringe on the right and left to the
-  ;; specified number of pixels.  When called interactively, prompt the user for a
-  ;; fringe style to apply.
-  (set-fringe-mode 8)
+  (when (display-graphic-p)
+    ;; When called with a number, set the fringe on the right and left to the
+    ;; specified number of pixels.  When called interactively, prompt the user for a
+    ;; fringe style to apply.
+    (set-fringe-mode 8))
 #+end_src
 
 * Adjust initial frame size
