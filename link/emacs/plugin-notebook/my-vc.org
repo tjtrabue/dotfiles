@@ -237,10 +237,11 @@ maintained.
     :config
     ;; Enable diff-hl globally.
     (global-diff-hl-mode 1)
-    ;; Show diffs in the margin, instead of in the fringe.  An alternative to
-    ;; `global-diff-hl-mode'. This allows `diff-hl' to work in the console, as well as in the GUI
-    ;; since console Emacs has no fringe.
-    (diff-hl-margin-mode 1)
+    (unless (display-graphic-p)
+      ;; Show diffs in the margin, instead of in the fringe.  An alternative to
+      ;; `global-diff-hl-mode'. This allows `diff-hl' to work in the console, as well as in the GUI
+      ;; since console Emacs has no fringe.
+      (diff-hl-margin-mode 1))
     ;; Provide diff highlighting for vc-dir-mode buffers.
     (diff-hl-dir-mode 1)
     ;; Provide similar functionality in dired-mode.

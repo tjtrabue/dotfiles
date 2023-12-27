@@ -2,6 +2,7 @@
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
 #+DATE:    2020:5:25
+#+TAGS:    emacs initialization init
 #+STARTUP: fold
 
 This Org document contains my primary Emacs configuration. =~/.emacs= only holds
