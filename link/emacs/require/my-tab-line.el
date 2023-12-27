@@ -33,9 +33,24 @@
 
 (require 'tab-line)
 
+(defun my-tab-line-tab-name-function (buffer &optional _buffers)
+  "Print tab name for BUFFER with some leading space for readability."
+  (concat " " (buffer-name buffer)))
+
 ;; If non-nil, calling `tab-line-switch-to-next-tab' on the last tab selects
 ;; the first tab, and vice versa.
 (setq tab-line-switch-cycling t)
+
+;; Specify the function used to print the tab name in the tab line.
+(setq tab-line-tab-name-function #'my-tab-line-tab-name-function)
+
+;; Tab Line Faces
+(set-face-attribute 'tab-line nil
+  :height 1.0
+  ;; Increase the height of the tab line.
+  :box `(:line-width 3
+          :color ,(face-attribute 'tab-line :background)
+          :style nil))
 
 ;; Enable `tab-line-mode' globally.
 (global-tab-line-mode 1)
