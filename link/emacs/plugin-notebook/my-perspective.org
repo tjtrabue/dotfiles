@@ -79,6 +79,8 @@ different perspective, and more.
                        (not (string-match-p "^\s*magit\\(:\\|-\\).*" buf-name))
                        ;; Include buffers visiting files
                        (or buf-file-name
+                           ;; Allow *scratch* buffer(s)
+                           (string-match-p ".*\\*scratch\\*.*" buf-name)
                            ;; Ignore *special* buffers (i.e, buffers that begin with "*")
                            (not (string-match-p "^\s*\\*.*" buf-name))))))
                   current-persp-buffers)))
