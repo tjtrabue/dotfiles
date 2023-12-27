@@ -529,7 +529,7 @@ of the right and left fringes individually.
   ;; When called with a number, set the fringe on the right and left to the
   ;; specified number of pixels.  When called interactively, prompt the user for a
   ;; fringe style to apply.
-  (set-fringe-mode 10)
+  (set-fringe-mode 8)
 #+end_src
 
 * Adjust initial frame size

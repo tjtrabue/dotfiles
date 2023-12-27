@@ -78,8 +78,9 @@ different perspective, and more.
                       (and
                        ;; First, make sure the buffer has a name.
                        buf-name
-                       ;; Include buffers visiting files
+                       ;; Include buffers visiting files.
                        (or buf-file-name
+                           ;; Include specifically allowed non-file buffers.
                            (seq-some (lambda (regexp)
                                        (string-match-p regexp buf-name))
                                      allowed-special-regexps)))))
