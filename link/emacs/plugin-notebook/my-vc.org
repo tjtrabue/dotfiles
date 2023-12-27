@@ -232,6 +232,8 @@ maintained.
     :custom
     ;; Whether to draw borders aroung fringe indicators.
     (diff-hl-draw-borders nil)
+    ;; How long to wait before updating the buffer's VC diff on the fly.
+    (diff-hl-flydiff-delay 0.2)
     :config
     ;; Enable diff-hl globally.
     (global-diff-hl-mode 1)
