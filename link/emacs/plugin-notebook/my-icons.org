@@ -42,7 +42,14 @@ Use fancy developer icons in Emacs.  Very pretty!
                   (concat
                    ;; Add face-formatted space before icon.
                    (propertize " " 'face face 'help-echo help-echo)
-                   (let ((icon (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab))))
+                   (let* (;; Figure out if the major mode has an icon.  If so, use it. Otherwise,
+                          ;; default to a specific icon.  all-the-icons unfortunately returns the
+                          ;; major mode symbol instead of nil if it can't find an icon for a major
+                          ;; mode, so we have to check if we have a string in order to proceed.
+                          (icon-str (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab)))
+                          (icon (if (stringp icon-str)
+                                    icon-str
+                                  (all-the-icons-octicon "file-text"))))
                      (setq icon (copy-sequence icon))
                      (add-face-text-property 0 (length icon) face t icon)
                      ;; Add face-formatted icon.
