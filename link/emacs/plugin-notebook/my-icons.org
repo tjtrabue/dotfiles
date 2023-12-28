@@ -12,7 +12,11 @@ Use fancy developer icons in Emacs.  Very pretty!
   (defun my/all-the-icons-tab-line-format (tab tabs)
     "Add file mode icons to tab-line tabs.
 
-  Currently, this is almost entirely a copy-paste of the
+  This function is an implementation of
+  `tab-line-tab-name-format-function'.  See that variable's docs
+  for more information.
+
+  Currently, this function is almost entirely a copy-paste of the
   `tab-line-tab-name-format-default' with a few extra lines for
   adding the file mode icon."
     (let* ((buffer-p (bufferp tab))
