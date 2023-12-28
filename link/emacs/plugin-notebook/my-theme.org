@@ -104,18 +104,12 @@ color names used by Modus]].
                             :inherit '(org-level-1 modus-themes-heading-0)
                             :height 1.75)
         ;; Adjust mode line style
-        (set-face-attribute 'mode-line nil
-                            :height 1.1
-                            :box `(:line-width ,mode-line-box-height
-                                               :color ,(face-attribute 'mode-line
-                                                                       :background)
-                                               :style nil))
-        (set-face-attribute 'mode-line-inactive nil
-                            :height 1.1
-                            :box `(:line-width ,mode-line-box-height
-                                               :color ,(face-attribute 'mode-line-inactive
-                                                                       :background)
-                                               :style nil))
+        (dolist (face '(mode-line mode-line-inactive mode-line-highlight))
+          (set-face-attribute face nil
+                              :height 1.1
+                              ;; Increase mode-line height by adding a border box.
+                              :box `(:line-width ,mode-line-box-height
+                                                 :color ,(face-background face))))
         (when (bound-and-true-p tab-line-mode)
           ;; Adjust tab-line faces after the theme loads.
           (dolist (face '(tab-line
@@ -126,7 +120,7 @@ color names used by Modus]].
             (set-face-attribute face nil
                                 :height 1.0
                                 :width 'expanded
-                                ;; Increase the height of the tab-line by adding a border box.
+                                ;; Increase tab-line height by adding a border box.
                                 :box `(:line-width ,tab-line-box-height
                                                    :color ,(face-background face)))))
         (when (bound-and-true-p solaire-mode)
