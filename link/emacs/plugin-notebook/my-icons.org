@@ -33,16 +33,19 @@ Use fancy developer icons in Emacs.  Very pretty!
         (setf face (funcall fn tab tabs face buffer-p selected-p)))
       (apply 'propertize
              (concat
-              ;; Add face-formatted space before icon.
-              (propertize " " 'face face)
-              ;; Add face-formatted icon.
-              (let ((icon (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab))))
-                (setq icon (copy-sequence icon))
-                (add-face-text-property 0 (length icon) face t icon)
-                (propertize icon
-                            'help-echo help-echo))
-              ;; Add face-formatted space after icon.
-              (propertize " " 'face face)
+              (if buffer-p
+                  ;; If the tab is a file buffer, prefix the buffer name with its mode icon.
+                  (concat
+                   ;; Add face-formatted space before icon.
+                   (propertize " " 'face face 'help-echo help-echo)
+                   (let ((icon (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab))))
+                     (setq icon (copy-sequence icon))
+                     (add-face-text-property 0 (length icon) face t icon)
+                     ;; Add face-formatted icon.
+                     (propertize icon 'help-echo help-echo))
+                   ;; Add face-formatted space after icon.
+                   (propertize " " 'face face 'help-echo help-echo))
+                "")
               (propertize (string-replace "%" "%%" name) ;; (bug#57848)
                           'face face
                           'keymap tab-line-tab-map
