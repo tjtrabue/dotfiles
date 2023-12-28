@@ -26,7 +26,9 @@ Use fancy developer icons in Emacs.  Very pretty!
                      (if (mode-line-window-selected-p)
                          'tab-line-tab-current
                        'tab-line-tab)
-                   'tab-line-tab-inactive)))
+                   'tab-line-tab-inactive))
+           (help-echo (if selected-p "Current tab"
+                        "Click to select tab")))
       (dolist (fn tab-line-tab-face-functions)
         (setf face (funcall fn tab tabs face buffer-p selected-p)))
       (apply 'propertize
@@ -37,14 +39,14 @@ Use fancy developer icons in Emacs.  Very pretty!
               (let ((icon (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab))))
                 (setq icon (copy-sequence icon))
                 (add-face-text-property 0 (length icon) face t icon)
-                icon)
+                (propertize icon
+                            'help-echo help-echo))
               ;; Add face-formatted space after icon.
               (propertize " " 'face face)
               (propertize (string-replace "%" "%%" name) ;; (bug#57848)
                           'face face
                           'keymap tab-line-tab-map
-                          'help-echo (if selected-p "Current tab"
-                                       "Click to select tab")
+                          'help-echo help-echo
                           ;; Don't turn mouse-1 into mouse-2 (bug#49247)
                           'follow-link 'ignore)
               (let ((close (or (and (or buffer-p (assq 'buffer tab)
