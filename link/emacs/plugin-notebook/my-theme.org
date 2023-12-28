@@ -143,6 +143,14 @@ color names used by Modus]].
                                                           'tab-line-tab-inactive
                                                           :background)
                                                  :style nil))
+          (set-face-attribute 'tab-line-tab-inactive-alternate nil
+                              :height 1.0
+                              :width 'expanded
+                              :box `(:line-width ,tab-line-box-height
+                                                 :color ,(face-attribute
+                                                          'region
+                                                          :background)
+                                                 :style nil))
           (set-face-attribute 'tab-line-highlight nil
                               :height 1.0
                               :width 'expanded
