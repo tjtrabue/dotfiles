@@ -16,13 +16,13 @@ current perspective, removing a buffer from the perspective, switching to a
 different perspective, and more.
 
 * perspective.el vs persp-mode package
-  You may be wondering why there are two different packages offering the
-  =persp-mode= global minor mode. There's =perspective.el=, and then there's a
-  package just called =persp-mode=. =persp-mode= the package is a /fork/ of
-  =perspective.el= that has fallen behind and lost momentum. It was originally
-  intended to make =perspective.el= easier to work with, especially with
-  multiple frames, but it is less configurable and can be frustrating since it
-  seizes control of Emacs in some invasive ways.
+You may be wondering why there are two different packages offering the
+=persp-mode= global minor mode. There's =perspective.el=, and then there's a
+package just called =persp-mode=. =persp-mode= the package is a /fork/ of
+=perspective.el= that has fallen behind and lost momentum. It was originally
+intended to make =perspective.el= easier to work with, especially with
+multiple frames, but it is less configurable and can be frustrating since it
+seizes control of Emacs in some invasive ways.
 
 * Functions
 #+begin_src emacs-lisp
@@ -88,76 +88,76 @@ different perspective, and more.
 #+end_src
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package perspective
-      :demand t
-      :hook
-      ;; Save perspective to disk whenever the user kills Emacs.
-      (kill-emacs . persp-state-save)
-      :general
-      (my/user-leader-def persp-mode-map
-        ;; This is general.el's way of accomplishing :bind-keymap.
-        "j" '(:keymap perspective-map))
-      (general-def persp-mode-map
-        "C-x b" 'persp-switch-to-buffer
-        "C-x k" 'persp-kill-buffer*
-        "C-M-k" (lambda ()
-                  "Kill the current buffer for the active persepective."
-                  (interactive)
-                  (persp-kill-buffer* (current-buffer))))
-      ;; Set evil-leader keys for perspective.el
-      (my/evil-leader-def persp-mode-map
-        ;; Remappings of standard evil-leader shortcuts
-        "kk" 'persp-kill-buffer*
-        ;; Custom perspective evil-leader shortcuts
-        "pL" 'persp-state-load
-        "pS" 'persp-state-save
-        "pa" 'persp-add-buffer
-        "pb" 'persp-switch-to-buffer*
-        "pc" 'persp-kill
-        "pi" 'persp-import
-        "pk" 'persp-remove-buffer
-        "pn" 'persp-next
-        "pp" 'persp-prev
-        "pr" 'persp-rename
-        "ps" 'persp-switch)
-      :custom
-      ;; Prefix for all perspective.el commands
-      (persp-mode-prefix-key (kbd "C-c j"))
-      ;; Where perspective.el saves its configuration
-      (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
-      :config
-      ;; Enable LSP server(s) when switching perspectives to work around the fact
-      ;; that perspective.el disables LSP servers when switching.
-      (add-hook 'persp-switch-hook #'my/persp-switch-start-lsp-servers)
-      ;; Add any opened file buffers to current perspective.
-      (add-hook 'find-file-hook #'my/add-current-buffer-to-perspective)
-      ;; Remove the buffer from the perspective when we kill-this-buffer.
-      (advice-add #'kill-this-buffer
-                  :before
-                  #'my/remove-current-buffer-from-perspective)
-      ;; Turn on persp-mode globally
-      (persp-mode 1)
-      ;; Automatically resume the main perspective after x seconds.  The delay is
-      ;; necessary to allow Emacs time to initialize before resuming the previous
-      ;; perspective.
-      (run-with-timer 1 nil #'persp-state-load persp-state-default-file)
-      (when (bound-and-true-p tab-line-mode)
-        ;; When using the tab-line to list buffers in visual tabs, only list
-        ;; buffers visiting files in the current perspective.
-        (setq tab-line-tabs-function #'my/persp-tab-line-tabs-files)))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package perspective
+    :demand t
+    :hook
+    ;; Save perspective to disk whenever the user kills Emacs.
+    (kill-emacs . persp-state-save)
+    :general
+    (my/user-leader-def persp-mode-map
+      ;; This is general.el's way of accomplishing :bind-keymap.
+      "j" '(:keymap perspective-map))
+    (general-def persp-mode-map
+      "C-x b" 'persp-switch-to-buffer
+      "C-x k" 'persp-kill-buffer*
+      "C-M-k" (lambda ()
+                "Kill the current buffer for the active persepective."
+                (interactive)
+                (persp-kill-buffer* (current-buffer))))
+    ;; Set evil-leader keys for perspective.el
+    (my/evil-leader-def persp-mode-map
+      ;; Remappings of standard evil-leader shortcuts
+      "kk" 'persp-kill-buffer*
+      ;; Custom perspective evil-leader shortcuts
+      "pL" 'persp-state-load
+      "pS" 'persp-state-save
+      "pa" 'persp-add-buffer
+      "pb" 'persp-switch-to-buffer*
+      "pc" 'persp-kill
+      "pi" 'persp-import
+      "pk" 'persp-remove-buffer
+      "pn" 'persp-next
+      "pp" 'persp-prev
+      "pr" 'persp-rename
+      "ps" 'persp-switch)
+    :custom
+    ;; Prefix for all perspective.el commands
+    (persp-mode-prefix-key (kbd "C-c j"))
+    ;; Where perspective.el saves its configuration
+    (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
+    :config
+    ;; Enable LSP server(s) when switching perspectives to work around the fact
+    ;; that perspective.el disables LSP servers when switching.
+    (add-hook 'persp-switch-hook #'my/persp-switch-start-lsp-servers)
+    ;; Add any opened file buffers to current perspective.
+    (add-hook 'find-file-hook #'my/add-current-buffer-to-perspective)
+    ;; Remove the buffer from the perspective when we kill-this-buffer.
+    (advice-add #'kill-this-buffer
+                :before
+                #'my/remove-current-buffer-from-perspective)
+    ;; Turn on persp-mode globally
+    (persp-mode 1)
+    ;; Automatically resume the main perspective after x seconds.  The delay is
+    ;; necessary to allow Emacs time to initialize before resuming the previous
+    ;; perspective.
+    (run-with-timer 1 nil #'persp-state-load persp-state-default-file)
+    (when (bound-and-true-p tab-line-mode)
+      ;; When using the tab-line to list buffers in visual tabs, only list
+      ;; buffers visiting files in the current perspective.
+      (setq tab-line-tabs-function #'my/persp-tab-line-tabs-files)))
+#+end_src
 
 * Plugins
 ** persp-projectile
-   Integrates =perspective.el= with =projectile=, allowing you to switch between
-   perspectives specifically for Projectile projects. This is very similar to
-   the standard =projectile-switch-project= function.
+Integrates =perspective.el= with =projectile=, allowing you to switch between
+perspectives specifically for Projectile projects. This is very similar to
+the standard =projectile-switch-project= function.
 
-   #+begin_src emacs-lisp
-     (use-package persp-projectile
-       :general
-       (general-def projectile-command-map
-         [remap projectile-switch-project] 'projectile-persp-switch-project
-         "," 'projectile-persp-switch-project))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package persp-projectile
+    :general
+    (general-def projectile-command-map
+      [remap projectile-switch-project] 'projectile-persp-switch-project
+      "," 'projectile-persp-switch-project))
+#+end_src
