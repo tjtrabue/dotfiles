@@ -103,29 +103,6 @@ color names used by Modus]].
         (set-face-attribute 'org-document-title nil
                             :inherit '(org-level-1 modus-themes-heading-0)
                             :height 1.75)
-        (when (bound-and-true-p solaire-mode)
-          ;; Support Solaire.
-          (custom-set-faces
-           `(solaire-default-face ((,c :inherit default
-                                       :background ,bg-dim
-                                       :foreground ,fg-dim)))
-           `(solaire-line-number-face ((,c :inherit solaire-default-face
-                                           :foreground ,fg-dim)))
-           `(solaire-hl-line-face ((,c :background ,bg-active)))
-           `(solaire-org-hide-face ((,c :background ,bg-dim
-                                        :foreground ,bg-dim)))))
-        (when (bound-and-true-p highlight-indent-guides-mode)
-          ;; Customize faces for `highlight-indent-guides-mode' since that mode
-          ;; cannot seem to figure out its faces on its own when using Modus themes.
-          (set-face-background 'highlight-indent-guides-odd-face bg-dim)
-          (set-face-background 'highlight-indent-guides-even-face bg-dim)
-          (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
-          (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
-          (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
-          (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
-          (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
-          (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
-          (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender))
         ;; Adjust mode line style
         (set-face-attribute 'mode-line nil
                             :height 1.1
@@ -154,7 +131,30 @@ color names used by Modus]].
                               ;; Increase the height of the tab line.
                               :box `(:line-width ,tab-line-box-height
                                                  :color ,(face-attribute 'highlight :background)
-                                                 :style nil))))))
+                                                 :style nil)))
+        (when (bound-and-true-p solaire-mode)
+          ;; Support Solaire.
+          (custom-set-faces
+           `(solaire-default-face ((,c :inherit default
+                                       :background ,bg-dim
+                                       :foreground ,fg-dim)))
+           `(solaire-line-number-face ((,c :inherit solaire-default-face
+                                           :foreground ,fg-dim)))
+           `(solaire-hl-line-face ((,c :background ,bg-active)))
+           `(solaire-org-hide-face ((,c :background ,bg-dim
+                                        :foreground ,bg-dim)))))
+        (when (bound-and-true-p highlight-indent-guides-mode)
+          ;; Customize faces for `highlight-indent-guides-mode' since that mode
+          ;; cannot seem to figure out its faces on its own when using Modus themes.
+          (set-face-background 'highlight-indent-guides-odd-face bg-dim)
+          (set-face-background 'highlight-indent-guides-even-face bg-dim)
+          (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
+          (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
+          (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
+          (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
+          (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
+          (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
+          (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender)))))
 #+end_src
 
 *** =use-package= specification
