@@ -7,6 +7,64 @@
 * all-the-icons
 Use fancy developer icons in Emacs.  Very pretty!
 
+** Functions
+#+begin_src emacs-lisp
+  (defun my/all-the-icons-tab-line-format (tab tabs)
+    "Add file mode icons to tab-line tabs.
+
+  Currently, this is almost entirely a copy-paste of the
+  `tab-line-tab-name-format-default' with a few extra lines for
+  adding the file mode icon."
+    (let* ((buffer-p (bufferp tab))
+           (selected-p (if buffer-p
+                           (eq tab (window-buffer))
+                         (cdr (assq 'selected tab))))
+           (name (if buffer-p
+                     (funcall tab-line-tab-name-function tab tabs)
+                   (cdr (assq 'name tab))))
+           (face (if selected-p
+                     (if (mode-line-window-selected-p)
+                         'tab-line-tab-current
+                       'tab-line-tab)
+                   'tab-line-tab-inactive)))
+      (dolist (fn tab-line-tab-face-functions)
+        (setf face (funcall fn tab tabs face buffer-p selected-p)))
+      (apply 'propertize
+             (concat
+              ;; Add face-formatted space before icon.
+              (propertize " " 'face face)
+              ;; Add face-formatted icon.
+              (let ((icon (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab))))
+                (setq icon (copy-sequence icon))
+                (add-face-text-property 0 (length icon) face t icon)
+                icon)
+              ;; Add face-formatted space after icon.
+              (propertize " " 'face face)
+              (propertize (string-replace "%" "%%" name) ;; (bug#57848)
+                          'face face
+                          'keymap tab-line-tab-map
+                          'help-echo (if selected-p "Current tab"
+                                       "Click to select tab")
+                          ;; Don't turn mouse-1 into mouse-2 (bug#49247)
+                          'follow-link 'ignore)
+              (let ((close (or (and (or buffer-p (assq 'buffer tab)
+                                        (assq 'close tab))
+                                    tab-line-close-button-show
+                                    (not (eq tab-line-close-button-show
+                                             (if selected-p 'non-selected
+                                               'selected)))
+                                    tab-line-close-button)
+                               "")))
+                (setq close (copy-sequence close))
+                ;; Don't overwrite the icon face
+                (add-face-text-property 0 (length close) face t close)
+                close))
+             `(tab ,tab
+                   ,@(if selected-p '(selected t))
+                   mouse-face tab-line-highlight))))
+#+end_src
+
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package all-the-icons
     :demand t
@@ -25,7 +83,10 @@ Use fancy developer icons in Emacs.  Very pretty!
       ;; simply type 'C-x C-e' after the (all-the-icons-install-fonts t) sexp
       ;; to redownload all files.
       (when (member nil (mapcar 'file-exists-p icon-paths))
-        (all-the-icons-install-fonts t))))
+        (all-the-icons-install-fonts t)))
+    (when (bound-and-true-p tab-line-mode)
+      ;; Add file mode icons to tab-line tabs.
+      (setq tab-line-tab-name-format-function #'my/all-the-icons-tab-line-format)))
 #+end_src
 
 ** Plugins
