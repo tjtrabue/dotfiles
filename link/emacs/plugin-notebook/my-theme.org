@@ -118,47 +118,17 @@ color names used by Modus]].
                                                :style nil))
         (when (bound-and-true-p tab-line-mode)
           ;; Adjust tab-line faces after the theme loads.
-          (set-face-attribute 'tab-line nil
-                              :height 1.0
-                              :width 'expanded
-                              ;; Increase the height of the tab line.
-                              :box `(:line-width ,tab-line-box-height
-                                                 :color ,(face-attribute
-                                                          'tab-line
-                                                          :background)
-                                                 :style nil))
-          (set-face-attribute 'tab-line-tab-current nil
-                              :height 1.0
-                              :width 'expanded
-                              :box `(:line-width ,tab-line-box-height
-                                                 :color ,(face-attribute
-                                                          'tab-line-tab-current
-                                                          :background)
-                                                 :style nil))
-          (set-face-attribute 'tab-line-tab-inactive nil
-                              :height 1.0
-                              :width 'expanded
-                              :box `(:line-width ,tab-line-box-height
-                                                 :color ,(face-attribute
-                                                          'tab-line-tab-inactive
-                                                          :background)
-                                                 :style nil))
-          (set-face-attribute 'tab-line-tab-inactive-alternate nil
-                              :height 1.0
-                              :width 'expanded
-                              :box `(:line-width ,tab-line-box-height
-                                                 :color ,(face-attribute
-                                                          'region
-                                                          :background)
-                                                 :style nil))
-          (set-face-attribute 'tab-line-highlight nil
-                              :height 1.0
-                              :width 'expanded
-                              :box `(:line-width ,tab-line-box-height
-                                                 :color ,(face-attribute
-                                                          'highlight
-                                                          :background)
-                                                 :style nil)))
+          (dolist (face '(tab-line
+                          tab-line-tab-current
+                          tab-line-tab-inactive
+                          tab-line-tab-inactive-alternate
+                          tab-line-highlight))
+            (set-face-attribute face nil
+                                :height 1.0
+                                :width 'expanded
+                                ;; Increase the height of the tab-line by adding a border box.
+                                :box `(:line-width ,tab-line-box-height
+                                                   :color ,(face-background face)))))
         (when (bound-and-true-p solaire-mode)
           ;; Support Solaire.
           (custom-set-faces
