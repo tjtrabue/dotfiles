@@ -109,7 +109,7 @@ color names used by Modus]].
                               :height 1.1
                               ;; Increase mode-line height by adding a border box.
                               :box `(:line-width ,mode-line-box-height
-                                                 :color ,(face-background face))))
+                                                 :color ,(face-background face nil t))))
         (when (bound-and-true-p tab-line-mode)
           ;; Adjust tab-line faces after the theme loads.
           (dolist (face '(tab-line
@@ -122,7 +122,7 @@ color names used by Modus]].
                                 :width 'expanded
                                 ;; Increase tab-line height by adding a border box.
                                 :box `(:line-width ,tab-line-box-height
-                                                   :color ,(face-background face)))))
+                                                   :color ,(face-background face nil t)))))
         (when (bound-and-true-p solaire-mode)
           ;; Support Solaire.
           (custom-set-faces
