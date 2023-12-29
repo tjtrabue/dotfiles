@@ -139,8 +139,10 @@ Add icons to completion candidates using the built in completion metadata functi
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-completion
-    :after all-the-icons
+    :after (all-the-icons marginalia)
     :demand t
+    :hook
+    (marginalia-mode . all-the-icons-completion-marginalia-setup)
     :config
     (all-the-icons-completion-mode 1))
 #+end_src
