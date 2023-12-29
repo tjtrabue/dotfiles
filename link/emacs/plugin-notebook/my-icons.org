@@ -45,7 +45,12 @@ Use fancy developer icons in Emacs.  Very pretty!
                   ;; If the tab is a file buffer, prefix the buffer name with its mode icon.
                   (concat
                    ;; Add face-formatted space before icon.
-                   (propertize " " 'face face 'help-echo help-echo)
+                   (propertize " "
+                               'face face
+                               'keymap tab-line-tab-map
+                               ;; Don't turn mouse-1 into mouse-2 (bug#49247)
+                               'follow-link 'ignore
+                               'help-echo help-echo)
                    (let* (;; Figure out if the major mode has an icon.  If so, use it. Otherwise,
                           ;; default to a specific icon.  all-the-icons unfortunately returns the
                           ;; major mode symbol instead of nil if it can't find an icon for a major
@@ -57,9 +62,17 @@ Use fancy developer icons in Emacs.  Very pretty!
                      (setq icon (copy-sequence icon))
                      (add-face-text-property 0 (length icon) face t icon)
                      ;; Add face-formatted icon.
-                     (propertize icon 'help-echo help-echo))
+                     (propertize icon
+                                 'keymap tab-line-tab-map
+                                 'help-echo help-echo
+                                 'follow-link 'ignore))
                    ;; Add face-formatted space after icon.
-                   (propertize " " 'face face 'help-echo help-echo))
+                   (propertize " "
+                               'face face
+                               'keymap tab-line-tab-map
+                               ;; Don't turn mouse-1 into mouse-2 (bug#49247)
+                               'follow-link 'ignore
+                               'help-echo help-echo))
                 "")
               (propertize (string-replace "%" "%%" name) ;; (bug#57848)
                           'face face
