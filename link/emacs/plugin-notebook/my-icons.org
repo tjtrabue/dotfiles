@@ -146,7 +146,11 @@ Show an icon instead of the major mode name in the modeline.
 
 #+begin_src emacs-lisp
   (use-package mode-icons
-    :demand t)
+    ;; This plugin doesn't seem to play nicely with `lsp-bridge'.  It becomes very CPU-intensive.
+    :disabled
+    :demand t
+    :config
+    (mode-icons-mode 1))
 #+end_src
 
 * nerd-icons
