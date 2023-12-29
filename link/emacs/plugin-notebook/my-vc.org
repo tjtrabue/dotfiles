@@ -61,6 +61,10 @@ porcelain exists in Magit.
       "gp" 'magit-pull
       "gr" 'magit-rebase
       "gs" 'magit-stage-modified)
+    (my/evil-leader-def with-editor-mode-map
+      ;; These bindings are active when editing the commit message buffer.
+      "cc" 'with-editor-finish
+      "ck" 'with-editor-cancel)
     :custom
     ;; If non-nil and either `global-auto-revert-mode' or `magit-auto-revert-mode'
     ;; is active, Magit immediately reverts buffers by explicitely calling
