@@ -44,10 +44,10 @@
 ;; Specify the function used to print the tab name in the tab line.
 (setq tab-line-tab-name-function #'my-tab-line-tab-name-function)
 
-;; Hide the "x" button next to each tab.
+;; Whether to show the "x" close button next to each tab.
 (setq tab-line-close-button-show nil)
 
-;; Hide the "+" button to add a new tab.
+;; Whether to show the "+" button used to add a new tab.
 (setq tab-line-new-button-show nil)
 
 ;; This is a custom callback function that the user can define which decides
