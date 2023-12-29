@@ -1,7 +1,8 @@
-#+TITLE:  Version Control Configuration/Plugins
-#+AUTHOR: Tom Trabue
-#+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020-05-26
+#+TITLE:   Version Control Configuration/Plugins
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020-05-26
+#+TAGS:    vc version control git magit github gitlab codeberg
 #+STARTUP: fold
 
 Plugins for extending Emacs with version control capabilities.

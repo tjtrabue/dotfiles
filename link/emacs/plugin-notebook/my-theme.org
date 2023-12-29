@@ -1,8 +1,8 @@
-#+TITLE:  Emacs Color Theme
-#+AUTHOR: Tom Trabue
-#+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020-05-26
-#+TAGS:   color colors theme
+#+TITLE:   Emacs Color Theme
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020-05-26
+#+TAGS:    color colors theme modus doom
 #+STARTUP: fold
 
 This is where we set Emacs' primary color theme.

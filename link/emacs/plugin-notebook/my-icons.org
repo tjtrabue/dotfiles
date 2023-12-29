@@ -1,8 +1,12 @@
-#+TITLE:  Extra Development Icons for Emacs
-#+AUTHOR: Tom Trabue
-#+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020-05-25
+#+TITLE:   Icon Enhancements for Emacs' GUI
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020-05-25
+#+TAGS:    icon icons gui nerd all the mode
 #+STARTUP: fold
+
+Emacs looks better with icons! These plugins add icons to different parts of
+Emacs' UI.
 
 * all-the-icons
 Use fancy developer icons in Emacs.  Very pretty!
