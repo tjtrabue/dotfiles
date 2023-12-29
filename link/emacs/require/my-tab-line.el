@@ -50,6 +50,15 @@
 ;; Hide the "+" button to add a new tab.
 (setq tab-line-new-button-show nil)
 
+;; This is a custom callback function that the user can define which decides
+;; into which tab group an input buffer gets added.
+;;
+;; This function takes a buffer as an argument, and should return a string
+;; representing the name of the group into which the input buffer should be
+;; placed. If the function returns nil, the buffer will be filtered out
+;; entirely.
+(setq tab-line-tabs-buffer-group-function nil)
+
 ;; Enable `tab-line-mode' globally.
 (global-tab-line-mode 1)
 
