@@ -102,9 +102,12 @@ color names used by Modus]].
                           :inherit '(org-level-1 modus-themes-heading-0)
                           :height 1.75)
       ;; Adjust mode line style
-      (dolist (face '(mode-line mode-line-inactive mode-line-highlight))
+      (dolist (face '(mode-line
+                      mode-line-active
+                      mode-line-inactive
+                      mode-line-highlight))
         (set-face-attribute face nil
-                            :height 1.1
+                            :height 1.0
                             ;; Increase mode-line height by adding a border box.
                             :box `(:line-width 4 :color ,(face-background face nil t))))
       (when (bound-and-true-p tab-line-mode)

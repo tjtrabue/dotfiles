@@ -9,8 +9,10 @@ configuration. This file contains all of the plugins and customization necessary
 to make Emacs the greatest Common Lisp editor this side of the solar system!
 
 The two main Common Lisp integration plugins are SLIME and SLY, which are
-alternatives to one another. SLY is newer and more powerful, though, so I would
-stick with SLY unless you have a reason not to.
+alternatives to one another, and are almost at feature parity. SLY is a fork of
+SLIME, and has some advanced features that SLIME does not, but also has a slower
+development and release cycle. Which package you decide to use is entirely up to
+you.
 
 If you are curious about the correct coding style for Common Lisp, you can find
 the style guide [[https:lisp-lang.org/style-guide][here]].
