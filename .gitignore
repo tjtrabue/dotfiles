@@ -438,6 +438,7 @@ link/config/autostart/state-svc.desktop
 
 # 1Password {{{
 link/config/1Password/
+link/config/op/
 # }}}
 
 # Browser {{{

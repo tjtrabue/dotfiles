@@ -1,7 +1,7 @@
-#+TITLE:  Language Server Protocol Client for Emacs
-#+AUTHOR: Tom Trabue
-#+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020-05-25
+#+TITLE:   Language Server Protocol Client for Emacs
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020-05-25
 #+STARTUP: fold
 
 Language Server Protocol client (=lsp-mode=) configuration.  It is highly
@@ -574,8 +574,7 @@ infrastructure for Emacs.
       "lgl" 'lsp-bridge-diagnostic-list
       "lgc" 'lsp-bridge-diagnostic-copy
       "lh"  'lsp-bridge-signature-help-fetch
-      "li"  'lsp-bridge-find-impl
-      "loi" 'lsp-bridge-find-impl-other-window
+      "li" 'lsp-bridge-find-impl "loi" 'lsp-bridge-find-impl-other-window
       "lk"  'lsp-bridge-popup-documentation
       "lp"  'hydra-lsp-bridge-peek/lsp-bridge-peek
       "lR"  'lsp-bridge-find-references
