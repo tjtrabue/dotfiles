@@ -1,8 +1,8 @@
-#+TITLE:   Generic Lisp Configuration
-#+AUTHOR:   Tom Trabue
-#+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021-07-05
-#+TAGS:
+#+TITLE:  Generic Lisp Configuration/Plugins
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2021-07-05
+#+TAGS:    lisp lispy configuration
 #+STARTUP: fold
 
 This file contains configuration and plugins for editing generic LISP code
