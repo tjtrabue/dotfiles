@@ -69,6 +69,8 @@ seizes control of Emacs in some invasive ways.
 
   See the documentation for `perspective.el' for further details."
     (let ((current-persp-buffers (persp-get-buffers (persp-current-name)))
+          ;; Allow these major mode buffers in the tab line.
+          (allowed-major-modes '(dired-mode))
           ;; List of non-file buffer name regular expressions to allow.
           (allowed-special-regexps '(;; Allow *scratch* buffer(s).
                                      "^.*\\*.*scratch.*\\*.*$")))
@@ -80,6 +82,12 @@ seizes control of Emacs in some invasive ways.
                        buf-name
                        ;; Include buffers visiting files.
                        (or buf-file-name
+                           (seq-some (lambda (mm)
+                                       ;; Check the major mode of the each open buffer to see if it is
+                                       ;; in our allow-list.
+                                       (with-current-buffer buf
+                                         (eq mm major-mode)))
+                                     allowed-major-modes)
                            ;; Include specifically allowed non-file buffers.
                            (seq-some (lambda (regexp)
                                        (string-match-p regexp buf-name))
