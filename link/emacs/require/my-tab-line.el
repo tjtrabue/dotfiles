@@ -37,6 +37,42 @@
   "Print tab name for BUFFER with some leading space for readability."
   (concat " " (buffer-name buffer) " "))
 
+(defun my-tab-line-filter-display-buffers (bufs)
+  "Determine which buffers in BUFS will show up in `tab-line'.
+
+See the documentation for `perspective.el' for further details."
+  (let (;; Allow these major mode buffers in the tab line.
+         (allowed-major-modes '(dired-mode))
+         ;; List of non-file buffer name regular expressions to allow.
+         (allowed-special-regexps '(;; Allow *scratch* buffer(s).
+                                     "^.*\\*.*scratch.*\\*.*$")))
+    (seq-filter (lambda (buf)
+                  (let ((buf-name (buffer-name buf))
+                         (buf-file-name (buffer-file-name buf)))
+                    (and
+                      ;; First, make sure the buffer has a name.
+                      buf-name
+                      ;; Include buffers visiting files.
+                      (or buf-file-name
+                        (seq-some (lambda (mm)
+                                    ;; Check the major mode of the each open buffer to see if it is
+                                    ;; in our allow-list.
+                                    (with-current-buffer buf
+                                      (eq mm major-mode)))
+                          allowed-major-modes)
+                        ;; Include specifically allowed non-file buffers.
+                        (seq-some (lambda (regexp)
+                                    (string-match-p regexp buf-name))
+                          allowed-special-regexps)))))
+      bufs)))
+
+;; Specify a function to determine the list of buffers to display in the
+;; `tab-line'.
+(setq tab-line-tabs-function (lambda ()
+                               ;; Default to apply filtering to the entire
+                               ;; `buffer-list'.
+                               (my-tab-line-filter-display-buffers (buffer-list))))
+
 ;; If non-nil, calling `tab-line-switch-to-next-tab' on the last tab selects
 ;; the first tab, and vice versa.
 (setq tab-line-switch-cycling t)

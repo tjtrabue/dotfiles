@@ -68,31 +68,8 @@ seizes control of Emacs in some invasive ways.
     "Return list of current perspective's file buffers to display in the tab line.
 
   See the documentation for `perspective.el' for further details."
-    (let ((current-persp-buffers (persp-get-buffers (persp-current-name)))
-          ;; Allow these major mode buffers in the tab line.
-          (allowed-major-modes '(dired-mode))
-          ;; List of non-file buffer name regular expressions to allow.
-          (allowed-special-regexps '(;; Allow *scratch* buffer(s).
-                                     "^.*\\*.*scratch.*\\*.*$")))
-      (seq-filter (lambda (buf)
-                    (let ((buf-name (buffer-name buf))
-                          (buf-file-name (buffer-file-name buf)))
-                      (and
-                       ;; First, make sure the buffer has a name.
-                       buf-name
-                       ;; Include buffers visiting files.
-                       (or buf-file-name
-                           (seq-some (lambda (mm)
-                                       ;; Check the major mode of the each open buffer to see if it is
-                                       ;; in our allow-list.
-                                       (with-current-buffer buf
-                                         (eq mm major-mode)))
-                                     allowed-major-modes)
-                           ;; Include specifically allowed non-file buffers.
-                           (seq-some (lambda (regexp)
-                                       (string-match-p regexp buf-name))
-                                     allowed-special-regexps)))))
-                  current-persp-buffers)))
+    (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
+      (my-tab-line-filter-display-buffers current-persp-buffers)))
 #+end_src
 
 * =use-package= specification
