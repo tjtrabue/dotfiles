@@ -48,7 +48,8 @@ See the documentation for `perspective.el' for further details."
                                      "^.*\\*.*scratch.*\\*.*$")))
     (seq-filter (lambda (buf)
                   (let ((buf-name (buffer-name buf))
-                         (buf-file-name (buffer-file-name buf)))
+                         (buf-file-name (buffer-file-name buf))
+                         (buf-major-mode (buffer-local-value 'major-mode buf)))
                     (and
                       ;; First, make sure the buffer has a name.
                       buf-name
@@ -57,7 +58,7 @@ See the documentation for `perspective.el' for further details."
                         (seq-some (lambda (mm)
                                     ;; Check the major mode of the each open buffer to see if it is
                                     ;; in our allow-list.
-                                    (eq mm (buffer-local-value 'major-mode buf)))
+                                    (eq mm buf-major-mode))
                           allowed-major-modes)
                         ;; Include specifically allowed non-file buffers.
                         (seq-some (lambda (regexp)
