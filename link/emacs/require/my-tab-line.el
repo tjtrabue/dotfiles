@@ -57,8 +57,7 @@ See the documentation for `perspective.el' for further details."
                         (seq-some (lambda (mm)
                                     ;; Check the major mode of the each open buffer to see if it is
                                     ;; in our allow-list.
-                                    (with-current-buffer buf
-                                      (eq mm major-mode)))
+                                    (eq mm (buffer-local-value 'major-mode buf)))
                           allowed-major-modes)
                         ;; Include specifically allowed non-file buffers.
                         (seq-some (lambda (regexp)
