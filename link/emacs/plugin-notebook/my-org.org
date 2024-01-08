@@ -136,7 +136,16 @@ Preview org files in Emacs rendered as HTML.
 
 #+begin_src emacs-lisp
   (use-package org-preview-html
-    :after org)
+    :after org
+    :custom
+    ;; May be either:
+    ;;   'eww (default): Use EWW to preview Org documents.
+    ;;   'xwidget: Use configured X widget browser to preview Org documents.
+    (org-preview-html-viewer (if (string-match-p "\sXWIDGETS\s" system-configuration-features)
+                                 ;; Use the X widget browser if available.
+                                 'xwidget
+                               ;; Otherwise, fall back on EWW.
+                               'eww)))
 #+end_src
 
 * org-tree-slide
