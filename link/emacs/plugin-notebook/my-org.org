@@ -145,7 +145,17 @@ Preview org files in Emacs rendered as HTML.
                                  ;; Use the X widget browser if available.
                                  'xwidget
                                ;; Otherwise, fall back on EWW.
-                               'eww)))
+                               'eww))
+    ;; Can be one of:
+    ;;   'manual
+    ;;   'save (default)
+    ;;   'timer
+    ;;   'export
+    ;;   'instant
+    (org-preview-html-refresh-configuration 'save)
+    ;; The number of seconds between preview updates if `org-preview-html-refresh-configuration' is
+    ;; set to `timer'.
+    (org-preview-html-timer-interval 2))
 #+end_src
 
 * org-tree-slide
