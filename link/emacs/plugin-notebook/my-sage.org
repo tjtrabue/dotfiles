@@ -1,0 +1,33 @@
+#+TITLE:   Sage Math Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-01-09
+#+TAGS:    sage math python
+#+STARTUP: fold
+
+From the [[https://www.sagemath.org/index.html][website]]:
+
+#+begin_quote
+SageMath is a free open-source mathematics software system licensed under the
+GPL. It builds on top of many existing open-source packages: NumPy, SciPy,
+matplotlib, Sympy, Maxima, GAP, FLINT, R and many more.
+#+end_quote
+
+The Sage authors wanted a free, open-source, viable alternative to Maple,
+Mathematica, MatLab, and other proprietary computer algebra systems (CASs), and
+Sage was their solution.
+
+* Notes about Sage
+Sage is a very heavyweight software system (about 3GB at the time of this
+writing), and as such may not be viable on all platforms. Only install Sage if
+you have a direct need to do so.
+
+* Plugins
+** sage-shell-mode
+=sage-shell-mode= is an Elisp front-end for Sage.
+
+It requires a local installation of Sage Math in order to function.
+
+#+begin_src emacs-lisp
+  (use-package sage-shell-mode)
+#+end_src
