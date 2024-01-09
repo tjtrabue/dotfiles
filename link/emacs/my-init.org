@@ -1342,9 +1342,8 @@ try to load =org= later.
     ;; Use built-in Org version to avoid version compatibility issues.
     ;; You may want to comment the `:ensure' and `:straight' directives
     ;; from time to time in order to upgrade your Org version.
-    :ensure nil
-    :straight nil
-    :mode ("\\.org\\'" . org-mode)
+    ;; :ensure nil
+    ;; :straight nil
     :delight
     (org-src-mode nil org-src)
     (org-indent-mode nil org-indent)
