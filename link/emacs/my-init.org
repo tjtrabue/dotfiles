@@ -1358,7 +1358,7 @@ try to load =org= later.
       "C-l" 'org-cycle)
     (my/evil-leader-def org-mode-map
       "cc" 'org-edit-special
-      "ol" 'org-latex-preview)
+      "op" 'org-latex-preview)
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
       ;; outside of org-mode.
@@ -1379,6 +1379,21 @@ try to load =org= later.
     (org-startup-indented t)
     ;; Whether to show LaTeX previews when opening a new Org buffer.
     (org-startup-with-latex-preview t)
+    ;; The default LaTeX preview program to use.
+    ;; Can be one of the following:
+    ;; (you must have the corresponding CLI program installed)
+    ;;   'dvipng (default)
+    ;;   'dvisvgm
+    ;;   'imagemagick (uses the `convert' program)
+    (org-preview-latex-default-process (cond
+                                        ((and (executable-find "convert")
+                                              (string-match-p "\sIMAGEMAGICK\s"
+                                                              system-configuration-features)
+                                              'imagemagick))
+                                        ((executable-find "dvisvgm")
+                                         'dvisvgm)
+                                        (t
+                                         'dvipng)))
     ;; Directory used by Org only in rare circumstances, such as when filing
     ;; away remember notes.
     (org-directory my/org-dir)
