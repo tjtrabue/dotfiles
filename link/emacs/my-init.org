@@ -1357,7 +1357,8 @@ try to load =org= later.
       ;; fields in a table, opens/closes org headings, etc.
       "C-l" 'org-cycle)
     (my/evil-leader-def org-mode-map
-      "cc" 'org-edit-special)
+      "cc" 'org-edit-special
+      "ol" 'org-latex-preview)
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
       ;; outside of org-mode.
@@ -1376,6 +1377,8 @@ try to load =org= later.
     (org-startup-folded 'fold)
     ;; Whether to open Org mode buffers with `org-indent-mode' enabled.
     (org-startup-indented t)
+    ;; Whether to show LaTeX previews when opening a new Org buffer.
+    (org-startup-with-latex-preview t)
     ;; Directory used by Org only in rare circumstances, such as when filing
     ;; away remember notes.
     (org-directory my/org-dir)

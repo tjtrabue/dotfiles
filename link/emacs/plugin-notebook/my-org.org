@@ -54,6 +54,26 @@ getting URLs into an Org document, which you can edit later.
       "L" 'org-cliplink))
 #+end_src
 
+* org-fragtog
+=org-fragtog-mode= is a minor mode that automatically toggles Org mode LaTeX
+previews as the cursor enters and exits LaTeX fragments. When the cursor is
+inside of a fragment, the preview turns off. When the cursor leaves the
+fragment, the preview toggles back on.
+
+A LaTeX fragment is any LaTeX environment embedded within an Org document
+surrounded by blank lines before and after. For instance:
+
+\begin{equation}
+x=\sqrt{b}
+\end{equation}
+
+#+begin_src emacs-lisp
+  (use-package org-fragtog
+    ;; :hook
+    ;; (org-mode . org-fragtog-mode)
+    )
+#+end_src
+
 * org-roam
 =org-roam= is an amazing plugin that integrates some of Roam's advanced note
 taking features into =org-mode=. =org-roam= depends on a custom SQLite
