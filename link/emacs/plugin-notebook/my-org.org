@@ -69,6 +69,8 @@ x=\sqrt{b}
 
 #+begin_src emacs-lisp
   (use-package org-fragtog
+    ;; I prefer to enable fragtog mode manually.  It's not terribly CPU-intensive, but little things
+    ;; do add up.
     ;; :hook
     ;; (org-mode . org-fragtog-mode)
     )
