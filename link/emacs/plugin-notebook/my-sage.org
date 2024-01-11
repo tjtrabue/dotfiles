@@ -28,5 +28,13 @@ you have a direct need to do so.
 It requires a local installation of Sage Math in order to function.
 
 #+begin_src emacs-lisp
-  (use-package sage-shell-mode)
+  (use-package sage-shell-mode
+    :custom
+    ;; Only enable this option for IPython version <7
+    (sage-shell:use-prompt-toolkit nil)
+    ;; Enable this option for IPython version >=7
+    (sage-shell:use-simple-prompt t)
+    ;; Disabling the following options can speed up Sage's startup.
+    (sage-shell:set-ipython-version-on-startup nil)
+    (sage-shell:check-ipython-version-on-startup nil))
 #+end_src
