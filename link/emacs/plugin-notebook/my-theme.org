@@ -151,6 +151,11 @@ color names used by Modus]].
 
 #+begin_src emacs-lisp
   (use-package modus-themes
+    ;; Having some issues with the default straight recipe for modus-themes,
+    ;; which uses the SourceHut master repo, so I'm overwriting it to use the
+    ;; GitHub repo, instead.
+    :straight (modus-themes :type git :host github
+                            :repo "protesilaos/modus-themes" :branch "main")
     :demand t
     :init
     (setq modus-themes-italic-constructs t
