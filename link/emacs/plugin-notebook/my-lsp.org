@@ -574,7 +574,8 @@ infrastructure for Emacs.
       "lgl" 'lsp-bridge-diagnostic-list
       "lgc" 'lsp-bridge-diagnostic-copy
       "lh"  'lsp-bridge-signature-help-fetch
-      "li" 'lsp-bridge-find-impl "loi" 'lsp-bridge-find-impl-other-window
+      "li"  'lsp-bridge-find-impl
+      "loi" 'lsp-bridge-find-impl-other-window
       "lk"  'lsp-bridge-popup-documentation
       "lp"  'hydra-lsp-bridge-peek/lsp-bridge-peek
       "lR"  'lsp-bridge-find-references
@@ -729,5 +730,12 @@ infrastructure for Emacs.
       (set-face-attribute 'lsp-bridge-diagnostics-warning-face nil
                           :underline `(:style wave :color ,(modus-themes-get-color-value 'yellow-intense)))
       (set-face-attribute 'lsp-bridge-diagnostics-error-face nil
-                          :underline `(:style wave :color ,(modus-themes-get-color-value 'red-intense)))))
+                          :underline `(:style wave :color ,(modus-themes-get-color-value 'red-intense))))
+    :config
+    ;; Associate some less popular major modes with language servers.
+    (add-to-list 'lsp-bridge-single-lang-server-mode-list
+                 '((sage-shell-mode sage-shell:sage-mode) . lsp-bridge-python-lsp-server))
+    ;; Enable `lsp-bridge-mode' in some less well-known major modes.
+    (dolist (elt '(sage-shell-mode sage-shell:sage-mode))
+      (add-to-list 'lsp-bridge-default-mode-hooks elt)))
 #+end_src

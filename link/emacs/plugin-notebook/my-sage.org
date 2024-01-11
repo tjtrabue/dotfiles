@@ -22,8 +22,7 @@ Sage is a very heavyweight software system (about 3GB at the time of this
 writing), and as such may not be viable on all platforms. Only install Sage if
 you have a direct need to do so.
 
-* Plugins
-** sage-shell-mode
+* sage-shell-mode
 =sage-shell-mode= is an Elisp front-end for Sage.
 
 It requires a local installation of Sage Math in order to function.
