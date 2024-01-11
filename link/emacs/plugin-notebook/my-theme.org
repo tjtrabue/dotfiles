@@ -151,9 +151,10 @@ color names used by Modus]].
 
 #+begin_src emacs-lisp
   (use-package modus-themes
-    ;; Having some issues with the default straight recipe for modus-themes,
-    ;; which uses the SourceHut master repo, so I'm overwriting it to use the
-    ;; GitHub repo, instead.
+    ;; NOTE: 1/11/2024 - Having some issues with the default straight recipe for modus-themes, which
+    ;; uses the SourceHut master repo, so I'm overwriting it to use the GitHub repo, instead.  Once
+    ;; SourceHut is working again, I would remove this `:straight' directive and revert back to using
+    ;; SourceHut.
     :straight (modus-themes :type git :host github
                             :repo "protesilaos/modus-themes" :branch "main")
     :demand t
