@@ -734,8 +734,8 @@ infrastructure for Emacs.
     :config
     ;; Associate some less popular major modes with language servers.
     (add-to-list 'lsp-bridge-single-lang-server-mode-list
-                 '((sage-shell-mode sage-shell:sage-mode) . lsp-bridge-python-lsp-server))
+                 '(sage-shell:sage-mode . lsp-bridge-python-lsp-server))
     ;; Enable `lsp-bridge-mode' in some less well-known major modes.
-    (dolist (elt '(sage-shell-mode sage-shell:sage-mode))
+    (dolist (elt '(sage-shell:sage-mode))
       (add-to-list 'lsp-bridge-default-mode-hooks elt)))
 #+end_src

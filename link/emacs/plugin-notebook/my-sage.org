@@ -36,5 +36,10 @@ It requires a local installation of Sage Math in order to function.
     (sage-shell:use-simple-prompt t)
     ;; Disabling the following options can speed up Sage's startup.
     (sage-shell:set-ipython-version-on-startup nil)
-    (sage-shell:check-ipython-version-on-startup nil))
+    (sage-shell:check-ipython-version-on-startup nil)
+    :init
+    (add-hook 'sage-shell-mode-hook
+              (lambda ()
+                ;; Use company completion in the Sage shell.
+                (company-mode))))
 #+end_src
