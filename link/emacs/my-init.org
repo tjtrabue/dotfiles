@@ -1309,7 +1309,7 @@ and hooks in a way that defers loading the package.
       "N"  'my/toggle-line-number-type
       ;; Window
       "ad" 'delete-window
-      "ag" 'delete-other-windows
+      "af" 'delete-other-windows
       "as" 'split-window-right
       "aw" 'split-window-below
       ;; Bookmarks

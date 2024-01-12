@@ -156,6 +156,10 @@ color names used by Modus]].
     ;; :straight (modus-themes :type git :host github
     ;;                         :repo "protesilaos/modus-themes" :branch "main")
     :demand t
+    :general
+    (general-def
+      ;; Switch from light to dark theme, or vice versa.
+      "<f5>" 'modus-themes-toggle)
     :init
     (setq modus-themes-italic-constructs t
           modus-themes-bold-constructs t
