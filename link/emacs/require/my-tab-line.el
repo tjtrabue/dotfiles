@@ -45,7 +45,9 @@ See the documentation for `perspective.el' for further details."
          (allowed-major-modes '(dired-mode))
          ;; List of non-file buffer name regular expressions to allow.
          (allowed-special-regexps '(;; Allow *scratch* buffer(s).
-                                     "^.*\\*.*scratch.*\\*.*$")))
+                                     "^.*\\*.*scratch.*\\*.*$"
+                                     ;; Allow Customize windows.
+                                     "^.*\\*.*Customize Group:.*\\*.*$")))
     (seq-filter (lambda (buf)
                   (let ((buf-name (buffer-name buf))
                          (buf-file-name (buffer-file-name buf))
