@@ -421,7 +421,7 @@ equivalent, so be sure to look for them using =C-h f=.
     ((lisp-mode . slime-mode)
      (inferior-lisp-mode . inferior-slime-mode))
     :general
-    (my/evil-leader-def 'normal slime-repl-mode-map
+    (my/evil-leader-def slime-repl-mode-map
       ;; Use ",," in normal mode in the SLIME REPL to launch the shortcut menu.
       ","  'slime-handle-repl-shortcut
       ;; Compile (if necessary) and load a lisp file.
