@@ -414,6 +414,8 @@ equivalent, so be sure to look for them using =C-h f=.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package slime
+    :delight
+    (slime-autodoc-mode nil slime-autodoc)
     :commands slime
     :hook
     ((lisp-mode . slime-mode)
