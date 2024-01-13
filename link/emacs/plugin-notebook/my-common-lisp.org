@@ -432,6 +432,8 @@ equivalent, so be sure to look for them using =C-h f=.
       "sU" 'slime-repl-push-directory
       ;; Pop the current directory.
       "sO" 'slime-repl-pop-directory
+      ;; Use the configured browser to lookup the symbol at point in the online CL Hyperspec.
+      "sH" 'slime-hyperspec-lookup
       ;; Display help
       "sh" 'slime-repl-shortcut-help
       ;; Define a new global, special variable.
