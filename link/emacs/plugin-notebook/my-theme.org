@@ -7,8 +7,8 @@
 
 This is where we set Emacs' primary color theme.
 
-*WARNING:* Do NOT set themes via the 'M-x load-theme' command or through
-customize! Those systems will add a ton of 'safety' checks to ~/.emacs and mess
+*WARNING:* Do NOT set themes via the =M-x load-theme= command or through
+customize! Those systems will add a ton of "safety" checks to ~/.emacs and mess
 up our nice, easy method of loading themes from right here in this file. If you
 do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
