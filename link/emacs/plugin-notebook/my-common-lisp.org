@@ -439,15 +439,19 @@ equivalent, so be sure to look for them using =C-h f=.
       ;; Expand and replace the macro expression at point.
       "sM" (lambda ()
              (interactive)
-             (when (evil-normal-state-p)
-               (forward-char))
-             (slime-macroexpand-1-inplace))
+             (if (evil-normal-state-p)
+                 (save-excursion
+                   (forward-char)
+                   (slime-macroexpand-1-inplace))
+               (slime-macroexpand-1-inplace)))
       ;; Expand the macro expression at point.
       "sm" (lambda ()
              (interactive)
-             (when (evil-normal-state-p)
-               (forward-char))
-             (slime-macroexpand-1))
+             (if (evil-normal-state-p)
+                 (save-excursion
+                   (forward-char)
+                   (slime-macroexpand-1))
+               (slime-macroexpand-1)))
       ;; Define a new global, special variable.
       "sP" 'slime-repl-defparameter
       ;; Change the current package
