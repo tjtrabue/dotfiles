@@ -436,6 +436,18 @@ equivalent, so be sure to look for them using =C-h f=.
       "sH" 'slime-hyperspec-lookup
       ;; Display help
       "sh" 'slime-repl-shortcut-help
+      ;; Expand and replace the macro expression at point.
+      "sM" (lambda ()
+             (interactive)
+             (when (evil-normal-state-p)
+               (forward-char))
+             (slime-macroexpand-1-inplace))
+      ;; Expand the macro expression at point.
+      "sm" (lambda ()
+             (interactive)
+             (when (evil-normal-state-p)
+               (forward-char))
+             (slime-macroexpand-1))
       ;; Define a new global, special variable.
       "sP" 'slime-repl-defparameter
       ;; Change the current package
