@@ -454,6 +454,12 @@ equivalent, so be sure to look for them using =C-h f=.
       ;; Cycle SLIME REPL history.
       "C-j" 'slime-repl-next-input
       "C-k" 'slime-repl-previous-input)
+    (general-def 'insert slime-repl-mode-map
+      ;; Enter an indended newline in the REPL.
+      ;; Useful when defining functions the REPL.
+      "C-<return>" 'slime-repl-newline-and-indent
+      ;; Close all open lists and evaluate the input string.
+      "M-RET" 'slime-repl-closing-return)
     ;; The user may initiate these keybindings after pressing the SLIME prefix key, which is usually
     ;; "C-c".
     (general-def slime-prefix-map
