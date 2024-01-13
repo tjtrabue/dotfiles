@@ -411,6 +411,31 @@ equivalent, so be sure to look for them using =C-h f=.
   from the Algol family: the ability to complete the methods of the foo class by
   typing =foo.<TAB>=.
 
+** Functions
+#+begin_src emacs-lisp
+  (defun my/slime-macroexpand-1-inplace ()
+    "Evil wrapper for `slime-macroexpand-1-inplace'.
+
+  Preserves point during macroexpansion."
+    (interactive)
+    (if (evil-normal-state-p)
+        (save-excursion
+          (forward-char)
+          (slime-macroexpand-1-inplace))
+      (slime-macroexpand-1-inplace)))
+
+  (defun my/slime-macroexpand-1 ()
+    "Evil wrapper for `slime-macroexpand-1'.
+
+  Preserves point during macroexpansion."
+    (interactive)
+    (if (evil-normal-state-p)
+        (save-excursion
+          (forward-char)
+          (slime-macroexpand-1))
+      (slime-macroexpand-1)))
+#+end_src
+
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package slime
@@ -437,21 +462,9 @@ equivalent, so be sure to look for them using =C-h f=.
       ;; Display help
       "sh" 'slime-repl-shortcut-help
       ;; Expand and replace the macro expression at point.
-      "sM" (lambda ()
-             (interactive)
-             (if (evil-normal-state-p)
-                 (save-excursion
-                   (forward-char)
-                   (slime-macroexpand-1-inplace))
-               (slime-macroexpand-1-inplace)))
+      "sM" 'my/slime-macroexpand-1-inplace
       ;; Expand the macro expression at point.
-      "sm" (lambda ()
-             (interactive)
-             (if (evil-normal-state-p)
-                 (save-excursion
-                   (forward-char)
-                   (slime-macroexpand-1))
-               (slime-macroexpand-1)))
+      "sm" 'my/slime-macroexpand-1
       ;; Define a new global, special variable.
       "sP" 'slime-repl-defparameter
       ;; Change the current package
