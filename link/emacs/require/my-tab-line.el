@@ -67,15 +67,17 @@ See the documentation for `perspective.el' for further details."
                     ;; Include buffers visiting files.
                     (or buf-file-name
                       (seq-some (lambda (mm)
-                                  ;; Check the major mode of the each open buffer to see if it is
-                                  ;; in our allow-list.
+                                  ;; Check the major mode of the each open
+                                  ;; buffer to see if it is in our allow-list.
                                   (eq mm buf-major-mode))
                         my-tab-line-allowed-major-modes)
                       ;; Include specifically allowed non-file buffers.
                       (seq-some (lambda (regexp)
                                   (string-match-p regexp buf-name))
                         my-tab-line-allowed-regexps)))))
-    bufs))
+    ;; Reverse the buffer list because otherwise newly added buffers end up on
+    ;; the left of the tab-line.
+    (seq-reverse bufs)))
 
 ;; Specify a function to determine the list of buffers to display in the
 ;; `tab-line'.
