@@ -33,6 +33,22 @@
 
 (require 'tab-line)
 
+(defcustom my-tab-line-allowed-regexps '(;; Allow *scratch* buffer(s).
+                                          "^.*\\*.*scratch.*\\*.*$"
+                                          ;; Allow Customize windows.
+                                          "^.*\\*.*Customize Group:.*\\*.*$")
+  "List of regular expressions matching special buffers allowed in the tab line."
+  :type '(regexp)
+  :group 'my-tab-line)
+
+(defcustom my-tab-line-allowed-major-modes '(dired-mode)
+  "List of major modes whose buffers are allowed in the tab line."
+  :type '(symbol)
+  :group 'my-tab-line)
+
+(defgroup my-tab-line '((my-tab-line-allowed-regexps custom-variable)
+                         (my-tab-line-allowed-major-modes custom-variable))
+  "My special `tab-line' variables.")
 (defun my-tab-line-tab-name-function (buffer &optional _buffers)
   "Print tab name for BUFFER with some leading space for readability."
   (concat " " (buffer-name buffer) " "))
@@ -41,32 +57,25 @@
   "Determine which buffers in BUFS will show up in `tab-line'.
 
 See the documentation for `perspective.el' for further details."
-  (let (;; Allow these major mode buffers in the tab line.
-         (allowed-major-modes '(dired-mode))
-         ;; List of non-file buffer name regular expressions to allow.
-         (allowed-special-regexps '(;; Allow *scratch* buffer(s).
-                                     "^.*\\*.*scratch.*\\*.*$"
-                                     ;; Allow Customize windows.
-                                     "^.*\\*.*Customize Group:.*\\*.*$")))
-    (seq-filter (lambda (buf)
-                  (let ((buf-name (buffer-name buf))
-                         (buf-file-name (buffer-file-name buf))
-                         (buf-major-mode (buffer-local-value 'major-mode buf)))
-                    (and
-                      ;; First, make sure the buffer has a name.
-                      buf-name
-                      ;; Include buffers visiting files.
-                      (or buf-file-name
-                        (seq-some (lambda (mm)
-                                    ;; Check the major mode of the each open buffer to see if it is
-                                    ;; in our allow-list.
-                                    (eq mm buf-major-mode))
-                          allowed-major-modes)
-                        ;; Include specifically allowed non-file buffers.
-                        (seq-some (lambda (regexp)
-                                    (string-match-p regexp buf-name))
-                          allowed-special-regexps)))))
-      bufs)))
+  (seq-filter (lambda (buf)
+                (let ((buf-name (buffer-name buf))
+                       (buf-file-name (buffer-file-name buf))
+                       (buf-major-mode (buffer-local-value 'major-mode buf)))
+                  (and
+                    ;; First, make sure the buffer has a name.
+                    buf-name
+                    ;; Include buffers visiting files.
+                    (or buf-file-name
+                      (seq-some (lambda (mm)
+                                  ;; Check the major mode of the each open buffer to see if it is
+                                  ;; in our allow-list.
+                                  (eq mm buf-major-mode))
+                        my-tab-line-allowed-major-modes)
+                      ;; Include specifically allowed non-file buffers.
+                      (seq-some (lambda (regexp)
+                                  (string-match-p regexp buf-name))
+                        my-tab-line-allowed-regexps)))))
+    bufs))
 
 ;; Specify a function to determine the list of buffers to display in the
 ;; `tab-line'.

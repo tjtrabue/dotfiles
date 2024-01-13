@@ -470,6 +470,9 @@ equivalent, so be sure to look for them using =C-h f=.
     (general-def 'normal '(slime-mode-map slime-repl-mode-map)
       "K" 'slime-documentation)
     :init
+    (when (bound-and-true-p tab-line-mode)
+      ;; Add extra special buffers to the tab line.
+      (add-to-list 'my-tab-line-allowed-regexps "^.*\\*slime-repl\s.*\\*.*$"))
     ;; Set the path to the selected Common Lisp implementation executable.
     ;; The user must set this variable before the package loads.
     (setq inferior-lisp-program (my/get-inferior-lisp-program))
