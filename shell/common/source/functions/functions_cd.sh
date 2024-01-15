@@ -117,10 +117,12 @@ __do_cd() {
 # Perform a normal `cd` command.
 __do_cd_to_dir_or_alias() {
   local dirArg="${1}"
-  local aliasedDir="$(__get_directory_for_alias "${dirArg}")"
 
-  # Replace dirArg with aliasedDir if it is defined.
-  dirArg="${aliasedDir:-${dirArg}}"
+  # Replace $dirArg with $aliasedDir if it is defined and the alias name does
+  # not conflict with a true directory name.
+  if [ -n "${dirArg}" ] && [ ! -d "${dirArg}" ]; then
+    dirArg="$(__get_directory_for_alias "${dirArg}")"
+  fi
 
   if [ -n "${dirArg}" ] && [ ! -d "${dirArg}" ]; then
     err "${BLUE}${dirArg}${NC} is neither a directory nor a directory alias."
