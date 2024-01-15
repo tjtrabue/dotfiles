@@ -73,6 +73,7 @@ Generate a table of contents for a markdown file.
 
 #+begin_src emacs-lisp
   (use-package markdown-toc
+    :delight
     :hook
     (markdown-mode . markdown-toc-mode))
 #+end_src

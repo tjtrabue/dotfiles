@@ -68,11 +68,11 @@ x=\sqrt{b}
 \end{equation}
 
 ** Deprecation warning
-Based on what I have seen, starting with Org version 9.7, =org-fragtog= should
-no longer be necessary. Org mode will include a built-in auto mode that provides
-the same feature as =org-fragtog= only much, much faster. We should switch to
-that feature as soon as possible. [[https://orgmode.org/Changes.html][Be on the lookout as Org updates]] to see if
-that new feature arrives.
+Based on what I have seen, starting with the official release of Org version
+9.7, =org-fragtog= should no longer be necessary. Org mode will include a
+built-in auto mode that provides the same feature as =org-fragtog= only much,
+much faster. We should switch to that feature as soon as possible. [[https://orgmode.org/Changes.html][Be on the
+lookout as Org updates]] to see if that new feature arrives.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
