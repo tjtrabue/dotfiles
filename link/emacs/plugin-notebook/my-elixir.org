@@ -9,6 +9,24 @@ language built on Erlang's BEAM virtual machine optimized for writing
 distributed, fault-tolerant applications that must contend with a vast multitude
 of concurrent processes.
 
+* elixir-ts-mode
+The Tree-Sitter enabled version of =elixir-mode=.
+
+#+begin_src emacs-lisp
+  (use-package elixir-ts-mode
+    :hook
+    (elixir-ts-mode . (lambda ()
+                        (push '(">=" . ?\u2265) prettify-symbols-alist)
+                        (push '("<=" . ?\u2264) prettify-symbols-alist)
+                        (push '("!=" . ?\u2260) prettify-symbols-alist)
+                        (push '("==" . ?\u2A75) prettify-symbols-alist)
+                        (push '("=~" . ?\u2245) prettify-symbols-alist)
+                        (push '("<-" . ?\u2190) prettify-symbols-alist)
+                        (push '("->" . ?\u2192) prettify-symbols-alist)
+                        (push '("<-" . ?\u2190) prettify-symbols-alist)
+                        (push '("|>" . ?\u25B7) prettify-symbols-alist))))
+#+end_src
+
 * elixir-mode (deprecated)
 Major mode for working with Elixir files. =elixir-mode= provides font-locking,
 indentation, and navigation support for the Elixir programming language.

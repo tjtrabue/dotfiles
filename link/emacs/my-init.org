@@ -1051,7 +1051,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
 
 #+begin_src emacs-lisp
   ;; Native tree-sitter support was added in Emacs 29.
-  (when (>= emacs-major-version 29)
+  (when (functionp 'treesit-install-language-grammar)
     ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
     (setq treesit-language-source-alist
           '((heex "https://github.com/phoenixframework/tree-sitter-heex")
