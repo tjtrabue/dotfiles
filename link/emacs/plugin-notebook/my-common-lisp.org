@@ -37,9 +37,13 @@ the style guide [[https:lisp-lang.org/style-guide][here]].
   (defun my/get-inferior-lisp-program ()
     "Return the shell command used to launch the `inferior-lisp-program'.
   This is command becomes the selected Common Lisp interpreter."
-    (let ((path-to-ros (executable-find "ros"))
+    (let ((path-to-qlot (executable-find "qlot"))
+          (path-to-ros (executable-find "ros"))
           (path-to-sbcl (executable-find "sbcl")))
-      (cond (path-to-ros
+      (cond (path-to-qlot
+             ;; Use Roswell CL manager if possible.
+             (concat path-to-qlot " exec ros run"))
+            (path-to-ros
              ;; Use Roswell CL manager if possible.
              (concat path-to-ros " run"))
             (t
@@ -499,6 +503,13 @@ equivalent, so be sure to look for them using =C-h f=.
     (general-def 'normal '(slime-mode-map slime-repl-mode-map)
       "K" 'slime-documentation)
     :init
+    ;; List of different Common Lisp implementations.
+    ;; This is necessary when working with `qlot', the project-local dependency manager.
+    (setq slime-lisp-implementations '((qlot ("qlot" "exec" "ros" "run") :coding-system utf-8-unix)
+                                       (ros  ("ros" "run") :coding-system utf-8-unix)
+                                       (sbcl ("sbcl") :coding-system utf-8-unix)))
+    ;; The default Lisp implementation from `slime-lisp-implmenetations' to use.
+    (setq slime-default-lisp 'qlot)
     ;; Set the path to the selected Common Lisp implementation executable.
     ;; The user must set this variable before the package loads.
     (setq inferior-lisp-program (my/get-inferior-lisp-program))
@@ -508,6 +519,11 @@ equivalent, so be sure to look for them using =C-h f=.
                                       ;; We don't want to see trailing whitespace in the REPL.
                                       (setq-local show-trailing-whitespace nil)
                                       (whitespace-mode -1)))
+    ;; Change into the project root directory before starting the SLIME REPL.
+    ;; This is important for `qlot', and maybe for `ros', too.
+    (advice-add 'slime-start :around (lambda (orig &rest args)
+                                       (let ((default-directory (vc-root-dir)))
+                                         (apply orig args))))
     :custom
     ;; Bring in almost every contributor package (that's what slime-fancy does).
     ;; `slime-company' is a separate MELPA package.
