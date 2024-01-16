@@ -1078,7 +1078,9 @@ library that greatly enhances Emacs' semantic understanding of source code.
             (toml-mode . toml-ts-mode)
             (yaml-mode . yaml-ts-mode)))
     ;; Install language grammars defines in `treesit-language-source-alist'.
-    (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+    ;; Run this on-demand whenever you change `treesit-language-source-alist'.
+    ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+    )
 #+end_src
 
 * Package Manager
