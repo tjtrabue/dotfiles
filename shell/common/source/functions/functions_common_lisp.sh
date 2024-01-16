@@ -19,6 +19,8 @@ install_roswell() {
   esac
 
   link_roswell_init_file
+
+  install_roswell_scripts
 }
 
 # Install all relevant Common Lisp distributions.
@@ -33,8 +35,13 @@ install_common_lisps() {
 
 # Install the LSP server for Common Lisp.
 # You need roswell in order to install this.
-install_common_lisp_lsp() {
-  ros install cxxxr/lem cxxxr/cl-lsp
+install_roswell_scripts() {
+  log_info "Installing important roswell scripts"
+  ros install qlot \
+    cl-project \
+    clack \
+    cxxxr/lem \
+    cxxxr/cl-lsp
 }
 
 # Install all Common Lisp packages needed globally.

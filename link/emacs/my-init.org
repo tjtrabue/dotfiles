@@ -831,6 +831,16 @@ Set standard environment variables that affect Emacs as a whole.
   (setenv "LANG" "en_US.UTF-8")
 #+end_src
 
+** Common Lisp
+#+begin_src emacs-lisp
+  ;; This is the path variable that ASDF reads when determining which directories hold Common Lisp
+  ;; systems. Paths ending in a double-slash designate a directory tree to scan recursively for
+  ;; systems.
+  (setenv "CL_SOURCE_REGISTRY" (concat ".:./qlot/dists//:"
+                                       (getenv "HOME")
+                                       "/common-lisp//:"))
+#+end_src
+
 ** Perl
 Perl's operations depends on a number of environment variables that Emacs
 will not recognize by default, so we must set them here.
