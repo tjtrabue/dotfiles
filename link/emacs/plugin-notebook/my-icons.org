@@ -51,14 +51,20 @@ Use fancy developer icons in Emacs.  Very pretty!
                                ;; Don't turn mouse-1 into mouse-2 (bug#49247)
                                'follow-link 'ignore
                                'help-echo help-echo)
-                   (let* (;; Figure out if the major mode has an icon.  If so, use it. Otherwise,
-                          ;; default to a specific icon.  all-the-icons unfortunately returns the
-                          ;; major mode symbol instead of nil if it can't find an icon for a major
-                          ;; mode, so we have to check if we have a string in order to proceed.
-                          (icon-str (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab)))
-                          (icon (if (stringp icon-str)
-                                    icon-str
-                                  (all-the-icons-octicon "file-text"))))
+                   (let* (;; Figure out if the major mode has an icon.  If so, use it. If not, see if
+                          ;; we can determine an icon based on the buffer's file name.  Otherwise,
+                          ;; default to a specific icon.  `all-the-icons' functions, such as
+                          ;; `all-the-icons-icon-for-mode', unfortunately return the major mode symbol
+                          ;; instead of nil if it can't find an icon for a major mode, so we have to
+                          ;; check if we have a string in order to proceed.
+                          (file-name (buffer-file-name tab))
+                          (icon-str-mode (all-the-icons-icon-for-mode (buffer-local-value 'major-mode tab)))
+                          (icon-str-file (and (not (stringp icon-str-mode))
+                                              file-name
+                                              (all-the-icons-icon-for-file file-name)))
+                          (icon (cond ((stringp icon-str-mode) icon-str-mode)
+                                      ((stringp icon-str-file) icon-str-file)
+                                      (t (all-the-icons-octicon "file-text")))))
                      (setq icon (copy-sequence icon))
                      (add-face-text-property 0 (length icon) face t icon)
                      ;; Add face-formatted icon.
