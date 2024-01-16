@@ -1045,6 +1045,42 @@ stale files. We should periodically purge old files from these directories.
         (delete-file file))))
 #+end_src
 
+* Tree-Sitter
+Emacs 29 introduced support for =tree-sitter=, a powerful language parsing
+library that greatly enhances Emacs' semantic understanding of source code.
+
+#+begin_src emacs-lisp
+  ;; Native tree-sitter support was added in Emacs 29.
+  (when (>= emacs-major-version 29)
+    ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
+    (setq treesit-language-source-alist
+          '((heex "https://github.com/phoenixframework/tree-sitter-heex")
+            (elixir "https://github.com/elixir-lang/tree-sitter-elixir")))
+    ;; Here we remap major modes to ensure that the correct `tree-sitter' enabled mode activates,
+    ;; instead.
+    (setq major-mode-remap-alist
+          '((sh-mode . bash-ts-mode)
+            (elixir-mode . elixir-ts-mode)
+            (c-mode . c-ts-mode)
+            (c++-mode . c++-ts-mode)
+            (cmake-mode . cmake-ts-mode)
+            (csharp-mode . csharp-ts-mode)
+            (css-mode . css-ts-mode)
+            (go-mode . go-ts-mode)
+            (go-dot-mod-mode . go-mod-ts-mode)
+            (html-mode . html-ts-mode)
+            (java-mode . java-ts-mode)
+            (js-mode . js-ts-mode)
+            (lua-mode . lua-ts-mode)
+            (rjsx-mode . tsx-ts-mode)
+            (ruby-mode . ruby-ts-mode)
+            (rust-mode . rust-ts-mode)
+            (toml-mode . toml-ts-mode)
+            (yaml-mode . yaml-ts-mode)))
+    ;; Install language grammars defines in `treesit-language-source-alist'.
+    (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+#+end_src
+
 * Package Manager
 Configure package managers Emacs leverages to install and configure third-party
 packages.

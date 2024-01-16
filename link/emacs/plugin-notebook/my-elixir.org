@@ -42,7 +42,29 @@ one of the following commands:
 
 #+begin_src emacs-lisp
   (use-package mix
-    :hook (elixir-mode . mix-minor-mode))
+    :delight
+    (mix-minor-mode nil mix)
+    :hook
+    ((elixir-mode elixir-ts-mode) . mix-minor-mode)
+    :general
+    (my/evil-leader-def mix-minor-mode-map
+      "xe"  'mix-execute-task
+      "xue" (lambda ()
+              (interactive)
+              (mix-execute-task nil 'use-umbrella-subprojects))
+      "xl"  'mix-last-command
+      "xt"  'mix-test
+      "xut" (lambda ()
+              (interactive)
+              (mix-test nil 'use-umbrella-subprojects))
+      "xo"  'mix-test-current-buffer
+      "xuo" (lambda ()
+              (interactive)
+              (mix-test-current-buffer nil 'use-umbrella-subprojects))
+      "xf"  'mix-test-current-test
+      "xuf" (lambda ()
+              (interactive)
+              (mix-test-current-test nil 'use-umbrella-subprojects))))
 #+end_src
 
 * exunit.el
@@ -53,7 +75,7 @@ Simple interface for running ExUnit tests from inside Emacs.
     :delight
     :hook
     ;; Turn on exunit-mode when editing Elixir files
-    (elixir-mode . exunit-mode))
+    ((elixir-mode elixir-ts-mode) . exunit-mode))
 #+end_src
 
 * inf-elixir
@@ -64,7 +86,7 @@ probably shouldn't.
 #+begin_src emacs-lisp
   (use-package inf-elixir
     :general
-    (my/user-leader-def elixir-mode-map
+    (my/user-leader-def elixir-ts-mode-map
       "i i" 'inf-elixir
       "i p" 'inf-elixir-project
       "i l" 'inf-elixir-send-line

@@ -49,6 +49,8 @@ install_lexical() {
     log_info "Installing Lexical" &&
       cd "${LEXICAL_INSTALL_DIR}" &&
       mix deps.get &&
+      mix clean &&
+      rm -rf "${LEXICAL_INSTALL_DIR}/_build" &&
       INDEXING_ENABLED=true mix package
   )
 }
