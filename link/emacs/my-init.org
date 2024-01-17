@@ -519,33 +519,61 @@ LanguageServerProtocol clients and servers.
                                                "firefox"
                                                "chrome")))
 
-  ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
-  ;; cursor at that character position, right between the '' where we will begin typing our search
-  ;; expression.
-  (grep-apply-setting 'grep-find-command
-                      (cond
-                       ((executable-find "ugrep")
-                        `(,(concat "ugrep -e '' --color=always --index --no-heading -HI0inr"
-                                   " --ignore-files=$(git rev-parse --show-toplevel)/.gitignore"
-                                   " --ignore-files=${HOME}/.config/git/ignore"
-                                   " -- $(git rev-parse --show-toplevel || pwd)")
-                          . 11))
-                       ((executable-find "rg")
-                        '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)" . 8))))
-
-  ;; The default command to run for `M-x lgrep'.
-  (grep-apply-setting 'grep-template
-                      (cond ((executable-find "ugrep")
-                             "ugrep <C> <X> --color=always --index --no-heading -HIPine <R> <F>")
-                            ((executable-find "rg")
-                             "rg --color=always --no-heading -HPine <R> <F>")
-                            (t nil)))
-
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
     ;; variable to 'resize-mode may improve the performance of plugins that use
     ;; child frames.
     (setq posframe-gtk-resize-child-frames 'resize-mode))
+#+end_src
+
+* Grep/Search
+Being one of the flagship GNU programs, Emacs has wondrous integration with
+other GNU tools, not the least of which is Grep. Emacs implements a number of
+interactive, templated Grep commands:
+
+- =lgrep=: Limited grep search for PATTERN in FILES starting in DIR.
+- =rgrep=: Recursive, total grep search for PATTERN in FILES starting in DIR.
+- =rzgrep=: Recursive, total grep search for PATTERN in gzipped FILES starting
+  DIR.
+- =grep-find=: Run grep via find.
+
+#+begin_src emacs-lisp
+  (let ((has-ugrep (executable-find "ugrep"))
+        (has-rg    (executable-find "rg")))
+    ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
+    ;; cursor at that character position, right between the '' where we will begin typing our search
+    ;; expression.
+    (grep-apply-setting 'grep-find-command
+                        (cond (has-ugrep
+                               `(,(concat "ugrep -e '' --color=always --index --no-heading -HI0inr"
+                                          " --ignore-files=\"$(git rev-parse --show-toplevel)/.gitignore\""
+                                          " -- \"$(git rev-parse --show-toplevel || pwd)\"")
+                                 . 11))
+                              (has-rg
+                               '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)"
+                                 . 8))
+                              (t nil)))
+
+    ;; The default command to run for `lgrep'.
+    (grep-apply-setting 'grep-template
+                        (cond (has-ugrep
+                               "ugrep <C> <X> --color=always --index --no-heading -HIPine <R> <F>")
+                              (has-rg
+                               "rg --color=always --no-heading -HPine <R> <F>")
+                              (t nil)))
+    ;; The default command to use for `rgrep'.
+    (grep-apply-setting 'grep-find-template
+                        (cond (has-ugrep
+                               (concat
+                                "find -H <D> <X> -type f <F>"
+                                " -exec ugrep <C> --index --no-heading -0HIPine <R> \\{\\} + ';'"))
+                              (has-rg
+                               (concat
+                                "find -H <D> <X> -type f <F>"
+                                " -exec rg --no-heading -0HPne <R> \\{\\} + ';'"))
+                              (t
+                               (concat "find -H <D> <X> -type f <F>"
+                                       " -exec grep <C> -nH --null -e <R> \\{\\} + ';'")))))
 #+end_src
 
 * Set fringe width
