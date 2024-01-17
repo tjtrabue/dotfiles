@@ -1162,7 +1162,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
                                        (member f '("." "..")))
                                      (directory-files ts-grammars-dir)))))
             (dolist (g ts-grammars)
-              (unless (seq-contains-p installed-grammars g)
+              (unless (memq g installed-grammars)
                 (treesit-install-language-grammar g))))
         ;; If the tree-sitter grammar dir does not exist, install all grammars from scratch.
         (mapc #'treesit-install-language-grammar ts-grammars))))
