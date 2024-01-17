@@ -519,7 +519,12 @@ LanguageServerProtocol clients and servers.
 
   ;;; xref
   ;; The program to use to find xref symbols.
-  (setq xref-search-program 'ripgrep)
+  (setq xref-search-program (cond ((executable-find "rg") 'ripgrep)
+                                  ((executable-find "ugrep") 'ugrep)
+                                  (t "grep")))
+
+  ;; The default command to run for `M-x lgrep'.
+  (setq grep-template "ugrep --color=always -0Iinr -e <R>")
 
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
