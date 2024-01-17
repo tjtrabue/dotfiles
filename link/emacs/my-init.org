@@ -69,6 +69,8 @@ block.
   (require 'ffap)
   ;; EasyPG, Emacs' front-end for GPG.
   (require 'epa)
+  ;; Emacs Grep integration functions/configuration.
+  (require 'grep)
 #+end_src
 
 * Define User Variables
@@ -521,10 +523,16 @@ LanguageServerProtocol clients and servers.
     ;; Change standard `grep-find' command to use Ripgrep when available.  The 27 means place the
     ;; cursor at the 27th character, right between the '' where we will begin typing our search
     ;; expression.
-    (setq grep-find-command
-          '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27))
-    ;; The default command to run for `M-x lgrep'.
-    (setq grep-template "rg --color=always --no-heading -HPin -e <R>"))
+    (grep-apply-setting 'grep-find-command
+                        '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27)))
+
+  ;; The default command to run for `M-x lgrep'.
+  (grep-apply-setting 'grep-template
+                      (cond ((executable-find "ugrep")
+                             "ugrep <C> <X> --color=always --index --no-heading -HIPine <R> <F>")
+                            ((executable-find "rg")
+                             "rg --color=always --no-heading -HPine <R> <F>")
+                            (t nil)))
 
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
