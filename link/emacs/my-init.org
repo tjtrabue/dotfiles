@@ -1148,9 +1148,24 @@ library that greatly enhances Emacs' semantic understanding of source code.
             (toml-mode . toml-ts-mode)
             (yaml-mode . yaml-ts-mode)))
 
-    ;; IMPORTANT: Evaluate this command whenever you change `treesit-language-source-alist':
-    ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
-    )
+    ;; Install missing tree-sitter grammars.
+    (let ((ts-grammars-dir (concat (file-truename (getenv "HOME")) "/.emacs.d/tree-sitter"))
+          (ts-grammars (mapcar #'car treesit-language-source-alist)))
+      (if (file-directory-p ts-grammars-dir)
+          ;; If the tree-sitter grammars dir exists, check its contents and only install missing
+          ;; grammars.
+          (let ((installed-grammars
+                 (mapcar (lambda (f)
+                           (intern
+                            (string-remove-prefix "libtree-sitter-" (string-remove-suffix ".so" f))))
+                         (seq-remove (lambda (f)
+                                       (member f '("." "..")))
+                                     (directory-files ts-grammars-dir)))))
+            (dolist (g ts-grammars)
+              (unless (seq-contains-p installed-grammars g)
+                (treesit-install-language-grammar g))))
+        ;; If the tree-sitter grammar dir does not exist, install all grammars from scratch.
+        (mapc #'treesit-install-language-grammar ts-grammars))))
 #+end_src
 
 * Package Manager
