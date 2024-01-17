@@ -526,6 +526,8 @@ LanguageServerProtocol clients and servers.
                       (cond
                        ((executable-find "ugrep")
                         `(,(concat "ugrep -e '' --color=always --index --no-heading -HI0inr"
+                                   " --ignore-files=$(git rev-parse --show-toplevel)/.gitignore"
+                                   " --ignore-files=${HOME}/.config/git/ignore"
                                    " -- $(git rev-parse --show-toplevel || pwd)")
                           . 11))
                        ((executable-find "rg")
