@@ -533,6 +533,19 @@ LanguageServerProtocol clients and servers.
     (setq posframe-gtk-resize-child-frames 'resize-mode))
 #+end_src
 
+* Grep/Search Configuration
+Emacs, being one of the flagship GNU programs, has wondrous integration with
+other GNU tools, not the least of which is Grep.
+
+#+begin_src emacs-lisp
+  ;; Change standard `grep-find' command to use Ripgrep when available.  The 27 means place the cursor
+  ;; at the 27th character, right between the '' where we will begin typing our search expression.
+  (when (executable-find "rg")
+    (grep-apply-setting
+     'grep-find-command
+     '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27)))
+#+end_src
+
 * Set fringe width
 In Emacs, the /fringe/ is the margin on the left and/or right side of a frame
 between the edge of the frame and the first buffer. You can even set the width
