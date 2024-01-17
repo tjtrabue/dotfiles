@@ -523,9 +523,6 @@ LanguageServerProtocol clients and servers.
                                   ((executable-find "ugrep") 'ugrep)
                                   (t "grep")))
 
-  ;; The default command to run for `M-x lgrep'.
-  (setq grep-template "ugrep --color=always -0Iinr -e <R>")
-
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
     ;; variable to 'resize-mode may improve the performance of plugins that use
@@ -543,7 +540,9 @@ other GNU tools, not the least of which is Grep.
   (when (executable-find "rg")
     (grep-apply-setting
      'grep-find-command
-     '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27)))
+     '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27))
+    ;; The default command to run for `M-x lgrep'.
+    (grep-apply-setting 'grep-template "rg --color=always --no-heading -HPin -e <R>"))
 #+end_src
 
 * Set fringe width
