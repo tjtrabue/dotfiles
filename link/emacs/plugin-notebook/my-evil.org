@@ -723,53 +723,6 @@ main features of =lispyville=:
                (lispyville-yank-line beg end type reg yank-handler)))
         (evil-paste-after count))))
 
-  (defun my/set-lispyville-leader-keys ()
-    "Set `evil-leader' keybindings for all lispy modes."
-    (mapc (lambda (mode)
-            (let ((mode-map (intern (concat (symbol-name mode) "-map"))))
-              ;; Here we use the :keymaps keyword argument because we want to
-              ;; evaluate `mode-map' before passing it to `my/evil-leader-def'.
-              (my/evil-leader-def :keymaps mode-map
-                ">"  'lispy-eval-and-replace
-                "l(" 'my/lispyville-wrap-round-and-insert
-                "l)" 'lispyville-wrap-round
-                "l[" 'my/lispyville-wrap-brackets-and-insert
-                "l]" 'lispyville-wrap-brackets
-                "l{" 'my/lispyville-wrap-braces-and-insert
-                "l}" 'lispyville-wrap-braces
-                "l<" 'lispyville-<
-                "l>" 'lispyville->
-                "lB" 'lispy-bind-variable
-                "lC" 'lispy-convolute-sexp
-                "lD" 'lispy-describe-inline
-                "lE" 'lispy-eval-and-insert
-                "lO" 'lispy-string-oneline
-                "lQ" 'lispy-quotes
-                "lR" 'lispy-raise-some
-                "lS" 'lispy-splice
-                "lT" 'lispy-teleport
-                "lU" 'lispy-unbind-variable
-                "lW" 'lispyville-wrap-braces
-                "lb" 'lispyville-wrap-brackets
-                "lc" 'lispy-clone
-                "ld" 'evil-collection-lispy-delete
-                "le" 'lispy-eval
-                "lj" 'lispy-join
-                "ll" 'lispyville-raise-list
-                "lm" 'lispy-multiline
-                "ln" 'lispy-left
-                "lo" 'lispy-oneline
-                "lp" 'lispy-tab
-                "lq" 'lispy-stringify
-                "lr" 'lispy-raise-sexp
-                "ls" 'lispy-split
-                "lt" 'transpose-sexps
-                "lw" 'my/lispyville-wrap-round-and-insert
-                "lx" 'lispy-extract-defun
-                "ly" 'lispy-new-copy)))
-          my/lisp-major-modes)
-    t)
-
   (defun my/lispyville-delete-backward-char-and-join (count)
     "Delete previous COUNT chars, keeping parens balanced.
 
@@ -781,104 +734,6 @@ main features of =lispyville=:
     (if (bolp)
         (evil-delete-backward-char-and-join count)
       (call-interactively 'lispyville-delete-char-or-splice-backwards)))
-
-  (defun my/set-lispyville-mode-keys ()
-    "Set extra `evil-mode' keybindings for `lispyville-mode'."
-    (let ((mode-map 'lispyville-mode-map))
-      (general-define-key
-       :keymaps mode-map
-       "C-S-h" 'lispyville-left
-       "C-S-j" 'lispy-down
-       "C-S-k" 'lispy-up
-       "C-S-l" 'lispyville-right
-       "C-S-p" 'my/lispyville-duplicate-dwim)
-      (general-define-key
-       :states 'normal
-       :keymaps mode-map
-       ;; slurp: expand current s-exp; barf: Contract current s-exp
-       "-" 'lispyville-slurp
-       "_" 'lispyville-barf
-       ;; Split and join s-exps
-       "\\" 'lispy-split
-       "|" 'lispy-join
-       ;; Function navigation
-       "{" 'lispyville-backward-function-begin
-       "}" 'lispyville-forward-function-begin
-       ;; List navigation
-       "(" 'lispyville-backward-list-begin
-       ")" 'lispyville-forward-list-begin
-       ;; lispy-kill then enter insert state.
-       "C" 'my/lispyville-kill-and-insert
-       ;; Kill ARG sexps.
-       "D" 'lispy-kill
-       ;; Adapt ace-style jump commands for lispy.
-       "F" 'lispy-ace-paren
-       ;; Swap position of current sexp and the previous one.
-       "T" 'transpose-sexps
-       ;; Copy the sexp at point or visual selection.
-       "Y" 'lispy-new-copy
-       ;; Special comment functions
-       "gcc" 'lispyville-comment-or-uncomment-line
-       "gcC" 'lispyville-comment-or-uncomment
-       "gcy" 'lispyville-comment-and-clone-dwim
-       ;; Kill quoted string or sexp including point.
-       "C-'" 'lispy-kill-at-point
-       ;; Mark symbols with M-m
-       "M-m" 'lispy-mark-symbol)
-      (general-define-key
-       :states '(insert replace)
-       :keymaps mode-map
-       ;; lispy pair insertion commands tend to mess with the CIDER nREPL, so I
-       ;; prefer to use plain old self-insert-command for inserting parentheses,
-       ;; braces, and brackets.
-       "("   'self-insert-command
-       ")"   'self-insert-command
-       "{"   'self-insert-command
-       "}"   'self-insert-command
-       "["   'self-insert-command
-       "]"   'self-insert-command
-       "DEL" 'my/lispyville-delete-backward-char-and-join
-       ;; Remap our favorite normal mode chord to lispyville's version of ESC.
-       (general-chord "jk") 'lispyville-normal-state)
-
-      (general-define-key
-       :states '(normal insert)
-       :keymaps mode-map
-       ;; Function navigation
-       "M-h" 'lispyville-beginning-of-defun
-       "M-l" 'lispyville-end-of-defun)
-      (general-define-key
-       :states '(normal visual)
-       :keymaps mode-map
-       ;; Make "J" into the safe join operator in Lisp modes.
-       "J" 'lispyville-join
-       ;; Contract/expand current sexp.
-       "<<" 'lispyville-<
-       ">>" 'lispyville->
-       ;; Clone the current sexp or region
-       "C-y" 'lispy-clone
-       ;; Move s-exps back and forth
-       "M-j" 'lispyville-move-down
-       "M-k" 'lispyville-move-up)
-      (general-define-key
-       :states 'visual
-       :keymaps mode-map
-       "gc" 'lispyville-comment-or-uncomment-line
-       "gC" 'lispyville-comment-or-uncomment
-       "gy" 'lispyville-comment-and-clone-dwim)
-      (general-define-key
-       :states '(normal visual operator motion)
-       :keymaps mode-map
-       ;; Use uppercase variants of Evil movement keys to traverse lisp atoms.
-       [remap evil-forward-WORD-begin]  'lispyville-forward-atom-begin
-       [remap evil-backward-WORD-begin] 'lispyville-backward-atom-begin
-       [remap evil-forward-WORD-end]    'lispyville-forward-atom-end
-       [remap evil-backward-WORD-end]   'lispyville-backward-atom-end)))
-
-  (defun my/set-lispyville-lispy-keys ()
-    "Use `lispy-define-key' to set extra keybindings for `lispyville'."
-    ;; Use "v" to enter lispy special while in Evil's visual state.
-    (lispy-define-key lispy-mode-map "v" #'lispyville-toggle-mark-type))
 #+end_src
 
 *** =use-package= specification
@@ -887,11 +742,121 @@ main features of =lispyville=:
     :after (evil-collection lispy)
     :delight lispyville-mode
     :hook
-    (lispy-mode .
-                (lambda ()
-                  (lispyville-mode 1)
-                  (my/set-lispyville-leader-keys)
-                  (my/set-lispyville-mode-keys)))
+    (lispy-mode . lispyville-mode)
+    :general
+    (my/evil-leader-def lispyville-mode-map
+      ">"  'lispy-eval-and-replace
+      "l(" 'my/lispyville-wrap-round-and-insert
+      "l)" 'lispyville-wrap-round
+      "l[" 'my/lispyville-wrap-brackets-and-insert
+      "l]" 'lispyville-wrap-brackets
+      "l{" 'my/lispyville-wrap-braces-and-insert
+      "l}" 'lispyville-wrap-braces
+      "l<" 'lispyville-<
+      "l>" 'lispyville->
+      "lB" 'lispy-bind-variable
+      "lC" 'lispy-convolute-sexp
+      "lD" 'lispy-describe-inline
+      "lE" 'lispy-eval-and-insert
+      "lO" 'lispy-string-oneline
+      "lQ" 'lispy-quotes
+      "lR" 'lispy-raise-some
+      "lS" 'lispy-splice
+      "lT" 'lispy-teleport
+      "lU" 'lispy-unbind-variable
+      "lW" 'lispyville-wrap-braces
+      "lb" 'lispyville-wrap-brackets
+      "lc" 'lispy-clone
+      "ld" 'evil-collection-lispy-delete
+      "le" 'lispy-eval
+      "lj" 'lispy-join
+      "ll" 'lispyville-raise-list
+      "lm" 'lispy-multiline
+      "ln" 'lispy-left
+      "lo" 'lispy-oneline
+      "lp" 'lispy-tab
+      "lq" 'lispy-stringify
+      "lr" 'lispy-raise-sexp
+      "ls" 'lispy-split
+      "lt" 'transpose-sexps
+      "lw" 'my/lispyville-wrap-round-and-insert
+      "lx" 'lispy-extract-defun
+      "ly" 'lispy-new-copy)
+    (general-def lispyville-mode-map
+      "C-S-h" 'lispyville-left
+      "C-S-j" 'lispy-down
+      "C-S-k" 'lispy-up
+      "C-S-l" 'lispyville-right
+      "C-S-p" 'my/lispyville-duplicate-dwim)
+    (general-def 'normal lispyville-mode-map
+      ;; slurp: expand current s-exp; barf: Contract current s-exp
+      "-" 'lispyville-slurp
+      "_" 'lispyville-barf
+      ;; Split and join s-exps
+      "\\" 'lispy-split
+      "|" 'lispy-join
+      ;; Function navigation
+      "{" 'lispyville-backward-function-begin
+      "}" 'lispyville-forward-function-begin
+      ;; List navigation
+      "(" 'lispyville-backward-list-begin
+      ")" 'lispyville-forward-list-begin
+      ;; lispy-kill then enter insert state.
+      "C" 'my/lispyville-kill-and-insert
+      ;; Kill ARG sexps.
+      "D" 'lispy-kill
+      ;; Adapt ace-style jump commands for lispy.
+      "F" 'lispy-ace-paren
+      ;; Swap position of current sexp and the previous one.
+      "T" 'transpose-sexps
+      ;; Copy the sexp at point or visual selection.
+      "Y" 'lispy-new-copy
+      ;; Special comment functions
+      "gcc" 'lispyville-comment-or-uncomment-line
+      "gcC" 'lispyville-comment-or-uncomment
+      "gcy" 'lispyville-comment-and-clone-dwim
+      ;; Kill quoted string or sexp including point.
+      "C-'" 'lispy-kill-at-point
+      ;; Mark symbols with M-m
+      "M-m" 'lispy-mark-symbol)
+    (general-def '(insert replace) lispyville-mode-map
+      ;; lispy pair insertion commands tend to mess with the CIDER nREPL, so I
+      ;; prefer to use plain old self-insert-command for inserting parentheses,
+      ;; braces, and brackets.
+      "("   'self-insert-command
+      ")"   'self-insert-command
+      "{"   'self-insert-command
+      "}"   'self-insert-command
+      "["   'self-insert-command
+      "]"   'self-insert-command
+      "DEL" 'my/lispyville-delete-backward-char-and-join
+      ;; Remap our favorite normal mode chord to lispyville's version of ESC.
+      (general-chord "jk") 'lispyville-normal-state)
+    (general-def '(normal insert) lispyville-mode-map
+      ;; Function navigation
+      "M-h" 'lispyville-beginning-of-defun
+      "M-l" 'lispyville-end-of-defun)
+    (general-def '(normal visual) lispyville-mode-map
+      ;; Make "J" into the safe join operator in Lisp modes.
+      "J" 'lispyville-join
+      ;; Contract/expand current sexp.
+      "<<" 'lispyville-<
+      ">>" 'lispyville->
+      ;; Clone the current sexp or region
+      "C-y" 'lispy-clone
+      ;; Move s-exps back and forth
+      "M-j" 'lispyville-move-down
+      "M-k" 'lispyville-move-up)
+    (general-def 'visual lispyville-mode-map
+      "gc" 'lispyville-comment-or-uncomment-line
+      "gC" 'lispyville-comment-or-uncomment
+      "gy" 'lispyville-comment-and-clone-dwim)
+    (general-def '(normal visual operator motion) lispyville-mode-map
+      ;; Use uppercase variants of Evil movement keys to traverse lisp atoms.
+      [remap evil-forward-WORD-begin]  'lispyville-forward-atom-begin
+      [remap evil-backward-WORD-begin] 'lispyville-backward-atom-begin
+      [remap evil-forward-WORD-end]    'lispyville-forward-atom-end
+      [remap evil-backward-WORD-end]   'lispyville-backward-atom-end)
     :custom
     ;; Setting this variable to t means lispyville motion commands, such as (, ),
     ;; {, }, etc.  automatically enter insert mode to make editing more fluid.
@@ -947,7 +912,6 @@ main features of =lispyville=:
     ;; Only use evil-mode's visual selection instead of lispy marks.
     (lispyville-enter-visual-when-marking)
     (advice-add 'lispyville-yank :around 'my/highlight-evil-region-advice)
-    ;; (my/set-lispyville-lispy-keys)
     ;; Add lispyville special mode indicator to modeline.
     (add-to-list 'mode-line-misc-info
                  '(:eval (when (featurep 'lispyville)
