@@ -519,12 +519,17 @@ LanguageServerProtocol clients and servers.
                                                "firefox"
                                                "chrome")))
 
-  (when (executable-find "rg")
-    ;; Change standard `grep-find' command to use Ripgrep when available.  The 27 means place the
-    ;; cursor at the 27th character, right between the '' where we will begin typing our search
-    ;; expression.
-    (grep-apply-setting 'grep-find-command
-                        '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27)))
+  ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
+  ;; cursor at that character position, right between the '' where we will begin typing our search
+  ;; expression.
+  (grep-apply-setting 'grep-find-command
+                      (cond
+                       ((executable-find "ugrep")
+                        `(,(concat "ugrep -e '' --color=always --index --no-heading -HI0inr"
+                                   " -- $(git rev-parse --show-toplevel || pwd)")
+                          . 11))
+                       ((executable-find "rg")
+                        '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)" . 8))))
 
   ;; The default command to run for `M-x lgrep'.
   (grep-apply-setting 'grep-template
