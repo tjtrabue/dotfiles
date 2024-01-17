@@ -202,6 +202,7 @@ ttf-fira-mono
 ttf-hack
 ttf-liberation
 ttf-nerd-fonts-symbols
+ugrep
 unixodbc
 unzip
 upower

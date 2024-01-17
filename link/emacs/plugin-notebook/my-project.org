@@ -1,17 +1,27 @@
-#+TITLE:  Projectile Project Management
-#+AUTHOR: Tom Trabue
-#+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020-05-26
+#+TITLE:   Emacs Project Management
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020-05-26
+#+TAGS:    project projectile
 #+STARTUP: fold
 
-Projectile is a project management plugin for Emacs that helps you perform
+* project.el
+=project.el= is Emacs' built-in project management system. It has come a long
+way over the past few years, and now rivals =projectile= in terms of features.
+
+#+begin_src emacs-lisp
+  (use-package project)
+#+end_src
+
+* Projectile
+=projectile= is a project management plugin for Emacs that helps you perform
 important coding actions at the project level. Such actions include searching
 for project files, text searching (i.e., project-scoped =grep=), renaming files,
 building and installing project artifacts, etc. Projectile is a project
 management super tool, and by far one of the most important Emacs plugins for
 software development.
 
-* Functions
+** Functions
 #+begin_src emacs-lisp
   (with-eval-after-load "projectile"
     (defun my/projectile-reload-dir-locals ()
@@ -23,7 +33,7 @@ software development.
             (my/reload-dir-locals-for-current-buffer))))))
 #+end_src
 
-* =use-package= specification
+** =use-package= specification
 
 #+begin_src emacs-lisp
   (use-package projectile

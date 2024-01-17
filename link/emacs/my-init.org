@@ -357,6 +357,9 @@ LanguageServerProtocol clients and servers.
   ;; present absolutely all of them.
   (setq byte-compile-warnings t)
 
+  ;; Whether to automatically scroll the compilation window as output arrives.
+  (setq compilation-scroll-output t)
+
   ;; Display relative line numbers like in Vim.
   (setq display-line-numbers 'relative)
   (setq display-line-numbers-type 'relative)
@@ -513,6 +516,10 @@ LanguageServerProtocol clients and servers.
                                                "chromium"
                                                "firefox"
                                                "chrome")))
+
+  ;;; xref
+  ;; The program to use to find xref symbols.
+  (setq xref-search-program 'ripgrep)
 
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
