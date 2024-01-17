@@ -539,13 +539,14 @@ interactive, templated Grep commands:
 
 #+begin_src emacs-lisp
   (let ((has-ugrep (executable-find "ugrep"))
-        (has-rg    (executable-find "rg")))
+        (has-rg    (executable-find "rg"))
+        (find-cmd-str "find -H <D> <X> -type f <F> -exec "))
     ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
     ;; cursor at that character position, right between the '' where we will begin typing our search
     ;; expression.
     (grep-apply-setting 'grep-find-command
                         (cond (has-ugrep
-                               `(,(concat "ugrep -e '' --color=always --index --no-heading -HI0inr"
+                               `(,(concat "ugrep -e '' --index --no-heading -HI0inr"
                                           " --ignore-files=\"$(git rev-parse --show-toplevel)/.gitignore\""
                                           " -- \"$(git rev-parse --show-toplevel || pwd)\"")
                                  . 11))
@@ -564,16 +565,13 @@ interactive, templated Grep commands:
     ;; The default command to use for `rgrep'.
     (grep-apply-setting 'grep-find-template
                         (cond (has-ugrep
-                               (concat
-                                "find -H <D> <X> -type f <F>"
-                                " -exec ugrep <C> --index --no-heading -0HIPine <R> \\{\\} + ';'"))
+                               (concat find-cmd-str
+                                       "ugrep <C> --color=always --index --no-heading -0HIPine <R> \\{\\} +"))
                               (has-rg
-                               (concat
-                                "find -H <D> <X> -type f <F>"
-                                " -exec rg --no-heading -0HPne <R> \\{\\} + ';'"))
+                               (concat find-cmd-str
+                                       "rg --color=always --no-heading -0HPne <R> \\{\\} +"))
                               (t
-                               (concat "find -H <D> <X> -type f <F>"
-                                       " -exec grep <C> -nH --null -e <R> \\{\\} + ';'")))))
+                               (concat find-cmd-str "grep <C> -nH --null -e <R> \\{\\} +")))))
 #+end_src
 
 * Set fringe width
