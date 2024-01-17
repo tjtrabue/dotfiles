@@ -1570,6 +1570,20 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
     (org-auto-tangle-default t))
 #+end_src
 
+** xref
+=xref= comes with Emacs 28.1 and newer, but sometimes we don't get access to the
+latest and greatest, so we can also download it from ELPA.
+
+#+begin_src emacs-lisp
+  (use-package xref
+    :demand t
+    :custom
+    (xref-show-definitions-function #'xref-show-definitions-completing-read)
+    ;; The program to use to find xref symbols.
+    (xref-search-program (cond ((executable-find "rg") 'ripgrep)
+                               ((executable-find "ugrep") 'ugrep)
+                               (t "grep"))))
+#+end_src
 * Load External Configuration Files
 Load additional Emacs configuration files from my custom plugins directories.
 Most of these files correspond directly to third-party dependencies from MELPA.

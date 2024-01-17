@@ -56,18 +56,3 @@ Another =ripgrep= package for Emacs needed by some other plugins.
 #+begin_src emacs-lisp
   (use-package ripgrep)
 #+end_src
-
-* xref
-=xref= comes with Emacs 28.1 and newer, but sometimes we don't get access to the
-latest and greatest, so we can also download it from ELPA.
-
-#+begin_src emacs-lisp
-  (use-package xref
-    :demand t
-    :custom
-    (xref-show-definitions-function #'xref-show-definitions-completing-read)
-    ;; The program to use to find xref symbols.
-    (xref-search-program (cond ((executable-find "rg") 'ripgrep)
-                               ((executable-find "ugrep") 'ugrep)
-                               (t "grep"))))
-#+end_src
