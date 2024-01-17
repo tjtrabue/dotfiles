@@ -1,8 +1,8 @@
-#+TITLE: Emacs Search Plugins
-#+AUTHOR: Tom Trabue
-#+EMAIL:  tom.trabue@gmail.com
-#+DATE:   2020-06-08
-#+TAGS:
+#+TITLE:   Emacs Search Configuration/Plugins
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2020-06-08
+#+TAGS:    search dumb jump grep rg git tags
 #+STARTUP: fold
 
 =ripgrep= or =rg= is an incredibly fast searching tool for UNIX-based operating
@@ -10,22 +10,64 @@ systems.  It behaves similarly to =grep= and =ag=, but is faster than either of
 them. I highly recommend that you use =rg= over =grep= or even =ag= whenever
 possible.
 
+This file also contains my configuration for =xref=, Emacs' unified interface to
+refactoring and searching /identifiers/, which are syntactic subunits of a
+program (i.e., functions, variables, subroutines, methods, classes, etc.).
+
 * deadgrep
-  =deadgrep= is a beautiful front-end for =ripgrep=, the faster replacement for
-  =grep= and =ag=.
+=deadgrep= is a beautiful front-end for =ripgrep=, the faster replacement for
+=grep= and =ag=.
+
+#+begin_src emacs-lisp
+  (use-package deadgrep
+    :commands deadgrep
+    :general
+    (my/user-leader-def
+      "S" 'deadgrep))
+#+end_src
+
+* dumb-jump
+=dumb-jump= is simply the best jump-to-definition package available to Emacs. It
+uses =git-grep=, =grep=, =ag=, and =rg= to figure out how to jump to the chosen
+definition. =dumb-jump= requires essentially no configuration nor any TAGS
+files, making it a great out-of-the-box solution for finding definitions at
+point. All you must do is add =dumb-jump= to the list of =xref= backend
+functions, and you're off to the races!
+
+After you've set up your =xref= hook, you can find the definition under the
+cursor by typing =M-.=. Or, if you use =evil-mode=, by typing =gd= instead.
 
   #+begin_src emacs-lisp
-    (use-package deadgrep
-      :commands deadgrep
-      :general
-      (my/user-leader-def
-        "S" 'deadgrep))
+    (use-package dumb-jump
+      :after xref
+      :demand t
+      :custom
+      (dumb-jump-prefer-searcher 'rg)
+      (dumb-jump-rg-search-args "--color=never --pcre2 -i")
+      (dumb-jump-git-grep-search-args "--color=never -iI --cached --ignore-standard --untracked")
+      :init
+      (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
   #+end_src
 
 * ripgrep
-  Another =ripgrep= package for Emacs needed by some other plugins.
-  *NOTE:* Please keep this package around for the sake of =projectile=.
+Another =ripgrep= package for Emacs needed by some other plugins.
+*NOTE:* Please keep this package around for the sake of =projectile=.
 
-  #+begin_src emacs-lisp
-    (use-package ripgrep)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package ripgrep)
+#+end_src
+
+* xref
+=xref= comes with Emacs 28.1 and newer, but sometimes we don't get access to the
+latest and greatest, so we can also download it from ELPA.
+
+#+begin_src emacs-lisp
+  (use-package xref
+    :demand t
+    :custom
+    (xref-show-definitions-function #'xref-show-definitions-completing-read)
+    ;; The program to use to find xref symbols.
+    (xref-search-program (cond ((executable-find "rg") 'ripgrep)
+                               ((executable-find "ugrep") 'ugrep)
+                               (t "grep"))))
+#+end_src
