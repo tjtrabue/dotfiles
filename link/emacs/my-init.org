@@ -1108,6 +1108,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
     ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
     (setq treesit-language-source-alist
           '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+            (clojure "https://github.com/sogaiu/tree-sitter-clojure")
             (cmake "https://github.com/uyha/tree-sitter-cmake")
             (css "https://github.com/tree-sitter/tree-sitter-css")
             (elisp "https://github.com/Wilfred/tree-sitter-elisp")
@@ -1147,8 +1148,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
             (toml-mode . toml-ts-mode)
             (yaml-mode . yaml-ts-mode)))
 
-    ;; Install language grammars defines in `treesit-language-source-alist'.
-    ;; IMPORTANT: Run this on-demand whenever you change `treesit-language-source-alist'.
+    ;; IMPORTANT: Evaluate this command whenever you change `treesit-language-source-alist':
     ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
     )
 #+end_src
