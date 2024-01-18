@@ -109,7 +109,9 @@ color names used by Modus]].
         (set-face-attribute face nil
                             :height 1.0
                             ;; Increase mode-line height by adding a border box.
-                            :box `(:line-width 4 :color ,(face-background face nil t))))
+                            :box `(:line-width 4
+                                               :color ,(face-background face nil t)
+                                               :style released-button)))
       (when (bound-and-true-p tab-line-mode)
         ;; Adjust tab-line faces after the theme loads.
         (dolist (face '(tab-line
