@@ -2,17 +2,19 @@
 #+AUTHOR:  Thomas Trabue
 #+EMAIL:   tom.trabue@gmail.com
 #+DATE:    2024-01-18
-#+TAGS:
+#+TAGS:    combobulate structural navigation editing tree sitter tree-sitter
 #+STARTUP: fold
 
-Combobulate is a package that adds structured editing and movement to a wide
+=combobulate= is a package that adds structured editing and movement to a wide
 range of programming languages. Unlike most programming major modes that use
 error-prone imperative code and regular expressions to determine what's what in
 your code, Combobulate uses Emacs 29's =tree-sitter= library. Tree-sitter
-maintains a concrete syntax tree of your code, providing Combobulate absolute
-clarity of all aspects of your code, enabling more correct movement and editing
-than you would otherwise have.
+maintains a /concrete syntax tree/ of your code, providing =combobulate=
+absolute clarity of all aspects of your code, enabling more correct movement and
+editing than you would otherwise have.
 
 #+begin_src emacs-lisp
-  (use-package combobulate)
+  (use-package combobulate
+    ;; Only use combobulate if we have a tree-sitter enabled Emacs.
+    :if (string-match-p "\sTREE_SITTER\s" system-configuration-features))
 #+end_src

@@ -1112,78 +1112,6 @@ stale files. We should periodically purge old files from these directories.
         (delete-file file))))
 #+end_src
 
-* Tree-Sitter
-Emacs 29 introduced support for =tree-sitter=, a powerful language parsing
-library that greatly enhances Emacs' semantic understanding of source code.
-
-#+begin_src emacs-lisp
-  ;; Native tree-sitter support was added in Emacs 29.
-  (when (functionp 'treesit-install-language-grammar)
-    ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
-    (setq treesit-language-source-alist
-          '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-            (clojure "https://github.com/sogaiu/tree-sitter-clojure")
-            (cmake "https://github.com/uyha/tree-sitter-cmake")
-            (commonlisp "https://github.com/theHamsta/tree-sitter-commonlisp")
-            (css "https://github.com/tree-sitter/tree-sitter-css")
-            (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-            (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-            (go "https://github.com/tree-sitter/tree-sitter-go")
-            (heex "https://github.com/phoenixframework/tree-sitter-heex")
-            (html "https://github.com/tree-sitter/tree-sitter-html")
-            (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-            (json "https://github.com/tree-sitter/tree-sitter-json")
-            (make "https://github.com/alemuller/tree-sitter-make")
-            (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-            (org "https://github.com/milisims/tree-sitter-org")
-            (python "https://github.com/tree-sitter/tree-sitter-python")
-            (toml "https://github.com/tree-sitter/tree-sitter-toml")
-            (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-            (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-
-    ;; Here we remap major modes to ensure that the correct `tree-sitter' enabled mode activates,
-    ;; instead.
-    (setq major-mode-remap-alist
-          '((sh-mode . bash-ts-mode)
-            (elixir-mode . elixir-ts-mode)
-            (c-mode . c-ts-mode)
-            (c++-mode . c++-ts-mode)
-            (cmake-mode . cmake-ts-mode)
-            (csharp-mode . csharp-ts-mode)
-            (css-mode . css-ts-mode)
-            (go-mode . go-ts-mode)
-            (go-dot-mod-mode . go-mod-ts-mode)
-            (html-mode . html-ts-mode)
-            (java-mode . java-ts-mode)
-            (js-mode . js-ts-mode)
-            (lua-mode . lua-ts-mode)
-            (rjsx-mode . tsx-ts-mode)
-            (ruby-mode . ruby-ts-mode)
-            (rust-mode . rust-ts-mode)
-            (toml-mode . toml-ts-mode)
-            (yaml-mode . yaml-ts-mode)))
-
-    ;; Install missing tree-sitter grammars.
-    (let ((ts-grammars-dir (concat (file-truename (getenv "HOME")) "/.emacs.d/tree-sitter"))
-          (ts-grammars (mapcar #'car treesit-language-source-alist)))
-      (if (file-directory-p ts-grammars-dir)
-          ;; If the tree-sitter grammars dir exists, check its contents and only install missing
-          ;; grammars.
-          (let ((installed-grammars
-                 (mapcar (lambda (f)
-                           (intern
-                            (string-remove-prefix "libtree-sitter-" (string-remove-suffix ".so" f))))
-                         (seq-remove (lambda (f)
-                                       (member f '("." "..")))
-                                     (directory-files ts-grammars-dir)))))
-            (dolist (g ts-grammars)
-              (unless (memq g installed-grammars)
-                (treesit-install-language-grammar g))))
-        ;; If the tree-sitter grammar dir does not exist, install all grammars from scratch.
-        (mapc #'treesit-install-language-grammar ts-grammars))))
-#+end_src
-
 * Package Manager
 Configure package managers Emacs leverages to install and configure third-party
 packages.
@@ -1616,6 +1544,89 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
     :custom
     ;; Whether to use auto-tangle as the default behavior for all org buffers.
     (org-auto-tangle-default t))
+#+end_src
+
+** tree-sitter
+Emacs 29 introduced support for =tree-sitter=, a powerful language parsing
+library that greatly enhances Emacs' semantic understanding of source code.
+
+#+begin_src emacs-lisp
+  (use-package treesit
+    ;; `treesit' is a built-in feature, and does not exist in ELPA/MELPA.
+    :ensure nil
+    :straight nil
+    :demand t
+    :if (and (>= emacs-major-version 29)
+             (string-match-p "\sTREE_SITTER\s" system-configuration-features))
+    :preface
+    ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
+    (dolist (grammar
+             '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+               (clojure "https://github.com/sogaiu/tree-sitter-clojure")
+               (cmake "https://github.com/uyha/tree-sitter-cmake")
+               (commonlisp "https://github.com/theHamsta/tree-sitter-commonlisp")
+               (css "https://github.com/tree-sitter/tree-sitter-css")
+               (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+               (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+               (go "https://github.com/tree-sitter/tree-sitter-go")
+               (heex "https://github.com/phoenixframework/tree-sitter-heex")
+               (html "https://github.com/tree-sitter/tree-sitter-html")
+               (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+               (json "https://github.com/tree-sitter/tree-sitter-json")
+               (make "https://github.com/alemuller/tree-sitter-make")
+               (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+               (org "https://github.com/milisims/tree-sitter-org")
+               (python "https://github.com/tree-sitter/tree-sitter-python")
+               (toml "https://github.com/tree-sitter/tree-sitter-toml")
+               (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+               (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master"
+                           "typescript/src")
+               (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+      (add-to-list 'treesit-language-source-alist grammar))
+    ;; Here we remap major modes to ensure that the correct `tree-sitter' enabled mode activates,
+    ;; instead.
+    (dolist (mapping
+             '((sh-mode . bash-ts-mode)
+               (elixir-mode . elixir-ts-mode)
+               (c-mode . c-ts-mode)
+               (c++-mode . c++-ts-mode)
+               (cmake-mode . cmake-ts-mode)
+               (csharp-mode . csharp-ts-mode)
+               (css-mode . css-ts-mode)
+               (go-mode . go-ts-mode)
+               (go-dot-mod-mode . go-mod-ts-mode)
+               (html-mode . html-ts-mode)
+               (java-mode . java-ts-mode)
+               (js-mode . js-ts-mode)
+               (lua-mode . lua-ts-mode)
+               (rjsx-mode . tsx-ts-mode)
+               (ruby-mode . ruby-ts-mode)
+               (rust-mode . rust-ts-mode)
+               (toml-mode . toml-ts-mode)
+               (yaml-mode . yaml-ts-mode)))
+      (add-to-list 'major-mode-remap-alist mapping))
+    (defun my/install-missing-treesit-grammars ()
+      "Install any missing tree-sitter grammars to `~/.emacs.d/tree-sitter/'."
+      (interactive)
+      (let ((ts-grammars-dir (concat (file-truename (getenv "HOME")) "/.emacs.d/tree-sitter"))
+            (ts-grammars (mapcar #'car treesit-language-source-alist)))
+        (if (file-directory-p ts-grammars-dir)
+            ;; If the tree-sitter grammars dir exists, check its contents and only install missing
+            ;; grammars.
+            (let ((installed-grammars
+                   (mapcar (lambda (f)
+                             (intern
+                              (string-remove-prefix "libtree-sitter-" (string-remove-suffix ".so" f))))
+                           (seq-remove (lambda (f)
+                                         (member f '("." "..")))
+                                       (directory-files ts-grammars-dir)))))
+              (dolist (g ts-grammars)
+                (unless (memq g installed-grammars)
+                  (treesit-install-language-grammar g))))
+          ;; If the tree-sitter grammar dir does not exist, install all grammars from scratch.
+          (mapc #'treesit-install-language-grammar ts-grammars))))
+    :config
+    (my/install-missing-treesit-grammars))
 #+end_src
 
 ** xref
