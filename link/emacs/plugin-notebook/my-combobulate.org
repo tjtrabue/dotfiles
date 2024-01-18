@@ -13,6 +13,16 @@ maintains a /concrete syntax tree/ of your code, providing =combobulate=
 absolute clarity of all aspects of your code, enabling more correct movement and
 editing than you would otherwise have.
 
+* Functions
+#+begin_src emacs-lisp
+  (defun my/combob-evil-kill-node-and-insert (&optional arg)
+    "Kill ARG nodes at point and enter Evil insert state."
+    (interactive "p")
+    (combobulate-kill-node-dwim arg)
+    (evil-insert arg))
+#+end_src
+
+* =use-package= specification
 #+begin_src emacs-lisp
   (use-package combobulate
     ;; Only use combobulate if we have a tree-sitter enabled Emacs.
@@ -26,6 +36,22 @@ editing than you would otherwise have.
      (python-ts-mode     . combobulate-mode)
      (tsx-ts-mode        . combobulate-mode)
      (typescript-ts-mode . combobulate-mode))
+    :general
+    (general-def 'normal combobulate-key-map
+      [remap evil-delete-line] 'combobulate-kill-node-dwim
+      [remap evil-change-line] 'my/combob-evil-kill-node-and-insert
+      "-" 'combobulate-yoink-forward
+      "_" 'combobulate-yeet-forward)
+    (general-def '(normal visual) combobulate-key-map
+      "M-j" 'combobulate-drag-down
+      "M-k" 'combobulate-drag-up)
+    (my/user-leader-def combobulate-key-map
+      "v" 'combobulate-highlight-dwim-at-point)
+    (my/evil-leader-def combobulate-key-map
+      "ld" 'combobulate-kill-node-dwim
+      "lh" 'combobulate-highlight-dwim-at-point
+      "lt" 'combobulate-transpose-sexps
+      "lT" 'combobulate-transpose-sexps-1)
     :init
     (setq combobulate-key-prefix "C-c o"))
 #+end_src
