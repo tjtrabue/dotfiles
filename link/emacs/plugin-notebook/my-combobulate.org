@@ -19,12 +19,12 @@ editing than you would otherwise have.
     :if (and (fboundp 'treesit-available-p)
              (treesit-available-p))
     :hook
-    ((css-ts-mode . combobulate-mode)
-     (html-ts-mode . combobulate-mode)
-     (json-ts-mode . combobulate-mode)
-     (js-ts-mode . combobulate-mode)
-     (python-ts-mode . combobulate-mode)
-     (tsx-ts-mode . combobulate-mode)
+    ((css-ts-mode        . combobulate-mode)
+     (html-ts-mode       . combobulate-mode)
+     (json-ts-mode       . combobulate-mode)
+     (js-ts-mode         . combobulate-mode)
+     (python-ts-mode     . combobulate-mode)
+     (tsx-ts-mode        . combobulate-mode)
      (typescript-ts-mode . combobulate-mode))
     :init
     (setq combobulate-key-prefix "C-c o"))
