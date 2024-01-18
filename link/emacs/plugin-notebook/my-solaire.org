@@ -11,6 +11,10 @@ less "real", such as popups, terminals, sidebars, etc.
 
 #+begin_src emacs-lisp
   (use-package solaire-mode
+    ;; 1/18/24 (tjtrabue): I currently use `modus-themes', with which solaire-mode does not seem to
+    ;; work well. I have added hooks to modus-themes config, but even so I don't see much of a
+    ;; difference.
+    ;; :disabled
     :demand t
     :config
     (solaire-global-mode 1))

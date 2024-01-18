@@ -124,17 +124,12 @@ color names used by Modus]].
                               :width 'expanded
                               ;; Increase tab-line height by adding a border box.
                               :box `(:line-width 4 :color ,(face-background face nil t)))))
-      (when (bound-and-true-p solaire-mode)
-        ;; Support Solaire.
-        (custom-set-faces
-         `(solaire-default-face ((,c :inherit default
-                                     :background ,bg-dim
-                                     :foreground ,fg-dim)))
-         `(solaire-line-number-face ((,c :inherit solaire-default-face
-                                         :foreground ,fg-dim)))
-         `(solaire-hl-line-face ((,c :background ,bg-active)))
-         `(solaire-org-hide-face ((,c :background ,bg-dim
-                                      :foreground ,bg-dim)))))
+      ;; Override solaire faces.
+      (custom-set-faces
+       `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
+       `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
+       `(solaire-hl-line-face ((,c :background ,bg-active)))
+       `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
       (when (bound-and-true-p highlight-indent-guides-mode)
         ;; Customize faces for `highlight-indent-guides-mode' since that mode
         ;; cannot seem to figure out its faces on its own when using Modus themes.
@@ -150,9 +145,11 @@ color names used by Modus]].
 #+end_src
 
 *** =use-package= specification
-
 #+begin_src emacs-lisp
   (use-package modus-themes
+    ;; If you decide to disable solaire-mode, make sure to comment out this line as well as the
+    ;; solaire faces customizations in the modus-themes custom faces function above.
+    :after solaire-mode
     ;; You may occassionally wish to clone modus-themes from the GitHub mirror instead of SourceHut
     ;; due to network issues.
     ;; :straight (modus-themes :type git :host github
