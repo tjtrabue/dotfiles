@@ -1,0 +1,18 @@
+#+TITLE:   Combobulate: Structural Navigation/Editing
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-01-18
+#+TAGS:
+#+STARTUP: fold
+
+Combobulate is a package that adds structured editing and movement to a wide
+range of programming languages. Unlike most programming major modes that use
+error-prone imperative code and regular expressions to determine what's what in
+your code, Combobulate uses Emacs 29's =tree-sitter= library. Tree-sitter
+maintains a concrete syntax tree of your code, providing Combobulate absolute
+clarity of all aspects of your code, enabling more correct movement and editing
+than you would otherwise have.
+
+#+begin_src emacs-lisp
+  (use-package combobulate)
+#+end_src

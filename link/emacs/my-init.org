@@ -728,6 +728,12 @@ edited location, as opposed to opening them at the beginning of the file.
 
   ;; Highlight the current line based on a customizable face.
   (global-hl-line-mode 1)
+
+  ;; Activate `visual-line-mode' in all buffers.
+  ;;
+  ;; `visual-line-mode' wraps text at word boundaries at the window's edge so that you do not have to
+  ;; horizontally scroll to read long lines.
+  (global-visual-line-mode 1)
 #+end_src
 
 * Key Bindings
