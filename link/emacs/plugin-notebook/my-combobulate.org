@@ -20,6 +20,7 @@ editing than you would otherwise have.
              (treesit-available-p))
     :hook
     ((css-ts-mode . combobulate-mode)
+     (html-ts-mode . combobulate-mode)
      (json-ts-mode . combobulate-mode)
      (js-ts-mode . combobulate-mode)
      (python-ts-mode . combobulate-mode)
