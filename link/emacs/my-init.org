@@ -1364,6 +1364,10 @@ and hooks in a way that defers loading the package.
       "C-M-k" 'kill-this-buffer
       ;; Duplicate the current line or region N times.
       "C-S-p" 'duplicate-dwim)
+    ;; "C-c" keybindings:
+    (my/user-leader-def 'visual
+      ;; Use `C-c (' to align a visual region.
+      "(" 'align)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
       ;; Move cursor to beginning/end of line.
