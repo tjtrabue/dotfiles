@@ -14,6 +14,12 @@ The Tree-Sitter enabled version of =elixir-mode=.
 
 #+begin_src emacs-lisp
   (use-package elixir-ts-mode
+    ;; We want to use the built-in `elixir-ts-mode'.
+    ;; The MELPA package is a back-port for use Emacs 29.1.
+    :ensure nil
+    :straight nil
+    :if (and (fboundp 'treesit-available-p)
+             (treesit-available-p))
     :hook
     (elixir-ts-mode . (lambda ()
                         (push '(">=" . ?\u2265) prettify-symbols-alist)

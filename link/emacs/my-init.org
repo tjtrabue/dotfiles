@@ -1556,8 +1556,8 @@ library that greatly enhances Emacs' semantic understanding of source code.
     :ensure nil
     :straight nil
     :demand t
-    :if (and (>= emacs-major-version 29)
-             (string-match-p "\sTREE_SITTER\s" system-configuration-features))
+    :if (and (fboundp 'treesit-available-p)
+             (treesit-available-p))
     :preface
     ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
     (dolist (grammar
@@ -1586,23 +1586,26 @@ library that greatly enhances Emacs' semantic understanding of source code.
     ;; Here we remap major modes to ensure that the correct `tree-sitter' enabled mode activates,
     ;; instead.
     (dolist (mapping
-             '((sh-mode . bash-ts-mode)
-               (elixir-mode . elixir-ts-mode)
-               (c-mode . c-ts-mode)
+             '((c-mode . c-ts-mode)
                (c++-mode . c++-ts-mode)
                (cmake-mode . cmake-ts-mode)
                (csharp-mode . csharp-ts-mode)
                (css-mode . css-ts-mode)
+               (elixir-mode . elixir-ts-mode)
                (go-mode . go-ts-mode)
                (go-dot-mod-mode . go-mod-ts-mode)
                (html-mode . html-ts-mode)
                (java-mode . java-ts-mode)
                (js-mode . js-ts-mode)
+               (json-mode . json-ts-mode)
                (lua-mode . lua-ts-mode)
+               (python-mode . python-ts-mode)
                (rjsx-mode . tsx-ts-mode)
                (ruby-mode . ruby-ts-mode)
                (rust-mode . rust-ts-mode)
+               (sh-mode . bash-ts-mode)
                (toml-mode . toml-ts-mode)
+               (typescript-mode . typescript-ts-mode)
                (yaml-mode . yaml-ts-mode)))
       (add-to-list 'major-mode-remap-alist mapping))
     (defun my/install-missing-treesit-grammars ()
