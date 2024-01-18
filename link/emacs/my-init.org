@@ -870,6 +870,14 @@ Custom functions, both standard and interactive.
     (interactive)
     (let ((enable-local-variables :all))
       (hack-dir-local-variables-non-file-buffer)))
+
+  (defun compose (&rest fns)
+    "Compose FNS together: first to last."
+    (cl-destructuring-bind (fun . rest) (reverse fns)
+      (lambda (&rest args)
+        (seq-reduce (lambda (v f) (funcall f v))
+                    rest
+                    (apply fun args)))))
 #+end_src
 
 * Environment Variables
@@ -1120,6 +1128,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
             (json "https://github.com/tree-sitter/tree-sitter-json")
             (make "https://github.com/alemuller/tree-sitter-make")
             (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+            (org "https://github.com/milisims/tree-sitter-org")
             (python "https://github.com/tree-sitter/tree-sitter-python")
             (toml "https://github.com/tree-sitter/tree-sitter-toml")
             (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
