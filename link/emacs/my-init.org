@@ -1571,6 +1571,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
                (cmake "https://github.com/uyha/tree-sitter-cmake")
                (commonlisp "https://github.com/theHamsta/tree-sitter-commonlisp")
                (css "https://github.com/tree-sitter/tree-sitter-css")
+               (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
                (elisp "https://github.com/Wilfred/tree-sitter-elisp")
                (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
                (go "https://github.com/tree-sitter/tree-sitter-go")
@@ -1596,6 +1597,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
                (cmake-mode      . cmake-ts-mode)
                (csharp-mode     . csharp-ts-mode)
                (css-mode        . css-ts-mode)
+               (dockerfile-mode . dockerfile-ts-mode)
                (elixir-mode     . elixir-ts-mode)
                (go-mode         . go-ts-mode)
                (go-dot-mod-mode . go-mod-ts-mode)
@@ -1616,23 +1618,16 @@ library that greatly enhances Emacs' semantic understanding of source code.
     (defun my/install-missing-treesit-grammars ()
       "Install any missing tree-sitter grammars to `~/.emacs.d/tree-sitter/'."
       (interactive)
-      (let ((ts-grammars-dir (concat (file-truename (getenv "HOME")) "/.emacs.d/tree-sitter"))
+      (let ((ts-grammars-dir (file-truename (concat user-emacs-directory "tree-sitter")))
             (ts-grammars (mapcar #'car treesit-language-source-alist)))
         (if (file-directory-p ts-grammars-dir)
             ;; If the tree-sitter grammars dir exists, check its contents and only install missing
             ;; grammars.
-            (let ((installed-grammars
-                   (mapcar (lambda (f)
-                             (intern
-                              (string-remove-prefix "libtree-sitter-" (string-remove-suffix ".so" f))))
-                           (seq-remove (lambda (f)
-                                         (member f '("." "..")))
-                                       (directory-files ts-grammars-dir)))))
-              (dolist (g ts-grammars)
-                (unless (memq g installed-grammars)
-                  (treesit-install-language-grammar g))))
+            (dolist (g ts-grammars)
+              (unless (treesit-language-available-p g)
+                (treesit-install-language-grammar g ts-grammars-dir)))
           ;; If the tree-sitter grammar dir does not exist, install all grammars from scratch.
-          (mapc #'treesit-install-language-grammar ts-grammars))))
+          (mapc (lambda (g) (treesit-install-language-grammar g ts-grammars-dir)) ts-grammars))))
     :config
     (my/install-missing-treesit-grammars))
 #+end_src
