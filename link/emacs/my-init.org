@@ -1294,7 +1294,8 @@ default mode name is hidden completely.
     ;; Remove lighter text for whitespace-mode
     (delight '((whitespace-mode nil whitespace)
                (auto-fill-function nil simple)
-               (subword-mode nil subword))))
+               (subword-mode nil subword)
+               (visual-line-mode nil simple))))
 #+end_src
 
 ** use-package-chords
