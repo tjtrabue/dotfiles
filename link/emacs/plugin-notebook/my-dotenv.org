@@ -1,0 +1,19 @@
+#+TITLE:   Support for Editing .env files
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-01-18
+#+TAGS:
+#+STARTUP: fold
+
+Emacs configuration and plugins for editing =.env= files.
+
+* dotenv-mode
+Us programmers do occasionally need to edit a =.env= file, such as when
+programming Docker Compose, Ruby, Go, and other languages. This package provides
+syntax highlighting for such files.
+
+#+begin_src emacs-lisp
+  (use-package dotenv-mode
+    ;; Also support files with names such as `.env.test', or `.env.secret'.
+    :mode ("\\.env\\..*\\'" . dotenv-mode))
+#+end_src
