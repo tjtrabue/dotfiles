@@ -38,13 +38,16 @@ editing than you would otherwise have.
      (typescript-ts-mode . combobulate-mode))
     :general
     (general-def 'normal combobulate-key-map
-      [remap evil-delete-line] 'combobulate-kill-node-dwim
-      [remap evil-change-line] 'my/combob-evil-kill-node-and-insert
+      [remap evil-delete-line]         'combobulate-kill-node-dwim
+      [remap evil-change-line]         'my/combob-evil-kill-node-and-insert
+      [remap evil-forward-WORD-begin]  'forward-sexp
+      [remap evil-backward-WORD-begin] 'backward-sexp
       "-" 'combobulate-yoink-forward
       "_" 'combobulate-yeet-forward)
     (general-def '(normal visual) combobulate-key-map
-      "M-j" 'combobulate-drag-down
-      "M-k" 'combobulate-drag-up)
+      "C-S-p" 'combobulate-clone-node-dwim
+      "M-j"   'combobulate-drag-down
+      "M-k"   'combobulate-drag-up)
     (my/user-leader-def combobulate-key-map
       "v" 'combobulate-highlight-dwim-at-point)
     (my/evil-leader-def combobulate-key-map
