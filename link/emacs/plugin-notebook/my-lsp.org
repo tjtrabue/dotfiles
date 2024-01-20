@@ -554,13 +554,16 @@ infrastructure for Emacs.
                 :build (:not compile))
     :general
     (general-def lsp-bridge-mode-map
-      "M-." 'lsp-bridge-find-def
-      "M-," 'lsp-bridge-find-def-return
-      "M-]" 'lsp-bridge-diagnostic-jump-next
-      "M-[" 'lsp-bridge-diagnostic-jump-prev
-      "M-r" 'lsp-bridge-find-references
-      "M-R" 'lsp-bridge-diagnostic-list
-      "M-v" 'acm-select-next-page)
+      [remap xref-find-definitions]              'lsp-bridge-find-def
+      [remap xref-find-references]               'lsp-bridge-find-references
+      [remap xref-find-definitions-other-window] 'lsp-bridge-find-def-other-window
+      "M-."                                      'lsp-bridge-find-def
+      "M-,"                                      'lsp-bridge-find-def-return
+      "M-]"                                      'lsp-bridge-diagnostic-jump-next
+      "M-["                                      'lsp-bridge-diagnostic-jump-prev
+      "M-r"                                      'lsp-bridge-find-references
+      "M-R"                                      'lsp-bridge-diagnostic-list
+      "M-v"                                      'acm-select-next-page)
     (general-def '(normal visual) lsp-bridge-mode-map
       "gr" 'lsp-bridge-rename)
     ;; Standard LSP keybindings (beginning with `C-c'):
