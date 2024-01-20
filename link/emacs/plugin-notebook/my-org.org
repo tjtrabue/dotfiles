@@ -161,6 +161,20 @@ Utility for moving downloaded images into Org buffers.
     (make-directory org-download-image-dir t))
 #+end_src
 
+* org-modern
+=org-modern-mode= utilizes a modern style for your Org buffers using font
+locking and text properties. This package styles headlines, keywords, tables,
+and source blocks. The styling is configurable: you can enable, disable, or
+modify the style of each syntax element individually via the =org-modern=
+customization group.
+
+#+begin_src emacs-lisp
+  (use-package org-modern
+    :hook
+    ((org-mode . org-modern-mode)
+     (org-agenda-finalize . org-modern-agenda)))
+#+end_src
+
 * org-preview-html
 Preview org files in Emacs rendered as HTML.
 
