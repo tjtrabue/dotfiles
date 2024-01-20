@@ -11,6 +11,8 @@
   (use-package svg-tag-mode
     ;; This is a pretty, but not very useful plugin.  `hl-todo-mode' does everything I need. Until I
     ;; find have a better use for this plugin, I will keep it disabled.
+    ;; UPDATE: `org-modern'implements pretty much everything in this package, and does so in a more
+    ;; efficient way, so I wouldn't bother with this package.
     :disabled
     :demand t
     :hook
