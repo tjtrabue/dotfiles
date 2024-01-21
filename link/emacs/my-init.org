@@ -1648,6 +1648,7 @@ latest and greatest, so we can also download it from ELPA.
                                ((executable-find "ugrep") 'ugrep)
                                (t "grep"))))
 #+end_src
+
 * Load External Configuration Files
 Load additional Emacs configuration files from my custom plugins directories.
 Most of these files correspond directly to third-party dependencies from MELPA.
