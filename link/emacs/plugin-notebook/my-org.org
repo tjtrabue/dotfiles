@@ -2,6 +2,7 @@
 #+AUTHOR:  Tom Trabue
 #+EMAIL:   tom.trabue@gmail.com
 #+DATE:    2020-05-26
+#+TAGS:    org mode markup literate programming
 #+STARTUP: fold
 
 Org is one of Emacs' killer apps: a powerful ORGanizer and much more, Org
