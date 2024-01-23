@@ -151,6 +151,9 @@ cedet-rc.el
 link/emacs/straight/build*
 link/emacs/straight/modified
 link/emacs/straight/repos
+
+# Emacs LaTeX output for configuration files
+link/emacs/plugin-notebook/ltximg/
 # }}}
 
 # sw {{{
