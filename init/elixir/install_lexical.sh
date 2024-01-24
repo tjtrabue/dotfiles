@@ -32,6 +32,8 @@ add this directory to your PATH variable once this script completes. Otherwise,
 some LSP clients (such as lsp-bridge for Emacs) may not be able to start or
 interact properly with Lexical.
 
+NOTE: Lexical requires 'git-lfs'.
+
 USAGE:
   ${THIS_EXEC} [OPTIONS]
 
