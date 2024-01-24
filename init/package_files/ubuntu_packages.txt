@@ -29,6 +29,7 @@ gcc-12
 gcc-12-doc
 gcc-12-locales
 gcc-12-multilib
+git-lfs
 global
 google-cloud-cli
 google-cloud-sdk-gke-gcloud-auth-plugin
