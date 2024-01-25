@@ -131,9 +131,11 @@ link/config/TabNine/*
 # }}}
 
 # Emacs {{{
-# Emacs backup files
+# Emacs backup and auto-save files
 *~
-*#*
+\#*\#
+.\#*
+auto-save-list
 
 # Compiled Emacs lisp files
 *.elc
