@@ -1551,6 +1551,28 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
     (org-auto-tangle-default t))
 #+end_src
 
+** ediff
+=ediff= is Emacs' built-in file diff tool. Although originally designed for
+viewing generic file diffs in ye olden times, =ediff= works wonderfully for
+viewing Git diffs between commits, merging diffs during Git merge conflicts, and
+much more.
+
+#+begin_src emacs-lisp
+  (use-package ediff
+    :custom
+    ;; `nil' means prompt to remove unmodified buffers A/B/C at session end.
+    (ediff-keep-variants nil)
+    ;; Whether to make all variant buffers read-only when `ediff' stars.
+    (ediff-make-buffers-readonly-at-startup nil)
+    ;; (ediff-merge-revisions-with-ancestor t)
+    ;; If `t', show only diff regions where both buffers disagree with the ancestor.
+    (ediff-show-clashes-only t)
+    ;; The function used to split the main window between buffer-A and buffer-B.
+    (ediff-split-window-function #'split-window-horizontally)
+    ;; Function called to set up windows.
+    (ediff-window-setup-function #'ediff-setup-windows-plain))
+#+end_src
+
 ** tree-sitter
 Emacs 29 introduced support for =tree-sitter=, a powerful language parsing
 library that greatly enhances Emacs' semantic understanding of source code.
