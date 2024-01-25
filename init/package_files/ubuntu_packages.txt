@@ -39,6 +39,7 @@ htop
 hunspell
 hunspell-en-us
 imagemagick
+inotify-tools
 isync
 jq
 language-pack-en-base
