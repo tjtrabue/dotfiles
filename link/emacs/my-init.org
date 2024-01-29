@@ -1401,6 +1401,7 @@ and hooks in a way that defers loading the package.
       "es" 'eshell-below
       ;; File
       "ff" 'find-file
+      "fF" 'find-file-other-window
       "lf" 'load-file
       "of" 'org-babel-load-file))
 #+end_src
@@ -1476,8 +1477,6 @@ try to load =org= later.
   \\PassOptionsToPackage{svgnames}{xcolor}
   \\documentclass[11pt]{article}
   \\usepackage{fontspec}
-  \\setmainfont{ETBembo RomanOSF}
-  \\setsansfont[Scale=MatchLowercase]{Raleway}
   \\setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
   \\usepackage{sectsty}
   \\allsectionsfont{\\sffamily}
@@ -1487,6 +1486,7 @@ try to load =org= later.
   \\lstset{frame=single,aboveskip=1em,
     framesep=.5em,backgroundcolor=\\color{AliceBlue},
     rulecolor=\\color{LightSteelBlue},framerule=1pt}
+  \\usepackage{setspace}
   \\usepackage{xcolor}
   \\newcommand\\basicdefault[1]{\\scriptsize\\color{Black}\\ttfamily#1}
   \\lstset{basicstyle=\\basicdefault{\\spaceskip1em}}
