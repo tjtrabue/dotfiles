@@ -1530,7 +1530,7 @@ try to load =org= later.
         showstringspaces=false,
         columns=fullflexible,
         keepspaces=true}
-  \\usepackage[a4paper,margin=1in,left=1.5in]{geometry}
+  \\usepackage[letterpaper,margin=1in]{geometry}
   \\usepackage{parskip}
   \\makeatletter
   \\renewcommand{\\maketitle}{%
