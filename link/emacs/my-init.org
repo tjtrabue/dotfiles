@@ -1472,6 +1472,8 @@ try to load =org= later.
                                         ("" "amssymb" t)
                                         ("" "capt-of" nil)
                                         ("" "hyperref" nil)))
+    ;; I took all of this preamble configuration from this blog post:
+    ;; https://so.nwalsh.com/2020/01/05-latex
     (org-latex-classes '(("article"
                           "\\RequirePackage{fix-cm}
   \\PassOptionsToPackage{svgnames}{xcolor}
