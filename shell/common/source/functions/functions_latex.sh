@@ -28,4 +28,13 @@ install_digestif_lsp() {
   digestif
 }
 
+# Update all TexLive LaTeX packages.
+# NOTE: This function assumes that you have installed TexLive manually, not
+#       through your system's package manager!
+update_texlive_packages() {
+  # Add the '--reinstall-forcibly-removed' flag if you want to recover something
+  # you uninstalled accidentally.
+  tlmgr update --self --all
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1
