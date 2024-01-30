@@ -8,6 +8,9 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
+# Parent directory for TexLive distributions.
+declare TEXLIVE_DIR="/usr/local/texlive"
+
 # Logging variables
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
@@ -77,8 +80,27 @@ and your INFOPATH file (~/.info_path):
 EOF
 }
 
+# We  want our user to own the texlive distribution dir.
+# It will have a name like: /usr/local/texlive/2023
+update_texlive_permissions() {
+  log_info "Making ${USER} owner of ${TEXLIVE_DIR}/* directories"
+  find "${TEXLIVE_DIR}" -maxdepth 1 -mindepth 1 -type d \
+    -regextype 'posix-extended' -regex '.*[0-9]{4}' \
+    -execdir sudo chown -hR "${USER}" '{}' ';'
+}
+
+# Make sure tlmgr knows where to get updates.
+configure_tlmgr() {
+  local tlmgrUpdateUrl="https://mirror.ctan.org/systems/texlive/tlnet"
+
+  log_info "Configuring tlmgr"
+  tlmgr option location "${tlmgrUpdateUrl}"
+}
+
 main() {
-  install_texlive
+  install_texlive &&
+    update_texlive_permissions &&
+    configure_tlmgr
 }
 # }}}
 
