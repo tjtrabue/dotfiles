@@ -28,6 +28,10 @@ contain out-of-date versions that are incompatible with the latest TeX Live
 package repositories, meaning you cannot automatically install package using
 'tlmgr install <package>'.
 
+To update texlive, run the following commands:
+  sudo tlmgr update --self
+  sudo tlmgr update --all
+
 To uninstall this distribution, the cleanest solution is to use
 'sudo tlmgr remove --all --force'. If that does not work, the directories you
 must remove will be named with the scheme:
@@ -65,6 +69,7 @@ install_texlive() {
   cat <<EOF
 Done! Do not forget to prepend this to your PATH:
   /usr/local/texlive/YYYY/bin/PLATFORM,
+(PLATFORM will look something like 'x86_64-linux')
 You will also want to add these to your mandb config file (/etc/manpath.config):
   /usr/local/texlive/YYYY/texmf-dist/doc/man
 and your INFOPATH file (~/.info_path):
