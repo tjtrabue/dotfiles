@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -euo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Help/Usage {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC} | Install latest LaTeX TexLive distribution
+
+Install the latest TeX Live distribution on a UNIX OS. This is the preferred
+approach to installing TeX Live, since system package repositories usually
+contain out-of-date versions that are incompatible with the latest TeX Live
+package repositories, meaning you cannot automatically install package using
+'tlmgr install <package>'.
+
+To uninstall this distribution, the cleanest solution is to use
+'sudo tlmgr remove --all --force'. If that does not work, the directories you
+must remove will be named with the scheme:
+  /usr/local/texlive/YYYY
+  ~/.texliveYYYY
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+# }}}
+
+# Primary Functions {{{
+install_texlive() {
+  local tempDir="/tmp"
+  local texliveDownloadUrl="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
+  local tarFileName="install-tl-unx.tar.gz"
+
+  log_info "Installing latest TeX Live distribution"
+  (
+    cd "${tempDir}" && \
+    wget -q "${texliveDownloadUrl}" && \
+    zcat < "${tarFileName}" | tar xf - && \
+    (
+      cd "$(find "${tempDir}" -maxdepth 1 -mindepth 1 \
+        -type d -name 'install-tl-*')" && \
+      sudo perl ./install-tl --paper=letter --no-interaction
+    )
+  ) && \
+  rm -rf "${tempDir:?}"/install-tl-* && \
+  cat <<EOF
+Done! Do not forget to prepend this to your PATH:
+  /usr/local/texlive/YYYY/bin/PLATFORM,
+You will also want to add these to your mandb config file (/etc/manpath.config):
+  /usr/local/texlive/YYYY/texmf-dist/doc/man
+and your INFOPATH file (~/.info_path):
+  /usr/local/texlive/YYYY/texmf-dist/doc/info
+EOF
+}
+
+main() {
+  install_texlive
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n 'install_latest_texlive' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
