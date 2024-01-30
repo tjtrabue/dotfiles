@@ -127,9 +127,42 @@ itl__setup_paths() {
   printf '%s\n' "${texliveInfoDir}" >>"${userInfoPathFile}"
 }
 
+# Install some extra TexLive fonts that are not "free" in the FSF sense of the
+# word, and are therefore not included with TexLive by default.
+itl__install_non_free_fonts() {
+  local nonFreeFontsInstallerUrl="https://www.tug.org/fonts/getnonfreefonts/install-getnonfreefonts"
+  local tmpDir="/tmp"
+  local nonFreeFontsInstaller="install-getnonfreefonts"
+
+  log_info "Installing non-free TexLive fonts"
+  (
+    cd "${tmpDir}" &&
+      wget -q "${nonFreeFontsInstallerUrl}" &&
+        texlua "${nonFreeFontsInstaller}" &&
+        getnonfreefonts --sys --all
+  )
+}
+
+itl__link_texlive_font_config() {
+  local latestTexliveDir="$(printf '%s\n' "${TEXLIVE_DIR}"/20* |
+    sort -n |
+    tail -1)"
+  local texliveFontConfFile="${latestTexliveDir}/texmf-var/fonts/conf/texlive-fontconfig.conf"
+  local systemFontConfDest="/etc/fonts/conf.d/09-texlive-fonts.conf"
+
+  if [ -f "${texliveFontConfFile}" ]; then
+    log_info "Linking TexLive font config file to: ${BLUE}${systemFontConfDest}${NC}"
+    sudo ln -sf "${texliveFontConfFile}" "${systemFontConfDest}"
+  else
+    err "Could not find TexLive font config file at: ${BLUE}${texliveFontConfFile}${NC}"
+  fi
+}
+
+# Update caches for man page database, font cache, etc.
 itl__update_caches() {
   log_info "Updating caches"
   sudo mandb
+  sudo fc-cache -fsv
 }
 
 main() {
@@ -137,6 +170,8 @@ main() {
     itl__update_texlive_permissions &&
     itl__configure_tlmgr &&
     itl__setup_paths &&
+    itl__install_non_free_fonts &&
+    itl__link_texlive_font_config &&
     itl__update_caches
 }
 # }}}

@@ -1477,6 +1477,8 @@ try to load =org= later.
   \\PassOptionsToPackage{svgnames}{xcolor}
   \\documentclass[11pt]{article}
   \\usepackage{fontspec}
+  \\setmainfont{Linux Libertine O}
+  \\setsansfont[Scale=MatchLowercase]{Raleway}
   \\setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
   \\usepackage{sectsty}
   \\allsectionsfont{\\sffamily}
