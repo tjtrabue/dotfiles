@@ -4,7 +4,7 @@
 #+LATEX_HEADER: usepackage{fontspec}
 #+LATEX_HEADER: setmainfont{Linux Libertine O}
 #+LATEX_HEADER: setsansfont[Scale=MatchLowercase]{Raleway}
-#+LATEX_HEADER: setmonofont[Scale=MatchLowercase]{Luxi Mono}
+#+LATEX_HEADER: setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
 #+LATEX_HEADER: usepackage{sectsty}
 #+LATEX_HEADER: allsectionsfont{\sffamily}
 #+LATEX_HEADER: usepackage{enumitem}
