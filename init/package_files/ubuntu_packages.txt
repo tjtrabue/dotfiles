@@ -223,7 +223,6 @@ sharutils
 shellcheck
 socat
 texinfo
-texlive-full
 tree
 unzip
 w3m
