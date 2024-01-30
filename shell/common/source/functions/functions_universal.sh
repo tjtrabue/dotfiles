@@ -47,8 +47,9 @@ rmbaks() {
 
 # Make a new executable bash script.
 mkbin() {
-  local executableName="$1"
+  local executableName="${1}"
   local bashTemplate
+
   if [ -L "$DOTFILES_HOME" ]; then
     bashTemplate="$(find -L "$DOTFILES_HOME" -type f -iname "*mkbin.bash")"
   elif [ -d "$DOTFILES_HOME" ]; then
@@ -58,15 +59,18 @@ mkbin() {
       "that the directory exists, and try again."
     return 1
   fi
+
   while [ -z "$executableName" ]; do
     echoe "Please enter a name for the executable (with or without file extension):"
     read -er executableName
   done
+
   if [[ $executableName =~ \..*$ ]]; then
     executableName="${executableName/.*//}"
   fi
-  cp "$bashTemplate" "$executableName"
-  chmod 755 "$executableName"
+
+  cp "${bashTemplate}" "${executableName}"
+  chmod 755 "${executableName}"
 }
 
 # Return the name of the currently running shell interpreter, such as "bash" or
