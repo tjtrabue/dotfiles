@@ -148,6 +148,7 @@ itl__link_texlive_font_config() {
     sort -n |
     tail -1)"
   local texliveFontConfFile="${latestTexliveDir}/texmf-var/fonts/conf/texlive-fontconfig.conf"
+  # TODO: Verify this destination works for Linux distros other than Ubuntu!
   local systemFontConfDest="/etc/fonts/conf.d/09-texlive-fonts.conf"
 
   if [ -f "${texliveFontConfFile}" ]; then
