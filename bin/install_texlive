@@ -52,7 +52,7 @@ EOF
 # }}}
 
 # Primary Functions {{{
-install_texlive() {
+itl__install_texlive() {
   local tempDir="/tmp"
   local texliveDownloadUrl="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
   local tarFileName="install-tl-unx.tar.gz"
@@ -82,7 +82,7 @@ EOF
 
 # We  want our user to own the texlive distribution dir.
 # It will have a name like: /usr/local/texlive/2023
-update_texlive_permissions() {
+itl__update_texlive_permissions() {
   log_info "Making ${USER} owner of ${TEXLIVE_DIR}/* directories"
   find "${TEXLIVE_DIR}" -maxdepth 1 -mindepth 1 -type d \
     -regextype 'posix-extended' -regex '.*[0-9]{4}' \
@@ -90,17 +90,17 @@ update_texlive_permissions() {
 }
 
 # Make sure tlmgr knows where to get updates.
-configure_tlmgr() {
-  local tlmgrUpdateUrl="https://mirror.ctan.org/systems/texlive/tlnet"
+itl__configure_tlmgr() {
+  local tlmgrUpdateUrl="http://mirror.ctan.org/systems/texlive/tlnet"
 
   log_info "Configuring tlmgr"
   tlmgr option location "${tlmgrUpdateUrl}"
 }
 
 main() {
-  install_texlive &&
-    update_texlive_permissions &&
-    configure_tlmgr
+  itl__install_texlive &&
+    itl__update_texlive_permissions &&
+    itl__configure_tlmgr
 }
 # }}}
 
