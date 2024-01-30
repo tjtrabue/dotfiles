@@ -1400,7 +1400,7 @@ and hooks in a way that defers loading the package.
       ;; eshell
       "es" 'eshell-below
       ;; File
-      "ff" 'find-file
+      "ff" 'find-file-at-point
       "fF" 'find-file-other-window
       "lf" 'load-file
       "of" 'org-babel-load-file))
