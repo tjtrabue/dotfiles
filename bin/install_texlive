@@ -74,7 +74,7 @@ Done! Do not forget to prepend this to your PATH:
   /usr/local/texlive/YYYY/bin/PLATFORM,
 (PLATFORM will look something like 'x86_64-linux')
 You will also want to add these to your mandb config file (/etc/manpath.config):
-  /usr/local/texlive/YYYY/texmf-dist/doc/man
+  MANPATH_MAP /usr/local/texlive/YYYY/bin/PLATFORM /usr/local/texlive/YYYY/texmf-dist/doc/man
 and your INFOPATH file (~/.info_path):
   /usr/local/texlive/YYYY/texmf-dist/doc/info
 EOF
@@ -85,7 +85,6 @@ EOF
 itl__update_texlive_permissions() {
   log_info "Making ${USER} owner of ${TEXLIVE_DIR}/* directories"
   find "${TEXLIVE_DIR}" -maxdepth 1 -mindepth 1 -type d \
-    -regextype 'posix-extended' -regex '.*[0-9]{4}' \
     -execdir sudo chown -hR "${USER}" '{}' ';'
 }
 
@@ -97,10 +96,48 @@ itl__configure_tlmgr() {
   tlmgr option location "${tlmgrUpdateUrl}"
 }
 
+# Setup PATH, man db, texinfo config, etc.
+itl__setup_paths() {
+  local latestTexliveDir="$(printf '%s\n' "${TEXLIVE_DIR}"/20* |
+    sort -n |
+    tail -1)"
+  local texliveBinDir="$(find "${latestTexliveDir}/bin" -maxdepth 1 \
+    -mindepth 1 -type d)"
+  local texliveInfoDir="${latestTexliveDir}/texmf-dist/doc/info"
+  local texliveManDir="${latestTexliveDir}/texmf-dist/doc/man"
+  local userInfoPathFile="${HOME}/.info_path"
+  local mandbFile="/etc/manpath.config"
+
+  if [ -d "${texliveBinDir}" ]; then
+    log_info "Adding texlive binaries dir to \$PATH"
+    atp "${texliveBinDir}"
+  else
+    warn "Could not find texlive bin dir: ${BLUE}${texliveBinDir}${NC}"
+  fi
+
+  if [ -f "${mandbFile}" ]; then
+    log_info "Adding texlive man path configuration"
+    printf 'MANPATH_MAP %s %s\n' "${texliveBinDir}" "${texliveManDir}" |
+      sudo tee -a "${mandbFile}" >>/dev/null 2>&1
+  else
+    warn "Could not find manpath config file at: ${BLUE}${mandbFile}${NC}"
+  fi
+
+  log_info "Adding texlive info path to ${BLUE}${userInfoPathFile}${NC}"
+  printf '%s\n' "${texliveInfoDir}" >>"${userInfoPathFile}"
+}
+
+itl__update_caches() {
+  log_info "Updating caches"
+  sudo mandb
+}
+
 main() {
   itl__install_texlive &&
     itl__update_texlive_permissions &&
-    itl__configure_tlmgr
+    itl__configure_tlmgr &&
+    itl__setup_paths &&
+    itl__update_caches
 }
 # }}}
 
