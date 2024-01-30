@@ -248,6 +248,22 @@ Supports the following properties:
     (ob-mermaid-cli-path (executable-find "mmdc")))
 #+end_src
 
+* ob-sagemath
+=ob-sagemath= provides an org-babel integration with SageMath by
+=sage-shell-mode=. This package takes inspiration from =ob-ipython=, though its
+implementation is entirely different.
+
+#+begin_src emacs-lisp
+  (use-package ob-sagemath
+    :after sage-shell-mode
+    ;; This package requires a SageMath installation on the system.
+    :if (executable-find "sage")
+    :init
+    ;; Ob-sagemath supports only evaluating with a session.
+    (setq org-babel-default-header-args:sage '((:session . t)
+                                               (:results . "output"))))
+#+end_src
+
 * ox-gfm
 This is a small exporter based on the Markdown exporter already existing in
 Org mode.

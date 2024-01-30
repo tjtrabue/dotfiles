@@ -1612,6 +1612,8 @@ try to load =org= later.
     ;; Whether to prompt the user for confirmation before evaluating source
     ;; blocks.
     (org-confirm-babel-evaluate nil)
+    ;; Whether to show images when opening an Org file.
+    (org-startup-with-inline-images t)
     ;; Whether to keep images their original size or to shrink them to fit their
     ;; corresponding Org mode buffer.
     (org-image-actual-width nil)
@@ -1642,6 +1644,8 @@ try to load =org= later.
                 ;; Fix Evil mode keybindings in Org's special-edit buffers (Source code buffers
                 ;; entered by pressing `C-c \'').
                 (evil-normalize-keymaps)))
+    ;; Show images after evaluating code blocks.
+    (add-hook 'org-babel-after-execute-hook #'org-display-inline-images)
     ;; Make sure the Org notes directory is present.
     (make-directory my/org-dir t)
     ;; Also create the agenda directory.
