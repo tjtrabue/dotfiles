@@ -259,7 +259,8 @@ implementation is entirely different.
     ;; This package requires a SageMath installation on the system.
     :if (executable-find "sage")
     :init
-    ;; Ob-sagemath supports only evaluating with a session.
+    ;; Ob-sagemath supports only evaluating with a session, meaning each Org babel block for sagemath
+    ;; requires a `:session foo' tag.
     (setq org-babel-default-header-args:sage '((:session . t)
                                                (:results . "output"))))
 #+end_src
