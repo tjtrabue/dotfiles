@@ -10,12 +10,16 @@ fact, many modern LSP servers also provide a DAP server.
 
 #+begin_src emacs-lisp
   (use-package dap-mode
-    :after (lsp-mode lsp-treemacs)
+    :after lsp-bridge
+    ;; :after (lsp-mode lsp-treemacs)
     :hook
     ((dap-stopped . (lambda (arg)
                       ;; Automatically trigger the built-in dap-mode hydra when the debugger
                       ;; hits a breakpoint.
                       (call-interactively #'dap-hydra)))
+     (lsp-bridge-mode . (lambda ()
+                          ;; Automatically configure dap-mode with default settings
+                          (dap-auto-configure-mode 1)))
      (lsp-mode . (lambda ()
                    ;; Automatically configure dap-mode with default settings
                    (dap-auto-configure-mode 1)))
@@ -25,5 +29,9 @@ fact, many modern LSP servers also provide a DAP server.
                                       (dap-chrome-setup))))
     :general
     (general-def lsp-command-map
-      "d h" 'dap-hydra))
+      "d h" 'dap-hydra)
+    (my/user-leader-def lsp-bridge-mode-map
+      "lH" 'dap-hydra)
+    (my/evil-leader-def lsp-bridge-mode-map
+      "wH" 'dap-hydra))
 #+end_src
