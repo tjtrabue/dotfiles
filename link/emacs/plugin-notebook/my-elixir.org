@@ -33,19 +33,6 @@ The Tree-Sitter enabled version of =elixir-mode=.
                         (push '("|>" . ?\u25B7) prettify-symbols-alist))))
 #+end_src
 
-* elixir-mode (deprecated)
-Major mode for working with Elixir files. =elixir-mode= provides font-locking,
-indentation, and navigation support for the Elixir programming language.
-
-NOTE: This package is for Emacs 29 and earlier. Starting with version 30, Emacs
-comes with a built-in Elixir major mode with tree-sitter support. You should use
-the built-in =elxir-mode= when possible.
-
-#+begin_src emacs-lisp
-  (use-package elixir-mode
-    :if (<= emacs-major-version 29))
-#+end_src
-
 * mix.el
 Minor mode for interacting with Mix (the Elixir build and lifecycle tool that
 comes with each Elixir SDK) from inside Emacs.
@@ -103,22 +90,55 @@ Simple interface for running ExUnit tests from inside Emacs.
 #+end_src
 
 * inf-elixir
-Provides functions for opening and interacting with IEx, the Elixir REPL, from
-inside Emacs. Useful if you do not use Alchemist, which is deprecated, so you
-probably shouldn't.
+Provides functions for opening and interacting with IEx, the interactive Elixir
+REPL, from inside Emacs. Alchemist included a great IEx integration feature, but
+since Alchemist has been abandoned for years now, =inf-elixir= provides a
+fantastic alternative, and accompanies =elixir-ls= or =lexical= nicely. In fact,
+combining =lexical= with =inf-elixir= provides the nearly same turbo charge for
+Elixir that SLIME does for Common Lisp.
 
+** Notes
+- If you want to use the =open()= helper function in IEx to open a module or
+  file in Emacs, you must run Emacs in server mode.
+
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package inf-elixir
+    :hook
+    ;; Turn on `inf-elixir-minor-mode' for all Elixir buffers.
+    ;; This mode allows interaction with the IEx REPL.
+    (elixir-ts-mode . inf-elixir-minor-mode)
     :general
     (my/user-leader-def elixir-ts-mode-map
       "i i" 'inf-elixir
       "i p" 'inf-elixir-project
       "i l" 'inf-elixir-send-line
       "i r" 'inf-elixir-send-region
-      "i b" 'inf-elixir-send-buffer))
+      "i b" 'inf-elixir-send-buffer
+      "i R" 'inf-elixir-reload-module)
+    (my/evil-leader-def elixir-ts-mode-map
+      "ii" 'inf-elixir
+      "ip" 'inf-elixir-project
+      "il" 'inf-elixir-send-line
+      "ir" 'inf-elixir-send-region
+      "ib" 'inf-elixir-send-buffer
+      "iR" 'inf-elixir-reload-module))
 #+end_src
 
-* Alchemist
+* elixir-mode (deprecated)
+Major mode for working with Elixir files. =elixir-mode= provides font-locking,
+indentation, and navigation support for the Elixir programming language.
+
+NOTE: This package is for Emacs 29 and earlier. Starting with version 30, Emacs
+comes with a built-in Elixir major mode with tree-sitter support. You should use
+the built-in =elxir-mode= when possible.
+
+#+begin_src emacs-lisp
+  (use-package elixir-mode
+    :if (<= emacs-major-version 29))
+#+end_src
+
+* Alchemist (deprecated)
 A suite of tools for working with Elixir projects, including Phoenix MVC
 applications.
 
