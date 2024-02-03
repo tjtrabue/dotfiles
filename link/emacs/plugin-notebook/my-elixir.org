@@ -59,6 +59,7 @@ one of the following commands:
     ((elixir-mode elixir-ts-mode) . mix-minor-mode)
     :general
     (my/evil-leader-def mix-minor-mode-map
+      ","   'mix-execute-task
       "xe"  'mix-execute-task
       "xue" (lambda ()
               (interactive)
@@ -80,6 +81,8 @@ one of the following commands:
 
 * exunit.el
 Simple interface for running ExUnit tests from inside Emacs.
+
+The default keybinding to launch the transient menu (a la =magit=) is =C-c ,=.
 
 #+begin_src emacs-lisp
   (use-package exunit
