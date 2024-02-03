@@ -213,7 +213,7 @@ navigate slides.
 #+begin_src emacs-lisp
   (use-package org-tree-slide
     :general
-    (general-def 'normal org-tree-slide-mode-map
+    (general-def org-tree-slide-mode-map
       "C->" 'org-tree-slide-move-next-tree
       "C-<" 'org-tree-slide-move-previous-tree)
     :init
