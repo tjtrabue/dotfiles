@@ -46,6 +46,7 @@ docker
 docker-buildx
 docker-compose
 doxygen
+dvisvgm
 efibootmgr
 elixir
 evince
