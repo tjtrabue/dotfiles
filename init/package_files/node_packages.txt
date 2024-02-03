@@ -42,6 +42,7 @@ markdownlint
 markdownlint-cli
 mermaid
 node-cljfmt
+npm-check
 npm-check-updates
 prettier
 prettier-plugin-elm

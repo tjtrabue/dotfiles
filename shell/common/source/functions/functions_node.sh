@@ -62,15 +62,9 @@ install_node_packages() {
   eval "npm install -g --force $(tr '\n' ' ' <"${NODE_PACKAGES_FILE}")"
 }
 
+# Update all globally installed NPM packages to the latest version.
 update_node_packages() {
-  # Uses the npm-check-updates tool to get packages marked for update
-  local packagesToUpdate="$(ncu -gu 2>/dev/null | grep '^npm' | sed '/^$/d')"
-
-  if [ -n "$packagesToUpdate" ]; then
-    eval "npm install -g" "${packagesToUpdate}"
-  else
-    log_info "No packages to update."
-  fi
+  npx npm-check --global --update-all
 }
 
 # Writes the default node version installed with nvm to the ~/.path file.
