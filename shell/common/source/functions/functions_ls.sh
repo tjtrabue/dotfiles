@@ -20,7 +20,7 @@ ll() {
 }
 
 alias la >>/dev/null 2>&1 && unalias la >>/dev/null 2>&1
-# List all files in long-form, using either `exa` or `ls`.
+# List all files in long-form, using either `eza`, `exa`, or `ls`.
 la() {
   local flags="-l -F -h -A"
   local dir_to_list="${*:-.}"
@@ -30,7 +30,7 @@ la() {
 alias lla >>/dev/null 2>&1 && unalias lla >>/dev/null 2>&1
 # List all files in long-form, choosing the `ls` analog command automatically.
 lla() {
-  local flags="-lAFh"
+  local flags="-l -A -F -h"
   local dir_to_list="${*:-.}"
   __do_ls "$flags" "$dir_to_list"
 }
@@ -56,7 +56,9 @@ __do_ls_light() {
   local flags="$1"
   local dir_to_list="${2:-.}"
 
-  if [ -x "$(command -v "exa")" ]; then
+  if [ -x "$(command -v "eza")" ]; then
+    __do_ls_eza "${flags}" "${dir_to_list}"
+  elif [ -x "$(command -v "exa")" ]; then
     __do_ls_exa "${flags}" "${dir_to_list}"
   elif [ -x "$(command -v perl)" ]; then
     __do_ls_perl_script "${flags}" "${dir_to_list}"
@@ -74,6 +76,8 @@ __do_ls_auto() {
     __do_ls_colorls "${flags}" "${dir_to_list}"
   elif $USE_LS_ICONS && [ -x "$(command -v "ls-icons")" ]; then
     __do_ls_ls_icons "${flags}" "${dir_to_list}"
+  elif [ -x "$(command -v "eza")" ]; then
+    __do_ls_eza "${flags}" "${dir_to_list}"
   elif [ -x "$(command -v "exa")" ]; then
     __do_ls_exa "${flags}" "${dir_to_list}"
   elif [ -x "$(command -v perl)" ]; then
@@ -96,6 +100,8 @@ __do_ls_colorls() {
 
 # The exa command is a drop-in replacement for ls written in rust, and has
 # far better coloring capabilities.
+#
+# NOTE: `exa` has been replaced by the `eza` tool.
 __do_ls_exa() {
   local flags="$1"
   local dir_to_list="${2:-.}"
@@ -105,6 +111,18 @@ __do_ls_exa() {
   # Add extra exa-specific flags.
   flags="${flags} -@ --group-directories-first --git"
   eval "command exa ${flags} ${dir_to_list}"
+}
+
+# `eza` is the successor program to exa, and should be used in its stead.
+__do_ls_eza() {
+  local flags="$1"
+  local dir_to_list="${2:-.}"
+
+  # `eza` has no '-A' flag, so use '-a' instead.
+  flags="${flags/A/a}"
+  # Add extra eza-specific flags.
+  flags="${flags} -@ --group-directories-first --git"
+  eval "command eza ${flags} ${dir_to_list}"
 }
 
 # Use the fancy ls-icons tool to show ls output if we have ls-icons installed.
