@@ -59,17 +59,17 @@ itl__install_texlive() {
 
   log_info "Installing latest TeX Live distribution"
   (
-    cd "${tempDir}" && \
-    wget -q "${texliveDownloadUrl}" && \
-    zcat < "${tarFileName}" | tar xf - && \
-    (
-      cd "$(find "${tempDir}" -maxdepth 1 -mindepth 1 \
-        -type d -name 'install-tl-*')" && \
-      sudo perl ./install-tl --paper=letter --no-interaction
-    )
-  ) && \
-  rm -rf "${tempDir:?}"/install-tl-* && \
-  cat <<EOF
+    cd "${tempDir}" &&
+      wget -q "${texliveDownloadUrl}" &&
+      zcat <"${tarFileName}" | tar xf - &&
+      (
+        cd "$(find "${tempDir}" -maxdepth 1 -mindepth 1 \
+          -type d -name 'install-tl-*')" &&
+          sudo perl ./install-tl --paper=letter --no-interaction
+      )
+  ) &&
+    rm -rf "${tempDir:?}"/install-tl-* &&
+    cat <<EOF
 Done! Do not forget to prepend this to your PATH:
   /usr/local/texlive/YYYY/bin/PLATFORM,
 (PLATFORM will look something like 'x86_64-linux')
@@ -106,10 +106,20 @@ itl__setup_paths() {
   local texliveInfoDir="${latestTexliveDir}/texmf-dist/doc/info"
   local texliveManDir="${latestTexliveDir}/texmf-dist/doc/man"
   local userInfoPathFile="${HOME}/.info_path"
+  # The path to the manpage database file.
   local mandbFile="/etc/manpath.config"
+  local distro="$(getdistro)"
+
+  # Different Linux distros have different manpage database file locations. The
+  # syntax should be the same regardless of file name or location.
+  case "${distro}" in
+  "Arch Linux")
+    mandbFile="/etc/man_db.conf"
+    ;;
+  esac
 
   if [ -d "${texliveBinDir}" ]; then
-    log_info "Adding texlive binaries dir to \$PATH"
+    log_info 'Adding texlive binaries dir to $PATH'
     atp "${texliveBinDir}"
   else
     warn "Could not find texlive bin dir: ${BLUE}${texliveBinDir}${NC}"
@@ -138,8 +148,8 @@ itl__install_non_free_fonts() {
   (
     cd "${tmpDir}" &&
       wget -q "${nonFreeFontsInstallerUrl}" &&
-        texlua "${nonFreeFontsInstaller}" &&
-        getnonfreefonts --sys --all
+      texlua "${nonFreeFontsInstaller}" &&
+      getnonfreefonts --sys --all
   )
 }
 
@@ -169,8 +179,8 @@ itl__update_caches() {
 main() {
   itl__install_texlive &&
     itl__update_texlive_permissions &&
-    itl__configure_tlmgr &&
     itl__setup_paths &&
+    itl__configure_tlmgr &&
     itl__install_non_free_fonts &&
     itl__link_texlive_font_config &&
     itl__update_caches

@@ -5,7 +5,7 @@
 alias l >>/dev/null 2>&1 && unalias l >>/dev/null 2>&1
 # List out files in long-form, using `exa` if available, or `ls`.
 l() {
-  local flags="-lFh"
+  local flags="-l -F -h"
   local dir_to_list="${*:-.}"
 
   __do_ls "${flags}" "${dir_to_list}" "light"
@@ -14,7 +14,7 @@ l() {
 alias ll >>/dev/null 2>&1 && unalias ll >>/dev/null 2>&1
 # List out files in long-form, choosing the `ls` analog command automatically.
 ll() {
-  local flags="-lFh"
+  local flags="-l -F -h"
   local dir_to_list="${*:-.}"
   __do_ls "$flags" "$dir_to_list"
 }
@@ -22,7 +22,7 @@ ll() {
 alias la >>/dev/null 2>&1 && unalias la >>/dev/null 2>&1
 # List all files in long-form, using either `exa` or `ls`.
 la() {
-  local flags="-lFhA"
+  local flags="-l -F -h -A"
   local dir_to_list="${*:-.}"
   __do_ls "${flags}" "${dir_to_list}" "light"
 }
@@ -160,7 +160,7 @@ install_custom_ls_colors() {
   fi
 
   (
-    cd "${installDir}" 
+    cd "${installDir}"
     make install
   )
 }
