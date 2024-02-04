@@ -35,7 +35,8 @@ The Tree-Sitter enabled version of =elixir-mode=.
                         ;; with `mix format', but if you encounter any code formatting issues, you may
                         ;; want to disable `aggressive-indent-mode', as it can cause conflicts with
                         ;; automatic code formatters.
-                        (aggressive-indent-mode 1))))
+                        ;; (aggressive-indent-mode 1)
+                        )))
 #+end_src
 
 * mix.el

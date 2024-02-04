@@ -70,12 +70,16 @@ itl__install_texlive() {
   ) &&
     rm -rf "${tempDir:?}"/install-tl-* &&
     cat <<EOF
-Done! Do not forget to prepend this to your PATH:
+Done! Although this script SHOULD take care of these settings automatically,
+make sure that this is prepended to your \$PATH environment variable:
   /usr/local/texlive/YYYY/bin/PLATFORM,
 (PLATFORM will look something like 'x86_64-linux')
-You will also want to add these to your mandb config file (/etc/manpath.config):
+
+You will also want to add this line to your mandb config file
+(Usually at '/etc/manpath.config' or '/etc/man_db.conf'):
   MANPATH_MAP /usr/local/texlive/YYYY/bin/PLATFORM /usr/local/texlive/YYYY/texmf-dist/doc/man
-and your INFOPATH file (~/.info_path):
+
+And add this line to your INFOPATH file (~/.info_path):
   /usr/local/texlive/YYYY/texmf-dist/doc/info
 EOF
 }
