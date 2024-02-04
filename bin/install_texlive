@@ -170,7 +170,7 @@ itl__update_caches() {
 # Print the user a final informational message to ensure that they know which
 # system files to edit/link.
 itl__print_final_message() {
-  cat <<EOF
+  command cat <<EOF
 Done! Although this script SHOULD take care of these settings automatically,
 make sure that this is prepended to your \$PATH environment variable:
   /usr/local/texlive/YYYY/bin/PLATFORM,
