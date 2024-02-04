@@ -68,20 +68,7 @@ itl__install_texlive() {
           sudo perl ./install-tl --paper=letter --no-interaction
       )
   ) &&
-    rm -rf "${tempDir:?}"/install-tl-* &&
-    cat <<EOF
-Done! Although this script SHOULD take care of these settings automatically,
-make sure that this is prepended to your \$PATH environment variable:
-  /usr/local/texlive/YYYY/bin/PLATFORM,
-(PLATFORM will look something like 'x86_64-linux')
-
-You will also want to add this line to your mandb config file
-(Usually at '/etc/manpath.config' or '/etc/man_db.conf'):
-  MANPATH_MAP /usr/local/texlive/YYYY/bin/PLATFORM /usr/local/texlive/YYYY/texmf-dist/doc/man
-
-And add this line to your INFOPATH file (~/.info_path):
-  /usr/local/texlive/YYYY/texmf-dist/doc/info
-EOF
+    rm -rf "${tempDir:?}"/install-tl-*
 }
 
 # We  want our user to own the texlive distribution dir.
@@ -180,6 +167,24 @@ itl__update_caches() {
   sudo fc-cache -fsv
 }
 
+# Print the user a final informational message to ensure that they know which
+# system files to edit/link.
+itl__print_final_message() {
+  cat <<EOF
+Done! Although this script SHOULD take care of these settings automatically,
+make sure that this is prepended to your \$PATH environment variable:
+  /usr/local/texlive/YYYY/bin/PLATFORM,
+(PLATFORM will look something like 'x86_64-linux')
+
+You will also want to add this line to your mandb config file
+(Usually at '/etc/manpath.config' or '/etc/man_db.conf'):
+  MANPATH_MAP /usr/local/texlive/YYYY/bin/PLATFORM /usr/local/texlive/YYYY/texmf-dist/doc/man
+
+And add this line to your INFOPATH file (~/.info_path):
+  /usr/local/texlive/YYYY/texmf-dist/doc/info
+EOF
+}
+
 main() {
   itl__install_texlive &&
     itl__update_texlive_permissions &&
@@ -187,7 +192,8 @@ main() {
     itl__configure_tlmgr &&
     itl__install_non_free_fonts &&
     itl__link_texlive_font_config &&
-    itl__update_caches
+    itl__update_caches &&
+    itl__print_final_message
 }
 # }}}
 
