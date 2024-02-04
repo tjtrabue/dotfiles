@@ -33,8 +33,8 @@ The Tree-Sitter enabled version of =elixir-mode=.
                         (push '("|>" . ?\u25B7) prettify-symbols-alist)
                         ;; Turn on `aggressive-indent-mode' for Elixir buffers.  It seems to work fine
                         ;; with `mix format', but if you encounter any code formatting issues, you may
-                        ;; want to disable `aggressive-indent-mode', as it is known to cause conflicts
-                        ;; with automatic code formatters.
+                        ;; want to disable `aggressive-indent-mode', as it can cause conflicts with
+                        ;; automatic code formatters.
                         (aggressive-indent-mode 1))))
 #+end_src
 
