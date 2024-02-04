@@ -22,6 +22,7 @@ is simple to do.
     (my/user-leader-def flycheck-mode-map
       "F" '(:keymap flycheck-command-map))
     (my/evil-leader-def flycheck-mode-map
+      "fb" 'flycheck-buffer
       "fd" 'flycheck-display-error-at-point
       "fl" 'flycheck-list-errors
       "fn" 'flycheck-next-error
