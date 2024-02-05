@@ -477,6 +477,10 @@ LanguageServerProtocol clients and servers.
   ;; Whether to cycle completions.
   (setq completion-cycle-threshold t)
 
+  ;; If non-nil, redraw the display before processing queued input events.
+  ;; NOTE: Can make the typing experience slower.
+  (setq redisplay-dont-pause t)
+
   ;; Show file name and major mode in title bar.
   (setq-default frame-title-format
                 '("%b [%m]@"
