@@ -13,12 +13,17 @@ emacs_rm_caches() {
 
   log_info "Deleting Emacs cache directories"
   rm -f "${emacsHome:?}/persp-state.el"
-  rm -rf "${emacaHome:?}/.cache"
-  rm -rf "${emacaHome:?}/eln-cache"
-  rm -rf "${emacaHome:?}/elisp-autofmt-cache"
+  rm -rf "${emacsHome:?}/.cache"
+  rm -rf "${emacsHome:?}/eln-cache"
+  rm -rf "${emacsHome:?}/elisp-autofmt-cache"
 
   log_info "Deleting Straight.el byte-compiled files"
-  find "${straightHome}" -type f -name '*.elc' -delete
+  if [ -n "$(command -v fd)" ]; then
+    # `fd` is a faster, more modern replacement for `find`.
+    fd -t f -x rm '{}' ';' -- ".*\.elc$" "${straightHome}"
+  else
+    find "${straightHome}" -type f -name '*.elc' -delete
+  fi
 }
 
 # Start Emacs in Gnus mode to read email/news.
