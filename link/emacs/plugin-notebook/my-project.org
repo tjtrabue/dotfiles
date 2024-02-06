@@ -37,6 +37,9 @@ software development.
 
 #+begin_src emacs-lisp
   (use-package projectile
+    ;; :straight
+    ;; (projectile :flavor melpa :type git :host github
+    ;;             :repo "bbatsov/projectile" :branch "master")
     ;; perspective.el overwrites projectile's command prefix, so we want to load
     ;; projectile after perspective.
     :after perspective

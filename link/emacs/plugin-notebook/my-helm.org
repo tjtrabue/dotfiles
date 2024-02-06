@@ -132,6 +132,8 @@ Configuration for all things helm-related, including helm-projectile integration
 
 #+begin_src emacs-lisp
   (use-package helm-projectile
+    ;; Currently using Vertico/Consult instead of Helm.
+    :disabled
     :after (helm projectile ag rg helm-rg helm-ag)
     :general
     (general-def projectile-mode-map

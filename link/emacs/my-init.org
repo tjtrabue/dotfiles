@@ -1723,6 +1723,9 @@ library that greatly enhances Emacs' semantic understanding of source code.
     :if (and (fboundp 'treesit-available-p)
              (treesit-available-p))
     :preface
+    ;; Make sure the Treesitter grammar alist is defined.
+    (unless (boundp 'treesit-language-source-alist)
+      (setq treesit-language-source-alist nil))
     ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
     (dolist (grammar
              '((bash "https://github.com/tree-sitter/tree-sitter-bash")

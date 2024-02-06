@@ -9,12 +9,16 @@ emacs_rm_backups() {
 # behavior.
 emacs_rm_caches() {
   local emacsHome="${HOME}/.emacs.d"
+  local straightHome="${emacsHome}/straight"
 
   log_info "Deleting Emacs cache directories"
-  rm -f "${emacsHome}/persp-state.el"
-  rm -rf "${emacaHome}/.cache"
-  rm -rf "${emacaHome}/eln-cache"
-  rm -rf "${emacaHome}/elisp-autofmt-cache"
+  rm -f "${emacsHome:?}/persp-state.el"
+  rm -rf "${emacaHome:?}/.cache"
+  rm -rf "${emacaHome:?}/eln-cache"
+  rm -rf "${emacaHome:?}/elisp-autofmt-cache"
+
+  log_info "Deleting Straight.el byte-compiled files"
+  find "${straightHome}" -type f -name '*.elc' -delete
 }
 
 # Start Emacs in Gnus mode to read email/news.
