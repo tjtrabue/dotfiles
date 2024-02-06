@@ -1,15 +1,9 @@
 #!/bin/sh
 
-emacs_rm_backups() {
-  find -L "${DOTFILES_HOME}" -type f -regextype posix-extended \
-    -regex ".*(~)|(.*#.*)$" -delete
-}
-
 # Get rid of cache directores under ~/.emacs.d/ to help get rid of unusual
 # behavior.
 emacs_rm_caches() {
-  local emacsHome="${HOME}/.emacs.d"
-  local straightHome="${emacsHome}/straight"
+  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
 
   log_info "Deleting Emacs cache directories"
   rm -f "${emacsHome:?}/persp-state.el"
@@ -17,13 +11,26 @@ emacs_rm_caches() {
   rm -rf "${emacsHome:?}/eln-cache"
   rm -rf "${emacsHome:?}/elisp-autofmt-cache"
 
-  log_info "Deleting Straight.el byte-compiled files"
+  log_info "Deleting all byte-compiled files"
   if [ -n "$(command -v fd)" ]; then
     # `fd` is a faster, more modern replacement for `find`.
-    fd -t f -x rm '{}' ';' -- ".*\.elc$" "${straightHome}"
+    fd -t f -x rm '{}' ';' -- ".*\.elc$" "${emacsHome}"
   else
-    find "${straightHome}" -type f -name '*.elc' -delete
+    find "${emacsHome}" -type f -name '*.elc' -delete
   fi
+}
+
+# Byte-compile everything in a given directory (defaults to '~/.emacs.d').
+emacs_byte_recompile_dir() {
+  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
+  local emacsDir="${1:-${emacsHome}}"
+
+  if [ ! -d "${emacsDir}" ]; then
+    err "Directory ${BLUE}${emacsDir}${NC} not found"
+    return 1
+  fi
+
+  emacs --batch --eval "(byte-recompile-directory \"${emacsDir}\")"
 }
 
 # Start Emacs in Gnus mode to read email/news.
@@ -206,7 +213,7 @@ straight_rm_repo() {
 
 # Clone my personal roam-notes database.
 clone_roam_notes() {
-  local emacsHome="${EMACS_HOME:-${HOME}/.emacs.d}"
+  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local roamNotesHome="${emacsHome}/roam-notes"
   local roamNotesRepoUrl="git@github.com:tjtrabue/roam-notes.git"
   local response=""
