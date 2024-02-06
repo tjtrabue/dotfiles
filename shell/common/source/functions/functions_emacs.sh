@@ -21,7 +21,7 @@ emacs_rm_caches() {
 }
 
 # Byte-compile everything in a given directory (defaults to '~/.emacs.d').
-emacs_byte_recompile_dir() {
+emacs_byte_compile_dir() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local emacsDir="${1:-${emacsHome}}"
 
@@ -30,7 +30,7 @@ emacs_byte_recompile_dir() {
     return 1
   fi
 
-  emacs --batch --eval "(byte-recompile-directory \"${emacsDir}\")"
+  emacs --batch --eval "(byte-recompile-directory \"${emacsDir}\" 0)"
 }
 
 # Start Emacs in Gnus mode to read email/news.
