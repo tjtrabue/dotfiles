@@ -256,22 +256,5 @@ install_emacs_cask() {
   )
 }
 
-# Tangle and combine all Emacs configuration blocks held in literate Org files
-# into one super Emacs configuration file.
-make_emacs_super_config() {
-  local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
-  local pluginNotebookDir="${emacsHome}/plugin-notebook"
-  local elispScriptsDir="${emacsHome}/scripts"
-  local emacsSuperConfigFile="${emacsHome}/tjtrabue-emacs.el"
-
-  log_info "Tangling all literate Org config files"
-  emacs --batch --script "${elispScriptsDir}/tangle-org-files.el"
-
-  log_info "Combining output *.el files into super config file:" \
-    "${BLUE}${emacsSuperConfigFile}${NC}"
-  command cat -s "${emacsHome}/my-init.el" "${pluginNotebookDir}"/*.el \
-    >"${emacsSuperConfigFile}"
-}
-
 # Modeline for this file (leave it commented!)
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

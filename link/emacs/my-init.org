@@ -184,37 +184,6 @@ Language and encoding parameters for this particular Emacs instance.
   (set-keyboard-coding-system 'utf-8)
 #+end_src
 
-* Configure Load Path
-=load-path= is a list of directories Emacs searches when asked to load a
-module. It is analogous to the =PATH= environment variable used by the shell
-when searching for executable programs, or the =CLASSPATH= variable used by Java
-to search for compiled classes.
-
-Here we add important paths to =load-path= that Emacs does not search by
-default.
-
-#+begin_src emacs-lisp
-  ;; Add /usr/local/share/emacs/site-lisp/ to load-path, and then
-  ;; add all of its child directories recursively to load-path
-  (let ((usr-local-lisp "/usr/local/share/emacs/site-lisp"))
-    (when (file-directory-p usr-local-lisp)
-      (let ((default-directory usr-local-lisp))
-        (add-to-list 'load-path usr-local-lisp)
-        (normal-top-level-add-subdirs-to-load-path))))
-
-  ;; Add our custom Elisp library dir to load-path, and then
-  ;; add all of its child directories recursively to load-path
-  (let ((default-directory my/elisp-lib-dir))
-    (add-to-list 'load-path my/elisp-lib-dir)
-    (normal-top-level-add-subdirs-to-load-path))
-
-  ;; Tell Emacs where our personal elisp lib dir resides.
-  (add-to-list 'load-path my/emacs-lisp-dir)
-
-  ;; Tell Emacs where to find plugin config files.
-  (add-to-list 'load-path my/emacs-plugin-dir)
-#+end_src
-
 * Native Compilation
 To speed up performance, we want to native-compile our configuration files.
 
@@ -1818,7 +1787,7 @@ Most of these files correspond directly to third-party dependencies from MELPA.
 My configuration files install, configure, and load those third-party packages
 in a way that does not clutter my primary configuration file.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   ;; Load the file containing custom set variables.
   (load custom-file 'noerror 'nomessage)
 

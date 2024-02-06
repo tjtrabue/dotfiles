@@ -17,4 +17,4 @@
 (org-babel-tangle-file my/org-init-file)
 (mapc (lambda (f)
         (org-babel-tangle-file f))
-      (directory-files my/plugin-notebook-dir t "\\.org$"))
+  (directory-files my/plugin-notebook-dir t "\\.org$"))

@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE=""
+declare LOG_LEVEL=3
+
+declare EMACS_HOME="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
+declare MAIN_ORG_CONFIG_FILE="${EMACS_HOME}/my-init.org"
+declare SUPER_CONFIG_FILE="${EMACS_HOME}/tjtrabue-emacs.el"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC} | <insert description here>
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+EOF
+}
+
+# Tangle and combine all Emacs configuration blocks held in literate Org files
+# into one super Emacs configuration file.
+mesc__create_super_config() {
+  local pluginNotebookDir="${EMACS_HOME}/plugin-notebook"
+  local elispScriptsDir="${EMACS_HOME}/scripts"
+
+  log_info "Tangling all literate Org config files"
+  emacs --batch --script "${elispScriptsDir}/tangle-org-files.el"
+
+  log_info "Combining output *.el files into super config file:" \
+    "${BLUE}${SUPER_CONFIG_FILE}${NC}"
+  # Use lexical binding by default in super config.
+  printf "%s\n\n" ";;; -*- lexical-binding: t; -*-" >"${SUPER_CONFIG_FILE}"
+  command cat -s "$(readlink "${MAIN_ORG_CONFIG_FILE}" | sed 's/\.org$/.el/')" \
+    "${pluginNotebookDir}"/*.el \
+    >>"${SUPER_CONFIG_FILE}"
+}
+
+main() {
+  print_header "Creating Emacs super configuration file"
+  mesc__create_super_config
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o h --long help -n '<name_here>' -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:

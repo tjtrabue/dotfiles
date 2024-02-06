@@ -54,90 +54,22 @@
 
 ;; Add required libraries
 (require 'bytecomp)
-(require 'org)
 
 ;; Settings for Emacs Lisp embedded in Org source blocks.
 (with-eval-after-load "ob-emacs-lisp"
   ;; Globally set lexical bindings for all Emacs Lisp code blocks in Org files.
   (setq org-babel-default-header-args:emacs-lisp
-        '((:lexical . t) (:tangle . "yes"))))
+    '((:lexical . t)
+       (:tangle . "yes"))))
 
 ;; Define and set variables
 (eval-when-compile
   (defconst my/home-dir (getenv "HOME")
     "User's home directory path.")
-  (defconst my/dotfiles-dir (file-truename (concat my/home-dir "/.dotfiles"))
-    "tjtrabue's dotfiles repository directory which houses the primary
-  Emacs config.")
-  (defconst my/dotfiles-emacs-dir
-    (file-truename (concat my/dotfiles-dir "/link/emacs"))
-    "Main Emacs directory in tjtrabue's dotfiles repository.")
   (defconst my/emacsrc (file-truename (concat (getenv "HOME") "/.emacs"))
     "The main Emacs config file in the user's home directory.")
-  (defconst my/main-emacs-init-org
-    (file-truename (concat my/dotfiles-emacs-dir "/my-init.org"))
-    "My primary Emacs configuration file in `org-mode' syntax.")
-  (defconst my/main-emacs-init-el
-    (car (org-babel-tangle-file my/main-emacs-init-org))
-    "My tangled Emacs configuration file created from `my/main-emacs-init-org'.")
-  (defconst my/main-emacs-init-elc
-    (byte-compile-dest-file my/main-emacs-init-el)
-    "My compiled Emacs configuration file byte-compiled from
-`main-emacs-init-el'.")
   (defconst my/use-straight t
     "Whether to use straight.el instead of Emacs' built-in package manager."))
-
-;; Define functions to help us get started compiling and loading our other
-;; files.
-(defsubst my/file-not-exists-or-newer-than-other-p (file other)
-  "Return non-nil if FILE does not exist or is newer than OTHER file."
-  (or (not (file-exists-p file))
-      (equal (nth 4 (file-attributes file)) (list 0 0))
-      (file-newer-than-file-p file other)))
-
-(defsubst my/tangle-config-artifact (elisp-file)
-  "Tangle the ancestor to an ELISP-FILE.
-
-Return the name of the ELISP-FILE."
-  (if (not (string= (file-name-extension elisp-file) "el"))
-      (error "Argument is not an Elisp file"))
-  (let ((ancestor (concat (file-name-sans-extension elisp-file) ".org")))
-    (when (my/file-not-exists-or-newer-than-other-p ancestor elisp-file)
-      (org-babel-tangle-file ancestor))
-    (identity elisp-file)))
-
-(defsubst my/byte-compile-config-artifact (elc-file)
-  "Byte-compile the ancestor to a compiled ELC-FILE.
-
-Return the name of the ELC-FILE."
-  (if (not (string= (file-name-extension file) "elc"))
-      (error "Argument is not a compiled Elisp file"))
-  (let ((ancestor (concat (file-name-sans-extension elc-file) ".el")))
-    (when (my/file-not-exists-or-newer-than-other-p ancestor elc-file)
-      ;; May need to update the .el (ancestor) file before compiling it.
-      (byte-compile-file (my/tangle-config-artifact ancestor)))
-    (identity elc-file)))
-
-(defsubst my/create-update-config-artifact (file)
-  "Compile or tangle the given FILE if it is newer than its original file.
-
-This function will call `byte-compile-file' on FILE's ancestor if FILE's
-extension is '.elc', and will call `org-babel-tangle-file' on the ancestor if
-FILE's extension is '.el'."
-  (let ((file-ext (file-name-extension file))
-        (file-name (file-name-sans-extension file))
-        (ancestor-file nil))
-    (cond
-     ((string= "elc" file-ext)
-      ;; If we're examining a compiled Elisp file, check it against its
-      ;; .el ancestor.
-      (setq ancestor-file (concat file-name ".el"))
-      (my/byte-compile-config-artifact file))
-     ((string= "el" file-ext)
-      ;; If we're examining a regular Elisp file, check it against its
-      ;; .org ancestor.
-      (setq ancestor-file (concat file-name ".org"))
-      (my/tangle-config-artifact file)))))
 
 (defsubst my/apply-to-dir-files (dir pattern fn &rest args)
   "Apply FN to all files in DIR matching regex PATTERN.
@@ -153,30 +85,27 @@ Any additional args ARGS are passed to FN."
 ;; NOTE: Currently disabled since we use straight.el to manage our packages.
 (if (and (not my/use-straight) (>= emacs-major-version 24))
 ;;; IF we want to use the built-in package manager...
-    (progn
-      ;; Package configuration
-      (require 'package)
-      ;; Add extra package archives to the list of repositories.
-      ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
-      ;;       to change the URLs to simple HTTP in order for them to function.
-      ;;       If you must do this, also uncomment the two expressions below.
-      ;;       That will reset the archives list and allow you to only use
-      ;;       unsecured connections for package transfer.
-      ;; (setq package-archives nil)
-      ;; (add-to-list 'package-archives
-      ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-      (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
-                   t)
-      (add-to-list
-       'package-archives '("marmalade" . "https://marmalade-repo.org/packages/")
-       t)
-      (package-initialize)
-      ;; Automatically install packages using use-package
-      (unless (package-installed-p 'use-package)
-        (package-refresh-contents)
-        (package-install 'use-package))
-      (require 'use-package))
+  (progn
+    ;; Package configuration
+    (require 'package)
+    ;; Add extra package archives to the list of repositories.
+    ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+    ;;       to change the URLs to simple HTTP in order for them to function.
+    ;;       If you must do this, also uncomment the two expressions below.
+    ;;       That will reset the archives list and allow you to only use
+    ;;       unsecured connections for package transfer.
+    ;; (setq package-archives nil)
+    ;; (add-to-list 'package-archives
+    ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+    (add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+    (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+    (package-initialize)
+    ;; Automatically install packages using use-package
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+    (require 'use-package))
 ;;; OTHERWISE...
   ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
   (setq package-enable-at-startup nil)
@@ -184,10 +113,29 @@ Any additional args ARGS are passed to FN."
   ;; at the end of your init.el
   (setq package--init-file-ensured t))
 
-;; Have to set default-directory to the dotfiles directory in my dotfiles
-;; repository because symlinks and Emacs apparently do not play well together.
-(let ((default-directory my/dotfiles-emacs-dir))
-  ;; Load the main configuration file.
-  (org-babel-load-file my/main-emacs-init-org))
+;;; Configure the `load-path'.
+;; Add `/usr/local/share/emacs/site-lisp/' to load-path, and then add all of its
+;; child directories recursively to load-path
+(let ((usr-local-lisp "/usr/local/share/emacs/site-lisp"))
+  (when (file-directory-p usr-local-lisp)
+    (let ((default-directory usr-local-lisp))
+      (add-to-list 'load-path usr-local-lisp)
+      (normal-top-level-add-subdirs-to-load-path))))
+;; This sets additional paths where Emacs looks for Elisp files when a load
+;; command is issued.
+(dolist (dir (list (file-truename (concat user-emacs-directory "plugin"))
+               (file-truename (concat user-emacs-directory "private"))
+               (file-truename (concat user-emacs-directory "require"))))
+  (add-to-list 'load-path dir))
+
+(let* ((super-config (file-truename (concat user-emacs-directory "tjtrabue-emacs.el")))
+        (dotfiles-home-dir (file-truename (concat (getenv "HOME") "/.dotfiles")))
+        (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin"))))
+  (unless (file-exists-p super-config)
+    ;; If we do not find the giant configuration Elisp file, generate it here.
+    (compile (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
+  (let ((default-directory user-emacs-directory))
+    ;; Load the giant Elisp file!
+    (load-file super-config)))
 
 ;;; .emacs ends here
