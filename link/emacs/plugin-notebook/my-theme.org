@@ -96,6 +96,8 @@ color names used by Modus]].
 #+begin_src emacs-lisp
   (defun my/modus-themes-custom-faces ()
     "Customize faces for modus themes."
+    ;; We need to load Org faces before we can customize them.
+    (require 'org-faces)
     (modus-themes-with-colors
       ;; Change the font/size/color of Org mode titles so they stand out more.
       (set-face-attribute 'org-document-title nil

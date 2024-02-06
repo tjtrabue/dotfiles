@@ -97,8 +97,8 @@ Any additional args ARGS are passed to FN."
     ;; (setq package-archives nil)
     ;; (add-to-list 'package-archives
     ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-    (add-to-list 'package-archives '("org"   . "https://orgmode.org/elpa/") t)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+    (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
+    (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
     (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
     (package-initialize)
     ;; Automatically install packages using use-package
@@ -125,7 +125,8 @@ Any additional args ARGS are passed to FN."
 ;; command is issued.
 (dolist (dir (list (file-truename (concat user-emacs-directory "plugin"))
                (file-truename (concat user-emacs-directory "private"))
-               (file-truename (concat user-emacs-directory "require"))))
+               (file-truename (concat user-emacs-directory "require"))
+               (file-truename (concat user-emacs-directory "require/fix"))))
   (add-to-list 'load-path dir))
 
 (let* ((super-config (file-truename (concat user-emacs-directory "tjtrabue-emacs.el")))
