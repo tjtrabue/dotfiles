@@ -9,6 +9,25 @@ This Org document contains my primary Emacs configuration. =~/.emacs= only holds
 pieces of code necessary to prepare and load this file. You can find my full
 dotfiles repository [[https://github.com/tjtrabue/dotfiles][here]].
 
+* How to Load the Complete Configuration
+I split my Emacs configuration across many files, most of which reside in
+literate Org configuration blocks in =~/.emacs.d/plugin-notebook/=. Tangling and
+loading all of those files using Org Babel can greatly add to Emacs' initial
+load time. To reduce startup time, I created an executable script called
+=make_emacs_super_config= that tangles all of my Org configuration files and
+concatenates them into one, giant Emacs Lisp file named =tjtrabue-emacs.el=. My
+=~/.emacs= file knows to look for the super config file, and if it does not yet
+exist, generate it using the aforementioned script.
+
+Thus, before starting Emacs, you should run this command to generate the super
+config file:
+
+#+begin_src sh :tangle no
+  ~/.dotfiles/bin/make_emacs_super_config
+#+end_src
+
+Now, start Emacs, sit back, and enjoy!
+
 * Known Issues (PLEASE READ)
 Here I list any known issues with my configuration and/or plugins, and any
 workarounds that you should use temporarily while the issues are being resolved.
@@ -1781,27 +1800,4 @@ latest and greatest, so we can also download it from ELPA.
     (xref-search-program (cond ((executable-find "rg") 'ripgrep)
                                ((executable-find "ugrep") 'ugrep)
                                (t "grep"))))
-#+end_src
-
-* Load External Configuration Files
-Load additional Emacs configuration files from my custom plugins directories.
-Most of these files correspond directly to third-party dependencies from MELPA.
-My configuration files install, configure, and load those third-party packages
-in a way that does not clutter my primary configuration file.
-
-#+begin_src emacs-lisp :tangle no
-  ;; Load the file containing custom set variables.
-  (load custom-file 'noerror 'nomessage)
-
-  ;; Load personal Elisp files.
-  (my/apply-to-dir-files my/emacs-plugin-dir "\\.el$"
-                         (lambda (f &rest args)
-                           "Make use of `load''s extensionless file loading
-  feature for Elisp files. This means `load' will first look for an .elc file,
-  then for a .el file in lieu of that."
-                           (load (file-name-sans-extension f) args)))
-
-  ;; Load configuration embedded in Org mode files.
-  (my/apply-to-dir-files my/plugin-notebook-dir "\\.org$"
-                         #'org-babel-load-file)
 #+end_src
