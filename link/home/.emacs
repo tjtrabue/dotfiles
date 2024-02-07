@@ -138,12 +138,12 @@ Any additional args ARGS are passed to FN."
 
   (let* ((super-config (file-truename (concat user-emacs-directory "tjtrabue-emacs.el")))
           (dotfiles-home-dir (file-truename (concat (getenv "HOME") "/.dotfiles")))
-          (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin"))))
+          (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin")))
+          (default-directory user-emacs-directory))
     (when (or my/force-refresh-super-config
             (not (file-exists-p super-config)))
       ;; If we do not find the giant configuration Elisp file, generate it here.
       (compile (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
-    (let ((default-directory user-emacs-directory))
-      ;; Load the giant Elisp file!
-      (load-file super-config))))
+    ;; Load the giant Elisp file!
+    (load-file super-config)))
 ;;; .emacs ends here
