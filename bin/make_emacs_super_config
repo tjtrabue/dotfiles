@@ -47,7 +47,16 @@ mesc__create_super_config() {
   log_info "Combining output *.el files into super config file:" \
     "${BLUE}${SUPER_CONFIG_FILE}${NC}"
   # Use lexical binding by default in super config.
-  printf "%s\n\n" ";;; -*- lexical-binding: t; -*-" >"${SUPER_CONFIG_FILE}"
+  command cat <<EOF >"${SUPER_CONFIG_FILE}"
+;;; -*- lexical-binding: t; -*-
+
+;; This is an automatically-generated file. Do not edit it directly. Instead,
+;; edit '~/.emacs.d/my-init.org', or any of the other configuration files in
+;; '~/.emacs.d/plugin-notebook/', and then run:
+;;
+;;   ~/.dotfiles/bin/make_emacs_super_config
+
+EOF
   command cat -s "$(readlink "${MAIN_ORG_CONFIG_FILE}" | sed 's/\.org$/.el/')" \
     "${pluginNotebookDir}"/*.el \
     >>"${SUPER_CONFIG_FILE}"
