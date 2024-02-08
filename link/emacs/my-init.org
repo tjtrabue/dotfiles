@@ -194,7 +194,8 @@ This is where I define new variables needed throughout my configuration.
 Create directories that must be present for our Emacs configuration to function.
 
 #+begin_src emacs-lisp
-  (make-directory my/emacs-plugin-dir 'and-parents)
+  (eval-when-compile
+    (make-directory my/emacs-plugin-dir 'and-parents))
 #+end_src
 
 * Language/Encoding
