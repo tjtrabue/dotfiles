@@ -99,71 +99,71 @@ This is where I define new variables needed throughout my configuration.
   ;; Make these variables compile-time constants (and available during
   ;; compilation)
   (eval-when-compile
-    (defvar my/emacs-plugin-dir (file-truename
+    (defconst my/emacs-plugin-dir (file-truename
                                  (concat user-emacs-directory "/plugin"))
       "Directory for additional elisp config files.
   Mostly for enumerating and configuring downloaded plugins.")
-    (defvar my/plugin-notebook-dir (file-truename
+    (defconst my/plugin-notebook-dir (file-truename
                                     (concat user-emacs-directory
                                             "/plugin-notebook"))
       "Directory for config files written in Org syntax.")
-    (defvar my/elisp-lib-dir (file-truename
+    (defconst my/elisp-lib-dir (file-truename
                               (concat user-emacs-directory "/require"))
       "Directory for custom Emacs Lisp library files.")
-    (defvar my/private-elisp-dir (file-truename
+    (defconst my/private-elisp-dir (file-truename
                                   (concat user-emacs-directory "/private"))
       "Directory containing private config for my local environment.")
-    (defvar my/local-repos-dir (file-truename
+    (defconst my/local-repos-dir (file-truename
                                 (concat user-emacs-directory "/local-repos"))
       "Directory for local `straight' repos.")
-    (defvar my/emacs-backup-dir (file-truename
+    (defconst my/emacs-backup-dir (file-truename
                                  (concat user-emacs-directory "/backups"))
       "Directory housing all Emacs backup files.")
-    (defvar my/emacs-auto-saves-dir (file-truename
+    (defconst my/emacs-auto-saves-dir (file-truename
                                      (concat user-emacs-directory "/auto-saves"))
       "Directory housing all Emacs auto-save files.")
-    (defvar my/emacs-lisp-dir (file-truename
+    (defconst my/emacs-lisp-dir (file-truename
                                (concat user-emacs-directory "/lisp"))
       "Extra miscellaneous elisp code goes here (if necessary).")
-    (defvar user-fonts-dir (file-truename
+    (defconst user-fonts-dir (file-truename
                             (concat (getenv "HOME") "/.local/share/fonts"))
       "Fonts directory for the current user")
-    (defvar my/static-path-file (file-truename
+    (defconst my/static-path-file (file-truename
                                  (concat (getenv "HOME") "/.path_static"))
       "The compiled PATH file used to quickly determine PATH.")
-    (defvar my/straight-home-dir (file-truename
+    (defconst my/straight-home-dir (file-truename
                                   (concat user-emacs-directory "/straight"))
       "Home directory for the straight package manager.")
-    (defvar my/straight-repos-dir (file-truename
+    (defconst my/straight-repos-dir (file-truename
                                    (concat my/straight-home-dir "/repos"))
       "Housing area for repositories cloned by straight.")
-    (defvar my/straight-build-dir (file-truename
+    (defconst my/straight-build-dir (file-truename
                                    (concat my/straight-home-dir "/build"))
       "Housing area for linked and compiled Elisp files for packages installed
   with straight.el.")
-    (defvar my/workspace-dir (file-truename
+    (defconst my/workspace-dir (file-truename
                               (concat (getenv "HOME") "/workspace"))
       "Directory containig development projects.")
-    (defvar my/practice-dir (file-truename
+    (defconst my/practice-dir (file-truename
                              (concat (getenv "HOME") "/practice"))
       "Directory containig practice or scratch code.")
-    (defvar my/line-width 80 "The width of each line of code.")
-    (defvar my/use-helm-gtags t
+    (defconst my/line-width 80 "The width of each line of code.")
+    (defconst my/use-helm-gtags t
       "If non-nil, use helm-gtags over the ggtags package. Otherwise, use ggtags.")
-    (defvar my/user-info-dir
+    (defconst my/user-info-dir
       (file-truename (concat (getenv "HOME") "/.local/share/info"))
       "The directory containing extra info pages installed by the user.")
-    (defvar my/max-worker-processes
+    (defconst my/max-worker-processes
       (string-trim (shell-command-to-string "nproc"))
       "The maximum number of processor threads that can be running at once.")
-    (defvar my/org-dir
+    (defconst my/org-dir
       (file-truename (concat user-emacs-directory "/org"))
       "My custom directory used by Org to store miscellaneous notes.")
-    (defvar my/org-agenda-dir (file-truename (concat my/org-dir "/agenda"))
+    (defconst my/org-agenda-dir (file-truename (concat my/org-dir "/agenda"))
       "Directory containing my Org agenda files.")
-    (defvar my/org-capture-file (file-truename (concat my/org-dir "/inbox.org"))
+    (defconst my/org-capture-file (file-truename (concat my/org-dir "/inbox.org"))
       "File receiving Org captures from other files. A dumping ground for ideas.")
-    (defvar my/lisp-major-modes
+    (defconst my/lisp-major-modes
       '(cider-repl-mode
         clojure-mode
         clojurec-mode
@@ -180,7 +180,7 @@ This is where I define new variables needed throughout my configuration.
                                         (file-truename (concat (getenv "HOME") "/" file)))
                                       '(".authinfo.gpg" ".authinfo" ".netrc"))
       "The user's .authinfo files used to store login credentials.")
-    (defvar my/line-number-state 'relative
+    (defconst my/line-number-state 'relative
       "The current global line number setting. Either `absolute' or `relative'."))
 #+end_src
 

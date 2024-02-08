@@ -144,6 +144,8 @@ Any additional args ARGS are passed to FN."
             (not (file-exists-p super-config)))
       ;; If we do not find the giant configuration Elisp file, generate it here.
       (compile (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
+    (byte-recompile-file super-config)
     ;; Load the giant Elisp file!
+    ;; TODO: Load the byte-compiled version of the Elisp file once we fix it.
     (load-file super-config)))
 ;;; .emacs ends here
