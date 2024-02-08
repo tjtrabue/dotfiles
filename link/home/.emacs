@@ -80,6 +80,17 @@ Any additional args ARGS are passed to FN."
       (if (file-directory-p dir)
         (mapc #'apply-it (directory-files dir nil pattern)))))
 
+  (defun my/recreate-super-config ()
+    "Re-create the Emacs super configuration file.
+
+Once created, the file should be placed at
+`~/.emacs.d/tjtrabue-emacs.el'."
+    (interactive)
+    (let* ((dotfiles-home-dir (file-truename (concat (getenv "HOME") "/.dotfiles")))
+            (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin")))
+            (super-config-script (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
+      (compile super-config-script)))
+
 ;;; Configure the `load-path'.
   ;; Add `/usr/local/share/emacs/site-lisp/' to load-path, and then add all of its
   ;; child directories recursively to load-path
@@ -97,13 +108,11 @@ Any additional args ARGS are passed to FN."
     (add-to-list 'load-path dir))
 
   (let* ((super-config (file-truename (concat user-emacs-directory "tjtrabue-emacs.el")))
-          (dotfiles-home-dir (file-truename (concat (getenv "HOME") "/.dotfiles")))
-          (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin")))
           (default-directory user-emacs-directory))
     (when (or my/force-refresh-super-config
             (not (file-exists-p super-config)))
       ;; If we do not find the giant configuration Elisp file, generate it here.
-      (compile (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
+      (my/recreate-super-config))
     (byte-recompile-file super-config)
     ;; Load the giant Elisp file!
     ;; TODO: Load the byte-compiled version of the Elisp file once we fix it.
