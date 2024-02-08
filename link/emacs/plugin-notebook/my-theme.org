@@ -15,47 +15,50 @@ theme code added by customize.
 
 * Variables
 #+begin_src emacs-lisp
-  (defvar my/theme-after-load-hook nil
-    "Functions to run after the main theme activates.
+  (eval-when-compile
+    (defvar my/theme-after-load-hook nil
+      "Functions to run after the main theme activates.
   Please do not make this hook run as advice to `load-theme' because
   it will end up in an infinite loop due to the need to load the
   `org-beautify-theme' after the main theme. Thus, it will call `load-theme'
-  automatically after it calls `load-theme' for all eternity.")
+  automatically after it calls `load-theme' for all eternity."))
 #+end_src
 
 * Functions
 #+begin_src emacs-lisp
-  (defun my/activate-theme--doom ()
-    "Activation/configuration function for doom theme."
-    (load-theme 'doom-one t)
-    ;; Flash the modeline when the Emacs bell rings.
-    ;; (doom-themes-visual-bell-config)
-    ;; Two treemacs icon themes: one that takes after Atom's themes, and
-    ;; another more colorful theme.
-    (doom-themes-treemacs-config)
-    ;; Correct and improve some of org-mode's native fontification.
-    (doom-themes-org-config))
+  (eval-and-compile
+    (defun my/activate-theme--doom ()
+      "Activation/configuration function for doom theme."
+      (load-theme 'doom-one t)
+      ;; Flash the modeline when the Emacs bell rings.
+      ;; (doom-themes-visual-bell-config)
+      ;; Two treemacs icon themes: one that takes after Atom's themes, and
+      ;; another more colorful theme.
+      (doom-themes-treemacs-config)
+      ;; Correct and improve some of org-mode's native fontification.
+      (doom-themes-org-config))
 
-  (defun my/activate-theme--modus ()
-    "Activation/configuration function for modus theme."
-    (load-theme 'modus-vivendi t)
-    ;; Set custom faces for the active Modus theme.
-    (my/modus-themes-custom-faces))
+    (defun my/activate-theme--modus ()
+      "Activation/configuration function for modus theme."
+      (load-theme 'modus-vivendi t)
+      ;; Set custom faces for the active Modus theme.
+      (my/modus-themes-custom-faces))
 
-  (defun my/activate-theme ()
-    "Activate my favorite color theme.
+    (defun my/activate-theme ()
+      "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
   functions to provide a single point of theme configuration."
-    (my/activate-theme--modus))
+      (my/activate-theme--modus)))
 #+end_src
 
 * Add advice to theme activation function
 We want to run our custom theme hooks automatically after the theme loads.
 
 #+begin_src emacs-lisp
-  (defun run-my/activate-theme ()
-    "Run `my/theme-after-load-hook'."
-    (run-hooks 'my/theme-after-load-hook))
+  (eval-and-compile
+    (defun run-my/activate-theme ()
+      "Run `my/theme-after-load-hook'."
+      (run-hooks 'my/theme-after-load-hook)))
   (advice-add 'my/activate-theme :after #'run-my/activate-theme)
 #+end_src
 
@@ -92,58 +95,66 @@ available in certain contexts, such as within the body of a
 =modus-themes-with-colors= macro. Check the online documentation for a [[https://protesilaos.com/emacs/modus-themes-colors][list of
 color names used by Modus]].
 
+*** Compiler Preface
+This block requires macros and definitions needed during compile-time.
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (require 'modus-themes))
+#+end_src
+
 *** Functions
 #+begin_src emacs-lisp
-  (defun my/modus-themes-custom-faces ()
-    "Customize faces for modus themes."
-    ;; We need to load Org faces before we can customize them.
-    (require 'org-faces)
-    (modus-themes-with-colors
-      ;; Change the font/size/color of Org mode titles so they stand out more.
-      (set-face-attribute 'org-document-title nil
-                          :inherit '(org-level-1 modus-themes-heading-0)
-                          :height 1.75)
-      ;; Adjust mode line style
-      (dolist (face '(mode-line
-                      mode-line-active
-                      mode-line-inactive
-                      mode-line-highlight))
-        (set-face-attribute face nil
-                            :height 1.0
-                            ;; Increase mode-line height by adding a border box.
-                            :box `(:line-width 4
-                                               :color ,(face-background face nil t)
-                                               :style released-button)))
-      (when (bound-and-true-p tab-line-mode)
-        ;; Adjust tab-line faces after the theme loads.
-        (dolist (face '(tab-line
-                        tab-line-tab-current
-                        tab-line-tab-inactive
-                        tab-line-tab-inactive-alternate
-                        tab-line-highlight))
-          (set-face-attribute face nil
-                              :height 1.0
-                              :width 'expanded
-                              ;; Increase tab-line height by adding a border box.
-                              :box `(:line-width 4 :color ,(face-background face nil t)))))
-      ;; Override solaire faces.
-      (custom-set-faces
-       `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
-       `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
-       `(solaire-hl-line-face ((,c :background ,bg-active)))
-       `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
-      (when (bound-and-true-p highlight-indent-guides-mode)
-        ;; Customize faces for `highlight-indent-guides-mode' since that mode
-        ;; cannot seem to figure out its faces on its own when using Modus themes.
-        (set-face-background 'highlight-indent-guides-odd-face bg-dim)
-        (set-face-background 'highlight-indent-guides-even-face bg-dim)
-        (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
-        (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
-        (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
-        (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
-        (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
-        (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
-        (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender))))
+  (eval-and-compile
+    (defun my/modus-themes-custom-faces ()
+      "Customize faces for modus themes."
+      ;; We need to load Org faces before we can customize them.
+      (require 'org-faces)
+      (modus-themes-with-colors
+        ;; Change the font/size/color of Org mode titles so they stand out more.
+        (set-face-attribute 'org-document-title nil
+                            :inherit '(org-level-1 modus-themes-heading-0)
+                            :height 1.75)
+        ;; Adjust mode line style
+        (dolist (face '(mode-line
+                        mode-line-active
+                        mode-line-inactive
+                        mode-line-highlight))
+          (set-face-attribute face nil :height 1.0
+                              ;; Increase mode-line height by adding a border box.
+                              :box `(:line-width 4
+                                                 :color ,(face-background face nil t)
+                                                 :style released-button)))
+        (when (bound-and-true-p tab-line-mode)
+          ;; Adjust tab-line faces after the theme loads.
+          (dolist (face '(tab-line
+                          tab-line-tab-current
+                          tab-line-tab-inactive
+                          tab-line-tab-inactive-alternate
+                          tab-line-highlight))
+            (set-face-attribute face nil
+                                :height 1.0
+                                :width 'expanded
+                                ;; Increase tab-line height by adding a border box.
+                                :box `(:line-width 4 :color ,(face-background face nil t)))))
+        ;; Override solaire faces.
+        (custom-set-faces
+         `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
+         `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
+         `(solaire-hl-line-face ((,c :background ,bg-active)))
+         `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
+        (when (bound-and-true-p highlight-indent-guides-mode)
+          ;; Customize faces for `highlight-indent-guides-mode' since that mode
+          ;; cannot seem to figure out its faces on its own when using Modus themes.
+          (set-face-background 'highlight-indent-guides-odd-face bg-dim)
+          (set-face-background 'highlight-indent-guides-even-face bg-dim)
+          (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
+          (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
+          (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
+          (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
+          (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
+          (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
+          (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender)))))
 #+end_src
 
 *** =use-package= specification

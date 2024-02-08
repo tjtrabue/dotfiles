@@ -102,7 +102,7 @@ This is where I define new variables needed throughout my configuration.
 #+begin_src emacs-lisp
   ;; Make these variables compile-time constants (and available during
   ;; compilation)
-  (eval-when-compile
+  (eval-and-compile
     (defconst my/use-straight-p t
       "Whether to use straight.el instead of Emacs' built-in package manager.")
     (defconst my/emacs-plugin-dir (file-truename
@@ -194,7 +194,7 @@ This is where I define new variables needed throughout my configuration.
 Create directories that must be present for our Emacs configuration to function.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     (make-directory my/emacs-plugin-dir 'and-parents))
 #+end_src
 
@@ -256,7 +256,7 @@ opposed to strewing them about each directory you visit. Same goes for the
 auto-save feature for buffers.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     ;; Put all backup files in ~/.emacs.d/backups and auto save files in
     ;; ~/.emacs.d/auto-saves to avoid causing unwanted side-effects.
     (dolist (dir (list my/emacs-backup-dir my/emacs-auto-saves-dir))
@@ -320,7 +320,7 @@ GC-related variables, especially if you use advanced programming tools such as
 LanguageServerProtocol clients and servers.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     ;; Always follow symlinks
     (setq vc-follow-symlinks t)
     ;; Reduce risk of loading outdated bytecode
@@ -487,14 +487,14 @@ LanguageServerProtocol clients and servers.
     (if (version<= "27.1" emacs-version)
         (setq bidi-inhibit-bpa t))
 
-    ;;; EasyPG settings (Emacs' front-end for GPG)
+  ;;; EasyPG settings (Emacs' front-end for GPG)
     ;; Whether to cache the user's passphrases for symmetrically encrypted files.
     (setq epa-file-cache-passphrase-for-symmetric-encryption t)
     ;; How to prompt the user for passphrases.
     ;; 'loopback means to query passphrases through the minibuffer.
     (setq epg-pinentry-mode 'loopback)
 
-    ;;; Browser
+  ;;; Browser
     ;; Determines the default web browser function to use when opening a URL via
     ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
     (setq browse-url-browser-function #'browse-url-generic)
@@ -761,7 +761,7 @@ such as =mutt= and =mu=.
 Custom functions, both standard and interactive.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     (unless (fboundp 'my/apply-to-dir-files)
       ;; May need to define this function here since it's originally defined in `~/.emacs', which
       ;; isn't always loaded (i.e., it's only loaded for interactive Emacs sessions).
@@ -1102,15 +1102,15 @@ stale files. We should periodically purge old files from these directories.
 
 #+begin_src emacs-lisp
   (message "Deleting old backup and auto-save files...")
-  (eval-when-compile
+  (eval-and-compile
     (let ((week (* 60 60 24 7))
           (current (float-time (current-time))))
       (dolist (file (append (directory-files
-                            (concat (file-truename my/emacs-backup-dir) "/") t)
+                             (concat (file-truename my/emacs-backup-dir) "/") t)
                             (directory-files
-                            (concat (file-truename my/emacs-auto-saves-dir) "/") t)))
+                             (concat (file-truename my/emacs-auto-saves-dir) "/") t)))
         (when (and (backup-file-name-p file)
-                  (> (- current (float-time (nth 5 (file-attributes file))))
+                   (> (- current (float-time (nth 5 (file-attributes file))))
                       week))
           (message "%s" file)
           (delete-file file)))))
@@ -1125,13 +1125,12 @@ Here we determine whether to use Emacs' built-in package manager =package.el= or
 the much superior =straight.el= third-party package manager.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     (if (and (not my/use-straight-p) (>= emacs-major-version 24))
     ;;; IF we want to use the built-in package manager...
         (progn
           ;; Package configuration
-          (eval-when-compile
-            (require 'package))
+          (require 'package)
           ;; Add extra package archives to the list of repositories.
           ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
           ;;       to change the URLs to simple HTTP in order for them to function.
@@ -1149,8 +1148,7 @@ the much superior =straight.el= third-party package manager.
           (unless (package-installed-p 'use-package)
             (package-refresh-contents)
             (package-install 'use-package))
-          (eval-when-compile
-            (require 'use-package)))
+          (require 'use-package))
     ;;; OTHERWISE...
       ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
       (setq package-enable-at-startup nil)
@@ -1171,7 +1169,9 @@ To update all packages installed through straight, run =M-x
 straight-pull-all=
 
 #+begin_src emacs-lisp
-  (eval-when-compile
+  ;; NOTE: This is `eval-and-compile`, not `eval-when-compile'. They are
+  ;; different macros. `eval-and-compile' evaluates
+  (eval-and-compile
     (defvar bootstrap-version)
     ;; Always use `use-package' when installing packages, making the `:straight t'
     ;; part of the `use-package' macro unnecessary.
@@ -1246,35 +1246,36 @@ process. I prefer to parse my =PATH= from the =~/.path_static= file, since that
 path is already calculated.
 
 #+begin_src emacs-lisp
-  (if (and (member system-type '(gnu gnu/linux darwin cygwin))
-           (file-exists-p my/static-path-file))
-      ;; If we have compiled our `~/.path_static` file, use the PATH in that file
-      ;; because using that PATH is much faster than calculating it dynmaically.
-      (setenv "PATH" (substitute-env-vars
-                      (shell-command-to-string
-                       (concat "cat " my/static-path-file " | "
-                               "grep '^\\s*PATH=' | "
-                               "sed -e 's/^\\s*PATH=//' -e 's/\"//g'"))))
-    (use-package exec-path-from-shell
-      :demand t
-      :init
-      ;; Whether to output debug info to the *Messages* buffer.
-      ;; NOTE: This variable is not customizable.
-      (setq exec-path-from-shell-debug nil)
-      :custom
-      ;; How long to wait before warning about long startup time for shell.
-      (exec-path-from-shell-warn-duration-millis 500)
-      :config
-      ;; Only run this plugin for macOS, Linux, or Cygwin systems.
-      (when (member system-type '(gnu gnu/linux darwin cygwin))
-        ;; Make sure to use the lean version of our login shell profile to
-        ;; avoid timing out or excessive memory consumption.
-        (setenv "USE_LEAN_PROFILE" "true")
-        ;; Set $PATH by running the user's login shell.
-        (exec-path-from-shell-initialize)
-        ;; Remove USE_LEAN_PROFILE environment variable once it has served its
-        ;; purpose.
-        (setenv "USE_LEAN_PROFILE" nil))))
+  (eval-and-compile
+    (if (and (member system-type '(gnu gnu/linux darwin cygwin))
+             (file-exists-p my/static-path-file))
+        ;; If we have compiled our `~/.path_static` file, use the PATH in that file
+        ;; because using that PATH is much faster than calculating it dynmaically.
+        (setenv "PATH" (substitute-env-vars
+                        (shell-command-to-string
+                         (concat "cat " my/static-path-file " | "
+                                 "grep '^\\s*PATH=' | "
+                                 "sed -e 's/^\\s*PATH=//' -e 's/\"//g'"))))
+      (use-package exec-path-from-shell
+        :demand t
+        :init
+        ;; Whether to output debug info to the *Messages* buffer.
+        ;; NOTE: This variable is not customizable.
+        (setq exec-path-from-shell-debug nil)
+        :custom
+        ;; How long to wait before warning about long startup time for shell.
+        (exec-path-from-shell-warn-duration-millis 500)
+        :config
+        ;; Only run this plugin for macOS, Linux, or Cygwin systems.
+        (when (member system-type '(gnu gnu/linux darwin cygwin))
+          ;; Make sure to use the lean version of our login shell profile to
+          ;; avoid timing out or excessive memory consumption.
+          (setenv "USE_LEAN_PROFILE" "true")
+          ;; Set $PATH by running the user's login shell.
+          (exec-path-from-shell-initialize)
+          ;; Remove USE_LEAN_PROFILE environment variable once it has served its
+          ;; purpose.
+          (setenv "USE_LEAN_PROFILE" nil)))))
 #+end_src
 
 ** delight
@@ -1369,17 +1370,17 @@ and hooks in a way that defers loading the package.
   (use-package general
     :demand t
     :config
-    (eval-when-compile
+    (eval-and-compile
       (add-to-list 'load-path (file-truename (concat user-emacs-directory "straight/build/general")))
-      (require 'general))
-    ;; Define a shortcut function for defining keys that begin with "C-c"
-    (general-create-definer my/user-leader-def
-      :prefix "C-c")
-    ;; Create a replacement macro for `evil-leader'. This obsoletes the need to
-    ;; include `evil-leader' in your configuation!
-    (general-create-definer my/evil-leader-def
-      :states '(normal visual)
-      :prefix ",")
+      (require 'general)
+      ;; Define a shortcut function for defining keys that begin with "C-c"
+      (general-create-definer my/user-leader-def
+        :prefix "C-c")
+      ;; Create a replacement macro for `evil-leader'. This obsoletes the need to
+      ;; include `evil-leader' in your configuation!
+      (general-create-definer my/evil-leader-def
+        :states '(normal visual)
+        :prefix ","))
     ;; Allows using Vim-style key definers.
     ;; Available definers are:
     ;;   general-imap

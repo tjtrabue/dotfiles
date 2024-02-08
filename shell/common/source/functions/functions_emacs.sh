@@ -20,17 +20,17 @@ emacs_rm_caches() {
   fi
 }
 
-# Byte-compile everything in a given directory (defaults to '~/.emacs.d').
-emacs_byte_compile_dir() {
+# Byte-compile everything in the super config directory.
+emacs_byte_compile_config() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
-  local emacsDir="${1:-${emacsHome}}"
+  local emacsScriptsDir="${emacsHome}/scripts"
 
-  if [ ! -d "${emacsDir}" ]; then
-    err "Directory ${BLUE}${emacsDir}${NC} not found"
+  if [ ! -d "${emacsScriptsDir}" ]; then
+    err "Directory ${BLUE}${emacsScriptsDir}${NC} not found"
     return 1
   fi
 
-  emacs --batch --eval "(byte-recompile-directory \"${emacsDir}\" 0)"
+  emacs --batch --script "${emacsScriptsDir}/byte-compile-config.el"
 }
 
 # Start Emacs in Gnus mode to read email/news.

@@ -15,103 +15,106 @@ use them, such as =plsense= and =Devel::PerlySense=. Just be warned that using
 such plugins is sure to slow your system down significantly.
 
 * PDE
-  PDE is a collection of Emacs Lisp modules for interacting with Perl code
-  distributed through CPAN in a package named =Emacs::PDE=. Thus, you must
-  install =Emacs::PDE= through your CPAN install utility, usually =cpanm=. Once
-  you have installed PDE, you may load it in Emacs.
+PDE is a collection of Emacs Lisp modules for interacting with Perl code
+distributed through CPAN in a package named =Emacs::PDE=. Thus, you must
+install =Emacs::PDE= through your CPAN install utility, usually =cpanm=. Once
+you have installed PDE, you may load it in Emacs.
 
-  *NOTE*: I do not recommend you use PDE right now as it can hijack a number of
-  different configuration settings, such as =helm=.
+*NOTE*: I do not recommend you use PDE right now as it can hijack a number of
+different configuration settings, such as =helm=.
 
 #+begin_src emacs-lisp
-;; Add the Elisp code in the PDE directory to load-path.
-(let ((pde-dir (concat user-emacs-directory "pde")))
-  (when (file-directory-p pde-dir)
-    (add-to-list 'load-path pde-dir)))
+  (eval-and-compile
+    ;; Add the Elisp code in the PDE directory to load-path.
+    (let ((pde-dir (concat user-emacs-directory "pde")))
+      (when (file-directory-p pde-dir)
+        (add-to-list 'load-path pde-dir)))
 
-(defun load-pde ()
-  "Load the Perl Development Environment."
-  (interactive)
-  (let* ((pde-dir (concat user-emacs-directory "pde"))
-         (pde-load-file (concat pde-dir "/pde-load.el")))
-    (when (file-exists-p pde-load-file)
-      (load pde-load-file))))
+    (defun load-pde ()
+      "Load the Perl Development Environment."
+      (interactive)
+      (let* ((pde-dir (concat user-emacs-directory "pde"))
+             (pde-load-file (concat pde-dir "/pde-load.el")))
+        (when (file-exists-p pde-load-file)
+          (load pde-load-file))))
 
-(define-minor-mode pde-mode
-  "Minor mode for activating the Perl Development Environment package from CPAN."
-  :lighter " PDE"
-  (if pde-mode
-      (load-pde)
-    (unload-feature 'pde-load)))
+    (define-minor-mode pde-mode
+      "Minor mode for activating the Perl Development Environment package from CPAN."
+      :lighter " PDE"
+      (if pde-mode
+          (load-pde)
+        (unload-feature 'pde-load))))
 #+end_src
 
 * Plugins
 ** cperl-mode
-   =cperl-mode= is a more advanced Perl editing mode than the standard
-   =perl-mode=, with better syntax highlighting and more editing functions.
-   You should always, always use =cperl-mode=, never use =perl-mode=. Also,
-   =cperl-mode= is built into Emacs, so there's nothing to install. I don't know
-   why it's not the default Perl editing mode.
+=cperl-mode= is a more advanced Perl editing mode than the standard
+=perl-mode=, with better syntax highlighting and more editing functions.
+You should always, always use =cperl-mode=, never use =perl-mode=. Also,
+=cperl-mode= is built into Emacs, so there's nothing to install. I don't know
+why it's not the default Perl editing mode.
 
 *** Variables
 #+begin_src emacs-lisp
-  (defvar my/ffap-perl-inc-dirs
-        (apply 'append
-        (mapcar (function ffap-all-subdirs)
-          (split-string (shell-command-to-string
-              "perl -e 'pop @INC; print join(q/ /,@INC);'"))))
-    "Directories from the @INC variables in Perl used to locate
-    files at point.")
+  (eval-when-compile
+    (defconst my/ffap-perl-inc-dirs
+      (apply 'append
+             (mapcar (function ffap-all-subdirs)
+                     (split-string (shell-command-to-string
+                                    "perl -e 'pop @INC; print join(q/ /,@INC);'"))))
+      "Directories from the @INC variables in Perl used to locate
+    files at point."))
 #+end_src
 
 *** Functions
 #+begin_src emacs-lisp
-  (defun my/cperl-ffap-locate(name)
-    "Return cperl module for find-file-at-point."
-    (let* ((r (replace-regexp-in-string ":" "/" (file-name-sans-extension name)))
-           (e (replace-regexp-in-string "//" "/" r))
-           (x (ffap-locate-file e '(".pm" ".pl" ".xs") my/ffap-perl-inc-dirs)))
-      x))
+  (eval-and-compile
+    (defun my/cperl-ffap-locate(name)
+      "Return cperl module for find-file-at-point."
+      (let* ((r (replace-regexp-in-string ":" "/" (file-name-sans-extension name)))
+             (e (replace-regexp-in-string "//" "/" r))
+             (x (ffap-locate-file e '(".pm" ".pl" ".xs") my/ffap-perl-inc-dirs)))
+        x))
 
-  (defun my/perl-module-path (module-name)
-    "Return the path to the given Perl module."
-    (let* ((file-name
-            (concat (replace-regexp-in-string "::" "/" module-name)
-                    ".pm"))
-           (command-line
-            (concat "perl -M'"
-                    module-name
-                    "' -e'print $INC{q{"
-                    file-name
-                    "}}'"))
-           (path (shell-command-to-string command-line))
-           (cant-locate (string-match "^Can't locate " path)))
-      (if cant-locate
-          nil
-        path)))
+    (defun my/perl-module-path (module-name)
+      "Return the path to the given Perl module."
+      (let* ((file-name
+              (concat (replace-regexp-in-string "::" "/" module-name)
+                      ".pm"))
+             (command-line
+              (concat "perl -M'"
+                      module-name
+                      "' -e'print $INC{q{"
+                      file-name
+                      "}}'"))
+             (path (shell-command-to-string command-line))
+             (cant-locate (string-match "^Can't locate " path)))
+        (if cant-locate
+            nil
+          path)))
 
-  (defun find-perl-module (module-name)
-    "Open a Perl module's source file."
-    (interactive (list (let* ((default-arg (cperl-word-at-point))
-                              (input (read-string (format "Perl module name%s: "
-                                                          (if (string= default-arg "")
-                                                              ""
-                                                            (format " (default %s)" default-arg))))))
-                         (if (string= input "")
-                             (if (string= default-arg "")
-                                 (error "No Perl module given")
-                               default-arg)
-                           input))))
-    (let ((path (my/perl-module-path module-name)))
-      (if path
-          (find-file path)
-        (error "Module '%s' not found" module-name))))
+    (defun find-perl-module (module-name)
+      "Open a Perl module's source file."
+      (interactive (list (let* ((default-arg (cperl-word-at-point))
+                                (input (read-string (format "Perl module name%s: "
+                                                            (if (string= default-arg "")
+                                                                ""
+                                                              (format " (default %s)" default-arg))))))
+                           (if (string= input "")
+                               (if (string= default-arg "")
+                                   (error "No Perl module given")
+                                 default-arg)
+                             input))))
+      (let ((path (my/perl-module-path module-name)))
+        (if path
+            (find-file path)
+          (error "Module '%s' not found" module-name))))
 
-  (defun my/cperl-eldoc-documentation-function ()
-    "Return meaningful doc string for `eldoc-mode'."
-    (car
-      (let ((cperl-message-on-help-error nil))
-        (cperl-get-help))))
+    (defun my/cperl-eldoc-documentation-function ()
+      "Return meaningful doc string for `eldoc-mode'."
+      (car
+       (let ((cperl-message-on-help-error nil))
+         (cperl-get-help)))))
 #+end_src
 
 *** =use-package= specification
@@ -124,11 +127,11 @@ such plugins is sure to slow your system down significantly.
     ("perl" . cperl-mode)
     :hook
     (cperl-mode . (lambda ()
-      (make-local-variable 'eldoc-documentation-function)
-      (make-local-variable 'after-save-hook)
-      (setq eldoc-documentation-function #'my/cperl-eldoc-documentation-function)
-      (cperl-lazy-install)
-      (add-hook 'after-save-hook #'font-lock-fontify-buffer)))
+                    (make-local-variable 'eldoc-documentation-function)
+                    (make-local-variable 'after-save-hook)
+                    (setq eldoc-documentation-function #'my/cperl-eldoc-documentation-function)
+                    (cperl-lazy-install)
+                    (add-hook 'after-save-hook #'font-lock-fontify-buffer)))
     :config
     ;; Get rid of troublesome keybindings
     (define-key cperl-mode-map (kbd "C-j") nil)
@@ -137,18 +140,18 @@ such plugins is sure to slow your system down significantly.
 #+end_src
 
 ** perly-sense-mode
-    PerlySense is an IDE backend for Perl. It interfaces with Emacs quite
-    nicely.  Much like PDE, You must install PerlySense via CPAN from the
-    Devel::PerlySense package. It provides some fancy IDE features such as class
-    hierarchies, documentation for the thing at point, searching through a
-    project for Perl files containing given text, and even showing test
-    coverage.
+PerlySense is an IDE backend for Perl. It interfaces with Emacs quite
+nicely.  Much like PDE, You must install PerlySense via CPAN from the
+Devel::PerlySense package. It provides some fancy IDE features such as class
+hierarchies, documentation for the thing at point, searching through a
+project for Perl files containing given text, and even showing test
+coverage.
 
-    PerlySense is most useful for Object Oriented Perl projects, since most of
-    the IDE's features revolve around class hierarchies, documentation at point,
-    go-to-definition for classes only, etc. However, where PerlySense falls
-    short, =plsense= shines. I highly recommend you use both, but I do find that
-    =plsense= is more generally useful.
+PerlySense is most useful for Object Oriented Perl projects, since most of
+the IDE's features revolve around class hierarchies, documentation at point,
+go-to-definition for classes only, etc. However, where PerlySense falls
+short, =plsense= shines. I highly recommend you use both, but I do find that
+=plsense= is more generally useful.
 
 #+begin_src emacs-lisp
   (use-package perly-sense-mode
@@ -157,7 +160,7 @@ such plugins is sure to slow your system down significantly.
     (perly-sense-mode :type git :host github :repo "tjtrabue/perly-sense-mode")
     :after (cperl-mode evil-collection)
     :hook ((cperl-mode perl-mode) . (lambda ()
-             (perly-sense-mode)))
+                                      (perly-sense-mode)))
     :init
     ;; The PerlySense prefix key (unset only if needed)
     (setq ps/key-prefix (kbd "C-c C-o"))
@@ -169,27 +172,27 @@ such plugins is sure to slow your system down significantly.
 #+end_src
 
 ** plsense
-   Much like =company-plsense=, this is another Emacs interface plugin for
-   =plsense=, but while =company-plsense= focuses on automatically completing
-   what you type, this one provides other IDE features, such as
-   jump-to-definition, managing the =plsense= servers, etc.
+Much like =company-plsense=, this is another Emacs interface plugin for
+=plsense=, but while =company-plsense= focuses on automatically completing
+what you type, this one provides other IDE features, such as
+jump-to-definition, managing the =plsense= servers, etc.
 
-   Please note that you must have already installed the =plsense= Perl package
-   before you can use this plugin.
+Please note that you must have already installed the =plsense= Perl package
+before you can use this plugin.
 
-   *NOTE*: Please do /not/ use the =plsense-config-default= function in the
-   =:config= block! It enables =auto-complete-mode=, something that I do not
-   use, and it does so in a way that makes getting rid of =auto-complete-mode=
-   in any Perl buffer automatically very difficult. Instead of using
-   =plsense-config-default=, simply put all of your =plsense= initialization
-   logic in the =:hook= block in the =use-package= specification below. As you
-   can see, my chosen suite of initialization functions are heavily inspired by
-   =plsense-config-default=, but I leave out the =auto-complete-mode=
-   parts. Some may call this duplication of effort. However, I believe that the
-   flexibility that my approach affords me more than makes up for the hassle
-   incurred by rewriting =plsense-config-defaul=, and given how old this plugin
-   is and the slow pace of its change history, I doubt that it will change much
-   in the near future.
+*NOTE*: Please do /not/ use the =plsense-config-default= function in the
+=:config= block! It enables =auto-complete-mode=, something that I do not
+use, and it does so in a way that makes getting rid of =auto-complete-mode=
+in any Perl buffer automatically very difficult. Instead of using
+=plsense-config-default=, simply put all of your =plsense= initialization
+logic in the =:hook= block in the =use-package= specification below. As you
+can see, my chosen suite of initialization functions are heavily inspired by
+=plsense-config-default=, but I leave out the =auto-complete-mode=
+parts. Some may call this duplication of effort. However, I believe that the
+flexibility that my approach affords me more than makes up for the hassle
+incurred by rewriting =plsense-config-defaul=, and given how old this plugin
+is and the slow pace of its change history, I doubt that it will change much
+in the near future.
 
 #+begin_src emacs-lisp
   (use-package plsense
@@ -197,22 +200,22 @@ such plugins is sure to slow your system down significantly.
     :after cperl-mode
     :hook
     ((cperl-mode perl-mode) . (lambda ()
-      (make-local-variable 'after-save-hook)
-      ;; Start the plsense servers automatically.
-      (plsense-server-start)
-      ;; Add keybindings and such.
-      (plsense-setup-current-buffer)
-      (plsense-update-current-buffer)
-      ;; Turn auto-complete-mode OFF.
-      ;; This must come after plsense-setup-current-buffer
-      (auto-complete-mode -1)
-      ;; Tell plsense to update the buffer after saving.
-      (add-hook 'after-save-hook 'plsense-update-current-buffer t)
-      ;; Define advice for informing changes of current buffer to server.
-      (plsense-server-sync-trigger-ize newline)
-      (plsense-server-sync-trigger-ize newline-and-indent)
-      (plsense-server-sync-trigger-ize yank)
-      (plsense-server-sync-trigger-ize yas/commit-snippet)))
+                                (make-local-variable 'after-save-hook)
+                                ;; Start the plsense servers automatically.
+                                (plsense-server-start)
+                                ;; Add keybindings and such.
+                                (plsense-setup-current-buffer)
+                                (plsense-update-current-buffer)
+                                ;; Turn auto-complete-mode OFF.
+                                ;; This must come after plsense-setup-current-buffer
+                                (auto-complete-mode -1)
+                                ;; Tell plsense to update the buffer after saving.
+                                (add-hook 'after-save-hook 'plsense-update-current-buffer t)
+                                ;; Define advice for informing changes of current buffer to server.
+                                (plsense-server-sync-trigger-ize newline)
+                                (plsense-server-sync-trigger-ize newline-and-indent)
+                                (plsense-server-sync-trigger-ize yank)
+                                (plsense-server-sync-trigger-ize yas/commit-snippet)))
     :init
     ;; Key binding
     (setq plsense-popup-help-key "C-:")
@@ -221,8 +224,8 @@ such plugins is sure to slow your system down significantly.
 #+end_src
 
 ** perl-find-library
-   This is a community package for finding Perl library source files.
-   It really supersedes my custom =find-perl-module= function.
+This is a community package for finding Perl library source files.
+It really supersedes my custom =find-perl-module= function.
 
 #+begin_src emacs-lisp
   (use-package perl-find-library

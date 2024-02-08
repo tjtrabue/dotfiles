@@ -22,46 +22,45 @@ An =evil-operator= is a function that acts on text objects (characters, words,
 lines, etc.). They mimic Vim's operators, but are much more customizeable.
 
 #+begin_src emacs-lisp
-  ;; This is to satisfy the byte-compiler.
-  (defvar my-evil-join)
-  (unless (fboundp 'my/define-custom-evil-operators)
-    (defsubst my/define-custom-evil-operators ()
-      "Define extra operators for use in `evil-mode'."
+  (eval-and-compile
+    (unless (fboundp 'my/define-custom-evil-operators)
+      (defsubst my/define-custom-evil-operators ()
+        "Define extra operators for use in `evil-mode'."
 
-      ;; FIXME: When run on line:
-      ;;   (insert "\n#endif  // " ident)))))
-      ;; it modifies the string and becomes:
-      ;;     (insert "\n#endif // " ident)))))
-      ;;
-      ;; if joined lines are comments, remove delimiters
-      (evil-define-operator my-evil-join (beg end)
-        "Join the selected lines. Based on blaenk/dots on GitHub.
+        ;; FIXME: When run on line:
+        ;;   (insert "\n#endif  // " ident)))))
+        ;; it modifies the string and becomes:
+        ;;     (insert "\n#endif // " ident)))))
+        ;;
+        ;; if joined lines are comments, remove delimiters
+        (evil-define-operator my-evil-join (beg end)
+          "Join the selected lines. Based on blaenk/dots on GitHub.
 
-  This custom version of `evil-join' handles joining commented
-  lines more handily than evil's default J operator, removing
-  leading comment designators. In that sense, it behaves far more
-  like Vim."
-        :motion evil-line
-        (let* ((count (count-lines beg end))
-               ;; we join pairs at a time
-               (count (if (> count 1) (1- count) count))
-               ;; the mark at the middle of the joined pair of lines
-               (fixup-mark (make-marker)))
-          (dotimes (var count)
-            (if (and (bolp) (eolp))
-                (join-line 1)
-              (let* ((end (line-beginning-position 3))
-                     (fill-column (1+ (- end beg))))
-                ;; save the mark at the middle of the pair
-                (set-marker fixup-mark (line-end-position))
-                ;; join it via fill
-                (fill-region-as-paragraph beg end)
-                ;; jump back to the middle
-                (goto-char fixup-mark)
-                ;; context-dependent whitespace fixup
-                (fixup-whitespace))))
-          ;; remove the mark
-          (set-marker fixup-mark nil)))))
+    This custom version of `evil-join' handles joining commented
+    lines more handily than evil's default J operator, removing
+    leading comment designators. In that sense, it behaves far more
+    like Vim."
+          :motion evil-line
+          (let* ((count (count-lines beg end))
+                 ;; we join pairs at a time
+                 (count (if (> count 1) (1- count) count))
+                 ;; the mark at the middle of the joined pair of lines
+                 (fixup-mark (make-marker)))
+            (dotimes (var count)
+              (if (and (bolp) (eolp))
+                  (join-line 1)
+                (let* ((end (line-beginning-position 3))
+                       (fill-column (1+ (- end beg))))
+                  ;; save the mark at the middle of the pair
+                  (set-marker fixup-mark (line-end-position))
+                  ;; join it via fill
+                  (fill-region-as-paragraph beg end)
+                  ;; jump back to the middle
+                  (goto-char fixup-mark)
+                  ;; context-dependent whitespace fixup
+                  (fixup-whitespace))))
+            ;; remove the mark
+            (set-marker fixup-mark nil))))))
 #+end_src
 
 * Define macros
@@ -99,21 +98,22 @@ Custom =evil-mode= macros.
 Custom =evil-mode= functions.
 
 #+begin_src emacs-lisp
-  (defun my/evil-eval-and-replace-last-sexp ()
-    "Replace the preceding sexp with its value."
-    (interactive)
-    (my/evil-adjust-point
-     (my/eval-and-replace)))
+  (eval-and-compile
+    (defun my/evil-eval-and-replace-last-sexp ()
+      "Replace the preceding sexp with its value."
+      (interactive)
+      (my/evil-adjust-point
+       (my/eval-and-replace)))
 
-  (defun my/evil-insert-newline-above (arg)
-    "Insert ARG newlines above point.
+    (defun my/evil-insert-newline-above (arg)
+      "Insert ARG newlines above point.
 
-    The effect of this function is to move all lines, from point
-    onward, down by ARG lines."
-    (interactive "p")
-    (let ((repeats arg))
-      (dotimes (_n repeats)
-        (evil-insert-newline-above))))
+      The effect of this function is to move all lines, from point
+      onward, down by ARG lines."
+      (interactive "p")
+      (let ((repeats arg))
+        (dotimes (_n repeats)
+          (evil-insert-newline-above)))))
 #+end_src
 
 * Custom advice functions
@@ -122,7 +122,7 @@ on their parameters.
 
 ** Define advice functions
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     (defun my/highlight-evil-region-advice (orig-fn beg end &rest args)
       "Pulse a selected buffer region with a highlight for a moment."
       (pulse-momentary-highlight-region beg end 'highlight)
@@ -131,9 +131,10 @@ on their parameters.
 
 ** Add advice to evil functions
 #+begin_src emacs-lisp
-  (defun my/add-evil-advice ()
-    "Add advice to various `evil-mode' functions."
-    (advice-add 'evil-yank :around 'my/highlight-evil-region-advice))
+  (eval-and-compile
+    (defun my/add-evil-advice ()
+      "Add advice to various `evil-mode' functions."
+      (advice-add 'evil-yank :around 'my/highlight-evil-region-advice)))
 #+end_src
 
 * =use-package= specification
@@ -353,9 +354,9 @@ Provides default Vim keybindings for all standard Emacs modes.
     :config
     (evil-collection-init)
     (when (bound-and-true-p tab-line-mode)
-     (general-def 'normal evil-collection-unimpaired-mode-map
-      "[b" 'tab-line-switch-to-prev-tab
-      "]b" 'tab-line-switch-to-next-tab)))
+      (general-def 'normal evil-collection-unimpaired-mode-map
+        "[b" 'tab-line-switch-to-prev-tab
+        "]b" 'tab-line-switch-to-next-tab)))
 #+end_src
 
 ** evil-escape
@@ -676,60 +677,61 @@ main features of =lispyville=:
 
 *** Functions
 #+begin_src emacs-lisp
-  (defun my/lispyville-wrap-round-and-insert (arg)
-    "Call `lispy-parens' with a default ARG of 1 and enter `evil-insert-state'."
-    (interactive "P")
-    (lispy-parens (or arg 1))
-    (evil-insert-state))
+  (eval-and-compile
+    (defun my/lispyville-wrap-round-and-insert (arg)
+      "Call `lispy-parens' with a default ARG of 1 and enter `evil-insert-state'."
+      (interactive "P")
+      (lispy-parens (or arg 1))
+      (evil-insert-state))
 
-  (defun my/lispyville-wrap-braces-and-insert (arg)
-    "Call `lispy-braces' with a default ARG of 1 and enter `evil-insert-state'."
-    (interactive "P")
-    (lispy-braces (or arg 1))
-    (evil-insert-state))
+    (defun my/lispyville-wrap-braces-and-insert (arg)
+      "Call `lispy-braces' with a default ARG of 1 and enter `evil-insert-state'."
+      (interactive "P")
+      (lispy-braces (or arg 1))
+      (evil-insert-state))
 
-  (defun my/lispyville-wrap-brackets-and-insert (arg)
-    "Call `lispy-brackets' with a default ARG of 1 and enter `evil-insert-state'."
-    (interactive "P")
-    (lispy-brackets (or arg 1))
-    (evil-insert-state))
+    (defun my/lispyville-wrap-brackets-and-insert (arg)
+      "Call `lispy-brackets' with a default ARG of 1 and enter `evil-insert-state'."
+      (interactive "P")
+      (lispy-brackets (or arg 1))
+      (evil-insert-state))
 
-  (defun my/lispyville-kill-and-insert ()
-    "Kill line or sexp and enter `evil''s insert state."
-    (interactive)
-    (lispy-kill)
-    (evil-insert-state))
+    (defun my/lispyville-kill-and-insert ()
+      "Kill line or sexp and enter `evil''s insert state."
+      (interactive)
+      (lispy-kill)
+      (evil-insert-state))
 
-  (defun my/lispyville-duplicate-dwim (count)
-    "Duplicate the current line or region COUNT times."
-    (interactive "P")
-    (let ((beg (pos-bol))
-          (end (pos-eol))
-          (reg evil-this-register)
-          (yank-handler #'evil-yank-line-handler)
-          (type 'line))
-      (save-excursion
-        (cond ((evil-visual-state-p)
-               (setq beg evil-visual-beginning
-                     end evil-visual-end
-                     yank-handler #'evil-yank-block-handler
-                     type 'block)
-               (lispyville-yank beg end type reg yank-handler))
-              (t
-               (lispyville-yank-line beg end type reg yank-handler)))
-        (evil-paste-after count))))
+    (defun my/lispyville-duplicate-dwim (count)
+      "Duplicate the current line or region COUNT times."
+      (interactive "P")
+      (let ((beg (pos-bol))
+            (end (pos-eol))
+            (reg evil-this-register)
+            (yank-handler #'evil-yank-line-handler)
+            (type 'line))
+        (save-excursion
+          (cond ((evil-visual-state-p)
+                 (setq beg evil-visual-beginning
+                       end evil-visual-end
+                       yank-handler #'evil-yank-block-handler
+                       type 'block)
+                 (lispyville-yank beg end type reg yank-handler))
+                (t
+                 (lispyville-yank-line beg end type reg yank-handler)))
+          (evil-paste-after count))))
 
-  (defun my/lispyville-delete-backward-char-and-join (count)
-    "Delete previous COUNT chars, keeping parens balanced.
+    (defun my/lispyville-delete-backward-char-and-join (count)
+      "Delete previous COUNT chars, keeping parens balanced.
 
-  The lispyville backspace function does not join and move
-  point back to the end of the previous line when you press
-  backspace at the beginning of a line, so we should revert to the
-  standard evil backspace function."
-    (interactive "P")
-    (if (bolp)
-        (evil-delete-backward-char-and-join count)
-      (call-interactively 'lispyville-delete-char-or-splice-backwards)))
+    The lispyville backspace function does not join and move
+    point back to the end of the previous line when you press
+    backspace at the beginning of a line, so we should revert to the
+    standard evil backspace function."
+      (interactive "P")
+      (if (bolp)
+          (evil-delete-backward-char-and-join count)
+        (call-interactively 'lispyville-delete-char-or-splice-backwards))))
 #+end_src
 
 *** =use-package= specification
