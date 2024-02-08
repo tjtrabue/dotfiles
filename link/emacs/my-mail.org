@@ -89,7 +89,7 @@ Mu4e looks for your password file in:
     (defvar my/mail-dir (file-truename (concat (getenv "MAIL_DIR") "/gmail"))
       "Local email folder.")
     (if (not my/mail-dir)
-        (setq my/mail-dir (file-truename (concat my/home-dir "/Mail/gmail"))))
+        (setq my/mail-dir (file-truename (concat (getenv "HOME") "/Mail/gmail"))))
     (defvar my/remote-mail-inbox-dir "/Inbox"
       "Email inbox directory on remote server.")
     (defvar my/remote-mail-drafts-dir "/[Gmail]/Drafts"

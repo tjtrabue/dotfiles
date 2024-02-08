@@ -22,45 +22,46 @@ An =evil-operator= is a function that acts on text objects (characters, words,
 lines, etc.). They mimic Vim's operators, but are much more customizeable.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (unless (fboundp 'my/define-custom-evil-operators)
-      (defun my/define-custom-evil-operators ()
-        "Define extra operators for use in `evil-mode'."
+  ;; This is to satisfy the byte-compiler.
+  (defvar my-evil-join)
+  (unless (fboundp 'my/define-custom-evil-operators)
+    (defsubst my/define-custom-evil-operators ()
+      "Define extra operators for use in `evil-mode'."
 
-        ;; FIXME: When run on line:
-        ;;   (insert "\n#endif  // " ident)))))
-        ;; it modifies the string and becomes:
-        ;;     (insert "\n#endif // " ident)))))
-        ;;
-        ;; if joined lines are comments, remove delimiters
-        (evil-define-operator my-evil-join (beg end)
-          "Join the selected lines. Based on blaenk/dots on GitHub.
+      ;; FIXME: When run on line:
+      ;;   (insert "\n#endif  // " ident)))))
+      ;; it modifies the string and becomes:
+      ;;     (insert "\n#endif // " ident)))))
+      ;;
+      ;; if joined lines are comments, remove delimiters
+      (evil-define-operator my-evil-join (beg end)
+        "Join the selected lines. Based on blaenk/dots on GitHub.
 
   This custom version of `evil-join' handles joining commented
   lines more handily than evil's default J operator, removing
   leading comment designators. In that sense, it behaves far more
   like Vim."
-          :motion evil-line
-          (let* ((count (count-lines beg end))
-                 ;; we join pairs at a time
-                 (count (if (> count 1) (1- count) count))
-                 ;; the mark at the middle of the joined pair of lines
-                 (fixup-mark (make-marker)))
-            (dotimes (var count)
-              (if (and (bolp) (eolp))
-                  (join-line 1)
-                (let* ((end (line-beginning-position 3))
-                       (fill-column (1+ (- end beg))))
-                  ;; save the mark at the middle of the pair
-                  (set-marker fixup-mark (line-end-position))
-                  ;; join it via fill
-                  (fill-region-as-paragraph beg end)
-                  ;; jump back to the middle
-                  (goto-char fixup-mark)
-                  ;; context-dependent whitespace fixup
-                  (fixup-whitespace))))
-            ;; remove the mark
-            (set-marker fixup-mark nil))))))
+        :motion evil-line
+        (let* ((count (count-lines beg end))
+               ;; we join pairs at a time
+               (count (if (> count 1) (1- count) count))
+               ;; the mark at the middle of the joined pair of lines
+               (fixup-mark (make-marker)))
+          (dotimes (var count)
+            (if (and (bolp) (eolp))
+                (join-line 1)
+              (let* ((end (line-beginning-position 3))
+                     (fill-column (1+ (- end beg))))
+                ;; save the mark at the middle of the pair
+                (set-marker fixup-mark (line-end-position))
+                ;; join it via fill
+                (fill-region-as-paragraph beg end)
+                ;; jump back to the middle
+                (goto-char fixup-mark)
+                ;; context-dependent whitespace fixup
+                (fixup-whitespace))))
+          ;; remove the mark
+          (set-marker fixup-mark nil)))))
 #+end_src
 
 * Define macros
@@ -217,11 +218,6 @@ The Evil mode plugin itself.
     (my/evil-leader-def
       "eE" 'my/evil-eval-and-replace-last-sexp)
     :init
-    ;; NOTE: We must set variables for evil-mode's initialization in evil-leader's
-    ;;       use-package directive because it loads first, and it in turn loads
-    ;;       evil mode. That is, if we're using `evil-leader'. If not, list them
-    ;;       here.
-
     ;; Set evil-mode variables here.
     ;; These values must be set here because evil-leader loads before evil
     ;; itself. Thus, these variables will have already been set by the time

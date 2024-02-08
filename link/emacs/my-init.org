@@ -76,20 +76,23 @@ here. Wait to load modules only used by an individual plugin in its =init=
 block.
 
 #+begin_src emacs-lisp
-  ;; Man pager library
-  (require 'man)
-  ;; Newer dired library
-  (require 'dired-x)
-  ;; String manipulation library
-  (require 'subr-x)
-  ;; Make C and C++ modes available; necessary for some third-party packages
-  (require 'cc-mode)
-  ;; "find function at point" library
-  (require 'ffap)
-  ;; EasyPG, Emacs' front-end for GPG.
-  (require 'epa)
-  ;; Emacs Grep integration functions/configuration.
-  (require 'grep)
+  ;; Wrapping `require' statements in an `eval-when-compile' is a hygenic practice in Emacs Lisp that
+  ;; prepares Elisp code for compilation.
+  (eval-when-compile
+    ;; Man pager library
+    (require 'man)
+    ;; Newer dired library
+    (require 'dired-x)
+    ;; String manipulation library
+    (require 'subr-x)
+    ;; Make C and C++ modes available; necessary for some third-party packages
+    (require 'cc-mode)
+    ;; "find function at point" library
+    (require 'ffap)
+    ;; EasyPG, Emacs' front-end for GPG.
+    (require 'epa)
+    ;; Emacs Grep integration functions/configuration.
+    (require 'grep))
 #+end_src
 
 * Define User Variables
@@ -99,53 +102,55 @@ This is where I define new variables needed throughout my configuration.
   ;; Make these variables compile-time constants (and available during
   ;; compilation)
   (eval-when-compile
+    (defconst my/use-straight-p t
+      "Whether to use straight.el instead of Emacs' built-in package manager.")
     (defconst my/emacs-plugin-dir (file-truename
-                                 (concat user-emacs-directory "/plugin"))
+                                   (concat user-emacs-directory "/plugin"))
       "Directory for additional elisp config files.
   Mostly for enumerating and configuring downloaded plugins.")
     (defconst my/plugin-notebook-dir (file-truename
-                                    (concat user-emacs-directory
-                                            "/plugin-notebook"))
+                                      (concat user-emacs-directory
+                                              "/plugin-notebook"))
       "Directory for config files written in Org syntax.")
     (defconst my/elisp-lib-dir (file-truename
-                              (concat user-emacs-directory "/require"))
+                                (concat user-emacs-directory "/require"))
       "Directory for custom Emacs Lisp library files.")
     (defconst my/private-elisp-dir (file-truename
-                                  (concat user-emacs-directory "/private"))
+                                    (concat user-emacs-directory "/private"))
       "Directory containing private config for my local environment.")
     (defconst my/local-repos-dir (file-truename
-                                (concat user-emacs-directory "/local-repos"))
+                                  (concat user-emacs-directory "/local-repos"))
       "Directory for local `straight' repos.")
     (defconst my/emacs-backup-dir (file-truename
-                                 (concat user-emacs-directory "/backups"))
+                                   (concat user-emacs-directory "/backups"))
       "Directory housing all Emacs backup files.")
     (defconst my/emacs-auto-saves-dir (file-truename
-                                     (concat user-emacs-directory "/auto-saves"))
+                                       (concat user-emacs-directory "/auto-saves"))
       "Directory housing all Emacs auto-save files.")
     (defconst my/emacs-lisp-dir (file-truename
-                               (concat user-emacs-directory "/lisp"))
+                                 (concat user-emacs-directory "/lisp"))
       "Extra miscellaneous elisp code goes here (if necessary).")
     (defconst user-fonts-dir (file-truename
-                            (concat (getenv "HOME") "/.local/share/fonts"))
+                              (concat (getenv "HOME") "/.local/share/fonts"))
       "Fonts directory for the current user")
     (defconst my/static-path-file (file-truename
-                                 (concat (getenv "HOME") "/.path_static"))
+                                   (concat (getenv "HOME") "/.path_static"))
       "The compiled PATH file used to quickly determine PATH.")
     (defconst my/straight-home-dir (file-truename
-                                  (concat user-emacs-directory "/straight"))
+                                    (concat user-emacs-directory "/straight"))
       "Home directory for the straight package manager.")
     (defconst my/straight-repos-dir (file-truename
-                                   (concat my/straight-home-dir "/repos"))
+                                     (concat my/straight-home-dir "/repos"))
       "Housing area for repositories cloned by straight.")
     (defconst my/straight-build-dir (file-truename
-                                   (concat my/straight-home-dir "/build"))
+                                     (concat my/straight-home-dir "/build"))
       "Housing area for linked and compiled Elisp files for packages installed
   with straight.el.")
     (defconst my/workspace-dir (file-truename
-                              (concat (getenv "HOME") "/workspace"))
+                                (concat (getenv "HOME") "/workspace"))
       "Directory containig development projects.")
     (defconst my/practice-dir (file-truename
-                             (concat (getenv "HOME") "/practice"))
+                               (concat (getenv "HOME") "/practice"))
       "Directory containig practice or scratch code.")
     (defconst my/line-width 80 "The width of each line of code.")
     (defconst my/use-helm-gtags t
@@ -201,21 +206,6 @@ Language and encoding parameters for this particular Emacs instance.
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
-#+end_src
-
-* Native Compilation
-To speed up performance, we want to native-compile our configuration files.
-
-** Native compile personal Elisp files
-Emacs compiles its own built-in Emacs Lisp files to native code, but users must
-instruct Emacs to compile custom libraries.
-
-#+begin_src emacs-lisp
-  ;; This command native-compiles all Elisp files under a directory
-  (native-compile-async `(,my/elisp-lib-dir
-                          ,my/emacs-plugin-dir
-                          ,my/plugin-notebook-dir)
-                        'recursively)
 #+end_src
 
 * Require Custom Libraries
@@ -778,7 +768,7 @@ Custom functions, both standard and interactive.
   (defun reload-config ()
     "Reload all Emacs config files."
     (interactive)
-    (load-file my/emacsrc))
+    (load-file user-init-file))
 
   (defun download-elisp-lib (url &optional file-name)
     "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
@@ -1108,6 +1098,44 @@ stale files. We should periodically purge old files from these directories.
 Configure package managers Emacs leverages to install and configure third-party
 packages.
 
+** Standard Config
+Here we determine whether to use Emacs' built-in package manager =package.el= or
+the much superior =straight.el= third-party package manager.
+
+#+begin_src emacs-lisp
+  (if (and (not my/use-straight-p) (>= emacs-major-version 24))
+  ;;; IF we want to use the built-in package manager...
+      (progn
+        ;; Package configuration
+        (eval-when-compile
+          (require 'package))
+        ;; Add extra package archives to the list of repositories.
+        ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+        ;;       to change the URLs to simple HTTP in order for them to function.
+        ;;       If you must do this, also uncomment the two expressions below.
+        ;;       That will reset the archives list and allow you to only use
+        ;;       unsecured connections for package transfer.
+        ;; (setq package-archives nil)
+        ;; (add-to-list 'package-archives
+        ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+        (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
+        (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
+        (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+        (package-initialize)
+        ;; Automatically install packages using use-package
+        (unless (package-installed-p 'use-package)
+          (package-refresh-contents)
+          (package-install 'use-package))
+        (eval-when-compile
+          (require 'use-package)))
+  ;;; OTHERWISE...
+    ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
+    (setq package-enable-at-startup nil)
+    ;; this tells package.el not to add those pesky customized variable settings
+    ;; at the end of your init.el
+    (setq package--init-file-ensured t))
+#+end_src
+
 ** straight
 =straight= is a newer package manager for Emacs that differs from
 =package.el=.  It operates by cloning Git repositories for Emacs packages and
@@ -1120,57 +1148,62 @@ To update all packages installed through straight, run =M-x
 straight-pull-all=
 
 #+begin_src emacs-lisp
-  (defvar bootstrap-version)
-  ;; Always use `use-package' when installing packages, making the `:straight t'
-  ;; part of the `use-package' macro unnecessary.
-  (setq straight-use-package-by-default t)
-  ;; The straight.el branch to clone.
-  (setq straight-repository-branch "develop")
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 6))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           (concat
-            "https://raw.githubusercontent.com/radian-software/straight.el/"
-            straight-repository-branch
-            "/install.el")
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (with-no-warnings
-      (load bootstrap-file nil 'nomessage))
+  (eval-when-compile
+    (defvar bootstrap-version)
+    ;; Always use `use-package' when installing packages, making the `:straight t'
+    ;; part of the `use-package' macro unnecessary.
+    (setq straight-use-package-by-default t)
+    ;; The straight.el branch to clone.
+    (setq straight-repository-branch "develop")
+    (let ((bootstrap-file
+           (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
+          (bootstrap-version 7))
+      (unless (file-exists-p bootstrap-file)
+        (with-current-buffer
+            (url-retrieve-synchronously
+             (concat
+              "https://raw.githubusercontent.com/radian-software/straight.el/"
+              straight-repository-branch
+              "/install.el")
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
+      (with-no-warnings
+        (load bootstrap-file nil 'nomessage))
 
-    ;; Register more Git project hosting sites with Straight.el.
-    ;; TODO: Remove these host additions once straight.el includes them by
-    ;;       default.
-    (add-to-list 'straight-hosts '(codeberg "codeberg.org" ".git"))
+      ;; Load all of straight's macros at compile-time.
+      (add-to-list 'load-path (file-truename (concat user-emacs-directory "straight/build/straight")))
+      (require 'straight)
 
-    ;; Refresh package repositories
-    (when (not (fboundp 'straight-pull-recipe-repositories))
-      ;; Sometimes straight.el does not include the convenience function
-      ;; `straight-pull-recipe-repositories', in which case we should alias
-      ;; that function to our own custom version.
-      (defalias 'straight-pull-recipe-repositories
-        'my-straight-helpers-pull-recipe-repositories))
-    (straight-pull-recipe-repositories)
+      ;; Register more Git project hosting sites with Straight.el.
+      ;; TODO: Remove these host additions once straight.el includes them by
+      ;;       default.
+      (add-to-list 'straight-hosts '(codeberg "codeberg.org" ".git"))
 
-    ;; Default mode for loading packages: either defer or demand.
-    ;; (setq use-package-always-demand t)
-    (setq use-package-always-defer t)
+      ;; Refresh package repositories
+      (when (not (fboundp 'straight-pull-recipe-repositories))
+        ;; Sometimes straight.el does not include the convenience function
+        ;; `straight-pull-recipe-repositories', in which case we should alias
+        ;; that function to our own custom version.
+        (defalias 'straight-pull-recipe-repositories
+          'my-straight-helpers-pull-recipe-repositories))
+      (straight-pull-recipe-repositories)
 
-    ;; Install use-package via straight.
-    ;; After this function runs, use-package will automatically use straight
-    ;; to install packages if you specify ':stright t' instead of ':ensure t'.
-    ;; If you have set straight-use-package-by-default to t, this is
-    ;; unnecessary.
-    (straight-use-package
-     ;; Override the MELPA recipe in order to get all Elisp files for
-     ;; use-package. For some reason, the MELPA recipe excludes several
-     ;; important source files.
-     '(use-package :type git :host github :repo "jwiegley/use-package"
-        :files (:defaults))))
+      ;; Default mode for loading packages: either defer or demand.
+      ;; (setq use-package-always-demand t)
+      (setq use-package-always-defer t)
+
+      ;; Install use-package via straight.
+      ;; After this function runs, use-package will automatically use straight
+      ;; to install packages if you specify ':stright t' instead of ':ensure t'.
+      ;; If you have set straight-use-package-by-default to t, this is
+      ;; unnecessary.
+      (straight-use-package
+       ;; Override the MELPA recipe in order to get all Elisp files for
+       ;; use-package. For some reason, the MELPA recipe excludes several
+       ;; important source files.
+       '(use-package :type git :host github :repo "jwiegley/use-package"
+          :files (:defaults)))))
 #+end_src
 
 * Install Packages Needed on Startup
@@ -1313,6 +1346,9 @@ and hooks in a way that defers loading the package.
   (use-package general
     :demand t
     :config
+    (eval-when-compile
+      (add-to-list 'load-path (file-truename (concat user-emacs-directory "straight/build/general")))
+      (require 'general))
     ;; Define a shortcut function for defining keys that begin with "C-c"
     (general-create-definer my/user-leader-def
       :prefix "C-c")

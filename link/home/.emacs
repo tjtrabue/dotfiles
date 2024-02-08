@@ -41,10 +41,10 @@
 
   ;; JIT settings to speed up startup.
   ;; https://tychoish.com/post/towards-faster-emacs-start-times/
-  ;; (setq jit-lock-stealth-time nil)
-  ;; (setq jit-lock-defer-time nil)
-  ;; (setq jit-lock-defer-time 0.05)
-  ;; (setq jit-lock-stealth-load 200)
+  (setq jit-lock-stealth-time nil
+    jit-lock-defer-time nil
+    jit-lock-defer-time 0.05
+    jit-lock-stealth-load 200)
 
 ;;; NOTE REGARDING BYTE COMPILING CONFIG FILES:
   ;; In general, I have observed that attempting to load compiled Elisp files is
@@ -57,10 +57,12 @@
   ;;
   ;; In addition, the process of compiling all of these macro-heavy Elisp files is
   ;; extremely difficult to get right. Many things are left up to chance, and
-  ;; things we often take for granted in the Elisp world cease to function
+  ;; things we often take for granted in the Elisp world cease to function.
 
   ;; Add required libraries
-  (require 'bytecomp)
+  (eval-when-compile
+    (require 'bytecomp)
+    (require 'cl-lib))
 
   ;; Settings for Emacs Lisp embedded in Org source blocks.
   (with-eval-after-load "ob-emacs-lisp"
@@ -69,56 +71,14 @@
       '((:lexical . t)
          (:tangle . "yes"))))
 
-  ;; Define and set variables
-  (eval-when-compile
-    (defconst my/home-dir (getenv "HOME")
-      "User's home directory path.")
-    (defconst my/emacsrc (file-truename (concat (getenv "HOME") "/.emacs"))
-      "The main Emacs config file in the user's home directory.")
-    (defconst my/use-straight t
-      "Whether to use straight.el instead of Emacs' built-in package manager."))
-
   (defsubst my/apply-to-dir-files (dir pattern fn &rest args)
     "Apply FN to all files in DIR matching regex PATTERN.
 
 Any additional args ARGS are passed to FN."
-    (require 'cl-lib)
     (cl-flet
       ((apply-it (f) (funcall fn (concat (file-name-as-directory dir) f) args)))
       (if (file-directory-p dir)
         (mapc #'apply-it (directory-files dir nil pattern)))))
-
-  ;; Load extra packages using Emacs 24's package system.
-  ;; NOTE: Currently disabled since we use straight.el to manage our packages.
-  (if (and (not my/use-straight) (>= emacs-major-version 24))
-;;; IF we want to use the built-in package manager...
-    (progn
-      ;; Package configuration
-      (require 'package)
-      ;; Add extra package archives to the list of repositories.
-      ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
-      ;;       to change the URLs to simple HTTP in order for them to function.
-      ;;       If you must do this, also uncomment the two expressions below.
-      ;;       That will reset the archives list and allow you to only use
-      ;;       unsecured connections for package transfer.
-      ;; (setq package-archives nil)
-      ;; (add-to-list 'package-archives
-      ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-      (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
-      (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
-      (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
-      (package-initialize)
-      ;; Automatically install packages using use-package
-      (unless (package-installed-p 'use-package)
-        (package-refresh-contents)
-        (package-install 'use-package))
-      (require 'use-package))
-;;; OTHERWISE...
-    ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
-    (setq package-enable-at-startup nil)
-    ;; this tells package.el not to add those pesky customized variable settings
-    ;; at the end of your init.el
-    (setq package--init-file-ensured t))
 
 ;;; Configure the `load-path'.
   ;; Add `/usr/local/share/emacs/site-lisp/' to load-path, and then add all of its
