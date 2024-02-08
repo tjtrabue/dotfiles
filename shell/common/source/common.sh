@@ -28,7 +28,7 @@ LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 __src_env_setup_files() {
   local f
 
-  for f in "${HOME}/."{dirs,vars,var_overrides}; do
+  for f in "${HOME}/."{vars,var_overrides,dirs}; do
     [ -s "${f}" ] && . "${f}"
   done
 }
