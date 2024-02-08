@@ -256,41 +256,42 @@ opposed to strewing them about each directory you visit. Same goes for the
 auto-save feature for buffers.
 
 #+begin_src emacs-lisp
-  ;; Put all backup files in ~/.emacs.d/backups and auto save files in
-  ;; ~/.emacs.d/auto-saves to avoid causing unwanted side-effects.
-  (dolist (dir (list my/emacs-backup-dir my/emacs-auto-saves-dir))
-    (when (not (file-directory-p dir))
-      (make-directory dir t)))
-  (setq backup-directory-alist
-        `((".*" . ,(file-truename (concat my/emacs-backup-dir "/")))))
-  (setq auto-save-file-name-transforms
-        `((".*" ,(file-truename (concat my/emacs-auto-saves-dir "/")) t)))
-  (setq auto-save-list-file-prefix
-        (file-truename (concat my/emacs-auto-saves-dir "/.saves-")))
-  (setq tramp-backup-directory-alist
-        `((".*" . ,(file-truename my/emacs-backup-dir))))
-  (setq tramp-auto-save-directory
-        (file-truename (concat my/emacs-auto-saves-dir "/")))
+  (eval-when-compile
+    ;; Put all backup files in ~/.emacs.d/backups and auto save files in
+    ;; ~/.emacs.d/auto-saves to avoid causing unwanted side-effects.
+    (dolist (dir (list my/emacs-backup-dir my/emacs-auto-saves-dir))
+      (when (not (file-directory-p dir))
+        (make-directory dir t)))
+    (setq backup-directory-alist
+          `((".*" . ,(file-truename (concat my/emacs-backup-dir "/")))))
+    (setq auto-save-file-name-transforms
+          `((".*" ,(file-truename (concat my/emacs-auto-saves-dir "/")) t)))
+    (setq auto-save-list-file-prefix
+          (file-truename (concat my/emacs-auto-saves-dir "/.saves-")))
+    (setq tramp-backup-directory-alist
+          `((".*" . ,(file-truename my/emacs-backup-dir))))
+    (setq tramp-auto-save-directory
+          (file-truename (concat my/emacs-auto-saves-dir "/")))
 
-  ;; Backup of a file the first time it is saved.
-  (setq make-backup-files t)
-  ;; Don't clobber symlinks
-  (setq backup-by-copying t)
-  ;; Version numbers for backup files
-  (setq version-control t)
-  ;; Delete excess backup files silently
-  (setq delete-old-versions t)
-  (setq delete-by-moving-to-trash nil)
-  ;; Oldest versions to keep when new numbered backups created (default 2)
-  (setq kept-old-versions 2)
-  ;; Newest versions to keep when new numbered backups created (default 2)
-  (setq kept-new-versions 5)
-  ;; Auto-save every buffer that visits a file
-  (setq auto-save-default t)
-  ;; Number of seconds idle time before auto-save (default 30)
-  (setq auto-save-timeout 30)
-  ;; Number of keystrokes between auto-saves (default 300)
-  (setq auto-save-interval 300)
+    ;; Backup of a file the first time it is saved.
+    (setq make-backup-files t)
+    ;; Don't clobber symlinks
+    (setq backup-by-copying t)
+    ;; Version numbers for backup files
+    (setq version-control t)
+    ;; Delete excess backup files silently
+    (setq delete-old-versions t)
+    (setq delete-by-moving-to-trash nil)
+    ;; Oldest versions to keep when new numbered backups created (default 2)
+    (setq kept-old-versions 2)
+    ;; Newest versions to keep when new numbered backups created (default 2)
+    (setq kept-new-versions 5)
+    ;; Auto-save every buffer that visits a file
+    (setq auto-save-default t)
+    ;; Number of seconds idle time before auto-save (default 30)
+    (setq auto-save-timeout 30)
+    ;; Number of keystrokes between auto-saves (default 300)
+    (setq auto-save-interval 300))
 #+end_src
 
 * Color Configuration
