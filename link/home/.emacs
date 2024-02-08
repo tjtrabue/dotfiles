@@ -41,10 +41,10 @@
 
   ;; JIT settings to speed up startup.
   ;; https://tychoish.com/post/towards-faster-emacs-start-times/
-  (setq jit-lock-stealth-time nil
-    jit-lock-defer-time nil
-    jit-lock-defer-time 0.05
-    jit-lock-stealth-load 200)
+  ;; (setq jit-lock-stealth-time nil
+  ;;   jit-lock-defer-time nil
+  ;;   jit-lock-defer-time 0.05
+  ;;   jit-lock-stealth-load 200)
 
 ;;; NOTE REGARDING BYTE COMPILING CONFIG FILES:
   ;; In general, I have observed that attempting to load compiled Elisp files is
@@ -107,14 +107,17 @@ Once created, the file should be placed at
                  (file-truename (concat user-emacs-directory "require/fix"))))
     (add-to-list 'load-path dir))
 
-  (let* ((super-config (file-truename (concat user-emacs-directory "tjtrabue-emacs.el")))
+  (let* ((super-config-dir (file-truename (concat user-emacs-directory "super_config")))
           (default-directory user-emacs-directory))
-    (when (or my/force-refresh-super-config
-            (not (file-exists-p super-config)))
-      ;; If we do not find the giant configuration Elisp file, generate it here.
-      (my/recreate-super-config))
-    (byte-recompile-file super-config)
-    ;; Load the giant Elisp file!
-    ;; TODO: Load the byte-compiled version of the Elisp file once we fix it.
-    (load-file super-config)))
+    (if (or my/force-refresh-super-config
+          (not (file-directory-p super-config-dir)))
+      (progn
+        ;; Create the super config if it is not yet present.
+        (my/recreate-super-config)
+        ;; Force compilation of the super config dir after it's first created.
+        (byte-recompile-directory super-config-dir 0 t))
+      ;; OTHERWISE only recompile files that need recompiling.
+      (byte-recompile-directory super-config-dir))
+    ;; TODO: Load the byte-compiled version of the Elisp files once we fix them.
+    (my/apply-to-dir-files super-config-dir "\\.el$" #'load)))
 ;;; .emacs ends here

@@ -15,12 +15,13 @@ literate Org configuration blocks in =~/.emacs.d/plugin-notebook/=. Tangling and
 loading all of those files using Org Babel can greatly add to Emacs' initial
 load time. To reduce startup time, I created an executable script called
 =make_emacs_super_config= that tangles all of my Org configuration files and
-concatenates them into one, giant Emacs Lisp file named =tjtrabue-emacs.el=. My
-=~/.emacs= file knows to look for the super config file, and if it does not yet
-exist, generate it using the aforementioned script.
+concatenates them into a series of Emacs Lisp files under
+=~/.emacs.d/super_config=. My =~/.emacs= file knows to look for the super config
+directory, and, if it does not yet exist, generate it using the aforementioned
+script.
 
 Thus, before starting Emacs, you should run this command to generate the super
-config file:
+config:
 
 #+begin_src sh :tangle no
   ~/.dotfiles/bin/make_emacs_super_config

@@ -15,6 +15,8 @@ declare LOG_LEVEL=3
 declare EMACS_HOME="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
 declare MAIN_ORG_CONFIG_FILE="${EMACS_HOME}/my-init.org"
 declare SUPER_CONFIG_FILE="${EMACS_HOME}/tjtrabue-emacs.el"
+declare SUPER_CONFIG_DIR="${EMACS_HOME}/super_config"
+declare SUPER_CONFIG_FILE_PREFIX="tjtrabue-emacs"
 # }}}
 
 # Imports {{{
@@ -35,19 +37,31 @@ OPTIONS:
 EOF
 }
 
-# Tangle and combine all Emacs configuration blocks held in literate Org files
-# into one super Emacs configuration file.
-mesc__create_super_config() {
-  local pluginNotebookDir="${EMACS_HOME}/plugin-notebook"
-  local elispScriptsDir="${EMACS_HOME}/scripts"
+# Create the ~/.emacs.d/super_config/ directory.
+mesc__make_directories() {
+  log_info "Creating dir: ${BLUE}${SUPER_CONFIG_DIR}${NC}"
+  rm -rf "${SUPER_CONFIG_DIR:?}"
+  mkdir -p "${SUPER_CONFIG_DIR}"
+}
 
-  log_info "Tangling all literate Org config files"
-  emacs --batch --script "${elispScriptsDir}/tangle-org-files.el"
+# Print the path to the Elisp super config file at the given index.
+mesc__get_super_config_file_path() {
+  local super_config_index="${1}"
 
-  log_info "Combining output *.el files into super config file:" \
-    "${BLUE}${SUPER_CONFIG_FILE}${NC}"
+  printf '%s' "${SUPER_CONFIG_DIR}/${SUPER_CONFIG_FILE_PREFIX}-${super_config_index}.el"
+}
+
+# Create the next super config file in ~/.emacs.d/super_config
+mesc__make_super_config_file() {
+  local super_config_index="${1}"
+  local super_config_file
+
+  super_config_file="$(mesc__get_super_config_file_path "${super_config_index}")"
+
+  log_info "Creating new super config file: ${BLUE}${super_config_file}${NC}"
+
   # Use lexical binding by default in super config.
-  command cat <<EOF >"${SUPER_CONFIG_FILE}"
+  command cat <<EOF >"${super_config_file}"
 ;;; -*- lexical-binding: t; -*-
 
 ;; This is an automatically-generated file. Do not edit it directly. Instead,
@@ -57,13 +71,61 @@ mesc__create_super_config() {
 ;;   ~/.dotfiles/bin/make_emacs_super_config
 
 EOF
-  command cat -s "$(readlink "${MAIN_ORG_CONFIG_FILE}" | sed 's/\.org$/.el/')" \
-    "${pluginNotebookDir}"/*.el \
-    >>"${SUPER_CONFIG_FILE}"
+}
+
+mesc__write_to_super_config_file() {
+  local infile="${1}"
+  local super_config_index="${2}"
+  local super_config_file
+
+  if [ ! -f "${infile}" ]; then
+    err "${BLUE}${infile}${NC}: No such file"
+    return 1
+  fi
+
+  super_config_file="$(mesc__get_super_config_file_path "${super_config_index}")"
+
+  command cat "${infile}" >>"${super_config_file}"
+}
+
+mesc__tangle_all_org_config_files() {
+  local elispScriptsDir="${EMACS_HOME}/scripts"
+
+  log_info "Tangling all literate Org config files"
+  emacs --batch --script "${elispScriptsDir}/tangle-org-files.el"
+}
+
+# Tangle and combine all Emacs configuration blocks held in literate Org files
+# into one super Emacs configuration file.
+mesc__create_super_config() {
+  local pluginNotebookDir="${EMACS_HOME}/plugin-notebook"
+  local f
+  local count=0
+  local super_config_index=0
+
+  mesc__tangle_all_org_config_files
+
+  # Write tangled main Org config file to its own super config file.
+  mesc__make_super_config_file "${super_config_index}"
+  mesc__write_to_super_config_file \
+    "$(readlink "${MAIN_ORG_CONFIG_FILE}" | sed 's/\.org$/.el/')" \
+    "${super_config_index}"
+
+  ((count++))
+
+  for f in "${pluginNotebookDir}"/*.el; do
+    if ((count % 10 == 0)); then
+      ((super_config_index++))
+      mesc__make_super_config_file "${super_config_index}"
+    fi
+    mesc__write_to_super_config_file "${f}" "${super_config_index}"
+    ((count++))
+  done
 }
 
 main() {
   print_header "Creating Emacs super configuration file"
+  mesc__make_directories
   mesc__create_super_config
 }
 # }}}
