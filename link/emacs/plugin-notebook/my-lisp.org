@@ -31,16 +31,6 @@ regardless of its particular dialect.
         slime-repl-mode
         sly-mrepl-mode)
        . lispy-mode)
-      :general
-      (general-unbind lispy-mode-map
-        ;; Unbind HORRIFIC keybindings that keep me from inserting characters.
-        "["
-        "]"
-        "{"
-        "}"
-        ;; These also interfere with my preferred Evil keybindings.
-        "C-j"
-        "C-k")
       :custom
       ;; Make lispy compatible with the following Lisp minor modes.
       (lispy-compat '(edebug cider))
@@ -52,7 +42,20 @@ regardless of its particular dialect.
       ;; Tweak key themes enabled by default.  Since I use lispyville for evil-mode
       ;; integration, I don't need the annoying "special" mode bindings that lispy
       ;; likes to use.
-      (lispy-set-key-theme '(lispy c-digits)))
+      (lispy-set-key-theme '(lispy c-digits))
+      ;; These unbindings don't seem to take in the `:general' stanza, so I'm placing them here instead.
+      (general-unbind lispy-mode-map
+        ;; Bound to `lispy-newline-and-indent' by default, but this can get in the way of conditional
+        ;; bindings, such as completing the current company selection.
+        "RET"
+        ;; Unbind HORRIFIC keybindings that keep me from inserting characters.
+        "["
+        "]"
+        "{"
+        "}"
+        ;; These also interfere with my preferred Evil keybindings.
+        "C-j"
+        "C-k"))
   #+end_src
 
 * parinfer-rust-mode

@@ -5,12 +5,10 @@
 #+TAGS:    profile profiler startup
 #+STARTUP: fold
 
-=ESUP= is the Emacs Start-Up Profiler. It does not currently work with my
-convoluted configuration.
+=ESUP= is the Emacs Start-Up Profiler, a package that allows Emacs users to
+profile their Emacs start-up time without leaving Emacs.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package esup
-      :disabled
-      :commands esup)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package esup
+    :commands esup)
+#+end_src

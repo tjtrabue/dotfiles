@@ -815,6 +815,8 @@ main features of =lispyville=:
       "C-'" 'lispy-kill-at-point
       ;; Mark symbols with M-m
       "M-m" 'lispy-mark-symbol)
+    (general-def 'insert lispyville-mode-map
+      "RET" 'lispy-newline-and-indent)
     (general-def '(insert replace) lispyville-mode-map
       ;; lispy pair insertion commands tend to mess with the CIDER nREPL, so I
       ;; prefer to use plain old self-insert-command for inserting parentheses,
