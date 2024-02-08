@@ -101,10 +101,11 @@ COLOR is one of the following symbols:
 
 If the user specifies SUBLIST as the name of a nested alist within
 THEME-ALIST, then use that nested SUBLIST as the main theme alist."
-  (require 'my-colors)
+  (eval-when-compile
+    (require 'my-colors))
   (let ((the-right-alist theme-alist))
     (if sublist
-        (setq the-right-alist (cdr (assq sublist theme-alist))))
+      (setq the-right-alist (cdr (assq sublist theme-alist))))
     (setq my-colors-color-theme-alist the-right-alist)))
 
 ;;;###autoload
