@@ -761,118 +761,131 @@ such as =mutt= and =mu=.
 Custom functions, both standard and interactive.
 
 #+begin_src emacs-lisp
-  (defun print-major-mode ()
-    "Show the major mode of the current buffer in the echo area."
-    (interactive)
-    (message "%s" major-mode))
+  (eval-when-compile
+    (unless (fboundp 'my/apply-to-dir-files)
+      ;; May need to define this function here since it's originally defined in `~/.emacs', which
+      ;; isn't always loaded (i.e., it's only loaded for interactive Emacs sessions).
+      (defsubst my/apply-to-dir-files (dir pattern fn &rest args)
+        "Apply FN to all files in DIR matching regex PATTERN.
 
-  (defun gnus-new-frame ()
-    "Create a new frame and start the Gnus news reader in it."
-    (interactive)
-    (with-selected-frame (make-frame)
-      (gnus)))
+  Any additional args ARGS are passed to FN."
+        (cl-flet
+            ((apply-it (f) (funcall fn (concat (file-name-as-directory dir) f) args)))
+          (if (file-directory-p dir)
+              (mapc #'apply-it (directory-files dir nil pattern))))))
 
-  (defun reload-config ()
-    "Reload all Emacs config files."
-    (interactive)
-    (load-file user-init-file))
+    (defun print-major-mode ()
+      "Show the major mode of the current buffer in the echo area."
+      (interactive)
+      (message "%s" major-mode))
 
-  (defun download-elisp-lib (url &optional file-name)
-    "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
+    (defun gnus-new-frame ()
+      "Create a new frame and start the Gnus news reader in it."
+      (interactive)
+      (with-selected-frame (make-frame)
+        (gnus)))
 
-    If FILE-NAME is omitted or nil, it defaults to the last segment of the URL."
-    (if (not file-name)
-        (setq file-name (url-file-nondirectory (url-unhex-string url))))
-    (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
-      (make-directory my/emacs-lisp-dir t)
-      (url-copy-file url (file-truename file-path) t)))
+    (defun reload-config ()
+      "Reload all Emacs config files."
+      (interactive)
+      (load-file user-init-file))
 
-  (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
-    "Recursively add directories from a BASE-DIR to load-path.
+    (defun download-elisp-lib (url &optional file-name)
+      "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
 
-  Optionally, SUBDIRS is a list of subdirectory strings beneath BASE-DIR that
-  should be added to load-path. If this argument is absent, all subdirectories
-  of BASE-DIR are added to load-path."
-    (interactive)
-    (let ((default-directory base-dir))
-      (setq load-path
-            (append
-             (let ((load-path (copy-sequence load-path))) ; Shadow
-               (if subdirs
-                   ;; If user supplied list of subdirs, pass it here
-                   (normal-top-level-add-to-load-path subdirs)
-                 ;; Otherwise, add all directories under base-dir
-                 (normal-top-level-add-subdirs-to-load-path)))
-             load-path))))
+      If FILE-NAME is omitted or nil, it defaults to the last segment of the URL."
+      (if (not file-name)
+          (setq file-name (url-file-nondirectory (url-unhex-string url))))
+      (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
+        (make-directory my/emacs-lisp-dir t)
+        (url-copy-file url (file-truename file-path) t)))
 
-  (defun my/compile-org-dir (org-dir)
-    "Tangle then byte compile every .org file in ORG-DIR, but only if necessary.
+    (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
+      "Recursively add directories from a BASE-DIR to load-path.
 
-  This function first checks for byte-compiled .elc files in the
-  directory. If they do not yet exist for their corresponding .el
-  files, or if the .elc files are older than their parent .el
-  files, this function byte-compiles the .el files. However, the
-  .el files are generated from their ancestor .org files, so this
-  function then checks to make sure that the .el files are present
-  and up-to-date with each .org file. If they are absent or out of
-  sync, tangle the .org files to generate the .el files."
-    (interactive)
-    (let* ((default-directory org-dir)
-           (org-files (directory-files org-dir 'full ".*\\.org"))
-           (elc-files (mapcar (lambda (file)
-                                (concat
-                                 (file-name-sans-extension file) ".elc"))
-                              org-files)))
-      (mapc #'my/create-update-config-artifact elc-files)))
+    Optionally, SUBDIRS is a list of subdirectory strings beneath BASE-DIR that
+    should be added to load-path. If this argument is absent, all subdirectories
+    of BASE-DIR are added to load-path."
+      (interactive)
+      (let ((default-directory base-dir))
+        (setq load-path
+              (append
+               (let ((load-path (copy-sequence load-path))) ; Shadow
+                 (if subdirs
+                     ;; If user supplied list of subdirs, pass it here
+                     (normal-top-level-add-to-load-path subdirs)
+                   ;; Otherwise, add all directories under base-dir
+                   (normal-top-level-add-subdirs-to-load-path)))
+               load-path))))
 
-  (defun my/use-mu4e-p ()
-    "Return T if the system is configured for `mu4e'. Return NIL otherwise."
-    (and (executable-find "mu") (executable-find "mbsync")))
+    (defun my/compile-org-dir (org-dir)
+      "Tangle then byte compile every .org file in ORG-DIR, but only if necessary.
 
-  (defun my/toggle-line-number-type ()
-    "Toggle absolute/relative line numbers in all open buffers."
-    (interactive)
-    ;; Figure out global line number state for all buffer.
-    (if (eq my/line-number-state 'absolute)
-        (setq my/line-number-state 'relative
-              display-line-numbers-type 'relative)
-      (setq my/line-number-state 'absolute
-            display-line-numbers-type t))
-    ;; Apply new line number type to all open buffers.
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        ;; Only operate on buffers that display line numbers..
-        (when (bound-and-true-p display-line-numbers-mode)
-          (if (eq my/line-number-state 'relative)
-              (setq display-line-numbers 'relative)
-            (setq display-line-numbers t))))))
+    This function first checks for byte-compiled .elc files in the
+    directory. If they do not yet exist for their corresponding .el
+    files, or if the .elc files are older than their parent .el
+    files, this function byte-compiles the .el files. However, the
+    .el files are generated from their ancestor .org files, so this
+    function then checks to make sure that the .el files are present
+    and up-to-date with each .org file. If they are absent or out of
+    sync, tangle the .org files to generate the .el files."
+      (interactive)
+      (let* ((default-directory org-dir)
+             (org-files (directory-files org-dir 'full ".*\\.org"))
+             (elc-files (mapcar (lambda (file)
+                                  (concat
+                                   (file-name-sans-extension file) ".elc"))
+                                org-files)))
+        (mapc #'my/create-update-config-artifact elc-files)))
 
-  (defun my/eval-and-replace ()
-    "Replace the preceding sexp with its value."
-    (let ((value (eval (preceding-sexp))))
-      (backward-kill-sexp)
-      (insert (format "%S" value))))
+    (defun my/use-mu4e-p ()
+      "Return T if the system is configured for `mu4e'. Return NIL otherwise."
+      (and (executable-find "mu") (executable-find "mbsync")))
 
-  (defun my/running-wsl-p ()
-    "Return non-nil if Emacs is running on Windows Subsystem for Linux."
-    (let ((case-fold-search t))
-      (or (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop")
-          (string-match "\\(microsoft\\|WSL\\)"
-                        (shell-command-to-string "uname -r | tr -d \"\n\"")))))
+    (defun my/toggle-line-number-type ()
+      "Toggle absolute/relative line numbers in all open buffers."
+      (interactive)
+      ;; Figure out global line number state for all buffer.
+      (if (eq my/line-number-state 'absolute)
+          (setq my/line-number-state 'relative
+                display-line-numbers-type 'relative)
+        (setq my/line-number-state 'absolute
+              display-line-numbers-type t))
+      ;; Apply new line number type to all open buffers.
+      (dolist (buffer (buffer-list))
+        (with-current-buffer buffer
+          ;; Only operate on buffers that display line numbers..
+          (when (bound-and-true-p display-line-numbers-mode)
+            (if (eq my/line-number-state 'relative)
+                (setq display-line-numbers 'relative)
+              (setq display-line-numbers t))))))
 
-  (defun my/reload-dir-locals-for-current-buffer ()
-    "Reload vars in .dir-locals.el file for current buffer."
-    (interactive)
-    (let ((enable-local-variables :all))
-      (hack-dir-local-variables-non-file-buffer)))
+    (defun my/eval-and-replace ()
+      "Replace the preceding sexp with its value."
+      (let ((value (eval (preceding-sexp))))
+        (backward-kill-sexp)
+        (insert (format "%S" value))))
 
-  (defun compose (&rest fns)
-    "Compose FNS together: first to last."
-    (cl-destructuring-bind (fun . rest) (reverse fns)
-      (lambda (&rest args)
-        (seq-reduce (lambda (v f) (funcall f v))
-                    rest
-                    (apply fun args)))))
+    (defun my/running-wsl-p ()
+      "Return non-nil if Emacs is running on Windows Subsystem for Linux."
+      (let ((case-fold-search t))
+        (or (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop")
+            (string-match "\\(microsoft\\|WSL\\)"
+                          (shell-command-to-string "uname -r | tr -d \"\n\"")))))
+
+    (defun my/reload-dir-locals-for-current-buffer ()
+      "Reload vars in .dir-locals.el file for current buffer."
+      (interactive)
+      (let ((enable-local-variables :all))
+        (hack-dir-local-variables-non-file-buffer)))
+
+    (defun compose (&rest fns)
+      "Compose FNS together: first to last."
+      (cl-destructuring-bind (fun . rest) (reverse fns)
+        (lambda (&rest args)
+          (seq-reduce (lambda (v f) (funcall f v))
+                      rest
+                      (apply fun args))))))
 #+end_src
 
 * Environment Variables
