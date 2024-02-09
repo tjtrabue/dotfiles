@@ -1,8 +1,8 @@
-#+TITLE:    TRAMP: Interact with Remote Resources
-#+AUTHOR:   Tom Trabue
-#+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021-07-13
-#+TAGS:
+#+TITLE:   TRAMP: Interact with Remote Resources
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2021-07-13
+#+TAGS:    tramp remote resource resources file edit
 #+STARTUP: fold
 
 TRAMP is Emacs' built-in system for interacting with non-local or unusual
