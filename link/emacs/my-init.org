@@ -1291,17 +1291,26 @@ default mode name is hidden completely.
                (visual-line-mode nil simple))))
 #+end_src
 
-** use-package-chords
-Adds =:chords= keyword to =use-package= for defining key-chords.
+** key-chord
+This package maps pairs of simultaneously pressed keys to bindings.
 
 #+begin_src emacs-lisp
-  (use-package use-package-chords
+  (use-package key-chord
     :demand t
     :preface
     (eval-when-compile
       (require 'key-chord))
     :config
     (key-chord-mode 1))
+#+end_src
+
+** use-package-chords
+Adds =:chords= keyword to =use-package= for defining key-chords.
+
+#+begin_src emacs-lisp
+  (use-package use-package-chords
+    :after key-chord
+    :demand t)
 #+end_src
 
 ** general
