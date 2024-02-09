@@ -20,8 +20,8 @@ emacs_rm_caches() {
   fi
 }
 
-# Byte-compile everything in the super config directory.
-emacs_byte_compile_config() {
+# Compile everything in the super config directory.
+emacs_compile_config() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local emacsScriptsDir="${emacsHome}/scripts"
 
@@ -30,7 +30,7 @@ emacs_byte_compile_config() {
     return 1
   fi
 
-  emacs --batch --script "${emacsScriptsDir}/byte-compile-config.el"
+  emacs --batch --script "${emacsScriptsDir}/compile-config.el"
 }
 
 # Start Emacs in Gnus mode to read email/news.

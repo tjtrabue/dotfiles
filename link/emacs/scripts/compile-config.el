@@ -23,8 +23,10 @@
 
   ;; Make macros available at compile-time.
   (require 'bytecomp)
+  (require 'comp-run)
   (require 'use-package)
   (require 'straight)
   (require 'general)
 
+  ;; (native-compile-async (list super-config-dir) 'recursively)
   (byte-recompile-directory super-config-dir 0))

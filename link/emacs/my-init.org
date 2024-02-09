@@ -1170,8 +1170,6 @@ straight-pull-all=
 
 #+begin_src emacs-lisp
   ;; I refactored my `straight.el' bootstrap code to a separate file.
-  (eval-when-compile
-    (require 'my-straight-bootstrap))
   (load "my-straight-bootstrap")
 #+end_src
 
@@ -1300,6 +1298,8 @@ Adds =:chords= keyword to =use-package= for defining key-chords.
   (use-package use-package-chords
     :demand t
     :config
+    (eval-when-compile
+       (require 'key-chord))
     (key-chord-mode 1))
 #+end_src
 
