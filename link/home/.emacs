@@ -39,6 +39,9 @@
 (defvar my/force-refresh-super-config nil
   "Whether to force reconstruction of the super config Elisp file.")
 
+(defvar my/use-compiled-config t
+  "Whether to use the compiled version of tangled config files.")
+
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
 (add-to-list
@@ -128,7 +131,7 @@ Once created, the file should be placed at
       (byte-recompile-directory super-config-dir 0 t))
     ;; OTHERWISE only recompile files that need recompiling.
     (byte-recompile-directory super-config-dir))
-  ;; TODO: Load the byte-compiled version of the Elisp files once we fix them.
-  (my/apply-to-dir-files super-config-dir "\\.el$" (lambda (f &rest args)
-                                                    (load (file-name-sans-extension f)))))
+  (if my/use-compiled-config
+    (my/apply-to-dir-files super-config-dir "\\.elc$" #'load)
+    (my/apply-to-dir-files super-config-dir "\\.el$" #'load)))
 ;;; .emacs ends here
