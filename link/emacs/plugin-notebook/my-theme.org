@@ -27,23 +27,6 @@ theme code added by customize.
 * Functions
 #+begin_src emacs-lisp
   (eval-and-compile
-    (defun my/activate-theme--doom ()
-      "Activation/configuration function for doom theme."
-      (load-theme 'doom-one t)
-      ;; Flash the modeline when the Emacs bell rings.
-      ;; (doom-themes-visual-bell-config)
-      ;; Two treemacs icon themes: one that takes after Atom's themes, and
-      ;; another more colorful theme.
-      (doom-themes-treemacs-config)
-      ;; Correct and improve some of org-mode's native fontification.
-      (doom-themes-org-config))
-
-    (defun my/activate-theme--modus ()
-      "Activation/configuration function for modus theme."
-      (load-theme 'modus-vivendi t)
-      ;; Set custom faces for the active Modus theme.
-      (my/modus-themes-custom-faces))
-
     (defun my/activate-theme ()
       "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
@@ -110,7 +93,12 @@ color names used by Modus]].
     (eval-when-compile
       (require 'modus-themes))
     (eval-and-compile
-      (defun my/modus-themes-custom-faces ()
+      (defsubst my/activate-theme--modus ()
+        "Activation/configuration function for modus theme."
+        (load-theme 'modus-vivendi t)
+        ;; Set custom faces for the active Modus theme.
+        (my/modus-themes-custom-faces))
+      (defsubst my/modus-themes-custom-faces ()
         "Customize faces for modus themes."
         ;; We need to load Org faces before we can customize them.
         (require 'org-faces)
@@ -278,6 +266,20 @@ buttery-smooth editing experience.
     :disabled
     :after all-the-icons
     :demand t
+    :preface
+    (eval-when-compile
+      (require 'doom-themes))
+    (eval-and-compile
+      (defun my/activate-theme--doom ()
+        "Activation/configuration function for doom theme."
+        (load-theme 'doom-one t)
+        ;; Flash the modeline when the Emacs bell rings.
+        ;; (doom-themes-visual-bell-config)
+        ;; Two treemacs icon themes: one that takes after Atom's themes, and
+        ;; another more colorful theme.
+        (doom-themes-treemacs-config)
+        ;; Correct and improve some of org-mode's native fontification.
+        (doom-themes-org-config)))
     :custom
     ;; Enable bold fonts
     (doom-themes-enable-bold t)
