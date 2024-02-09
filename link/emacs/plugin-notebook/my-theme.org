@@ -97,6 +97,9 @@ color names used by Modus]].
 
 *** Functions
 #+begin_src emacs-lisp
+  (eval-when-compile
+    (require 'modus-themes))
+
   (eval-and-compile
     (defun my/modus-themes-custom-faces ()
       "Customize faces for modus themes."

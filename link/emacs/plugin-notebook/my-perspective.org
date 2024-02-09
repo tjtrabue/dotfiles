@@ -26,6 +26,9 @@ seizes control of Emacs in some invasive ways.
 
 * Functions
 #+begin_src emacs-lisp
+  (eval-when-compile
+    (require 'perspective))
+
   (eval-and-compile
     (defun my/add-current-buffer-to-perspective ()
       "Advising function to add the current buffer to the active perspective."

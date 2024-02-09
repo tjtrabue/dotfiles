@@ -1297,9 +1297,10 @@ Adds =:chords= keyword to =use-package= for defining key-chords.
 #+begin_src emacs-lisp
   (use-package use-package-chords
     :demand t
-    :config
+    :preface
     (eval-when-compile
-       (require 'key-chord))
+      (require 'key-chord))
+    :config
     (key-chord-mode 1))
 #+end_src
 
