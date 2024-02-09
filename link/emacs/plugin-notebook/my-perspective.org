@@ -24,58 +24,6 @@ intended to make =perspective.el= easier to work with, especially with
 multiple frames, but it is less configurable and can be frustrating since it
 seizes control of Emacs in some invasive ways.
 
-* Functions
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (require 'perspective))
-
-  (eval-and-compile
-    (defun my/add-current-buffer-to-perspective ()
-      "Advising function to add the current buffer to the active perspective."
-      (interactive)
-      (when (and (bound-and-true-p persp-mode)
-                 (not (persp-is-current-buffer (current-buffer))))
-        (persp-add-buffer (current-buffer))))
-
-    (defun my/remove-current-buffer-from-perspective ()
-      "Advising function to remove the current buffer to the active perspective.
-
-    This function checks to see if the current buffer is part of the active
-    perspective before it tries to remove the buffer from the current perspective."
-      (interactive)
-      (when (and (bound-and-true-p persp-mode)
-                 (buffer-file-name)
-                 (persp-is-current-buffer (current-buffer)))
-        (persp-remove-buffer (current-buffer))))
-
-    (defun my/persp-switch-start-lsp-servers ()
-      "Start LSP server(s) when switching perspectives, if applicable.
-
-    We do this because switching perspectives seems to deactivate LSP
-    servers by default.  This function checks each buffer in the
-    switched-to perspective for a registered LSP server, and if it
-    has one, enables the server."
-      (mapc (lambda (buffer)
-              (with-current-buffer buffer
-                (when (and
-                       ;; Make sure we are dealing with a buffer
-                       ;; visiting a file.
-                       (buffer-file-name)
-                       (bound-and-true-p lsp-mode)
-                       ;; Check if buffer's major-mode is a derived mode of one of
-                       ;; our enabled major-modes for LSP integration.
-                       (apply #'derived-mode-p my-custom-lsp-enabled-modes))
-                  (lsp-deferred))))
-            (persp-current-buffers)))
-
-    (defun my/persp-tab-line-tabs-files ()
-      "Return list of current perspective's file buffers to display in the tab line.
-
-    See the documentation for `perspective.el' for further details."
-      (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
-        (my-tab-line-filter-display-buffers current-persp-buffers))))
-#+end_src
-
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package perspective
@@ -83,6 +31,54 @@ seizes control of Emacs in some invasive ways.
     :hook
     ;; Save perspective to disk whenever the user kills Emacs.
     (kill-emacs . persp-state-save)
+    :preface
+    (eval-when-compile
+      (require 'perspective))
+    (eval-and-compile
+      (defun my/add-current-buffer-to-perspective ()
+        "Advising function to add the current buffer to the active perspective."
+        (interactive)
+        (when (and (bound-and-true-p persp-mode)
+                   (not (persp-is-current-buffer (current-buffer))))
+          (persp-add-buffer (current-buffer))))
+
+      (defun my/remove-current-buffer-from-perspective ()
+        "Advising function to remove the current buffer to the active perspective.
+
+    This function checks to see if the current buffer is part of the active
+    perspective before it tries to remove the buffer from the current perspective."
+        (interactive)
+        (when (and (bound-and-true-p persp-mode)
+                   (buffer-file-name)
+                   (persp-is-current-buffer (current-buffer)))
+          (persp-remove-buffer (current-buffer))))
+
+      (defun my/persp-switch-start-lsp-servers ()
+        "Start LSP server(s) when switching perspectives, if applicable.
+
+    We do this because switching perspectives seems to deactivate LSP
+    servers by default.  This function checks each buffer in the
+    switched-to perspective for a registered LSP server, and if it
+    has one, enables the server."
+        (mapc (lambda (buffer)
+                (with-current-buffer buffer
+                  (when (and
+                         ;; Make sure we are dealing with a buffer
+                         ;; visiting a file.
+                         (buffer-file-name)
+                         (bound-and-true-p lsp-mode)
+                         ;; Check if buffer's major-mode is a derived mode of one of
+                         ;; our enabled major-modes for LSP integration.
+                         (apply #'derived-mode-p my-custom-lsp-enabled-modes))
+                    (lsp-deferred))))
+              (persp-current-buffers)))
+
+      (defun my/persp-tab-line-tabs-files ()
+        "Return list of current perspective's file buffers to display in the tab line.
+
+    See the documentation for `perspective.el' for further details."
+        (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
+          (my-tab-line-filter-display-buffers current-persp-buffers))))
     :general
     (my/user-leader-def persp-mode-map
       ;; This is general.el's way of accomplishing :bind-keymap.
