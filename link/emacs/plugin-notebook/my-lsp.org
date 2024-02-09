@@ -592,6 +592,10 @@ infrastructure for Emacs.
       "C-j" 'acm-select-next
       "C-k" 'acm-select-prev
       "C-l" 'acm-complete)
+    (general-def 'insert acm-mode-map
+      ;; This is to avoid accidentally entering a newline when all you wanted to do is select the
+      ;; current completion candidate.
+      "RET" 'acm-complete)
     ;; Evil leader commands (beginning with ","):
     (my/evil-leader-def lsp-bridge-mode-map
       "w]"  'lsp-bridge-diagnostic-jump-next
