@@ -642,7 +642,7 @@ of my must-have plugins for =eshell=, and I recommend it to everybody!
 Easily navigate up the current directory tree in =eshell= using aliased
 commands. The way it works is like this:
 
-#+begin_src shell
+#+begin_src shell :tangle no
   # current directory: /long/path/name/to/me
   up pa
   # new cwd: /long/path

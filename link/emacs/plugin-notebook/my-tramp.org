@@ -25,92 +25,97 @@ process from has a remote =default-directory=.
 
 * Usage Notes from the Emacs Manual
 ** =ssh= and =plink=
-   If your local host runs an SSH client, and the remote host runs an SSH
-   server, the simplest remote file name is =/ssh:user@host:/path/to/file=. The
-   remote file name =/ssh::= opens a remote connection to yourself on the local
-   host, and is taken often for testing TRAMP.
+If your local host runs an SSH client, and the remote host runs an SSH server,
+the simplest remote file name is =/ssh:user@host:/path/to/file=. The remote file
+name =/ssh::= opens a remote connection to yourself on the local host, and is
+taken often for testing TRAMP.
 
-   On MS Windows, PuTTY is often used as SSH client. Its =plink= method can be
-   used there to open a connection to a remote host running an ssh server:
-   =/plink:user@host:/path/to/file=.
+On MS Windows, PuTTY is often used as SSH client. Its =plink= method can be used
+there to open a connection to a remote host running an ssh server:
+=/plink:user@host:/path/to/file=.
 
 ** =su=, =sudo=, and =sg=
-   Sometimes, it is necessary to work on your local host under different
-   permissions. For this, you could use the =su= or =sudo= connection
-   method. Both methods use ‘root’ as default user name and the return value of
-   =(system-name)= as default host name. Therefore, it is convenient to open a
-   file as =/sudo::/path/to/file=.
+Sometimes, it is necessary to work on your local host under different
+permissions. For this, you could use the =su= or =sudo= connection method. Both
+methods use ‘root’ as default user name and the return value of =(system-name)=
+as default host name. Therefore, it is convenient to open a file as
+=/sudo::/path/to/file=.
 
-   The method =sg= stands for “switch group”; the changed group must be used
-   here as user name. The default host name is the same.
+The method =sg= stands for “switch group”; the changed group must be used here
+as user name. The default host name is the same.
+
 ** Combining =ssh= or =plink= with =su= or =sudo=
-   If the =su= or =sudo= option shall be performed on another host, it could be
-   combined with a leading =ssh= or =plink= option. That means, TRAMP connects
-   first to the other host with non-administrative credentials, and changes to
-   administrative credentials on that host afterwards. In a simple case, the
-   syntax looks like =/ssh:user@host|sudo::/path/to/file=.
+If the =su= or =sudo= option shall be performed on another host, it could be
+combined with a leading =ssh= or =plink= option. That means, TRAMP connects
+first to the other host with non-administrative credentials, and changes to
+administrative credentials on that host afterwards. In a simple case, the syntax
+looks like =/ssh:user@host|sudo::/path/to/file=.
+
 ** =sudoedit=
-   The =sudoedit= method is similar to the =sudo= method. However, it is a
-   different implementation: it does not keep an open session running in the
-   background. This is for security reasons; on the backside this method is less
-   performant than the sudo method, it is restricted to the ‘localhost’ only,
-   and it does not support external processes.
+The =sudoedit= method is similar to the =sudo= method. However, it is a
+different implementation: it does not keep an open session running in the
+background. This is for security reasons; on the backside this method is less
+performant than the sudo method, it is restricted to the ‘localhost’ only, and
+it does not support external processes.
+
 ** =smbclient=
-   In order to access a remote MS Windows host or Samba server, the =smbclient=
-   client is used. The remote file name syntax is
-   =/smb:user%domain@host:/path/to/file=. The first part of the local file name
-   is the share exported by the remote host, ‘path’ in this example.
+In order to access a remote MS Windows host or Samba server, the =smbclient=
+client is used. The remote file name syntax is
+=/smb:user%domain@host:/path/to/file=. The first part of the local file name is
+the share exported by the remote host, ‘path’ in this example.
 
 * Troubleshooting TRAMP
 ** TRAMP is too slow!
-   If TRAMP is super slow for you, make sure to set your PS1 prompt variable to
-   something very, very simple. TRAMP parses your shell's prompt to determine
-   whether or not a command has finished, so the simpler the better. A good
-   example would be placing the following in your =.bashrc= files, both on your
-   remote server and your local development machine:
+If TRAMP is super slow for you, make sure to set your PS1 prompt variable to
+something very, very simple. TRAMP parses your shell's prompt to determine
+whether or not a command has finished, so the simpler the better. A good example
+would be placing the following in your =.bashrc= files, both on your remote
+server and your local development machine:
 
-   #+begin_src shell
-     if [ $TERM == "dumb" ]; then
-         PS1="tramp $ "
-     fi
-   #+end_src
+#+begin_src shell :tangle no
+  if [ $TERM == "dumb" ]; then
+      PS1="tramp $ "
+  fi
+#+end_src
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package tramp
-      ;; Use built-in Tramp.
-      :ensure nil
-      :straight nil
-      :custom
-      ;; Cache sudo password for the day.
-      (password-cache t)
-      (password-cache-expiry (* 8 3600)))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package tramp
+    ;; Use built-in Tramp.
+    ;; :ensure nil
+    ;; :straight nil
+    :custom
+    ;; Cache sudo password for the day.
+    (password-cache t)
+    (password-cache-expiry (* 8 3600)))
+#+end_src
 
 * Plugins
 ** tramp-container
-   This is an integrated package that offers the TRAMP method =docker= for
-   interacting with running Docker containers.
+This is a built-in Emacs package that offers the TRAMP method =docker= for
+interacting with running Docker containers.
 
-   Use =C-x C-f /docker:user@container:/path/to/file=, where =user= is the user
-   you want to use inside of the container (optional), and =container= is the
-   name of the container you want to access.
+Use =C-x C-f /docker:user@container:/path/to/file=, where =user= is the user you
+want to use inside of the container (optional), and =container= is the name of
+the container you want to access.
 
-   For example, if you want to access a Docker container as the root user:
-   =/sudo:root@localhost|docker:user@container:/path/to/file=
+For example, if you want to access a Docker container as the root user:
+=/sudo:root@localhost|docker:user@container:/path/to/file=
 
-   #+begin_src emacs-lisp
-     (use-package tramp-container
-       :ensure nil
-       :straight nil)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package tramp-container
+    ;; This feature is built-in to Emacs 29.
+    :if (>= emacs-major-version 29)
+    :ensure nil
+    :straight nil)
+#+end_src
 
 ** vagrant-tramp
-   =vagrant-tramp= adds an Emacs TRAMP method for Vagrant boxes. As far as
-   Vagrant is concerned, the TRAMP =vagrant= method behaves like the built-in
-   =vagrant ssh= command. The =vagrant-tramp= method simply provides
-   auto-completion and a wrapper around =vagrant ssh= for connecting to boxes.
+=vagrant-tramp= adds an Emacs TRAMP method for Vagrant boxes. As far as Vagrant
+is concerned, the TRAMP =vagrant= method behaves like the built-in =vagrant ssh=
+command. The =vagrant-tramp= method simply provides auto-completion and a
+wrapper around =vagrant ssh= for connecting to boxes.
 
-   #+begin_src emacs-lisp
-     (use-package vagrant-tramp)
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package vagrant-tramp)
+#+end_src
