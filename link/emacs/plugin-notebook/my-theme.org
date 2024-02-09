@@ -95,14 +95,6 @@ available in certain contexts, such as within the body of a
 =modus-themes-with-colors= macro. Check the online documentation for a [[https://protesilaos.com/emacs/modus-themes-colors][list of
 color names used by Modus]].
 
-*** Compiler Preface
-This block requires macros and definitions needed during compile-time.
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (require 'modus-themes))
-#+end_src
-
 *** Functions
 #+begin_src emacs-lisp
   (eval-and-compile
@@ -267,6 +259,8 @@ This block requires macros and definitions needed during compile-time.
             (accent-3 red-cooler)))
     (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
     :config
+    (eval-when-compile
+      (require 'modus-themes))
     (my/activate-theme))
 #+end_src
 

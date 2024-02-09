@@ -24,14 +24,6 @@ intended to make =perspective.el= easier to work with, especially with
 multiple frames, but it is less configurable and can be frustrating since it
 seizes control of Emacs in some invasive ways.
 
-* Compiler Preface
-This block requires macros and definitions needed during compile-time.
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (require 'perspective))
-#+end_src
-
 * Functions
 #+begin_src emacs-lisp
   (eval-and-compile
@@ -121,6 +113,8 @@ This block requires macros and definitions needed during compile-time.
     ;; Where perspective.el saves its configuration
     (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
     :config
+    (eval-when-compile
+      (require 'perspective))
     ;; Enable LSP server(s) when switching perspectives to work around the fact
     ;; that perspective.el disables LSP servers when switching.
     (add-hook 'persp-switch-hook #'my/persp-switch-start-lsp-servers)

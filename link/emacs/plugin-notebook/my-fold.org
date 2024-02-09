@@ -12,108 +12,108 @@ supports a number of code folding /backends/, some of which come preinstalled
 with Emacs, while still others must be installed as third-party plugins.
 
 * origami
-  =origami= is a smart code folding plugin for Emacs. As a rule, Emacs supports
-  lots of different code folding minor modes, some of which are built-in, some
-  are external plugins. =origami= is of the latter category, and is one of the
-  best representatives.
+=origami= is a smart code folding plugin for Emacs. As a rule, Emacs supports
+lots of different code folding minor modes, some of which are built-in, some are
+external plugins. =origami= is of the latter category, and is one of the best
+representatives.
 
-  =origami= integrates nicely with =evil-mode=, so using standard Vim-like
-  folding commands such as =zc= and =zo= work out of the box, no configuration
-  necessary. It also is capable of folding code between Vim-style ={{{...}}}=
-  markings.
+=origami= integrates nicely with =evil-mode=, so using standard Vim-like folding
+commands such as =zc= and =zo= work out of the box, no configuration
+necessary. It also is capable of folding code between Vim-style ={{{...}}}=
+markings.
 
 ** Supported major modes
-   =origami= supports the following major modes out of the box:
+=origami= supports the following major modes out of the box:
 
-   - C
-   - C++
-   - Clojure
-   - Go
-   - Java
-   - Javascript
-   - PHP
-   - Perl
-   - Python
-   - elisp
+- C
+- C++
+- Clojure
+- Go
+- Java
+- Javascript
+- PHP
+- Perl
+- Python
+- elisp
 
-   Anything not in this list will be folded using indentation. This works
-   surprisingly well for most major-modes and is great for folding text.
+Anything not in this list will be folded using indentation. This works
+surprisingly well for most major-modes and is great for folding text.
 
 ** Adding support for new major modes
-   It should be trivial to add support for any language that uses braces to
-   delimit blocks. Just add to =origami-parser-alist= something like:
-   =(mode-name . origami-c-style-parser)=. Adding support for another lisp
-   dialect should be almost as simple. You can also easily define a parser for
-   anything with start and end delimiters (similar to braces). Use the
-   =origami-markers-parser= function for this. There is an example defined for
-   triple-braces in =origami-parser-alist=.
+It should be trivial to add support for any language that uses braces to delimit
+blocks. Just add to =origami-parser-alist= something like: =(mode-name
+. origami-c-style-parser)=. Adding support for another lisp dialect should be
+almost as simple. You can also easily define a parser for anything with start
+and end delimiters (similar to braces). Use the =origami-markers-parser=
+function for this. There is an example defined for triple-braces in
+=origami-parser-alist=.
 
 ** =use-package= specification
-   #+begin_src emacs-lisp
-     (use-package origami
-       :hook
-       ;; Probably don't want to use origami for text-mode.
-       ((prog-mode conf-mode sgml-mode) . origami-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package origami
+    :hook
+    ;; Probably don't want to use origami for text-mode.
+    ((prog-mode conf-mode sgml-mode) . origami-mode))
+#+end_src
 
 * vimish-fold
-  =vimish-fold= adds Vim's native code folding capabilities to Emacs.
+=vimish-fold= adds Vim's native code folding capabilities to Emacs.
 
 ** NOTE: =origami= supports folding Vim-style triple-braces
-   =origami= has built-in supports for folding sections of code such as:
+=origami= has built-in supports for folding sections of code such as:
 
-   #+begin_src bash :tangle no
-     # my fold {{{
-     echo "Code within this triple-fold block can be folded by origami."
-     # }}}
-   #+end_src
+#+begin_src shell :tangle no
+  # my fold {{{
+  echo "Code within this triple-fold block can be folded by origami."
+  # }}}
+#+end_src
 
-   Thus, if you only use =vimish-fold= for such markings, =vimish-fold= is
-   probably unnecessary. Just stick with =origami=.
+Thus, if you only use =vimish-fold= for such markings, =vimish-fold= is probably
+unnecessary. Just stick with =origami=.
 
 ** Using =vimish-fold= in addition to other code folding backends
-   =vimish-fold= is /not/ a standard code folding backend for Emacs. That is,
-   unlike =origami=, =vimish-fold= does not implement Emacs' code folding API in
-   such a way that it can be used by standard folding functions, meaning that
-   =vimish-fold= will not integrate with =evil-mode= by default. To get
-   =evil-mode= to respect =vimish-fold= commands you will have to customize
-   evil's keybindings. However, I find that I like to use =origami= as
-   =evil-mode='s primary code folding backend, and use =vimish-fold= as a
-   secondary folding layer.
+=vimish-fold= is /not/ a standard code folding backend for Emacs. That is,
+unlike =origami=, =vimish-fold= does not implement Emacs' code folding API in
+such a way that it can be used by standard folding functions, meaning that
+=vimish-fold= will not integrate with =evil-mode= by default. To get =evil-mode=
+to respect =vimish-fold= commands you will have to customize evil's
+keybindings. However, I find that I like to use =origami= as =evil-mode='s
+primary code folding backend, and use =vimish-fold= as a secondary folding
+layer.
 
 ** =use-package= specification
-   #+begin_src emacs-lisp
-     (use-package vimish-fold
-       ;; origami supports Vim-style "{{{...}}}" folding now.
-       :disabled
-       :demand t
-       :hook
-       ;; Re-create folds from mark comments when visiting a file.
-       (find-file . vimish-fold-from-marks)
-       :general
-       (general-def
-         ;; The standard vimish-fold keybinding. I don't tend to use it.
-         "C-`" 'vimish-fold-toggle)
-       (general-def 'normal
-         "zf" 'vimish-fold-avy)
-       (my/evil-leader-def
-         "va" 'vimish-fold-avy
-         "vd" 'vimish-fold-delete
-         "vD" 'vimish-fold-delete-all
-         "vf" 'vimish-fold
-         "vm" 'vimish-fold-from-marks
-         "vr" 'vimish-fold-refold
-         "vR" 'vimish-fold-refold-all
-         "vu" 'vimish-fold-unfold
-         "vU" 'vimish-fold-unfold-all
-         "vv" 'vimish-fold-toggle
-         "vV" 'vimish-fold-toggle-all)
-       :custom
-       ;; Where to indicate a fold
-       (vimish-fold-indication-mode 'right-fringe)
-       ;; Whether to save folds on buffer saving.
-       (vimish-fold-persist-on-saving t)
-       :config
-       ;; Activate vimish-fold mode for all buffers.
-       (vimish-fold-global-mode 1))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package vimish-fold
+    ;; origami supports Vim-style "{{{...}}}" folding now.
+    :disabled
+    :demand t
+    :hook
+    ;; Re-create folds from mark comments when visiting a file.
+    (find-file . vimish-fold-from-marks)
+    :general
+    (general-def
+      ;; The standard vimish-fold keybinding. I don't tend to use it.
+      "C-`" 'vimish-fold-toggle)
+    (general-def 'normal
+      "zf" 'vimish-fold-avy)
+    (my/evil-leader-def
+      "va" 'vimish-fold-avy
+      "vd" 'vimish-fold-delete
+      "vD" 'vimish-fold-delete-all
+      "vf" 'vimish-fold
+      "vm" 'vimish-fold-from-marks
+      "vr" 'vimish-fold-refold
+      "vR" 'vimish-fold-refold-all
+      "vu" 'vimish-fold-unfold
+      "vU" 'vimish-fold-unfold-all
+      "vv" 'vimish-fold-toggle
+      "vV" 'vimish-fold-toggle-all)
+    :custom
+    ;; Where to indicate a fold
+    (vimish-fold-indication-mode 'right-fringe)
+    ;; Whether to save folds on buffer saving.
+    (vimish-fold-persist-on-saving t)
+    :config
+    ;; Activate vimish-fold mode for all buffers.
+    (vimish-fold-global-mode 1))
+#+end_src
