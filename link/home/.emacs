@@ -40,7 +40,11 @@
   "Whether to force reconstruction of the super config Elisp file.")
 
 (defvar my/use-compiled-config nil
-  "Whether to use the compiled version of tangled config files.")
+  "Whether to use the compiled version of tangled config files.
+
+  Use at your own risk! I have found it not at all worthwhile to compile
+  my configuration.  Most of the performance increase comes from
+  native-compiling Emacs itself, along with any downloaded libraries.")
 
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
@@ -114,14 +118,17 @@ Once created, the file should be placed at
 ;; This sets additional paths where Emacs looks for Elisp files when a load
 ;; command is issued.
 (dolist (dir (list (file-truename (concat user-emacs-directory "plugin"))
-                   (file-truename (concat user-emacs-directory "private"))
-                   (file-truename (concat user-emacs-directory "require"))
-                   (file-truename (concat user-emacs-directory "require/fix"))))
+               (file-truename (concat user-emacs-directory "private"))
+               (file-truename (concat user-emacs-directory "require"))
+               (file-truename (concat user-emacs-directory "require/fix"))))
   (add-to-list 'load-path dir))
+
+;; I refactored my `straight.el' bootstrap code to a separate file.
+(load "my-straight-bootstrap")
 
 ;; Make downloaded straight packages available on `load-path'.
 (dolist (dir (directory-files (file-truename (concat user-emacs-directory "straight/build"))
-                              'full-name))
+               'full-name))
   (when (file-directory-p dir)
     (add-to-list 'load-path dir)))
 

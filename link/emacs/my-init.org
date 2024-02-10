@@ -1179,9 +1179,6 @@ To update all packages installed through straight, run =M-x
 straight-pull-all=
 
 #+begin_src emacs-lisp
-  ;; I refactored my `straight.el' bootstrap code to a separate file.
-  (load "my-straight-bootstrap")
-
   (eval-when-compile
     (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
 #+end_src
