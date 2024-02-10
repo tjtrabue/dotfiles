@@ -13,7 +13,7 @@
 ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
 ;; screen with debugging output seems to mess with evil-mode, so I find it
 ;; prudent to turn this variable off until I have a reason to turn it on.
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 ;; Instruct Emacs not to go through the trouble of running each filename loaded
 ;; against special regexps.
@@ -39,7 +39,7 @@
 (defvar my/force-refresh-super-config nil
   "Whether to force reconstruction of the super config Elisp file.")
 
-(defvar my/use-compiled-config t
+(defvar my/use-compiled-config nil
   "Whether to use the compiled version of tangled config files.")
 
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid

@@ -16,14 +16,18 @@ Emacs comes with a number of functions for aligning text in columns, such as:
 However, sometimes we need a little more power. That's where these plugins come
 in.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (require 'general)
+#+end_src
+
 * ialign
 Interactive/visual plugin for Emacs' built-in =align-regexp=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ialign
-    :after consult-xref
     :commands ialign
     :general
     (general-def 'visual

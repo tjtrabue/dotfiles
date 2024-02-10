@@ -10,6 +10,7 @@
   (require 'general)
 
   (use-package anzu
+    :after consult
     :delight
     :demand t
     :general
