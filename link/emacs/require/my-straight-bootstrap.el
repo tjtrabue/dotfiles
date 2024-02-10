@@ -75,17 +75,24 @@
   ;; (setq use-package-always-demand t)
   (setq use-package-always-defer t)
 
+  ;; Always treat `use-package' specifications as if they had `:ensure t' by
+  ;; default. You can override this behavior by specifying `:ensure nil',
+  ;; instead.
+  (setq use-package-always-ensure t)
+
   ;; Install use-package via straight.
   ;; After this function runs, use-package will automatically use straight
   ;; to install packages if you specify ':stright t' instead of ':ensure t'.
   ;; If you have set straight-use-package-by-default to t, this is
   ;; unnecessary.
-  (straight-use-package
-    ;; Override the MELPA recipe in order to get all Elisp files for
-    ;; use-package. For some reason, the MELPA recipe excludes several
-    ;; important source files.
-    '(use-package :type git :host github :repo "jwiegley/use-package"
-       :files (:defaults))))
+  (when (< emacs-major-version 29)
+    ;; `use-package' comes built into modern versions of Emacs.
+    (straight-use-package
+      ;; Override the MELPA recipe in order to get all Elisp files for
+      ;; use-package. For some reason, the MELPA recipe excludes several
+      ;; important source files.
+      '(use-package :type git :host github :repo "jwiegley/use-package"
+         :files (:defaults)))))
 
 ;; NOTE: This is `eval-and-compile`, not `eval-when-compile'. They are different
 ;; macros. `eval-and-compile' evaluates its code both during compilation and

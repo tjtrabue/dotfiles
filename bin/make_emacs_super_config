@@ -47,8 +47,24 @@ mesc__make_directories() {
 # Print the path to the Elisp super config file at the given index.
 mesc__get_super_config_file_path() {
   local super_config_index="${1}"
+  local super_config_index_suffix
 
-  printf '%s' "${SUPER_CONFIG_DIR}/${SUPER_CONFIG_FILE_PREFIX}-${super_config_index}.el"
+  # Add leading zeros to index in filename to ensure proper file load order.
+  # For instance, files without leading zeros load in this order:
+  #
+  #   file_1.txt
+  #   file_10.txt
+  #   file_2.txt
+  #
+  # Whereas leading zeros fix this problem:
+  #
+  #  file_01.txt
+  #  file_02.txt
+  #  file_10.txt
+  super_config_index_suffix="$(printf '%03d' "${super_config_index}")"
+
+  printf '%s' \
+    "${SUPER_CONFIG_DIR}/${SUPER_CONFIG_FILE_PREFIX}-${super_config_index_suffix}.el"
 }
 
 # Create the next super config file in ~/.emacs.d/super_config

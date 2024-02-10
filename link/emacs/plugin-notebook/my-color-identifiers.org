@@ -10,9 +10,14 @@ easily identify them in a file.
 
 #+begin_src emacs-lisp
   (use-package color-identifiers-mode
+    ;; We have to load this package after our primary theme!  Otherwise we can experience errors on
+    ;; startup.
+    :after modus-themes
+    :demand t
     :delight
-    :hook
-    ;; Only turn on `color-identifiers-mode' for major modes that benefit
-    ;; from it since this mode can slow down fontification.
-    ((clojure-mode emacs-lisp-mode) . color-identifiers-mode))
+    :preface
+    (eval-when-compile
+      (require 'color-identifiers-mode))
+    :config
+    (global-color-identifiers-mode 1))
 #+end_src

@@ -27,7 +27,7 @@ theme code added by customize.
 * Functions
 #+begin_src emacs-lisp
   (eval-and-compile
-    (defun my/activate-theme ()
+    (defsubst my/activate-theme ()
       "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
   functions to provide a single point of theme configuration."
@@ -81,33 +81,33 @@ color names used by Modus]].
 *** =use-package= specification
 #+begin_src emacs-lisp
   (require 'general)
+    ;; We need to load Org faces before we can customize them.
+  (require 'org-faces)
 
   (use-package modus-themes
     ;; If you decide to disable solaire-mode, make sure to comment out this line as well as the
     ;; solaire faces customizations in the modus-themes custom faces function above.
-    :after solaire-mode
+    :after (org solaire-mode)
     ;; You may occassionally wish to clone modus-themes from the GitHub mirror instead of SourceHut
     ;; due to network issues.
     ;; :straight (modus-themes :type git :host github
     ;;                         :repo "protesilaos/modus-themes" :branch "main")
     :demand t
-    :preface
-    (eval-and-compile
-      (defsubst my/activate-theme--modus ()
-        "Activation/configuration function for modus theme."
-        (load-theme 'modus-vivendi t)
-        ;; Set custom faces for the active Modus theme.
-        (my/modus-themes-custom-faces))
-      (defsubst my/modus-themes-custom-faces ()
-        "Customize faces for modus themes."
-        ;; We need to load Org faces before we can customize them.
-        (require 'org-faces)
-        (modus-themes-with-colors
-          ;; Change the font/size/color of Org mode titles so they stand out more.
+    :general
+    (general-def
+      ;; Switch from light to dark theme, or vice versa.
+      "<f5>" 'modus-themes-toggle)
+    :init
+    (require 'modus-themes)
+    (defun my/modus-themes-custom-faces ()
+      "Customize faces for modus themes."
+      (macroexpand
+       '(modus-themes-with-colors
+          ;;   Change the font/size/color of Org mode titles so they stand out more.
           (set-face-attribute 'org-document-title nil
                               :inherit '(org-level-1 modus-themes-heading-0)
                               :height 1.75)
-          ;; Adjust mode line style
+          ;;   Adjust mode line style
           (dolist (face '(mode-line
                           mode-line-active
                           mode-line-inactive
@@ -129,7 +129,7 @@ color names used by Modus]].
                                   :width 'expanded
                                   ;; Increase tab-line height by adding a border box.
                                   :box `(:line-width 4 :color ,(face-background face nil t)))))
-          ;; Override solaire faces.
+          ;;   Override solaire faces.
           (custom-set-faces
            `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
            `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
@@ -147,12 +147,11 @@ color names used by Modus]].
             (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
             (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
             (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender)))))
-    :general
-    (general-def
-      ;; Switch from light to dark theme, or vice versa.
-      "<f5>" 'modus-themes-toggle)
-    :init
-    (require 'modus-themes)
+    (defun my/activate-theme--modus ()
+      "Activation/configuration function for modus theme."
+      (load-theme 'modus-vivendi t)
+      ;; Set custom faces for the active Modus theme.
+      (my/modus-themes-custom-faces))
     (setq modus-themes-italic-constructs t
           modus-themes-bold-constructs t
           modus-themes-mixed-fonts t
@@ -247,9 +246,8 @@ color names used by Modus]].
             (accent-3 red-cooler)))
     (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
     :config
-    (eval-when-compile
-      (require 'modus-themes))
-    (my/activate-theme))
+    (my/activate-theme)
+    (load-theme 'modus-vivendi t))
 #+end_src
 
 ** doom-themes
@@ -269,7 +267,7 @@ buttery-smooth editing experience.
     :demand t
     :preface
     (eval-and-compile
-      (defun my/activate-theme--doom ()
+      (defsubst my/activate-theme--doom ()
         "Activation/configuration function for doom theme."
         (load-theme 'doom-one t)
         ;; Flash the modeline when the Emacs bell rings.

@@ -168,8 +168,12 @@ within Emacs.
 #+begin_src emacs-lisp
   (use-package skewer-mode
     :preface
-    (eval-when-compile
-      (require 'skewer-mode))
+    (require 'skewer-mode)
+    (require 'skewer-setup)
+    (require 'skewer-repl)
+    (require 'skewer-html)
+    (require 'skewer-css)
+    (require 'skewer-bower)
     :config
     (skewer-setup))
 #+end_src

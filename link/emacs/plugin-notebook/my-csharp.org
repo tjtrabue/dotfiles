@@ -15,7 +15,7 @@ non-Windows programmer.
 #+begin_src emacs-lisp
   (use-package csharp-mode
     ;; `csharp-mode' is built-in to Emacs version 29 and onward.
-    :if (< emacs-major-version 29)
+    :if (eval-and-compile (< emacs-major-version 29))
     :after (tree-sitter tree-sitter-langs)
     :mode
     ("\\.cs\\'" . csharp-tree-sitter-mode))

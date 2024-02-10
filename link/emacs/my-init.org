@@ -241,16 +241,8 @@ best to keep these code snippets out of the main Emacs configuration file since
 they are necessary evil, not main configuration code, and as such will soon
 become unnecessary and may be safely removed.
 
-#+begin_src emacs-lisp
-  ;; Fix certain org-mode function argument list issues.
-  (require 'org-functions-fix)
-  ;; Add dummy values to fix `helpful' and `color-identifiers' dependency on
-  ;; read-symbol-positions-list
-  (require 'symbol-positions-fix)
-  ;; Add dummy variables needed to get native compilation to work, especially
-  ;; for Straight.el. This should be able to go away pretty soon.
-  (require 'native-comp-fix)
-#+end_src
+If no code block follows this paragraph, then my current configuration requires
+no hot-fixes.
 
 * Configure Backup Dirs/Auto-Saves
 It's handy to have Emacs put all backup files in a centralized directory, as
@@ -1322,18 +1314,6 @@ This package maps pairs of simultaneously pressed keys to bindings.
       (require 'key-chord))
     :config
     (key-chord-mode 1))
-#+end_src
-
-** use-package-chords
-Adds =:chords= keyword to =use-package= for defining key-chords.
-
-#+begin_src emacs-lisp
-  (use-package use-package-chords
-    :after key-chord
-    :demand t
-    :preface
-    (eval-when-compile
-      (require 'use-package-chords)))
 #+end_src
 
 ** general

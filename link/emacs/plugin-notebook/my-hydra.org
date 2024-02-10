@@ -24,85 +24,53 @@ This is a simple, nearly trivial hydra used as an example and starting point for
 creating more complex specimens. All that =hydra-zoom= accomplishes is defining
 a zoom in/out hydra for the global keymap.
 
-#+begin_src emacs-lisp
-  (defun my/define-hydra-zoom ()
-    "Wrapper function for defhydra hydra-zoom"
-
-    ;; NOTE: This overrides the default `undo' keybinding.
-    (defhydra hydra-zoom (global-map "C-/")
-      "Zoom in/out in the current window"
-      ("k" text-scale-increase "in")
-      ("j" text-scale-decrease "out")))
-#+end_src
-
 ** hydra-resize-window
 This hydra resizes the current window using VI keys.
-
-#+begin_src emacs-lisp
-  (defun my/define-hydra-resize-window ()
-    "Wrapper function for defhtdra hydra-resize-window."
-    (defhydra hydra-resize-window (global-map "C-]")
-      "Resize window with VI keys"
-      ("h" shrink-window-horizontally "Shrink horizontally")
-      ("j" shrink-window "Shrink vertically")
-      ("k" enlarge-window "Enlarge vertically")
-      ("l" enlarge-window-horizontally "Enlarge horizontally")
-      ("q" nil "Quit" :exit t))
-    (my/evil-leader-def 'override
-      "ar" 'hydra-resize-window/body))
-#+end_src
 
 ** hydra-expand-region
 This hydra expands and contracts the active region by semantic units using the
 =expand-region= plugin.
 
-#+begin_src emacs-lisp
-  (defun my/define-hydra-expand-region ()
-    "Wrapper function for defhydra hydra-expand-region."
-    (defhydra hydra-expand-region ()
-      "Expand/contract visual region"
-      ("=" er/expand-region "Expand region")
-      ("-" er/contract-region "Contract region"))
-    ;; We bind the hydra key separately so that pressing the binding immediately
-    ;; expands the region, as well as activates the hydra.
-    (general-def
-      "C-=" 'hydra-expand-region/er/expand-region))
-#+end_src
-
 ** hydra-org-todo
 Cycles through todo states for an Org file entry.
 
-#+begin_src emacs-lisp
-  (defun my/define-hydra-org-todo ()
-    "Wrapper function for defhydra hydra-org-todo."
-    ;; Notice that we don't bind any keys in the hydra definition because this
-    ;; hydra only contains one binding: "t". We bind to this command directly
-    ;; after we define the hydra.
-    (defhydra hydra-org-todo ()
-      "Cycle org todo states"
-      ("t" org-todo))
-    (general-def org-mode-map
-      "C-c C-t" 'hydra-org-todo/org-todo))
-#+end_src
-
-* Activate hydras
-#+begin_src emacs-lisp
-  (defun my/define-hydras ()
-    "Load custom hydra definitions."
-    (interactive)
-    (my/define-hydra-zoom)
-    (my/define-hydra-resize-window)
-    (my/define-hydra-expand-region)
-    ;; It's better to use org-todo's menu keys instead.
-    ;; (my/define-hydra-org-todo)
-    )
-#+end_src
-
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package hydra
     :after evil-collection
     :demand t
-    :config
-    (my/define-hydras))
+    :preface
+    (require 'hydra)
+    (eval-and-compile
+      (defhydra hydra-zoom (global-map "C-/")
+        "Zoom in/out in the current window"
+        ("k" text-scale-increase "in")
+        ("j" text-scale-decrease "out"))
+      (defhydra hydra-resize-window (global-map "C-]")
+        "Resize window with VI keys"
+        ("h" shrink-window-horizontally "Shrink horizontally")
+        ("j" shrink-window "Shrink vertically")
+        ("k" enlarge-window "Enlarge vertically")
+        ("l" enlarge-window-horizontally "Enlarge horizontally")
+        ("q" nil "Quit" :exit t))
+      (defhydra hydra-expand-region ()
+        "Expand/contract visual region"
+        ("=" er/expand-region "Expand region")
+        ("-" er/contract-region "Contract region")))
+    :general
+    (general-def
+      "C-=" 'hydra-expand-region/er/expand-region)
+    (general-def org-mode-map
+      "C-c C-t" 'hydra-org-todo/org-todo)
+    (my/evil-leader-def 'override
+      "ar" 'hydra-resize-window/body)
+    ;; Notice that we don't bind any keys in the hydra definition because this
+    ;; hydra only contains one binding: "t". We bind to this command directly
+    ;; after we define the hydra.
+    ;; (defhydra hydra-org-todo ()
+    ;;   "Cycle org todo states"
+    ;;   ("t" org-todo))
+    )
 #+end_src
