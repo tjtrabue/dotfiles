@@ -131,7 +131,10 @@ Once created, the file should be placed at
       (byte-recompile-directory super-config-dir 0 t))
     ;; OTHERWISE only recompile files that need recompiling.
     (byte-recompile-directory super-config-dir))
-  (if my/use-compiled-config
+  (if (and my/use-compiled-config
+        (directory-files super-config-dir nil "\\.elc$"))
+    ;; Load compiled Elisp files if availble.
     (my/apply-to-dir-files super-config-dir "\\.elc$" #'load)
+    ;; Otherwise, load the Elisp source files.
     (my/apply-to-dir-files super-config-dir "\\.el$" #'load)))
 ;;; .emacs ends here
