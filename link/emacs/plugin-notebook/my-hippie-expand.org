@@ -69,7 +69,6 @@ This code block pleases the Elisp compilers (byte-compiler and native compiler).
 * =use-package= specification
 #+begin_src emacs-lisp
   (require 'general)
-  (require 'straight)
 
   (use-package hippie-exp
     :after evil-collection

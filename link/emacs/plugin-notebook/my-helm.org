@@ -6,6 +6,14 @@
 
 Configuration for all things helm-related, including helm-projectile integration.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * helm
 =helm= is a generic completion framework for Emacs that is far more powerful
 than basic tab-completion. I don't want to rewrite the whole Bible on Helm
@@ -18,7 +26,6 @@ errors in Helm, notably in =helm-config.el=, citing undefined/void variables
 as the reason for halting compilation. I recommend you use =ivy= in this case.
 
 #+begin_src emacs-lisp
-  (require 'straight)
   (require 'general)
 
   (use-package helm
@@ -285,7 +292,6 @@ working configuration for =persp-mode= in my plugins notebook. I only use
 =persp-mode= for everything else.
 
 #+begin_src emacs-lisp
-  (require 'straight)
   (require 'general)
 
   (use-package helm-escreen

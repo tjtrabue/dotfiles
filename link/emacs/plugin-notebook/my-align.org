@@ -23,6 +23,7 @@ Interactive/visual plugin for Emacs' built-in =align-regexp=.
   (require 'general)
 
   (use-package ialign
+    :after consult-xref
     :commands ialign
     :general
     (general-def 'visual

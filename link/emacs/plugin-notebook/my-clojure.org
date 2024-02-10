@@ -19,8 +19,6 @@ This code block pleases the Elisp compilers (byte-compiler and native compiler).
 Major mode for editing Clojure files.
 
 #+begin_src emacs-lisp
-  (require 'straight)
-
   (use-package clojure-mode
     :straight
     ;; Default straight recipe only includes the clojure-mode.el file for some

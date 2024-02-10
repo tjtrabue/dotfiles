@@ -670,8 +670,6 @@ commands. The way it works is like this:
 Cool enhancements for eshell.
 
 #+begin_src emacs-lisp
-  (require 'straight)
-
   (use-package aweshell
     :straight (aweshell :type git :host github :repo "manateelazycat/aweshell"))
 #+end_src

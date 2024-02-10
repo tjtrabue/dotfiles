@@ -125,7 +125,6 @@ stay on top of this package's new features and changing API.
 
 #+begin_src emacs-lisp
   (require 'general)
-  (require 'straight)
 
   (use-package elisp-autofmt
     :straight
@@ -166,8 +165,6 @@ code, so it's never confused by comments or `foo-bar' matching `foo'.
 [[file:~/.emacs.d/plugin-notebook/my-help.org::helpful][helpful]] requires this package.
 
 #+begin_src emacs-lisp
-  (require 'straight)
-
   (use-package elisp-refs
     :demand t
     :straight

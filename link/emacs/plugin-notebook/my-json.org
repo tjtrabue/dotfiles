@@ -7,6 +7,14 @@
 
 Plugins for editing and interacting with JSON documents.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * json-mode
 Major mode for editing JSON documents.
 
@@ -41,7 +49,5 @@ Emacs bindings to =jq=. I haven't found much use for this library.
     (jq :type git :host github :repo "p-baleine/jq.el"
         :pre-build (("cmake" ".")
                     ("cmake" "--build" "."))
-        :files (:defaults "jq-impl*" "libjq*" "libonig*"))
-    :preface
-    (require 'straight))
+        :files (:defaults "jq-impl*" "libjq*" "libonig*")))
 #+end_src

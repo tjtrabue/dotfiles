@@ -13,7 +13,7 @@
 ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
 ;; screen with debugging output seems to mess with evil-mode, so I find it
 ;; prudent to turn this variable off until I have a reason to turn it on.
-(setq debug-on-error nil)
+(setq debug-on-error t)
 
 ;; Instruct Emacs not to go through the trouble of running each filename loaded
 ;; against special regexps.
@@ -114,10 +114,16 @@ Once created, the file should be placed at
 ;; This sets additional paths where Emacs looks for Elisp files when a load
 ;; command is issued.
 (dolist (dir (list (file-truename (concat user-emacs-directory "plugin"))
-               (file-truename (concat user-emacs-directory "private"))
-               (file-truename (concat user-emacs-directory "require"))
-               (file-truename (concat user-emacs-directory "require/fix"))))
+                   (file-truename (concat user-emacs-directory "private"))
+                   (file-truename (concat user-emacs-directory "require"))
+                   (file-truename (concat user-emacs-directory "require/fix"))))
   (add-to-list 'load-path dir))
+
+;; Make downloaded straight packages available on `load-path'.
+(dolist (dir (directory-files (file-truename (concat user-emacs-directory "straight/build"))
+                              'full-name))
+  (when (file-directory-p dir)
+    (add-to-list 'load-path dir)))
 
   ;;; Load the super config:
 (let* ((super-config-dir (file-truename (concat user-emacs-directory "super_config")))
@@ -134,7 +140,9 @@ Once created, the file should be placed at
   (if (and my/use-compiled-config
         (directory-files super-config-dir nil "\\.elc$"))
     ;; Load compiled Elisp files if availble.
-    (my/apply-to-dir-files super-config-dir "\\.elc$" #'load)
+    (my/apply-to-dir-files super-config-dir "\\.el$" (lambda (file &rest args)
+                                                      (load (file-name-sans-extension file) args)))
+    ;; (my/apply-to-dir-files super-config-dir "\\.elc$" #'load)
     ;; Otherwise, load the Elisp source files.
     (my/apply-to-dir-files super-config-dir "\\.el$" #'load)))
 ;;; .emacs ends here

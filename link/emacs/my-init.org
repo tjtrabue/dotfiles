@@ -1300,8 +1300,9 @@ default mode name is hidden completely.
 #+begin_src emacs-lisp
   (use-package delight
     :demand t
-    :init
-    (require 'delight)
+    :preface
+    (eval-when-compile
+      (require 'delight))
     :config
     ;; Remove lighter text for whitespace-mode
     (delight '((whitespace-mode nil whitespace)
@@ -1316,8 +1317,9 @@ This package maps pairs of simultaneously pressed keys to bindings.
 #+begin_src emacs-lisp
   (use-package key-chord
     :demand t
-    :init
-    (require 'key-chord)
+    :preface
+    (eval-when-compile
+      (require 'key-chord))
     :config
     (key-chord-mode 1))
 #+end_src
@@ -1329,8 +1331,9 @@ Adds =:chords= keyword to =use-package= for defining key-chords.
   (use-package use-package-chords
     :after key-chord
     :demand t
-    :init
-    (require 'use-package-chords))
+    :preface
+    (eval-when-compile
+      (require 'use-package-chords)))
 #+end_src
 
 ** general
@@ -1345,7 +1348,7 @@ and hooks in a way that defers loading the package.
 #+begin_src emacs-lisp
   (use-package general
     :demand t
-    :init
+    :preface
     (require 'general)
     :config
     (eval-and-compile

@@ -37,8 +37,6 @@ set of ligatures may not be compatible with others.
               :branch "master")
     :hook
     (after-init . global-ligature-mode)
-    :preface
-    (require 'straight)
     :config
     (let ((cascadia-code-ligatures '("|||>" "<|||" "<==>" "<!--" "####" "~~>"
                                      "***" "||=" "||>" ":::" "::=" "=:=" "==="

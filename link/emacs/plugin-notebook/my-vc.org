@@ -97,8 +97,6 @@ logic for creating Git commits. I like to configure this package separately from
 the main Magit package.
 
 #+begin_src emacs-lisp
-  (require 'straight)
-
   (use-package git-commit
     :after magit
     :ensure nil
@@ -251,6 +249,15 @@ maintained.
     (diff-hl-draw-borders nil)
     ;; How long to wait before updating the buffer's VC diff on the fly.
     (diff-hl-flydiff-delay 0.2)
+    :preface
+    (require 'diff-hl)
+    (require 'diff-hl-amend)
+    (require 'diff-hl-dired)
+    (require 'diff-hl-flydiff)
+    (require 'diff-hl-inline-popup)
+    (require 'diff-hl-margin)
+    (require 'diff-hl-show-hunk)
+    (require 'diff-hl-show-hunk-posframe)
     :config
     ;; Enable diff-hl globally.
     (global-diff-hl-mode 1)
@@ -277,7 +284,6 @@ do is visit a git-controlled file and invoke =git-timemachine= or
 =git-timemachine-toggle=. Check the documentation for the default keybindings.
 
 #+begin_src emacs-lisp
-  (require 'straight)
   (require 'general)
 
   (use-package git-timemachine

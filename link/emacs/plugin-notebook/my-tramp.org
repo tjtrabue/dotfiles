@@ -95,9 +95,7 @@ server and your local development machine:
     :custom
     ;; Cache sudo password for the day.
     (password-cache t)
-    (password-cache-expiry (* 8 3600))
-    :preface
-    (require 'straight))
+    (password-cache-expiry (* 8 3600)))
 #+end_src
 
 * Plugins
@@ -117,9 +115,7 @@ For example, if you want to access a Docker container as the root user:
     ;; This feature is built-in to Emacs 29.
     :if (>= emacs-major-version 29)
     :ensure nil
-    :straight nil
-    :preface
-    (require 'straight))
+    :straight nil)
 #+end_src
 
 ** vagrant-tramp

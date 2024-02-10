@@ -19,7 +19,8 @@ This code block pleases the Elisp compilers (byte-compiler and native compiler).
 
 #+begin_src emacs-lisp
   (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
+    (require 'origami))
 #+end_src
 
 * lsp-mode
@@ -47,6 +48,7 @@ which ones you do not yet satisfy.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lsp-mode
+    ;; Currently using `lsp-bridge' instead.
     :disabled
     :after evil-collection
     ;; Adjust mode line for LSP minor modes.
@@ -319,6 +321,7 @@ your file system.
   ;;       by projectile). Put a ".ccls-root" file in the project root
   ;;       directory to fix this problem.
   (use-package ccls
+    ;; Currently using `lsp-bridge' instead.
     :disabled
     :after (evil projectile)
     :general
@@ -356,6 +359,8 @@ Dart workflows.
 
 #+begin_src emacs-lisp
   (use-package lsp-dart
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     :after
     (dart-mode lsp-mode))
 #+end_src
@@ -366,6 +371,8 @@ Dart workflows.
   ;; NOTE: This plugin requires haskell-language-server to be installed on your
   ;;       system.
   (use-package lsp-haskell
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     :after lsp-mode
     :hook
     ((haskell-mode haskell-literate-mode) . lsp))
@@ -375,6 +382,8 @@ Dart workflows.
 
 #+begin_src emacs-lisp
   (use-package lsp-java
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     :after lsp-mode)
 #+end_src
 
@@ -382,7 +391,9 @@ Dart workflows.
 
 #+begin_src emacs-lisp
   (use-package lsp-origami
-    :after lsp-mode)
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
+    :after (lsp-mode origami))
 #+end_src
 
 *** lsp-pyright
@@ -392,6 +403,8 @@ traction after =python-language-server= became a bit stagnant.
 
 #+begin_src emacs-lisp
   (use-package lsp-pyright
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     :after lsp-mode
     :hook
     (python-mode . (lambda ()
@@ -406,6 +419,8 @@ features such as semantic highlighting.
 
 #+begin_src emacs-lisp
   (use-package lsp-sourcekit
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     ;; sourcekit-lsp appears to only be available on macOS as of now.
     :if (eq system-type 'darwin)
     :after lsp-mode
@@ -419,6 +434,8 @@ Sync =treemacs= file explorer with the LSP server.
 
 #+begin_src emacs-lisp
   (use-package lsp-treemacs
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     :after (lsp-mode treemacs)
     :commands lsp-treemacs-errors-list
     :hook
@@ -445,6 +462,8 @@ floating window, a sidebar for diagnostics and LSP code actions, and more.
 
 #+begin_src emacs-lisp
   (use-package lsp-ui
+    ;; Currently using `lsp-bridge' instead.
+    :disabled
     :after lsp-mode
     :hook
     (lsp-mode .
@@ -554,6 +573,8 @@ infrastructure for Emacs.
 #+end_src
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package lsp-bridge
     :after (hydra modus-themes)
     :demand t
@@ -562,9 +583,6 @@ infrastructure for Emacs.
                 :type git :host github :repo "manateelazycat/lsp-bridge"
                 :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
                 :build (:not compile))
-    :preface
-    (require 'general)
-    (require 'straight)
     :general
     (general-def lsp-bridge-mode-map
       [remap xref-find-definitions]              'lsp-bridge-find-def

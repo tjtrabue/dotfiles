@@ -16,6 +16,14 @@ backend to each other backend you desire to use. For example, if you want to use
 the =company-elisp= backend and =company-yasnippet=, you would add the following
 to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * Variables
 #+begin_src emacs-lisp
   (defvar my/company-enable-yas t
@@ -368,8 +376,6 @@ Elixir-related major modes that are not covered by =lsp-mode=, such as
 =inf-elixir-mode=.
 
 #+begin_src emacs-lisp
-  (require 'straight)
-
   (use-package company-elixir
     ;; Not that useful. Completions only work if you have a valid,
     ;; working Elixir project.

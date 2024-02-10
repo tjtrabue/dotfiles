@@ -27,8 +27,6 @@ Major mode for editing source code files written in the Odin programming
 language.
 
 #+begin_src emacs-lisp
-  (require 'straight)
-
   (use-package odin-mode
     :mode ("\\.odin\\'" . odin-mode)
     :straight

@@ -167,6 +167,9 @@ within Emacs.
 
 #+begin_src emacs-lisp
   (use-package skewer-mode
+    :preface
+    (eval-when-compile
+      (require 'skewer-mode))
     :config
     (skewer-setup))
 #+end_src

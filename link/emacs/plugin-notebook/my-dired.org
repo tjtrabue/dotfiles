@@ -21,7 +21,6 @@ This code block pleases the Elisp compilers (byte-compiler and native compiler).
 * =use-package= specification
 #+begin_src emacs-lisp
   (require 'general)
-  (require 'straight)
 
   (use-package dired
     ;; dired is a built-in package, so we don't want to try to download it.
