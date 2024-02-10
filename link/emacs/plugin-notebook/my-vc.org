@@ -7,6 +7,14 @@
 
 Plugins for extending Emacs with version control capabilities.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * vc
 General version control plugin for Emacs. =vc-mode= is agnostic to any
 particular version control system, providing functions that work for Git, SVN,
@@ -40,9 +48,9 @@ porcelain exists in Magit.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package magit
-    :preface
-    (require 'general)
     :general
     (general-def
       ;; Global binding for summoning the Magit transient popup for reading keys.
@@ -89,6 +97,8 @@ logic for creating Git commits. I like to configure this package separately from
 the main Magit package.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package git-commit
     :after magit
     :ensure nil
@@ -267,6 +277,9 @@ do is visit a git-controlled file and invoke =git-timemachine= or
 =git-timemachine-toggle=. Check the documentation for the default keybindings.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+  (require 'general)
+
   (use-package git-timemachine
     :commands (git-timemachine git-timemachine-toggle)
     ;; The MELPA package is out of date because the project moved from GitLab to
@@ -274,8 +287,6 @@ do is visit a git-controlled file and invoke =git-timemachine= or
     :straight
     (git-timemachine :host github
                      :repo "emacsmirror/git-timemachine")
-    :preface
-    (require 'general)
     :general
     (general-def 'normal git-timemachine-mode-map
       "?" 'git-timemachine-help
@@ -297,9 +308,9 @@ Interactively create and retrieve links to the current file's page on GitHub,
 GitLab, BitBucket, etc.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package git-link
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       "g l" 'git-link))
@@ -329,13 +340,13 @@ I've noticed that this plugin doesn't work that well with PGP-signed
 commits. The popup only shows the PGP signature, not the commit message.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package git-messenger
     :commands
     (git-messenger:popup-diff
      git-messenger:popup-message
      git-messenger:popup-show)
-    :preface
-    (require 'general)
     :general
     (my/evil-leader-def
       "gxm" 'git-messenger:popup-message
@@ -352,9 +363,9 @@ Adds a command for Emacs to regress, or "undo" a region back through its Git
 history, a region back through its Git history.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package git-undo
-    :preface
-    (require 'general)
     :general
     (my/evil-leader-def
       "gu" 'git-undo))

@@ -15,41 +15,42 @@ cannot build it correctly. The only way I've found to install it properly is to
 download the repository manually (or through =straight.el=) and point
 =load-path= at the repository's location.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package snails
-      :disabled
-      ;; 6/11/2021: This package does not yet have an official release, and is
-      ;; not yet hosted in Melpa.
-      :straight
-      (snails :type git :host github :repo "manateelazycat/snails"
-              :files ("*"))
-      :demand t
-      ;; :commands (snails snails-search-point)
-      :init
-      ;; The only way I can get snails to work is to add the cloned
-      ;; repo to the load-path. Straight's build doesn't seem to work.
-      (add-to-list 'load-path
-        (file-truename (concat my/straight-repos-dir "/snails")))
-      ;; Change default search backends (most are unnecessary)
-      (setq snails-default-backends '(
-        ;; Default backends
-        ;; snails-backend-eaf-browser-history
-        ;; snails-backend-awesome-tab-group
-        snails-backend-buffer
-        ;; snails-backend-eaf-pdf-table
-        ;; snails-backend-eaf-browser-open
-        ;; snails-backend-eaf-browser-search
-        ;; snails-backend-eaf-github-search
-        ;; snails-backend-google-suggestion
-        snails-backend-recentf
-        ;; snails-backend-directory-files
-        snails-backend-bookmark
-        ;; Extra backends
-        snails-backend-rg
-        snails-backend-fd))
-      :config
-      ;; Use custom backends to make Snails faster.
-      (add-to-list 'snails-default-backends 'snails-backend-rg)
-      (add-to-list 'snails-default-backends 'snails-backend-fd))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package snails
+    :disabled
+    ;; 6/11/2021: This package does not yet have an official release, and is
+    ;; not yet hosted in Melpa.
+    :straight
+    (snails :type git :host github :repo "manateelazycat/snails"
+            :files ("*"))
+    :demand t
+    ;; :commands (snails snails-search-point)
+    :preface
+    (require 'straight)
+    :init
+    ;; The only way I can get snails to work is to add the cloned
+    ;; repo to the load-path. Straight's build doesn't seem to work.
+    (add-to-list 'load-path
+                 (file-truename (concat my/straight-repos-dir "/snails")))
+    ;; Change default search backends (most are unnecessary)
+    (setq snails-default-backends '(
+                                    ;; Default backends
+                                    ;; snails-backend-eaf-browser-history
+                                    ;; snails-backend-awesome-tab-group
+                                    snails-backend-buffer
+                                    ;; snails-backend-eaf-pdf-table
+                                    ;; snails-backend-eaf-browser-open
+                                    ;; snails-backend-eaf-browser-search
+                                    ;; snails-backend-eaf-github-search
+                                    ;; snails-backend-google-suggestion
+                                    snails-backend-recentf
+                                    ;; snails-backend-directory-files
+                                    snails-backend-bookmark
+                                    ;; Extra backends
+                                    snails-backend-rg
+                                    snails-backend-fd))
+    :config
+    ;; Use custom backends to make Snails faster.
+    (add-to-list 'snails-default-backends 'snails-backend-rg)
+    (add-to-list 'snails-default-backends 'snails-backend-fd))
+#+end_src

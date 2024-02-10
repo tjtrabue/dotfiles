@@ -36,6 +36,9 @@ software development.
 ** =use-package= specification
 
 #+begin_src emacs-lisp
+  (require 'general)
+  (require 'straight)
+
   (use-package projectile
     ;; :straight
     ;; (projectile :flavor melpa :type git :host github
@@ -44,8 +47,6 @@ software development.
     ;; projectile after perspective.
     :after perspective
     :demand t
-    :preface
-    (require 'general)
     :general
     ;; This extended general definition allows us to bind keymaps to keys
     ;; just like use-package's `bind-keymap' directive.

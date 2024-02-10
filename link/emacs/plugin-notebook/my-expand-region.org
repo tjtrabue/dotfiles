@@ -12,11 +12,11 @@ prescribed selection key.
 for keybindings for my expand-region hydra.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package expand-region
     :after evil-collection
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def 'visual
       ")" 'er/expand-region

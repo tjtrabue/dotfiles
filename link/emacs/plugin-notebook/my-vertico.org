@@ -28,11 +28,11 @@ completion UI in terms of customization.
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package vertico
     :after evil-collection
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def vertico-map
       "?" 'minibuffer-completion-help
@@ -82,6 +82,8 @@ Configure directory extension.
 *NOTE:* You must intall the =vertico-directory.el= file manually.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package vertico-directory
     :after vertico
     ;; Vertico extensions come with the repo.
@@ -96,6 +98,8 @@ Configure directory extension.
 Mouse integration for Vertico.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package vertico-mouse
     ;; Does not work with my setup.
     :disabled

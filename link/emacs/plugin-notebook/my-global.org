@@ -12,6 +12,8 @@ cross-platform.
   =ggtags= is Emacs' front end to GNU Global.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package ggtags
     :hook
     ;; Start helm-gtags-mode only for specific major modes
@@ -20,8 +22,6 @@ cross-platform.
     (c-mode-common . (lambda ()
                        (when (and (not my/use-helm-gtags) (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode))
                          (ggtags-mode))))
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def ggtags-mode-map
       "g s" 'ggtags-find-other-symbol

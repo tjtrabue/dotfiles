@@ -80,6 +80,8 @@ color names used by Modus]].
 
 *** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package modus-themes
     ;; If you decide to disable solaire-mode, make sure to comment out this line as well as the
     ;; solaire faces customizations in the modus-themes custom faces function above.
@@ -90,8 +92,6 @@ color names used by Modus]].
     ;;                         :repo "protesilaos/modus-themes" :branch "main")
     :demand t
     :preface
-    (require 'general)
-    (require 'modus-themes)
     (eval-and-compile
       (defsubst my/activate-theme--modus ()
         "Activation/configuration function for modus theme."
@@ -152,6 +152,7 @@ color names used by Modus]].
       ;; Switch from light to dark theme, or vice versa.
       "<f5>" 'modus-themes-toggle)
     :init
+    (require 'modus-themes)
     (setq modus-themes-italic-constructs t
           modus-themes-bold-constructs t
           modus-themes-mixed-fonts t
@@ -267,8 +268,6 @@ buttery-smooth editing experience.
     :after all-the-icons
     :demand t
     :preface
-    (eval-when-compile
-      (require 'doom-themes))
     (eval-and-compile
       (defun my/activate-theme--doom ()
         "Activation/configuration function for doom theme."
@@ -287,6 +286,8 @@ buttery-smooth editing experience.
     (doom-themes-enable-italic t)
     ;; A more colorful theme for Treemacs that leverages all-the-icons.
     (doom-themes-treemacs-theme "doom-colors")
+    :init
+    (require 'doom-themes)
     :config
     (my/activate-theme))
 #+end_src

@@ -54,6 +54,13 @@ You should always, always use =cperl-mode=, never use =perl-mode=. Also,
 =cperl-mode= is built into Emacs, so there's nothing to install. I don't know
 why it's not the default Perl editing mode.
 
+*** Compiler Preface
+This code block exists to satisfy both the byte-compiler and native compiler.
+
+#+begin_src emacs-lisp
+  (require 'ffap)
+#+end_src
+
 *** Variables
 #+begin_src emacs-lisp
   (eval-when-compile
@@ -154,6 +161,8 @@ short, =plsense= shines. I highly recommend you use both, but I do find that
 =plsense= is more generally useful.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package perly-sense-mode
     :disabled
     :straight
@@ -228,10 +237,10 @@ This is a community package for finding Perl library source files.
 It really supersedes my custom =find-perl-module= function.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package perl-find-library
     :after cperl-mode
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def cperl-mode-map
       "f l" 'perl-find-library)

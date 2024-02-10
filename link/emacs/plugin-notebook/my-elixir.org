@@ -9,10 +9,20 @@ language built on Erlang's BEAM virtual machine optimized for writing
 distributed, fault-tolerant applications that must contend with a vast multitude
 of concurrent processes.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * elixir-ts-mode
 The Tree-Sitter enabled version of =elixir-mode=.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package elixir-ts-mode
     ;; We want to use the built-in `elixir-ts-mode'.
     ;; The MELPA package is a back-port for use Emacs 29.1.
@@ -58,13 +68,13 @@ one of the following commands:
 - =l=: =mix-last-command=
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package mix
     :delight
     (mix-minor-mode nil mix)
     :hook
     ((elixir-mode elixir-ts-mode) . mix-minor-mode)
-    :preface
-    (require 'general)
     :general
     (my/evil-leader-def mix-minor-mode-map
       ","   'mix-execute-task
@@ -114,13 +124,13 @@ Elixir that SLIME does for Common Lisp.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package inf-elixir
     :hook
     ;; Turn on `inf-elixir-minor-mode' for all Elixir buffers.
     ;; This mode allows interaction with the IEx REPL.
     (elixir-ts-mode . inf-elixir-minor-mode)
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def elixir-ts-mode-map
       "i i" 'inf-elixir

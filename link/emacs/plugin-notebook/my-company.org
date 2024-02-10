@@ -83,6 +83,8 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package company
     ;; Must load company after Yasnippet and HippieExpand because we want TAB to
     ;; cycle company completions. If company loads before Hippie and Yasnippet the
@@ -93,8 +95,6 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     ;; Currently only enabling `company-mode' in select major modes in favor of
     ;; using `lsp-bridge''s autocompletion by default.
     (lisp-mode . company-mode)
-    :preface
-    (require 'general)
     :general
     (general-unbind (company-active-map company-search-map)
       ;; We want to use TAB for hippie-expand, not cycling company.
@@ -235,10 +235,10 @@ Show quick documentation for company completions in a separate popup.
 
 ** company-try-hard
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package company-try-hard
     :after company
-    :preface
-    (require 'general)
     :general
     (general-def 'insert company-mode-map
       "C-<tab>" 'company-try-hard)
@@ -368,6 +368,8 @@ Elixir-related major modes that are not covered by =lsp-mode=, such as
 =inf-elixir-mode=.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package company-elixir
     ;; Not that useful. Completions only work if you have a valid,
     ;; working Elixir project.

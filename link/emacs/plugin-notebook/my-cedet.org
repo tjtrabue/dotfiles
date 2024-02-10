@@ -238,6 +238,8 @@ separate =use-package= expressions for =semantic=, =ede=, etc.
 
 ** CEDET Development Repository
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package cedet
     :disabled
     :straight
@@ -259,11 +261,11 @@ configuration files to keep this one relatively short.
 =srefactor= is a refactoring plugin for C/C++ using =CEDET=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package srefactor
     :disabled
     :after cedet
-    :preface
-    (require 'general)
     :general
     (general-def lisp-mode-map
       "M-RET o" 'srefactor-lisp-one-line
@@ -294,11 +296,11 @@ something that you probably do not want. Once Semantic is active, it is
 super hard to turn it off.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package function-args
     :disabled
     :after cedet
-    :preface
-    (require 'general)
     :general
     (general-unbind function-args-mode-map
       ;; Remove mappings from the function-args-mode-map that we wish to use for
@@ -323,13 +325,13 @@ frame it was called from as opposed to opening in a new frame. This is far
 more convenient, especially when using a tiling window manager.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package sr-speedbar
     :disabled
     :after cedet
     ;; No need to bind keys right now.
     ;; sr-speedbar is unused in favor of treemacs/lsp.
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       "b t" 'sr-speedbar-toggle

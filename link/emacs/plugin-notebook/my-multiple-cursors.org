@@ -11,10 +11,10 @@ When you want to get rid of your additional cursors, simply press =C-g= (may
 need to press that key combination more than once).
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package multiple-cursors
     :disabled
-    :preface
-    (require 'general)
     :general
     (general-def
       "C-S-c C-S-c" 'mc/edit-lines

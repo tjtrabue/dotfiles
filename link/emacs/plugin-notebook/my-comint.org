@@ -9,6 +9,14 @@
 framework for designing modes for interacting with REPLs. Many other major modes
 inherit from =comint-mode=, such as =sly-mrepl-mode=.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * Functions
   #+begin_src emacs-lisp
     (defun my/comint-search-history ()
@@ -34,6 +42,9 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+  (require 'straight)
+
   (use-package comint
     :after evil-collection
     :demand t
@@ -47,8 +58,6 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
                      ;; interactive shell.
                      (setq-local show-trailing-whitespace nil)
                      (whitespace-mode -1)))
-    :preface
-    (require 'general)
     :general
     (general-def '(normal insert) comint-mode-map
       ;; Search backward through history using completing-read.

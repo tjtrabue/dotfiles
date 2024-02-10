@@ -8,12 +8,22 @@
 =explain-pause-mode= is a =top=-like mode for figuring out which processes in
 Emacs are slowing the system down. Very useful for debugging.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package explain-pause-mode
-      ;; explain-pasue-mode isn't in MELPA yet.
-      :straight (explain-pause-mode :type git :host github
-                                    :repo "lastquestion/explain-pause-mode")
-      :commands
-      (explain-pause-mode explain-pause-top))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package explain-pause-mode
+    ;; explain-pasue-mode isn't in MELPA yet.
+    :straight (explain-pause-mode :type git :host github
+                                  :repo "lastquestion/explain-pause-mode")
+    :commands
+    (explain-pause-mode explain-pause-top)
+    :preface
+    (require 'straight))
+#+end_src

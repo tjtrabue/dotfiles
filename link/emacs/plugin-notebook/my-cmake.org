@@ -28,13 +28,13 @@ Adds IDE-like features to Emacs when editing CMake projects.
 you use it, currently.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package cmake-ide
     :disabled
     :after projectile
     :hook
     (c-mode-common . my/cmake-ide-find-project)
-    :preface
-    (require 'general)
     :general
     (general-def
       [remap comment-region] 'cmake-ide-compile)

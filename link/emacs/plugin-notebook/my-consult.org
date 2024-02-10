@@ -40,11 +40,11 @@ completion buffer to some category. For example:
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package consult
     :demand t
     ;; Replace bindings. Lazily loaded due by `use-package'.
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       ;; C-c bindings (mode-specific-map)
@@ -190,10 +190,10 @@ including =recentf= directories, project directories, bookmarked directories,
 and more.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package consult-dir
     :after consult
-    :preface
-    (require 'general)
     :general
     (general-def
       "C-x C-d" 'consult-dir)
@@ -205,10 +205,10 @@ and more.
 Consult integration with =lsp-mode=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package consult-lsp
     :after (consult lsp-mode)
-    :preface
-    (require 'general)
     :general
     (general-def lsp-command-map
       "c d" 'consult-lsp-diagnostics
@@ -234,11 +234,11 @@ Integrates =consult= with the =projectile= project manager. It provides the
 awesome =consult=-ing read front end for =projectile= functions.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package consult-projectile
     :after (consult projectile)
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def 'normal 'override
       ;; Use consult-projectile instead of projectile-find-file
@@ -271,10 +271,10 @@ awesome =consult=-ing read front end for =projectile= functions.
 Consult source for Yasnippet snippets for the current major mode.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package consult-yasnippet
     :after (consult yasnippet)
-    :preface
-    (require 'general)
     :general
     (general-def yas-minor-mode-map
       "C-c y y" 'consult-yasnippet))
@@ -284,10 +284,10 @@ Consult source for Yasnippet snippets for the current major mode.
 Consult integration with the =flycheck= linting engine.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package consult-flycheck
     :after (consult flycheck)
-    :preface
-    (require 'general)
     :general
     (general-def
       [remap consult-flymake] 'consult-flycheck))

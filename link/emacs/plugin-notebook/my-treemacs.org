@@ -12,11 +12,11 @@ features absent from the majority of such explorers.
 This is the configuration for =treemacs= itself.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package treemacs
     :after all-the-icons
     :commands treemacs
-    :preface
-    (require 'general)
     :general
     (general-def
       "M-0" 'treemacs-select-window)
@@ -81,11 +81,11 @@ update the =treemacs= workspace when we switch =projectile= projects because
 
 *** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package treemacs-projectile
     :after (treemacs projectile)
     :commands treemacs-projectile
-    :preface
-    (require 'general)
     :general
     ;; Automatically prefixed with "C-c"
     (my/user-leader-def

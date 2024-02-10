@@ -41,5 +41,7 @@ Emacs bindings to =jq=. I haven't found much use for this library.
     (jq :type git :host github :repo "p-baleine/jq.el"
         :pre-build (("cmake" ".")
                     ("cmake" "--build" "."))
-        :files (:defaults "jq-impl*" "libjq*" "libonig*")))
+        :files (:defaults "jq-impl*" "libjq*" "libonig*"))
+    :preface
+    (require 'straight))
 #+end_src

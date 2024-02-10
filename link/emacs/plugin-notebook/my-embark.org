@@ -47,6 +47,8 @@ keybinding for =embark-act=, and select an action for the candidate, such as
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package embark
     :after evil-collection
     :demand t
@@ -55,8 +57,6 @@ keybinding for =embark-act=, and select an action for the candidate, such as
                              ;; Disable whitespace mode for embark modes
                              (setq-local show-trailing-whitespace nil)
                              (whitespace-mode -1)))
-    :preface
-    (require 'general)
     :general
     (general-def 'override
       "M-o" 'embark-act

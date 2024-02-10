@@ -10,9 +10,9 @@ file. Simply activate =smerge-mode= and use Smerge's awesome keybindings to
 simplify your merge conflict resolutions!
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package smerge-mode
-    :preface
-    (require 'general)
     :general
     (my/evil-leader-def smerge-mode-map
       "mC"  'smerge-combine-with-next

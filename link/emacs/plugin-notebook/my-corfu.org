@@ -15,6 +15,8 @@ system. You can think of =corfu= as a completion in region counterpart to
 * =use-package= specification
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package corfu
     ;; This package is not yet up to Company standards
     :disabled
@@ -25,8 +27,6 @@ system. You can think of =corfu= as a completion in region counterpart to
     (corfu-quit-at-boundary t) ;; Automatically quit at word boundary
     (corfu-quit-no-match t)    ;; Automatically quit if there is no match
     (corfu-separator ?\s)      ;; Orderless field separator
-    :preface
-    (require 'general)
     :general
     (general-def 'insert corfu-map
       "C-j" 'corfu-next

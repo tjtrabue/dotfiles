@@ -36,7 +36,9 @@ configurable modeline taken from Doom Emacs.
   (use-package my-colors
     :after color-theme-sanityinc-tomorrow
     :ensure nil
-    :straight nil)
+    :straight nil
+    :preface
+    (require 'straight))
 #+end_src
 
 ** Variables

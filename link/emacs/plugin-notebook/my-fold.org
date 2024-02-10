@@ -83,6 +83,8 @@ layer.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package vimish-fold
     ;; origami supports Vim-style "{{{...}}}" folding now.
     :disabled
@@ -90,8 +92,6 @@ layer.
     :hook
     ;; Re-create folds from mark comments when visiting a file.
     (find-file . vimish-fold-from-marks)
-    :preface
-    (require 'general)
     :general
     (general-def
       ;; The standard vimish-fold keybinding. I don't tend to use it.

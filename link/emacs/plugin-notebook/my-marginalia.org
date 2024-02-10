@@ -19,10 +19,10 @@ category. You can cycle between more or less detailed annotators with the
 command =marginalia-cycle=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package marginalia
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def minibuffer-local-map
       "M-A" 'marginalia-cycle)

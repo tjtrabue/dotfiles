@@ -14,13 +14,13 @@ includes support for themed icons, modified indicators, adjustable fonts, and
 more.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package centaur-tabs
     ;; Disabled in favor of built-in `tab-bar-mode'.  See `my-tab-bar.el' for configuration.
     :disabled
     :after evil-collection
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def
       "C-x B" 'centaur-tabs-switch-group)

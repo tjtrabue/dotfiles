@@ -11,13 +11,13 @@ aforementioned three tools.
 
 * =use-package= specification
   #+begin_src emacs-lisp
+    (require 'general)
+
     (use-package selectrum
       ;; Disabled in favor of Vertico
       :disabled
       :after counsel
       :demand t
-      :preface
-      (require 'general)
       :general
       (general-def
         ;; Pull up selectrum with the previous input already entered

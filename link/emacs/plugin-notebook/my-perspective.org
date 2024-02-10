@@ -26,14 +26,14 @@ seizes control of Emacs in some invasive ways.
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package perspective
     :demand t
     :hook
     ;; Save perspective to disk whenever the user kills Emacs.
     (kill-emacs . persp-state-save)
     :preface
-    (eval-when-compile
-      (require 'perspective))
     (eval-and-compile
       (defun my/add-current-buffer-to-perspective ()
         "Advising function to add the current buffer to the active perspective."
@@ -79,8 +79,6 @@ seizes control of Emacs in some invasive ways.
     See the documentation for `perspective.el' for further details."
         (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
           (my-tab-line-filter-display-buffers current-persp-buffers))))
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def persp-mode-map
       ;; This is general.el's way of accomplishing :bind-keymap.
@@ -113,6 +111,8 @@ seizes control of Emacs in some invasive ways.
     (persp-mode-prefix-key (kbd "C-c j"))
     ;; Where perspective.el saves its configuration
     (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
+    :init
+    (require 'perspective)
     :config
     (eval-when-compile
       (require 'perspective))
@@ -144,9 +144,9 @@ perspectives specifically for Projectile projects. This is very similar to
 the standard =projectile-switch-project= function.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package persp-projectile
-    :preface
-    (require 'general)
     :general
     (general-def projectile-command-map
       [remap projectile-switch-project] 'projectile-persp-switch-project

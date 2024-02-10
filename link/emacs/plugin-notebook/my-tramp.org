@@ -23,6 +23,14 @@ you can run even processes on a remote host, when the buffer you call the
 process from has a remote =default-directory=.
 #+END_QUOTE
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * Usage Notes from the Emacs Manual
 ** =ssh= and =plink=
 If your local host runs an SSH client, and the remote host runs an SSH server,
@@ -87,7 +95,9 @@ server and your local development machine:
     :custom
     ;; Cache sudo password for the day.
     (password-cache t)
-    (password-cache-expiry (* 8 3600)))
+    (password-cache-expiry (* 8 3600))
+    :preface
+    (require 'straight))
 #+end_src
 
 * Plugins
@@ -107,7 +117,9 @@ For example, if you want to access a Docker container as the root user:
     ;; This feature is built-in to Emacs 29.
     :if (>= emacs-major-version 29)
     :ensure nil
-    :straight nil)
+    :straight nil
+    :preface
+    (require 'straight))
 #+end_src
 
 ** vagrant-tramp

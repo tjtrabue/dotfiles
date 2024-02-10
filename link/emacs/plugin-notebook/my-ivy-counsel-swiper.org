@@ -39,12 +39,12 @@ details.
 press =C-M-j=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package ivy
     :disabled
     :after evil-collection
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def ivy-switch-buffer-map
       ;; Make sure that navigation shortcuts work
@@ -112,6 +112,8 @@ is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
 =ivy-yasnippet=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package ivy-yasnippet
     :disabled
     :after (ivy yasnippet)
@@ -122,8 +124,6 @@ is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
     ;; first time. Once a candidate whose key doesn’t match whatever is before
     ;; point is selected, behave like nil until the minibuffer exits.
     (ivy-yasnippet-expand-keys 'smart)
-    :preface
-    (require 'general)
     :general
     (general-def yas-minor-mode-map
       [remap yas-expand] 'ivy-yasnippet))
@@ -138,12 +138,12 @@ is more general and faster.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package counsel
     :disabled
     :after ivy
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def
       [remap dired] 'counsel-dired
@@ -158,13 +158,13 @@ is more general and faster.
 ** Plugins
 *** counsel-projectile
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package counsel-projectile
     :disabled
     :after (counsel projectile)
     :hook
     (counsel-mode . counsel-projectile-mode)
-    :preface
-    (require 'general)
     :general
     (general-def 'normal
       ;; Overwrite the standard projectile-find-file shortcut
@@ -174,10 +174,10 @@ is more general and faster.
 
 *** counsel-tramp
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package counsel-tramp
     :disabled
-    :preface
-    (require 'general)
     :general
     (general-def
       "M-r" 'counsel-tramp))
@@ -188,12 +188,12 @@ is more general and faster.
 =isearch=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package swiper
     :disabled
     :after evil-collection
     :commands (swiper swiper-backward)
-    :preface
-    (require 'general)
     :general
     (general-def 'normal
       ;; Use swiper for evil-mode's forward and reverse search

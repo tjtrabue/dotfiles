@@ -7,11 +7,11 @@
 =anzu= highlights all searches as you type.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package anzu
     :delight
     :demand t
-    :preface
-    (require 'general)
     :general
     (general-def
       [remap query-replace] 'anzu-query-replace

@@ -9,6 +9,8 @@ debuggers. It builds on the LanguageServerProtocol to perform its duties. In
 fact, many modern LSP servers also provide a DAP server.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package dap-mode
     :after lsp-bridge
     ;; :after (lsp-mode lsp-treemacs)
@@ -27,8 +29,6 @@ fact, many modern LSP servers also provide a DAP server.
      ((js-mode js2-mode web-mode) . (lambda ()
                                       (require 'dap-chrome)
                                       (dap-chrome-setup))))
-    :preface
-    (require 'general)
     :general
     (general-def lsp-command-map
       "d h" 'dap-hydra)

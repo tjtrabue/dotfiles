@@ -6,6 +6,14 @@
 
 This is my Emacs email configuration file.
 
+* Compiler Preface
+This code block pleases the Elisp compilers (byte-compiler and native compiler).
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+#+end_src
+
 * =mu4e=
 =mu4e= is a =maildir=-based email client for Emacs. Quite different from
 programs like =gnus=, which get their information from a remote server, =mu4e=
@@ -82,6 +90,8 @@ Mu4e looks for your password file in:
     ;; Probably not necessary to set this value, but may come in handy if mu4e
     ;; doesn't load:
     ;; :load-path "/usr/share/emacs/site-lisp/mu4e/"
+    :preface
+    (require 'straight)
     :init
     ;; Load mu4e
     (require 'mu4e)

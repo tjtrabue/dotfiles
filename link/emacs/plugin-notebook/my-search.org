@@ -19,10 +19,10 @@ program (i.e., functions, variables, subroutines, methods, classes, etc.).
 =grep= and =ag=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package deadgrep
     :commands deadgrep
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       "S" 'deadgrep))

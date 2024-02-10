@@ -19,6 +19,8 @@ strengthen your Haskell game in no time.
   built-in debugger.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package haskell-mode
     :after evil-collection
     :hook
@@ -35,8 +37,6 @@ strengthen your Haskell game in no time.
                       ;; Automatically enable haskell-unicode
                       ;; input method.
                       (turn-on-haskell-unicode-input-method)))
-    :preface
-    (require 'general)
     :general
     (general-def haskell-interactive-mode-map
       "M-k" 'haskell-interactive-mode-history-previous

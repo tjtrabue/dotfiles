@@ -18,6 +18,9 @@ errors in Helm, notably in =helm-config.el=, citing undefined/void variables
 as the reason for halting compilation. I recommend you use =ivy= in this case.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+  (require 'general)
+
   (use-package helm
     :disabled
     :demand t
@@ -41,8 +44,6 @@ as the reason for halting compilation. I recommend you use =ivy= in this case.
     ;; based on the number of matches.
     (helm-autoresize-min-height 40)
     (helm-autoresize-max-height 0)
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       ;; Main key bindings
@@ -133,12 +134,12 @@ That function prompts for a project if we're not already in one,
 whereas helm-projectile-find-file does not.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-projectile
     ;; Currently using Vertico/Consult instead of Helm.
     :disabled
     :after (helm projectile ag rg helm-rg helm-ag)
-    :preface
-    (require 'general)
     :general
     (general-def projectile-mode-map
       ;; Use ripgrep instead of standard grep for speed.
@@ -158,10 +159,10 @@ completion systems such as Selectrum. Thus, we can use =helm-swoop= by itself
 without loading Helm.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-swoop
     :after projectile
-    :preface
-    (require 'general)
     :general
     (general-def
       ;; Main key bindings
@@ -242,11 +243,11 @@ alternatives, and each has its own set of benefits and drawbacks.
 *NOTE*: Currently deprecated in favor of =helm-lsp=
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-gtags
     :disabled
     :after helm
-    :preface
-    (require 'general)
     :general
     (general-def helm-gtags-mode-map
       "C-j" 'helm-gtags-select
@@ -284,13 +285,14 @@ working configuration for =persp-mode= in my plugins notebook. I only use
 =persp-mode= for everything else.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+  (require 'general)
+
   (use-package helm-escreen
     :disabled
     :after (helm escreen)
     :straight (helm-escreen :host github
                             :repo "dmh43/helm-escreen")
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       "r c" 'helm-escreen-create-screen
@@ -304,12 +306,12 @@ This package provides an alternative to the built-in =xref-apropos= for
 =lsp-mode=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-lsp
     :disabled
     :after (lsp-mode helm)
     :commands helm-lsp-workspace-symbol
-    :preface
-    (require 'general)
     :general
     (general-def lsp-mode-map
       [remap xref-find-apropos] 'helm-lsp-workspace-symbol
@@ -355,9 +357,9 @@ update, delete, etc.) whereas =system-packages= can operate on packages en
 mass.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-system-packages
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def
       "s p" 'helm-system-packages))
@@ -375,11 +377,11 @@ Search =perldoc= documentation with =helm=. It has lots of nice helm actions
 built into it, as well.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-perldoc
     :disabled
     :after cperl-mode
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def cperl-mode-map
       ;; Don't just remap cperl-perldoc to helm-perldoc because they are not quite
@@ -397,13 +399,13 @@ company's default completion buffer since it does not integrate with
 documentation on hover and other nice features.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package helm-company
     ;; Not super useful, and it doesn't integrate with documentation on
     ;; hover.
     :disabled
     :after (helm company)
-    :preface
-    (require 'general)
     :general
     (general-def company-mode-map
       "C-;" 'helm-company)

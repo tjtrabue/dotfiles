@@ -223,9 +223,9 @@ A lightweight Emacs plugin for HTML live editing. Requires =simple-httpd= and
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package impatient-mode
-    :preface
-    (require 'general)
     :general
     (my/user-leader-def impatient-mode-map
       "C-o" 'my/browse-impatient-url-of-buffer))
@@ -237,12 +237,12 @@ A paredit-like collection of structured editing commands for =html-mode=.
 *NOTE:* Does /not/ work with =web-mode=!
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package tagedit
     :hook
     (html-mode . (lambda ()
                    (require 'tagedit)))
-    :preface
-    (require 'general)
     :general
     (my/evil-leader-def html-mode-map
       "lS" 'tagedit-split-tag

@@ -13,9 +13,9 @@ those backends available for completion, either through a completion UI such as
 completion functions directly to keys to invoke them manually.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package cape
-    :preface
-    (require 'general)
     :general
     (general-def
       "M-\" p" 'completion-at-point

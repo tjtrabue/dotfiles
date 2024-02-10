@@ -13,11 +13,11 @@ to drag words back and forth. It integrates with =evil-mode='s visual
 selection much better than =move-text=.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package drag-stuff
     :demand t
     :delight
-    :preface
-    (require 'general)
     :general
     (general-def '(normal visual) drag-stuff-mode-map
       "M-k" 'drag-stuff-up
@@ -42,11 +42,11 @@ found that this plugin does not work well with =evil-mode='s visual line
 selection, so if you use =evil-mode=, I'd opt for Drag Stuff, instead.
 
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package move-text
     ;; Currently using Drag Stuff instead.
     :disabled
-    :preface
-    (require 'general)
     :general
     (general-def 'normal 'override
       "M-j" 'move-text-down

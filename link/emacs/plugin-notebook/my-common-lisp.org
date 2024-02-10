@@ -128,6 +128,8 @@ Thank you so much for the your contributions, Mihai!
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package sly
     ;; Currently using SLIME.
     :disabled
@@ -155,8 +157,6 @@ Thank you so much for the your contributions, Mihai!
                      "gh" 'sly-describe-function
                      "gr" 'sly-who-references
                      "gs" 'sly-who-sets))))
-    :preface
-    (require 'general)
     :general
     (general-def sly-prefix-map
       ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
@@ -321,6 +321,8 @@ MREPL. To install =agnostic-lizard=, simply run:
 
 **** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package sly-stepper
     :disabled
     :after sly
@@ -363,6 +365,8 @@ Replaces SLY's default completion with a function better suited to systems using
 the package-inferred style.
 
 #+begin_src emacs-lisp
+  (require 'straight)
+
   (use-package sly-package-inferred
     ;; 12/21/21
     ;; Needs a special fork of SLY in order to work.
@@ -444,6 +448,8 @@ equivalent, so be sure to look for them using =C-h f=.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package slime
     :delight
     (slime-autodoc-mode nil slime-autodoc)
@@ -451,8 +457,6 @@ equivalent, so be sure to look for them using =C-h f=.
     :hook
     ((lisp-mode . slime-mode)
      (inferior-lisp-mode . inferior-slime-mode))
-    :preface
-    (require 'general)
     :general
     (my/evil-leader-def slime-repl-mode-map
       ;; Use ",," in normal mode in the SLIME REPL to launch the shortcut menu.

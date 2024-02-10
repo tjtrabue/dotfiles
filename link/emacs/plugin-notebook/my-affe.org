@@ -28,12 +28,12 @@ finding files by name.
 
 * =use-package= specification
 #+begin_src emacs-lisp
+  (require 'general)
+
   (use-package affe
     :after consult
     :demand t
     :commands (affe-grep affe-find)
-    :preface
-    (require 'general)
     :general
     (general-def 'normal 'override
       "C-r" 'affe-grep)
