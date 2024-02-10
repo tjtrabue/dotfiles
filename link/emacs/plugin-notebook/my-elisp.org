@@ -68,6 +68,8 @@ For example: =(number-sequence 1 10)= results in: =1 2 3 4 5 6 7 8 9 10=
   (use-package eros
     :hook
     (emacs-lisp-mode . eros-mode)
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def
       "<"  'eros-eval-last-sexp
@@ -98,6 +100,8 @@ both to =C-c C-d d= and =C-c C-d C-d= by default.
     :delight
     :hook
     ((emacs-lisp-mode ielm-mode) . elisp-slime-nav-mode)
+    :preface
+    (require 'general)
     :general
     (general-def 'normal elisp-slime-nav-mode-map
       ;; elisp-slime-nav binds "K" in evil's normal mode to lookup the Elisp
@@ -118,6 +122,8 @@ stay on top of this package's new features and changing API.
                    :files (:defaults "elisp-autofmt*"))
     :commands (elisp-autofmt-buffer elisp-autofmt-mode)
     :hook (emacs-lisp-mode . elisp-autofmt-mode)
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def emacs-lisp-mode-map
       "=" (lambda ()

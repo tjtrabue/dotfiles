@@ -32,6 +32,8 @@ finding files by name.
     :after consult
     :demand t
     :commands (affe-grep affe-find)
+    :preface
+    (require 'general)
     :general
     (general-def 'normal 'override
       "C-r" 'affe-grep)

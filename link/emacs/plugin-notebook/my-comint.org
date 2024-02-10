@@ -47,6 +47,8 @@ inherit from =comint-mode=, such as =sly-mrepl-mode=.
                      ;; interactive shell.
                      (setq-local show-trailing-whitespace nil)
                      (whitespace-mode -1)))
+    :preface
+    (require 'general)
     :general
     (general-def '(normal insert) comint-mode-map
       ;; Search backward through history using completing-read.

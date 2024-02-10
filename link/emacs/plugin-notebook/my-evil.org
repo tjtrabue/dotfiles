@@ -157,6 +157,8 @@ The Evil mode plugin itself.
                                  (if (eq my/line-number-state 'absolute)
                                      (setq display-line-numbers t)
                                    (setq display-line-numbers 'relative)))))
+    :preface
+    (require 'general)
     :general
     ;; Use "jk" to escape from insert and replace states.
     ;; Currently using evil-escape for this feature, but I'm leaving the code
@@ -329,6 +331,8 @@ Provides default Vim keybindings for all standard Emacs modes.
     :after evil
     :demand t
     :delight evil-collection-unimpaired-mode
+    :preface
+    (require 'general)
     :general
     (general-unbind
       ;; We do not need to kill a line with C-k anymore since we're using
@@ -404,6 +408,8 @@ Increment or decrement numbers at point.
 #+begin_src emacs-lisp
   (use-package evil-numbers
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def 'normal
       "g+" 'evil-numbers/inc-at-pt
@@ -451,6 +457,8 @@ configuration.
 #+begin_src emacs-lisp
   (use-package evil-nerd-commenter
     :after evil-collection
+    :preface
+    (require 'general)
     :general
     (general-def 'normal 'override
       "gcc" 'evilnc-comment-or-uncomment-lines
@@ -505,6 +513,8 @@ consecutive motions beginning with =gx=.
 #+begin_src emacs-lisp
   (use-package evil-args
     :after evil-collection
+    :preface
+    (require 'general)
     :general
     (general-def 'normal
       "C-c a l" 'evil-forward-arg
@@ -540,6 +550,8 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
     :hook
     ;; Turn off snipe in magit-mode for compatibility.
     (magit-mode . turn-off-evil-snipe-mode)
+    :preface
+    (require 'general)
     :general
     (general-def '(normal motion) evil-snipe-local-mode-map
       "s" 'evil-snipe-s
@@ -577,6 +589,8 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
     ((org-mode . evil-org-mode)
      (evil-org-mode . (lambda ()
                         (evil-org-set-key-theme))))
+    :preface
+    (require 'general)
     :general
     (general-def 'insert org-mode-map
       "RET" 'evil-org-return
@@ -607,6 +621,8 @@ on =multiple-cursors= at all, and is in fact an alternative implementation.
     :disabled
     :after evil-collection
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def 'visual
       "A" 'evil-mc-make-cursor-in-visual-selection-end
@@ -637,6 +653,8 @@ concert, if you so desire, but I prefer =evil-multiedit= for all use cases.
 #+begin_src emacs-lisp
   (use-package evil-multiedit
     :after evil-collection
+    :preface
+    (require 'general)
     :general
     (general-def '(normal visual)
       "M-d" 'evil-multiedit-match-and-next
@@ -741,6 +759,8 @@ main features of =lispyville=:
     :delight lispyville-mode
     :hook
     (lispy-mode . lispyville-mode)
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def lispyville-mode-map
       ">"  'lispy-eval-and-replace

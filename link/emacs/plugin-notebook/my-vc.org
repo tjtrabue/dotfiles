@@ -41,6 +41,8 @@ porcelain exists in Magit.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package magit
+    :preface
+    (require 'general)
     :general
     (general-def
       ;; Global binding for summoning the Magit transient popup for reading keys.
@@ -272,6 +274,8 @@ do is visit a git-controlled file and invoke =git-timemachine= or
     :straight
     (git-timemachine :host github
                      :repo "emacsmirror/git-timemachine")
+    :preface
+    (require 'general)
     :general
     (general-def 'normal git-timemachine-mode-map
       "?" 'git-timemachine-help
@@ -294,6 +298,8 @@ GitLab, BitBucket, etc.
 
 #+begin_src emacs-lisp
   (use-package git-link
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       "g l" 'git-link))
@@ -328,6 +334,8 @@ commits. The popup only shows the PGP signature, not the commit message.
     (git-messenger:popup-diff
      git-messenger:popup-message
      git-messenger:popup-show)
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def
       "gxm" 'git-messenger:popup-message
@@ -345,6 +353,8 @@ history, a region back through its Git history.
 
 #+begin_src emacs-lisp
   (use-package git-undo
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def
       "gu" 'git-undo))

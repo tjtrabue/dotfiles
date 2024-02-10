@@ -50,6 +50,8 @@ getting URLs into an Org document, which you can edit later.
 #+begin_src emacs-lisp
   (use-package org-cliplink
     :after org
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def org-mode-map
       "L" 'org-cliplink))
@@ -112,6 +114,8 @@ repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam databas
   (use-package org-roam
     :after (emacsql org)
     :demand t
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       "n c" 'org-roam-capture
@@ -212,6 +216,8 @@ navigate slides.
 
 #+begin_src emacs-lisp
   (use-package org-tree-slide
+    :preface
+    (require 'general)
     :general
     (general-def org-tree-slide-mode-map
       "C->" 'org-tree-slide-move-next-tree

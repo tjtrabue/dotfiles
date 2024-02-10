@@ -15,7 +15,7 @@ offering you relevant actions to use on a target determined by the context:
   symbol or URL at point.
 
 * Types of actions
-  The type of actions offered depend on the type of the target:
+The type of actions offered depend on the type of the target:
 
   - For files you get offered actions like deleting, copying, renaming, visiting
     in another window, running a shell command on the file, etc.
@@ -23,92 +23,94 @@ offering you relevant actions to use on a target determined by the context:
   - For package names the actions include installing, removing or visiting the
     homepage.
 
-  If you want a reminder of which actions are available after running
-  =embark-act= type =C-h= which will prompt you for an action with completion,
-  and remind you of the key bindings.
+    If you want a reminder of which actions are available after running
+    =embark-act= type =C-h= which will prompt you for an action with completion,
+    and remind you of the key bindings.
 
 * Embark adds contextual behavior for generic minibuffer completions
-  Embark provides the missing context-sensitive behavior present in Ivy's
-  minibuffer completion functions to generic completion UIs, such as Vertico and
-  Selectrum. Thus, utilizing a combination of Vertico, Consult, and Embark, you
-  can pop open a minibuffer completion with a command such as
-  =switch-to-buffer=, activate Embark on the current selection with your custom
-  keybinding for =embark-act=, and select an action for the candidate, such as
-  =kill-buffer=.
+Embark provides the missing context-sensitive behavior present in Ivy's
+minibuffer completion functions to generic completion UIs, such as Vertico and
+Selectrum. Thus, utilizing a combination of Vertico, Consult, and Embark, you
+can pop open a minibuffer completion with a command such as
+=switch-to-buffer=, activate Embark on the current selection with your custom
+keybinding for =embark-act=, and select an action for the candidate, such as
+=kill-buffer=.
 
 * Functions
-  #+begin_src emacs-lisp
-    (defun my/embark-act-noquit ()
-      "Run action but don't quit the minibuffer afterwards."
-      (interactive)
-      (let ((embark-quit-after-action nil))
-        (embark-act)))
-  #+end_src
+#+begin_src emacs-lisp
+  (defun my/embark-act-noquit ()
+    "Run action but don't quit the minibuffer afterwards."
+    (interactive)
+    (let ((embark-quit-after-action nil))
+      (embark-act)))
+#+end_src
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package embark
-      :after evil-collection
-      :demand t
-      :hook
-      (embark-collect-mode . (lambda ()
-                               ;; Disable whitespace mode for embark modes
-                               (setq-local show-trailing-whitespace nil)
-                               (whitespace-mode -1)))
-      :general
-      (general-def 'override
-        "M-o" 'embark-act
-        "M-u" 'embark-dwim
-        "M-m" 'my/embark-act-noquit
-        ;; alternative for `describe-bindings'
-        "C-h E" 'embark-bindings)
-      (general-def 'normal embark-collect-mode-map
-        "p" 'consult-preview-at-point)
-      :init
-      ;; Optionally replace the key help with a completing-read interface
-      (setq prefix-help-command #'embark-prefix-help-command)
-      ;; Show the Embark target at point via Eldoc.  You may adjust the Eldoc
-      ;; strategy, if you want to see the documentation from multiple providers.
-      (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
-      (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
-      :custom
-      ;; This option controls whether embark dismisses the minibuffer after
-      ;; `embark-act' finishes when the user invokes embark from the minibuffer.  If
-      ;; this variable's value is an alist, the CAR of each entry in the alist is a
-      ;; function for which to specify minibuffer quit behavior, and the CDR is one
-      ;; of two values that specify the quit behavior: `t' means quit the minibuffer
-      ;; after the function runs, and `nil' means don't quit the minibuffer.  A
-      ;; special CAR value of `t' means apply the following quit behavior for all
-      ;; non-specified functions (so it's a default behavior for all other
-      ;; functions).
-      (embark-quit-after-action '((kill-buffer . nil) (t . t)))
-      :config
-      ;; Hide the mode line of the Embark live/completions buffers
-      (add-to-list 'display-buffer-alist
-                   '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                     nil
-                     (window-parameters (mode-line-format . none))))
-      ;; Remove certain action hooks that run before Embark runs the action.
-      (setq embark-pre-action-hooks
-            (seq-filter (lambda (e)
-                          (not (seq-contains-p
-                                ;; I don't want Embark to prompt me for confirmation
-                                ;; before killing a buffer.
-                                '((kill-buffer embark--confirm))
-                                e)))
-                        embark-pre-action-hooks)))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package embark
+    :after evil-collection
+    :demand t
+    :hook
+    (embark-collect-mode . (lambda ()
+                             ;; Disable whitespace mode for embark modes
+                             (setq-local show-trailing-whitespace nil)
+                             (whitespace-mode -1)))
+    :preface
+    (require 'general)
+    :general
+    (general-def 'override
+      "M-o" 'embark-act
+      "M-u" 'embark-dwim
+      "M-m" 'my/embark-act-noquit
+      ;; alternative for `describe-bindings'
+      "C-h E" 'embark-bindings)
+    (general-def 'normal embark-collect-mode-map
+      "p" 'consult-preview-at-point)
+    :init
+    ;; Optionally replace the key help with a completing-read interface
+    (setq prefix-help-command #'embark-prefix-help-command)
+    ;; Show the Embark target at point via Eldoc.  You may adjust the Eldoc
+    ;; strategy, if you want to see the documentation from multiple providers.
+    (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+    (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+    :custom
+    ;; This option controls whether embark dismisses the minibuffer after
+    ;; `embark-act' finishes when the user invokes embark from the minibuffer.  If
+    ;; this variable's value is an alist, the CAR of each entry in the alist is a
+    ;; function for which to specify minibuffer quit behavior, and the CDR is one
+    ;; of two values that specify the quit behavior: `t' means quit the minibuffer
+    ;; after the function runs, and `nil' means don't quit the minibuffer.  A
+    ;; special CAR value of `t' means apply the following quit behavior for all
+    ;; non-specified functions (so it's a default behavior for all other
+    ;; functions).
+    (embark-quit-after-action '((kill-buffer . nil) (t . t)))
+    :config
+    ;; Hide the mode line of the Embark live/completions buffers
+    (add-to-list 'display-buffer-alist
+                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                   nil
+                   (window-parameters (mode-line-format . none))))
+    ;; Remove certain action hooks that run before Embark runs the action.
+    (setq embark-pre-action-hooks
+          (seq-filter (lambda (e)
+                        (not (seq-contains-p
+                              ;; I don't want Embark to prompt me for confirmation
+                              ;; before killing a buffer.
+                              '((kill-buffer embark--confirm))
+                              e)))
+                      embark-pre-action-hooks)))
+#+end_src
 
 * Plugins
 ** embark-consult
-   Consult users will also want the =embark-consult= package.
+Consult users will also want the =embark-consult= package.
 
-   #+begin_src emacs-lisp
-     (use-package embark-consult
-       :after (embark consult)
-       :demand t
-       ;; if you want to have consult previews as you move around an
-       ;; auto-updating embark collect buffer
-       :hook
-       (embark-collect-mode . consult-preview-at-point-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package embark-consult
+    :after (embark consult)
+    :demand t
+    ;; if you want to have consult previews as you move around an
+    ;; auto-updating embark collect buffer
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src

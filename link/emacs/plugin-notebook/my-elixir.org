@@ -63,6 +63,8 @@ one of the following commands:
     (mix-minor-mode nil mix)
     :hook
     ((elixir-mode elixir-ts-mode) . mix-minor-mode)
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def mix-minor-mode-map
       ","   'mix-execute-task
@@ -117,6 +119,8 @@ Elixir that SLIME does for Common Lisp.
     ;; Turn on `inf-elixir-minor-mode' for all Elixir buffers.
     ;; This mode allows interaction with the IEx REPL.
     (elixir-ts-mode . inf-elixir-minor-mode)
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def elixir-ts-mode-map
       "i i" 'inf-elixir

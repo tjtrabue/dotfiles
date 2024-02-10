@@ -90,8 +90,8 @@ color names used by Modus]].
     ;;                         :repo "protesilaos/modus-themes" :branch "main")
     :demand t
     :preface
-    (eval-when-compile
-      (require 'modus-themes))
+    (require 'general)
+    (require 'modus-themes)
     (eval-and-compile
       (defsubst my/activate-theme--modus ()
         "Activation/configuration function for modus theme."

@@ -185,6 +185,8 @@ which ones you do not yet satisfy.
                   ;; issues.
                   (when (bound-and-true-p aggressive-indent-mode)
                     (aggressive-indent-mode -1))))
+    :preface
+    (require 'general)
     :general
     ;; This is general.el's way of accomplishing :bind-keymap, but
     ;; general's way is more flexible and integrates with its
@@ -552,6 +554,8 @@ infrastructure for Emacs.
                 :type git :host github :repo "manateelazycat/lsp-bridge"
                 :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
                 :build (:not compile))
+    :preface
+    (require 'general)
     :general
     (general-def lsp-bridge-mode-map
       [remap xref-find-definitions]              'lsp-bridge-find-def

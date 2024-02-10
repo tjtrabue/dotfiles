@@ -27,6 +27,8 @@ fact, many modern LSP servers also provide a DAP server.
      ((js-mode js2-mode web-mode) . (lambda ()
                                       (require 'dap-chrome)
                                       (dap-chrome-setup))))
+    :preface
+    (require 'general)
     :general
     (general-def lsp-command-map
       "d h" 'dap-hydra)

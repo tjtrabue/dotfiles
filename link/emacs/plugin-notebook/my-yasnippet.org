@@ -19,6 +19,8 @@ The =yasnippet= plugin itself.
     :delight yas-minor-mode
     :commands
     (yas-minor-mode yas-global-mode)
+    :preface
+    (require 'general)
     :general
     (general-unbind yas-minor-mode-map
       "TAB"
@@ -109,6 +111,8 @@ like YASnippet fields and mirrors to be.
 #+begin_src emacs-lisp
   (use-package auto-yasnippet
     :after yasnippet
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def yas-minor-mode-map
       "y TAB" 'aya-expand

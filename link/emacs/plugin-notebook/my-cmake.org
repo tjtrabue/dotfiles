@@ -7,56 +7,58 @@
 Integration with CMake within Emacs.
 
 * cmake-mode
-  #+begin_src emacs-lisp
-    (use-package cmake-mode)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package cmake-mode)
+#+end_src
 
 * cmake-font-lock
-  Advanced syntax highlighting for =cmake-mode=. One of this package's best
-  features is highlighting function arguments according to their use.
+Advanced syntax highlighting for =cmake-mode=. One of this package's best
+features is highlighting function arguments according to their use.
 
-  #+begin_src emacs-lisp
-    (use-package cmake-font-lock
-      :after cmake-mode
-      :hook (cmake-mode . cmake-font-lock-activate))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package cmake-font-lock
+    :after cmake-mode
+    :hook (cmake-mode . cmake-font-lock-activate))
+#+end_src
 
 * cmake-ide
-  Adds IDE-like features to Emacs when editing CMake projects.
+Adds IDE-like features to Emacs when editing CMake projects.
 
-  *NOTE*: This package interferes with =lsp-mode=, so I do not recommend that
-  you use it, currently.
+*NOTE*: This package interferes with =lsp-mode=, so I do not recommend that
+you use it, currently.
 
-  #+begin_src emacs-lisp
-    (use-package cmake-ide
-      :disabled
-      :after projectile
-      :hook
-      (c-mode-common . my/cmake-ide-find-project)
-      :general
-      (general-def
-        [remap comment-region] 'cmake-ide-compile)
-      ;; The :preface block makes the byte-compiler happy.
-      ;; Everything executed in the :preface block is evaluated at both load time
-      ;; and at byte-compilation time, in order to ensure that definitions are
-      ;; seen by both the Lisp evaluator and the byte-compiler. Thus, you should
-      ;; NOT include any side-effectful code in the :preface block, and instead
-      ;; limit code in the :preface block only to symbol declarations and
-      ;; definitions.
-      :preface
-      (defun my/cmake-ide-find-project ()
-        "Finds the directory of the project for cmake-ide."
-        (with-eval-after-load 'projectile
-          (setq cmake-ide-project-dir (projectile-project-root))
-          (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
-        (setq cmake-ide-compile-command
-              (concat "cd " cmake-ide-build-dir " && cmake .. && make"))
-        (cmake-ide-load-db))
-      (defun my/switch-to-compilation-window ()
-        "Switches to the *compilation* buffer after compilation."
-        (other-window 1))
-      :init
-      (cmake-ide-setup)
-      :config
-      (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package cmake-ide
+    :disabled
+    :after projectile
+    :hook
+    (c-mode-common . my/cmake-ide-find-project)
+    :preface
+    (require 'general)
+    :general
+    (general-def
+      [remap comment-region] 'cmake-ide-compile)
+    ;; The :preface block makes the byte-compiler happy.
+    ;; Everything executed in the :preface block is evaluated at both load time
+    ;; and at byte-compilation time, in order to ensure that definitions are
+    ;; seen by both the Lisp evaluator and the byte-compiler. Thus, you should
+    ;; NOT include any side-effectful code in the :preface block, and instead
+    ;; limit code in the :preface block only to symbol declarations and
+    ;; definitions.
+    :preface
+    (defun my/cmake-ide-find-project ()
+      "Finds the directory of the project for cmake-ide."
+      (with-eval-after-load 'projectile
+        (setq cmake-ide-project-dir (projectile-project-root))
+        (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
+      (setq cmake-ide-compile-command
+            (concat "cd " cmake-ide-build-dir " && cmake .. && make"))
+      (cmake-ide-load-db))
+    (defun my/switch-to-compilation-window ()
+      "Switches to the *compilation* buffer after compilation."
+      (other-window 1))
+    :init
+    (cmake-ide-setup)
+    :config
+    (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
+#+end_src

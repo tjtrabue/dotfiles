@@ -7,15 +7,15 @@
 Configuration for all things helm-related, including helm-projectile integration.
 
 * helm
-  =helm= is a generic completion framework for Emacs that is far more powerful
-  than basic tab-completion. I don't want to rewrite the whole Bible on Helm
-  right here in my dotfiles, so I recommend you read up on the package on its
-  home page.
+=helm= is a generic completion framework for Emacs that is far more powerful
+than basic tab-completion. I don't want to rewrite the whole Bible on Helm
+right here in my dotfiles, so I recommend you read up on the package on its
+home page.
 
-  *NOTE ABOUT NATIVE COMPILATION*: If you are using =gccemacs=, that is, the
-  experimental native-comp branch of Emacs, you may experience compilation
-  errors in Helm, notably in =helm-config.el=, citing undefined/void variables
-  as the reason for halting compilation. I recommend you use =ivy= in this case.
+*NOTE ABOUT NATIVE COMPILATION*: If you are using =gccemacs=, that is, the
+experimental native-comp branch of Emacs, you may experience compilation
+errors in Helm, notably in =helm-config.el=, citing undefined/void variables
+as the reason for halting compilation. I recommend you use =ivy= in this case.
 
 #+begin_src emacs-lisp
   (use-package helm
@@ -41,6 +41,8 @@ Configuration for all things helm-related, including helm-projectile integration
     ;; based on the number of matches.
     (helm-autoresize-min-height 40)
     (helm-autoresize-max-height 0)
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       ;; Main key bindings
@@ -85,9 +87,9 @@ Configuration for all things helm-related, including helm-projectile integration
     (require 'helm-config)
     (unless (boundp 'completion-in-region-function)
       (define-key lisp-interaction-mode-map [remap completion-at-point]
-        'helm-lisp-completion-at-point)
+                  'helm-lisp-completion-at-point)
       (define-key emacs-lisp-mode-map       [remap completion-at-point]
-        'helm-lisp-completion-at-point))
+                  'helm-lisp-completion-at-point))
     (when (executable-find "curl")
       (setq helm-google-suggest-use-curl-p t))
     (helm-autoresize-mode t)
@@ -96,7 +98,7 @@ Configuration for all things helm-related, including helm-projectile integration
 
 * Plugins
 ** helm-rg
-  Helm integration with =ripgrep=.
+Helm integration with =ripgrep=.
 
 #+begin_src emacs-lisp
   (use-package helm-rg
@@ -109,7 +111,7 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-ag
-  Helm integration with =the_silver_searcher=.
+Helm integration with =the_silver_searcher=.
 
 #+begin_src emacs-lisp
   (use-package helm-ag
@@ -119,22 +121,24 @@ Configuration for all things helm-related, including helm-projectile integration
     ;; Use ripgrep if available
     (if (executable-find "rg")
         (lambda ()
-        (setq helm-grep-ag-command "rg --hidden --smart-case --no-heading --line-number %s %s %s"))))
+          (setq helm-grep-ag-command "rg --hidden --smart-case --no-heading --line-number %s %s %s"))))
 #+end_src
 
 ** helm-projectile
-   Use special helm functions to enhance projectile.
+Use special helm functions to enhance projectile.
 
-   NOTE: We don't want to use all helm-projectile functions because they
-   break certain functionalities we like, such as with projectile-find-file.
-   That function prompts for a project if we're not already in one,
-   whereas helm-projectile-find-file does not.
+NOTE: We don't want to use all helm-projectile functions because they
+break certain functionalities we like, such as with projectile-find-file.
+That function prompts for a project if we're not already in one,
+whereas helm-projectile-find-file does not.
 
 #+begin_src emacs-lisp
   (use-package helm-projectile
     ;; Currently using Vertico/Consult instead of Helm.
     :disabled
     :after (helm projectile ag rg helm-rg helm-ag)
+    :preface
+    (require 'general)
     :general
     (general-def projectile-mode-map
       ;; Use ripgrep instead of standard grep for speed.
@@ -143,19 +147,21 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-swoop
-  Creates a narrowing find buffer for locating and manipulating text within open
-  buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you will
-  enter an edit mode. Press =C-x C-s= from the edit buffer to apply your
-  changes.
+Creates a narrowing find buffer for locating and manipulating text within open
+buffers. To edit the lines in your swoop buffer, press =C-c C-e= and you will
+enter an edit mode. Press =C-x C-s= from the edit buffer to apply your
+changes.
 
-  Please note that this plugin does /not/ depend on Helm itself, which is very
-  nice since Helm is quite old and slow, yielding ground to far more efficient
-  completion systems such as Selectrum. Thus, we can use =helm-swoop= by itself
-  without loading Helm.
+Please note that this plugin does /not/ depend on Helm itself, which is very
+nice since Helm is quite old and slow, yielding ground to far more efficient
+completion systems such as Selectrum. Thus, we can use =helm-swoop= by itself
+without loading Helm.
 
 #+begin_src emacs-lisp
   (use-package helm-swoop
     :after projectile
+    :preface
+    (require 'general)
     :general
     (general-def
       ;; Main key bindings
@@ -198,47 +204,49 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-gtags
-  Helm integration with the GNU Global source code tagging system. Global is
-  much like C-tags or =etags=, but differs in that it is not dependent on any
-  particular editor. Global works the same way regardless of where it is
-  installed.
+Helm integration with the GNU Global source code tagging system. Global is
+much like C-tags or =etags=, but differs in that it is not dependent on any
+particular editor. Global works the same way regardless of where it is
+installed.
 
-  *NOTE*: You should use this package /or/ =ggtags=, not both at once.  They are
-          alternatives, and each has its own set of benefits and drawbacks.
+*NOTE*: You should use this package /or/ =ggtags=, not both at once.  They are
+alternatives, and each has its own set of benefits and drawbacks.
 
 *** Additional functions
 #+begin_src emacs-lisp
   (defun my/create-helm-gtags-keybindings ()
     "Create my own custom keybindings for helm-gtags commands."
     (let* ((my/helm-gtags-prefix-key "C-c g")
-          (command-table '(("h" . helm-gtags-display-browser)
-                           ("a" . helm-gtags-tags-in-this-function)
-                           ("f" . helm-gtags-find-files)
-                           ("F" . helm-gtags-parse-file)
-                           ("g" . helm-gtags-find-pattern)
-                           ("s" . helm-gtags-find-symbol)
-                           ("r" . helm-gtags-find-rtag)
-                           ("t" . helm-gtags-dwim)
-                           ("d" . helm-gtags-find-tag)
-                           ("u" . helm-gtags-update-tags)))
-        ;; If we're starting the prefix with an escape sequence, simply
-        ;; concatenate the prefix and the new key. Otherwise, perform the
-        ;; usual (kbd) operation on the key chord string.
-        (key-func (if (string-prefix-p "\\" my/helm-gtags-prefix-key)
-                      #'concat
-                    (lambda (prefix key) (kbd (concat prefix " " key))))))
-    (cl-loop for (key . command) in command-table do
-      (define-key helm-gtags-mode-map
-        (funcall key-func my/helm-gtags-prefix-key key) command))))
+           (command-table '(("h" . helm-gtags-display-browser)
+                            ("a" . helm-gtags-tags-in-this-function)
+                            ("f" . helm-gtags-find-files)
+                            ("F" . helm-gtags-parse-file)
+                            ("g" . helm-gtags-find-pattern)
+                            ("s" . helm-gtags-find-symbol)
+                            ("r" . helm-gtags-find-rtag)
+                            ("t" . helm-gtags-dwim)
+                            ("d" . helm-gtags-find-tag)
+                            ("u" . helm-gtags-update-tags)))
+           ;; If we're starting the prefix with an escape sequence, simply
+           ;; concatenate the prefix and the new key. Otherwise, perform the
+           ;; usual (kbd) operation on the key chord string.
+           (key-func (if (string-prefix-p "\\" my/helm-gtags-prefix-key)
+                         #'concat
+                       (lambda (prefix key) (kbd (concat prefix " " key))))))
+      (cl-loop for (key . command) in command-table do
+               (define-key helm-gtags-mode-map
+                           (funcall key-func my/helm-gtags-prefix-key key) command))))
 #+end_src
 
 *** use-package definition
-    *NOTE*: Currently deprecated in favor of =helm-lsp=
+*NOTE*: Currently deprecated in favor of =helm-lsp=
 
 #+begin_src emacs-lisp
   (use-package helm-gtags
     :disabled
     :after helm
+    :preface
+    (require 'general)
     :general
     (general-def helm-gtags-mode-map
       "C-j" 'helm-gtags-select
@@ -262,18 +270,18 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-escreen
-   =helm= source for the =escreen= window manager plugin.  This package is not
-   in any of the Emacs Elisp repositories, so we have to use =straight= to clone
-   it from GitHub and build it.
+=helm= source for the =escreen= window manager plugin.  This package is not
+in any of the Emacs Elisp repositories, so we have to use =straight= to clone
+it from GitHub and build it.
 
-   Now this has to be said: =escreen= is not a terribly powerful program. It
-   shares buffers across screen sessions, and it has no mechanism for persisting
-   screens configurations between Emacs sessions. =escreen= is also very old,
-   hailing from 1992, so it is unlikely that it will improve much more.  A
-   better alternative for managing workspaces is =persp-mode=, and I have a
-   working configuration for =persp-mode= in my plugins notebook. I only use
-   =escreen= for ECB integration, but even that does not work too well. I use
-   =persp-mode= for everything else.
+Now this has to be said: =escreen= is not a terribly powerful program. It
+shares buffers across screen sessions, and it has no mechanism for persisting
+screens configurations between Emacs sessions. =escreen= is also very old,
+hailing from 1992, so it is unlikely that it will improve much more.  A
+better alternative for managing workspaces is =persp-mode=, and I have a
+working configuration for =persp-mode= in my plugins notebook. I only use
+=escreen= for ECB integration, but even that does not work too well. I use
+=persp-mode= for everything else.
 
 #+begin_src emacs-lisp
   (use-package helm-escreen
@@ -281,6 +289,8 @@ Configuration for all things helm-related, including helm-projectile integration
     :after (helm escreen)
     :straight (helm-escreen :host github
                             :repo "dmh43/helm-escreen")
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       "r c" 'helm-escreen-create-screen
@@ -290,14 +300,16 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-lsp
-   This package provides an alternative to the built-in =xref-apropos= for
-   =lsp-mode=.
+This package provides an alternative to the built-in =xref-apropos= for
+=lsp-mode=.
 
 #+begin_src emacs-lisp
   (use-package helm-lsp
     :disabled
     :after (lsp-mode helm)
     :commands helm-lsp-workspace-symbol
+    :preface
+    (require 'general)
     :general
     (general-def lsp-mode-map
       [remap xref-find-apropos] 'helm-lsp-workspace-symbol
@@ -305,9 +317,9 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-make
-   Integration between =helm=, =projectile=, and =make=. This package provides a
-   bunch of useful functions but no default keybindings, so we must do that
-   ourselves.
+Integration between =helm=, =projectile=, and =make=. This package provides a
+bunch of useful functions but no default keybindings, so we must do that
+ourselves.
 
 #+begin_src emacs-lisp
   (use-package helm-make
@@ -331,39 +343,43 @@ Configuration for all things helm-related, including helm-projectile integration
           helm-make-nproc 0))
 #+end_src
 ** helm-system-packages
-   Helm wrapper around the =system-packages= plugin used to manager operating
-   system packages from within Emacs.
+Helm wrapper around the =system-packages= plugin used to manager operating
+system packages from within Emacs.
 
-   This is another Helm plugin you can use without installing Helm itself, which
-   is wonderful since avoiding Helm is desirable these days.
+This is another Helm plugin you can use without installing Helm itself, which
+is wonderful since avoiding Helm is desirable these days.
 
-   This package is not an alternative to =system-packages=, since all
-   =helm-system-packages= can do is operating on individual packages (install,
-   update, delete, etc.) whereas =system-packages= can operate on packages en
-   mass.
+This package is not an alternative to =system-packages=, since all
+=helm-system-packages= can do is operating on individual packages (install,
+update, delete, etc.) whereas =system-packages= can operate on packages en
+mass.
 
 #+begin_src emacs-lisp
   (use-package helm-system-packages
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       "s p" 'helm-system-packages))
 #+end_src
 
 ** helm-dash
-   Documentation browser plugin using Dash
+Documentation browser plugin using Dash
 
 #+begin_src emacs-lisp
   (use-package helm-dash
     :disabled)
 #+end_src
 ** helm-perldoc
-   Search =perldoc= documentation with =helm=. It has lots of nice helm actions
-   built into it, as well.
+Search =perldoc= documentation with =helm=. It has lots of nice helm actions
+built into it, as well.
 
 #+begin_src emacs-lisp
   (use-package helm-perldoc
     :disabled
     :after cperl-mode
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def cperl-mode-map
       ;; Don't just remap cperl-perldoc to helm-perldoc because they are not quite
@@ -376,36 +392,38 @@ Configuration for all things helm-related, including helm-projectile integration
 #+end_src
 
 ** helm-company
-   Helm mode for =company= completion system. This mode is not as useful as
-   company's default completion buffer since it does not integrate with
-   documentation on hover and other nice features.
+Helm mode for =company= completion system. This mode is not as useful as
+company's default completion buffer since it does not integrate with
+documentation on hover and other nice features.
 
-   #+begin_src emacs-lisp
-     (use-package helm-company
-       ;; Not super useful, and it doesn't integrate with documentation on
-       ;; hover.
-       :disabled
-       :after (helm company)
-       :general
-       (general-def company-mode-map
-         "C-;" 'helm-company)
-       (general-def company-active-map
-         "C-;" 'helm-company))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package helm-company
+    ;; Not super useful, and it doesn't integrate with documentation on
+    ;; hover.
+    :disabled
+    :after (helm company)
+    :preface
+    (require 'general)
+    :general
+    (general-def company-mode-map
+      "C-;" 'helm-company)
+    (general-def company-active-map
+      "C-;" 'helm-company))
+#+end_src
 ** helm-sly
-   =helm= integration for =sly=, the newer Common Lisp IDE for Emacs superseding
-   SLIME.
+=helm= integration for =sly=, the newer Common Lisp IDE for Emacs superseding
+SLIME.
 
-   #+begin_src emacs-lisp
-     (use-package helm-sly
-       ;; Currently disabled since the xref buffer is perfectly helpful.
-       :disabled
-       :after (helm sly)
-       :demand t
-       :hook
-       (sly-mrepl . helm-sly-disable-internal-completion)
-       :custom
-       (helm-completion-in-region-fuzzy-match t)
-       :config
-       (global-helm-sly-mode 1))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package helm-sly
+    ;; Currently disabled since the xref buffer is perfectly helpful.
+    :disabled
+    :after (helm sly)
+    :demand t
+    :hook
+    (sly-mrepl . helm-sly-disable-internal-completion)
+    :custom
+    (helm-completion-in-region-fuzzy-match t)
+    :config
+    (global-helm-sly-mode 1))
+#+end_src

@@ -17,6 +17,8 @@ select a link.
     ;; Disabled in favor of `link-hint', which is really just a more versatile version of this plugin.
     :disabled
     :demand t
+    :preface
+    (require 'general)
     :general
     ;; `C-c o' follows links in in `org-mode'
     (my/user-leader-def org-mode-map
@@ -34,6 +36,8 @@ Xref items, or just about anything else one would consider a "link".
 
 #+begin_src emacs-lisp
   (use-package link-hint
+    :preface
+    (require 'general)
     :general
     (general-def 'normal
       "g/s" 'link-hint-copy-link-at-point

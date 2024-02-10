@@ -37,6 +37,8 @@ configuration. To change the recipe you used to generate the tags file, execute
     :delight
     :commands
     (citre-jump citre-jump-back citre-peek citre-update-this-tags-file)
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def
       "zb" 'citre-jump-back

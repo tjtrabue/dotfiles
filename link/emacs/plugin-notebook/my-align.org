@@ -22,6 +22,8 @@ Interactive/visual plugin for Emacs' built-in =align-regexp=.
 #+begin_src emacs-lisp
   (use-package ialign
     :commands ialign
+    :preface
+    (require 'general)
     :general
     (general-def 'visual
       "C-x l" 'ialign))

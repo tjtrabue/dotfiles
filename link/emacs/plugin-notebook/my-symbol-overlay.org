@@ -12,6 +12,8 @@ and more powerful.
 
 #+begin_src emacs-lisp
   (use-package symbol-overlay
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       ;; This extended general definition allows binding keymaps to keys similar

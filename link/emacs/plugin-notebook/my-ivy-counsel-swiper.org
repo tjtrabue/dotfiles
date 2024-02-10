@@ -13,179 +13,191 @@ tool for visible text in a buffer, and an alternative to Emacs' built-in
 =isearch= feature.
 
 * Ivy
-  =ivy= is a generic completion mechanism for Emacs, and a faster alternative to
-  =helm=. While it operates similarly to other completion schemes such as
-  =icomplete-mode=, =ivy= aims to be more efficient, smaller, simpler, and
-  smoother to use, yet highly customizable.
+=ivy= is a generic completion mechanism for Emacs, and a faster alternative to
+=helm=. While it operates similarly to other completion schemes such as
+=icomplete-mode=, =ivy= aims to be more efficient, smaller, simpler, and
+smoother to use, yet highly customizable.
 
-  *NOTE:* Currently deprecated in favor of =selectrum=, which is a newer,
-  fancier narrowing selection framework for Emacs. See =my-selectrum= for more
-  details.
+*NOTE:* Currently deprecated in favor of =selectrum=, which is a newer,
+fancier narrowing selection framework for Emacs. See =my-selectrum= for more
+details.
 
 ** Functions
 
-   #+begin_src emacs-lisp
-     (defun my/ivy-toggle-mark ()
-       "Used to toggle an ivy mark in the ivy minibuffer. If the current
-candidate is not marked, mark it. Otherwise, unmark the marked candidate."
-       (interactive)
-       (if (ivy--marked-p)
-           (ivy-unmark)
-         (ivy-mark)))
-   #+end_src
+#+begin_src emacs-lisp
+  (defun my/ivy-toggle-mark ()
+    "Used to toggle an ivy mark in the ivy minibuffer. If the current
+  candidate is not marked, mark it. Otherwise, unmark the marked candidate."
+    (interactive)
+    (if (ivy--marked-p)
+        (ivy-unmark)
+      (ivy-mark)))
+#+end_src
 
 ** =use-package= specification
-   *NOTE:* If you want to accept the currently typed name in =ivy-find-file=,
-   press =C-M-j=.
+*NOTE:* If you want to accept the currently typed name in =ivy-find-file=,
+press =C-M-j=.
 
-   #+begin_src emacs-lisp
-     (use-package ivy
-       :disabled
-       :after evil-collection
-       :demand t
-       :general
-       (general-def ivy-switch-buffer-map
-         ;; Make sure that navigation shortcuts work
-         "C-j" 'ivy-next-line
-         "C-k" 'ivy-previous-line
-         ;; Rebind the switch-buffer-kill function to something sane
-         "C-d" 'ivy-switch-buffer-kill)
-       (general-def ivy-minibuffer-map
-         ;; Navigation shortcuts
-         "C-j" 'ivy-next-line
-         "C-k" 'ivy-previous-line
-         ;; Change directory to current completion candidate and continue
-         ;; completion selection
-         "C-l" 'ivy-alt-done
-         ;; Use TAB to mark/unmark candidates
-         "<tab>" 'my/ivy-toggle-mark)
-       (general-def '(normal insert)
-         "C-e" 'ivy-switch-buffer)
-       :custom
-       ;; Keep the ivy completion buffer's height fixed.
-       (ivy-fixed-height-minibuffer t)
-       (ivy-use-virtual-buffers t)
-       ;; Use `orderless' for ivy completions
-       ;; (using prescient.el instead)
-       ;; (ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
-       ;; Make sure recursive minibuffers are enabled (should be already).
-       (enable-recursive-minibuffers t)
-       ;; Make the ivy window's height a function of its parent frame's height
-       (ivy-height-alist
-        '((t
-           lambda (_caller)
-           (/ (frame-height) 3))))
-       :config
-       (ivy-mode 1))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package ivy
+    :disabled
+    :after evil-collection
+    :demand t
+    :preface
+    (require 'general)
+    :general
+    (general-def ivy-switch-buffer-map
+      ;; Make sure that navigation shortcuts work
+      "C-j" 'ivy-next-line
+      "C-k" 'ivy-previous-line
+      ;; Rebind the switch-buffer-kill function to something sane
+      "C-d" 'ivy-switch-buffer-kill)
+    (general-def ivy-minibuffer-map
+      ;; Navigation shortcuts
+      "C-j" 'ivy-next-line
+      "C-k" 'ivy-previous-line
+      ;; Change directory to current completion candidate and continue
+      ;; completion selection
+      "C-l" 'ivy-alt-done
+      ;; Use TAB to mark/unmark candidates
+      "<tab>" 'my/ivy-toggle-mark)
+    (general-def '(normal insert)
+      "C-e" 'ivy-switch-buffer)
+    :custom
+    ;; Keep the ivy completion buffer's height fixed.
+    (ivy-fixed-height-minibuffer t)
+    (ivy-use-virtual-buffers t)
+    ;; Use `orderless' for ivy completions
+    ;; (using prescient.el instead)
+    ;; (ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
+    ;; Make sure recursive minibuffers are enabled (should be already).
+    (enable-recursive-minibuffers t)
+    ;; Make the ivy window's height a function of its parent frame's height
+    (ivy-height-alist
+     '((t
+        lambda (_caller)
+        (/ (frame-height) 3))))
+    :config
+    (ivy-mode 1))
+#+end_src
 
 ** Plugins
 *** ivy-all-the-icons
-    Ivy integration plugin for the incredible =all-the-icons= plugin.
+Ivy integration plugin for the incredible =all-the-icons= plugin.
 
-    #+begin_src emacs-lisp
-      (use-package all-the-icons-ivy
-        :disabled
-        :after (all-the-icons ivy)
-        :demand t
-        :config
-        (all-the-icons-ivy-setup))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package all-the-icons-ivy
+    :disabled
+    :after (all-the-icons ivy)
+    :demand t
+    :config
+    (all-the-icons-ivy-setup))
+#+end_src
 
 *** ivy-prescient
 
-    #+begin_src emacs-lisp
-      (use-package ivy-prescient
-        :disabled
-        ;; this plugin MUST be loaded after Counsel, since it has to undo a bunch of
-        ;; Counsel's nonsense.
-        :after (counsel prescient)
-        :hook
-        (counsel-mode . ivy-prescient-mode))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package ivy-prescient
+    :disabled
+    ;; this plugin MUST be loaded after Counsel, since it has to undo a bunch of
+    ;; Counsel's nonsense.
+    :after (counsel prescient)
+    :hook
+    (counsel-mode . ivy-prescient-mode))
+#+end_src
 
 *** ivy-yasnippet
-    Use =ivy= to preview =yasnippet= snippets. The main function for this suite
-    is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
-    =ivy-yasnippet=.
+Use =ivy= to preview =yasnippet= snippets. The main function for this suite
+is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
+=ivy-yasnippet=.
 
-    #+begin_src emacs-lisp
-      (use-package ivy-yasnippet
-        :disabled
-        :after (ivy yasnippet)
-        :commands ivy-yasnippet
-        :custom
-        ;; How ivy-yasnippet should expand keywords before point. "smart" means that
-        ;; ivy-yasnippet should expand when a matching candidate is selected for the
-        ;; first time. Once a candidate whose key doesn’t match whatever is before
-        ;; point is selected, behave like nil until the minibuffer exits.
-        (ivy-yasnippet-expand-keys 'smart)
-        :general
-        (general-def yas-minor-mode-map
-          [remap yas-expand] 'ivy-yasnippet))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package ivy-yasnippet
+    :disabled
+    :after (ivy yasnippet)
+    :commands ivy-yasnippet
+    :custom
+    ;; How ivy-yasnippet should expand keywords before point. "smart" means that
+    ;; ivy-yasnippet should expand when a matching candidate is selected for the
+    ;; first time. Once a candidate whose key doesn’t match whatever is before
+    ;; point is selected, behave like nil until the minibuffer exits.
+    (ivy-yasnippet-expand-keys 'smart)
+    :preface
+    (require 'general)
+    :general
+    (general-def yas-minor-mode-map
+      [remap yas-expand] 'ivy-yasnippet))
+#+end_src
 
 * Counsel
-  =counsel= is a collection of =ivy= enhancements for standard Emacs functions,
-  such as =find-file= and =switch-to-buffer=.
+=counsel= is a collection of =ivy= enhancements for standard Emacs functions,
+such as =find-file= and =switch-to-buffer=.
 
-  *NOTE:* We should start moving away from Counsel and toward Selectrum, which
-  is more general and faster.
+*NOTE:* We should start moving away from Counsel and toward Selectrum, which
+is more general and faster.
 
 ** =use-package= specification
-   #+begin_src emacs-lisp
-     (use-package counsel
-       :disabled
-       :after ivy
-       :demand t
-       :general
-       (general-def
-         [remap dired] 'counsel-dired
-         [remap recentf-open-files] 'counsel-recentf)
-       :custom
-       (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :config
-       (counsel-mode 1))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package counsel
+    :disabled
+    :after ivy
+    :demand t
+    :preface
+    (require 'general)
+    :general
+    (general-def
+      [remap dired] 'counsel-dired
+      [remap recentf-open-files] 'counsel-recentf)
+    :custom
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
+    :config
+    (counsel-mode 1))
+#+end_src
 
 ** Plugins
 *** counsel-projectile
-    #+begin_src emacs-lisp
-      (use-package counsel-projectile
-        :disabled
-        :after (counsel projectile)
-        :hook
-        (counsel-mode . counsel-projectile-mode)
-        :general
-        (general-def 'normal
-          ;; Overwrite the standard projectile-find-file shortcut
-          ;; with the enhanced counsel version.
-          "C-p" 'counsel-projectile-find-file))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package counsel-projectile
+    :disabled
+    :after (counsel projectile)
+    :hook
+    (counsel-mode . counsel-projectile-mode)
+    :preface
+    (require 'general)
+    :general
+    (general-def 'normal
+      ;; Overwrite the standard projectile-find-file shortcut
+      ;; with the enhanced counsel version.
+      "C-p" 'counsel-projectile-find-file))
+#+end_src
 
 *** counsel-tramp
-    #+begin_src emacs-lisp
-      (use-package counsel-tramp
-        :disabled
-        :general
-        (general-def
-          "M-r" 'counsel-tramp))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package counsel-tramp
+    :disabled
+    :preface
+    (require 'general)
+    :general
+    (general-def
+      "M-r" 'counsel-tramp))
+#+end_src
 
 * Swiper
-  =swiper= is a narrowing search tool which serves as an alternative to
-  =isearch=.
+=swiper= is a narrowing search tool which serves as an alternative to
+=isearch=.
 
-  #+begin_src emacs-lisp
-    (use-package swiper
-      :disabled
-      :after evil-collection
-      :commands (swiper swiper-backward)
-      :general
-      (general-def 'normal
-        ;; Use swiper for evil-mode's forward and reverse search
-        ;; functions, as well.
-        "/" 'swiper
-        "?" 'swiper-backward))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package swiper
+    :disabled
+    :after evil-collection
+    :commands (swiper swiper-backward)
+    :preface
+    (require 'general)
+    :general
+    (general-def 'normal
+      ;; Use swiper for evil-mode's forward and reverse search
+      ;; functions, as well.
+      "/" 'swiper
+      "?" 'swiper-backward))
+#+end_src

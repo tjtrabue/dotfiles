@@ -93,6 +93,8 @@ to =company-backends=: ='(company-elisp :with company-yasnippet)=.
     ;; Currently only enabling `company-mode' in select major modes in favor of
     ;; using `lsp-bridge''s autocompletion by default.
     (lisp-mode . company-mode)
+    :preface
+    (require 'general)
     :general
     (general-unbind (company-active-map company-search-map)
       ;; We want to use TAB for hippie-expand, not cycling company.
@@ -235,6 +237,8 @@ Show quick documentation for company completions in a separate popup.
 #+begin_src emacs-lisp
   (use-package company-try-hard
     :after company
+    :preface
+    (require 'general)
     :general
     (general-def 'insert company-mode-map
       "C-<tab>" 'company-try-hard)

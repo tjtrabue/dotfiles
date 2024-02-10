@@ -36,6 +36,8 @@ editing than you would otherwise have.
      (python-ts-mode     . combobulate-mode)
      (tsx-ts-mode        . combobulate-mode)
      (typescript-ts-mode . combobulate-mode))
+    :preface
+    (require 'general)
     :general
     (general-def 'normal combobulate-key-map
       [remap evil-delete-line]         'combobulate-kill-node-dwim

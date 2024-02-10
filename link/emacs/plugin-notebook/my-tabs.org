@@ -9,52 +9,54 @@ This file contains plugins and configuration for editor tabs similar to those
 found in other modern editors, such as Notepad++ and VisualStudio Code.
 
 * centaur-tabs
-  =centaur-tabs= is a stylish, highly configurable tabs plugin for Emacs. It
-  includes support for themed icons, modified indicators, adjustable fonts, and
-  more.
+=centaur-tabs= is a stylish, highly configurable tabs plugin for Emacs. It
+includes support for themed icons, modified indicators, adjustable fonts, and
+more.
 
-  #+begin_src emacs-lisp
-    (use-package centaur-tabs
-      ;; Disabled in favor of built-in `tab-bar-mode'.  See `my-tab-bar.el' for configuration.
-      :disabled
-      :after evil-collection
-      :demand t
-      :general
-      (general-def
-        "C-x B" 'centaur-tabs-switch-group)
-      (general-def 'normal evil-collection-unimpaired-mode-map
-        ;; Use ']b' and '[b' to navigate tabs.
-        "] b" 'centaur-tabs-forward
-        "[ b" 'centaur-tabs-backward)
-      :init
-      ;; Can be necessary for current tab underline to display correctly.
-      ;; Only important if centaur-tabs-set-bar is set to 'under.
-      (setq x-underline-at-descent-line t)
-      :custom
-      ;; How to style consecutive tabs. Can be one of: "alternate", "bar", "box",
-      ;; "chamfer", "rounded", "slant", "wave", "zigzag".
-      (centaur-tabs-style "bar")
-      ;; Use themed icons for tabs
-      (centaur-tabs-set-icons t)
-      ;; Adjust tab height
-      (centaur-tabs-height 32)
-      ;; Gray-out tab icons for unselected buffers
-      (centaur-tabs-gray-out-icons 'buffer)
-      ;; Add colored bar to selected tab.
-      ;; Can be one of: 'left, 'right, 'over, 'under
-      (centaur-tabs-set-bar 'under)
-      ;; Turn off ido integration to instead opt into completing-read, which is used
-      ;; by Selectrum.
-      (centaur-tabs-enable-ido-completion nil)
-      ;; Show marker icon on tabs for modified files.
-      (centaur-tabs-set-modified-marker t)
-      ;; Only cycle through visible tabs, do not advance to new tab groups.
-      (centaur-tabs-cycle-scope 'tabs)
-      :config
-      ;; Enable centaur-tabs globally
-      (centaur-tabs-mode 1)
-      ;; Make the headline face match the centaur-tabs-default face
-      (centaur-tabs-headline-match)
-      ;; Automatically group tabs by Projectile project.
-      (centaur-tabs-group-by-projectile-project))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package centaur-tabs
+    ;; Disabled in favor of built-in `tab-bar-mode'.  See `my-tab-bar.el' for configuration.
+    :disabled
+    :after evil-collection
+    :demand t
+    :preface
+    (require 'general)
+    :general
+    (general-def
+      "C-x B" 'centaur-tabs-switch-group)
+    (general-def 'normal evil-collection-unimpaired-mode-map
+      ;; Use ']b' and '[b' to navigate tabs.
+      "] b" 'centaur-tabs-forward
+      "[ b" 'centaur-tabs-backward)
+    :init
+    ;; Can be necessary for current tab underline to display correctly.
+    ;; Only important if centaur-tabs-set-bar is set to 'under.
+    (setq x-underline-at-descent-line t)
+    :custom
+    ;; How to style consecutive tabs. Can be one of: "alternate", "bar", "box",
+    ;; "chamfer", "rounded", "slant", "wave", "zigzag".
+    (centaur-tabs-style "bar")
+    ;; Use themed icons for tabs
+    (centaur-tabs-set-icons t)
+    ;; Adjust tab height
+    (centaur-tabs-height 32)
+    ;; Gray-out tab icons for unselected buffers
+    (centaur-tabs-gray-out-icons 'buffer)
+    ;; Add colored bar to selected tab.
+    ;; Can be one of: 'left, 'right, 'over, 'under
+    (centaur-tabs-set-bar 'under)
+    ;; Turn off ido integration to instead opt into completing-read, which is used
+    ;; by Selectrum.
+    (centaur-tabs-enable-ido-completion nil)
+    ;; Show marker icon on tabs for modified files.
+    (centaur-tabs-set-modified-marker t)
+    ;; Only cycle through visible tabs, do not advance to new tab groups.
+    (centaur-tabs-cycle-scope 'tabs)
+    :config
+    ;; Enable centaur-tabs globally
+    (centaur-tabs-mode 1)
+    ;; Make the headline face match the centaur-tabs-default face
+    (centaur-tabs-headline-match)
+    ;; Automatically group tabs by Projectile project.
+    (centaur-tabs-group-by-projectile-project))
+#+end_src

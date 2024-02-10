@@ -15,6 +15,8 @@ is simple to do.
   (use-package flycheck
     :hook
     (prog-mode . flycheck-mode)
+    :preface
+    (require 'general)
     :general
     ;; This is general.el's way of accomplishing :bind-keymap, but
     ;; general's way is more flexible and integrates with its
@@ -271,6 +273,8 @@ Correct misspelled words using your favorite completion interface.
 #+begin_src emacs-lisp
   (use-package flyspell-correct
     :after flyspell
+    :preface
+    (require 'general)
     :general
     (general-def flyspell-mode-map
       "C-." 'flyspell-correct-wrapper))

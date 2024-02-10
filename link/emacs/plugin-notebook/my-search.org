@@ -21,6 +21,8 @@ program (i.e., functions, variables, subroutines, methods, classes, etc.).
 #+begin_src emacs-lisp
   (use-package deadgrep
     :commands deadgrep
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def
       "S" 'deadgrep))

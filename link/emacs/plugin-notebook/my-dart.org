@@ -23,6 +23,8 @@ programming language.
     :after dart-mode
     :hook
     (dart-mode . flutter-test-mode)
+    :preface
+    (require 'general)
     :general
     (general-def 'normal dart-mode-map
       ;; Run or reload Flutter
@@ -42,6 +44,8 @@ to work. You probably do not want to use both plugins at the same time.
 #+begin_src emacs-lisp
   (use-package hover
     :after dart-mode
+    :preface
+    (require 'general)
     :general
     (general-def dart-mode-map
       "C-M-z" 'hover-run-or-hot-reload

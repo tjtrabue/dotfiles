@@ -20,6 +20,8 @@ cross-platform.
     (c-mode-common . (lambda ()
                        (when (and (not my/use-helm-gtags) (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode))
                          (ggtags-mode))))
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def ggtags-mode-map
       "g s" 'ggtags-find-other-symbol

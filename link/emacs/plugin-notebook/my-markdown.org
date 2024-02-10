@@ -26,6 +26,8 @@ blocks in a separate buffer with =C-c C-'= a la Org Mode.
                        (general-def 'normal 'local
                          "M-j" 'markdown-move-down
                          "M-k" 'markdown-move-up)))
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def markdown-mode-map
       "C-l" 'markdown-follow-link-at-point)

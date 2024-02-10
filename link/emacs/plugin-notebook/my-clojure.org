@@ -113,6 +113,8 @@ file in your project's root directory with the following content:
     :after evil-collection
     :hook
     (clojure-mode . cider-mode)
+    :preface
+    (require 'general)
     :general
     (general-unbind cider-repl-mode-map
       ",")

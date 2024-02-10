@@ -14,325 +14,331 @@ simpler code completion/navigation).
 
 * Important Notes on CEDET Tools (Please Read!)
 ** Semantic Notes
-   Semantic is a semantic analyzer for various coding languages. It is also old,
-   slow, and fantastically complicated. I advice you not to use it unless you
-   have to. It used to be Emacs' answer to Eclipse's capabilities, but these days
-   there are better options. Try a LanguageServerProtocol server such as =ccls=
-   before you turn to Semantic.
+Semantic is a semantic analyzer for various coding languages. It is also old,
+slow, and fantastically complicated. I advice you not to use it unless you
+have to. It used to be Emacs' answer to Eclipse's capabilities, but these days
+there are better options. Try a LanguageServerProtocol server such as =ccls=
+before you turn to Semantic.
 
-   That being said, Semantic still has many nice features that have not been
-   duplicated by more modern IDE system alternatives, such as the
-   =semantic-refactor= plugin for smart C/C++ and Lisp code refactoring. Thus, it
-   is not prudent to forego Semantic altogether, lest you toss out the proverbial
-   baby with the even more proverbial bath water.
+That being said, Semantic still has many nice features that have not been
+duplicated by more modern IDE system alternatives, such as the
+=semantic-refactor= plugin for smart C/C++ and Lisp code refactoring. Thus, it
+is not prudent to forego Semantic altogether, lest you toss out the proverbial
+baby with the even more proverbial bath water.
 
-   The only way to use Semantic efficiently is to make it rather toothless. By
-   that I mean you must remove Semantic's =completion-at-point= functions and
-   remove any autocomplete features attached to Semantic, both tasks I accomplish
-   in my configuration. Since I use =company= for auto-completion, check my
-   =company= configuration for the changes I had to make to remove Semantic.
+The only way to use Semantic efficiently is to make it rather toothless. By
+that I mean you must remove Semantic's =completion-at-point= functions and
+remove any autocomplete features attached to Semantic, both tasks I accomplish
+in my configuration. Since I use =company= for auto-completion, check my
+=company= configuration for the changes I had to make to remove Semantic.
 
 ** EDE Notes
-   EDE is the Emacs Development Environment. It is a project management system
-   for Emacs that provides some IDE features, such as auto-generation of project
-   configuration files, dependency management, etc. However, like Semantic, it is
-   also very old. It does not incur the massive slowdown of Semantic, thankfully,
-   but =projectile= is a better all-purpose solution to project management in
-   Emacs.
+EDE is the Emacs Development Environment. It is a project management system
+for Emacs that provides some IDE features, such as auto-generation of project
+configuration files, dependency management, etc. However, like Semantic, it is
+also very old. It does not incur the massive slowdown of Semantic, thankfully,
+but =projectile= is a better all-purpose solution to project management in
+Emacs.
 
-   EDE also focuses most of its project management capabilities on Autotools, a
-   suite of GNU project configuration tools that have not been popular outside of
-   the GNU ecosystem in...ever. CMake has long ago surpassed Autotools in terms
-   of flexibility, ease of configuration, and cross-compilation power, not to
-   mention it's much less verbose and much easier to read. Thus, EDE may not be a
-   good choice for managing your project if you decide to forego Autotools in
-   favor of another tool chain.
+EDE also focuses most of its project management capabilities on Autotools, a
+suite of GNU project configuration tools that have not been popular outside of
+the GNU ecosystem in...ever. CMake has long ago surpassed Autotools in terms
+of flexibility, ease of configuration, and cross-compilation power, not to
+mention it's much less verbose and much easier to read. Thus, EDE may not be a
+good choice for managing your project if you decide to forego Autotools in
+favor of another tool chain.
 
 * Variables
-  #+begin_src emacs-lisp
-    (defvar my/cedet-git-home (concat my/straight-repos-dir "cedet/")
-      "Local CEDET development repository.")
-    (defvar my/cedet-lisp-dir (concat my/cedet-git-home "lisp/")
-      "Main libraries directory for CEDET development distribution.")
-    (defvar my/cedet-contrib-dir (concat my/cedet-git-home "contrib/")
-      "Secondary contribution libraries directory for CEDET development
-    distribution.")
-  #+end_src
+#+begin_src emacs-lisp
+  (defvar my/cedet-git-home (concat my/straight-repos-dir "cedet/")
+    "Local CEDET development repository.")
+  (defvar my/cedet-lisp-dir (concat my/cedet-git-home "lisp/")
+    "Main libraries directory for CEDET development distribution.")
+  (defvar my/cedet-contrib-dir (concat my/cedet-git-home "contrib/")
+    "Secondary contribution libraries directory for CEDET development
+  distribution.")
+#+end_src
 
 * Functions
 ** CEDET Functions
-   #+begin_src emacs-lisp
-     (defun my/cedet-hook-fn ()
-       "Runs when activating c-mode-common, tuning various settings
-     ideal for CEDET, such as turning on certain key bindings."
-       ;; Load development libraries
-       (require 'semantic/bovine/clang
-                (concat my/cedet-lisp-dir "cedet/semantic/bovine/clang.el"))
+#+begin_src emacs-lisp
+  (defun my/cedet-hook-fn ()
+    "Runs when activating c-mode-common, tuning various settings
+  ideal for CEDET, such as turning on certain key bindings."
+    ;; Load development libraries
+    (require 'semantic/bovine/clang
+             (concat my/cedet-lisp-dir "cedet/semantic/bovine/clang.el"))
 
-       ;; Load contribution libraries
-       (require 'eassist
-                (concat my/cedet-contrib-dir "eassist.el"))
+    ;; Load contribution libraries
+    (require 'eassist
+             (concat my/cedet-contrib-dir "eassist.el"))
 
-       (local-set-key [(control return)] 'semantic-ia-complete-symbol)
-       (local-set-key (kbd "C-c ?") 'semantic-ia-complete-tip)
-       (local-set-key (kbd "C-c >") 'semantic-complete-analyze-inline)
-       ;; Toggle between prototype and implementation.
-       (local-set-key (kbd "C-c t") 'semantic-analyze-proto-impl-toggle))
-   #+end_src
+    (local-set-key [(control return)] 'semantic-ia-complete-symbol)
+    (local-set-key (kbd "C-c ?") 'semantic-ia-complete-tip)
+    (local-set-key (kbd "C-c >") 'semantic-complete-analyze-inline)
+    ;; Toggle between prototype and implementation.
+    (local-set-key (kbd "C-c t") 'semantic-analyze-proto-impl-toggle))
+#+end_src
 
 ** EDE Functions
-   #+begin_src emacs-lisp
-     (defun ede-object-system-include-path ()
-       "Return the system include path for the current buffer."
-       (when ede-object
-         (ede-system-include-path ede-object)))
+#+begin_src emacs-lisp
+  (defun ede-object-system-include-path ()
+    "Return the system include path for the current buffer."
+    (when ede-object
+      (ede-system-include-path ede-object)))
 
-     (defun my/ede-add-keybindings ()
-       "Add keys to ede-minor-mode and other ede minor modes."
-       (with-eval-after-load 'ede/dired
-         (define-key ede-dired-keymap [remap ede-add-file] 'ede-dired-add-to-target)))
+  (defun my/ede-add-keybindings ()
+    "Add keys to ede-minor-mode and other ede minor modes."
+    (with-eval-after-load 'ede/dired
+      (define-key ede-dired-keymap [remap ede-add-file] 'ede-dired-add-to-target)))
 
-     (defun my/ede-hook-fn ()
-       "Main hook function to run when entering `ede-minor-mode'."
-       (my/ede-add-keybindings))
-   #+end_src
+  (defun my/ede-hook-fn ()
+    "Main hook function to run when entering `ede-minor-mode'."
+    (my/ede-add-keybindings))
+#+end_src
 
 ** Semantic Functions
-   #+begin_src emacs-lisp
-     (defun my/semantic-add-default-minor-modes ()
-       "Add hooks to enable extra global minor modes for Semantic."
-       ;; Add Semantic features
-       ;; (Make sure to specify this list before activating semantic-mode!)
-       ;;
-       ;; Cache semantic parsing results in a database file.
-       ;; (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode)
-       ;; Automatically check if buffer is out of date and re-parse if needed,
-       ;; asynchronously.
-       ;; (add-to-list 'semantic-default-submodes
-       ;;             'global-semantic-idle-scheduler-mode)
-       ;; Enables automatic bookmarking of tags that you edited, so you can return
-       ;; to them later with the semantic-mrub-switch-tags command.
-       (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode)
-       ;; Activates CEDET's context menu that is bound to right mouse button.
-       ;; (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode)
-       ;; Activates highlighting of first line for current tag
-       ;; (function, class, etc.)
-       ;; (add-to-list 'semantic-default-submodes
-       ;;             'global-semantic-highlight-func-mode)
-       ;; Activates mode when name of current tag will be shown in top line of
-       ;; buffer
-       (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-       ;; Activates use of separate styles for tags decoration (depending on tag's
-       ;; class). These styles are defined in the semantic-decoration-styles list.
-       (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode)
-       ;; Activates highlighting of local names that are the same as name of tag
-       ;; under cursor
-       ;; (add-to-list 'semantic-default-submodes
-       ;;             'global-semantic-idle-local-symbol-highlight-mode)
-       ;; Shows which elements weren't processed by current parser's rules
-       (add-to-list 'semantic-default-submodes
-                    'global-semantic-show-unmatched-syntax-mode))
+#+begin_src emacs-lisp
+  (defun my/semantic-add-default-minor-modes ()
+    "Add hooks to enable extra global minor modes for Semantic."
+    ;; Add Semantic features
+    ;; (Make sure to specify this list before activating semantic-mode!)
+    ;;
+    ;; Cache semantic parsing results in a database file.
+    ;; (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode)
+    ;; Automatically check if buffer is out of date and re-parse if needed,
+    ;; asynchronously.
+    ;; (add-to-list 'semantic-default-submodes
+    ;;             'global-semantic-idle-scheduler-mode)
+    ;; Enables automatic bookmarking of tags that you edited, so you can return
+    ;; to them later with the semantic-mrub-switch-tags command.
+    (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode)
+    ;; Activates CEDET's context menu that is bound to right mouse button.
+    ;; (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode)
+    ;; Activates highlighting of first line for current tag
+    ;; (function, class, etc.)
+    ;; (add-to-list 'semantic-default-submodes
+    ;;             'global-semantic-highlight-func-mode)
+    ;; Activates mode when name of current tag will be shown in top line of
+    ;; buffer
+    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+    ;; Activates use of separate styles for tags decoration (depending on tag's
+    ;; class). These styles are defined in the semantic-decoration-styles list.
+    (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode)
+    ;; Activates highlighting of local names that are the same as name of tag
+    ;; under cursor
+    ;; (add-to-list 'semantic-default-submodes
+    ;;             'global-semantic-idle-local-symbol-highlight-mode)
+    ;; Shows which elements weren't processed by current parser's rules
+    (add-to-list 'semantic-default-submodes
+                 'global-semantic-show-unmatched-syntax-mode))
 
-     (defun my/semantic-add-gtags-support ()
-       "Use GNU Global to support Semantic if available."
-       (when (my-os-tool-installed-p "global")
-         (semanticdb-enable-gnu-global-databases 'c-mode)
-         (semanticdb-enable-gnu-global-databases 'c++-mode)))
+  (defun my/semantic-add-gtags-support ()
+    "Use GNU Global to support Semantic if available."
+    (when (my-os-tool-installed-p "global")
+      (semanticdb-enable-gnu-global-databases 'c-mode)
+      (semanticdb-enable-gnu-global-databases 'c++-mode)))
 
-     (defun my/semantic-set-throttles-for-modes ()
-       "Set default throttles for Semantic mode in various major modes to speed
-     up Semantic."
-       ;; Do not search system include path for C files.
-       (setq-mode-local c-mode semanticdb-find-default-throttle
-                        '(project unloaded system recursive))
+  (defun my/semantic-set-throttles-for-modes ()
+    "Set default throttles for Semantic mode in various major modes to speed
+  up Semantic."
+    ;; Do not search system include path for C files.
+    (setq-mode-local c-mode semanticdb-find-default-throttle
+                     '(project unloaded system recursive))
 
-       ;; Semantic makes editing Emacs Lisp code virtually impossible due to how
-       ;; slow the task of parsing Elisp tends to be, especially at volume.
-       ;; This setting tells Semantic which sources to use to create its database.
-       (setq-mode-local emacs-lisp-mode semanticdb-find-default-throttle
-                        '(project omniscience)))
+    ;; Semantic makes editing Emacs Lisp code virtually impossible due to how
+    ;; slow the task of parsing Elisp tends to be, especially at volume.
+    ;; This setting tells Semantic which sources to use to create its database.
+    (setq-mode-local emacs-lisp-mode semanticdb-find-default-throttle
+                     '(project omniscience)))
 
-     ;; Right now this does not seem to do anything
-     (defun my/semantic-remove-capf-hooks ()
-       "Semantic's completion-at-point-functions are super, super resource
-     intensive, and you're better off not using them, opting instead for a Language
-     Server or something else."
-       (remove-hook 'completion-at-point-functions
-                    #'semantic-analyze-completion-at-point-function)
-       (remove-hook 'completion-at-point-functions
-                    #'semantic-analyze-notc-completion-at-point-function)
-       (remove-hook 'completion-at-point-functions
-                    #'semantic-analyze-nolongprefix-completion-at-point-function))
+  ;; Right now this does not seem to do anything
+  (defun my/semantic-remove-capf-hooks ()
+    "Semantic's completion-at-point-functions are super, super resource
+  intensive, and you're better off not using them, opting instead for a Language
+  Server or something else."
+    (remove-hook 'completion-at-point-functions
+                 #'semantic-analyze-completion-at-point-function)
+    (remove-hook 'completion-at-point-functions
+                 #'semantic-analyze-notc-completion-at-point-function)
+    (remove-hook 'completion-at-point-functions
+                 #'semantic-analyze-nolongprefix-completion-at-point-function))
 
-     (defun my/semantic-add-keybindings ()
-       "Set Semantic mode's keybindings, including keys for contributor
-     functions. Also, for some reason, Emacs thinks we're changing a constant
-     value if we try to set these in the :bind directive of the use-package
-     expression."
-       (define-key c-mode-base-map (kbd "M-m") 'eassist-list-methods)
-       (define-key c-mode-base-map (kbd "M-o") 'eassist-switch-h-cpp))
+  (defun my/semantic-add-keybindings ()
+    "Set Semantic mode's keybindings, including keys for contributor
+  functions. Also, for some reason, Emacs thinks we're changing a constant
+  value if we try to set these in the :bind directive of the use-package
+  expression."
+    (define-key c-mode-base-map (kbd "M-m") 'eassist-list-methods)
+    (define-key c-mode-base-map (kbd "M-o") 'eassist-switch-h-cpp))
 
-     (defun my/semantic-hook-fn ()
-       "Main hook function to run when entering `semantic-mode'."
-       (require 'srecode)
+  (defun my/semantic-hook-fn ()
+    "Main hook function to run when entering `semantic-mode'."
+    (require 'srecode)
 
-       ;; Use Clang for code analysis (if available).
-       ;; (when (fboundp 'semantic-clang-activate)
-       ;;   (semantic-clang-activate))
+    ;; Use Clang for code analysis (if available).
+    ;; (when (fboundp 'semantic-clang-activate)
+    ;;   (semantic-clang-activate))
 
-       ;; Semantic Recoder
-       ;; This tool allows you to insert auto-generated code blocks using
-       ;; Semantic, such as classes, getters and setters, etc..
-       (srecode-minor-mode))
-   #+end_src
+    ;; Semantic Recoder
+    ;; This tool allows you to insert auto-generated code blocks using
+    ;; Semantic, such as classes, getters and setters, etc..
+    (srecode-minor-mode))
+#+end_src
 
 * CEDET Package Configuration
-  We also pull down the CEDET development repository to get access to the
-  contributors' scripts, which are quite handy extensions for CEDET. It should
-  go without saying that the configuration for this packages absolutely
-  *requires* the development version of CEDET to properly function.
+We also pull down the CEDET development repository to get access to the
+contributors' scripts, which are quite handy extensions for CEDET. It should
+go without saying that the configuration for this packages absolutely
+*requires* the development version of CEDET to properly function.
 
-  It's important to put *all* CEDET configuration in /this/ =use-package=
-  specification, since values seem to be overwritten if we break CEDET up into
-  separate =use-package= expressions for =semantic=, =ede=, etc.
+It's important to put *all* CEDET configuration in /this/ =use-package=
+specification, since values seem to be overwritten if we break CEDET up into
+separate =use-package= expressions for =semantic=, =ede=, etc.
 
 ** Semantic
-   #+begin_src emacs-lisp
-     (use-package semantic
-       :disabled
-       :hook
-       (c-mode-common . semantic-mode)
-       :init
-       (require 'compile)
-       (require 'cc-mode)
-       :config
-       (my/semantic-add-default-minor-modes)
-       (my/semantic-add-gtags-support)
-       (my/semantic-remove-capf-hooks)
+#+begin_src emacs-lisp
+  (use-package semantic
+    :disabled
+    :hook
+    (c-mode-common . semantic-mode)
+    :init
+    (require 'compile)
+    (require 'cc-mode)
+    :config
+    (my/semantic-add-default-minor-modes)
+    (my/semantic-add-gtags-support)
+    (my/semantic-remove-capf-hooks)
 
-       ;; Add more header paths to Semantic's paths list.
-       ;; Can use this function any number of times.
-       ;; If you want the headers to be available in both C and C++, do not
-       ;; include the optional second mode argument.
-       (semantic-add-system-include "/usr/include/boost" 'c++-mode)
+    ;; Add more header paths to Semantic's paths list.
+    ;; Can use this function any number of times.
+    ;; If you want the headers to be available in both C and C++, do not
+    ;; include the optional second mode argument.
+    (semantic-add-system-include "/usr/include/boost" 'c++-mode)
 
-       ;; Set default throttle sources for Semantic.
-       (my/semantic-set-throttles-for-modes)
+    ;; Set default throttle sources for Semantic.
+    (my/semantic-set-throttles-for-modes)
 
-       ;; Set keybindings here to avoid Emacs error that occurs when we try to use
-       ;; the :bind directives.
-       (my/semantic-add-keybindings))
-   #+end_src
+    ;; Set keybindings here to avoid Emacs error that occurs when we try to use
+    ;; the :bind directives.
+    (my/semantic-add-keybindings))
+#+end_src
 
 ** EDE
-   #+begin_src emacs-lisp
-     (use-package ede
-       :disabled
-       :hook
-       (ede-minor-mode . my/ede-hook-fn)
-       :config
-       (global-ede-mode))
+#+begin_src emacs-lisp
+  (use-package ede
+    :disabled
+    :hook
+    (ede-minor-mode . my/ede-hook-fn)
+    :config
+    (global-ede-mode))
 
-     (require 'compile)
-   #+end_src
+  (require 'compile)
+#+end_src
 
 ** CEDET Development Repository
-   #+begin_src emacs-lisp
-     (use-package cedet
-       :disabled
-       :straight
-       (cedet :type git :host github :repo "alexott/cedet" :branch "devel")
-       :hook
-       ;; Need to activate semantic-mode later on to make sure our third-party
-       ;; plugins are available.
-       (c-mode-common . my/cedet-hook-fn)
-       :config
-       (add-hook 'semantic-mode-hook #'my/semantic-hook-fn)
-       (add-hook 'ede-minor-mode-hook #'my/semantic-hook-fn))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package cedet
+    :disabled
+    :straight
+    (cedet :type git :host github :repo "alexott/cedet" :branch "devel")
+    :hook
+    ;; Need to activate semantic-mode later on to make sure our third-party
+    ;; plugins are available.
+    (c-mode-common . my/cedet-hook-fn)
+    :config
+    (add-hook 'semantic-mode-hook #'my/semantic-hook-fn)
+    (add-hook 'ede-minor-mode-hook #'my/semantic-hook-fn))
+#+end_src
 
 * Plugins
-  Extra plugins supporting CEDET. Larger tools, such as ECB, have their own
-  configuration files to keep this one relatively short.
+Extra plugins supporting CEDET. Larger tools, such as ECB, have their own
+configuration files to keep this one relatively short.
 
 *** Semantic Refactor
-    =srefactor= is a refactoring plugin for C/C++ using =CEDET=.
+=srefactor= is a refactoring plugin for C/C++ using =CEDET=.
 
-    #+begin_src emacs-lisp
-      (use-package srefactor
-        :disabled
-        :after cedet
-        :general
-        (general-def lisp-mode-map
-          "M-RET o" 'srefactor-lisp-one-line
-          "M-RET m" 'srefactor-lisp-format-sexp
-          "M-RET d" 'srefactor-lisp-format-defun
-          "M-RET b" 'srefactor-lisp-format-buffer)
-        (general-def emacs-lisp-mode-map
-          "M-RET o" 'srefactor-lisp-one-line
-          "M-RET m" 'srefactor-lisp-format-sexp
-          "M-RET d" 'srefactor-lisp-format-defun
-          "M-RET b" 'srefactor-lisp-format-buffer)
-        (general-def c-mode-map
-          "M-RET" 'srefactor-refactor-at-point)
-        (general-def c++-mode-map
-          "M-RET" 'srefactor-refactor-at-point)
-        :config
-        (require 'srefactor)
-        (require 'srefactor-lisp))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package srefactor
+    :disabled
+    :after cedet
+    :preface
+    (require 'general)
+    :general
+    (general-def lisp-mode-map
+      "M-RET o" 'srefactor-lisp-one-line
+      "M-RET m" 'srefactor-lisp-format-sexp
+      "M-RET d" 'srefactor-lisp-format-defun
+      "M-RET b" 'srefactor-lisp-format-buffer)
+    (general-def emacs-lisp-mode-map
+      "M-RET o" 'srefactor-lisp-one-line
+      "M-RET m" 'srefactor-lisp-format-sexp
+      "M-RET d" 'srefactor-lisp-format-defun
+      "M-RET b" 'srefactor-lisp-format-buffer)
+    (general-def c-mode-map
+      "M-RET" 'srefactor-refactor-at-point)
+    (general-def c++-mode-map
+      "M-RET" 'srefactor-refactor-at-point)
+    :config
+    (require 'srefactor)
+    (require 'srefactor-lisp))
+#+end_src
 
 *** function-args
-    The =function-args= package provides a preview for a functions arguments
-    when you type the function's open parenthesis. That is, it provides an
-    inline hint for typing a function's arguments.
+The =function-args= package provides a preview for a functions arguments
+when you type the function's open parenthesis. That is, it provides an
+inline hint for typing a function's arguments.
 
-    *IMPORTANT*: =function-args-mode= /will/ activate Semantic! This is
-    something that you probably do not want. Once Semantic is active, it is
-    super hard to turn it off.
+*IMPORTANT*: =function-args-mode= /will/ activate Semantic! This is
+something that you probably do not want. Once Semantic is active, it is
+super hard to turn it off.
 
-    #+begin_src emacs-lisp
-      (use-package function-args
-        :disabled
-        :after cedet
-        :general
-        (general-unbind function-args-mode-map
-          ;; Remove mappings from the function-args-mode-map that we wish to use for
-          ;; eassist in CEDET.
-          "M-o")
-        (my/user-leader-def function-args-mode-map
-          ;; Add new bindings for the ones we removed.
-          "m c" 'moo-complete
-          ;; Change existing bindings
-          "m s" 'fa-show)
-        :init
-        ;; Enable case-insensitive searching.
-        (setq-default semantic-case-fold t)
-        :config
-        ;; Make c++-mode default for .h files to improve parsing.
-        (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode)))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package function-args
+    :disabled
+    :after cedet
+    :preface
+    (require 'general)
+    :general
+    (general-unbind function-args-mode-map
+      ;; Remove mappings from the function-args-mode-map that we wish to use for
+      ;; eassist in CEDET.
+      "M-o")
+    (my/user-leader-def function-args-mode-map
+      ;; Add new bindings for the ones we removed.
+      "m c" 'moo-complete
+      ;; Change existing bindings
+      "m s" 'fa-show)
+    :init
+    ;; Enable case-insensitive searching.
+    (setq-default semantic-case-fold t)
+    :config
+    ;; Make c++-mode default for .h files to improve parsing.
+    (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode)))
+#+end_src
 
 *** sr-speedbar
-    This is a plugin for =speedbar= that allows it to stay docked in the same
-    frame it was called from as opposed to opening in a new frame. This is far
-    more convenient, especially when using a tiling window manager.
+This is a plugin for =speedbar= that allows it to stay docked in the same
+frame it was called from as opposed to opening in a new frame. This is far
+more convenient, especially when using a tiling window manager.
 
-    #+begin_src emacs-lisp
-      (use-package sr-speedbar
-        :disabled
-        :after cedet
-        ;; No need to bind keys right now.
-        ;; sr-speedbar is unused in favor of treemacs/lsp.
-        :general
-        (my/user-leader-def
-          "b t" 'sr-speedbar-toggle
-          "b o" 'sr-speedbar-select-window)
-        :init
-        ;; Do not consider speedbar window when using 'C-x o'
-        (setq sr-speedbar-skip-other-window-p t
-              ;; Open speedbar on the right so as not to interfere with ECB windows.
-              sr-speedbar-right-side t)
-        :config
-        (sr-speedbar-refresh-turn-on))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package sr-speedbar
+    :disabled
+    :after cedet
+    ;; No need to bind keys right now.
+    ;; sr-speedbar is unused in favor of treemacs/lsp.
+    :preface
+    (require 'general)
+    :general
+    (my/user-leader-def
+      "b t" 'sr-speedbar-toggle
+      "b o" 'sr-speedbar-select-window)
+    :init
+    ;; Do not consider speedbar window when using 'C-x o'
+    (setq sr-speedbar-skip-other-window-p t
+          ;; Open speedbar on the right so as not to interfere with ECB windows.
+          sr-speedbar-right-side t)
+    :config
+    (sr-speedbar-refresh-turn-on))
+#+end_src

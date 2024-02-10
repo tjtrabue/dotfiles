@@ -31,6 +31,8 @@ completion UI in terms of customization.
   (use-package vertico
     :after evil-collection
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def vertico-map
       "?" 'minibuffer-completion-help

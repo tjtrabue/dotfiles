@@ -19,6 +19,8 @@ the function that displays the tree of edits made to the current buffer.
     ;; fine, but the errors can get annoying.
     :disabled
     :demand t
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def
       "ut" 'undo-tree-visualize)

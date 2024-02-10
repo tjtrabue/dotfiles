@@ -65,6 +65,8 @@ all the time.
     :ensure nil
     :straight nil
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def '(normal insert)
       ;; The primary HippieExpand keybinding.

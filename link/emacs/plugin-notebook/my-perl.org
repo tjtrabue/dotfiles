@@ -230,6 +230,8 @@ It really supersedes my custom =find-perl-module= function.
 #+begin_src emacs-lisp
   (use-package perl-find-library
     :after cperl-mode
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def cperl-mode-map
       "f l" 'perl-find-library)

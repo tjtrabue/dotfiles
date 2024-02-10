@@ -15,6 +15,8 @@ This is the configuration for =treemacs= itself.
   (use-package treemacs
     :after all-the-icons
     :commands treemacs
+    :preface
+    (require 'general)
     :general
     (general-def
       "M-0" 'treemacs-select-window)
@@ -82,6 +84,8 @@ update the =treemacs= workspace when we switch =projectile= projects because
   (use-package treemacs-projectile
     :after (treemacs projectile)
     :commands treemacs-projectile
+    :preface
+    (require 'general)
     :general
     ;; Automatically prefixed with "C-c"
     (my/user-leader-def

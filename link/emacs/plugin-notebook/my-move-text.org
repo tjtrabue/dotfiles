@@ -8,41 +8,45 @@ This file contains plugins and configuration for moving words, lines, or regions
 around in Emacs buffers.
 
 * Drag Stuff
-  This is an alternative to =move-text= with more features, such as the ability
-  to drag words back and forth. It integrates with =evil-mode='s visual
-  selection much better than =move-text=.
+This is an alternative to =move-text= with more features, such as the ability
+to drag words back and forth. It integrates with =evil-mode='s visual
+selection much better than =move-text=.
 
-  #+begin_src emacs-lisp
-    (use-package drag-stuff
-      :demand t
-      :delight
-      :general
-      (general-def '(normal visual) drag-stuff-mode-map
-        "M-k" 'drag-stuff-up
-        "M-j" 'drag-stuff-down
-        ;; "M-h" 'drag-stuff-left
-        ;; "M-l" 'drag-stuff-right
-        )
-      ;; NOTE: Can't use `:custom' stanza to customize drag-stuff
-      ;;       variables because the author used `defvar' instead
-      ;;       of `defcustom' to define the plugin's variables.
-      :init
-      ;; Do not activate drag-stuff for lisp files since we want
-      ;; to use lispy commands to drag s-exps.
-      (setq drag-stuff-except-modes my/lisp-major-modes)
-      :config
-      (drag-stuff-global-mode 1))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package drag-stuff
+    :demand t
+    :delight
+    :preface
+    (require 'general)
+    :general
+    (general-def '(normal visual) drag-stuff-mode-map
+      "M-k" 'drag-stuff-up
+      "M-j" 'drag-stuff-down
+      ;; "M-h" 'drag-stuff-left
+      ;; "M-l" 'drag-stuff-right
+      )
+    ;; NOTE: Can't use `:custom' stanza to customize drag-stuff
+    ;;       variables because the author used `defvar' instead
+    ;;       of `defcustom' to define the plugin's variables.
+    :init
+    ;; Do not activate drag-stuff for lisp files since we want
+    ;; to use lispy commands to drag s-exps.
+    (setq drag-stuff-except-modes my/lisp-major-modes)
+    :config
+    (drag-stuff-global-mode 1))
+#+end_src
 
 * move-text
-  Easily move lines of text up and down with the =move-text= package. I have
-  found that this plugin does not work well with =evil-mode='s visual line
-  selection, so if you use =evil-mode=, I'd opt for Drag Stuff, instead.
+Easily move lines of text up and down with the =move-text= package. I have
+found that this plugin does not work well with =evil-mode='s visual line
+selection, so if you use =evil-mode=, I'd opt for Drag Stuff, instead.
 
 #+begin_src emacs-lisp
   (use-package move-text
     ;; Currently using Drag Stuff instead.
     :disabled
+    :preface
+    (require 'general)
     :general
     (general-def 'normal 'override
       "M-j" 'move-text-down

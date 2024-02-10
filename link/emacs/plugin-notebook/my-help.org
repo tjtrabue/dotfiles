@@ -15,6 +15,8 @@ help system.
 #+begin_src emacs-lisp
   (use-package helpful
     :after elisp-refs
+    :preface
+    (require 'general)
     :general
     (general-def 'override
       ;; Replace standard help functions with helpful functions.
@@ -47,6 +49,8 @@ Add cool new help functions, such as describe-keymap
 #+begin_src emacs-lisp
   (use-package help-fns+
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def
       "C-h M-m" 'describe-keymap
@@ -70,6 +74,8 @@ Emacs integration with the DevDocs website.
 
 #+begin_src emacs-lisp
   (use-package devdocs
+    :preface
+    (require 'general)
     :general
     (general-def
       "C-h D" 'devdocs-lookup))

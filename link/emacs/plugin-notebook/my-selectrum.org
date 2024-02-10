@@ -16,6 +16,8 @@ aforementioned three tools.
       :disabled
       :after counsel
       :demand t
+      :preface
+      (require 'general)
       :general
       (general-def
         ;; Pull up selectrum with the previous input already entered

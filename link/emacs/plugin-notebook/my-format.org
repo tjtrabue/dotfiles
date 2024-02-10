@@ -260,6 +260,8 @@ details.
     ;; This is still important, even though we make a second call to `delight' in
     ;; the `:config' block. See the note down there for more details.
     :delight
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def
       "=" 'apheleia-format-buffer)

@@ -13,6 +13,8 @@ replacement for plugins like Swiper and Helm Swoop.
   (use-package ctrlf
     :after evil-collection
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def
       ;; Remap standard Emacs isearch keybinding

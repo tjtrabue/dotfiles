@@ -79,6 +79,8 @@ seizes control of Emacs in some invasive ways.
     See the documentation for `perspective.el' for further details."
         (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
           (my-tab-line-filter-display-buffers current-persp-buffers))))
+    :preface
+    (require 'general)
     :general
     (my/user-leader-def persp-mode-map
       ;; This is general.el's way of accomplishing :bind-keymap.
@@ -143,6 +145,8 @@ the standard =projectile-switch-project= function.
 
 #+begin_src emacs-lisp
   (use-package persp-projectile
+    :preface
+    (require 'general)
     :general
     (general-def projectile-command-map
       [remap projectile-switch-project] 'projectile-persp-switch-project

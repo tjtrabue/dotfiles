@@ -155,6 +155,8 @@ Thank you so much for the your contributions, Mihai!
                      "gh" 'sly-describe-function
                      "gr" 'sly-who-references
                      "gs" 'sly-who-sets))))
+    :preface
+    (require 'general)
     :general
     (general-def sly-prefix-map
       ;; sly-prefix-map is bound to "C-c" in sly-mode by default.
@@ -449,6 +451,8 @@ equivalent, so be sure to look for them using =C-h f=.
     :hook
     ((lisp-mode . slime-mode)
      (inferior-lisp-mode . inferior-slime-mode))
+    :preface
+    (require 'general)
     :general
     (my/evil-leader-def slime-repl-mode-map
       ;; Use ",," in normal mode in the SLIME REPL to launch the shortcut menu.

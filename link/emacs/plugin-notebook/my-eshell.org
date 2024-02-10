@@ -569,6 +569,8 @@ use of all the functions we've written above.
     (eshell-mode . (lambda ()
                      (set-eshell-env-vars)
                      (set-eshell-aliases)))
+    :preface
+    (require 'general)
     :general
     (general-def eshell-proc-mode-map
       "M-j" 'eshell-next-matching-input-from-input

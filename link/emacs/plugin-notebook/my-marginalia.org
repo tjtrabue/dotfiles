@@ -21,6 +21,8 @@ command =marginalia-cycle=.
 #+begin_src emacs-lisp
   (use-package marginalia
     :demand t
+    :preface
+    (require 'general)
     :general
     (general-def minibuffer-local-map
       "M-A" 'marginalia-cycle)

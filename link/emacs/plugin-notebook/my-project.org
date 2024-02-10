@@ -44,6 +44,8 @@ software development.
     ;; projectile after perspective.
     :after perspective
     :demand t
+    :preface
+    (require 'general)
     :general
     ;; This extended general definition allows us to bind keymaps to keys
     ;; just like use-package's `bind-keymap' directive.

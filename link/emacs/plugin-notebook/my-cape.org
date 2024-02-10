@@ -14,6 +14,8 @@ completion functions directly to keys to invoke them manually.
 
 #+begin_src emacs-lisp
   (use-package cape
+    :preface
+    (require 'general)
     :general
     (general-def
       "M-\" p" 'completion-at-point

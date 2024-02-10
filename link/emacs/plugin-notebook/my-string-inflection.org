@@ -9,7 +9,6 @@
 through an array of standard naming conventions, such as "camelCase", "UPCASE",
 "snake_case", and more.
 
-* =use-package= specification
 #+begin_src emacs-lisp
   (use-package string-inflection
     :hook
@@ -19,6 +18,8 @@ through an array of standard naming conventions, such as "camelCase", "UPCASE",
                       (local-set-key (kbd "C-c C-u") 'string-inflection-python-style-cycle)))
      (ruby-mode . (lambda ()
                     (local-set-key (kbd "C-c C-u") 'string-inflection-ruby-style-cycle))))
+    :preface
+    (require 'general)
     :general
     ;; The main keybinding:
     ;; test_thing => TEST_THING => TestThing => testThing => test-thing

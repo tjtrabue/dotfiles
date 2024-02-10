@@ -16,6 +16,8 @@ jumping system of =ace-jump-mode= to navigating between windows, as well.
 
 #+begin_src emacs-lisp
   (use-package ace-window
+    :preface
+    (require 'general)
     :general
     (general-def 'override
       ;; Call `ace-window'
