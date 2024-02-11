@@ -812,26 +812,6 @@ Custom functions, both standard and interactive.
                    (normal-top-level-add-subdirs-to-load-path)))
                load-path))))
 
-    (defun my/compile-org-dir (org-dir)
-      "Tangle then byte compile every .org file in ORG-DIR, but only if necessary.
-
-    This function first checks for byte-compiled .elc files in the
-    directory. If they do not yet exist for their corresponding .el
-    files, or if the .elc files are older than their parent .el
-    files, this function byte-compiles the .el files. However, the
-    .el files are generated from their ancestor .org files, so this
-    function then checks to make sure that the .el files are present
-    and up-to-date with each .org file. If they are absent or out of
-    sync, tangle the .org files to generate the .el files."
-      (interactive)
-      (let* ((default-directory org-dir)
-             (org-files (directory-files org-dir 'full ".*\\.org"))
-             (elc-files (mapcar (lambda (file)
-                                  (concat
-                                   (file-name-sans-extension file) ".elc"))
-                                org-files)))
-        (mapc #'my/create-update-config-artifact elc-files)))
-
     (defun my/use-mu4e-p ()
       "Return T if the system is configured for `mu4e'. Return NIL otherwise."
       (and (executable-find "mu") (executable-find "mbsync")))
@@ -1412,6 +1392,7 @@ and hooks in a way that defers loading the package.
       ;; File
       "ff" 'find-file-at-point
       "fF" 'find-file-other-window
+      "fr" 'recentf-open-files
       "lf" 'load-file
       "of" 'org-babel-load-file))
 #+end_src
