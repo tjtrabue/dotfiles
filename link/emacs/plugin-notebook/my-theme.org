@@ -95,51 +95,52 @@ color names used by Modus]].
     (require 'modus-themes)
     (defun my/modus-themes-custom-faces ()
       "Customize faces for modus themes."
-      (modus-themes-with-colors
-        ;;   Change the font/size/color of Org mode titles so they stand out more.
-        (set-face-attribute 'org-document-title nil
-                            :inherit '(org-level-1 modus-themes-heading-0)
-                            :height 1.75)
-        ;;   Adjust mode line style
-        (dolist (face '(mode-line
-                        mode-line-active
-                        mode-line-inactive
-                        mode-line-highlight))
-          (set-face-attribute face nil :height 1.0
-                              ;; Increase mode-line height by adding a border box.
-                              :box `(:line-width 4
-                                                 :color ,(face-background face nil t)
-                                                 :style released-button)))
-        (when (bound-and-true-p tab-line-mode)
-          ;; Adjust tab-line faces after the theme loads.
-          (dolist (face '(tab-line
-                          tab-line-tab-current
-                          tab-line-tab-inactive
-                          tab-line-tab-inactive-alternate
-                          tab-line-highlight))
-            (set-face-attribute face nil
-                                :height 1.0
-                                :width 'expanded
-                                ;; Increase tab-line height by adding a border box.
-                                :box `(:line-width 4 :color ,(face-background face nil t)))))
-        ;;   Override solaire faces.
-        (custom-set-faces
-         `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
-         `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
-         `(solaire-hl-line-face ((,c :background ,bg-active)))
-         `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
-        (when (bound-and-true-p highlight-indent-guides-mode)
-          ;; Customize faces for `highlight-indent-guides-mode' since that mode
-          ;; cannot seem to figure out its faces on its own when using Modus themes.
-          (set-face-background 'highlight-indent-guides-odd-face bg-dim)
-          (set-face-background 'highlight-indent-guides-even-face bg-dim)
-          (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
-          (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
-          (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
-          (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
-          (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
-          (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
-          (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender))))
+      (macroexpand
+       '(modus-themes-with-colors
+          ;;   Change the font/size/color of Org mode titles so they stand out more.
+          (set-face-attribute 'org-document-title nil
+                              :inherit '(org-level-1 modus-themes-heading-0)
+                              :height 1.75)
+          ;;   Adjust mode line style
+          (dolist (face '(mode-line
+                          mode-line-active
+                          mode-line-inactive
+                          mode-line-highlight))
+            (set-face-attribute face nil :height 1.0
+                                ;; Increase mode-line height by adding a border box.
+                                :box `(:line-width 4
+                                                   :color ,(face-background face nil t)
+                                                   :style released-button)))
+          (when (bound-and-true-p tab-line-mode)
+            ;; Adjust tab-line faces after the theme loads.
+            (dolist (face '(tab-line
+                            tab-line-tab-current
+                            tab-line-tab-inactive
+                            tab-line-tab-inactive-alternate
+                            tab-line-highlight))
+              (set-face-attribute face nil
+                                  :height 1.0
+                                  :width 'expanded
+                                  ;; Increase tab-line height by adding a border box.
+                                  :box `(:line-width 4 :color ,(face-background face nil t)))))
+          ;;   Override solaire faces.
+          (custom-set-faces
+           `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
+           `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
+           `(solaire-hl-line-face ((,c :background ,bg-active)))
+           `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
+          (when (bound-and-true-p highlight-indent-guides-mode)
+            ;; Customize faces for `highlight-indent-guides-mode' since that mode
+            ;; cannot seem to figure out its faces on its own when using Modus themes.
+            (set-face-background 'highlight-indent-guides-odd-face bg-dim)
+            (set-face-background 'highlight-indent-guides-even-face bg-dim)
+            (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
+            (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
+            (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
+            (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
+            (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
+            (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
+            (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender)))))
     (defun my/activate-theme--modus ()
       "Activation/configuration function for modus theme."
       (load-theme 'modus-vivendi t)

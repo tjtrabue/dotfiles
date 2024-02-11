@@ -16,8 +16,8 @@ highlighting.
       :disabled
       ;; The `treesit' package is built-in to Emacs 29, and we should prefer
       ;; that one.
-      :if (or (< emacs-major-version 29)
-              (not (fboundp 'treesit-available-p)))
+      :if (or (not (fboundp 'treesit-available-p))
+              (not (treesit-available-p)))
       :delight
       :demand t
       :config
@@ -35,8 +35,8 @@ highlighting.
       :disabled
       ;; The `treesit' package is built-in to Emacs 29, and we should prefer
       ;; that one.
-      :if (or (< emacs-major-version 29)
-              (not (fboundp 'treesit-available-p)))
+      :if (or (not (fboundp 'treesit-available-p))
+              (not (treesit-available-p)))
       :after tree-sitter
       :demand t
       :hook
@@ -55,8 +55,8 @@ highlighting.
       :disabled
       ;; The `treesit' package is built-in to Emacs 29, and we should prefer
       ;; that one.
-      :if (or (< emacs-major-version 29)
-              (not (fboundp 'treesit-available-p)))
+      :if (or (not (fboundp 'treesit-available-p))
+              (not (treesit-available-p)))
       :after tree-sitter
       :demand t
       :hook
