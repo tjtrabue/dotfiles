@@ -14,15 +14,6 @@ blacklisted' you can fix the problem with: =M-x lsp-workpace-blacklist-remove=
 Because it was growing too large, I refactored my custom LSP mode configuration
 to the =my-custom-lsp.el= file.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
-    (require 'origami))
-#+end_src
-
 * lsp-mode
 =lsp-mode= is the actual LanguageServerProtocol client for Emacs. It does the
 heavy lifting of starting up Language Servers and managing connections to
@@ -195,8 +186,6 @@ which ones you do not yet satisfy.
                   ;; issues.
                   (when (bound-and-true-p aggressive-indent-mode)
                     (aggressive-indent-mode -1))))
-    :preface
-    (require 'general)
     :general
     ;; This is general.el's way of accomplishing :bind-keymap, but
     ;; general's way is more flexible and integrates with its
@@ -573,8 +562,6 @@ infrastructure for Emacs.
 #+end_src
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package lsp-bridge
     :after (hydra modus-themes)
     :demand t

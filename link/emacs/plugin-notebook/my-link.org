@@ -13,8 +13,6 @@ Quickly follow links in =help-mode=, =info-mode=, =woman-mode=, =eww-mode=,
 select a link.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ace-link
     ;; Disabled in favor of `link-hint', which is really just a more versatile version of this plugin.
     :disabled
@@ -35,8 +33,6 @@ Xref items, or just about anything else one would consider a "link".
 [[https://github.com/noctuid/link-hint.el][Try it out!]]
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package link-hint
     :general
     (general-def 'normal

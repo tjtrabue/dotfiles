@@ -7,8 +7,6 @@
 =anzu= highlights all searches as you type.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package anzu
     :after consult
     :delight

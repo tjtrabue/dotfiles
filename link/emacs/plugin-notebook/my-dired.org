@@ -10,18 +10,8 @@ explorer known as =dired=.
 To use =image-dired= mode properly, you must install =exiftool= on your system.
 This is a Perl based tool, and its installation varies from system to system.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired
     ;; dired is a built-in package, so we don't want to try to download it.
     :ensure nil
@@ -73,8 +63,6 @@ this way on purpose.
 
 *** dired-filter
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired-filter
     :general
     (my/evil-leader-def dired-mode-map
@@ -83,8 +71,6 @@ this way on purpose.
 
 *** dired-narrow
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired-narrow
     :hook
     (dired-mode . dired-narrow-mode)
@@ -95,8 +81,6 @@ this way on purpose.
 
 *** dired-subtree
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired-subtree
     :after evil-collection
     :general
@@ -179,8 +163,6 @@ Provides welcome additions to =dired= from =ranger=, such as two-stage
 copy-and-paste and bookmarks.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired-ranger
     :general
     (my/user-leader-def dired-mode-map
@@ -193,8 +175,6 @@ copy-and-paste and bookmarks.
 
 *** dired-collapse
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired-collapse
     :general
     (my/user-leader-def dired-mode-map
@@ -205,8 +185,6 @@ copy-and-paste and bookmarks.
 Preview files if a peep window.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package peep-dired
     :general
     (general-def dired-mode-map
@@ -218,8 +196,6 @@ Highlight =dired= buffers with Git information. Inspired by the =k= package
 for Zsh.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package dired-k
     ;; Interferes with icons in dired.
     :disabled

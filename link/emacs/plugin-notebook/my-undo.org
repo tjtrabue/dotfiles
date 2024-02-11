@@ -14,8 +14,6 @@ Vim. To use =undo-tree=, call =M-x undo-tree-mode= (or
 the function that displays the tree of edits made to the current buffer.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package undo-tree
     ;; undo-tree can cause errors due to its history file feature. It's mostly
     ;; fine, but the errors can get annoying.

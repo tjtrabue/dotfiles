@@ -7,14 +7,6 @@
 Emacs Lisp is the Emacs Lisp dialect of the age-old Lisp programming language.
 This file contains Emacs plugins and configuration for writing Emacs Lisp.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * ielm [built-in]
 IELM is the Inferior Emacs Lisp Mode. That is, it is a simple REPL for Emacs
 Lisp built on COMINT. It comes packaged with Emacs, so no installation is
@@ -73,8 +65,6 @@ Provides a cool overlay when evaluating an Elisp expression that looks like
 For example: =(number-sequence 1 10)= results in: =1 2 3 4 5 6 7 8 9 10=
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package eros
     :hook
     (emacs-lisp-mode . eros-mode)
@@ -104,8 +94,6 @@ whatever its type. As with =slime-describe-symbol=, this functionality is bound
 both to =C-c C-d d= and =C-c C-d C-d= by default.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package elisp-slime-nav
     :delight
     :hook
@@ -124,8 +112,6 @@ writing, it is still under development and not particularly stable. Make sure to
 stay on top of this package's new features and changing API.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package elisp-autofmt
     :straight
     (elisp-autofmt :type git :host codeberg :repo "ideasman42/emacs-elisp-autofmt"

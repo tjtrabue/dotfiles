@@ -17,14 +17,6 @@ you.
 If you are curious about the correct coding style for Common Lisp, you can find
 the style guide [[https:lisp-lang.org/style-guide][here]].
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * Basic Configuration
 #+begin_src emacs-lisp
   ;; Read the user's SBCL config file as a Common Lisp file.
@@ -136,8 +128,6 @@ Thank you so much for the your contributions, Mihai!
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package sly
     ;; Currently using SLIME.
     :disabled
@@ -452,8 +442,6 @@ equivalent, so be sure to look for them using =C-h f=.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package slime
     :delight
     (slime-autodoc-mode nil slime-autodoc)

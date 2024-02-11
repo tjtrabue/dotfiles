@@ -10,8 +10,6 @@ for Vim/Neovim. It is newer and more feature-rich than =ace-jump-mode=, as well
 as being actively maintained, making =avy= the better alternative.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package avy
     :after evil-collection
     :general

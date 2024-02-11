@@ -13,47 +13,32 @@ up our nice, easy method of loading themes from right here in this file. If you
 do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (require 'general)
-    ;; We need to load Org faces before we can customize them.
-  (require 'org-faces)
-
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * Variables
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (defvar my/theme-after-load-hook nil
-      "Functions to run after the main theme activates.
+  (defvar my/theme-after-load-hook nil
+    "Functions to run after the main theme activates.
   Please do not make this hook run as advice to `load-theme' because
   it will end up in an infinite loop due to the need to load the
   `org-beautify-theme' after the main theme. Thus, it will call `load-theme'
-  automatically after it calls `load-theme' for all eternity."))
+  automatically after it calls `load-theme' for all eternity.")
 #+end_src
 
 * Functions
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (defsubst my/activate-theme ()
-      "Activate my favorite color theme.
+  (defun my/activate-theme ()
+    "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
   functions to provide a single point of theme configuration."
-      (my/activate-theme--modus)))
+    (my/activate-theme--modus))
 #+end_src
 
 * Add advice to theme activation function
 We want to run our custom theme hooks automatically after the theme loads.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (defun run-my/activate-theme ()
-      "Run `my/theme-after-load-hook'."
-      (run-hooks 'my/theme-after-load-hook)))
+  (defun run-my/activate-theme ()
+    "Run `my/theme-after-load-hook'."
+    (run-hooks 'my/theme-after-load-hook))
   (advice-add 'my/activate-theme :after #'run-my/activate-theme)
 #+end_src
 
@@ -106,6 +91,7 @@ color names used by Modus]].
       ;; Switch from light to dark theme, or vice versa.
       "<f5>" 'modus-themes-toggle)
     :init
+    (require 'org-faces)
     (require 'modus-themes)
     (defun my/modus-themes-custom-faces ()
       "Customize faces for modus themes."

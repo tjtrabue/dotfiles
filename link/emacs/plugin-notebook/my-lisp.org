@@ -15,8 +15,6 @@ manner. There is also the fantastic =lispyville= plugin for integrating
 configuration, which is where I keep most of my interesting =lispy= settings.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package lispy
     :delight
     :hook

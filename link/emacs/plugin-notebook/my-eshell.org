@@ -12,14 +12,6 @@ lot of getting used to, but the reward is well worth the effort.  Most of the
 functions within this file were taken directly or adapted from Howard Abrams'
 eshell dotfiles.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * eshell
 This is the configuration for =eshell= itself. We use =use-package= to specify
 the configuration for =eshell= even though =eshell= is built-in to Emacs. This
@@ -571,8 +563,6 @@ This is where we specify the =use-package= directive for =eshell=, which makes
 use of all the functions we've written above.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package eshell
     :after evil-collection
     :hook

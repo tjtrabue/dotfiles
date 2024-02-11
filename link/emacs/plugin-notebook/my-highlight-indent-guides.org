@@ -53,8 +53,6 @@ automatically. The guides can clutter the UI and look distracting.
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package highlight-indent-guides
     ;; If you want to enable indent guides automatically, uncomment this hook.
     ;; :hook

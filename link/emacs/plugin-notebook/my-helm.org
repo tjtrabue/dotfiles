@@ -6,14 +6,6 @@
 
 Configuration for all things helm-related, including helm-projectile integration.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * helm
 =helm= is a generic completion framework for Emacs that is far more powerful
 than basic tab-completion. I don't want to rewrite the whole Bible on Helm
@@ -26,8 +18,6 @@ errors in Helm, notably in =helm-config.el=, citing undefined/void variables
 as the reason for halting compilation. I recommend you use =ivy= in this case.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm
     :disabled
     :demand t
@@ -141,8 +131,6 @@ That function prompts for a project if we're not already in one,
 whereas helm-projectile-find-file does not.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-projectile
     ;; Currently using Vertico/Consult instead of Helm.
     :disabled
@@ -166,8 +154,6 @@ completion systems such as Selectrum. Thus, we can use =helm-swoop= by itself
 without loading Helm.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-swoop
     :after projectile
     :general
@@ -250,8 +236,6 @@ alternatives, and each has its own set of benefits and drawbacks.
 *NOTE*: Currently deprecated in favor of =helm-lsp=
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-gtags
     :disabled
     :after helm
@@ -292,8 +276,6 @@ working configuration for =persp-mode= in my plugins notebook. I only use
 =persp-mode= for everything else.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-escreen
     :disabled
     :after (helm escreen)
@@ -312,8 +294,6 @@ This package provides an alternative to the built-in =xref-apropos= for
 =lsp-mode=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-lsp
     :disabled
     :after (lsp-mode helm)
@@ -363,8 +343,6 @@ update, delete, etc.) whereas =system-packages= can operate on packages en
 mass.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-system-packages
     :general
     (my/user-leader-def
@@ -383,8 +361,6 @@ Search =perldoc= documentation with =helm=. It has lots of nice helm actions
 built into it, as well.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-perldoc
     :disabled
     :after cperl-mode
@@ -405,8 +381,6 @@ company's default completion buffer since it does not integrate with
 documentation on hover and other nice features.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package helm-company
     ;; Not super useful, and it doesn't integrate with documentation on
     ;; hover.

@@ -14,14 +14,6 @@ high performance, modern systems and data-oriented programming.
 Odin is the C alternative for the Joy of Programming.
 #+end_quote
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * odin-mode
 Major mode for editing source code files written in the Odin programming
 language.

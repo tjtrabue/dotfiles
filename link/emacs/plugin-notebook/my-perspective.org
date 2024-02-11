@@ -26,8 +26,6 @@ seizes control of Emacs in some invasive ways.
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package perspective
     :demand t
     :hook
@@ -144,8 +142,6 @@ perspectives specifically for Projectile projects. This is very similar to
 the standard =projectile-switch-project= function.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package persp-projectile
     :general
     (general-def projectile-command-map

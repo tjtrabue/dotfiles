@@ -47,8 +47,6 @@ keybinding for =embark-act=, and select an action for the candidate, such as
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package embark
     :after evil-collection
     :demand t

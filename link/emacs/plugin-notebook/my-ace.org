@@ -15,8 +15,6 @@ Quick and easy window navigation, Ace style! This plugin extends the buffer
 jumping system of =ace-jump-mode= to navigating between windows, as well.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ace-window
     :general
     (general-def 'override

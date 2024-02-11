@@ -10,8 +10,6 @@ through an array of standard naming conventions, such as "camelCase", "UPCASE",
 "snake_case", and more.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package string-inflection
     :hook
     ((java-mode . (lambda ()

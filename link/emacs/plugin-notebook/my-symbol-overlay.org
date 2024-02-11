@@ -11,8 +11,6 @@ inspired by the =highlight-symbol= package, but =symbol-overlay= is much faster
 and more powerful.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package symbol-overlay
     :general
     (my/user-leader-def

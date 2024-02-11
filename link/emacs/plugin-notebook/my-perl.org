@@ -14,14 +14,6 @@ fairly sophisticated configuration for various Perl plugins should you wish to
 use them, such as =plsense= and =Devel::PerlySense=. Just be warned that using
 such plugins is sure to slow your system down significantly.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * PDE
 PDE is a collection of Emacs Lisp modules for interacting with Perl code
 distributed through CPAN in a package named =Emacs::PDE=. Thus, you must
@@ -243,8 +235,6 @@ This is a community package for finding Perl library source files.
 It really supersedes my custom =find-perl-module= function.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package perl-find-library
     :after cperl-mode
     :general

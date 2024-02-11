@@ -12,14 +12,6 @@ of tools, notably *Semantic* (intellisense, code completion, navigation), *EDE*
 (project management and library inclusion), and *Senator* (tag integration and
 simpler code completion/navigation).
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * Important Notes on CEDET Tools (Please Read!)
 ** Semantic Notes
 Semantic is a semantic analyzer for various coding languages. It is also old,
@@ -267,8 +259,6 @@ configuration files to keep this one relatively short.
 =srefactor= is a refactoring plugin for C/C++ using =CEDET=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package srefactor
     :disabled
     :after cedet
@@ -302,8 +292,6 @@ something that you probably do not want. Once Semantic is active, it is
 super hard to turn it off.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package function-args
     :disabled
     :after cedet
@@ -331,8 +319,6 @@ frame it was called from as opposed to opening in a new frame. This is far
 more convenient, especially when using a tiling window manager.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package sr-speedbar
     :disabled
     :after cedet

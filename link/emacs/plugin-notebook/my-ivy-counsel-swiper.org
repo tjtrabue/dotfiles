@@ -39,8 +39,6 @@ details.
 press =C-M-j=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ivy
     :disabled
     :after evil-collection
@@ -112,8 +110,6 @@ is is =ivy-yasnippet=, and I recommend you re-bind your =yas-expand= key to
 =ivy-yasnippet=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ivy-yasnippet
     :disabled
     :after (ivy yasnippet)
@@ -138,8 +134,6 @@ is more general and faster.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package counsel
     :disabled
     :after ivy
@@ -158,8 +152,6 @@ is more general and faster.
 ** Plugins
 *** counsel-projectile
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package counsel-projectile
     :disabled
     :after (counsel projectile)
@@ -174,8 +166,6 @@ is more general and faster.
 
 *** counsel-tramp
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package counsel-tramp
     :disabled
     :general
@@ -188,8 +178,6 @@ is more general and faster.
 =isearch=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package swiper
     :disabled
     :after evil-collection

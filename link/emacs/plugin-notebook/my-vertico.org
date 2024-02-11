@@ -14,14 +14,6 @@ use =completing-read= for completion can benefit from Vertico's sleek narrowing
 search front-end. Thus, Vertico really is a /replacement/ for Emacs' completion
 UI, as well as an enhancement.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * Vertico vs. other narrowing completion UIs
 Vertico is an alternative to completion frameworks such as Selectrum, Ivy,
 Helm, IDO, =icomplete-vertical=, etc. The main difference is that Vertico aims
@@ -36,8 +28,6 @@ completion UI in terms of customization.
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package vertico
     :after evil-collection
     :demand t

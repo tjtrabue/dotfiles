@@ -48,8 +48,6 @@ the page title found from the URL. It's a little limited, but it's handy for
 getting URLs into an Org document, which you can edit later.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package org-cliplink
     :after org
     :general
@@ -111,8 +109,6 @@ repository. [[https://github.com/tjtrabue/roam-notes][I keep my org-roam databas
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package org-roam
     :after (emacsql org)
     :demand t
@@ -215,8 +211,6 @@ To get started, =M-x org-tree-slide-mode=, and then use =C->= and =C-<= to
 navigate slides.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package org-tree-slide
     :general
     (general-def org-tree-slide-mode-map

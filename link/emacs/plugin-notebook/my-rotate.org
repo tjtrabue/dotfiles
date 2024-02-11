@@ -9,8 +9,6 @@ Change the orientation of multiple windows in an Emacs frame. This package
 behaves similar to =tmux=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package rotate
     :general
     (my/evil-leader-def

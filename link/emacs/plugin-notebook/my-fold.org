@@ -86,8 +86,6 @@ layer.
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package vimish-fold
     ;; origami supports Vim-style "{{{...}}}" folding now.
     :disabled

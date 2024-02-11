@@ -40,8 +40,6 @@ completion buffer to some category. For example:
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package consult
     :demand t
     ;; Replace bindings. Lazily loaded due by `use-package'.
@@ -190,8 +188,6 @@ including =recentf= directories, project directories, bookmarked directories,
 and more.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package consult-dir
     :after consult
     :general
@@ -205,8 +201,6 @@ and more.
 Consult integration with =lsp-mode=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package consult-lsp
     :after (consult lsp-mode)
     :general
@@ -234,8 +228,6 @@ Integrates =consult= with the =projectile= project manager. It provides the
 awesome =consult=-ing read front end for =projectile= functions.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package consult-projectile
     :after (consult projectile)
     :demand t
@@ -271,8 +263,6 @@ awesome =consult=-ing read front end for =projectile= functions.
 Consult source for Yasnippet snippets for the current major mode.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package consult-yasnippet
     :after (consult yasnippet)
     :general
@@ -284,8 +274,6 @@ Consult source for Yasnippet snippets for the current major mode.
 Consult integration with the =flycheck= linting engine.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package consult-flycheck
     :after (consult flycheck)
     :general

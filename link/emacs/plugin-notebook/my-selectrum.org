@@ -11,8 +11,6 @@ aforementioned three tools.
 
 * =use-package= specification
   #+begin_src emacs-lisp
-    (require 'general)
-
     (use-package selectrum
       ;; Disabled in favor of Vertico
       :disabled

@@ -7,14 +7,6 @@
 Integration for the awesome Clojure programming language.  Thanks, Rich! The
 world needed another Lisp.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
 * clojure-mode
 Major mode for editing Clojure files.
 
@@ -117,8 +109,6 @@ file in your project's root directory with the following content:
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package cider
     :after evil-collection
     :hook

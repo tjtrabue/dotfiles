@@ -14,8 +14,6 @@ that expands the snippet based on the abbreviation before point.
 The =yasnippet= plugin itself.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package yasnippet
     :demand t
     :delight yas-minor-mode
@@ -109,8 +107,6 @@ All you do is enter the code you'd enter anyway but placing ~ chars where you`d
 like YASnippet fields and mirrors to be.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package auto-yasnippet
     :after yasnippet
     :general

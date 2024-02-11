@@ -28,8 +28,6 @@ Adds IDE-like features to Emacs when editing CMake projects.
 you use it, currently.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package cmake-ide
     :disabled
     :after projectile

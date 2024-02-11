@@ -12,8 +12,6 @@ cross-platform.
   =ggtags= is Emacs' front end to GNU Global.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ggtags
     :hook
     ;; Start helm-gtags-mode only for specific major modes

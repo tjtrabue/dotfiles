@@ -36,8 +36,6 @@ Cycles through todo states for an Org file entry.
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package hydra
     :after evil-collection
     :demand t

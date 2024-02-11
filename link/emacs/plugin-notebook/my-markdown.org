@@ -16,8 +16,6 @@ If you have the =edit-indirect= package installed, you can edit fenced code
 blocks in a separate buffer with =C-c C-'= a la Org Mode.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package markdown-mode
     :after edit-indirect
     :mode

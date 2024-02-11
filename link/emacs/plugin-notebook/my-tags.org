@@ -33,8 +33,6 @@ configuration. To change the recipe you used to generate the tags file, execute
 
 ** =use-package= specification
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package citre
     :delight
     :commands

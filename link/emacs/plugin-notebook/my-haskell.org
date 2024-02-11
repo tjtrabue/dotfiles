@@ -19,8 +19,6 @@ strengthen your Haskell game in no time.
   built-in debugger.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package haskell-mode
     :after evil-collection
     :hook

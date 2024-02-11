@@ -14,8 +14,6 @@ required OS libraries, runtime environments, environment variables, and files.
 
 * docker
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package docker
     :general
     (my/user-leader-def

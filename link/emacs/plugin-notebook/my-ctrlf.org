@@ -10,8 +10,6 @@ itself as a replacement for =isearch=, but it is also trying to evolve into a
 replacement for plugins like Swiper and Helm Swoop.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package ctrlf
     :after evil-collection
     :demand t

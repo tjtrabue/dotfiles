@@ -19,8 +19,6 @@ program (i.e., functions, variables, subroutines, methods, classes, etc.).
 =grep= and =ag=.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package deadgrep
     :commands deadgrep
     :general

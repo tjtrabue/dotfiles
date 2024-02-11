@@ -19,8 +19,6 @@ Flutter is a cross-platform mobile application development kit for the Dart
 programming language.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package flutter
     :after dart-mode
     :hook
@@ -42,8 +40,6 @@ Hover is an /alternative/ to =flutter.el=, which requires an emulator in order
 to work. You probably do not want to use both plugins at the same time.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package hover
     :after dart-mode
     :general

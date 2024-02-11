@@ -12,8 +12,6 @@ is simple to do.
 
 * flycheck
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package flycheck
     :hook
     (prog-mode . flycheck-mode)
@@ -271,8 +269,6 @@ Replaces standard Flycheck indicators with expressive emojis.
 Correct misspelled words using your favorite completion interface.
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package flyspell-correct
     :after flyspell
     :general

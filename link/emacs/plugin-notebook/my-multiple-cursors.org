@@ -11,8 +11,6 @@ When you want to get rid of your additional cursors, simply press =C-g= (may
 need to press that key combination more than once).
 
 #+begin_src emacs-lisp
-  (require 'general)
-
   (use-package multiple-cursors
     :disabled
     :general
