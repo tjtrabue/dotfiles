@@ -24,10 +24,16 @@ emacs_rm_caches() {
 emacs_compile_config() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
   local emacsScriptsDir="${emacsHome}/scripts"
+  local emacsSuperConfigDir="${emacsHome}/super_config"
 
   if [ ! -d "${emacsScriptsDir}" ]; then
     err "Directory ${BLUE}${emacsScriptsDir}${NC} not found"
     return 1
+  fi
+
+  if [ ! -d "${emacsSuperConfigDir}" ]; then
+    # Put together the super config files if they are not already present.
+    make_emacs_super_config
   fi
 
   emacs --batch --script "${emacsScriptsDir}/compile-config.el"
