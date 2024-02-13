@@ -70,7 +70,8 @@ This is Emacs' Emmet package.  The default expand key for Emmet snippets is
 An Elisp library that allows WebSocket clients to talk to WebSocket servers.
 
 #+begin_src emacs-lisp
-  (use-package websocket)
+  (use-package websocket
+    :demand t)
 #+end_src
 
 * deno-bridge
