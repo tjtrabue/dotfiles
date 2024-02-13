@@ -65,17 +65,28 @@ This is Emacs' Emmet package.  The default expand key for Emmet snippets is
 
 #+end_src
 
+* WebSocket
+
+An Elisp library that allows WebSocket clients to talk to WebSocket servers.
+
+#+begin_src emacs-lisp
+  (use-package websocket)
+#+end_src
+
 * deno-bridge
 
 =deno-bridge= brings the Deno runtime into Emacs. Deno is an extremely
-performant TypeScript runtime.
+performant JavaScript, TypeScript, and WebAssembly runtime with tight security
+defaults. The main reason I include =deno-bridge= in my configuration is because
+=emmet2-mode= requires it to function.
+
+You must install the [[https://github.com/denoland/deno_install][Deno]] runtime for this package to function.
 
 #+begin_src emacs-lisp
   (use-package deno-bridge
     :straight
     (:type git :host github :repo "manateelazycat/deno-bridge")
-    :init
-    (use-package websocket))
+    :after websocket)
 #+end_src
 
 * emmet2-mode

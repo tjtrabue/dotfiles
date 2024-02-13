@@ -4,7 +4,7 @@
 # macOS, and Linux. It's main selling point is that it's very secure. It comes
 # with a number of developer tools, including a very fast language server.
 install_deno() {
-  local denoInstallUrl="https://deno.land/x/install/install.sh"
+  local denoInstallUrl="https://deno.land/install.sh"
 
   curl -fsSL "${denoInstallUrl}" | sh
 }
