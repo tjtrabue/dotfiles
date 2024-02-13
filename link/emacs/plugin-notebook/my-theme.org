@@ -90,17 +90,14 @@ color names used by Modus]].
     (general-def
       ;; Switch from light to dark theme, or vice versa.
       "<f5>" 'modus-themes-toggle)
+    :preface
+    (eval-when-compile
+      (require 'modus-themes))
     :init
-    (require 'org-faces)
-    (require 'modus-themes)
     (defun my/modus-themes-custom-faces ()
       "Customize faces for modus themes."
       (macroexpand
        '(modus-themes-with-colors
-          ;;   Change the font/size/color of Org mode titles so they stand out more.
-          (set-face-attribute 'org-document-title nil
-                              :inherit '(org-level-1 modus-themes-heading-0)
-                              :height 1.75)
           ;;   Adjust mode line style
           (dolist (face '(mode-line
                           mode-line-active
