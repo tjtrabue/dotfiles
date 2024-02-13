@@ -41,12 +41,18 @@ using =web-mode= instead of =html-mode= or =mhtml-mode=.  There is a bug in
      ("\.html\\.eex\\'" . web-mode)))
 #+end_src
 
-* emmet-mode
+* emmet-mode (deprecated)
 This is Emacs' Emmet package.  The default expand key for Emmet snippets is
 =C-j=.
 
+*NOTE (2/13/24)*: The author of the GitHub repository stated that the
+=emmet-mode= project is no longer maintained. Interested users should check out
+[[*emmet2-mode][emmet2-mode]] as an alternative.
+
 #+begin_src emacs-lisp
   (use-package emmet-mode
+    ;; The GitHub repo is no longer maintained.
+    :disabled
     :hook
     ;; Auto start Emmet in certain modes, such as any markup language or CSS
     ((css-mode sgml-mode web-mode) . emmet-mode)
@@ -57,6 +63,57 @@ This is Emacs' Emmet package.  The default expand key for Emmet snippets is
                                  ;; quotes after expanding
                                  (setq emmet-move-cursor-between-quotes t))))
 
+#+end_src
+
+* deno-bridge
+
+=deno-bridge= brings the Deno runtime into Emacs. Deno is an extremely
+performant TypeScript runtime.
+
+#+begin_src emacs-lisp
+  (use-package deno-bridge
+    :straight
+    (:type git :host github :repo "manateelazycat/deno-bridge")
+    :init
+    (use-package websocket))
+#+end_src
+
+* emmet2-mode
+
+Emmet2-mode is an Emmet-enhanced minor mode for Emacs. It is built on top of
+Deno, =deno-bridge= and the Emmet NPM package, delivering the complete set of
+Emmet functionalities while also integrating a wide array of extra features,
+such as:
+
+- Expand abbreviation from any character
+- Expand JSX class attribute with CSS modules object and class names constructor
+- Automatically detect =style={{}}= attribute and then expand CSS in JS
+- Automatically detect =<style></style>= tag and =style=""= attribute, then
+  expand CSS
+- Expand CSS and SCSS at-rules
+- Expand CSS pseudo-selectors
+- Numerous enhancements for Emmet CSS abbreviations
+
+** Dependencies
+
+=emmet2-mode= depends on the [[*deno-bridge][deno-bridge]] package.
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package emmet2-mode
+    :straight (:type git :host github :repo "p233/emmet2-mode" :files (:defaults "*.ts" "src" "data"))
+    :after deno-bridge
+    :hook ((css-mode
+            ;; Elixir/Phoenix templates
+            heex-ts-mode
+            html-mode
+            html-ts-mode
+            mhtml-mode
+            web-mode)
+           . emmet2-mode)
+    :general
+    (my/user-leader-def emmet2-mode-map
+      "C-." 'emmet2-expand))
 #+end_src
 
 * restclient

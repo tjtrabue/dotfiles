@@ -6,7 +6,6 @@ android-sdk-build-tools
 android-sdk-platform-tools
 android-studio
 arc-kde-git
-authy
 brave-beta-bin
 clj-kondo
 clojure-lsp-bin
