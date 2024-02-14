@@ -34,8 +34,8 @@ to a massive decrease in Emacs' performance. I recommend that you disable
         c++-mode
         common-lisp-mode
         emacs-lisp-mode
-        elixir-mode
-        elixir-ts-mode
+        ;; elixir-mode
+        ;; elixir-ts-mode
         haskell-mode
         ielm-mode
         java-mode
