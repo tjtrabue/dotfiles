@@ -484,13 +484,15 @@ __clone_gradle_completions_repo() {
 }
 
 __add_zoxide_completions_for_bash() {
-  if [ -x "$(command -v z)" ]; then
+  if [ -x "$(command -v zoxide)" ]; then
+    log_info "Adding Zoxide completions for Bash"
     eval "$(zoxide init bash)"
   fi
 }
 
 __add_zoxide_completions_for_zsh() {
-  if [ -x "$(command -v z)" ]; then
+  if [ -x "$(command -v zoxide)" ]; then
+    log_info "Adding Zoxide completions for Zsh"
     eval "$(zoxide init zsh)"
   fi
 }
