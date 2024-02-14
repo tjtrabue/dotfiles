@@ -1781,21 +1781,23 @@ library that greatly enhances Emacs' semantic understanding of source code.
                (typescript-mode . typescript-ts-mode)
                (yaml-mode       . yaml-ts-mode)))
       (add-to-list 'major-mode-remap-alist mapping))
-    (defun my/install-missing-treesit-grammars ()
-      "Install any missing tree-sitter grammars to `~/.emacs.d/tree-sitter/'."
-      (interactive)
+    (defun my/install-treesit-grammars (&optional force-reinstall)
+      "Install any missing tree-sitter grammars to `~/.emacs.d/tree-sitter/'.
+
+  If FORCE-REINSTALL is non-nil, reinstall all tree-sitter grammars."
+      (interactive "P")
       (let ((ts-grammars-dir (file-truename (concat user-emacs-directory "tree-sitter")))
             (ts-grammars (mapcar #'car treesit-language-source-alist)))
         (if (file-directory-p ts-grammars-dir)
             ;; If the tree-sitter grammars dir exists, check its contents and only install missing
             ;; grammars.
             (dolist (g ts-grammars)
-              (unless (treesit-language-available-p g)
+              (when (or force-reinstall (not (treesit-language-available-p g)))
                 (treesit-install-language-grammar g ts-grammars-dir)))
           ;; If the tree-sitter grammar dir does not exist, install all grammars from scratch.
           (mapc (lambda (g) (treesit-install-language-grammar g ts-grammars-dir)) ts-grammars))))
     :config
-    (my/install-missing-treesit-grammars))
+    (my/install-treesit-grammars))
 #+end_src
 
 ** xref
