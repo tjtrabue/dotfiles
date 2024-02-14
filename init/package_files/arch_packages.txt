@@ -235,5 +235,6 @@ ydotool
 yq
 zathura
 zathura-pdf-poppler
+zoxide
 zsh
 zsh-completions

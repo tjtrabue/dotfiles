@@ -36,6 +36,7 @@ add_bash_completions() {
   __add_gradle_completions_for_bash
   __add_rust_completions_for_bash
   __add_kubectl_completions_for_bash
+  __add_zoxide_completions_for_bash
 }
 
 # Add any extra Zsh completions.
@@ -53,6 +54,7 @@ add_zsh_completions() {
   __add_gradle_completions_for_zsh
   __add_rust_completions_for_zsh
   __add_kubectl_completions_for_zsh
+  __add_zoxide_completions_for_zsh
 }
 
 # Add extra Fish shell completions.
@@ -478,6 +480,18 @@ __clone_gradle_completions_repo() {
     log_info "Cloning Gradle completions repo to:" \
       "${BLUE}${gradleCompletionHome}${NC}"
     git clone "${gradleCompletionUrl}" "${gradleCompletionHome}"
+  fi
+}
+
+__add_zoxide_completions_for_bash() {
+  if [ -x "$(command -v z)" ]; then
+    eval "$(zoxide init bash)"
+  fi
+}
+
+__add_zoxide_completions_for_zsh() {
+  if [ -x "$(command -v z)" ]; then
+    eval "$(zoxide init zsh)"
   fi
 }
 
