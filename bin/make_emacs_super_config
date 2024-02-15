@@ -140,7 +140,7 @@ mesc__create_super_config() {
 }
 
 main() {
-  print_header "Creating Emacs super configuration file"
+  print_header "Creating Emacs super configuration"
   mesc__make_directories
   mesc__create_super_config
 }
