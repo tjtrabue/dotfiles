@@ -50,7 +50,8 @@ user's =PATH= environment variable.
     :custom
     (editorconfig-exec-path (executable-find "editorconfig"))
     ;; editorconfig can set/unset custom whitespace-trimming minor modes based on the configured value
-    ;; of `trim_trailing_whitespace'.
+    ;; of `trim_trailing_whitespace'. The default value for this variable is `nil', in which case
+    ;; editorconfig will only call the built-in `trim-trailing-whitespace' function on save.
     ;;
     ;; For example: (setq editorconfig-trim-whitespaces-mode 'whitespace-cleanup-mode) will turn on
     ;; `whitespace-cleanup-mode' if `trim_trailing_whitespace = true', and disable
