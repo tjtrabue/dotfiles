@@ -21,22 +21,23 @@ The Tree-Sitter enabled version of =elixir-mode=.
     :if (eval-and-compile (and (fboundp 'treesit-available-p)
                                (treesit-available-p)))
     :hook
-    (elixir-ts-mode . (lambda ()
-                        (push '(">=" . ?\u2265) prettify-symbols-alist)
-                        (push '("<=" . ?\u2264) prettify-symbols-alist)
-                        (push '("!=" . ?\u2260) prettify-symbols-alist)
-                        (push '("==" . ?\u2A75) prettify-symbols-alist)
-                        (push '("=~" . ?\u2245) prettify-symbols-alist)
-                        (push '("<-" . ?\u2190) prettify-symbols-alist)
-                        (push '("->" . ?\u2192) prettify-symbols-alist)
-                        (push '("<-" . ?\u2190) prettify-symbols-alist)
-                        (push '("|>" . ?\u25B7) prettify-symbols-alist)
-                        ;; Turn on `aggressive-indent-mode' for Elixir buffers.  It seems to work fine
-                        ;; with `mix format', but if you encounter any code formatting issues, you may
-                        ;; want to disable `aggressive-indent-mode', as it can cause conflicts with
-                        ;; automatic code formatters.
-                        ;; (aggressive-indent-mode 1)
-                        )))
+    ((elixir-mode elixir-ts-mode) .
+     (lambda ()
+       (push '(">=" . ?\u2265) prettify-symbols-alist)
+       (push '("<=" . ?\u2264) prettify-symbols-alist)
+       (push '("!=" . ?\u2260) prettify-symbols-alist)
+       (push '("==" . ?\u2A75) prettify-symbols-alist)
+       (push '("=~" . ?\u2245) prettify-symbols-alist)
+       (push '("<-" . ?\u2190) prettify-symbols-alist)
+       (push '("->" . ?\u2192) prettify-symbols-alist)
+       (push '("<-" . ?\u2190) prettify-symbols-alist)
+       (push '("|>" . ?\u25B7) prettify-symbols-alist)
+       (let ((max-columns 98))
+         ;; Change the allowed number of columns for Elixir code in accordance with the community
+         ;; style guide:
+         ;; https://github.com/christopheradams/elixir_style_guide?tab=readme-ov-file#whitespace
+         (setq-local fill-column max-columns
+                     whitespace-line-column max-columns)))))
 #+end_src
 
 * mix.el
