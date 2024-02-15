@@ -49,6 +49,13 @@ user's =PATH= environment variable.
     :delight
     :custom
     (editorconfig-exec-path (executable-find "editorconfig"))
+    ;; editorconfig can set/unset custom whitespace-trimming minor modes based on the configured value
+    ;; of `trim_trailing_whitespace'.
+    ;;
+    ;; For example: (setq editorconfig-trim-whitespaces-mode 'whitespace-cleanup-mode) will turn on
+    ;; `whitespace-cleanup-mode' if `trim_trailing_whitespace = true', and disable
+    ;; `whitespace-cleanup-mode' otherwise.
+    (editorconfig-trim-whitespaces-mode 'whitespace-cleanup-mode)
     :config
     (editorconfig-mode 1))
 #+end_src
