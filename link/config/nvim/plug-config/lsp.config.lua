@@ -131,8 +131,10 @@ lspconfig.dotls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
+
 -- elixir-ls
-local elixir_ls_binary = fs.os_cmd_to_string("command -v elixir-ls")
+-- Currently using `lexical` instead.
+--[[ local elixir_ls_binary = fs.os_cmd_to_string("command -v elixir-ls")
 if not str.isempty(elixir_ls_binary) then
   lspconfig.elixirls.setup {
     capabilities = capabilities,
@@ -144,6 +146,16 @@ if not str.isempty(elixir_ls_binary) then
         fetchDeps = true
       }
     }
+  }
+end ]]
+
+-- lexical (newer Elixir LSP server)
+local lexical_binary = fs.os_cmd_to_string("command -v start_lexical.sh")
+if not str.isempty(lexical_binary) then
+  lspconfig.lexical.setup {
+    capabilities = capabilities,
+    cmd = {lexical_binary},
+    on_attach = on_attach
   }
 end
 
