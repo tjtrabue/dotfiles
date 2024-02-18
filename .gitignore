@@ -314,6 +314,7 @@ link/config/kdedefaults
 link/config/kdeglobals
 link/config/kdfrc
 link/config/kfontinstuirc
+link/config/kgammarc
 link/config/kgetrc
 link/config/kglobalshortcutsrc
 link/config/khelpcenterrc
@@ -354,6 +355,7 @@ link/config/signond/
 link/config/specialmailcollectionsrc
 link/config/spectaclerc
 link/config/systemsettingsrc
+link/config/trashrc
 link/config/webengineurlinterceptoradblockrc
 link/config/xdg-desktop-portal-kderc
 link/config/xsettingsd/

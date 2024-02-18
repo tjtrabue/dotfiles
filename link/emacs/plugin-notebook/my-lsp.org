@@ -560,6 +560,7 @@ infrastructure for Emacs.
       ("p"        lsp-bridge-peek-tree-previous-node)
       ("q"        lsp-bridge-peek-abort :exit t)))
 #+end_src
+
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lsp-bridge
