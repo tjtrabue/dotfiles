@@ -8,7 +8,7 @@
 This is where we set Emacs' primary color theme.
 
 *WARNING:* Do NOT set themes via the =M-x load-theme= command or through
-customize! Those systems will add a ton of "safety" checks to ~/.emacs and mess
+customize. Those systems will add a ton of "safety" checks to ~/.emacs and mess
 up our nice, easy method of loading themes from right here in this file. If you
 do, you'll need to go through the custom-set-variables section and delete the
 theme code added by customize.
@@ -25,11 +25,73 @@ theme code added by customize.
 
 * Functions
 #+begin_src emacs-lisp
-  (defun my/activate-theme ()
-    "Activate my favorite color theme.
+  (eval-and-compile
+    (defsubst my/modus-themes-custom-faces ()
+      "Customize faces for modus themes."
+      (modus-themes-with-colors
+        ;;   Adjust mode line style
+        (dolist (face '(mode-line
+                        mode-line-active
+                        mode-line-inactive
+                        mode-line-highlight))
+          (set-face-attribute face nil :height 1.0
+                              ;; Increase mode-line height by adding a border box.
+                              :box `(:line-width 4
+                                                 :color ,(face-background face nil t)
+                                                 :style released-button)))
+        (when (bound-and-true-p tab-line-mode)
+          ;; Adjust tab-line faces after the theme loads.
+          (dolist (face '(tab-line
+                          tab-line-tab-current
+                          tab-line-tab-inactive
+                          tab-line-tab-inactive-alternate
+                          tab-line-highlight))
+            (set-face-attribute face nil
+                                :height 1.0
+                                :width 'expanded
+                                ;; Increase tab-line height by adding a border box.
+                                :box `(:line-width 4 :color ,(face-background face nil t)))))
+        ;;   Override solaire faces.
+        (custom-set-faces
+         `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
+         `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
+         `(solaire-hl-line-face ((,c :background ,bg-active)))
+         `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
+        (when (bound-and-true-p highlight-indent-guides-mode)
+          ;; Customize faces for `highlight-indent-guides-mode' since that mode
+          ;; cannot seem to figure out its faces on its own when using Modus themes.
+          (set-face-background 'highlight-indent-guides-odd-face bg-dim)
+          (set-face-background 'highlight-indent-guides-even-face bg-dim)
+          (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
+          (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
+          (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
+          (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
+          (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
+          (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
+          (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender))))
+
+    (defsubst my/activate-theme--modus ()
+      "Activation/configuration function for modus theme."
+      (load-theme 'modus-vivendi t)
+      ;; Set custom faces for the active Modus theme.
+      (my/modus-themes-custom-faces))
+
+    (defsubst my/activate-theme--doom ()
+      "Activation/configuration function for doom theme."
+      (load-theme 'doom-one t)
+      ;; Flash the modeline when the Emacs bell rings.
+      ;; (doom-themes-visual-bell-config)
+      ;; Two treemacs icon themes: one that takes after Atom's themes, and
+      ;; another more colorful theme.
+      (doom-themes-treemacs-config)
+      ;; Correct and improve some of org-mode's native fontification.
+      (doom-themes-org-config))
+
+    (defsubst my/activate-theme ()
+      "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
   functions to provide a single point of theme configuration."
-    (my/activate-theme--modus))
+      (my/activate-theme--modus)))
 #+end_src
 
 * Add advice to theme activation function
@@ -94,55 +156,6 @@ color names used by Modus]].
     (eval-when-compile
       (require 'modus-themes))
     :init
-    (defun my/modus-themes-custom-faces ()
-      "Customize faces for modus themes."
-      (macroexpand
-       '(modus-themes-with-colors
-          ;;   Adjust mode line style
-          (dolist (face '(mode-line
-                          mode-line-active
-                          mode-line-inactive
-                          mode-line-highlight))
-            (set-face-attribute face nil :height 1.0
-                                ;; Increase mode-line height by adding a border box.
-                                :box `(:line-width 4
-                                                   :color ,(face-background face nil t)
-                                                   :style released-button)))
-          (when (bound-and-true-p tab-line-mode)
-            ;; Adjust tab-line faces after the theme loads.
-            (dolist (face '(tab-line
-                            tab-line-tab-current
-                            tab-line-tab-inactive
-                            tab-line-tab-inactive-alternate
-                            tab-line-highlight))
-              (set-face-attribute face nil
-                                  :height 1.0
-                                  :width 'expanded
-                                  ;; Increase tab-line height by adding a border box.
-                                  :box `(:line-width 4 :color ,(face-background face nil t)))))
-          ;;   Override solaire faces.
-          (custom-set-faces
-           `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
-           `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
-           `(solaire-hl-line-face ((,c :background ,bg-active)))
-           `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))
-          (when (bound-and-true-p highlight-indent-guides-mode)
-            ;; Customize faces for `highlight-indent-guides-mode' since that mode
-            ;; cannot seem to figure out its faces on its own when using Modus themes.
-            (set-face-background 'highlight-indent-guides-odd-face bg-dim)
-            (set-face-background 'highlight-indent-guides-even-face bg-dim)
-            (set-face-foreground 'highlight-indent-guides-character-face bg-dim)
-            (set-face-background 'highlight-indent-guides-top-odd-face magenta-faint)
-            (set-face-background 'highlight-indent-guides-top-even-face magenta-faint)
-            (set-face-foreground 'highlight-indent-guides-top-character-face magenta-faint)
-            (set-face-background 'highlight-indent-guides-stack-odd-face bg-lavender)
-            (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
-            (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender)))))
-    (defun my/activate-theme--modus ()
-      "Activation/configuration function for modus theme."
-      (load-theme 'modus-vivendi t)
-      ;; Set custom faces for the active Modus theme.
-      (my/modus-themes-custom-faces))
     (setq modus-themes-italic-constructs t
           modus-themes-bold-constructs t
           modus-themes-mixed-fonts t
@@ -158,32 +171,29 @@ color names used by Modus]].
                                   (agenda-date . (1.3))
                                   (agenda-structure . (variable-pitch light 1.8))
                                   (t . (1.1)))
-          ;; Whether to allow UI components under the direct control of Emacs
-          ;; (such as the mode line, header line, and tab line) to contain
-          ;; variable-pitch fonts instead of just monospaced fonts.
+          ;; Whether to allow UI components under the direct control of Emacs (such as the mode line,
+          ;; header line, and tab line) to contain variable-pitch fonts instead of just monospaced
+          ;; fonts.
           modus-themes-variable-pitch-ui t
           ;; Override colors for all Modus themes.
           modus-themes-common-palette-overrides
           '((cursor magenta-cooler)
             ;; Make the fringe invisible.
             (fringe unspecified)
-            ;; Make line numbers less intense and add a shade of cyan
-            ;; for the current line number.
+            ;; Make line numbers less intense and add a shade of cyan for the current line number.
             (fg-line-number-inactive "gray50")
             (fg-line-number-active cyan-cooler)
             (bg-line-number-inactive unspecified)
             (bg-line-number-active unspecified)
-            ;; Make the current line of `hl-line-mode' a fine shade of
-            ;; gray (though also see my `lin' package).
+            ;; Make the current line of `hl-line-mode' a fine shade of gray (though also see my `lin'
+            ;; package).
             (bg-hl-line bg-dim)
-            ;; Make the region have a cyan-green background with no
-            ;; specific foreground (use foreground of underlying text).
-            ;; "bg-sage" refers to Salvia officinalis, else the common
-            ;; sage.
+            ;; Make the region have a cyan-green background with no specific foreground (use
+            ;; foreground of underlying text). "bg-sage" refers to Salvia officinalis, else the
+            ;; common sage.
             (bg-region bg-sage)
             (fg-region unspecified)
-            ;; Make matching parentheses a shade of magenta.  It
-            ;; complements the region nicely.
+            ;; Make matching parentheses a shade of magenta. It complements the region nicely.
             (bg-paren-match bg-magenta-intense)
             ;; Make email citations faint and neutral, reducing the
             ;; default four colors to two; make mail headers cyan-blue.
@@ -255,18 +265,6 @@ buttery-smooth editing experience.
     :disabled
     :after all-the-icons
     :demand t
-    :preface
-    (eval-and-compile
-      (defsubst my/activate-theme--doom ()
-        "Activation/configuration function for doom theme."
-        (load-theme 'doom-one t)
-        ;; Flash the modeline when the Emacs bell rings.
-        ;; (doom-themes-visual-bell-config)
-        ;; Two treemacs icon themes: one that takes after Atom's themes, and
-        ;; another more colorful theme.
-        (doom-themes-treemacs-config)
-        ;; Correct and improve some of org-mode's native fontification.
-        (doom-themes-org-config)))
     :custom
     ;; Enable bold fonts
     (doom-themes-enable-bold t)

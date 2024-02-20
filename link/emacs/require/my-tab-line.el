@@ -108,6 +108,18 @@ See the documentation for `perspective.el' for further details."
 ;; entirely.
 (setq tab-line-tabs-buffer-group-function nil)
 
+;; Adjust tab-line faces.
+(dolist (face '(tab-line
+                 tab-line-tab-current
+                 tab-line-tab-inactive
+                 tab-line-tab-inactive-alternate
+                 tab-line-highlight))
+  (set-face-attribute face nil
+    :height 1.0
+    :width 'expanded
+    ;; Increase tab-line height by adding a border box.
+    :box `(:line-width 4 :color ,(face-background face nil t))))
+
 ;; Enable `tab-line-mode' globally.
 (global-tab-line-mode 1)
 
