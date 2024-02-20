@@ -69,10 +69,12 @@ all the time.
     (general-def '(normal insert)
       ;; The primary HippieExpand keybinding.
       "C-;" 'hippie-expand)
-    (general-def 'insert
-      ;; TAB should try expanding or fall back on self-insertion.
-      "TAB"   'my/hippie-expand-or-tab
-      "<tab>" 'my/hippie-expand-or-tab)
+    ;; NOTE: Using default Tab key behavior along with completion-at-point functions, which provides
+    ;;       more predictable behavior.
+    ;; (general-def 'insert
+    ;;   ;; TAB should try expanding or fall back on self-insertion.
+    ;;   "TAB"   'my/hippie-expand-or-tab
+    ;;   "<tab>" 'my/hippie-expand-or-tab)
     :custom
     ;; Adjust the list of functions that hippie-expand will try when invoked.
     (hippie-expand-try-functions-list

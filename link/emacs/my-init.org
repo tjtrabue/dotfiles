@@ -1422,7 +1422,10 @@ try to load =org= later.
     (general-def 'insert org-mode-map
       ;; Cycle/continue to next option depending on context.  This moves through
       ;; fields in a table, opens/closes org headings, etc.
-      "C-l" 'org-cycle)
+      "C-l"   'org-cycle
+      ;; Bind usual Tab key behavior (indent or complete depending on point position).
+      "TAB"   'indent-for-tab-command
+      "<tab>" 'indent-for-tab-command)
     (my/evil-leader-def org-mode-map
       "cc" 'org-edit-special
       "op" 'org-latex-preview)

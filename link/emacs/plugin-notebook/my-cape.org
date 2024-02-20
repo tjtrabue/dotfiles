@@ -14,6 +14,23 @@ completion functions directly to keys to invoke them manually.
 
 #+begin_src emacs-lisp
   (use-package cape
+    :hook
+    ((emacs-lisp-mode . (lambda ()
+                          (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+                          (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)))
+     (sgml-mode . (lambda ()
+                    (add-to-list 'completion-at-point-functions #'cape-sgml)))
+     ((tex-mode LaTeX-mode latex-mode) .
+      (lambda ()
+        (add-to-list 'completion-at-point-functions #'cape-tex)))
+     ((comint-mode eshell-mode) .
+      (lambda ()
+        (add-to-list 'completion-at-point-functions #'cape-history)))
+     (company-mode . (lambda ()
+                       ;; Use Company backends as Capfs.
+                       (setq-local completion-at-point-functions
+                                   (mapcar #'cape-company-to-capf
+                                           (list #'company-files #'company-keywords #'company-dabbrev))))))
     :general
     (general-def
       "M-\" p" 'completion-at-point
@@ -37,7 +54,7 @@ completion functions directly to keys to invoke them manually.
     ;; global list.
     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+    ;;(add-to-list 'completion-at-point-functions #'cape-elisp-block)
     ;;(add-to-list 'completion-at-point-functions #'cape-history)
     ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
     ;;(add-to-list 'completion-at-point-functions #'cape-tex)
