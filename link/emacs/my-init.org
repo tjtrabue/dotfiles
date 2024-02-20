@@ -39,10 +39,10 @@ check it frequently for important updates you must make to your configuration.
 * NOTE: Slow Emacs Initial Load
 When running a fresh Emacs installation with all the goodies for the first time
 (things like AOT native compilation, jitted trampolines, etc.), Emacs will
-probably take a very, very long time to fully load due to the insane number of
-Elisp files Emacs must compile to native code. I'm talking many hours, possibly
-a full day depending on the beefiness of your CPU. This can be discouraging, but
-it is nothing to worry about. Emacs will eventually finish compiling all your
+probably take a long time to fully load due to the insane number of Elisp files
+Emacs must compile to native code. I'm talking many hours, possibly a full day
+depending on the beefiness of your CPU. This can be discouraging, but it is
+nothing to worry about. Emacs will eventually finish compiling all your
 files...usually. If Emacs does hang during compilation, for some reason, it can
 be difficult to tell if Emacs is still running or if something went wrong. Here
 are some tips for ensuring Emacs does, in fact, finish compiling your Elisp
@@ -1253,7 +1253,7 @@ detailed above:
 #+end_src
 
 *** Integration with =use-package=
-=delight= provides the =:delight= keyword for the =use-package= macro.  If you
+=delight= provides the =:delight= keyword for the =use-package= macro. If you
 use =use-package= as your package configuration system, this is /by far/ the
 best way to use =delight=. The following comes from the =use-package= README:
 
