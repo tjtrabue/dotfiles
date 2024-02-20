@@ -66,7 +66,7 @@ is simple to do.
     ;;                   non-nil. I have found that using this option causes an
     ;;                   up-front slowdown when opening source code files, so I
     ;;                   tend not to use it.
-    (flycheck-check-syntax-automatically '(save idle-change))
+    (flycheck-check-syntax-automatically '(save idle-change idle-buffer-switch))
     :config
     ;; Should call this function instead of setting up a `prog-mode' hook for `flycheck-mode' because
     ;; doing so can result in a hook-call cycle during eager macro expansion.

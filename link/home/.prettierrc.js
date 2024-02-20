@@ -10,6 +10,7 @@ module.exports = {
   trailingComma: 'es5',
   arrowParens: 'avoid',
   bracketSpacing: false,
+  plugins: ['prettier-plugin-tailwindcss'],
   // Always wrap Markdown files after a fixed width
   printWidth: 80,
   proseWrap: 'always',

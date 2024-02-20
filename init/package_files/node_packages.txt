@@ -46,6 +46,7 @@ npm-check
 npm-check-updates
 prettier
 prettier-plugin-elm
+prettier-plugin-tailwindcss
 prettier-plugin-toml
 pyright
 serve
