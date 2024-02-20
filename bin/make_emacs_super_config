@@ -24,7 +24,7 @@ declare SUPER_CONFIG_FILE_PREFIX="tjtrabue-emacs"
 # }}}
 
 # Functions {{{
-_help() {
+mesc__help() {
   command cat <<EOF
 ${THIS_EXEC} | <insert description here>
 
@@ -139,10 +139,14 @@ mesc__create_super_config() {
   done
 }
 
-main() {
-  print_header "Creating Emacs super configuration"
+mesc__main() {
+  log_info "Creating Emacs super configuration"
   mesc__make_directories
   mesc__create_super_config
+
+  command cat <<EOF
+Wrote Emacs super config files to: ${SUPER_CONFIG_DIR}
+EOF
 }
 # }}}
 
@@ -154,7 +158,7 @@ eval set -- "$args"
 while true; do
   case "$1" in
   -h | --help)
-    _help
+    mesc__help
     exit 0
     ;;
 
@@ -171,6 +175,6 @@ while true; do
 done
 # }}}
 
-main "${@}"
+mesc__main "${@}"
 
 # vim:foldenable:foldmethod=marker:
