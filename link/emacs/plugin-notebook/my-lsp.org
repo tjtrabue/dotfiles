@@ -708,7 +708,7 @@ infrastructure for Emacs.
   ;;; LSP C language server options:
     (lsp-bridge-c-lsp-server "clangd")
   ;;; LSP Elixir language server options:
-    (lsp-bridge-elixir-lsp-server "lexical")
+    (lsp-bridge-elixir-lsp-server "elixirLS")
   ;;; LSP Python language server options:
     (lsp-bridge-python-lsp-server "pyright")
   ;;; LSP Python multi-language servers options:
