@@ -13,8 +13,7 @@ is simple to do.
 * flycheck
 #+begin_src emacs-lisp
   (use-package flycheck
-    :hook
-    (prog-mode . flycheck-mode)
+    :demand t
     :general
     ;; This is general.el's way of accomplishing :bind-keymap, but
     ;; general's way is more flexible and integrates with its
@@ -67,7 +66,11 @@ is simple to do.
     ;;                   non-nil. I have found that using this option causes an
     ;;                   up-front slowdown when opening source code files, so I
     ;;                   tend not to use it.
-    (flycheck-check-syntax-automatically '(save idle-change)))
+    (flycheck-check-syntax-automatically '(save idle-change))
+    :config
+    ;; Should call this function instead of setting up a `prog-mode' hook for `flycheck-mode' because
+    ;; doing so can result in a hook-call cycle during eager macro expansion.
+    (global-flycheck-mode 1))
 #+end_src
 
 * flyspell

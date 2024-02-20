@@ -46,6 +46,7 @@ user's =PATH= environment variable.
 #+begin_src emacs-lisp
   (use-package editorconfig
     :demand t
+    :after whitespace-cleanup-mode
     :delight
     :custom
     (editorconfig-exec-path (executable-find "editorconfig"))
