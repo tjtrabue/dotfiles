@@ -34,6 +34,14 @@ USAGE:
 OPTIONS:
   -h | --help
     Print the help message (this message) and exit.
+
+  -i DIR | --install-dir DIR
+   The directory where this script will clone the elixir-ls source code
+   repository.
+
+  -r DIR | --release-dir DIR
+    The directory where this script will copy the elixir-ls release files and
+    executables.
 EOF
 }
 
@@ -72,7 +80,10 @@ iels__main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help -n 'install_elixir_ls.sh' -- "$@")
+args=$(getopt -o hi:r: \
+  --long help,install-dir:,release-dir: \
+  -n 'install_elixir_ls.sh' \
+  -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -81,6 +92,27 @@ while true; do
   -h | --help)
     _help
     exit 0
+    ;;
+
+  -i | --install-dir)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      INSTALL_DIR="$2"
+      ;;
+
+  -r | --release-dir)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      ELIXIR_LS_RELEASE_DIR="$2"
+      ;;
+
+    esac
     ;;
 
   --)
