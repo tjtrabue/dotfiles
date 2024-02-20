@@ -102,6 +102,8 @@ while true; do
     *)
       INSTALL_DIR="$2"
       ;;
+    esac
+    ;;
 
   -r | --release-dir)
     case "$2" in
@@ -111,7 +113,6 @@ while true; do
     *)
       ELIXIR_LS_RELEASE_DIR="$2"
       ;;
-
     esac
     ;;
 
