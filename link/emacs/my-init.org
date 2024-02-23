@@ -661,16 +661,10 @@ edited location, as opposed to opening them at the beginning of the file.
 
   ;; Automatically insert closing delimiters when the user types an opening
   ;; delimiter.
-  ;;
-  ;; NOTE: Parinfer does a much better job balancing parentheses and
-  ;; much more, so we can disable electric-pair-mode.  See my-lisp.org for
-  ;; details.
-  (electric-pair-mode -1)
+  (electric-pair-mode 1)
 
   ;; Automatically keep code indented when blocks change.
-  ;; Not necessary since we use clean-aindent-mode.
-  ;; See my-whitespace.org for more details.
-  (electric-indent-mode -1)
+  (electric-indent-mode 1)
 
   ;; Allow tooltips in pop-up mini-frames.
   (tooltip-mode 1)

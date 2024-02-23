@@ -37,7 +37,11 @@ The Tree-Sitter enabled version of =elixir-mode=.
          ;; style guide:
          ;; https://github.com/christopheradams/elixir_style_guide?tab=readme-ov-file#whitespace
          (setq-local fill-column max-columns
-                     whitespace-line-column max-columns)))))
+                     whitespace-line-column max-columns))
+       (when (bound-and-true-p smartparens-mode)
+         ;; NOTE (2/22/2024): `electric-pair-mode' works better with Elixir delimiters. Once
+         ;; smartparens' Elixir support improves, we can probably remove the following line.
+         (smartparens-mode -1)))))
 #+end_src
 
 * mix.el

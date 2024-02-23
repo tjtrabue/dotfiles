@@ -34,7 +34,6 @@ aforementioned Vim plugins have.
 
   #+begin_src emacs-lisp
     (use-package smartparens
-      :demand t
       :delight
       (smartparens-mode)
       (smartparens-strict-mode)
@@ -54,6 +53,9 @@ aforementioned Vim plugins have.
        . smartparens-strict-mode)
       :config
       ;; Enable smartparens globally.
-      (smartparens-global-mode)
+      ;; NOTE: `electric-indent-mode' does a perfectly good job of balancing delimiters for most
+      ;; languages. `smartparens-strict-mode' is still valuable for Lisp-based languages, but we should
+      ;; enable those per major mode.
+      ;; (smartparens-global-mode)
       (require 'smartparens-config))
   #+end_src
