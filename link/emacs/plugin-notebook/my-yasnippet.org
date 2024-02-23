@@ -23,6 +23,8 @@ The =yasnippet= plugin itself.
     (general-unbind yas-minor-mode-map
       "TAB"
       "<tab>")
+    (general-def yas-minor-mode-map
+      "M-\\" 'yas-expand)
     (my/user-leader-def yas-minor-mode-map
       "y e" 'yas-expand
       "y f" 'yas-visit-snippet-file
