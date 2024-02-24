@@ -5,8 +5,8 @@
 #+TAGS:
 #+STARTUP: fold
 
-=polymode= is a minor mode which allows multiple major modes to coexist in a
-single buffer using Emacs' /indirect buffer/ feature.
+Polymode is a minor mode that allows multiple major modes to coexist in a single
+buffer using Emacs' /indirect buffer/ feature.
 
 * Terminology
 Polymode defines some terms with which new users will not be familiar, so I
@@ -29,7 +29,6 @@ The new major mode that ties the =hostmode= and =innermode= together.
 templates within Elixir buffers.
 
 * =use-package= specification
-
 #+begin_src emacs-lisp
   (use-package polymode
     ;; :mode
