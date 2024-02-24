@@ -1,0 +1,53 @@
+#+TITLE:   Polymode: Multiple Major Modes in One Buffer
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-02-24
+#+TAGS:
+#+STARTUP: fold
+
+=polymode= is a minor mode which allows multiple major modes to coexist in a
+single buffer using Emacs' /indirect buffer/ feature.
+
+* Terminology
+Polymode defines some terms with which new users will not be familiar, so I
+briefly define them here.
+
+** hostmode
+The parent major mode that hosts the newly defined =polymode=.
+
+*Example*: Elixir mode which hosts embedded HEEx templates.
+
+** innermode
+The major mode embedded within the =hostmode=.
+
+*Example*: HEEx templates embedded within an Elixir buffer.
+
+** polymode
+The new major mode that ties the =hostmode= and =innermode= together.
+
+*Example*: A new major mode, such as =poly-elixir-heex-mode=, which embeds HEEx
+templates within Elixir buffers.
+
+* =use-package= specification
+
+#+begin_src emacs-lisp
+  (use-package polymode
+    ;; :mode
+    ;; ;; Automatically activate polymodes for their host mode filetypes.
+    ;; ("\\.exs?$" . poly-elixir-heex-mode)
+    :custom
+    (polymode-prefix-key "C-c n")
+    :config
+    ;; Make HEEx templates editable in heex-ts-mode from within an Elixir buffer.
+    ;; Elixir buffers allow embedded HEEx templates surrounded by ~H"""...""" delimiters.
+    (define-hostmode poly-elixir-hostmode :mode 'elixir-ts-mode)
+    (define-innermode poly-heex-template-elixir-innermode
+      :mode 'heex-ts-mode
+      :head-matcher (rx "~H" (= 3 (char "\"'")) (* (any space)))
+      :tail-matcher (rx (= 3 (char "\"'")))
+      :head-mode 'host
+      :tail-mode 'host)
+    (define-polymode poly-elixir-heex-mode
+      :hostmode 'poly-elixir-hostmode
+      :innermodes '(poly-heex-template-elixir-innermode)))
+#+end_src

@@ -9,12 +9,11 @@ declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
 # Logging variables
-declare LOG_TO_FILE=""
-declare LOG_LEVEL=3
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
 
 declare EMACS_HOME="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
 declare MAIN_ORG_CONFIG_FILE="${EMACS_HOME}/my-init.org"
-declare SUPER_CONFIG_FILE="${EMACS_HOME}/tjtrabue-emacs.el"
 declare SUPER_CONFIG_DIR="${EMACS_HOME}/super_config"
 declare SUPER_CONFIG_FILE_PREFIX="tjtrabue-emacs"
 # }}}
@@ -34,6 +33,13 @@ USAGE:
 OPTIONS:
   -h | --help
     Print the help message (this message) and exit.
+
+  -q | --quiet
+    Avoid verbose output by only printing error logs.
+
+  -v | --verbose
+    Print verbose logging output. This option may be presented multiple times
+    to increase the output level.
 EOF
 }
 
@@ -151,7 +157,10 @@ EOF
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help -n '<name_here>' -- "$@")
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n 'make_emacs_super_config' \
+  -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -160,6 +169,16 @@ while true; do
   -h | --help)
     mesc__help
     exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
     ;;
 
   --)

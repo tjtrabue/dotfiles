@@ -9,8 +9,8 @@ declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
 # Logging variables
-declare LOG_TO_FILE=""
-declare LOG_LEVEL=3
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
 # }}}
 
 # Imports {{{
@@ -28,6 +28,13 @@ USAGE:
 OPTIONS:
   -h | --help
     Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
 EOF
 }
 
@@ -37,7 +44,10 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help -n '<name_here>' -- "$@")
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n '<name_here>' \
+  -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -46,6 +56,16 @@ while true; do
   -h | --help)
     _help
     exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
     ;;
 
   --)
