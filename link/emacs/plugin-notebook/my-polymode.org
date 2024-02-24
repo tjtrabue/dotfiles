@@ -8,6 +8,9 @@
 Polymode is a minor mode that allows multiple major modes to coexist in a single
 buffer using Emacs' /indirect buffer/ feature.
 
+For further reading, [[https://www.masteringemacs.org/about][Mickey Petersen wrote a wonderful article on Polymode]] that
+I highly recommend.
+
 * Terminology
 Polymode defines some terms with which new users will not be familiar, so I
 briefly define them here.
