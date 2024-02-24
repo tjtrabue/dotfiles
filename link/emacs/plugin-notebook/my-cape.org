@@ -32,21 +32,21 @@ completion functions directly to keys to invoke them manually.
                                    (mapcar #'cape-company-to-capf
                                            (list #'company-files #'company-keywords #'company-dabbrev))))))
     :general
-    (general-def
-      "C-\" p" 'completion-at-point
-      "C-\" t" 'complete-tag
-      "C-\" d" 'cape-dabbrev
-      "C-\" h" 'cape-history
-      "C-\" f" 'cape-file
-      "C-\" k" 'cape-keyword
-      "C-\" s" 'cape-elisp-symbol
-      "C-\" e" 'cape-elisp-block
-      "C-\" a" 'cape-abbrev
-      "C-\" l" 'cape-line
-      "C-\" w" 'cape-dict
-      "C-\" -" 'cape-tex
-      "C-\" =" 'cape-sgml
-      "C-\" r" 'cape-rfc1345)
+    (my/user-leader-def
+      "o p" 'completion-at-point
+      "o t" 'complete-tag
+      "o d" 'cape-dabbrev
+      "o h" 'cape-history
+      "o f" 'cape-file
+      "o k" 'cape-keyword
+      "o s" 'cape-elisp-symbol
+      "o e" 'cape-elisp-block
+      "o a" 'cape-abbrev
+      "o l" 'cape-line
+      "o w" 'cape-dict
+      "o -" 'cape-tex
+      "o =" 'cape-sgml
+      "o r" 'cape-rfc1345)
     :init
     ;; Add to the global default value of `completion-at-point-functions' which is used by
     ;; `completion-at-point'.  The order of the functions matters, the first function returning a
