@@ -582,7 +582,11 @@ infrastructure for Emacs.
       "M-["                                      'lsp-bridge-diagnostic-jump-prev
       "M-r"                                      'lsp-bridge-find-references
       "M-R"                                      'lsp-bridge-diagnostic-list
-      "M-v"                                      'acm-select-next-page)
+      "M-v"                                      'acm-select-next-page
+      ;; Trust me, this is the correct ordering of these scroll commands.  It looks like these
+      ;; commands should be reversed to follow VI conventions, but in practice this is accurate.
+      "C-S-j"                                    'lsp-bridge-popup-documentation-scroll-up
+      "C-S-k"                                    'lsp-bridge-popup-documentation-scroll-down)
     (general-def '(normal visual) lsp-bridge-mode-map
       "gr" 'lsp-bridge-rename)
     ;; Standard LSP keybindings (beginning with `C-c'):
