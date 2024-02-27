@@ -6,3 +6,4 @@ neovim
 nodejs
 python
 ruby
+rust
