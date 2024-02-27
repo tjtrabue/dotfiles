@@ -763,9 +763,18 @@ infrastructure for Emacs.
                           :underline `(:style wave :color ,(modus-themes-get-color-value 'red-intense))))
     :config
     ;; Associate some less popular major modes with language servers.
-    (add-to-list 'lsp-bridge-single-lang-server-mode-list
-                 '(sage-shell:sage-mode . lsp-bridge-python-lsp-server))
+    (dolist (elt `(((json-mode json-ts-mode) . "vscode-json-language-server")
+                   (sage-shell:sage-mode     . ,lsp-bridge-python-lsp-server)))
+      (add-to-list 'lsp-bridge-single-lang-server-mode-list elt))
+    ;; Also configure major modes that require multiple language servers (usually HTML-derived major
+    ;; modes).
+    (dolist (elt '(((html-mode html-ts-mode mhtml-mode) . "html_emmet")))
+      (add-to-list 'lsp-bridge-multi-lang-server-mode-list elt))
     ;; Enable `lsp-bridge-mode' in some less well-known major modes.
-    (dolist (elt '(sage-shell:sage-mode))
+    (dolist (elt '(html-mode-hook
+                   json-mode-hook
+                   json-ts-mode-hook
+                   mhtml-mode-hook
+                   sage-shell-mode-hook))
       (add-to-list 'lsp-bridge-default-mode-hooks elt)))
 #+end_src
