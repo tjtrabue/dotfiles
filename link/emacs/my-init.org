@@ -77,23 +77,20 @@ here. Wait to load modules only used by an individual plugin in its =init=
 block.
 
 #+begin_src emacs-lisp
-  ;; Wrapping `require' statements in an `eval-when-compile' is a hygenic practice in Emacs Lisp that
-  ;; prepares Elisp code for compilation.
-  (eval-when-compile
-    ;; Man pager library
-    (require 'man)
-    ;; Newer dired library
-    (require 'dired-x)
-    ;; String manipulation library
-    (require 'subr-x)
-    ;; Make C and C++ modes available; necessary for some third-party packages
-    (require 'cc-mode)
-    ;; "find function at point" library
-    (require 'ffap)
-    ;; EasyPG, Emacs' front-end for GPG.
-    (require 'epa)
-    ;; Emacs Grep integration functions/configuration.
-    (require 'grep))
+  ;; Man pager library
+  (require 'man)
+  ;; Newer dired library
+  (require 'dired-x)
+  ;; String manipulation library
+  (require 'subr-x)
+  ;; Make C and C++ modes available; necessary for some third-party packages
+  (require 'cc-mode)
+  ;; "find function at point" library
+  (require 'ffap)
+  ;; EasyPG, Emacs' front-end for GPG.
+  (require 'epa)
+  ;; Emacs Grep integration functions/configuration.
+  (require 'grep)
 #+end_src
 
 * Define User Variables
@@ -196,8 +193,7 @@ This is where I define new variables needed throughout my configuration.
 Create directories that must be present for our Emacs configuration to function.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (make-directory my/emacs-plugin-dir 'and-parents))
+  (make-directory my/emacs-plugin-dir 'and-parents)
 #+end_src
 
 * Language/Encoding
@@ -250,42 +246,41 @@ opposed to strewing them about each directory you visit. Same goes for the
 auto-save feature for buffers.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    ;; Put all backup files in ~/.emacs.d/backups and auto save files in
-    ;; ~/.emacs.d/auto-saves to avoid causing unwanted side-effects.
-    (dolist (dir (list my/emacs-backup-dir my/emacs-auto-saves-dir))
-      (when (not (file-directory-p dir))
-        (make-directory dir t)))
-    (setq backup-directory-alist
-          `((".*" . ,(file-truename (concat my/emacs-backup-dir "/")))))
-    (setq auto-save-file-name-transforms
-          `((".*" ,(file-truename (concat my/emacs-auto-saves-dir "/")) t)))
-    (setq auto-save-list-file-prefix
-          (file-truename (concat my/emacs-auto-saves-dir "/.saves-")))
-    (setq tramp-backup-directory-alist
-          `((".*" . ,(file-truename my/emacs-backup-dir))))
-    (setq tramp-auto-save-directory
-          (file-truename (concat my/emacs-auto-saves-dir "/")))
+  ;; Put all backup files in ~/.emacs.d/backups and auto save files in
+  ;; ~/.emacs.d/auto-saves to avoid causing unwanted side-effects.
+  (dolist (dir (list my/emacs-backup-dir my/emacs-auto-saves-dir))
+    (when (not (file-directory-p dir))
+      (make-directory dir t)))
+  (setq backup-directory-alist
+        `((".*" . ,(file-truename (concat my/emacs-backup-dir "/")))))
+  (setq auto-save-file-name-transforms
+        `((".*" ,(file-truename (concat my/emacs-auto-saves-dir "/")) t)))
+  (setq auto-save-list-file-prefix
+        (file-truename (concat my/emacs-auto-saves-dir "/.saves-")))
+  (setq tramp-backup-directory-alist
+        `((".*" . ,(file-truename my/emacs-backup-dir))))
+  (setq tramp-auto-save-directory
+        (file-truename (concat my/emacs-auto-saves-dir "/")))
 
-    ;; Backup of a file the first time it is saved.
-    (setq make-backup-files t)
-    ;; Don't clobber symlinks
-    (setq backup-by-copying t)
-    ;; Version numbers for backup files
-    (setq version-control t)
-    ;; Delete excess backup files silently
-    (setq delete-old-versions t)
-    (setq delete-by-moving-to-trash nil)
-    ;; Oldest versions to keep when new numbered backups created (default 2)
-    (setq kept-old-versions 2)
-    ;; Newest versions to keep when new numbered backups created (default 2)
-    (setq kept-new-versions 5)
-    ;; Auto-save every buffer that visits a file
-    (setq auto-save-default t)
-    ;; Number of seconds idle time before auto-save (default 30)
-    (setq auto-save-timeout 30)
-    ;; Number of keystrokes between auto-saves (default 300)
-    (setq auto-save-interval 300))
+  ;; Backup of a file the first time it is saved.
+  (setq make-backup-files t)
+  ;; Don't clobber symlinks
+  (setq backup-by-copying t)
+  ;; Version numbers for backup files
+  (setq version-control t)
+  ;; Delete excess backup files silently
+  (setq delete-old-versions t)
+  (setq delete-by-moving-to-trash nil)
+  ;; Oldest versions to keep when new numbered backups created (default 2)
+  (setq kept-old-versions 2)
+  ;; Newest versions to keep when new numbered backups created (default 2)
+  (setq kept-new-versions 5)
+  ;; Auto-save every buffer that visits a file
+  (setq auto-save-default t)
+  ;; Number of seconds idle time before auto-save (default 30)
+  (setq auto-save-timeout 30)
+  ;; Number of keystrokes between auto-saves (default 300)
+  (setq auto-save-interval 300)
 #+end_src
 
 * Color Configuration

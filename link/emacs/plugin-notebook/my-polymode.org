@@ -34,6 +34,9 @@ templates within Elixir buffers.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package polymode
+    ;; 2/27/24: Causes some major performance issues in general, even if polymode is not active in a
+    ;; buffer.
+    :disabled
     ;; :mode
     ;; ;; Automatically activate polymodes for their host mode filetypes.
     ;; ("\\.exs?$" . poly-elixir-heex-mode)
