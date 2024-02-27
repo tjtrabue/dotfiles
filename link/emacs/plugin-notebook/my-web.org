@@ -87,7 +87,8 @@ You must install the [[https://github.com/denoland/deno_install][Deno]] runtime 
   (use-package deno-bridge
     :straight
     (:type git :host github :repo "manateelazycat/deno-bridge")
-    :after websocket)
+    :after websocket
+    :demand t)
 #+end_src
 
 * emmet2-mode
@@ -114,7 +115,6 @@ such as:
 #+begin_src emacs-lisp
   (use-package emmet2-mode
     :straight (:type git :host github :repo "p233/emmet2-mode" :files (:defaults "*.ts" "src" "data"))
-    :after deno-bridge
     :hook ((css-mode
             ;; Elixir/Phoenix templates
             heex-ts-mode
