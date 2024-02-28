@@ -6,15 +6,7 @@
 
 This is my Emacs email configuration file.
 
-* Compiler Preface
-This code block pleases the Elisp compilers (byte-compiler and native compiler).
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
-#+end_src
-
-* =mu4e=
+* mu4e
 =mu4e= is a =maildir=-based email client for Emacs. Quite different from
 programs like =gnus=, which get their information from a remote server, =mu4e=
 relies on an offline IMAP sync of the user's email account for reading email.

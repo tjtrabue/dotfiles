@@ -46,6 +46,9 @@
   my configuration.  Most of the performance increase comes from
   native-compiling Emacs itself, along with any downloaded libraries.")
 
+(defvar my/gc-cons-threshold (* 100 1024 1024)
+  "My chosen threshold for garbage collection.")
+
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
 (add-to-list
@@ -151,5 +154,12 @@ Once created, the file should be placed at
                                                       (load (file-name-sans-extension file) args)))
     ;; (my/apply-to-dir-files super-config-dir "\\.elc$" #'load)
     ;; Otherwise, load the Elisp source files.
-    (my/apply-to-dir-files super-config-dir "\\.el$" #'load)))
+    (my/apply-to-dir-files super-config-dir "\\.el$" #'load))
+  ;; After startup, it is important you reset the garbage collector
+  ;; settings to some reasonable defaults. A large gc-cons-threshold
+  ;; will cause freezing and stuttering during long-term interactive
+  ;; use. I find these are nice defaults:
+  (setq gc-cons-threshold my/gc-cons-threshold) ;; 800KB
+  (setq gc-cons-percentage 0.1)
+  (setq file-name-handler-alist last-file-name-handler-alist))
 ;;; .emacs ends here

@@ -53,10 +53,7 @@ function for this. There is an example defined for triple-braces in
   (use-package origami
     :hook
     ;; Probably don't want to use origami for text-mode.
-    ((prog-mode conf-mode sgml-mode) . origami-mode)
-    :preface
-    (eval-when-compile
-      (require 'origami)))
+    ((prog-mode conf-mode sgml-mode) . origami-mode))
 #+end_src
 
 * vimish-fold

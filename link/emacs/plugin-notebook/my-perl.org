@@ -63,7 +63,7 @@ This code block exists to satisfy both the byte-compiler and native compiler.
 
 *** Variables
 #+begin_src emacs-lisp
-  (eval-when-compile
+  (eval-and-compile
     (defconst my/ffap-perl-inc-dirs
       (apply 'append
              (mapcar (function ffap-all-subdirs)

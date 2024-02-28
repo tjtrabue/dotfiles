@@ -112,8 +112,6 @@ seizes control of Emacs in some invasive ways.
     :init
     (require 'perspective)
     :config
-    (eval-when-compile
-      (require 'perspective))
     ;; Enable LSP server(s) when switching perspectives to work around the fact
     ;; that perspective.el disables LSP servers when switching.
     (add-hook 'persp-switch-hook #'my/persp-switch-start-lsp-servers)

@@ -16,7 +16,7 @@ Emacs.
   #+begin_src emacs-lisp
     (use-package pdf-tools
       ;; Only Linux is currently supported
-      :if (eval-and-compile (memq system-type '(gnu gnu/linux))))
+      :if (memq system-type '(gnu gnu/linux)))
   #+end_src
 
 * pdf-view-restore

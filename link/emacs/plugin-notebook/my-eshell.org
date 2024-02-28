@@ -22,9 +22,8 @@ rather a configuration manager macro that wraps around a package manager.
 Import necessary external modules, most of which I wrote myself.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    ;; Includes functions for retrieving and dealing with the current color theme.
-    (require 'my-colors))
+  ;; Includes functions for retrieving and dealing with the current color theme.
+  (require 'my-colors)
 #+end_src
 
 ** Functions

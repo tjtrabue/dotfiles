@@ -15,6 +15,9 @@ Use fancy bullets in =org-mode=.
 
 #+begin_src emacs-lisp
   (use-package org-bullets
+    ;; 2/27/24: `org-bullets' has not been maintained for at least 10 years, and can slow Emacs'
+    ;; performance quite a bit.
+    :disabled
     :after org
     :hook
     (org-mode . org-bullets-mode))

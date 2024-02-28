@@ -15,9 +15,6 @@ easily identify them in a file.
     :after modus-themes
     :demand t
     :delight
-    :preface
-    (eval-when-compile
-      (require 'color-identifiers-mode))
     :config
     (global-color-identifiers-mode 1))
 #+end_src

@@ -290,16 +290,15 @@ inferior interpreters) inherit from, recognize ANSI color escape sequences so
 that shells don't look like a hot mess. We also want colorized man pages.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    ;; Set ANSI color integration in comint-mode
-    (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
-    ;; Colorize Emacs' man page viewer
-    (set-face-attribute 'Man-overstrike nil
-                        :inherit font-lock-type-face
-                        :bold t)
-    (set-face-attribute 'Man-underline nil
-                        :inherit font-lock-keyword-face
-                        :underline t))
+  ;; Set ANSI color integration in comint-mode
+  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+  ;; Colorize Emacs' man page viewer
+  (set-face-attribute 'Man-overstrike nil
+                      :inherit font-lock-type-face
+                      :bold t)
+  (set-face-attribute 'Man-underline nil
+                      :inherit font-lock-keyword-face
+                      :underline t)
 #+end_src
 
 * Set Emacs Variables
@@ -309,197 +308,196 @@ GC-related variables, especially if you use advanced programming tools such as
 LanguageServerProtocol clients and servers.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    ;; Always follow symlinks
-    (setq vc-follow-symlinks t)
-    ;; Reduce risk of loading outdated bytecode
-    (setq load-prefer-newer t)
+  ;; Always follow symlinks
+  (setq vc-follow-symlinks t)
+  ;; Reduce risk of loading outdated bytecode
+  (setq load-prefer-newer t)
 
-    ;; Do not show standard GNU Emacs welcome screen when Emacs starts,
-    ;; but instead enter the *scratch* buffer.
-    (setq inhibit-startup-screen t)
+  ;; Do not show standard GNU Emacs welcome screen when Emacs starts,
+  ;; but instead enter the *scratch* buffer.
+  (setq inhibit-startup-screen t)
 
-    ;; Silence the annoying error/warning bell
-    (setq ring-bell-function 'ignore)
+  ;; Silence the annoying error/warning bell
+  (setq ring-bell-function 'ignore)
 
-    ;; Suppress specified warning types.
-    (setq warning-suppress-log-types '((comp)))
+  ;; Suppress specified warning types.
+  (setq warning-suppress-log-types '((comp)))
 
-    ;; Describe the types of byte-compile warnings disired
-    ;; as a list. `nil' means present no byte compile warnings.
-    ;; `t' means present nearly all of them. `all' means
-    ;; present absolutely all of them.
-    (setq byte-compile-warnings t)
+  ;; Describe the types of byte-compile warnings disired
+  ;; as a list. `nil' means present no byte compile warnings.
+  ;; `t' means present nearly all of them. `all' means
+  ;; present absolutely all of them.
+  (setq byte-compile-warnings t)
 
-    ;; Whether to automatically scroll the compilation window as output arrives.
-    (setq compilation-scroll-output t)
+  ;; Whether to automatically scroll the compilation window as output arrives.
+  (setq compilation-scroll-output t)
 
-    ;; Display relative line numbers like in Vim.
-    (setq display-line-numbers 'relative)
-    (setq display-line-numbers-type 'relative)
+  ;; Display relative line numbers like in Vim.
+  (setq display-line-numbers 'relative)
+  (setq display-line-numbers-type 'relative)
 
-    ;; Up the maximum depth for eval, apply, and funcall functions.  This variable
-    ;; catches infinite recursions before they cause a stack overflow, but its
-    ;; default value is low.
-    (setq max-lisp-eval-depth 10101)
+  ;; Up the maximum depth for eval, apply, and funcall functions.  This variable
+  ;; catches infinite recursions before they cause a stack overflow, but its
+  ;; default value is low.
+  (setq max-lisp-eval-depth 10101)
 
-    ;; Get rid of scrollbars since l33t programmers don't need any.
-    (setq vertical-scroll-bar nil)
+  ;; Get rid of scrollbars since l33t programmers don't need any.
+  (setq vertical-scroll-bar nil)
 
-    ;; Increase the amount of bytes Emacs reads per unit time from a given
-    ;; process. The initial value is 4KB, far too low for modern day applications.
-    (setq read-process-output-max (* 3 (* 1024 1024)))
+  ;; Increase the amount of bytes Emacs reads per unit time from a given
+  ;; process. The initial value is 4KB, far too low for modern day applications.
+  (setq read-process-output-max (* 3 (* 1024 1024)))
 
-    ;; Max file size (in bytes) before a confirmation is required of the user before
-    ;; opening.
-    (setq large-file-warning-threshold 100000000)
+  ;; Max file size (in bytes) before a confirmation is required of the user before
+  ;; opening.
+  (setq large-file-warning-threshold 100000000)
 
-    ;; Echo unfinished commands after this many seconds of pause.
-    (setq echo-keystrokes 0.1)
+  ;; Echo unfinished commands after this many seconds of pause.
+  (setq echo-keystrokes 0.1)
 
-    ;; Set the max number of variable bindings allowed at one time to a
-    ;; number considerably higher than the default (which is 1600).
-    ;; Modern problems require modern solutions!
-    (setq max-specpdl-size 12000)
+  ;; Set the max number of variable bindings allowed at one time to a
+  ;; number considerably higher than the default (which is 1600).
+  ;; Modern problems require modern solutions!
+  (setq max-specpdl-size 12000)
 
-    ;; Each line should be 80 characters wide.
-    (setq-default fill-column my/line-width)
+  ;; Each line should be 80 characters wide.
+  (setq-default fill-column my/line-width)
 
-    ;; Set vertical ruler in programming modes
-    (setq-default
-     whitespace-line-column my/line-width
-     whitespace-style '(face lines-tail))
+  ;; Set vertical ruler in programming modes
+  (setq-default
+   whitespace-line-column my/line-width
+   whitespace-style '(face lines-tail))
 
-    ;; Smooth-scrolling
-    (if (>= emacs-major-version 29)
-        ;; Use native smooth-scrolling (requires Emacs version >= 29)
-        (pixel-scroll-precision-mode 1)
-      ;; Otherwise, simulate smooth-scrolling with basic Emacs settings.
-      ;; (also see the sublimity plugin configuration)
-      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-      (setq mouse-wheel-progressive-speed nil)
-      (setq mouse-wheel-follow-mouse 't))
-    (setq scroll-margin 0)
-    (setq scroll-step 1)
-    (setq scroll-conservatively 10000)
-    (setq auto-window-vscroll nil)
+  ;; Smooth-scrolling
+  (if (>= emacs-major-version 29)
+      ;; Use native smooth-scrolling (requires Emacs version >= 29)
+      (pixel-scroll-precision-mode 1)
+    ;; Otherwise, simulate smooth-scrolling with basic Emacs settings.
+    ;; (also see the sublimity plugin configuration)
+    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+    (setq mouse-wheel-progressive-speed nil)
+    (setq mouse-wheel-follow-mouse 't))
+  (setq scroll-margin 0)
+  (setq scroll-step 1)
+  (setq scroll-conservatively 10000)
+  (setq auto-window-vscroll nil)
 
-    ;; Automatically reload TAGS file without prompting us.
-    (setq tags-revert-without-query t)
+  ;; Automatically reload TAGS file without prompting us.
+  (setq tags-revert-without-query t)
 
-    ;; Never prompt us to take tags tables with us when moving between
-    ;; directories. Always assume "no".
-    (setq tags-add-tables nil)
+  ;; Never prompt us to take tags tables with us when moving between
+  ;; directories. Always assume "no".
+  (setq tags-add-tables nil)
 
-    ;; Try to indent the current line, or complete the thing at point if the code is
-    ;; already properly indented.
-    (setq tab-always-indent 'complete)
+  ;; Try to indent the current line, or complete the thing at point if the code is
+  ;; already properly indented.
+  (setq tab-always-indent 'complete)
 
-    ;; Use spaces instead of tabs.
-    (setq-default indent-tabs-mode nil)
-    ;; Indent in increments of 2 spaces.
-    (setq-default tab-width 2)
+  ;; Use spaces instead of tabs.
+  (setq-default indent-tabs-mode nil)
+  ;; Indent in increments of 2 spaces.
+  (setq-default tab-width 2)
 
-    ;; Show trailing whitespace characters by default.
-    (setq-default show-trailing-whitespace t)
+  ;; Show trailing whitespace characters by default.
+  (setq-default show-trailing-whitespace t)
 
-    ;; This must be set to nil in order for evil-collection to replace
-    ;; evil-integration in all important ways. This variable must be set
-    ;; here, NOT in the :config or :init blocks of a use-package expression.
-    ;; (otherwise a warning gets printed)
-    (setq evil-want-keybinding nil)
+  ;; This must be set to nil in order for evil-collection to replace
+  ;; evil-integration in all important ways. This variable must be set
+  ;; here, NOT in the :config or :init blocks of a use-package expression.
+  ;; (otherwise a warning gets printed)
+  (setq evil-want-keybinding nil)
 
-    ;; Enable recursive minibuffers
-    (setq enable-recursive-minibuffers t)
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t)
 
-    ;; Do not allow the cursor in the minibuffer prompt
-    (setq minibuffer-prompt-properties
-          '(read-only t cursor-intangible t face minibuffer-prompt))
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
 
-    ;; Move custom set variables to a separate file so as not to clutter my personal
-    ;; initialization files.
-    (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+  ;; Move custom set variables to a separate file so as not to clutter my personal
+  ;; initialization files.
+  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 
-    ;; Whether to use a graphical dialog box for user input.  Disabling this option
-    ;; causes Emacs to prompt the user from the minibuffer instead, keeping Emacs
-    ;; more keyboard-centric.
-    (setq use-dialog-box nil)
+  ;; Whether to use a graphical dialog box for user input.  Disabling this option
+  ;; causes Emacs to prompt the user from the minibuffer instead, keeping Emacs
+  ;; more keyboard-centric.
+  (setq use-dialog-box nil)
 
-    ;; Automatically revert Dired and other buffers when the filesystem updates.
-    (setq global-auto-revert-non-file-buffers t)
+  ;; Automatically revert Dired and other buffers when the filesystem updates.
+  (setq global-auto-revert-non-file-buffers t)
 
-    ;; Display the name of the real file when visiting a symbolic link.
-    ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
-    ;; generation!
-    (setq find-file-visit-truename nil)
+  ;; Display the name of the real file when visiting a symbolic link.
+  ;; WARNING: DO NOT SET THIS TO T! It messes with straight.el's autoload
+  ;; generation!
+  (setq find-file-visit-truename nil)
 
-    ;; Controls whether and when Emacs saves bookmarks to disk.
-    ;;   nil    -> Emacs never saves bookmarks.
-    ;;   t      -> Emacs saves bookmarks when it is killed.
-    ;;   NUMBER -> Emacs will save bookmarks to file after NUMBER changes
-    ;;             are made to bookmarks (i.e., if NUMBER is 1, Emacs will
-    ;;             will save the bookmarks file every time a bookmark is created
-    ;;             or deleted).
-    (setq bookmark-save-flag 1)
+  ;; Controls whether and when Emacs saves bookmarks to disk.
+  ;;   nil    -> Emacs never saves bookmarks.
+  ;;   t      -> Emacs saves bookmarks when it is killed.
+  ;;   NUMBER -> Emacs will save bookmarks to file after NUMBER changes
+  ;;             are made to bookmarks (i.e., if NUMBER is 1, Emacs will
+  ;;             will save the bookmarks file every time a bookmark is created
+  ;;             or deleted).
+  (setq bookmark-save-flag 1)
 
-    ;; Don’t compact font caches during GC. This can resolve lag issues with
-    ;; doom-modeline and some other plugins.
-    (setq inhibit-compacting-font-caches t)
+  ;; Don’t compact font caches during GC. This can resolve lag issues with
+  ;; doom-modeline and some other plugins.
+  (setq inhibit-compacting-font-caches t)
 
-    ;; Whether to cycle completions.
-    (setq completion-cycle-threshold t)
+  ;; Whether to cycle completions.
+  (setq completion-cycle-threshold t)
 
-    ;; If non-nil, redraw the display before processing queued input events.
-    ;; NOTE: Can make the typing experience slower.
-    (setq redisplay-dont-pause t)
+  ;; If non-nil, redraw the display before processing queued input events.
+  ;; NOTE: Can make the typing experience slower.
+  (setq redisplay-dont-pause t)
 
-    ;; Show file name and major mode in title bar.
-    (setq-default frame-title-format
-                  '("%b [%m]@"
-                    (:eval (or (file-remote-p default-directory 'host) system-name))
-                    " — Emacs"))
+  ;; Show file name and major mode in title bar.
+  (setq-default frame-title-format
+                '("%b [%m]@"
+                  (:eval (or (file-remote-p default-directory 'host) system-name))
+                  " — Emacs"))
 
-    ;; Emacs 28 variables.
-    (when (>= emacs-major-version 28)
-      ;; Hide commands in M-x which do not work in the current mode.
-      ;; Vertico commands are hidden in normal buffers.
-      (setq read-extended-command-predicate #'command-completion-default-include-p)
-      ;; Automatically native compile all packages installed with package.el
-      (setq package-native-compile t))
+  ;; Emacs 28 variables.
+  (when (>= emacs-major-version 28)
+    ;; Hide commands in M-x which do not work in the current mode.
+    ;; Vertico commands are hidden in normal buffers.
+    (setq read-extended-command-predicate #'command-completion-default-include-p)
+    ;; Automatically native compile all packages installed with package.el
+    (setq package-native-compile t))
 
-    ;; Emacs supports editing text in languages that order text horizontally
-    ;; right-to-left, such as Hebrew or Arabic. If you do not work in a language
-    ;; such as these, you can improve Emacs' performance if you tell it to assume
-    ;; all languages display left-to-right by default, resulting in fewer line scans
-    ;; necessary to display text.
-    (setq-default bidi-paragraph-direction 'left-to-right)
-    (if (version<= "27.1" emacs-version)
-        (setq bidi-inhibit-bpa t))
+  ;; Emacs supports editing text in languages that order text horizontally
+  ;; right-to-left, such as Hebrew or Arabic. If you do not work in a language
+  ;; such as these, you can improve Emacs' performance if you tell it to assume
+  ;; all languages display left-to-right by default, resulting in fewer line scans
+  ;; necessary to display text.
+  (setq-default bidi-paragraph-direction 'left-to-right)
+  (if (version<= "27.1" emacs-version)
+      (setq bidi-inhibit-bpa t))
 
   ;;; EasyPG settings (Emacs' front-end for GPG)
-    ;; Whether to cache the user's passphrases for symmetrically encrypted files.
-    (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-    ;; How to prompt the user for passphrases.
-    ;; 'loopback means to query passphrases through the minibuffer.
-    (setq epg-pinentry-mode 'loopback)
+  ;; Whether to cache the user's passphrases for symmetrically encrypted files.
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+  ;; How to prompt the user for passphrases.
+  ;; 'loopback means to query passphrases through the minibuffer.
+  (setq epg-pinentry-mode 'loopback)
 
   ;;; Browser
-    ;; Determines the default web browser function to use when opening a URL via
-    ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
-    (setq browse-url-browser-function #'browse-url-generic)
-    ;; Set default browser to the first of a ranked list of programs.
-    (setq browse-url-generic-program (seq-some #'executable-find
-                                               '("brave-beta"
-                                                 "brave"
-                                                 "chromium"
-                                                 "firefox"
-                                                 "chrome")))
+  ;; Determines the default web browser function to use when opening a URL via
+  ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
+  (setq browse-url-browser-function #'browse-url-generic)
+  ;; Set default browser to the first of a ranked list of programs.
+  (setq browse-url-generic-program (seq-some #'executable-find
+                                             '("brave-beta"
+                                               "brave"
+                                               "chromium"
+                                               "firefox"
+                                               "chrome")))
 
-    (when (display-graphic-p)
-      ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
-      ;; variable to 'resize-mode may improve the performance of plugins that use
-      ;; child frames.
-      (setq posframe-gtk-resize-child-frames 'resize-mode)))
+  (when (display-graphic-p)
+    ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
+    ;; variable to 'resize-mode may improve the performance of plugins that use
+    ;; child frames.
+    (setq posframe-gtk-resize-child-frames 'resize-mode))
 #+end_src
 
 * Grep/Search
@@ -514,41 +512,40 @@ interactive, templated Grep commands:
 - =grep-find=: Run grep via find.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (let ((has-ugrep (executable-find "ugrep"))
-          (has-rg    (executable-find "rg"))
-          (find-cmd-str "find -H <D> <X> -type f <F> -exec "))
-      ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
-      ;; cursor at that character position, right between the '' where we will begin typing our search
-      ;; expression.
-      (grep-apply-setting 'grep-find-command
-                          (cond (has-ugrep
-                                 `(,(concat "ugrep -e '' --index --no-heading -HI0inr"
-                                            " --ignore-files=\"$(git rev-parse --show-toplevel)/.gitignore\""
-                                            " -- \"$(git rev-parse --show-toplevel || pwd)\"")
-                                   . 11))
-                                (has-rg
-                                 '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)"
-                                   . 8))
-                                (t nil)))
+  (let ((has-ugrep (executable-find "ugrep"))
+        (has-rg    (executable-find "rg"))
+        (find-cmd-str "find -H <D> <X> -type f <F> -exec "))
+    ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
+    ;; cursor at that character position, right between the '' where we will begin typing our search
+    ;; expression.
+    (grep-apply-setting 'grep-find-command
+                        (cond (has-ugrep
+                               `(,(concat "ugrep -e '' --index --no-heading -HI0inr"
+                                          " --ignore-files=\"$(git rev-parse --show-toplevel)/.gitignore\""
+                                          " -- \"$(git rev-parse --show-toplevel || pwd)\"")
+                                 . 11))
+                              (has-rg
+                               '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)"
+                                 . 8))
+                              (t nil)))
 
-      ;; The default command to run for `lgrep'.
-      (grep-apply-setting 'grep-template
-                          (cond (has-ugrep
-                                 "ugrep <C> <X> --color=always --index --no-heading -HIPine <R> <F>")
-                                (has-rg
-                                 "rg --color=always --no-heading -HPine <R> <F>")
-                                (t nil)))
-      ;; The default command to use for `rgrep'.
-      (grep-apply-setting 'grep-find-template
-                          (cond (has-ugrep
-                                 (concat find-cmd-str
-                                         "ugrep <C> --color=always --index --no-heading -0HIPine <R> \\{\\} +"))
-                                (has-rg
-                                 (concat find-cmd-str
-                                         "rg --color=always --no-heading -0HPne <R> \\{\\} +"))
-                                (t
-                                 (concat find-cmd-str "grep <C> -nH --null -e <R> \\{\\} +"))))))
+    ;; The default command to run for `lgrep'.
+    (grep-apply-setting 'grep-template
+                        (cond (has-ugrep
+                               "ugrep <C> <X> --color=always --index --no-heading -HIPine <R> <F>")
+                              (has-rg
+                               "rg --color=always --no-heading -HPine <R> <F>")
+                              (t nil)))
+    ;; The default command to use for `rgrep'.
+    (grep-apply-setting 'grep-find-template
+                        (cond (has-ugrep
+                               (concat find-cmd-str
+                                       "ugrep <C> --color=always --index --no-heading -0HIPine <R> \\{\\} +"))
+                              (has-rg
+                               (concat find-cmd-str
+                                       "rg --color=always --no-heading -0HPne <R> \\{\\} +"))
+                              (t
+                               (concat find-cmd-str "grep <C> -nH --null -e <R> \\{\\} +")))))
 #+end_src
 
 * Set fringe width
@@ -612,9 +609,8 @@ pages. However, by default, Emacs only looks in a small number of locations for
 help pages. Here we add more locations for browsing user-installed info pages.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    ;; Make sure user-installed info pages are available.
-    (add-to-list 'Info-default-directory-list my/user-info-dir))
+  ;; Make sure user-installed info pages are available.
+  (add-to-list 'Info-default-directory-list my/user-info-dir)
 #+end_src
 
 * Aliases
@@ -744,127 +740,126 @@ such as =mutt= and =mu=.
 Custom functions, both standard and interactive.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (unless (fboundp 'my/apply-to-dir-files)
-      ;; May need to define this function here since it's originally defined in `~/.emacs', which
-      ;; isn't always loaded (i.e., it's only loaded for interactive Emacs sessions).
-      (defsubst my/apply-to-dir-files (dir pattern fn &rest args)
-        "Apply FN to all files in DIR matching regex PATTERN.
+  (unless (fboundp 'my/apply-to-dir-files)
+    ;; May need to define this function here since it's originally defined in `~/.emacs', which
+    ;; isn't always loaded (i.e., it's only loaded for interactive Emacs sessions).
+    (defsubst my/apply-to-dir-files (dir pattern fn &rest args)
+      "Apply FN to all files in DIR matching regex PATTERN.
 
   Any additional args ARGS are passed to FN."
-        (cl-flet
-            ((apply-it (f) (funcall fn (concat (file-name-as-directory dir) f) args)))
-          (if (file-directory-p dir)
-              (mapc #'apply-it (directory-files dir nil pattern))))))
+      (cl-flet
+          ((apply-it (f) (funcall fn (concat (file-name-as-directory dir) f) args)))
+        (if (file-directory-p dir)
+            (mapc #'apply-it (directory-files dir nil pattern))))))
 
-    (defun print-major-mode ()
-      "Show the major mode of the current buffer in the echo area."
-      (interactive)
-      (message "%s" major-mode))
+  (defun print-major-mode ()
+    "Show the major mode of the current buffer in the echo area."
+    (interactive)
+    (message "%s" major-mode))
 
-    (defun gnus-new-frame ()
-      "Create a new frame and start the Gnus news reader in it."
-      (interactive)
-      (with-selected-frame (make-frame)
-        (gnus)))
+  (defun gnus-new-frame ()
+    "Create a new frame and start the Gnus news reader in it."
+    (interactive)
+    (with-selected-frame (make-frame)
+      (gnus)))
 
-    (defun reload-config ()
-      "Reload all Emacs config files."
-      (interactive)
-      (load-file user-init-file))
+  (defun reload-config ()
+    "Reload all Emacs config files."
+    (interactive)
+    (load-file user-init-file))
 
-    (defun download-elisp-lib (url &optional file-name)
-      "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
+  (defun download-elisp-lib (url &optional file-name)
+    "Downloads an elisp file from a URL to `my/emacs-lisp-dir'.
 
       If FILE-NAME is omitted or nil, it defaults to the last segment of the URL."
-      (if (not file-name)
-          (setq file-name (url-file-nondirectory (url-unhex-string url))))
-      (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
-        (make-directory my/emacs-lisp-dir t)
-        (url-copy-file url (file-truename file-path) t)))
+    (if (not file-name)
+        (setq file-name (url-file-nondirectory (url-unhex-string url))))
+    (let ((file-path (concat my/emacs-lisp-dir (concat "/" file-name))))
+      (make-directory my/emacs-lisp-dir t)
+      (url-copy-file url (file-truename file-path) t)))
 
-    (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
-      "Recursively add directories from a BASE-DIR to load-path.
+  (defun my/recursive-add-dirs-to-load-path (base-dir &optional subdirs)
+    "Recursively add directories from a BASE-DIR to load-path.
 
     Optionally, SUBDIRS is a list of subdirectory strings beneath BASE-DIR that
     should be added to load-path. If this argument is absent, all subdirectories
     of BASE-DIR are added to load-path."
-      (interactive)
-      (let ((default-directory base-dir))
-        (setq load-path
-              (append
-               (let ((load-path (copy-sequence load-path))) ; Shadow
-                 (if subdirs
-                     ;; If user supplied list of subdirs, pass it here
-                     (normal-top-level-add-to-load-path subdirs)
-                   ;; Otherwise, add all directories under base-dir
-                   (normal-top-level-add-subdirs-to-load-path)))
-               load-path))))
+    (interactive)
+    (let ((default-directory base-dir))
+      (setq load-path
+            (append
+             (let ((load-path (copy-sequence load-path))) ; Shadow
+               (if subdirs
+                   ;; If user supplied list of subdirs, pass it here
+                   (normal-top-level-add-to-load-path subdirs)
+                 ;; Otherwise, add all directories under base-dir
+                 (normal-top-level-add-subdirs-to-load-path)))
+             load-path))))
 
-    (defun my/use-mu4e-p ()
-      "Return T if the system is configured for `mu4e'. Return NIL otherwise."
-      (and (executable-find "mu") (executable-find "mbsync")))
+  (defun my/use-mu4e-p ()
+    "Return T if the system is configured for `mu4e'. Return NIL otherwise."
+    (and (executable-find "mu") (executable-find "mbsync")))
 
-    (defun my/toggle-line-number-type ()
-      "Toggle absolute/relative line numbers in all open buffers."
-      (interactive)
-      ;; Figure out global line number state for all buffer.
-      (if (eq my/line-number-state 'absolute)
-          (setq my/line-number-state 'relative
-                display-line-numbers-type 'relative)
-        (setq my/line-number-state 'absolute
-              display-line-numbers-type t))
-      ;; Apply new line number type to all open buffers.
-      (dolist (buffer (buffer-list))
-        (with-current-buffer buffer
-          ;; Only operate on buffers that display line numbers..
-          (when (bound-and-true-p display-line-numbers-mode)
-            (if (eq my/line-number-state 'relative)
-                (setq display-line-numbers 'relative)
-              (setq display-line-numbers t))))))
+  (defun my/toggle-line-number-type ()
+    "Toggle absolute/relative line numbers in all open buffers."
+    (interactive)
+    ;; Figure out global line number state for all buffer.
+    (if (eq my/line-number-state 'absolute)
+        (setq my/line-number-state 'relative
+              display-line-numbers-type 'relative)
+      (setq my/line-number-state 'absolute
+            display-line-numbers-type t))
+    ;; Apply new line number type to all open buffers.
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        ;; Only operate on buffers that display line numbers..
+        (when (bound-and-true-p display-line-numbers-mode)
+          (if (eq my/line-number-state 'relative)
+              (setq display-line-numbers 'relative)
+            (setq display-line-numbers t))))))
 
-    (defun my/eval-and-replace ()
-      "Replace the preceding sexp with its value."
-      (let ((value (eval (preceding-sexp))))
-        (backward-kill-sexp)
-        (insert (format "%S" value))))
+  (defun my/eval-and-replace ()
+    "Replace the preceding sexp with its value."
+    (let ((value (eval (preceding-sexp))))
+      (backward-kill-sexp)
+      (insert (format "%S" value))))
 
-    (defun my/running-wsl-p ()
-      "Return non-nil if Emacs is running on Windows Subsystem for Linux."
-      (let ((case-fold-search t))
-        (or (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop")
-            (string-match "\\(microsoft\\|WSL\\)"
-                          (shell-command-to-string "uname -r | tr -d \"\n\"")))))
+  (defun my/running-wsl-p ()
+    "Return non-nil if Emacs is running on Windows Subsystem for Linux."
+    (let ((case-fold-search t))
+      (or (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop")
+          (string-match "\\(microsoft\\|WSL\\)"
+                        (shell-command-to-string "uname -r | tr -d \"\n\"")))))
 
-    (defun my/reload-dir-locals-for-current-buffer ()
-      "Reload vars in .dir-locals.el file for current buffer."
-      (interactive)
-      (let ((enable-local-variables :all))
-        (hack-dir-local-variables-non-file-buffer)))
+  (defun my/reload-dir-locals-for-current-buffer ()
+    "Reload vars in .dir-locals.el file for current buffer."
+    (interactive)
+    (let ((enable-local-variables :all))
+      (hack-dir-local-variables-non-file-buffer)))
 
-    (defun compose (&rest fns)
-      "Compose FNS together: first to last."
-      (cl-destructuring-bind (fun . rest) (reverse fns)
-        (lambda (&rest args)
-          (seq-reduce (lambda (v f) (funcall f v))
-                      rest
-                      (apply fun args)))))
+  (defun compose (&rest fns)
+    "Compose FNS together: first to last."
+    (cl-destructuring-bind (fun . rest) (reverse fns)
+      (lambda (&rest args)
+        (seq-reduce (lambda (v f) (funcall f v))
+                    rest
+                    (apply fun args)))))
 
-    (defun my/load-system-path ()
-      "Load $PATH from the compiled system path file."
-      (interactive)
-      (if (file-exists-p my/static-path-file)
-          (setenv "PATH" (substitute-env-vars
-                          (shell-command-to-string
-                           (concat "cat " my/static-path-file " | "
-                                   "grep '^\\s*PATH=' | "
-                                   "sed -e 's/^\\s*PATH=//' -e 's/\"//g'"))))
-        (error (concat "No static path file at " my/static-path-file))))
+  (defun my/load-system-path ()
+    "Load $PATH from the compiled system path file."
+    (interactive)
+    (if (file-exists-p my/static-path-file)
+        (setenv "PATH" (substitute-env-vars
+                        (shell-command-to-string
+                         (concat "cat " my/static-path-file " | "
+                                 "grep '^\\s*PATH=' | "
+                                 "sed -e 's/^\\s*PATH=//' -e 's/\"//g'"))))
+      (error (concat "No static path file at " my/static-path-file))))
 
-    (defun my/native-compile-config ()
-      "Native compile all Elisp files in the super config directory."
-      (interactive)
-      (native-compile-async (list my/super-config-dir) 'recursively)))
+  (defun my/native-compile-config ()
+    "Native compile all Elisp files in the super config directory."
+    (interactive)
+    (native-compile-async (list my/super-config-dir) 'recursively))
 #+end_src
 
 * Environment Variables
@@ -940,21 +935,6 @@ convenient than entering the shell, for the most part.
                                 (auto-revert-mode 1)))
 #+end_src
 
-** emacs-startup hooks
-These run after loading init files and handling the command line.
-
-#+begin_src emacs-lisp
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              ;; After startup, it is important you reset the garbage collector
-              ;; settings to some reasonable defaults. A large gc-cons-threshold
-              ;; will cause freezing and stuttering during long-term interactive
-              ;; use. I find these are nice defaults:
-              (setq gc-cons-threshold 104857600) ;; 100 MB
-              (setq gc-cons-percentage 0.1)
-              (setq file-name-handler-alist last-file-name-handler-alist)))
-#+end_src
-
 ** emacs-lisp hooks
 Hooks that run upon entering Emacs Lisp source code buffers.
 
@@ -972,8 +952,9 @@ Hooks that run upon entering Emacs Lisp source code buffers.
 These hooks just after entry into the minibuffer.
 
 #+begin_src emacs-lisp
-  ;; Do not allow the cursor in the minibuffer prompt
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+  (add-hook 'minibuffer-setup-hook (lambda ()
+                                     ;; Do not allow the cursor in the minibuffer prompt
+                                     (cursor-intangible-mode 1)))
 #+end_src
 
 ** minibuffer-mode hooks
@@ -1065,14 +1046,13 @@ Emacs configuration I want to keep private to my current machine, and load that
 configuration here if it is present.
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (when (file-directory-p my/private-elisp-dir)
-      (my/apply-to-dir-files my/private-elisp-dir "\\.el$"
-                             (lambda (f &rest args)
-                               "Make use of `load''s extensionless file loading
+  (when (file-directory-p my/private-elisp-dir)
+    (my/apply-to-dir-files my/private-elisp-dir "\\.el$"
+                           (lambda (f &rest args)
+                             "Make use of `load''s extensionless file loading
       feature for Elisp files. This means `load' will first look for an .elc file,
       then for a .el file in lieu of that."
-                               (load (file-name-sans-extension f) args)))))
+                             (load (file-name-sans-extension f) args))))
 #+end_src
 
 * Periodically Purge Backup/Temp Files
@@ -1081,18 +1061,17 @@ stale files. We should periodically purge old files from these directories.
 
 #+begin_src emacs-lisp
   (message "Deleting old backup and auto-save files...")
-  (eval-and-compile
-    (let ((week (* 60 60 24 7))
-          (current (float-time (current-time))))
-      (dolist (file (append (directory-files
-                             (concat (file-truename my/emacs-backup-dir) "/") t)
-                            (directory-files
-                             (concat (file-truename my/emacs-auto-saves-dir) "/") t)))
-        (when (and (backup-file-name-p file)
-                   (> (- current (float-time (nth 5 (file-attributes file))))
-                      week))
-          (message "%s" file)
-          (delete-file file)))))
+  (let ((week (* 60 60 24 7))
+        (current (float-time (current-time))))
+    (dolist (file (append (directory-files
+                           (concat (file-truename my/emacs-backup-dir) "/") t)
+                          (directory-files
+                           (concat (file-truename my/emacs-auto-saves-dir) "/") t)))
+      (when (and (backup-file-name-p file)
+                 (> (- current (float-time (nth 5 (file-attributes file))))
+                    week))
+        (message "%s" file)
+        (delete-file file))))
 #+end_src
 
 * Package Manager
@@ -1104,36 +1083,35 @@ Here we determine whether to use Emacs' built-in package manager =package.el= or
 the much superior =straight.el= third-party package manager.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (if (and (not my/use-straight-p) (>= emacs-major-version 24))
-    ;;; IF we want to use the built-in package manager...
-        (progn
-          ;; Package configuration
-          (require 'package)
-          ;; Add extra package archives to the list of repositories.
-          ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
-          ;;       to change the URLs to simple HTTP in order for them to function.
-          ;;       If you must do this, also uncomment the two expressions below.
-          ;;       That will reset the archives list and allow you to only use
-          ;;       unsecured connections for package transfer.
-          ;; (setq package-archives nil)
-          ;; (add-to-list 'package-archives
-          ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-          (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
-          (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
-          (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
-          (package-initialize)
-          ;; Automatically install packages using use-package
-          (unless (package-installed-p 'use-package)
-            (package-refresh-contents)
-            (package-install 'use-package))
-          (require 'use-package))
-    ;;; OTHERWISE...
-      ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
-      (setq package-enable-at-startup nil)
-      ;; this tells package.el not to add those pesky customized variable settings
-      ;; at the end of your init.el
-      (setq package--init-file-ensured t)))
+  (if (and (not my/use-straight-p) (>= emacs-major-version 24))
+  ;;; IF we want to use the built-in package manager...
+      (progn
+        ;; Package configuration
+        (require 'package)
+        ;; Add extra package archives to the list of repositories.
+        ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+        ;;       to change the URLs to simple HTTP in order for them to function.
+        ;;       If you must do this, also uncomment the two expressions below.
+        ;;       That will reset the archives list and allow you to only use
+        ;;       unsecured connections for package transfer.
+        ;; (setq package-archives nil)
+        ;; (add-to-list 'package-archives
+        ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+        (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
+        (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
+        (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+        (package-initialize)
+        ;; Automatically install packages using use-package
+        (unless (package-installed-p 'use-package)
+          (package-refresh-contents)
+          (package-install 'use-package))
+        (require 'use-package))
+  ;;; OTHERWISE...
+    ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
+    (setq package-enable-at-startup nil)
+    ;; this tells package.el not to add those pesky customized variable settings
+    ;; at the end of your init.el
+    (setq package--init-file-ensured t))
 #+end_src
 
 ** straight
@@ -1148,8 +1126,7 @@ To update all packages installed through straight, run =M-x
 straight-pull-all=
 
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))))
+  (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
 #+end_src
 
 * Install Packages Needed on Startup
@@ -1169,32 +1146,31 @@ process. I prefer to parse my =PATH= from the =~/.path_static= file, since that
 path is already calculated.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (if (and (member system-type '(gnu gnu/linux darwin cygwin))
-             (file-exists-p my/static-path-file))
-        ;; If we have compiled our `~/.path_static` file, use the PATH in that file
-        ;; because using that PATH is much faster than calculating it dynmaically.
-        (my/load-system-path)
-      (use-package exec-path-from-shell
-        :demand t
-        :init
-        ;; Whether to output debug info to the *Messages* buffer.
-        ;; NOTE: This variable is not customizable.
-        (setq exec-path-from-shell-debug nil)
-        :custom
-        ;; How long to wait before warning about long startup time for shell.
-        (exec-path-from-shell-warn-duration-millis 500)
-        :config
-        ;; Only run this plugin for macOS, Linux, or Cygwin systems.
-        (when (member system-type '(gnu gnu/linux darwin cygwin))
-          ;; Make sure to use the lean version of our login shell profile to
-          ;; avoid timing out or excessive memory consumption.
-          (setenv "USE_LEAN_PROFILE" "true")
-          ;; Set $PATH by running the user's login shell.
-          (exec-path-from-shell-initialize)
-          ;; Remove USE_LEAN_PROFILE environment variable once it has served its
-          ;; purpose.
-          (setenv "USE_LEAN_PROFILE" nil)))))
+  (if (and (member system-type '(gnu gnu/linux darwin cygwin))
+           (file-exists-p my/static-path-file))
+      ;; If we have compiled our `~/.path_static` file, use the PATH in that file
+      ;; because using that PATH is much faster than calculating it dynmaically.
+      (my/load-system-path)
+    (use-package exec-path-from-shell
+      :demand t
+      :init
+      ;; Whether to output debug info to the *Messages* buffer.
+      ;; NOTE: This variable is not customizable.
+      (setq exec-path-from-shell-debug nil)
+      :custom
+      ;; How long to wait before warning about long startup time for shell.
+      (exec-path-from-shell-warn-duration-millis 500)
+      :config
+      ;; Only run this plugin for macOS, Linux, or Cygwin systems.
+      (when (member system-type '(gnu gnu/linux darwin cygwin))
+        ;; Make sure to use the lean version of our login shell profile to
+        ;; avoid timing out or excessive memory consumption.
+        (setenv "USE_LEAN_PROFILE" "true")
+        ;; Set $PATH by running the user's login shell.
+        (exec-path-from-shell-initialize)
+        ;; Remove USE_LEAN_PROFILE environment variable once it has served its
+        ;; purpose.
+        (setenv "USE_LEAN_PROFILE" nil))))
 #+end_src
 
 ** delight
@@ -1258,9 +1234,6 @@ default mode name is hidden completely.
 #+begin_src emacs-lisp
   (use-package delight
     :demand t
-    :preface
-    (eval-when-compile
-      (require 'delight))
     :config
     ;; Remove lighter text for whitespace-mode
     (delight '((whitespace-mode nil whitespace)
@@ -1275,9 +1248,6 @@ This package maps pairs of simultaneously pressed keys to bindings.
 #+begin_src emacs-lisp
   (use-package key-chord
     :demand t
-    :preface
-    (eval-when-compile
-      (require 'key-chord))
     :config
     (key-chord-mode 1))
 #+end_src
@@ -1297,17 +1267,16 @@ and hooks in a way that defers loading the package.
     :preface
     (require 'general)
     :config
-    (eval-and-compile
-      (add-to-list 'load-path (file-truename (concat user-emacs-directory "straight/build/general")))
-      (require 'general)
-      ;; Define a shortcut function for defining keys that begin with "C-c"
-      (general-create-definer my/user-leader-def
-        :prefix "C-c")
-      ;; Create a replacement macro for `evil-leader'. This obsoletes the need to
-      ;; include `evil-leader' in your configuation!
-      (general-create-definer my/evil-leader-def
-        :states '(normal visual)
-        :prefix ","))
+    (add-to-list 'load-path (file-truename (concat user-emacs-directory "straight/build/general")))
+    (require 'general)
+    ;; Define a shortcut function for defining keys that begin with "C-c"
+    (general-create-definer my/user-leader-def
+      :prefix "C-c")
+    ;; Create a replacement macro for `evil-leader'. This obsoletes the need to
+    ;; include `evil-leader' in your configuation!
+    (general-create-definer my/evil-leader-def
+      :states '(normal visual)
+      :prefix ",")
     ;; Allows using Vim-style key definers.
     ;; Available definers are:
     ;;   general-imap
@@ -1400,9 +1369,6 @@ try to load =org= later.
     :delight
     (org-src-mode nil org-src)
     (org-indent-mode nil org-indent)
-    :preface
-    (eval-when-compile
-      (require 'org))
     :general
     (general-def org-mode-map
       ;; Mainly used to cycle through todo states.
@@ -1639,11 +1605,6 @@ try to load =org= later.
     :config
     ;; Required for expand-region.
     (require 'org-fold)
-    ;; Change the font/size of the TITLE attribute of each Org mode buffer.
-    ;; This makes the title larger, and stand out more.
-    (set-face-attribute 'org-document-title nil
-                        :inherit 'org-level-1
-                        :height 1.75)
     ;; Register PlantUML as an Org-compatible language for source blocks.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
@@ -1662,12 +1623,10 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
 
 #+begin_src emacs-lisp
   (use-package org-auto-tangle
+    :after org
     :delight
     :hook
     (org-mode . org-auto-tangle-mode)
-    :preface
-    (eval-when-compile
-      (require 'org-auto-tangle))
     :custom
     ;; Whether to use auto-tangle as the default behavior for all org buffers.
     (org-auto-tangle-default t))
@@ -1681,9 +1640,6 @@ much more.
 
 #+begin_src emacs-lisp
   (use-package ediff
-    :preface
-    (eval-when-compile
-      (require 'ediff))
     :custom
     ;; `nil' means prompt to remove unmodified buffers A/B/C at session end.
     (ediff-keep-variants nil)
@@ -1799,9 +1755,6 @@ latest and greatest, so we can also download it from ELPA.
 #+begin_src emacs-lisp
   (use-package xref
     :demand t
-    :preface
-    (eval-when-compile
-      (require 'xref))
     :custom
     (xref-show-definitions-function #'xref-show-definitions-completing-read)
     ;; The program to use to find xref symbols.
