@@ -71,14 +71,21 @@ porcelain exists in Magit.
     ;; is active, Magit immediately reverts buffers by explicitely calling
     ;; `auto-revert-buffers' after running Git for side-effects.
     ;; NOTE: Can slow down performance when editing files with magit-status open.
-    (magit-auto-revert-immediately nil)
+    (magit-auto-revert-immediately t)
     ;; List of symbols for actions that Magit should not confirm, or t.
     (magit-no-confirm '(stage-all-changes
                         unstage-all-changes
                         resurrect
                         untrack
                         rename
-                        set-and-push)))
+                        set-and-push))
+    :init
+    (add-hook 'magit-status-mode-hook (lambda ()
+                                        ;; Fix evil keybindings.
+                                        (evil-normalize-keymaps)))
+    :config
+    ;; Toggle buffer-local auto-revert-mode when a buffer is first created.
+    (magit-auto-revert-mode 1))
 #+end_src
 
 * git-commit

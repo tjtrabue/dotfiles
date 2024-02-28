@@ -8,8 +8,6 @@
 =edit-indirect= allows you to edit Markdown code blocks in a dedicated buffer,
 similar to how =org-mode= behaves.
 
-* =use-package= specification
-
 #+begin_src emacs-lisp
   (use-package edit-indirect)
 #+end_src
