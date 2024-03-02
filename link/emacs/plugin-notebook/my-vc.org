@@ -125,6 +125,11 @@ all supported keywords.
     :after magit
     :hook
     (magit-mode . magit-todos-mode)
+    :general
+    (general-def '(normal visual)
+      '(magit-todos-section-map magit-todos-list-mode-map magit-todos-item-section-map)
+      "j" 'evil-next-visual-line
+      "k" 'evil-previous-visual-line)
     :custom
     (magit-todos-exclude-globs '(;; Archives
                                  "*.tar.gz"
