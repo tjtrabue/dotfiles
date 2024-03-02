@@ -1,0 +1,19 @@
+#+TITLE:   Emacs Garbage Collection Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-03-01
+#+TAGS:
+#+STARTUP: fold
+
+* GCMH
+GCMH is the "garbage collector magic hack" for Emacs. It enforces a sneaky GC
+strategy to minimize interference with user activity. The strategy works like
+this: During normal use, =gcmh= sets a GC cons threshold. When idling, =gcmh=
+triggers the GC and a low threshold is set.
+
+#+begin_src emacs-lisp
+  (use-package gcmh
+    :demand t
+    :config
+    (gcmh-mode 1))
+#+end_src
