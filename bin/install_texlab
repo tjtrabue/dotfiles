@@ -12,8 +12,8 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
 declare LOG_LEVEL="${LOG_LEVEL:-3}"
 
-declare WS="${WS:-${HOME}/workspace}"
-declare TEXLAB_INSTALL_DIR="${WS}/texlab"
+declare APP_DIR="${HOME}/applications"
+declare TEXLAB_INSTALL_DIR="${APP_DIR}/texlab"
 declare TEXLAB_GIT_URL="https://github.com/latex-lsp/texlab.git"
 declare TEXLAB_BIN_TARGET_DIR="${HOME}/bin"
 # }}}
@@ -43,6 +43,14 @@ OPTIONS:
 EOF
 }
 
+# Check for required executables and conditions.
+itl__initial_checks() {
+  if [ ! -x "$(command -v rustc)" ]; then
+    err "No Rust compiler found"
+    return 1
+  fi
+}
+
 itl__create_dirs() {
   log_info "Creating required directories"
   mkdir -p "${TEXLAB_BIN_TARGET_DIR}"
@@ -56,15 +64,16 @@ itl__install_texlab() {
     cd "${TEXLAB_INSTALL_DIR}" &&
       log_info "Installing TexLab target: release" &&
       cargo build --release &&
-      log_info "Linking texlab executable to: ${BLUE}${TEXLAB_BIN_TARGET_DIR}${NC}" &&
-      ln -sft "${TEXLAB_BIN_TARGET_DIR}" "${texlabReleaseDir}/texlab"
+      log_info "Installing texlab executable to: ${BLUE}${TEXLAB_BIN_TARGET_DIR}${NC}" &&
+      install -m 0755 -t "${TEXLAB_BIN_TARGET_DIR}" "${texlabReleaseDir}/texlab"
   )
 }
 
 itl__main() {
   print_header "Installing TexLab LSP for LaTeX"
-  itl__create_dirs
-  itl__install_texlab
+  itl__initial_checks &&
+    itl__create_dirs &&
+    itl__install_texlab
 }
 # }}}
 
