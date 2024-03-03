@@ -5,6 +5,11 @@
 #+TAGS:
 #+STARTUP: fold
 
+Sometimes, one must do...things. Terrible things. Unforgivable things. Things
+that break Emacs' model of garbage collection in service of slightly enhancing
+the user's typing experience. This files contains my baroque and iniquitous
+configuration for tweaking Emacs' GC behavior.
+
 * GCMH
 GCMH is the "garbage collector magic hack" for Emacs. It enforces a sneaky GC
 strategy to minimize interference with user activity. The strategy works like
