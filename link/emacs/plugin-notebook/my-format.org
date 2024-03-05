@@ -263,6 +263,8 @@ details.
     :general
     (my/evil-leader-def
       "=" 'apheleia-format-buffer)
+    (my/user-leader-def
+      "f f" 'apheleia-format-buffer)
     :config
     (apheleia-global-mode 1)
     ;; Apheleia is weird when it comes to lighter text.  It puts the full mode

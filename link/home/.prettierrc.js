@@ -2,7 +2,7 @@
  * Configuration file for the Prettier Javascript auto-formatter.
  */
 
-module.exports = {
+const config = {
   semi: true,
   singleQuote: true,
   quoteProps: 'consistent',
@@ -11,9 +11,9 @@ module.exports = {
   arrowParens: 'avoid',
   bracketSpacing: false,
   plugins: ['prettier-plugin-tailwindcss'],
-  // Always wrap Markdown files after a fixed width
-  printWidth: 80,
   proseWrap: 'always',
 };
+
+export default config;
 
 // vim:foldenable:foldmethod=marker
