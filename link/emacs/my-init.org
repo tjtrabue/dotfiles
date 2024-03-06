@@ -1433,6 +1433,8 @@ try to load =org= later.
     rulecolor=\\color{LightSteelBlue},framerule=1pt}
   \\usepackage{setspace}
   \\usepackage{xcolor}
+  \\usepackage{tikz}
+  \\usepackage{pgfplots}
   \\newcommand\\basicdefault[1]{\\scriptsize\\color{Black}\\ttfamily#1}
   \\lstset{basicstyle=\\basicdefault{\\spaceskip1em}}
   \\lstset{literate=
@@ -1607,7 +1609,10 @@ try to load =org= later.
     (require 'org-fold)
     ;; Register PlantUML as an Org-compatible language for source blocks.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
+    (org-babel-do-load-languages 'org-babel-load-languages
+                                 '((emacs-lisp . t)
+                                   (latex . t)
+                                   (plantuml . t))))
 #+end_src
 
 ** org-auto-tangle
