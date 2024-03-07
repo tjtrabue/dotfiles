@@ -1408,7 +1408,7 @@ try to load =org= later.
                          (t "pdflatex")))
     ;; The command used to generate PDFs from Org's LaTeX exports.
     (org-latex-pdf-process
-     (list (concat "latexmk -f -%latex"
+     (list (concat "latexmk -f -%latex -pdf%latex='%latex --shell-escape %%O %%S'"
                    " -recorder -synctex=1 -bibtex-cond"
                    " -interaction=nonstopmode -output-directory=%o %f")))
     ;; The CLI program used to convert LaTeX fragments to image files.

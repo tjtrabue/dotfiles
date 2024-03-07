@@ -24,6 +24,7 @@ pipx
 powerline-gitstatus
 powerline-status
 proselint
+pygments
 pylint
 pynvim
 python-language-server
