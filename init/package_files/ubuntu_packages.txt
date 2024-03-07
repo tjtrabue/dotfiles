@@ -1,3 +1,4 @@
+adwaita-icon-theme-full
 apt-transport-https
 aspell
 atool

@@ -37,6 +37,17 @@ To get a live-preview in Emacs, do this:
 
 Voila! You now have an almost-instant preview of your TEX document.
 
+* TeX
+The built-in major mode for editing TeX documents.
+
+#+begin_src emacs-lisp
+  (use-package tex
+    :ensure nil
+    :straight nil
+    :config
+    (add-to-list 'TeX-command-list '("Latex Make" "latexmk %(-pdf) %t" TeX-run-TeX) ()))
+#+end_src
+
 * Plugins
 ** AUCTeX
 AUCTeX is the quintessential LaTeX mode for Emacs, and one the premier LaTeX
@@ -54,8 +65,6 @@ through a tutorial or two.
                       (visual-line-mode 1)
                       (flyspell-mode 1)
                       (reftex-mode 1)
-                      (push (list 'output-pdf "Zathura")
-                            TeX-view-program-selection)
                       ;; Make the standard compile command compile the TeX file
                       ;; into a PDF.
                       (setq-local compile-command
@@ -91,7 +100,27 @@ through a tutorial or two.
     (setq reftex-plug-into-AUCTeX '(t t t t t))
     ;; Revert pdf-view after compilation
     (add-hook 'TeX-after-compilation-finished-functions
-              #'TeX-revert-document-buffer))
+              #'TeX-revert-document-buffer)
+    :config
+    ;; Use `pdf-tools' to view PDFs so we can stay in Emacs.
+    (push '(output-pdf "PDF Tools") TeX-view-program-selection)
+    (add-to-list 'TeX-command-list '("Latex Make" "latexmk %(-pdf) %t" TeX-run-TeX)))
+#+end_src
+
+** CDLaTeX
+CDLaTeX is a minor mode supporting fast insertion of environment templates and
+math stuff in LaTeX.
+
+#+begin_src emacs-lisp
+  (use-package cdlatex
+    :hook
+    ;; Turn on cdlatex for all LaTeX editing major modes.
+    ;; AUCTeX
+    ((LaTeX-mode . (lambda ()
+                     (turn-on-cdlatex)))
+     ;; Built-in LaTeX mode
+     (latex-mode . (lambda ()
+                     (turn-on-cdlatex)))))
 #+end_src
 
 ** auctex-lua
