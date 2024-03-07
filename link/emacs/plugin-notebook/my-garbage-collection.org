@@ -18,6 +18,8 @@ triggers the GC and a low threshold is set.
 
 #+begin_src emacs-lisp
   (use-package gcmh
+    ;; Seems to reduce Emacs' performance.
+    :diabled
     :demand t
     :delight
     :config
