@@ -21,6 +21,7 @@ dbus-x11
 debhelper
 dpkg-dev
 elixir
+feh
 fonts-noto
 g++
 g++-12
