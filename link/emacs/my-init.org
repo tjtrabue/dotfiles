@@ -1411,6 +1411,9 @@ try to load =org= later.
      (list (concat "latexmk -"
                    org-latex-compiler
                    " -recorder -synctex=1 -bibtex-cond %b")))
+    ;; The CLI program used to convert LaTeX fragments to image files.
+    ;; default value: 'dvipng
+    (org-latex-create-formula-image-program 'imagemagick)
     ;; Whether to use `lstlisting' for source environments.
     (org-latex-listings t)
     ;; I took all of this preamble configuration from this blog post:
@@ -1419,21 +1422,14 @@ try to load =org= later.
                           "\\RequirePackage{fix-cm}
   \\PassOptionsToPackage{svgnames}{xcolor}
   \\documentclass[11pt]{article}
-  \\usepackage{fontspec}
   \\setmainfont{Linux Libertine O}
   \\setsansfont[Scale=MatchLowercase]{Raleway}
   \\setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
-  \\usepackage{sectsty}
   \\allsectionsfont{\\sffamily}
-  \\usepackage{enumitem}
   \\setlist[description]{style=unboxed,font=\\sffamily\\bfseries}
-  \\usepackage{listings}
   \\lstset{frame=single,aboveskip=1em,
     framesep=.5em,backgroundcolor=\\color{AliceBlue},
     rulecolor=\\color{LightSteelBlue},framerule=1pt}
-  \\usepackage{setspace}
-  \\usepackage{xcolor}
-  \\usepackage{pgfplots}
   \\newcommand\\basicdefault[1]{\\scriptsize\\color{Black}\\ttfamily#1}
   \\lstset{basicstyle=\\basicdefault{\\spaceskip1em}}
   \\lstset{literate=
@@ -1477,7 +1473,6 @@ try to load =org= later.
         columns=fullflexible,
         keepspaces=true}
   \\usepackage[letterpaper,margin=1in]{geometry}
-  \\usepackage{parskip}
   \\makeatletter
   \\renewcommand{\\maketitle}{%
     \\begingroup\\parindent0pt
@@ -1593,11 +1588,17 @@ try to load =org= later.
     (require 'org-fold)
     ;; Add more default LaTeX packages
     (dolist (package '(("" "color" t)
+                       ("" "enumitem" t)
                        ("" "grffile" t)
+                       ("" "listings" t)
                        ("" "minted" t)
                        ("" "parskip" t)
+                       ("" "pgfplots" t)
+                       ("" "sectsty" t)
+                       ("" "setspace" t)
                        ("" "textcomp" t)
-                       ("" "tikz" t)))
+                       ("" "tikz" t)
+                       ("" "xcolor" t)))
       (add-to-list 'org-latex-default-packages-alist package))
     ;; Register PlantUML as an Org-compatible language for source blocks.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
