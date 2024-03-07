@@ -1433,7 +1433,6 @@ try to load =org= later.
     rulecolor=\\color{LightSteelBlue},framerule=1pt}
   \\usepackage{setspace}
   \\usepackage{xcolor}
-  \\usepackage{tikz}
   \\usepackage{pgfplots}
   \\newcommand\\basicdefault[1]{\\scriptsize\\color{Black}\\ttfamily#1}
   \\lstset{basicstyle=\\basicdefault{\\spaceskip1em}}
@@ -1567,21 +1566,6 @@ try to load =org= later.
     (org-plantuml-exec-mode 'plantuml)
     (org-plantuml-executable-path (executable-find "plantuml"))
     :init
-    (setq org-latex-default-packages-alist '(("" "graphicx" t)
-                                             ("" "grffile" t)
-                                             ("" "longtable" nil)
-                                             ("" "wrapfig" nil)
-                                             ("" "rotating" nil)
-                                             ("normalem" "ulem" t)
-                                             ("" "amsmath" t)
-                                             ("" "textcomp" t)
-                                             ("" "amssymb" t)
-                                             ("" "capt-of" nil)
-                                             ("" "hyperref" nil)))
-    ;; Add LaTeX packages to Org mode's default list of LaTeX packages.
-    (dolist (pkg '(("" "grffile" t)
-                   ("" "textcomp" t)))
-      (add-to-list 'org-latex-default-packages-alist pkg))
     ;; Remove a few unnecessary packages from Org's default LaTeX package list.
     ;; (dolist (pkg '(("T1" "fontenc" t)
     ;;                ("AUTO" "inputenc" t ("pdflatex"))))
@@ -1607,6 +1591,14 @@ try to load =org= later.
     :config
     ;; Required for expand-region.
     (require 'org-fold)
+    ;; Add more default LaTeX packages
+    (dolist (package '(("" "color" t)
+                       ("" "grffile" t)
+                       ("" "minted" t)
+                       ("" "parskip" t)
+                       ("" "textcomp" t)
+                       ("" "tikz" t)))
+      (add-to-list 'org-latex-default-packages-alist package))
     ;; Register PlantUML as an Org-compatible language for source blocks.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages
