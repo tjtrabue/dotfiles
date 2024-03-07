@@ -19,6 +19,7 @@ triggers the GC and a low threshold is set.
 #+begin_src emacs-lisp
   (use-package gcmh
     :demand t
+    :delight
     :config
     (gcmh-mode 1))
 #+end_src

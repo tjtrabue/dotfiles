@@ -642,6 +642,20 @@ concert, if you so desire, but I prefer =evil-multiedit= for all use cases.
     (evil-ex-define-cmd "ie[dit]" 'evil-multiedit-ex-match))
 #+end_src
 
+** evil-tex
+Evil toolbox for LaTeX editing. Provides many text objects fully utilizing
+=evil-surround=, some useful movements, keymaps for quickly entering
+environments or =cdlatex=-like accents, and useful toggles.
+
+Heavily inspired by =vimtex=; successor of =evil-latex-textobjects=.
+
+#+begin_src emacs-lisp
+  (use-package evil-tex
+    :after evil-collection
+    :hook
+    (LaTeX-mode . evil-tex-mode))
+#+end_src
+
 ** kubernetes-evil
 #+begin_src emacs-lisp
   (use-package kubernetes-evil
