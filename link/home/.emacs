@@ -46,7 +46,7 @@
   my configuration.  Most of the performance increase comes from
   native-compiling Emacs itself, along with any downloaded libraries.")
 
-(defvar my/gc-cons-threshold (* 100 1024 1024)
+(defvar my/gc-cons-threshold (* 100 1024 1024) ;; 100 MB
   "My chosen threshold for garbage collection.")
 
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
@@ -159,7 +159,7 @@ Once created, the file should be placed at
   ;; settings to some reasonable defaults. A large gc-cons-threshold
   ;; will cause freezing and stuttering during long-term interactive
   ;; use. I find these are nice defaults:
-  (setq gc-cons-threshold my/gc-cons-threshold) ;; 800KB
+  (setq gc-cons-threshold my/gc-cons-threshold)
   (setq gc-cons-percentage 0.1)
   (setq file-name-handler-alist last-file-name-handler-alist))
 ;;; .emacs ends here
