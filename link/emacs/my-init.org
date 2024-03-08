@@ -1604,8 +1604,15 @@ try to load =org= later.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages
                                  '((emacs-lisp . t)
+                                   (gnuplot . t)
+                                   (js . t)
                                    (latex . t)
-                                   (plantuml . t))))
+                                   (org . t)
+                                   (perl . t)
+                                   (plantuml . t)
+                                   (python . t)
+                                   (R . t)
+                                   (shell . t))))
 #+end_src
 
 ** org-auto-tangle
