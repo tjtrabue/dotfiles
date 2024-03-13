@@ -1351,8 +1351,7 @@ and hooks in a way that defers loading the package.
       "ff" 'find-file-at-point
       "fF" 'find-file-other-window
       "fr" 'recentf-open-files
-      "lf" 'load-file
-      "of" 'org-babel-load-file))
+      "lf" 'load-file))
 #+end_src
 
 ** org
@@ -1383,6 +1382,8 @@ try to load =org= later.
       "<tab>" 'indent-for-tab-command)
     (my/evil-leader-def org-mode-map
       "cc" 'org-edit-special
+      "oe" 'org-export-dispatch
+      "ol" 'org-babel-load-file
       "op" 'org-latex-preview)
     (my/user-leader-def
       ;; These bindings should be available everywhere.  We'll want to use them
@@ -1408,105 +1409,15 @@ try to load =org= later.
                          (t "pdflatex")))
     ;; The command used to generate PDFs from Org's LaTeX exports.
     (org-latex-pdf-process
-     (list (concat "latexmk -f -%latex -pdf%latex='%latex --shell-escape %%O %%S'"
-                   " -recorder -synctex=1 -bibtex-cond"
-                   " -interaction=nonstopmode -output-directory=%o %f")))
+     (let ((latex-pdf-cmd (concat "latexmk -f -%latex -%latex='%latex -shell-escape %%O %%S'"
+                                  " -recorder -synctex=1 -bibtex-cond"
+                                  " -interaction=nonstopmode -output-directory=%o %f")))
+       (list latex-pdf-cmd)))
     ;; The CLI program used to convert LaTeX fragments to image files.
     ;; default value: 'dvipng
     (org-latex-create-formula-image-program 'imagemagick)
     ;; Whether to use `lstlisting' for source environments.
     (org-latex-listings t)
-    ;; I took all of this preamble configuration from this blog post:
-    ;; https://so.nwalsh.com/2020/01/05-latex
-    (org-latex-classes '(("article"
-                          "\\RequirePackage{fix-cm}
-  \\PassOptionsToPackage{svgnames}{xcolor}
-  \\documentclass[11pt]{article}
-  \\setmainfont{Linux Libertine O}
-  \\setsansfont[Scale=MatchLowercase]{Raleway}
-  \\setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
-  \\allsectionsfont{\\sffamily}
-  \\setlist[description]{style=unboxed,font=\\sffamily\\bfseries}
-  \\lstset{frame=single,aboveskip=1em,
-    framesep=.5em,backgroundcolor=\\color{AliceBlue},
-    rulecolor=\\color{LightSteelBlue},framerule=1pt}
-  \\newcommand\\basicdefault[1]{\\scriptsize\\color{Black}\\ttfamily#1}
-  \\lstset{basicstyle=\\basicdefault{\\spaceskip1em}}
-  \\lstset{literate=
-        {§}{{\\S}}1
-        {©}{{\\raisebox{.125ex}{\\copyright}\\enspace}}1
-        {«}{{\\guillemotleft}}1
-        {»}{{\\guillemotright}}1
-        {Á}{{\\'A}}1
-        {Ä}{{\\\"A}}1
-        {É}{{\\'E}}1
-        {Í}{{\\'I}}1
-        {Ó}{{\\'O}}1
-        {Ö}{{\\\"O}}1
-        {Ú}{{\\'U}}1
-        {Ü}{{\\\"U}}1
-        {ß}{{\\ss}}2
-        {à}{{\\`a}}1
-        {á}{{\\'a}}1
-        {ä}{{\\\"a}}1
-        {é}{{\\'e}}1
-        {í}{{\\'i}}1
-        {ó}{{\\'o}}1
-        {ö}{{\\\"o}}1
-        {ú}{{\\'u}}1
-        {ü}{{\\\"u}}1
-        {¹}{{\\textsuperscript1}}1
-              {²}{{\\textsuperscript2}}1
-              {³}{{\\textsuperscript3}}1
-        {i}{{\\i}}1
-        {}{{---}}1
-        {}{{'}}1
-        {}{{\\dots}}1
-              {?}{{$\\hookleftarrow$}}1
-        {?}{{\\textvisiblespace}}1,
-        keywordstyle=\\color{DarkGreen}\\bfseries,
-        identifierstyle=\\color{DarkRed},
-        commentstyle=\\color{Gray}\\upshape,
-        stringstyle=\\color{DarkBlue}\\upshape,
-        emphstyle=\\color{Chocolate}\\upshape,
-        showstringspaces=false,
-        columns=fullflexible,
-        keepspaces=true}
-  \\usepackage[letterpaper,margin=1in]{geometry}
-  \\makeatletter
-  \\renewcommand{\\maketitle}{%
-    \\begingroup\\parindent0pt
-    \\sffamily
-    \\Huge{\\bfseries\\@title}\\par\\bigskip
-    \\LARGE{\\bfseries\\@author}\\par\\medskip
-    \\normalsize\\@date\\par\\bigskip
-    \\endgroup\\@afterindentfalse\\@afterheading}
-  \\makeatother
-  [DEFAULT-PACKAGES]
-  \\hypersetup{linkcolor=Blue,urlcolor=DarkBlue,
-    citecolor=DarkRed,colorlinks=true}
-  \\AtBeginDocument{\\renewcommand{\\UrlFont}{\\ttfamily}}
-  [PACKAGES]
-  [EXTRA]"
-                          ("\\section{%s}" . "\\section*{%s}")
-                          ("\\subsection{%s}" . "\\subsection*{%s}")
-                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-
-                         ("report" "\\documentclass[11pt]{report}"
-                          ("\\part{%s}" . "\\part*{%s}")
-                          ("\\chapter{%s}" . "\\chapter*{%s}")
-                          ("\\section{%s}" . "\\section*{%s}")
-                          ("\\subsection{%s}" . "\\subsection*{%s}")
-                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
-
-                         ("book" "\\documentclass[11pt]{book}"
-                          ("\\part{%s}" . "\\part*{%s}")
-                          ("\\chapter{%s}" . "\\chapter*{%s}")
-                          ("\\section{%s}" . "\\section*{%s}")
-                          ("\\subsection{%s}" . "\\subsection*{%s}")
-                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
     ;; Whether to show LaTeX previews when opening a new Org buffer.
     (org-startup-with-latex-preview t)
     ;; The default LaTeX preview program to use.
@@ -1589,6 +1500,7 @@ try to load =org= later.
     ;; Add more default LaTeX packages
     (dolist (package '(("" "color" t)
                        ("" "enumitem" t)
+                       ("letterpaper,margin=1in" "geometry")
                        ("" "grffile" t)
                        ("" "listings" t)
                        ("" "minted" t)
