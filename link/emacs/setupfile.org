@@ -1,18 +1,13 @@
 #+LATEX_HEADER: \RequirePackage{fix-cm}
 #+LATEX_HEADER: \PassOptionsToPackage{svgnames}{xcolor}
 #+LATEX_HEADER: documentclass[11pt]{article}
-#+LATEX_HEADER: usepackage{fontspec}
 #+LATEX_HEADER: setmainfont{Linux Libertine O}
 #+LATEX_HEADER: setsansfont[Scale=MatchLowercase]{Raleway}
 #+LATEX_HEADER: setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
-#+LATEX_HEADER: usepackage{sectsty}
 #+LATEX_HEADER: allsectionsfont{\sffamily}
-#+LATEX_HEADER: usepackage{enumitem}
 #+LATEX_HEADER: setlist[description]{style=unboxed,font=\sffamily\bfseries}
-#+LATEX_HEADER: usepackage{listings}
 #+LATEX_HEADER: lstloadlanguages{XML,XSLT}
 #+LATEX_HEADER: lstset{defaultdialect=XSLT,frame=single, framesep=.5em,backgroundcolor=\color{AliceBlue}, rulecolor=\color{LightSteelBlue},framerule=1pt}
-#+LATEX_HEADER: usepackage{xcolor}
 #+LATEX_HEADER: newcommand\basicdefault[1]{\scriptsize\color{Black}\ttfamily#1}
 #+LATEX_HEADER: lstset{basicstyle=\basicdefault{\spaceskip.5em}}
 #+LATEX_HEADER: lstset{literate=
@@ -55,7 +50,6 @@
 #+LATEX_HEADER:            showstringspaces=false,
 #+LATEX_HEADER:            columns=fullflexible,
 #+LATEX_HEADER:            keepspaces=true}
-#+LATEX_HEADER: usepackage[letterpaper,margin=1in,left=1.5in]{geometry}
 #+LATEX_HEADER: makeatletter
 #+LATEX_HEADER: renewcommand{\maketitle}{%
 #+LATEX_HEADER:  \begingroup\parindent0pt
@@ -65,17 +59,6 @@
 #+LATEX_HEADER:  \normalsize\@date\par\bigskip
 #+LATEX_HEADER:  \endgroup}
 #+LATEX_HEADER: makeatother
-#+LATEX_HEADER: usepackage{graphicx}
-#+LATEX_HEADER: usepackage{grffile}
-#+LATEX_HEADER: usepackage{longtable}
-#+LATEX_HEADER: usepackage{wrapfig}
-#+LATEX_HEADER: usepackage{rotating}
-#+LATEX_HEADER: usepackage[normalem]{ulem}
-#+LATEX_HEADER: usepackage{amsmath}
-#+LATEX_HEADER: usepackage{textcomp}
-#+LATEX_HEADER: usepackage{amssymb}
-#+LATEX_HEADER: usepackage{capt-of}
-#+LATEX_HEADER: usepackage{hyperref}
 #+LATEX_HEADER: hypersetup{linkcolor=Blue,urlcolor=DarkBlue,
 #+LATEX_HEADER:  citecolor=DarkRed,colorlinks=true}
 #+LATEX_HEADER: AtBeginDocument{\renewcommand{\UrlFont}{\ttfamily}}

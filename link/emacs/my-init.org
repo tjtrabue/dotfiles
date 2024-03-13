@@ -1407,12 +1407,6 @@ try to load =org= later.
     (org-latex-compiler (cond
                          ((executable-find "xelatex") "xelatex")
                          (t "pdflatex")))
-    ;; The command used to generate PDFs from Org's LaTeX exports.
-    (org-latex-pdf-process
-     (let ((latex-pdf-cmd (concat "latexmk -f -%latex -%latex='%latex -shell-escape %%O %%S'"
-                                  " -recorder -synctex=1 -bibtex-cond"
-                                  " -interaction=nonstopmode -output-directory=%o %f")))
-       (list latex-pdf-cmd)))
     ;; The CLI program used to convert LaTeX fragments to image files.
     ;; default value: 'dvipng
     (org-latex-create-formula-image-program 'imagemagick)
@@ -1512,6 +1506,11 @@ try to load =org= later.
                        ("" "tikz" t)
                        ("" "xcolor" t)))
       (add-to-list 'org-latex-default-packages-alist package))
+    ;; The command used to generate PDFs from Org's LaTeX exports.
+    (setq org-latex-pdf-process (list (concat "latexmk -f -%latex"
+                                              " -%latex='%latex -shell-escape %%O %%S'"
+                                              " -recorder -synctex=1 -bibtex-cond"
+                                              " -interaction=nonstopmode -output-directory=%o %f")))
     ;; Register PlantUML as an Org-compatible language for source blocks.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages
