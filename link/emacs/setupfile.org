@@ -1,5 +1,6 @@
 #+LATEX_HEADER: \RequirePackage{fix-cm}
 #+LATEX_HEADER: \PassOptionsToPackage{svgnames}{xcolor}
+#+LATEX_HEADER: \documentclass[11pt]{article}
 #+LATEX_HEADER: \setmainfont{Linux Libertine O}
 #+LATEX_HEADER: \setsansfont[Scale=MatchLowercase]{Raleway}
 #+LATEX_HEADER: \setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
