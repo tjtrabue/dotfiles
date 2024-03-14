@@ -1,6 +1,5 @@
 #+LATEX_HEADER: \RequirePackage{fix-cm}
 #+LATEX_HEADER: \PassOptionsToPackage{svgnames}{xcolor}
-#+LATEX_HEADER: \documentclass[11pt]{article}
 #+LATEX_HEADER: \setmainfont{Linux Libertine O}
 #+LATEX_HEADER: \setsansfont[Scale=MatchLowercase]{Raleway}
 #+LATEX_HEADER: \setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
@@ -8,7 +7,7 @@
 #+LATEX_HEADER: \setlist[description]{style=unboxed,font=\sffamily\bfseries}
 #+LATEX_HEADER: \lstloadlanguages{XML,XSLT}
 #+LATEX_HEADER: \lstset{defaultdialect=XSLT,frame=single, framesep=.5em,backgroundcolor=\color{AliceBlue}, rulecolor=\color{LightSteelBlue},framerule=1pt}
-#+LATEX_HEADER: newcommand\basicdefault[1]{\scriptsize\color{Black}\ttfamily#1}
+#+LATEX_HEADER: \newcommand\basicdefault[1]{\scriptsize\color{Black}\ttfamily#1}
 #+LATEX_HEADER: \lstset{basicstyle=\basicdefault{\spaceskip.5em}}
 #+LATEX_HEADER: \lstset{literate=
 #+LATEX_HEADER:          {§}{{\S}}1
@@ -52,12 +51,12 @@
 #+LATEX_HEADER:          keepspaces=true}
 #+LATEX_HEADER: \makeatletter
 #+LATEX_HEADER: \renewcommand{\maketitle}{%
-#+LATEX_HEADER:  \begingroup\parindent0pt
-#+LATEX_HEADER:    \sffamily
-#+LATEX_HEADER:    \Huge{\bfseries\@title}\par\bigskip
-#+LATEX_HEADER:    \LARGE{\bfseries\@author}\par\medskip
-#+LATEX_HEADER:    \normalsize\@date\par\bigskip
-#+LATEX_HEADER:  \endgroup}
+#+LATEX_HEADER:   \begingroup\parindent0pt
+#+LATEX_HEADER:   \sffamily
+#+LATEX_HEADER:   \Huge{\bfseries\@title}\par\bigskip
+#+LATEX_HEADER:   \LARGE{\bfseries\@author}\par\medskip
+#+LATEX_HEADER:   \normalsize\@date\par\bigskip
+#+LATEX_HEADER:   \endgroup}
 #+LATEX_HEADER: \makeatother
 #+LATEX_HEADER: \hypersetup{linkcolor=Blue,urlcolor=DarkBlue,citecolor=DarkRed,colorlinks=true}
 #+LATEX_HEADER: \AtBeginDocument{\renewcommand{\UrlFont}{\ttfamily}}

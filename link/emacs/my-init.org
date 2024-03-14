@@ -1494,6 +1494,7 @@ try to load =org= later.
     ;; Add more default LaTeX packages
     (dolist (package '(("" "color" t)
                        ("" "enumitem" t)
+                       ("" "fontspec" t)
                        ("letterpaper,margin=1in" "geometry")
                        ("" "grffile" t)
                        ("" "listings" t)
