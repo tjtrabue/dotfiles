@@ -72,7 +72,7 @@ itl__install_texlive() {
 }
 
 # We  want our user to own the texlive distribution dir.
-# It will have a name like: /usr/local/texlive/2023
+# It will have a name like: /usr/local/texlive/20XX
 itl__update_texlive_permissions() {
   log_info "Making ${USER} owner of ${TEXLIVE_DIR}/* directories"
   find "${TEXLIVE_DIR}" -maxdepth 1 -mindepth 1 -type d \
@@ -85,6 +85,19 @@ itl__configure_tlmgr() {
 
   log_info "Configuring tlmgr"
   tlmgr option location "${tlmgrUpdateUrl}"
+}
+
+# Remove any existing TexLive directories.
+itl__delete_existing_texlive_installations() {
+  if [ -x "$(command -v tlmgr)" ]; then
+    log_info "Deleting existing TexLive installations"
+    sudo tlmgr uninstall --all --force
+  fi
+  if [ -d "${TEXLIVE_DIR}" ]; then
+    log_info "Deleting old texlive installation directories"
+    find "${TEXLIVE_DIR}" -mindepth 1 -maxdepth 1 -type d \
+      -regextype 'posix-extended' -regex '.*[0-9]{4}$' -delete
+  fi
 }
 
 # Setup PATH, man db, texinfo config, etc.
@@ -186,6 +199,7 @@ EOF
 }
 
 main() {
+  itl__delete_existing_texlive_installations
   itl__install_texlive &&
     itl__update_texlive_permissions &&
     itl__setup_paths &&
