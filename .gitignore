@@ -335,6 +335,7 @@ link/config/ksmserverrc
 link/config/ktimezonedrc
 link/config/kwalletmanager5rc
 link/config/kwalletrc
+link/config/kwinoutputconfig.json
 link/config/kwinrc
 link/config/kxkbrc
 link/config/okularpartrc
@@ -348,6 +349,7 @@ link/config/plasmanotifyrc
 link/config/plasmaparc
 link/config/plasmarc
 link/config/plasmashellrc
+link/config/powerdevilrc
 link/config/powermanagementprofilesrc
 link/config/sddmthemeinstallerrc
 link/config/session/

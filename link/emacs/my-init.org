@@ -1428,12 +1428,12 @@ try to load =org= later.
     ;;   'dvisvgm
     ;;   'imagemagick (uses the `convert' program)
     (org-preview-latex-default-process (cond
-                                        ;; ((and (executable-find "convert")
-                                        ;;       (string-match-p "\sIMAGEMAGICK\s"
-                                        ;;                       system-configuration-features)
-                                        ;;       'imagemagick))
-                                        ;; ((executable-find "dvisvgm")
-                                        ;;  'dvisvgm)
+                                        ((and (executable-find "convert")
+                                              (string-match-p "\sIMAGEMAGICK\s"
+                                                              system-configuration-features)
+                                              'imagemagick))
+                                        ((executable-find "dvisvgm")
+                                         'dvisvgm)
                                         (t
                                          'dvipng)))
     ;; Directory used by Org only in rare circumstances, such as when filing
@@ -1510,6 +1510,7 @@ try to load =org= later.
                        ("" "pgfplots" t)
                        ("" "sectsty" t)
                        ("" "setspace" t)
+                       ("" "svg" t)
                        ("" "textcomp" t)
                        ("" "tikz" t)
                        ("" "xcolor" t)))
