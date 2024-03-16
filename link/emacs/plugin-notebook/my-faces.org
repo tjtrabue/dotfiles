@@ -1,0 +1,12 @@
+#+TITLE:   Emacs Face configuration/plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-03-15
+#+TAGS:
+#+STARTUP: fold
+
+* engrave-faces
+
+#+begin_src emacs-lisp
+  (use-package engrave-faces)
+#+end_src

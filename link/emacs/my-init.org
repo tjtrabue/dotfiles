@@ -1412,6 +1412,13 @@ try to load =org= later.
     (org-latex-create-formula-image-program 'imagemagick)
     ;; Whether to use `lstlisting' for source environments.
     (org-latex-listings t)
+    ;; Backend used to generate source code listings.
+    ;; Can be one of (ordered from least to most capable):
+    ;;   'verbatim
+    ;;   'listings
+    ;;   'minted (requires the `pygments' Python package)
+    ;;   'engraved (requires the `engrave-faces' Emacs package and LaTeX `fvextra' package)
+    (org-latex-src-block-backend 'engraved)
     ;; Whether to show LaTeX previews when opening a new Org buffer.
     (org-startup-with-latex-preview t)
     ;; The default LaTeX preview program to use.
