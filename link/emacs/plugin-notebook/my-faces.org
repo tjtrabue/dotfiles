@@ -5,7 +5,14 @@
 #+TAGS:
 #+STARTUP: fold
 
+A *face* is Emacs terminology for a printable character, entailing copious
+levels of metadata for the character, such as font family, font weight,
+foreground color, background color, border boxes, and much more.
+
 * engrave-faces
+=engrave-faces= is a budding standardized system for exporting fontified code
+buffers to any number of backends, such as HTML, LaTeX, ANSI, and potentially
+more in the future.
 
 #+begin_src emacs-lisp
   (use-package engrave-faces)
