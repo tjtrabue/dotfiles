@@ -49,6 +49,7 @@
 #+LATEX_HEADER:          showstringspaces=false,
 #+LATEX_HEADER:          columns=fullflexible,
 #+LATEX_HEADER:          keepspaces=true}
+#+LATEX_HEADER: \pgfplotsset{compat=1.18}
 #+LATEX_HEADER: \makeatletter
 #+LATEX_HEADER: \renewcommand{\maketitle}{%
 #+LATEX_HEADER:   \begingroup\parindent0pt
