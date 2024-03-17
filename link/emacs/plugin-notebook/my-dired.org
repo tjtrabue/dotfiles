@@ -17,14 +17,6 @@ This is a Perl based tool, and its installation varies from system to system.
     :ensure nil
     :straight nil
     :general
-    (general-def '(normal emacs) dired-mode-map
-      ;; Reuse current dired buffer when opening new directories.
-      "RET" 'dired-find-alternate-file
-      "<return>" 'dired-find-alternate-file
-      ;; This will leave existing dired buffers open, opening new buffers instead
-      ;; of reusing the current buffer.
-      "M-RET" 'dired-find-file
-      "M-<return>" 'dired-find-file)
     (my/evil-leader-def dired-mode-map
       "dC" 'dired-do-copy-regexp
       "dG" 'dired-mark-files-containing-regexp
@@ -42,6 +34,10 @@ This is a Perl based tool, and its installation varies from system to system.
     (dired-dwim-target t)
     ;; Automatically revert dired buffers when revisiting their directories.
     (dired-auto-revert-buffer t)
+    ;; Whether to kill the current Dired buffer when navigating to a new directory.  If this is set to
+    ;; `nil', each time you press `RET' over a directory, a new Dired buffer will be created for the
+    ;; directory rather than "reusing" the current one.
+    (dired-kill-when-opening-new-dired-buffer t)
     :config
     ;; Allow using 'a' in dired to find file or directory in same buffer.
     (put 'dired-find-alternate-file 'disabled nil))
