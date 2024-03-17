@@ -31,5 +31,7 @@ characters.
 
 * =use-package= specification
 #+begin_src emacs-lisp
-  (use-package xeft)
+  (use-package xeft
+    ;; 3/16/24: Not currently using this plugin.
+    :disabled)
 #+end_src

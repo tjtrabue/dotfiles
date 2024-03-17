@@ -10,7 +10,6 @@ addresses, phone numbers, and more. BBDB works with various Emacs mail clients,
 such as Message mode, Mail mode, Rmail, gnus, Mu4e, VM, and Wanderlust. BBDB is
 fully customizeable.
 
-* =use-package= specification
 #+begin_src emacs-lisp
   (use-package bbdb)
 #+end_src

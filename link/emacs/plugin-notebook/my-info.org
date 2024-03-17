@@ -20,10 +20,10 @@ Contains additional packages and configuration for Emacs' built-in =info-mode=.
 #+end_src
 
 * info-colors
-  Colorize =info-mode= even without =info+=.
+Colorize =info-mode= even without =info+=.
 
 #+begin_src emacs-lisp
-(use-package info-colors
-  :hook
-  ((Info-selection) . info-colors-fontify-node))
+  (use-package info-colors
+    :hook
+    ((Info-selection) . info-colors-fontify-node))
 #+end_src

@@ -9,8 +9,8 @@ Raku is the official name for what was once known as Perl 6. It is the successor
 to Perl version 5, and is the new brainchild of Perl's creator, Larry Wall.
 
 * raku-mode
-  Major mode for editing Raku files. Comes packed with plenty of fancy functions
-  to make your life easier when writing Raku.
+Major mode for editing Raku files. Comes packed with plenty of fancy functions
+to make your life easier when writing Raku.
 
 #+begin_src emacs-lisp
   (use-package raku-mode

@@ -9,9 +9,9 @@
 magic of =ranger= into Emacs.
 
 * =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package ranger
-      ;; Too slow to be useful.
-      :disabled
-      :commands ranger)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package ranger
+    ;; Too slow to be useful.
+    :disabled
+    :commands ranger)
+#+end_src
