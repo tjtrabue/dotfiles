@@ -11,6 +11,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 # Logging variables
 declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
 declare LOG_LEVEL="${LOG_LEVEL:-3}"
+declare QUIET=false
 
 declare EMACS_HOME="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
 declare MAIN_ORG_CONFIG_FILE="${EMACS_HOME}/my-init.org"
@@ -110,11 +111,17 @@ mesc__write_to_super_config_file() {
   command cat "${infile}" >>"${super_config_file}"
 }
 
+# Generate .el files from source blocks in literate config .org files.
 mesc__tangle_all_org_config_files() {
   local elispScriptsDir="${EMACS_HOME}/scripts"
+  local emacsTangleCmd="emacs --batch --script ${elispScriptsDir}/tangle-org-files.el"
 
   log_info "Tangling all literate Org config files"
-  emacs --batch --script "${elispScriptsDir}/tangle-org-files.el"
+  if "${QUIET}"; then
+    eval "${emacsTangleCmd}" >>/dev/null 2>&1
+  else
+    eval "${emacsTangleCmd}"
+  fi
 }
 
 # Tangle and combine all Emacs configuration blocks held in literate Org files
@@ -150,9 +157,11 @@ mesc__main() {
   mesc__make_directories
   mesc__create_super_config
 
-  command cat <<EOF
+  if ! "${QUIET}"; then
+    command cat <<EOF
 Wrote Emacs super config files to: ${SUPER_CONFIG_DIR}
 EOF
+  fi
 }
 # }}}
 
@@ -173,6 +182,7 @@ while true; do
 
   -q | --quiet)
     LOG_LEVEL=1
+    QUIET=true
     shift
     ;;
 

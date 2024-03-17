@@ -5,7 +5,6 @@ android-sdk
 android-sdk-build-tools
 android-sdk-platform-tools
 android-studio
-arc-kde-git
 brave-beta-bin
 clj-kondo
 clojure-lsp-bin
@@ -14,7 +13,6 @@ dropbox
 dropbox-cli
 emacs-git
 findimagedupes
-flat-remix
 flutter-git
 google-cloud-cli
 google-cloud-cli-gke-gcloud-auth-plugin
@@ -23,7 +21,7 @@ icons-in-terminal
 jdtls
 kind
 kotlin-language-server-git
-kwin-bismuth-bin
+kwin-polonium-git
 lazygit-git
 libgccjit
 lightdm-webkit-theme-aether

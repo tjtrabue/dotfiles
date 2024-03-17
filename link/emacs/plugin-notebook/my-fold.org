@@ -51,6 +51,9 @@ function for this. There is an example defined for triple-braces in
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package origami
+    ;; Origami is old and unmaintained, also not as useful as it sounds.
+    ;; I used Origami when I was a Vim addict, and needed my {{{...}}} folds, but no more!
+    :disabled
     :hook
     ;; Probably don't want to use origami for text-mode.
     ((prog-mode conf-mode sgml-mode) . origami-mode))
