@@ -38,6 +38,9 @@ This is a Perl based tool, and its installation varies from system to system.
     ;; `nil', each time you press `RET' over a directory, a new Dired buffer will be created for the
     ;; directory rather than "reusing" the current one.
     (dired-kill-when-opening-new-dired-buffer t)
+    ;; `ls' switches for listing directory contents in Dired buffers.
+    ;; I like to list directories first.
+    (dired-listing-switches "-aFBhl --group-directories-first")
     :config
     ;; Allow using 'a' in dired to find file or directory in same buffer.
     (put 'dired-find-alternate-file 'disabled nil))
