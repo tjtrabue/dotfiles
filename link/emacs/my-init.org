@@ -183,7 +183,7 @@ This is where I define new variables needed throughout my configuration.
                                         (file-truename (concat (getenv "HOME") "/" file)))
                                       '(".authinfo.gpg" ".authinfo" ".netrc"))
       "The user's .authinfo files used to store login credentials.")
-    (defconst my/line-number-state 'relative
+    (defconst my/line-number-state 'absolute
       "The current global line number setting. Either `absolute' or `relative'.")
     (defconst my/super-config-dir (file-truename (concat user-emacs-directory "super_config"))
       "The path to the directory containing my loadable configuration files."))
@@ -332,9 +332,18 @@ LanguageServerProtocol clients and servers.
   ;; Whether to automatically scroll the compilation window as output arrives.
   (setq compilation-scroll-output t)
 
-  ;; Display relative line numbers like in Vim.
-  (setq display-line-numbers 'relative)
-  (setq display-line-numbers-type 'relative)
+  ;; How to display line numbers:
+  ;; - 'relative: Relative line numbers
+  ;; -         t: Absolute line numbers
+  ;; -       nil: No line numbers
+  (setq display-line-numbers (pcase my/line-number-state
+                               ('relative 'relative)
+                               ('absolute t)
+                               (_ nil)))
+  (setq display-line-numbers-type (pcase my/line-number-state
+                                    ('relative 'relative)
+                                    ('absolute t)
+                                    (_ nil)))
 
   ;; Up the maximum depth for eval, apply, and funcall functions.  This variable
   ;; catches infinite recursions before they cause a stack overflow, but its
