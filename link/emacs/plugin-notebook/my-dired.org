@@ -224,3 +224,18 @@ developers.
                     ;; Reuse a single dired buffer for each directory visited.
                     (diredp-toggle-find-file-reuse-dir 1))))
 #+end_src
+
+** dired-rsync
+A package containing the =dired-rsync= command which allows users to copy marked
+files in a =dired= buffer via =rsync=.
+
+#+begin_src emacs-lisp
+  (use-package dired-rsync
+    :init
+    ;; This is a secondary package in the same repository as `dired-rsync' that wraps the command in a
+    ;; "magic" like transient interface, allowing you to tweak the parameters for the `rsync' call.
+    (use-package dired-rsync-transient
+      :general
+      (my/user-leader-def dired-mode-map
+        "C-r" 'dired-rsync-transient)))
+#+end_src
