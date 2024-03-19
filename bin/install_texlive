@@ -48,7 +48,7 @@ USAGE:
 
 OPTIONS:
   -f | --force
-    Force a clean installation of TexLive, even if an existing installtion is 
+    Force a clean installation of TexLive, even if an existing installtion is
     found.
 
   -h | --help
@@ -195,7 +195,7 @@ itl__update_caches() {
 # the file system.
 itl__check_no_existing_texlive_installation() {
   log_info "Checking for existing TexLive installation(s)"
-  if tlmgr --version >>/dev/null 2>&1 ||
+  if tex --version | grep -q 'TeX Live' ||
     [ -n "$(find "${TEXLIVE_DIR}" -maxdepth 1 -mindepth 1 -type d \
       -regextype 'posix-extended' -regex '.*[0-9]{4}$')" ]; then
     log_info "Existing TexLive installation found"
