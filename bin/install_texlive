@@ -11,6 +11,9 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 # Parent directory for TexLive distributions.
 declare TEXLIVE_DIR="/usr/local/texlive"
 
+# Whether to force a clean install.
+declare FORCE_INSTALL=false
+
 # Logging variables
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
@@ -44,6 +47,10 @@ USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
+  -f | --force
+    Force a clean installation of TexLive, even if an existing installtion is 
+    found.
+
   -h | --help
     Print the help message (this message) and exit.
 EOF
@@ -94,9 +101,13 @@ itl__delete_existing_texlive_installations() {
   fi
   if [ -d "${TEXLIVE_DIR}" ]; then
     log_info "Deleting old texlive installation directories"
-    find "${TEXLIVE_DIR}" -mindepth 1 -maxdepth 1 -type d \
+    # Delete any '/usr/local/texlive/YYYY' directories.
+    sudo find "${TEXLIVE_DIR}" -mindepth 1 -maxdepth 1 -type d \
       -regextype 'posix-extended' -regex '.*[0-9]{4}$' -delete
   fi
+  # Delete any '~/.texliveYYYY' directories.
+  find "${HOME}" -mindepth 1 -maxdepth 1 -type d \
+    -regextype 'posix-extended' -regex '.*\.texlive[0-9]{4}$' -delete
 }
 
 # Setup PATH, man db, texinfo config, etc.
@@ -179,6 +190,20 @@ itl__update_caches() {
   sudo fc-cache -fsv
 }
 
+# Predicate function that returns 0 (true) if no existing TexLive installation
+# is found, and returns 1 (false) if it does find a TexLive distribution on
+# the file system.
+itl__check_no_existing_texlive_installation() {
+  log_info "Checking for existing TexLive installation(s)"
+  if tlmgr --version >>/dev/null 2>&1 ||
+    [ -n "$(find "${TEXLIVE_DIR}" -maxdepth 1 -mindepth 1 -type d \
+      -regextype 'posix-extended' -regex '.*[0-9]{4}$')" ]; then
+    log_info "Existing TexLive installation found"
+    return 1
+  fi
+  log_info "No TexLive installation found"
+}
+
 # Print the user a final informational message to ensure that they know which
 # system files to edit/link.
 itl__print_final_message() {
@@ -198,25 +223,37 @@ EOF
 }
 
 main() {
-  itl__delete_existing_texlive_installations
-  itl__install_texlive &&
-    itl__update_texlive_permissions &&
-    itl__setup_paths &&
-    itl__configure_tlmgr &&
-    itl__install_non_free_fonts &&
-    itl__link_texlive_font_config &&
-    itl__update_caches &&
-    itl__print_final_message
+  if "${FORCE_INSTALL}" || itl__check_no_existing_texlive_installation; then
+    itl__delete_existing_texlive_installations
+    itl__install_texlive &&
+      itl__update_texlive_permissions &&
+      itl__setup_paths &&
+      itl__configure_tlmgr &&
+      itl__install_non_free_fonts &&
+      itl__link_texlive_font_config &&
+      itl__update_caches &&
+      itl__print_final_message
+  else
+    warn "Existing TexLive installation found. Not installing."
+  fi
 }
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o h --long help -n 'install_latest_texlive' -- "$@")
+args=$(getopt -o fh \
+  --long force,help \
+  -n "${THIS_EXEC}" \
+  -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
+  -f | --force)
+    FORCE_INSTALL=true
+    shift
+    ;;
+
   -h | --help)
     _help
     exit 0
