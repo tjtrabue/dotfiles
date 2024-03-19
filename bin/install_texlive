@@ -32,11 +32,10 @@ package repositories, meaning you cannot automatically install package using
 'tlmgr install <package>'.
 
 To update texlive, run the following commands:
-  sudo tlmgr update --self
-  sudo tlmgr update --all
+  tlmgr update --self --all
 
 To uninstall this distribution, the cleanest solution is to use
-'sudo tlmgr remove --all --force'. If that does not work, the directories you
+'tlmgr uninstall --all --force'. If that does not work, the directories you
 must remove will be named with the scheme:
   /usr/local/texlive/YYYY
   ~/.texliveYYYY
@@ -91,7 +90,7 @@ itl__configure_tlmgr() {
 itl__delete_existing_texlive_installations() {
   if [ -x "$(command -v tlmgr)" ]; then
     log_info "Deleting existing TexLive installations"
-    sudo tlmgr uninstall --all --force
+    tlmgr uninstall --all --force || :
   fi
   if [ -d "${TEXLIVE_DIR}" ]; then
     log_info "Deleting old texlive installation directories"
