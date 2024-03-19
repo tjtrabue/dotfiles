@@ -26,6 +26,20 @@ Vertico, but does contain some custom filtering logic that keeps it from full
 =completing-read= compatibility. Vertico is also probably the most flexible
 completion UI in terms of customization.
 
+* Functions
+#+begin_src emacs-lisp
+  (defun my/crm-indicator (args)
+    "Add a prompt to `completing-read-multiple'.
+
+  Display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+#+end_src
+
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package vertico
@@ -60,6 +74,7 @@ completion UI in terms of customization.
       "C-l" 'vertico-insert
       "TAB" 'vertico-insert
       "M-TAB" 'minibuffer-complete
+      "M-RET" 'minibuffer-force-complete-and-exit
       ;; Select currently typed text and exit Vertico
       "C-M-j" 'vertico-exit-input)
     :custom
@@ -70,6 +85,8 @@ completion UI in terms of customization.
     (vertico-count 20)
     ;; Enable cycling for vertico-next and vertico-previous
     (vertico-cycle t)
+    :init
+    (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
     :config
     (vertico-mode 1))
 #+end_src

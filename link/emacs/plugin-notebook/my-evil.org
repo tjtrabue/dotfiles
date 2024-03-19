@@ -163,7 +163,10 @@ The Evil mode plugin itself.
       ;; Deletes the entire line, like "dd".
       "C-S-d" 'evil-delete-whole-line
       ;; Push text on current line down one line by adding a newline sequence above the current line.
-      "C-S-n" 'my/evil-insert-newline-above)
+      "C-S-n" (lambda ()
+                (interactive)
+                (evil-insert-newline-above)
+                (indent-according-to-mode)))
     (general-def 'override
       ;; Select next window in a cyclical manner.
       "C-," 'evil-window-next)
