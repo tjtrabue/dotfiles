@@ -250,6 +250,7 @@ eval set -- "$args"
 while true; do
   case "$1" in
   -f | --force)
+    log_info "Forcing clean TexLive install"
     FORCE_INSTALL=true
     shift
     ;;
