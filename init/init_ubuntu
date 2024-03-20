@@ -66,11 +66,20 @@ iu__import_ubuntu_public_keys() {
     sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 }
 
+# PPAs are extra Ubuntu package archives that include newer packages that don't
+# exist in the standard Ubuntu repository.
+iu__add_ppas() {
+  log_info "Adding Ubuntu PPAs"
+  sudo add-apt-repository ppa:inkscape.dev/stable -y
+  sudo apt update
+}
+
 main() {
   print_header "Initializing Ubuntu Linux distribution"
   iu__setup
   iu__init_ubuntu_keyring
   iu__import_ubuntu_public_keys
+  iu__add_ppas
   install_ubuntu_packages
 }
 # }}}
