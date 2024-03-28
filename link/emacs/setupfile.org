@@ -50,6 +50,15 @@
 #+LATEX_HEADER:          columns=fullflexible,
 #+LATEX_HEADER:          keepspaces=true}
 #+LATEX_HEADER: \pgfplotsset{compat=1.18}
+#+LATEX_HEADER: \newtheoremstyle{reddef}
+#+LATEX_HEADER:   {\topsep} % Space above
+#+LATEX_HEADER:   {\topsep} % Space below
+#+LATEX_HEADER:   {\itshape} % Body font
+#+LATEX_HEADER:   {} % Indent amount
+#+LATEX_HEADER:   {\color{Red}} % Theorem head font
+#+LATEX_HEADER:   {:} % Punctuation after theorem head
+#+LATEX_HEADER:   {.5em} % Space after theorem head
+#+LATEX_HEADER:   {\scshape\thmname{#1}\thmnumber{ #2}\upshape\thmnote{ (\bfseries#3\mdseries)}} % Theorem head spec (can be left empty, meaning 'normal')
 #+LATEX_HEADER: \makeatletter
 #+LATEX_HEADER: \renewcommand{\maketitle}{%
 #+LATEX_HEADER:   \begingroup\parindent0pt

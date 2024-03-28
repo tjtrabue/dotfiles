@@ -1508,7 +1508,8 @@ try to load =org= later.
     ;; Required for expand-region.
     (require 'org-fold)
     ;; Add more default LaTeX packages
-    (dolist (package '(("" "color" t)
+    (dolist (package '(("" "amsthm" t)
+                       ("" "color" t)
                        ("" "enumitem" t)
                        ("" "fontspec" t)
                        ("letterpaper,margin=1in" "geometry")
