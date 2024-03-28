@@ -64,6 +64,9 @@ install_node_packages() {
 
 # Update all globally installed NPM packages to the latest version.
 update_node_packages() {
+  # Update NPM itself.
+  npm install -g npm
+  # Install all globally installed packages.
   npx npm-check --global --update-all
 }
 
