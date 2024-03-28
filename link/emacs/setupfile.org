@@ -53,7 +53,7 @@
 #+LATEX_HEADER: \newtheoremstyle{reddef}
 #+LATEX_HEADER:   {\topsep} % Space above
 #+LATEX_HEADER:   {\topsep} % Space below
-#+LATEX_HEADER:   {\itshape} % Body font
+#+LATEX_HEADER:   {\color{OrangeRed}\itshape} % Body font
 #+LATEX_HEADER:   {} % Indent amount
 #+LATEX_HEADER:   {\color{OrangeRed}} % Theorem head font
 #+LATEX_HEADER:   {:} % Punctuation after theorem head
@@ -62,9 +62,18 @@
 #+LATEX_HEADER: \newtheoremstyle{bluethm}
 #+LATEX_HEADER:   {\topsep} % Space above
 #+LATEX_HEADER:   {\topsep} % Space below
-#+LATEX_HEADER:   {\itshape} % Body font
+#+LATEX_HEADER:   {\color{NavyBlue}\itshape} % Body font
 #+LATEX_HEADER:   {} % Indent amount
-#+LATEX_HEADER:   {\color{RoyalBlue}} % Theorem head font
+#+LATEX_HEADER:   {\color{NavyBlue}} % Theorem head font
+#+LATEX_HEADER:   {:} % Punctuation after theorem head
+#+LATEX_HEADER:   {.5em} % Space after theorem head
+#+LATEX_HEADER:   {\scshape\thmname{#1}\thmnumber{ #2}\upshape\thmnote{ (\bfseries#3\mdseries)}} % Theorem head spec (can be left empty, meaning 'normal')
+#+LATEX_HEADER: \newtheoremstyle{greenex}
+#+LATEX_HEADER:   {\topsep} % Space above
+#+LATEX_HEADER:   {\topsep} % Space below
+#+LATEX_HEADER:   {\color{ForestGreen}\upshape} % Body font
+#+LATEX_HEADER:   {} % Indent amount
+#+LATEX_HEADER:   {\color{ForestGreen}} % Theorem head font
 #+LATEX_HEADER:   {:} % Punctuation after theorem head
 #+LATEX_HEADER:   {.5em} % Space after theorem head
 #+LATEX_HEADER:   {\scshape\thmname{#1}\thmnumber{ #2}\upshape\thmnote{ (\bfseries#3\mdseries)}} % Theorem head spec (can be left empty, meaning 'normal')
