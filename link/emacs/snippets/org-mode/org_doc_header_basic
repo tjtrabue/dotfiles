@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: tjtrabue <tom.trabue@gmail.com>
+# name: org basic doc header
+# key: hdb_
+# --
+#+TITLE:     $1
+#+AUTHOR:    Thomas Trabue
+#+EMAIL:     tom.trabue@gmail.com
+#+DATE:      ${2:`(shell-command-to-string "date +%Y-%m-%d | tr -d '\n'")`}
+#+TAGS:      $3
+#+SETUPFILE: ~/.emacs.d/setupfile.org
+#+OPTIONS:   date:nil toc:nil author:nil title:t num:nil
+#+STARTUP:   fold
+
+$0

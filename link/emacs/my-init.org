@@ -1522,7 +1522,7 @@ try to load =org= later.
                        ("" "svg" t)
                        ("" "textcomp" t)
                        ("" "tikz" t)
-                       ("" "xcolor" t)))
+                       ("dvipsnames" "xcolor" t)))
       (add-to-list 'org-latex-default-packages-alist package))
     ;; The command used to generate PDFs from Org's LaTeX exports.
     (setq org-latex-pdf-process (list (concat "latexmk -f -%latex"
