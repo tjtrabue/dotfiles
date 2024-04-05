@@ -1392,6 +1392,8 @@ try to load =org= later.
     (my/evil-leader-def org-mode-map
       "cc" 'org-edit-special
       "oe" 'org-export-dispatch
+      ;; Export current Org buffer to PDF
+      "oE" 'org-latex-export-to-pdf
       "ol" 'org-babel-load-file
       "op" 'org-latex-preview)
     (my/user-leader-def
