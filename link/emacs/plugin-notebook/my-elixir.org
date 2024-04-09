@@ -44,6 +44,13 @@ The Tree-Sitter enabled version of =elixir-mode=.
          (smartparens-mode -1)))))
 #+end_src
 
+* heex-ts-mode
+A tree-sitter enabled major mode for editing Elixir HEEx templates.
+
+#+begin_src emacs-lisp
+  (use-package heex-ts-mode)
+#+end_src
+
 * mix.el
 Minor mode for interacting with Mix (the Elixir build and lifecycle tool that
 comes with each Elixir SDK) from inside Emacs.
