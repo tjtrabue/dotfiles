@@ -1,5 +1,5 @@
 lua 5.4.6
-erlang 27.0-rc2
+erlang 26.2.2
 elixir 1.16.2-otp-26
 neovim nightly
 rust nightly
