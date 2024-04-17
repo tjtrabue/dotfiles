@@ -55,6 +55,7 @@ EOF
 # Clone and build elixir-ls.
 iels__install_elixir_ls() {
   local gitUrl="https://github.com/elixir-lsp/elixir-ls.git"
+  local defaultBranch=""
 
   clone_or_update_git_repo "${gitUrl}" "${INSTALL_DIR}" &&
   (
@@ -69,6 +70,23 @@ iels__install_elixir_ls() {
       MIX_ENV=prod mix compile &&
       MIX_ENV=prod mix elixir_ls.release2 -o "${ELIXIR_LS_RELEASE_DIR}"
     )
+}
+
+# NOTE: Not currently in use because this doesn't seem to help anything.
+iels__make_git_release_tag() {
+  local tagVersion=""
+
+  tagVersion="v$(command cat "${INSTALL_DIR}/VERSION" | tr -d '\n')"
+
+  if ! git -C "${INSTALL_DIR}" tag -l | grep -q "^\s*${tagVersion}\s*\$"; then
+    # Create the new Git release tag if it does not already exist.
+    log_info "Creating Git release tag: '${GREEN}${tagVersion}${NC}'"
+    git -C "${INSTALL_DIR}" tag "${tagVersion}"
+  else
+    # Otherwise, report the prior existence of the tag.
+    log_info "Tag '${GREEN}${tagVersion}${NC}' already exists in repo:" \
+      "${BLUE}${INSTALL_DIR}${NC}"
+  fi
 }
 
 # Add the release dir to PATH so that the executables are discoverable.
