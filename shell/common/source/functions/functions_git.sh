@@ -488,6 +488,8 @@ EOF
 clone_or_update_git_repo() {
   local repoUrl="${1}"
   local repoDestDir="${2}"
+  local defaultBranch=""
+  local currentRef=""
 
   if [ -z "${repoUrl}" ]; then
     err "No Git repository URL provided"
@@ -500,10 +502,20 @@ clone_or_update_git_repo() {
 
   if [ -d "${repoDestDir}" ]; then
     log_info "Updating Git repo: ${BLUE}${repoDestDir}${NC}"
+    defaultBranch="$(defaultbranch "${repoDestDir}")"
+    currentRef="$(git -C "${repoDestDir}" rev-parse --abbrev-ref HEAD)"
     git -C "${repoDestDir}" clean -df
     git -C "${repoDestDir}" restore --staged .
     git -C "${repoDestDir}" restore .
+    if [ "${currentRef}" != "${defaultBranch}" ]; then
+      # Switch to the default branch before pulling new objects.
+      git -C "${repoDestDir}" checkout "${defaultBranch}"
+    fi
     git -C "${repoDestDir}" pull
+    if [ "${currentRef}" != "${defaultBranch}" ]; then
+      # Switch back to the original ref if we switched to begin with.
+      git -C "${repoDestDir}" checkout "${currentRef}"
+    fi
   else
     log_info "Cloning Git repo at ${MAGENTA}${repoUrl}${NC} to" \
       "${BLUE}${repoDestDir}${NC}"

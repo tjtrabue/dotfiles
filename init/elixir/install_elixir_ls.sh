@@ -55,14 +55,13 @@ EOF
 # Clone and build elixir-ls.
 iels__install_elixir_ls() {
   local gitUrl="https://github.com/elixir-lsp/elixir-ls.git"
+  local defaultBranch=""
 
-  clone_or_update_git_repo "${gitUrl}" "${INSTALL_DIR}"
+  clone_or_update_git_repo "${gitUrl}" "${INSTALL_DIR}" &&
   (
     log_info "Installing elixir-ls from ref" \
       "'${GREEN}${ELIXIR_LS_RELEASE_REF}${NC}'" &&
       cd "${INSTALL_DIR}" &&
-      git clean -df &&
-      git restore . &&
       git checkout "${ELIXIR_LS_RELEASE_REF}" &&
       mix clean &&
       mix clean --deps &&
@@ -70,7 +69,26 @@ iels__install_elixir_ls() {
       mix deps.get &&
       MIX_ENV=prod mix compile &&
       MIX_ENV=prod mix elixir_ls.release2 -o "${ELIXIR_LS_RELEASE_DIR}"
-  )
+    )
+}
+
+# For elixir-ls to work, the cloned repo has to have a branch/tag name that
+# exactly matches "v<VERSION>" where <VERSION> is the release version found
+# in the VERSION file at the root of the repository.
+iels__make_git_release_tag() {
+  local tagVersion=""
+
+  tagVersion="v$(command cat "${INSTALL_DIR}/VERSION" | tr -d '\n')"
+
+  if ! git -C "${INSTALL_DIR}" tag -l | grep -q "^\s*${tagVersion}\s*\$"; then
+    # Create the new Git release tag if it does not already exist.
+    log_info "Creating Git release tag: '${GREEN}${tagVersion}${NC}'"
+    git -C "${INSTALL_DIR}" tag "${tagVersion}"
+  else
+    # Otherwise, report the prior existence of the tag.
+    log_info "Tag '${GREEN}${tagVersion}${NC}' already exists in repo:" \
+      "${BLUE}${INSTALL_DIR}${NC}"
+  fi
 }
 
 # Add the release dir to PATH so that the executables are discoverable.
@@ -88,8 +106,9 @@ iels__add_elixir_ls_release_dir_to_path() {
 
 iels__main() {
   print_header "Installing elixir-ls"
-  iels__install_elixir_ls
-  iels__add_elixir_ls_release_dir_to_path
+  iels__install_elixir_ls &&
+  iels__add_elixir_ls_release_dir_to_path &&
+  iels__make_git_release_tag
 }
 # }}}
 
