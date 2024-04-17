@@ -58,7 +58,8 @@ iels__install_elixir_ls() {
 
   clone_or_update_git_repo "${gitUrl}" "${INSTALL_DIR}"
   (
-    log_info "Installing elixir-ls" &&
+    log_info "Installing elixir-ls from ref" \
+      "'${GREEN}${ELIXIR_LS_RELEASE_REF}${NC}'" &&
       cd "${INSTALL_DIR}" &&
       git checkout "${ELIXIR_LS_RELEASE_REF}" &&
       mix clean &&
@@ -73,7 +74,7 @@ iels__install_elixir_ls() {
 # Add the release dir to PATH so that the executables are discoverable.
 iels__add_elixir_ls_release_dir_to_path() {
   if [ -d "${ELIXIR_LS_RELEASE_DIR}" ]; then
-    log_info "Adding elixir-ls release dir " \
+    log_info "Adding elixir-ls release dir" \
       "${BLUE}${ELIXIR_LS_RELEASE_DIR}${NC} to \$PATH"
     atp "${ELIXIR_LS_RELEASE_DIR}"
   else
@@ -112,6 +113,7 @@ while true; do
       ;;
     *)
       INSTALL_DIR="$2"
+      shift 2
       ;;
     esac
     ;;
@@ -123,6 +125,7 @@ while true; do
       ;;
     *)
       ELIXIR_LS_RELEASE_DIR="$2"
+      shift 2
       ;;
     esac
     ;;
@@ -134,6 +137,7 @@ while true; do
       ;;
     *)
       ELIXIR_LS_RELEASE_REF="$2"
+      shift 2
       ;;
     esac
     ;;
