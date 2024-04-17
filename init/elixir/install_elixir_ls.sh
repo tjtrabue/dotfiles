@@ -10,6 +10,7 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare WS="${WS:-${HOME}/workspace}"
 declare INSTALL_DIR="${WS}/elixir-ls"
 declare ELIXIR_LS_RELEASE_DIR="${INSTALL_DIR}/release"
+declare ELIXIR_LS_RELEASE_REF="master"
 
 # Logging variables
 declare LOG_TO_FILE=""
@@ -42,6 +43,12 @@ OPTIONS:
   -r DIR | --release-dir DIR
     The directory where this script will copy the elixir-ls release files and
     executables.
+
+  -t REF | --release-ref REF
+    The Git ref to checkout prior to building elixir-ls. It is best practice to
+    select the latest tag.
+
+    Defaults to 'master', which can be unstable.
 EOF
 }
 
@@ -53,9 +60,11 @@ iels__install_elixir_ls() {
   (
     log_info "Installing elixir-ls" &&
       cd "${INSTALL_DIR}" &&
-      mix deps.get &&
+      git checkout "${ELIXIR_LS_RELEASE_REF}" &&
       mix clean &&
+      mix clean --deps &&
       rm -rf "${INSTALL_DIR}/_build" "${ELIXIR_LS_RELEASE_DIR}" &&
+      mix deps.get &&
       MIX_ENV=prod mix compile &&
       MIX_ENV=prod mix elixir_ls.release2 -o "${ELIXIR_LS_RELEASE_DIR}"
   )
@@ -82,8 +91,8 @@ iels__main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o hi:r: \
-  --long help,install-dir:,release-dir: \
+args=$(getopt -o hi:r:t: \
+  --long help,install-dir:,release-dir:,release-ref: \
   -n 'install_elixir_ls.sh' \
   -- "$@")
 eval set -- "$args"
@@ -114,6 +123,17 @@ while true; do
       ;;
     *)
       ELIXIR_LS_RELEASE_DIR="$2"
+      ;;
+    esac
+    ;;
+
+  -t | --release-ref)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    *)
+      ELIXIR_LS_RELEASE_REF="$2"
       ;;
     esac
     ;;
