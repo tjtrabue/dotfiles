@@ -61,6 +61,8 @@ iels__install_elixir_ls() {
     log_info "Installing elixir-ls from ref" \
       "'${GREEN}${ELIXIR_LS_RELEASE_REF}${NC}'" &&
       cd "${INSTALL_DIR}" &&
+      git clean -df &&
+      git restore . &&
       git checkout "${ELIXIR_LS_RELEASE_REF}" &&
       mix clean &&
       mix clean --deps &&
