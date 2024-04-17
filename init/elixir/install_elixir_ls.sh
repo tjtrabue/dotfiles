@@ -64,6 +64,8 @@ iels__install_elixir_ls() {
 # Add the release dir to PATH so that the executables are discoverable.
 iels__add_elixir_ls_release_dir_to_path() {
   if [ -d "${ELIXIR_LS_RELEASE_DIR}" ]; then
+    log_info "Adding elixir-ls release dir " \
+      "${BLUE}${ELIXIR_LS_RELEASE_DIR}${NC} to \$PATH"
     atp "${ELIXIR_LS_RELEASE_DIR}"
   else
     err "Could not find elixir-ls release dir at:" \
