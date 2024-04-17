@@ -48,7 +48,11 @@ The Tree-Sitter enabled version of =elixir-mode=.
 A tree-sitter enabled major mode for editing Elixir HEEx templates.
 
 #+begin_src emacs-lisp
-  (use-package heex-ts-mode)
+  (use-package heex-ts-mode
+    :config
+    (add-hook 'heex-ts-mode-hook (lambda ()
+                                   ;; Enable tab-line-mode when editing HEEx templates.
+                                   (tab-line-mode 1))))
 #+end_src
 
 * mix.el

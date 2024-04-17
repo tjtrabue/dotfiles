@@ -855,14 +855,27 @@ Custom functions, both standard and interactive.
                     (apply fun args)))))
 
   (defun my/load-system-path ()
-    "Load $PATH from the compiled system path file."
+    "Load $PATH env var from the compiled system path file.
+
+  This function uses the system path in the file designated by the
+  variable `my/static-path-file' to set both Emacs' PATH environment
+  variable, which inferior shell processes use, as well as the variable
+  `exec-path', which is more like a PATH variable for Emacs itself -- it
+  is the list of directories Emacs searches when looking for executable
+  programs to run."
     (interactive)
     (if (file-exists-p my/static-path-file)
-        (setenv "PATH" (substitute-env-vars
-                        (shell-command-to-string
-                         (concat "cat " my/static-path-file " | "
-                                 "grep '^\\s*PATH=' | "
-                                 "sed -e 's/^\\s*PATH=//' -e 's/\"//g'"))))
+        (let ((system-path (substitute-env-vars
+                            (shell-command-to-string
+                             (concat "cat " my/static-path-file " | "
+                                     "grep '^\\s*PATH=' | "
+                                     "sed -e 's/^\\s*PATH=//' -e 's/\"//g' | "
+                                     "tr -d '\n'")))))
+          ;; Set PATH environment variable, which is used by Emacs shell processes.
+          (setenv "PATH" system-path)
+          ;; Set `exec-path', which is the variable Emacs uses to search for executable programs.
+          (dolist (path (seq-reverse (split-string system-path ":")))
+            (add-to-list 'exec-path path)))
       (error (concat "No static path file at " my/static-path-file))))
 
   (defun my/native-compile-config ()
