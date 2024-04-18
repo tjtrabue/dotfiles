@@ -382,7 +382,10 @@ tre() {
     # installed.
     treeCmd="colorls --tree --color=always ${*}"
   elif [ -x "$(command -v eza)" ]; then
+    # "eza" is the newer version of "exa".
     treeCmd="eza --tree -a --color=always --git-ignore -I '${ignorePatterns}' ${*}"
+  elif [ -x "$(command -v exa)" ]; then
+    treeCmd="exa --tree -a --color=always --git-ignore -I '${ignorePatterns}' ${*}"
   elif [ -x "$(command -v tree)" ]; then
     # Use standard tree command
     treeCmd="tree -aC -I '${ignorePatterns}' --dirsfirst ${*}"
