@@ -380,7 +380,11 @@ LanguageServerProtocol clients and servers.
   ;; Smooth-scrolling
   (if (>= emacs-major-version 29)
       ;; Use native smooth-scrolling (requires Emacs version >= 29)
-      (pixel-scroll-precision-mode 1)
+      (progn
+        (pixel-scroll-precision-mode 1)
+        (when (not (memq system-type '(darwin)))
+          ;; Drift a little once scrolling stops (does not work on the NS port on macOS).
+          (setq pixel-scroll-precision-use-momentum t)))
     ;; Otherwise, simulate smooth-scrolling with basic Emacs settings.
     ;; (also see the sublimity plugin configuration)
     (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
