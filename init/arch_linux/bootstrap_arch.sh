@@ -416,6 +416,13 @@ kernel.sysrq = 1
 EOF
 # }}}
 
+# Configure Avahi {{{
+# Make nss-mdns authoritative for the '.local' domain, unless the unicast DNS
+# server responds to SOA queries for the top level local name, or the request
+# has more than two labels. See nss-mdns activation notes for details.
+arch-chroot "${MOUNT_ROOT}" sed -i -E 's/hosts:\s*mymachines/hosts: mymachines mdns_minimal [NOTFOUND=return]/' /etc/nsswitch.conf
+# }}}
+
 # Create .xinitrc file {{{
 info_log "Configuring xinit"
 cat <<EOF >"${MOUNT_ROOT}${XINIT_FILE}"
