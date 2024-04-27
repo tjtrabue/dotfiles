@@ -1,3 +1,4 @@
+PyGObject
 Wand
 autopep8
 beautysh
