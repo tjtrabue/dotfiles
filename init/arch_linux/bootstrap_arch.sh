@@ -402,6 +402,9 @@ arch-chroot "$MOUNT_ROOT" grub-mkconfig -o /boot/grub/grub.cfg
 # CUPS for printer integration
 arch-chroot "${MOUNT_ROOT}" systemctl enable cups
 
+# Avahi zero-config network service discovery
+arch-chroot "${MOUNT_ROOT}" systemctl enable avahi-daemon
+
 # Enable Network Time Protocol daemon
 arch-chroot "${MOUNT_ROOT}" systemctl enable ntpd
 # }}}

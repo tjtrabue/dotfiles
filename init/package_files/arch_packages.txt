@@ -12,6 +12,7 @@ asciidoc
 aspell
 aspell-en
 autorandr
+avahi
 awesome
 aws-cli
 bash-completion
@@ -135,6 +136,7 @@ noto-fonts
 noto-fonts-emoji
 noto-fonts-extra
 npm
+nss-mdns
 ntfs-3g
 ntp
 numlockx
