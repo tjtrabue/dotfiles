@@ -460,6 +460,9 @@ LanguageServerProtocol clients and servers.
   ;; Whether to cycle completions.
   (setq completion-cycle-threshold t)
 
+  ;; Whether to prompt user for confirmation before killing Emacs when child processes are running.
+  (setq confirm-kill-processes nil)
+
   ;; If non-nil, redraw the display before processing queued input events.
   ;; NOTE: Can make the typing experience slower.
   (setq redisplay-dont-pause t)
