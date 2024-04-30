@@ -252,6 +252,7 @@ pun intended), including leader-like keybindings. Not only this, but
 best documented Emacs plugins I've ever seen. For these reasons, I recommend
 using =general= and foregoing =evil-leader= altogether.
 
+*** =use-package= specification
 #+begin_src emacs-lisp
   (use-package evil-leader
     ;; Disabled in favor of general.el
