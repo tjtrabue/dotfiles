@@ -76,6 +76,7 @@ gnupg
 go
 gpicview
 grub
+gst-devtools
 hacksaw
 hicolor-icon-theme
 hplip

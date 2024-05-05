@@ -1,2 +1,12 @@
+[General]
+ConfigVersion=1
+
 [MainWindow]
 RestorePositionForNextInstance=false
+ToolBarsMovable=Disabled
+
+[Notification Messages]
+CloseAllEmptyTabs=true
+
+[UiSettings]
+ColorScheme=
