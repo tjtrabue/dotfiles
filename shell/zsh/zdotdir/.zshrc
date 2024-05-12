@@ -223,9 +223,9 @@ use_icons_in_terminal() {
 }
 use_icons_in_terminal
 
-# Print neofetch info when the terminal first opens
-if [ -x "$(command -v neofetch)" ]; then
-  neofetch 1>&2
+# Print system info when the terminal first opens.
+if [ -x "$(command -v fastfetch)" ]; then
+  fastfetch 1>&2
 fi
 
 # Modeline for this file (LEAVE IT COMMENTED!)

@@ -17,6 +17,7 @@ docker
 ed
 exa
 exiftool
+fastfetch
 fd
 findutils
 flex
@@ -57,7 +58,6 @@ lua-language-server
 mactex
 meld
 mu
-neofetch
 neovim --HEAD
 ninja
 openssh

@@ -53,6 +53,7 @@ elixir
 evince
 expac
 eza
+fastfetch
 fd
 feh
 ffmpegthumbnailer
@@ -125,7 +126,6 @@ meld
 meson
 mold
 nano
-neofetch
 neomutt
 neovim
 network-manager-applet
