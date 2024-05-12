@@ -224,9 +224,7 @@ use_icons_in_terminal() {
 use_icons_in_terminal
 
 # Print system info when the terminal first opens.
-if [ -x "$(command -v fastfetch)" ]; then
-  fastfetch 1>&2
-fi
+show_system_info
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
