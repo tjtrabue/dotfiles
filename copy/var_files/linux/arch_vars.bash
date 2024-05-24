@@ -18,4 +18,8 @@ export AUR_HELPER_NO_CONFIRM_FLAGS="--noconfirm --needed --mflags \
 
 # Bootloader
 export BOOTLOADER_CFG="/boot/grub/grub.cfg"
+
+# Erlang build configure options
+# For some reason, the ODBC lib is in a different location on Arch Linux.
+export KERL_CONFIGURE_OPTIONS="--with-odbc=/var/lib/pacman/local/unixodbc-2.3.12-1"
 # }}}
