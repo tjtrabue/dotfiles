@@ -257,7 +257,7 @@ require("formatter").setup(
   }
 )
 
-vim.api.nvim_exec(
+vim.api.nvim_exec2(
   [[
 " Format whole buffer
 nnoremap <silent> <leader>= :Format<CR>
@@ -296,7 +296,7 @@ augroup FormatAutogroup
   autocmd FileType yaml autocmd BufWritePost <buffer> FormatWrite
 augroup END
 ]],
-  true
+  {output = true}
 )
 
 -- vim:foldenable:foldmethod=indent:foldnestmax=1

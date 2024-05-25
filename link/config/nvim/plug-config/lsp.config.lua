@@ -14,11 +14,8 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
 
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", {})
 
   -- Mappings
   local opts = {noremap = true, silent = true}
@@ -47,7 +44,7 @@ local on_attach = function(client, bufnr)
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.document_highlight then
-    vim.api.nvim_exec(
+    vim.api.nvim_exec2(
       [[
         hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
         hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
@@ -58,7 +55,7 @@ local on_attach = function(client, bufnr)
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
         augroup END
         ]],
-      false
+      {output = false}
     )
   end
 end
@@ -131,7 +128,6 @@ lspconfig.dotls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
-
 -- elixir-ls
 -- Currently using `lexical` instead.
 --[[ local elixir_ls_binary = fs.os_cmd_to_string("command -v elixir-ls")
@@ -148,7 +144,6 @@ if not str.isempty(elixir_ls_binary) then
     }
   }
 end ]]
-
 -- lexical (newer Elixir LSP server)
 local lexical_binary = fs.os_cmd_to_string("command -v start_lexical.sh")
 if not str.isempty(lexical_binary) then

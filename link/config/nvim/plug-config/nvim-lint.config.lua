@@ -28,8 +28,8 @@ require("lint").inters_by_ft = {
 }
 
 -- Set up autocmd to trigger linting
-vim.api.nvim_exec([[
+vim.api.nvim_exec2([[
   autocmd BufWritePost <buffer> lua require('lint').try_lint()
-  ]], true)
+  ]], {output = true})
 
 -- vim:foldenable:foldmethod=marker:foldlevel=0

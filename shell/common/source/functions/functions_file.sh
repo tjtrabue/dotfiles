@@ -91,7 +91,7 @@ mksource() {
 
 mkinit() {
   local newInit="$1"
-  local initTemplate="${DOTFILES_HOME}/copy/templates/mkinit.bash"
+  local initTemplate="${DOTFILES_HOME}/copy/templates/mkbin.bash"
   local initFileName
   local initFilePath
 

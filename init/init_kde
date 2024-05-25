@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC} | Initialize the KDE desktop environment
+
+This script assumes that KDE is already installed on the operating system.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
+EOF
+}
+
+create_desktop_autostart_files() {
+  local autostartDir="${XDG_CONFIG_HOME:-${HOME}/.config/autostart}"
+  local onePasswordAutostartFile="${autostartDir}/1password.desktop"
+  local dropboxAutostartFile="${autostartDir}/dropbox.desktop"
+  local flameshotAutostartFile="${autostartDir}/flameshot.desktop"
+
+  log_info "Creating autostart entries"
+
+  if [ ! -f "${onePasswordAutostartFile}" ]; then
+    log_debug "Creating 1password autostart KDE script"
+    command cat <<EOF >"${onePasswordAutostartFile}"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=1Password
+Comment=A centralized password manager for users and enterprises.
+Exec=1password --silent
+Icon=1password
+Terminal=false
+StartupNotify=false
+Categories=Utility;Network;
+EOF
+  fi
+
+  if [ ! -f "${dropboxAutostartFile}" ]; then
+    log_debug "Creating Dropbox autostart KDE script"
+    command cat <<EOF >"${dropboxAutostartFile}"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Dropbox
+Comment=A free service that lets you bring your photos, docs, and videos anywhere and share them easily.
+Exec=dropbox
+Icon=dropbox
+Terminal=false
+StartupNotify=false
+Categories=Network;
+EOF
+  fi
+
+  if [ ! -f "${flameshotAutostartFile}" ]; then
+    log_debug "Creating Flameshot autostart KDE script"
+    command cat <<EOF >"${flameshotAutostartFile}"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Flameshot
+Comment=A graphical screenshot application
+Exec=flameshot
+Icon=flameshot
+Terminal=false
+StartupNotify=false
+Categories=Utility;
+EOF
+  fi
+}
+
+main() {
+  print_header "Initializing KDE"
+  create_desktop_autostart_files
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n 'init_kde' \
+  -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:
