@@ -79,9 +79,10 @@ packer.startup(
 
     use {"edkolev/tmuxline.vim"}
 
-    use {"glepnir/galaxyline.nvim"}
-
-    -- use {"hoob3rt/lualine.nvim"}
+    use {
+      "hoob3rt/lualine.nvim",
+      requires = {"nvim-tree/nvim-web-devicons", opt = true}
+    }
 
     -- Tab bar {{{
     use {"romgrk/barbar.nvim"}

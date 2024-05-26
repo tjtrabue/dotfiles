@@ -704,14 +704,8 @@ call s:SourcePluginConfigFile('nvim-colorizer.config.lua')
 call s:SourcePluginConfigFile('colorscheme.config.vim')
 call s:SourcePluginConfigFile('nvim-web-devicons.config.lua')
 
-" Activate the awesome galaxyline statusbar. This status line must be entirely
-" self-configured. That is, there is no 'default' status line that comes with
-" galaxyline. However, the repo does contain a few example files that you can
-" use as a starting point for your own custom status lines.
-call s:SourcePluginConfigFile('galaxyline.config.vim')
-
 " lualine is a fast, minimal framework for building statuslines.
-" call s:SourcePluginConfigFile('lualine.config.lua')
+call s:SourcePluginConfigFile('lualine.config.lua')
 
 " Org mode configuration
 call s:SourcePluginConfigFile('orgmode.config.lua')
