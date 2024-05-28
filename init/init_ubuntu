@@ -71,6 +71,7 @@ iu__import_ubuntu_public_keys() {
 iu__add_ppas() {
   log_info "Adding Ubuntu PPAs"
   sudo add-apt-repository ppa:inkscape.dev/stable -y
+  sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
   sudo apt update
 }
 
