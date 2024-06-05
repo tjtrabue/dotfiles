@@ -66,6 +66,24 @@ iu__import_ubuntu_public_keys() {
     sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 }
 
+# The default PostgreSQL version included in the Ubuntu Package Archives is
+# sure to be outdated. We can enable the PostgeSQL Apt Repository to get access
+# to the latest and greatest versions.
+#
+# See the official docs for more information:
+#   https://www.postgresql.org/download/linux/ubuntu/
+iu__install_postgresql() {
+  log_info "Installing base PostgreSQL packages"
+  sudo apt install -y postgresql-common
+
+  log_info "Enabling PostgreSQL Apt Repository"
+  sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+
+  log_info "Installing newest version of PostgreSQL"
+  sudo apt install -y postgresql{,-client,-doc}
+  sudo apt install -y libpq-dev
+}
+
 # PPAs are extra Ubuntu package archives that include newer packages that don't
 # exist in the standard Ubuntu repository.
 iu__add_ppas() {
@@ -82,6 +100,7 @@ main() {
   iu__import_ubuntu_public_keys
   iu__add_ppas
   install_ubuntu_packages
+  iu__install_postgresql
 }
 # }}}
 

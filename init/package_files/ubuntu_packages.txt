@@ -214,9 +214,6 @@ openbox
 parallel
 plocate
 poppler-utils
-postgresql
-postgresql-client
-postgresql-contrib
 procps
 quilt
 ranger
