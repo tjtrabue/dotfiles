@@ -46,6 +46,8 @@ link_ipython_config() {
   local ipythonConfigTargetDir="${HOME}/.ipython/profile_default"
   local ipythonConfigFilename="ipython_config.py"
 
+  mkdir -p "${ipythonConfigTargetDir}"
+
   log_info "Linking IPython configuration to:" \
     "${BLUE}${ipythonConfigTargetDir}${NC}"
 
