@@ -228,6 +228,9 @@ link_lsp_config() {
   if [ -d "${lspConfigTarget}" ]; then
     rm -rf "${lspConfigTarget}"
   fi
+
+  log_info "Linking ${lspConfigDir} to ${lspConfigTarget}"
+
   ln -sf "${lspConfigDir}" "${lspConfigTarget}"
 }
 
