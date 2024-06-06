@@ -1,0 +1,65 @@
+#+TITLE:   PostgreSQL Setup and Configuration
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-06-05
+#+TAGS:    postgres postgresql sql database db setup linux
+#+STARTUP: fold
+
+Ever wonder exactly how to heck those sagacious sysadmins install and configure
+PostgreSQL on a brand new workstation? Well, I'm here to tell you!
+
+* Installation and Setup
+Installing PostgreSQL will be different depending on your operating system.
+
+** Ubuntu
+Begin by installing the base package PostgreSQL package:
+
+#+begin_src sh :tangle no
+  # Install base packages
+  sudo apt install -y postgresql-common
+#+end_src
+
+
+Next, enable PostgreSQL Apt Repository:
+
+#+begin_src sh :tangle no
+  sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+#+end_src
+
+Now, install PostgreSQL and related packages:
+
+#+begin_src sh :tangle no
+  # Install PostgreSQL and related packages
+  sudo apt install -y postgresql{,-client,-doc}
+  sudo apt install -y libpq-dev
+#+end_src
+
+Next, you must start the PostgreSQL server before you can log in. This will
+depend on the init system in use.
+
+*** WSL
+
+If using Windows Subsystem for Linux, you must use =service= since WSL does not
+include =systemd=:
+
+#+begin_src sh :tangle no
+  sudo service postgresql start
+#+end_src
+
+* Initial Configuration
+
+** Set =postgres= user's password
+
+The sysadmin must set the =postgres= user's password before authenticating with
+the server for the first time:
+
+#+begin_src sh :tangle no
+  # "password" is a good choice for development machines.
+  sudo passwd postgres
+#+end_src
+
+* Logging Into PostgreSQL via the Command Line
+
+#+begin_src sh :tangle no
+  sudo -u postgres psql
+#+end_src
