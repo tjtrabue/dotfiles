@@ -32,7 +32,7 @@ OPTIONS:
 EOF
 }
 
-perform_initial_configuration() {
+ipgsql__perform_initial_configuration() {
   local databaseClusterLocation="/var/lib/postgres/data"
 
   log_info "Creating PostgreSQL database cluster"
@@ -40,7 +40,7 @@ perform_initial_configuration() {
 }
 
 # Set the postgres user's password to the default.
-change_postgres_user_password() {
+ipgsql__change_postgres_user_password() {
   local defaultPostgresPassword="postgres"
 
   log_info "Setting postgres user's password to: ${defaultPostgresPassword}"
@@ -48,8 +48,14 @@ change_postgres_user_password() {
     sudo passwd postgres
 }
 
+# Create a database user role for the currently logged in system user.
+ipgsql__create_main_user() {
+  log_info "Creating database user role for ${MAGENTA}${USER}${NC}"
+  sudo -u postgres createuser --superuser "${USER}"
+}
+
 # Enable and start the PostgreSQL SystemD service.
-start_postgres_server() {
+ipgsql__start_postgres_server() {
   log_info "Starting PostgreSQL SystemD service"
   sudo systemctl enable postgresql.service
   sudo systemctl start postgresql.service
@@ -57,9 +63,10 @@ start_postgres_server() {
 
 main() {
   print_header "Initializing PostgreSQL"
-  perform_initial_configuration
-  change_postgres_user_password
-  start_postgres_server
+  ipgsql__perform_initial_configuration
+  ipgsql__change_postgres_user_password
+  ipgsql__create_main_user
+  ipgsql__start_postgres_server
 }
 # }}}
 
