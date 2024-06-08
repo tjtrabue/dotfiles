@@ -91,3 +91,7 @@ TAB: menu-complete
 
 # Use Ctrl+h to interactively switch VCS branches.
 "\C-h": "swi\n"
+
+# Ctrl+j/Ctrl+k cycle command input history.
+"\C-j": next-history
+"\C-k": previous-history
