@@ -122,6 +122,7 @@ lynx
 maim
 man-db
 man-pages
+maturin
 mediainfo
 meld
 meson
@@ -168,6 +169,7 @@ pulsemixer
 python
 python-gpgme
 python-pip
+python-pyqt5
 ranger
 rclone
 read-edid

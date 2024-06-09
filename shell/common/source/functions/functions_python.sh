@@ -83,9 +83,15 @@ install_pyqt() {
   local pyqtVersion="${1:-5}"
   local pyqtPackageName="PyQt${pyqtVersion}"
 
+  if [ ! -x "$(command -v qmake)" ]; then
+    err "qmake command not found"
+    return 1
+  fi
+
   log_info "Installing ${pyqtPackageName}"
-  python3 -m pip install --user "${pyqtPackageName}" \
-    --verbose --config-settings --confirm-license=
+  python3 -m pip install --user -vv \
+    --config-settings "--confirm-license= --qmake=$(command -v qmake)" \
+    "${pyqtPackageName}"
 }
 
 get_python2_version() {

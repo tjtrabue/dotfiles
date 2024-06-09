@@ -562,7 +562,7 @@ infrastructure for Emacs.
 #+end_src
 
 ** =use-package= specification
-#+begin_src emacs-lisp
+
   (use-package lsp-bridge
     :after (hydra modus-themes)
     :demand t
@@ -701,6 +701,8 @@ infrastructure for Emacs.
     (acm-frame-background-dark-color (modus-themes-get-color-value 'bg-dim))
     ;; Whether to log messages in *lsp-bridge* buffer.
     (lsp-bridge-enable-log nil)
+    ;; The Python 3 executable path.
+    (lsp-bridge-python-command (string-trim (shell-command-to-string "command -v python3")))
     ;; Whether to automatically show the diagnostic under cursor in a tooltip.
     ;; Default: nil
     (lsp-bridge-enable-hover-diagnostic t)
