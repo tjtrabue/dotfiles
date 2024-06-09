@@ -699,6 +699,8 @@ infrastructure for Emacs.
     ;; The color of the completion window for light and dark modes:
     (acm-frame-background-light-color (modus-themes-get-color-value 'bg-dim))
     (acm-frame-background-dark-color (modus-themes-get-color-value 'bg-dim))
+    ;; Whether to log messages in *lsp-bridge* buffer.
+    (lsp-bridge-enable-log nil)
     ;; Whether to automatically show the diagnostic under cursor in a tooltip.
     ;; Default: nil
     (lsp-bridge-enable-hover-diagnostic t)

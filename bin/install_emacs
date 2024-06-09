@@ -269,7 +269,9 @@ ie__mac_build_options() {
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
 ie__construct_cc_options_gcc() {
-  local cflagsCommon="-O3 -mtune=native -march=native"
+  # Set compiler optimizations, and increase the max number of open file
+  # descriptors.
+  local cflagsCommon="-O3 -mtune=native -march=native -DFD_SETSIZE=10000"
 
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
