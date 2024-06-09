@@ -253,7 +253,7 @@ ie__uninstall_old_emacs_installation() {
 # OS-specific options {{{
 ie__linux_build_options() {
   log_info "Adding Linux build options"
-  printf '%s' "--with-x-toolkit=gtk3 \
+  printf '%s' "--with-x-toolkit=gtk \
     --with-cairo-xcb \
     --without-gsettings"
 }
