@@ -78,6 +78,7 @@ go
 gpicview
 grub
 gst-devtools
+gtk4
 hacksaw
 hicolor-icon-theme
 hplip

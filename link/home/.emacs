@@ -24,6 +24,15 @@
 ;; load order.
 (setq load-prefer-newer t)
 
+;; Define the level of native compilation optimization.
+;; Allowed values: -1, 0, 1, 2, 3.
+(setq native-comp-speed 3)
+
+;; The number of parallel async jobs to perform.
+;; Defaults to half the available CPU cores.
+(setq native-comp-async-jobs-number
+  (string-to-number (string-trim (shell-command-to-string "nproc"))))
+
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
 ;; They will be reset later on to further optimize our experience.

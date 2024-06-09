@@ -454,7 +454,6 @@ ie__construct_configure_cmd() {
     --enable-gcc-warnings=warn-only \
     --with-json \
     --with-tree-sitter \
-    --with-xwidgets \
     --with-imagemagick \
     --with-modules \
     --with-native-compilation=aot \
