@@ -563,6 +563,7 @@ infrastructure for Emacs.
 
 ** =use-package= specification
 
+#+begin_src emacs-lisp
   (use-package lsp-bridge
     :after (hydra modus-themes)
     :demand t
