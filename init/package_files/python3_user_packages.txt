@@ -8,7 +8,6 @@ cmake-language-server
 cmakelint
 cookiecutter
 cpplint
-dbus-python
 epc
 eyed3
 flake8

@@ -35,7 +35,7 @@ install_python_poetry() {
 
   # Install poetry tab completions for shells.
   if [ ! -f "${zshCompletionFile}" ]; then
-    poetry completions zsh > "${zshCompletionFile}"
+    poetry completions zsh >"${zshCompletionFile}"
   fi
 }
 
@@ -69,6 +69,23 @@ install_latest_python() {
   log_info "Installing ${YELLOW}Python ${latestPythonVersion}${NC} with pyenv"
   pyenv install -s "${latestPythonVersion}" &&
     pyenv global "${latestPythonVersion}"
+}
+
+# Python bindings to Qt graphical framework. Installing this package differs
+# from most Python PyPI packages in that it requires the user to accept a
+# license agreement, which is hidden from the user unless they specify the
+# '--verbose' option during installation. A strange choice, indeed. Also,
+# installing this package will take a LONG TIME, so be prepared.
+#
+# This is an alternative package to 'dbus-python', as it provides DBus bindings
+# of its own (as does 'PyGObject').
+install_pyqt() {
+  local pyqtVersion="${1:-5}"
+  local pyqtPackageName="PyQt${pyqtVersion}"
+
+  log_info "Installing ${pyqtPackageName}"
+  python3 -m pip install --user "${pyqtPackageName}" \
+    --verbose --config-settings --confirm-license=
 }
 
 get_python2_version() {
