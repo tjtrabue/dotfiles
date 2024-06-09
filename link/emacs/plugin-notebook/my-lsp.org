@@ -704,6 +704,10 @@ infrastructure for Emacs.
     ;; Whether to automatically show the diagnostic under cursor in a tooltip.
     ;; Default: nil
     (lsp-bridge-enable-hover-diagnostic t)
+    ;; Used for strongly typed languages (disabled by default).
+    (lsp-bridge-enable-inlay-hint t)
+    ;; Whether to enable program debugging (disabled by default).
+    (lsp-bridge-enable-debug t)
     ;; Enable LSP completions inside Org code blocks.
     ;; May slow Emacs down.
     (lsp-bridge-enable-org-babel t)

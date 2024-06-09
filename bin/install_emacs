@@ -271,7 +271,7 @@ ie__mac_build_options() {
 ie__construct_cc_options_gcc() {
   # Set compiler optimizations, and increase the max number of open file
   # descriptors.
-  local cflagsCommon="-O3 -mtune=native -march=native -DFD_SETSIZE=10000"
+  local cflagsCommon="-O3 -mtune=native -march=native"
 
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
@@ -279,7 +279,7 @@ ie__construct_cc_options_gcc() {
   CPP="$(command -v cpp)"
   AR="$(command -v gcc-ar)"
   AS="$(command -v as)"
-  CPPFLAGS="${CPPFLAGS:-""}"
+  CPPFLAGS="-DFD_SETSIZE=10000 ${CPPFLAGS:-""}"
   CFLAGS="${cflagsCommon} ${CFLAGS:-""}"
   CXXFLAGS="${cflagsCommon} ${CXXFLAGS:-""}"
   LDFLAGS="${LDFLAGS:-""}"
@@ -303,7 +303,7 @@ ie__construct_cc_options_clang() {
   LD="$(command -v lld)"
   AR="$(command -v llvm-ar)"
   AS="$(command -v llvm-as)"
-  CPPFLAGS="${CPPFLAGS:-""}"
+  CPPFLAGS="-DFD_SETSIZE=10000 ${CPPFLAGS:-""}"
   CFLAGS="${cflagsCommon} ${CFLAGS:-""}"
   CXXFLAGS="${cflagsCommon} ${CXXFLAGS:-""}"
   LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt ${LDFLAGS:-""}"
