@@ -703,7 +703,9 @@ infrastructure for Emacs.
     ;; Whether to log messages in *lsp-bridge* buffer.
     (lsp-bridge-enable-log nil)
     ;; The Python 3 executable path.
-    (lsp-bridge-python-command (string-trim (shell-command-to-string "command -v python3")))
+    (lsp-bridge-python-command (string-trim
+                                (shell-command-to-string "pyenv which python3")))
+    ;; (lsp-bridge-python-command "/usr/bin/python3")
     ;; Whether to automatically show the diagnostic under cursor in a tooltip.
     ;; Default: nil
     (lsp-bridge-enable-hover-diagnostic t)

@@ -29,9 +29,8 @@
 (setq native-comp-speed 3)
 
 ;; The number of parallel async jobs to perform.
-;; Defaults to half the available CPU cores.
-(setq native-comp-async-jobs-number
-  (string-to-number (string-trim (shell-command-to-string "nproc"))))
+;; Defaults to 0, meaning use half the available CPU cores.
+(setq native-comp-async-jobs-number 0)
 
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
