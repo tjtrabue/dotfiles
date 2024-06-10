@@ -702,9 +702,13 @@ infrastructure for Emacs.
     (acm-frame-background-dark-color (modus-themes-get-color-value 'bg-dim))
     ;; Whether to log messages in *lsp-bridge* buffer.
     (lsp-bridge-enable-log nil)
-    ;; The Python 3 executable path.
-    (lsp-bridge-python-command (string-trim
-                                (shell-command-to-string "pyenv which python3")))
+    ;; The Python 3 executable path. If you use a python distribution installed with `pyenv', it is
+    ;; important that you specify the entire path to the versioned python3 executable, not the the
+    ;; path to the `pyenv' shim.
+    (lsp-bridge-python-command (if (executable-find "pyenv")
+                                   (string-trim
+                                    (shell-command-to-string "pyenv which python3"))
+                                 (executable-find "python3")))
     ;; (lsp-bridge-python-command "/usr/bin/python3")
     ;; Whether to automatically show the diagnostic under cursor in a tooltip.
     ;; Default: nil

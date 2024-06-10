@@ -86,6 +86,7 @@ libgccjit0
 libgdk-pixbuf2.0-0
 libgif-dev
 libgif7
+libgirepository1.0-dev
 libgit2-dev
 libgl1
 libglvnd0
@@ -206,6 +207,7 @@ mediainfo
 meson
 mold
 mu4e
+ncurses-term
 neovim
 nodejs
 notmuch
@@ -222,7 +224,11 @@ rlwrap
 sharutils
 shellcheck
 socat
+tcl
+tcl-dev
 texinfo
+tk
+tk-dev
 tree
 unzip
 w3m

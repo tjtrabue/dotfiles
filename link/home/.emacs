@@ -107,7 +107,7 @@ Any additional args ARGS are passed to FN."
     (if (file-directory-p dir)
       (mapc #'apply-it (directory-files dir nil pattern)))))
 
-(defun my/recreate-super-config ()
+(defun my/create-super-config ()
   "Re-create the Emacs super configuration file.
 
 Once created, the file should be placed at
@@ -150,7 +150,7 @@ Once created, the file should be placed at
         (not (file-directory-p super-config-dir)))
     (progn
       ;; Create the super config if it is not yet present.
-      (my/recreate-super-config)
+      (my/create-super-config)
       ;; Force compilation of the super config dir after it's first created.
       (byte-recompile-directory super-config-dir 0 t))
     ;; OTHERWISE only recompile files that need recompiling.
