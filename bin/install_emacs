@@ -266,17 +266,31 @@ ie__mac_build_options() {
 
 # Compile-From-Source Functions {{{
 
+# Construct options common to both CFLAGS and CXXFLAGS.
+ie__construct_cc_options_common() {
+  printf '%s' "-O3 -mtune=native -march=native" \
+    " -fomit-frame-pointer" \
+    " -fallow-store-data-races" \
+    " -fno-semantic-interposition" \
+    " -fno-math-errno -floop-parallelize-all" \
+    " -ftree-parallelize-loops=4" \
+    " -funsafe-math-optimizations" \
+    " -fno-finite-math-only" \
+    " -fno-trapping-math" \
+    " -freciprocal-math" \
+    " -fno-rounding-math" \
+    " -fno-signaling-nans" \
+    " -fassociative-math" \
+    " -fno-signed-zeros" \
+    " -frename-registers" \
+    " -funroll-loops"
+}
+
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
 ie__construct_cc_options_gcc() {
-  # Set compiler optimizations, and increase the max number of open file
-  # descriptors.
-  local cflagsCommon="-O3 -mtune=native -march=native" \
-    "-fomit-frame-pointer -fallow-store-data-races -fno-semantic-interposition" \
-    "-fno-math-errno -floop-parallelize-all -ftree-parallelize-loops=4" \
-    "-funsafe-math-optimizations -fno-finite-math-only -fno-trapping-math" \
-    "-freciprocal-math -fno-rounding-math -fno-signaling-nans" \
-    "-fassociative-math -fno-signed-zeros -frename-registers -funroll-loops"
+  local cflagsCommon
+  cflagsCommon="$(ie__construct_cc_options_common)"
 
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
@@ -299,8 +313,9 @@ ie__construct_cc_options_gcc() {
 # If the user desires to compile Emacs using LLVM/Clang, adjust the C/C++
 # environment variables to reflect that choice.
 ie__construct_cc_options_clang() {
-  local cflagsCommon="-O3 -mtune=native -march=native"
   local nameOfMissingExecutable=""
+  local cflagsCommon
+  cflagsCommon="$(ie__construct_cc_options_common)"
 
   CC="$(command -v clang)"
   CXX="$(command -v clang++)"
