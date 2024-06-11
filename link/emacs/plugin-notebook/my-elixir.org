@@ -125,17 +125,9 @@ one of the following commands:
     ((elixir-mode elixir-ts-mode) . mix-minor-mode)
     :general
     (general-unbind mix-minor-mode-map
-      "C-c d d e"
-      "C-c d d f"
-      "C-c d d o"
-      "C-c d d q"
-      "C-c d d t"
-      "C-c d e"
-      "C-c d f"
-      "C-c d l"
-      "C-c d o"
-      "C-c d q"
-      "C-c d t")
+      "C-c d")
+    (my/user-leader-def mix-minor-mode-map
+      "M" 'mix-minor-mode-command-map)
     (my/evil-leader-def mix-minor-mode-map
       ","   'mix-execute-task
       "xe"  'mix-execute-task
