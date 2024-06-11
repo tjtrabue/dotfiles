@@ -73,6 +73,40 @@ one of the following commands:
 - =d f=: =mix-test-current-test= in an umbrella subproject.
 - =l=: =mix-last-command=
 
+** Functions
+#+begin_src emacs-lisp
+  (defun my/mix-deps-get (&optional prefix use-umbrella-subprojects)
+    "Run the `mix deps.get' command.
+
+  If PREFIX is non-nil, prompt for additional params.  See `mix--prompt`
+  IF USE-UMBRELLA-SUBPROJECTS is t, prompt for umbrells subproject."
+    (interactive "P")
+    (let ((project-root (if use-umbrella-subprojects (mix--umbrella-subproject-prompt) (mix--project-root))))
+      (mix--start "deps-get" "deps.get" project-root prefix)))
+
+  (defun my/mix-phoenix-server (&optional prefix use-umbrella-subprojects)
+    "Run the `mix phx.server' command.
+
+  If PREFIX is non-nil, prompt for additional params.  See `mix--prompt`
+  IF USE-UMBRELLA-SUBPROJECTS is t, prompt for umbrells subproject."
+    (interactive "P")
+    (save-excursion
+      (let* ((project-root (if use-umbrella-subprojects
+                               (mix--umbrella-subproject-prompt)
+                             (mix--project-root)))
+             (default-directory project-root)
+             (proc-buf-name (concat "*phx-server-" (file-name-base (directory-file-name project-root)) "*"))
+             (proc-buf (get-buffer-create proc-buf-name)))
+        (with-current-buffer proc-buf
+          (compilation-mode 1))
+        (make-process
+         :name (concat "phx-server-" (file-name-base (directory-file-name project-root)))
+         :buffer (get-buffer proc-buf)
+         :command '("mix" "phx.server"))
+        (display-buffer proc-buf))))
+#+end_src
+
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package mix
     :delight
@@ -102,6 +136,10 @@ one of the following commands:
       "xuc" (lambda ()
               (interactive)
               (mix-compile nil 'use-umbrella-subprojects))
+      "xd"  'my/mix-deps-get
+      "xud" (lambda ()
+              (interactive)
+              (my/mix-deps-get nil 'use-umbrella-subprojects))
       "xl"  'mix-last-command
       "xt"  'mix-test
       "xut" (lambda ()
@@ -114,7 +152,11 @@ one of the following commands:
       "xf"  'mix-test-current-test
       "xuf" (lambda ()
               (interactive)
-              (mix-test-current-test nil 'use-umbrella-subprojects))))
+              (mix-test-current-test nil 'use-umbrella-subprojects))
+      "xp"  'my/mix-phoenix-server
+      "xup" (lambda ()
+              (interactive)
+              (my/mix-phoenix-server nil 'use-umbrella-subprojects))))
 #+end_src
 
 * exunit.el
