@@ -107,16 +107,20 @@ Any additional args ARGS are passed to FN."
     (if (file-directory-p dir)
       (mapc #'apply-it (directory-files dir nil pattern)))))
 
-(defun my/create-super-config ()
-  "Re-create the Emacs super configuration file.
+(defun my/create-super-config (arg)
+  "Generate the super config file(s).
 
-Once created, the file should be placed at
-`~/.emacs.d/tjtrabue-emacs.el'."
-  (interactive)
+Once created, the file should be placed in
+`~/.emacs.d/super_config/'.
+
+If called with a prefix ARG, run in verbose mode."
+  (interactive "P")
   (let* ((dotfiles-home-dir (file-truename (concat (getenv "HOME") "/.dotfiles")))
           (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin")))
           (super-config-script (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
-    (compile super-config-script)))
+    (compile (if arg
+               super-config-script
+               (concat super-config-script " -q")))))
 
   ;;; Configure the `load-path'.
 ;; Add `/usr/local/share/emacs/site-lisp/' to load-path, and then add all of its
