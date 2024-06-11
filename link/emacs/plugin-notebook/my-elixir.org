@@ -99,8 +99,6 @@ one of the following commands:
              (project-dir-name (file-name-base (directory-file-name project-root)))
              (proc-buf-name (concat "*" proc-name "-" project-dir-name "*"))
              (proc-buf (get-buffer-create proc-buf-name)))
-        (with-current-buffer proc-buf
-          (compilation-mode 1))
         (make-process
          :name (concat proc-name "-" project-dir-name)
          :buffer (get-buffer proc-buf)
