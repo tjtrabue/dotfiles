@@ -102,7 +102,8 @@ one of the following commands:
         (make-process
          :name (concat proc-name "-" project-dir-name)
          :buffer (get-buffer proc-buf)
-         :command cmd)
+         :command cmd
+         :filter #'my-process-filter-colorize-output)
         (display-buffer proc-buf))))
 
   (defun my/mix-phoenix-server (&optional prefix use-umbrella-subprojects)

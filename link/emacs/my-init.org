@@ -229,6 +229,8 @@ custom Emacs Lisp libraries.
   (require 'my-completing-read)
   ;; Emacs' built-in tab line configuration.
   (require 'my-tab-line)
+  ;; Filter functions for processes.
+  (require 'my-process-filter)
 #+end_src
 
 * Load Hotfix Modules
