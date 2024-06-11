@@ -84,36 +84,16 @@ one of the following commands:
     (let ((project-root (if use-umbrella-subprojects (mix--umbrella-subproject-prompt) (mix--project-root))))
       (mix--start "deps-get" "deps.get" project-root prefix)))
 
-  (defun my/mix--make-bg-process (proc-name cmd &optional use-umbrella-subprojects)
-    "Create a long-running mix process PROC-NAME using CMD in a new buffer.
-
-  CMD is a the command list to be passed to the `:command' keyword of `make-process'.
-
-  If USE-UMBRELLA-SUBPROJECTS is specified, prompt for umbrella
-  subprojects."
-    (save-excursion
-      (let* ((project-root (if use-umbrella-subprojects
-                               (mix--umbrella-subproject-prompt)
-                             (mix--project-root)))
-             (default-directory project-root)
-             (project-dir-name (file-name-base (directory-file-name project-root)))
-             (proc-buf-name (concat "*" proc-name "-" project-dir-name "*"))
-             (proc-buf (get-buffer-create proc-buf-name)))
-        (make-process
-         :name (concat proc-name "-" project-dir-name)
-         :buffer (get-buffer proc-buf)
-         :command cmd
-         :filter #'my-process-filter-colorize-output)
-        (display-buffer proc-buf))))
-
   (defun my/mix-phoenix-server (&optional prefix use-umbrella-subprojects)
-    "Run the `mix phx.server' command.
+    "Run the `mix phx.server' command in a new process buffer.
 
-  If PREFIX is non-nil, prompt for additional params.  See `mix--prompt`
+  If PREFIX is non-nil, prompt for additional params. See `mix--prompt`
   IF USE-UMBRELLA-SUBPROJECTS is t, prompt for umbrells subproject."
     (interactive "P")
-    (save-excursion
-      (my/mix--make-bg-process "phx-server" '("mix" "phx.server") use-umbrella-subprojects)))
+    (let ((project-root (if use-umbrella-subprojects
+                            (mix--umbrella-subproject-prompt)
+                          (mix--project-root))))
+      (my-process-make-color-comp-process "phx-server" '("mix" "phx.server") project-root)))
 #+end_src
 
 ** =use-package= specification

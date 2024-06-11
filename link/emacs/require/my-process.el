@@ -1,4 +1,4 @@
-;;; my-process-filter.el --- summary -*- lexical-binding: t -*-
+;;; my-process.el --- summary -*- lexical-binding: t -*-
 
 ;; Author: Thomas Jacob Trabue
 ;; Maintainer: Thomas Jacob Trabue
@@ -26,7 +26,7 @@
 
 ;;; Commentary:
 
-;; Filter functions for `make-process'.
+;; Custom filter functions for `make-process'.
 
 ;;; Code:
 
@@ -53,6 +53,30 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Filter-Functions.html"
           (set-marker (process-mark proc) (point)))
         (if moving (goto-char (process-mark proc)))))))
 
-(provide 'my-process-filter)
+;;;###autoload
+(defun my-process-make-color-comp-process (proc-name cmd &optional proc-dir)
+  "Create a long-running mix process PROC-NAME using CMD in a new buffer.
 
-;;; my-process-filter.el ends here
+CMD is a the command list to be passed to the `:command' keyword of `make-process'.
+See the documentation for `make-process' for more information.
+
+May optionally specify PROC-DIR to change the directory where the process will run."
+  (let* ((default-directory (if proc-dir proc-dir default-directory))
+          (project-dir-name (file-name-base (directory-file-name default-directory)))
+          (proc-buf-name (concat "*" proc-name "-" project-dir-name "*"))
+          (proc-buf (get-buffer-create proc-buf-name)))
+    (with-current-buffer proc-buf
+      (compilation-mode)
+      ;; `compilation-mode' buffers are read-only by default, so we must specify our output buffer
+      ;; is writable.
+      (setq-local buffer-read-only nil))
+    (make-process
+      :name (concat proc-name "-" project-dir-name)
+      :buffer (get-buffer proc-buf)
+      :command cmd
+      :filter #'my-process-filter-colorize-output)
+    (display-buffer proc-buf)))
+
+(provide 'my-process)
+
+;;; my-process.el ends here
