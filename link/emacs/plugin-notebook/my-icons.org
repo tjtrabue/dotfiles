@@ -108,6 +108,9 @@ Use fancy developer icons in Emacs.  Very pretty!
   (use-package all-the-icons
     :demand t
     :if (display-graphic-p)
+    :hook
+    ;; Update the tab-line's icons when the major mode changes.
+    (after-change-major-mode . tab-line-format)
     :config
     (let ((icon-paths (mapcar (lambda (file-name)
                                 (expand-file-name file-name user-fonts-dir))
