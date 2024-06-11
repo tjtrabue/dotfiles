@@ -34,7 +34,7 @@ paclean() {
     paccache -r
   fi
   sudo pacman -Sc --noconfirm
-  pacman_remove_orphans
+  pacman_rm_orphans
 }
 
 # Remove the pacman lock file. This deadlock situation occurs sometimes when
@@ -50,8 +50,9 @@ pacman_unlock_db() {
   fi
 }
 
-# Orphan = unused transitive package
-pacman_remove_orphans() {
+# Remove orphaned Arch Linux packages.
+# "orphan" = unused transitive package.
+pacman_rm_orphans() {
   pacman -Qtdq | sudo pacman -Rns --noconfirm -
 }
 

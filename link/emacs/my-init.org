@@ -208,31 +208,6 @@ Language and encoding parameters for this particular Emacs instance.
   (set-keyboard-coding-system 'utf-8)
 #+end_src
 
-* Require Custom Libraries
-Once we have configured the =load-path= we can add =require= statements for
-custom Emacs Lisp libraries.
-
-#+begin_src emacs-lisp
-  ;; My own font functions and definitions.
-  (require 'my-font)
-  ;; My custom window functions.
-  (require 'my-window)
-  ;; Functions for interacting with hooks.
-  (require 'my-hook-fns)
-  ;; recentf library for managing recently accessed filed.
-  (require 'my-recentf)
-  ;; GTAGS function library.
-  (require 'my-gtags)
-  ;; straight.el convenience functions.
-  (require 'my-straight-helpers)
-  ;; Custom completing-read functions.
-  (require 'my-completing-read)
-  ;; Emacs' built-in tab line configuration.
-  (require 'my-tab-line)
-  ;; Custom functions for making/starting processes.
-  (require 'my-process)
-#+end_src
-
 * Load Hotfix Modules
 Load any HOTFIX modules in order to fix backwards-compatibility issues.  It is
 best to keep these code snippets out of the main Emacs configuration file since
@@ -516,6 +491,132 @@ LanguageServerProtocol clients and servers.
     ;; variable to 'resize-mode may improve the performance of plugins that use
     ;; child frames.
     (setq posframe-gtk-resize-child-frames 'resize-mode))
+#+end_src
+
+* Package Manager
+Configure package managers Emacs leverages to install and configure third-party
+packages.
+
+** Standard Config
+Here we determine whether to use Emacs' built-in package manager =package.el= or
+the much superior =straight.el= third-party package manager.
+
+#+begin_src emacs-lisp
+  (if (and (not my/use-straight-p) (>= emacs-major-version 24))
+  ;;; IF we want to use the built-in package manager...
+      (progn
+        ;; Package configuration
+        (require 'package)
+        ;; Add extra package archives to the list of repositories.
+        ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+        ;;       to change the URLs to simple HTTP in order for them to function.
+        ;;       If you must do this, also uncomment the two expressions below.
+        ;;       That will reset the archives list and allow you to only use
+        ;;       unsecured connections for package transfer.
+        ;; (setq package-archives nil)
+        ;; (add-to-list 'package-archives
+        ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+        (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
+        (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
+        (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+        (package-initialize)
+        ;; Automatically install packages using use-package
+        (unless (package-installed-p 'use-package)
+          (package-refresh-contents)
+          (package-install 'use-package))
+        (require 'use-package))
+  ;;; OTHERWISE...
+    ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
+    (setq package-enable-at-startup nil)
+    ;; this tells package.el not to add those pesky customized variable settings
+    ;; at the end of your init.el
+    (setq package--init-file-ensured t))
+#+end_src
+
+** straight
+=straight= is a newer package manager for Emacs that differs from
+=package.el=.  It operates by cloning Git repositories for Emacs packages and
+sym-linking them to Emacs' runtime path. =straight= is also a purely
+functional package manager, and integrates nicely with the =use-package=
+macro.  *NOTE:* straight requires Emacs version 24.5 or higher to properly
+function.
+
+To update all packages installed through straight, run =M-x
+straight-pull-all=
+
+#+begin_src emacs-lisp
+  (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
+#+end_src
+
+* Load Custom Libraries
+Once we have configured the =load-path=, we can load custom Emacs Lisp
+libraries. Using =straight.el= as the module loader takes care of lazy loading.
+
+#+begin_src emacs-lisp
+  ;; My own font functions and definitions.
+  (use-package my-font
+     :ensure nil
+     :straight
+     (my-font :local-repo "~/.emacs.d/require"
+              :files ("my-font.el")))
+
+  ;; My custom window functions.
+  (use-package my-window
+    :ensure nil
+    :straight
+    (my-window :local-repo "~/.emacs.d/require"
+               :files ("my-window.el")))
+
+  ;; Functions for interacting with hooks.
+  (use-package my-hook-fns
+    :ensure nil
+    :straight
+    (my-hook-fns :local-repo "~/.emacs.d/require"
+                 :files ("my-hook-fns.el")))
+
+  ;; recentf library for managing recently accessed filed.
+  (use-package my-recentf
+    :ensure nil
+    :straight
+    (my-recentf :local-repo "~/.emacs.d/require"
+                :files ("my-recentf.el")))
+
+  ;; GTAGS function library.
+  (use-package my-gtags
+    :ensure nil
+    :straight
+    (my-gtags :local-repo "~/.emacs.d/require"
+              :files ("my-gtags.el")))
+
+  ;; straight.el convenience functions.
+  (use-package my-straight-helpers
+    :ensure nil
+    :straight
+    (my-straight-helpers :local-repo "~/.emacs.d/require"
+                         :files ("my-straight-helpers.el")))
+
+  ;; Custom completing-read functions.
+  (use-package my-completing-read
+    :ensure nil
+    :straight
+    (my-completing-read :local-repo "~/.emacs.d/require"
+                        :files ("my-completing-read.el")))
+
+  ;; My customized buffer tab-line, based on Emacs' built-in version.
+  (use-package my-tab-line
+    :ensure nil
+    :straight
+    (my-tab-line :local-repo "~/.emacs.d/require"
+                 :files ("my-tab-line.el"))
+    :init
+    (my-tab-line-mode 1))
+
+  ;; Custom functions for making/starting processes.
+  (use-package my-process
+    :ensure nil
+    :straight
+    (my-process :local-repo "~/.emacs.d/require"
+                :files ("my-process.el")))
 #+end_src
 
 * Grep/Search
@@ -934,14 +1035,13 @@ Set variables used by LSP servers.
 
 * Hooks
 Hooks are analogous to Vim's =autocmds=. They represent a series of functions to
-run when a particular event occurs. Both Emacs proper and third party plugins
-expose certain hooks along with their packages, and the user can then attach
-functions to each hook by means of the =add-hook= function. The most commonly
-used hooks are those for major and minor modes, each having a name like
-=java-mode-hook=, or =company-mode-hook=.  However, most packages provide
-additional hooks for use besides those for major and minor modes, such as Evil's
-state change hooks like =evil-insert-state-entry-hook= and
-=evil-insert-state-exit-hook=.
+run when an event occurs. Both Emacs proper and third party plugins expose
+certain hooks along with their packages, and the user can then attach functions
+to each hook by means of the =add-hook= function. The most commonly used hooks
+are those for major and minor modes, each having a name like =java-mode-hook=,
+or =company-mode-hook=.  However, most packages provide additional hooks for use
+besides those for major and minor modes, such as Evil's state change hooks like
+=evil-insert-state-entry-hook= and =evil-insert-state-exit-hook=.
 
 ** Buffer-menu-mode hooks
 #+begin_src emacs-lisp
@@ -1103,61 +1203,6 @@ stale files. We should periodically purge old files from these directories.
                     week))
         (message "%s" file)
         (delete-file file))))
-#+end_src
-
-* Package Manager
-Configure package managers Emacs leverages to install and configure third-party
-packages.
-
-** Standard Config
-Here we determine whether to use Emacs' built-in package manager =package.el= or
-the much superior =straight.el= third-party package manager.
-
-#+begin_src emacs-lisp
-  (if (and (not my/use-straight-p) (>= emacs-major-version 24))
-  ;;; IF we want to use the built-in package manager...
-      (progn
-        ;; Package configuration
-        (require 'package)
-        ;; Add extra package archives to the list of repositories.
-        ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
-        ;;       to change the URLs to simple HTTP in order for them to function.
-        ;;       If you must do this, also uncomment the two expressions below.
-        ;;       That will reset the archives list and allow you to only use
-        ;;       unsecured connections for package transfer.
-        ;; (setq package-archives nil)
-        ;; (add-to-list 'package-archives
-        ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
-        (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
-        (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
-        (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
-        (package-initialize)
-        ;; Automatically install packages using use-package
-        (unless (package-installed-p 'use-package)
-          (package-refresh-contents)
-          (package-install 'use-package))
-        (require 'use-package))
-  ;;; OTHERWISE...
-    ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
-    (setq package-enable-at-startup nil)
-    ;; this tells package.el not to add those pesky customized variable settings
-    ;; at the end of your init.el
-    (setq package--init-file-ensured t))
-#+end_src
-
-** straight
-=straight= is a newer package manager for Emacs that differs from
-=package.el=.  It operates by cloning Git repositories for Emacs packages and
-sym-linking them to Emacs' runtime path. =straight= is also a purely
-functional package manager, and integrates nicely with the =use-package=
-macro.  *NOTE:* straight requires Emacs version 24.5 or higher to properly
-function.
-
-To update all packages installed through straight, run =M-x
-straight-pull-all=
-
-#+begin_src emacs-lisp
-  (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
 #+end_src
 
 * Install Packages Needed on Startup

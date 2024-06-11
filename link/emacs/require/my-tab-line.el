@@ -3,7 +3,7 @@
 ;; Author: Thomas Jacob Trabue
 ;; Maintainer: Thomas Jacob Trabue
 ;; Version: version
-;; Package-Requires: (dependencies)
+;; Package-Requires: ()
 ;; Homepage: homepage
 ;; Keywords: keywords
 
@@ -31,8 +31,10 @@
 
 ;;; Code:
 
-(require 'tab-line)
+;;;###autoload
+(require 'easy-mmode)
 
+;;;###autoload
 (defcustom my-tab-line-allowed-regexps '(;; Allow *scratch* buffer(s).
                                           "^.*\\*.*scratch.*\\*.*$"
                                           ;; Allow Customize windows.
@@ -41,11 +43,13 @@
   :type '(regexp)
   :group 'my-tab-line)
 
+;;;###autoload
 (defcustom my-tab-line-allowed-major-modes '(dired-mode)
   "List of major modes whose buffers are allowed in the tab line."
   :type '(symbol)
   :group 'my-tab-line)
 
+;;;###autoload
 (defgroup my-tab-line '((my-tab-line-allowed-regexps custom-variable)
                          (my-tab-line-allowed-major-modes custom-variable))
   "My special `tab-line' variables.")
@@ -80,49 +84,57 @@ See the documentation for `perspective.el' for further details."
     ;; the left of the tab-line.
     (seq-reverse bufs)))
 
-;; Specify a function to determine the list of buffers to display in the
-;; `tab-line'.
-(setq tab-line-tabs-function (lambda ()
-                               ;; Default to apply filtering to the entire
-                               ;; `buffer-list'.
-                               (my-tab-line-filter-display-buffers (buffer-list))))
+;;;###autoload
+(define-minor-mode my-tab-line-mode
+  "Global minor mode that toggles a fancy tab-line.
 
-;; If non-nil, calling `tab-line-switch-to-next-tab' on the last tab selects
-;; the first tab, and vice versa.
-(setq tab-line-switch-cycling t)
+By default, it widens each buffer tab, and uses font colors to mark
+which file buffers have been edited since their last write.  This
+tab-line can be nicely enhanced with `all-the-icons'.  See my
+configuration in `my-icons.org' for more details."
+  :global t
+  :init-value nil
+  :after-hook
+  (progn
+    (require 'tab-line)
 
-;; Specify the function used to print the tab name in the tab line.
-(setq tab-line-tab-name-function #'my-tab-line-tab-name-function)
+    ;; Specify a function to determine the list of buffers to display in the
+    ;; `tab-line'.
+    (setq tab-line-tabs-function (lambda ()
+                                   ;; Default to apply filtering to the entire
+                                   ;; `buffer-list'.
+                                   (my-tab-line-filter-display-buffers (buffer-list))))
+    ;; If non-nil, calling `tab-line-switch-to-next-tab' on the last tab selects
+    ;; the first tab, and vice versa.
+    (setq tab-line-switch-cycling t)
+    ;; Specify the function used to print the tab name in the tab line.
+    (setq tab-line-tab-name-function #'my-tab-line-tab-name-function)
+    ;; Whether to show the "x" close button next to each tab.
+    (setq tab-line-close-button-show nil)
+    ;; Whether to show the "+" button used to add a new tab.
+    (setq tab-line-new-button-show nil)
+    ;; This is a custom callback function that the user can define which decides
+    ;; into which tab group an input buffer gets added.
+    ;;
+    ;; This function takes a buffer as an argument, and should return a string
+    ;; representing the name of the group into which the input buffer should be
+    ;; placed. If the function returns nil, the buffer will be filtered out
+    ;; entirely.
+    (setq tab-line-tabs-buffer-group-function nil)
 
-;; Whether to show the "x" close button next to each tab.
-(setq tab-line-close-button-show nil)
-
-;; Whether to show the "+" button used to add a new tab.
-(setq tab-line-new-button-show nil)
-
-;; This is a custom callback function that the user can define which decides
-;; into which tab group an input buffer gets added.
-;;
-;; This function takes a buffer as an argument, and should return a string
-;; representing the name of the group into which the input buffer should be
-;; placed. If the function returns nil, the buffer will be filtered out
-;; entirely.
-(setq tab-line-tabs-buffer-group-function nil)
-
-;; Adjust tab-line faces.
-(dolist (face '(tab-line
-                 tab-line-tab-current
-                 tab-line-tab-inactive
-                 tab-line-tab-inactive-alternate
-                 tab-line-highlight))
-  (set-face-attribute face nil
-    :height 1.0
-    :width 'expanded
-    ;; Increase tab-line height by adding a border box.
-    :box `(:line-width 4 :color ,(face-background face nil t))))
-
-;; Enable `tab-line-mode' globally.
-(global-tab-line-mode 1)
+    ;; Adjust tab-line faces.
+    (dolist (face '(tab-line
+                     tab-line-tab-current
+                     tab-line-tab-inactive
+                     tab-line-tab-inactive-alternate
+                     tab-line-highlight))
+      (set-face-attribute face nil
+        :height 1.0
+        :width 'expanded
+        ;; Increase tab-line height by adding a border box.
+        :box `(:line-width 4 :color ,(face-background face nil t))))
+    ;; Enable `tab-line-mode' globally.
+    (global-tab-line-mode 1)))
 
 (provide 'my-tab-line)
 

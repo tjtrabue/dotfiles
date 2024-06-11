@@ -3,7 +3,7 @@
 ;; Author: Thomas Jacob Trabue
 ;; Maintainer: Thomas Jacob Trabue
 ;; Version: version
-;; Package-Requires: (dependencies)
+;; Package-Requires: ()
 ;; Homepage: homepage
 ;; Keywords: keywords
 

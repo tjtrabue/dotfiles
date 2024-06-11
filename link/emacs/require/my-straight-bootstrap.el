@@ -3,7 +3,7 @@
 ;; Author: Billy's Dad
 ;; Maintainer: Billy's Dad
 ;; Version: version
-;; Package-Requires: (dependencies)
+;; Package-Requires: ()
 ;; Homepage: homepage
 ;; Keywords: keywords
 
