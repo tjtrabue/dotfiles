@@ -5,15 +5,13 @@
 const config = {
   semi: true,
   singleQuote: true,
-  quoteProps: 'consistent',
+  quoteProps: "consistent",
   jsxSingleQuote: false,
-  trailingComma: 'es5',
-  arrowParens: 'avoid',
+  trailingComma: "es5",
+  arrowParens: "avoid",
   bracketSpacing: false,
-  plugins: ['prettier-plugin-tailwindcss'],
-  proseWrap: 'always',
+  plugins: ["prettier-plugin-tailwindcss"],
+  proseWrap: "always",
 };
 
 export default config;
-
-// vim:foldenable:foldmethod=marker
