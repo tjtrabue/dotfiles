@@ -102,7 +102,7 @@ one of the following commands:
     :delight
     (mix-minor-mode nil mix)
     :hook
-    ((elixir-mode elixir-ts-mode) . mix-minor-mode)
+    ((elixir-mode elixir-ts-mode heex-ts-mode) . mix-minor-mode)
     :general
     (general-unbind mix-minor-mode-map
       "C-c d")

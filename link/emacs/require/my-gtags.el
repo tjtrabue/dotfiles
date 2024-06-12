@@ -30,6 +30,7 @@
 
 ;;; Code:
 
+;;;###autoload
 (defun my-gtags-root-dir ()
   "Returns GTAGS root directory or nil if doesn't exist."
   (with-temp-buffer
@@ -37,10 +38,12 @@
       (buffer-substring (point-min) (1- (point-max)))
       nil)))
 
+;;;###autoload
 (defun my-gtags-update ()
   "Make GTAGS incremental update"
   (call-process "global" nil nil nil "-u"))
 
+;;;###autoload
 (defun my-gtags-update-hook-fn ()
   "Update GTAGS file whenever an appropriate file is saved."
   (when (my-gtags-root-dir)
