@@ -70,29 +70,6 @@ files and become useable:
     emacs --fg-daemon
   #+end_src
 
-* Require statements
-These are =require= directives used to import Elisp modules used heavily by
-plugins and my custom code. Please only list the most important modules
-here. Wait to load modules only used by an individual plugin in its =init=
-block.
-
-#+begin_src emacs-lisp
-  ;; Man pager library
-  (require 'man)
-  ;; Newer dired library
-  (require 'dired-x)
-  ;; String manipulation library
-  (require 'subr-x)
-  ;; Make C and C++ modes available; necessary for some third-party packages
-  (require 'cc-mode)
-  ;; "find function at point" library
-  (require 'ffap)
-  ;; EasyPG, Emacs' front-end for GPG.
-  (require 'epa)
-  ;; Emacs Grep integration functions/configuration.
-  (require 'grep)
-#+end_src
-
 * Define User Variables
 This is where I define new variables needed throughout my configuration.
 
@@ -215,7 +192,7 @@ they are necessary evil, not main configuration code, and as such will soon
 become unnecessary and may be safely removed.
 
 If no code block follows this paragraph, then my current configuration requires
-no hot-fixes.
+no hot-fixes (in which case there will be much rejoicing).
 
 * Configure Backup Dirs/Auto-Saves
 It's handy to have Emacs put all backup files in a centralized directory, as
@@ -258,24 +235,6 @@ auto-save feature for buffers.
   (setq auto-save-timeout 30)
   ;; Number of keystrokes between auto-saves (default 300)
   (setq auto-save-interval 300)
-#+end_src
-
-* Color Configuration
-Here we configure ANSI colors for major and minor modes used throughout Emacs.
-We need to make =comint-mode=, which all shell emulators in Emacs (known as
-inferior interpreters) inherit from, recognize ANSI color escape sequences so
-that shells don't look like a hot mess. We also want colorized man pages.
-
-#+begin_src emacs-lisp
-  ;; Set ANSI color integration in comint-mode
-  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
-  ;; Colorize Emacs' man page viewer
-  (set-face-attribute 'Man-overstrike nil
-                      :inherit font-lock-type-face
-                      :bold t)
-  (set-face-attribute 'Man-underline nil
-                      :inherit font-lock-keyword-face
-                      :underline t)
 #+end_src
 
 * Set Emacs Variables
@@ -548,6 +507,45 @@ straight-pull-all=
   (load (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
 #+end_src
 
+* Load Built-In Libraries
+Load built-in Elisp packages used heavily by plugins and my custom code. Please
+only list the most important modules here. Note how we can use =straight.el= to
+load packages bundled with Emacs just as easily as third-party packages. This is
+ideal because =straight.el= handles file compilation and lazy-loading.
+
+#+begin_src emacs-lisp
+  ;; Man pager library
+  (use-package man
+    :ensure nil
+    :straight (man :type built-in)
+    :demand t)
+  ;; Newer dired library
+  (use-package dired-x
+    :ensure nil
+    :straight (dired-x :type built-in))
+  ;; String manipulation library
+  (use-package subr-x
+    :ensure nil
+    :straight (subr-x :type built-in))
+  ;; Make C and C++ modes available; necessary for some third-party packages
+  (use-package cc-mode
+    :ensure nil
+    :straight (cc-mode :type built-in))
+  ;; "find function at point" library
+  (use-package ffap
+    :ensure nil
+    :straight (ffap :type built-in))
+  ;; EasyPG, Emacs' front-end for GPG.
+  (use-package epa
+    :ensure nil
+    :straight (epa :type built-in))
+  ;; Emacs Grep integration functions/configuration.
+  (use-package grep
+    :ensure nil
+    :straight (grep :type built-in)
+    :commands (grep-apply-setting))
+#+end_src
+
 * Load Custom Libraries
 Once we have configured the =load-path=, we can load custom Emacs Lisp
 libraries. Using =straight.el= as the module loader takes care of lazy loading.
@@ -617,6 +615,24 @@ libraries. Using =straight.el= as the module loader takes care of lazy loading.
     :straight
     (my-process :local-repo "~/.emacs.d/require"
                 :files ("my-process.el")))
+#+end_src
+
+* Color Configuration
+Here we configure ANSI colors for major and minor modes used throughout Emacs.
+We need to make =comint-mode=, which all shell emulators in Emacs (known as
+inferior interpreters) inherit from, recognize ANSI color escape sequences so
+that shells don't look like a hot mess. We also want colorized man pages.
+
+#+begin_src emacs-lisp
+  ;; Set ANSI color integration in comint-mode
+  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+  ;; Colorize Emacs' man page viewer
+  (set-face-attribute 'Man-overstrike nil
+                      :inherit font-lock-type-face
+                      :bold t)
+  (set-face-attribute 'Man-underline nil
+                      :inherit font-lock-keyword-face
+                      :underline t)
 #+end_src
 
 * Grep/Search
