@@ -108,6 +108,10 @@ Use fancy developer icons in Emacs.  Very pretty!
   (use-package all-the-icons
     :demand t
     :if (display-graphic-p)
+    :hook
+    (my-tab-line-mode . (lambda ()
+                          (setq my-tab-line-tab-name-format-function
+                                #'my/all-the-icons-tab-line-format)))
     :config
     (let ((icon-paths (mapcar (lambda (file-name)
                                 (expand-file-name file-name user-fonts-dir))
@@ -123,9 +127,9 @@ Use fancy developer icons in Emacs.  Very pretty!
       ;; to redownload all files.
       (when (member nil (mapcar 'file-exists-p icon-paths))
         (all-the-icons-install-fonts t)))
-    (when (bound-and-true-p tab-line-mode)
+    (when (bound-and-true-p my-tab-line-mode)
       ;; Add file mode icons to tab-line tabs.
-      (setq tab-line-tab-name-format-function #'my/all-the-icons-tab-line-format)))
+      (setq my-tab-line-tab-name-format-function #'my/all-the-icons-tab-line-format)))
 #+end_src
 
 ** Plugins

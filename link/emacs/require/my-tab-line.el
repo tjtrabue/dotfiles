@@ -56,6 +56,12 @@
   :group 'my-tab-line)
 
 ;;;###autoload
+(defcustom my-tab-line-tab-name-format-function #'tab-line-tab-name-format-default
+  "Specifies the function used to format each tab in the `tab-line'."
+  :type '(function)
+  :group 'my-tab-line)
+
+;;;###autoload
 (defgroup my-tab-line '((my-tab-line-allowed-regexps custom-variable)
                          (my-tab-line-allowed-major-modes custom-variable))
   "My special `tab-line' variables.")
@@ -110,8 +116,15 @@ configuration in `my-icons.org' for more details."
 
     ;; Whenever the user customizes `my-tab-line-tabs-function', pass the
     ;; customization along to `tab-line-tabs-function'.
-    (add-variable-watcher 'my-tab-line-tabs-function (lambda (_symbol newval _operation _where)
-                                                       (setq tab-line-tabs-function newval)))
+    (add-variable-watcher 'my-tab-line-tabs-function
+      (lambda (_symbol newval _operation _where)
+        (setq tab-line-tabs-function newval)))
+
+    ;; Whenever the user customizes `my-tab-line-tab-name-format-function', pass the
+    ;; customization along to `tab-line-tab-name-format-function'.
+    (add-variable-watcher 'my-tab-line-tab-name-format-function
+      (lambda (_symbol newval _operation _where)
+        (setq tab-line-tab-name-format-function newval)))
 
     ;; Adjust tab-line faces.
     (dolist (face '(tab-line
