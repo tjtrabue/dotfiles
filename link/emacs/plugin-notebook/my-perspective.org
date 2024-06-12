@@ -30,7 +30,11 @@ seizes control of Emacs in some invasive ways.
     :demand t
     :hook
     ;; Save perspective to disk whenever the user kills Emacs.
-    (kill-emacs . persp-state-save)
+    ((kill-emacs . persp-state-save)
+     (my-tab-line-mode . (lambda ()
+                           ;; When using the tab-line to list buffers in visual tabs, only list
+                           ;; buffers visiting files in the current perspective.
+                           (setq my-tab-line-tabs-function #'my/persp-tab-line-tabs-files))))
     :preface
     (require 'perspective)
     (defun my/add-current-buffer-to-perspective ()
@@ -75,8 +79,10 @@ seizes control of Emacs in some invasive ways.
       "Return list of current perspective's file buffers to display in the tab line.
 
     See the documentation for `perspective.el' for further details."
-      (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
-        (my-tab-line-filter-display-buffers current-persp-buffers)))
+      (if (bound-and-true-p persp-mode)
+          (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
+            (my-tab-line-filter-display-buffers current-persp-buffers))
+        (buffer-list)))
     :general
     (my/user-leader-def persp-mode-map
       ;; This is general.el's way of accomplishing :bind-keymap.
@@ -127,10 +133,10 @@ seizes control of Emacs in some invasive ways.
     ;; necessary to allow Emacs time to initialize before resuming the previous
     ;; perspective.
     (run-with-timer 1 nil #'persp-state-load persp-state-default-file)
-    (when (bound-and-true-p tab-line-mode)
-      ;; When using the tab-line to list buffers in visual tabs, only list
-      ;; buffers visiting files in the current perspective.
-      (setq tab-line-tabs-function #'my/persp-tab-line-tabs-files)))
+    (when (bound-and-true-p my-tab-line-mode)
+      ;; When using the my custom tab-line to list buffers in visual tabs, only list buffers visiting
+      ;; files in the current perspective.
+      (setq my-tab-line-tabs-function #'my/persp-tab-line-tabs-files)))
 #+end_src
 
 * Plugins
