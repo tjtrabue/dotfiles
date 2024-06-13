@@ -510,8 +510,10 @@ straight-pull-all=
 * Load Built-In Libraries
 Load built-in Elisp packages used heavily by plugins and my custom code. Please
 only list the most important modules here. Note how we can use =straight.el= to
-load packages bundled with Emacs just as easily as third-party packages. This is
-ideal because =straight.el= handles file compilation and lazy-loading.
+load packages bundled with Emacs just as easily as third-party packages, which
+is ideal because =straight.el= handles file compilation and lazy-loading. I pray
+Emacs incorporates =straight.el= into the core project someday soon and I get to
+remove this wistful aside (and my custom bootstrap code for =straight.el=).
 
 #+begin_src emacs-lisp
   ;; Man pager library
@@ -1456,7 +1458,7 @@ try to load =org= later.
     ;; You may want to comment the `:ensure' and `:straight' directives
     ;; from time to time in order to upgrade your Org version.
     ;; :ensure nil
-    ;; :straight nil
+    ;; :straight (org :type built-in)
     :delight
     (org-src-mode nil org-src)
     (org-indent-mode nil org-indent)
@@ -1590,6 +1592,32 @@ try to load =org= later.
     ;; Also create the agenda directory.
     (make-directory my/org-agenda-dir t)
     :config
+    ;; Add '-shell-escape' flag to all LaTeX commands that Org uses to generate previews, and make
+    ;; sure that `:latex-compiler' command strings generate DVI files when appropriate.
+    (let ((dvipng-default (alist-get 'dvipng org-preview-latex-process-alist))
+          (dvisvgm-default (alist-get 'dvisvgm org-preview-latex-process-alist))
+          (imagemagick-default (alist-get 'imagemagick org-preview-latex-process-alist)))
+      (setf (alist-get 'dvipng org-preview-latex-process-alist)
+            (plist-put dvipng-default :latex-compiler `(,(concat "lualatex"
+                                                                 " --shell-escape"
+                                                                 " --interaction=nonstopmode"
+                                                                 " --output-format=dvi"
+                                                                 " --output-directory=%o"
+                                                                 " %f"))))
+      (setf (alist-get 'dvisvgm org-preview-latex-process-alist)
+            (plist-put dvisvgm-default :latex-compiler `(,(concat "lualatex"
+                                                                  " --shell-escape"
+                                                                  " --interaction=nonstopmode"
+                                                                  " --output-format=dvi"
+                                                                  " --output-directory=%o"
+                                                                  " %f"))))
+      (setf (alist-get 'imagemagick org-preview-latex-process-alist)
+            (plist-put imagemagick-default :latex-compiler `(,(concat "lualatex"
+                                                                      " --shell-escape"
+                                                                      " --interaction=nonstopmode"
+                                                                      " --output-format=pdf"
+                                                                      " --output-directory=%o"
+                                                                      " %f")))))
     ;; Required for expand-region.
     (require 'org-fold)
     ;; Add more default LaTeX packages
