@@ -1597,28 +1597,22 @@ try to load =org= later.
     ;; command strings generate DVI files when appropriate.
     (let ((dvipng-config (alist-get 'dvipng org-preview-latex-process-alist))
           (dvisvgm-config (alist-get 'dvisvgm org-preview-latex-process-alist))
-          (imagemagick-config (alist-get 'imagemagick org-preview-latex-process-alist)))
-      (setf dvipng-config (plist-put dvipng-config
-                                     :latex-compiler `(,(concat "lualatex"
-                                                                " --shell-escape"
-                                                                " --interaction=nonstopmode"
-                                                                " --output-format=dvi"
-                                                                " --output-directory=%o"
-                                                                " %f"))))
-      (setf dvisvgm-config (plist-put dvisvgm-config
-                                      :latex-compiler `(,(concat "lualatex"
-                                                                 " --shell-escape"
-                                                                 " --interaction=nonstopmode"
-                                                                 " --output-format=dvi"
-                                                                 " --output-directory=%o"
-                                                                 " %f"))))
-      (setf imagemagick-config (plist-put imagemagick-config
-                                          :latex-compiler `(,(concat "lualatex"
-                                                                     " --shell-escape"
-                                                                     " --interaction=nonstopmode"
-                                                                     " --output-format=pdf"
-                                                                     " --output-directory=%o"
-                                                                     " %f")))))
+          (imagemagick-config (alist-get 'imagemagick org-preview-latex-process-alist))
+          (gen-dvi-cmd (concat "lualatex"
+                               " --shell-escape"
+                               " --interaction=nonstopmode"
+                               " --output-format=dvi"
+                               " --output-directory=%o"
+                               " %f") )
+          (gen-pdf-cmd (concat "lualatex"
+                               " --shell-escape"
+                               " --interaction=nonstopmode"
+                               " --output-format=pdf"
+                               " --output-directory=%o"
+                               " %f") ))
+      (setf dvipng-config (plist-put dvipng-config :latex-compiler gen-dvi-cmd))
+      (setf dvisvgm-config (plist-put dvisvgm-config :latex-compiler gen-dvi-cmd))
+      (setf imagemagick-config (plist-put imagemagick-config :latex-compiler gen-pdf-cmd)))
     ;; Required for expand-region.
     (require 'org-fold)
     ;; Add more default LaTeX packages
