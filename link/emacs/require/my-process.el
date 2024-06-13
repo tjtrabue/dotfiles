@@ -76,6 +76,8 @@ process will run."
       ;; `compilation-mode' buffers are read-only by default, so we must specify our output buffer
       ;; is writable.
       (setq-local buffer-read-only nil))
+    (when (get-process project-proc-name)
+      (error (concat "Process " project-proc-name " already exists")))
     (message (concat "Making process " project-proc-name))
     (make-process
       :name project-proc-name
@@ -99,8 +101,11 @@ running."
   (let* ((default-directory (if proc-dir proc-dir default-directory))
           (project-dir-name (file-name-base (directory-file-name default-directory)))
           (project-proc-name (concat proc-name "-" project-dir-name)))
-    (message (concat "Killing process " project-proc-name))
-    (kill-process project-proc-name)))
+    (if (get-process project-proc-name)
+      (progn
+        (message (concat "Killing process " project-proc-name))
+        (kill-process project-proc-name))
+      (error (concat "No active process " project-proc-name)))))
 
 (provide 'my-process)
 
