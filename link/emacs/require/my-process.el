@@ -55,27 +55,51 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Filter-Functions.html"
 
 ;;;###autoload
 (defun my-process-make-color-comp-process (proc-name cmd &optional proc-dir)
-  "Create a long-running mix process PROC-NAME using CMD in a new buffer.
+  "Create a long-lived process named PROC-NAME using CMD.
 
-CMD is a the command list to be passed to the `:command' keyword of `make-process'.
-See the documentation for `make-process' for more information.
+CMD is a the command list to be passed to the `:command' keyword of
+`make-process'.  See the documentation for `make-process' for more
+information.
 
-May optionally specify PROC-DIR to change the directory where the process will run."
+The process writes output to a new buffer named with the following
+convention: *<proc-name>-<proc-dir>*.
+
+May optionally specify PROC-DIR to change the directory where the
+process will run."
   (let* ((default-directory (if proc-dir proc-dir default-directory))
           (project-dir-name (file-name-base (directory-file-name default-directory)))
-          (proc-buf-name (concat "*" proc-name "-" project-dir-name "*"))
+          (project-proc-name (concat proc-name "-" project-dir-name))
+          (proc-buf-name (concat "*" project-proc-name "*"))
           (proc-buf (get-buffer-create proc-buf-name)))
     (with-current-buffer proc-buf
       (compilation-mode)
       ;; `compilation-mode' buffers are read-only by default, so we must specify our output buffer
       ;; is writable.
       (setq-local buffer-read-only nil))
+    (message (concat "Making process " project-proc-name))
     (make-process
-      :name (concat proc-name "-" project-dir-name)
+      :name project-proc-name
       :buffer (get-buffer proc-buf)
       :command cmd
+      :sentinel (lambda (_proc event)
+                  ;; (message (concat "process " (process-name proc) " event: " event))
+                  (cond
+                    ;; Kill the associated buffer when the process is killed.
+                    ((string-match-p "killed\n$" event) (when (bufferp proc-buf)
+                                                          (kill-buffer proc-buf)))))
       :filter #'my-process-filter-colorize-output)
     (display-buffer proc-buf)))
+
+;;;###autoload
+(defun my-process-kill-color-comp-process (proc-name &optional proc-dir)
+  "Kill a running process PROC-NAME.
+
+Optionally, project directory PROC-DIR where the project is running."
+  (let* ((default-directory (if proc-dir proc-dir default-directory))
+          (project-dir-name (file-name-base (directory-file-name default-directory)))
+          (project-proc-name (concat proc-name "-" project-dir-name)))
+    (message (concat "Killing process " project-proc-name))
+    (kill-process project-proc-name)))
 
 (provide 'my-process)
 

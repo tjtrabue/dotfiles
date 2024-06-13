@@ -84,16 +84,31 @@ one of the following commands:
     (let ((project-root (if use-umbrella-subprojects (mix--umbrella-subproject-prompt) (mix--project-root))))
       (mix--start "deps-get" "deps.get" project-root prefix)))
 
-  (defun my/mix-phoenix-server (&optional prefix use-umbrella-subprojects)
+  (defun my/mix-start-phoenix-server (&optional prefix use-umbrella-subprojects)
     "Run the `mix phx.server' command in a new process buffer.
 
-  If PREFIX is non-nil, prompt for additional params. See `mix--prompt`
+  If PREFIX is non-nil, prompt for additional params.  See `mix--prompt`
   IF USE-UMBRELLA-SUBPROJECTS is t, prompt for umbrells subproject."
     (interactive "P")
     (let ((project-root (if use-umbrella-subprojects
                             (mix--umbrella-subproject-prompt)
                           (mix--project-root))))
+      (when (not project-root)
+        (error "Could not find Elixir project root"))
       (my-process-make-color-comp-process "phx-server" '("mix" "phx.server") project-root)))
+
+  (defun my/mix-stop-phoenix-server (&optional prefix use-umbrella-subprojects)
+    "Kill a running Phoenix server for the current project.
+
+  If PREFIX is non-nil, prompt for additional params.  See `mix--prompt`
+  IF USE-UMBRELLA-SUBPROJECTS is t, prompt for umbrells subproject."
+    (interactive "P")
+    (let ((project-root (if use-umbrella-subprojects
+                            (mix--umbrella-subproject-prompt)
+                          (mix--project-root))))
+      (when (not project-root)
+        (error "Could not find Elixir project root"))
+      (my-process-kill-color-comp-process "phx-server" project-root)))
 #+end_src
 
 ** =use-package= specification
@@ -135,7 +150,8 @@ one of the following commands:
       "xuf" (lambda ()
               (interactive)
               (mix-test-current-test nil 'use-umbrella-subprojects))
-      "xp"  'my/mix-phoenix-server
+      "xp"  'my/mix-start-phoenix-server
+      "xP"  'my/mix-stop-phoenix-server
       "xup" (lambda ()
               (interactive)
               (my/mix-phoenix-server nil 'use-umbrella-subprojects))))
