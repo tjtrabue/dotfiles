@@ -32,6 +32,15 @@
 
 (require 'ansi-color)
 
+(defun my-process--get-project-proc-name (proc-name &optional proc-dir)
+  "Return the process name for a project directory.
+
+PROC-NAME is the user-supplied process name, and PROC-DIR is the
+directory where the process is running (defaults to `default-dir')."
+  (let* ((default-directory (if proc-dir proc-dir default-directory))
+          (project-dir-name (file-name-base (directory-file-name default-directory))))
+    (concat proc-name "-" project-dir-name)))
+
 ;;;###autoload
 (defun my-process-filter-colorize-output (proc string)
   "Filter function for `make-process' that colorizes output.
@@ -67,8 +76,7 @@ convention: *<proc-name>-<proc-dir>*.
 May optionally specify PROC-DIR to change the directory where the
 process will run."
   (let* ((default-directory (if proc-dir proc-dir default-directory))
-          (project-dir-name (file-name-base (directory-file-name default-directory)))
-          (project-proc-name (concat proc-name "-" project-dir-name))
+          (project-proc-name (my-process--get-project-proc-name proc-name default-directory))
           (proc-buf-name (concat "*" project-proc-name "*"))
           (proc-buf (get-buffer-create proc-buf-name)))
     (with-current-buffer proc-buf
@@ -98,9 +106,7 @@ process will run."
 
 Optionally, specify the project directory PROC-DIR where the project is
 running."
-  (let* ((default-directory (if proc-dir proc-dir default-directory))
-          (project-dir-name (file-name-base (directory-file-name default-directory)))
-          (project-proc-name (concat proc-name "-" project-dir-name)))
+  (let* ((project-proc-name (my-process--get-project-proc-name proc-name proc-dir)))
     (if (get-process project-proc-name)
       (progn
         (message (concat "Killing process " project-proc-name))
