@@ -146,6 +146,8 @@ details.
                    (when indent-tabs-mode "--tab")
                    "-"))
       (lisp-format . ("lisp-format"))
+      (mix-format .  ("apheleia-from-project-root" ".formatter.exs"
+                      "mix" "format" "--stdin-filename" filepath))
       (shfmt . ("shfmt" "-s" "-"))
       (sql-formatter . ("sql-formatter" "--language" "postgresql"
                         "--indent" "2" "--uppercase"
@@ -176,7 +178,9 @@ details.
       (go-mode . gofmt)
       (graphql-mode . prettier)
       (haskell-mode . brittany)
-      (heex-ts-mode . prettier)
+      ;; Requires the following line in your .formatter.exs project file:
+      ;;   plugins: [Phoenix.LiveView.HTMLFormatter]
+      (heex-ts-mode . mix-format)
       (html-mode . prettier)
       (java-mode . google-java-format)
       (js-mode . prettier)
