@@ -94,7 +94,8 @@ process will run."
 (defun my-process-kill-color-comp-process (proc-name &optional proc-dir)
   "Kill a running process PROC-NAME.
 
-Optionally, project directory PROC-DIR where the project is running."
+Optionally, specify the project directory PROC-DIR where the project is
+running."
   (let* ((default-directory (if proc-dir proc-dir default-directory))
           (project-dir-name (file-name-base (directory-file-name default-directory)))
           (project-proc-name (concat proc-name "-" project-dir-name)))
