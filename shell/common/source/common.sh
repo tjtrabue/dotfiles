@@ -70,7 +70,8 @@ __src_dir() {
     return 1
   fi
 
-  if [ -d "${dir}" ]; then
+  # Check that dir exists and is not empty.
+  if [ -d "${dir}" ] && [ -n "$(ls -A "${dir}")" ]; then
     for f in "${dir}"/*; do
       [ -s "${f}" ] && . "${f}"
     done
@@ -82,6 +83,7 @@ __src_os() {
   local archSrcDir="${LINUX_SOURCE_DIR}/arch"
   local ubuntuSrcDir="${LINUX_SOURCE_DIR}/ubuntu"
   local macSrcDir="${COMMON_SOURCE}/mac"
+  local wslSrcDir="${COMMON_SOURCE}/wsl"
   local osType
   local os
 
@@ -91,6 +93,10 @@ __src_os() {
   case "${osType}" in
   "Linux")
     __src_standard_subdirs_under_dir "${LINUX_SOURCE_DIR}"
+    if osiswsl; then
+      # Also source WSL definitions if running as a WSL system in Windows.
+      __src_standard_subdirs_under_dir "${wslSrcDir}"
+    fi
     ;;
   "Darwin")
     __src_standard_subdirs_under_dir "${macSrcDir}"

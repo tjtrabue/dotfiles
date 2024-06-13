@@ -119,6 +119,13 @@ getosversion() {
   __get_os_field "Version"
 }
 
+# Detect whether OS is running as a Windows Subsystem for Linux (WSL).
+# Returns exit code 0 if true, non-zero otherwise.
+osiswsl() {
+  test -f "/proc/sys/fs/binfmt_misc/WSLInterop" ||
+  uname -r | grep -E -q '(WSL|microsoft)'
+}
+
 # Get a field returned from the `getosinfo` function.
 __get_os_field() {
   local field="${1}"
