@@ -282,10 +282,18 @@ info_log "Installing base packages"
 pacstrap "${MOUNT_ROOT}" base linux linux-firmware base-devel
 # }}}
 
+# Generate filesystem table {{{
+log_info "Generating file system table"
+genfstab -U "${MOUNT_ROOT}" >>"${MOUNT_ROOT}/etc/fstab"
+
+log_info "Configuring tmpfs for /tmp"
+printf '\n%s\n' "tmpfs  /tmp  tmpfs  rw,nodev,nosuid,size=3G  0  0" \
+  >>"${MOUNT_ROOT}/etc/fstab"
+# }}}
+
 # Host/locale information {{{
 info_log "Configuring host/locale information"
 
-genfstab -U "${MOUNT_ROOT}" >>"${MOUNT_ROOT}/etc/fstab"
 echo "${USER_HOSTNAME}" >"${MOUNT_ROOT}/etc/hostname"
 
 arch-chroot "${MOUNT_ROOT}" ln -sf /usr/share/zoneinfo/US/Central /etc/localtime
