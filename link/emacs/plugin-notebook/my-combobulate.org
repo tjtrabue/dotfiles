@@ -28,6 +28,8 @@ editing than you would otherwise have.
     ;; Only use combobulate if we have a tree-sitter enabled Emacs.
     :if (and (fboundp 'treesit-available-p)
              (treesit-available-p))
+    :straight
+    (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
     :hook
     ((css-ts-mode        . combobulate-mode)
      (html-ts-mode       . combobulate-mode)
