@@ -22,6 +22,21 @@ Sage is a very heavyweight software system (about 3GB at the time of this
 writing), and as such may not be viable on all platforms. Only install Sage if
 you have a direct need to do so.
 
+** Using sage with org-babel
+
+The real killer feature of sage is its ability to export complicated math
+expressions to LaTeX, which you can probably guess, works incredibly well with
+Org Mode. Here is an example =org-babel= Sage code block. Note the use of the
+Org 9.7 =:async= header argument, which allows the user to continue using Emacs
+while Org executes the Sage code in a separate session. You should probably use
+=:async= anytime you use the =:session= header argument in an =org-babel= code
+block. Try evaluating it with =C-c C-c= and checking out the results!
+
+#+begin_src sage :exports none :session my-sage-session :tangle no :async
+  M = Matrix([[1,2,3],[2,3,4],[4,2,1]])
+  latex(M)
+#+end_src
+
 * sage-shell-mode
 =sage-shell-mode= is an Elisp front-end for Sage.
 
@@ -38,6 +53,11 @@ It requires a local installation of Sage Math in order to function.
     (sage-shell:set-ipython-version-on-startup nil)
     (sage-shell:check-ipython-version-on-startup nil)
     :init
+    ;; The major mode for editing Sage code is oddly named "sage-shell:sage-mode" while the Org Babel
+    ;; src block specifies is simply "sage". This confuses Org Mode when the user wishes to edit a
+    ;; Sage code block using "C-c '". We have to specially map the Sage src block specifier to its
+    ;; associated major mode to avoid this problem.
+    (add-to-list 'org-src-lang-modes '("sage" . sage-shell:sage))
     (add-hook 'sage-shell-mode-hook
               (lambda ()
                 ;; Use company completion in the Sage shell.
