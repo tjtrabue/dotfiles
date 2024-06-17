@@ -28,7 +28,7 @@ add_bash_completions() {
   # Add extra completions to special command aliases
   __add_git_alias_completions
   __add_custom_zsh_git_completions
-  __add_docker_alias_completions
+  __add_bash_docker_completions
   __add_sdkman_completions
   __add_asdf_completions_for_bash
   __add_pack_completions_for_bash
@@ -115,26 +115,16 @@ __add_zsh_git_completions() {
   __add_custom_zsh_git_completions
 }
 
-# Download Zsh docker completions.
+# Enable Docker shell completions for Zsh.
 __add_zsh_docker_completions() {
   local completionDir="$(__get_zsh_completion_dir)"
   local zshDockerCompletionFile="${completionDir}/_docker"
-  local zshDockerComposeCompletionFile="${completionDir}/_docker-compose"
 
   __create_zsh_completion_dir
 
   if [ ! -f "${zshDockerCompletionFile}" ]; then
-    log_info "Downloading Docker Zsh completions to:" \
-      "${BLUE}${zshDockerCompletionFile}${NC}"
-    curl -fsSL -o "${zshDockerCompletionFile}" \
-      "https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker"
-  fi
-
-  if [ ! -f "${zshDockerComposeCompletionFile}" ]; then
-    log_info "Downloading docker-compose Zsh completions to:" \
-      "${BLUE}${zshDockerComposeCompletionFile}${NC}"
-    curl -fsSL -o "${zshDockerComposeCompletionFile}" \
-      "https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/zsh/_docker-compose"
+    log_info "Creating Docker completions file for Zsh"
+    docker completion zsh >"${zshDockerCompletionFile}"
   fi
 
   __add_zsh_completion_dir_to_fpath
@@ -236,36 +226,16 @@ __add_custom_bash_git_completions() {
   fi
 }
 
-# Add lots of cool docker completions to aliased docker commands.
-__add_docker_alias_completions() {
-  # Recognize `d` as an alias for `docker`, thereby enabling docker command line
-  # completions for `d`.
-  __add_completions_to_command_alias "docker" "d"
+# Enable Docker shell completions for Bash.
+__add_bash_docker_completions() {
+  local userBashCompletionsDir="${HOME}/.local/share/bash-completion/completions"
+  local dockerBashCompletionsFile="${userBashCompletionsDir}/docker"
 
-  # Add extra docker aliases and completions.
-  __add_docker_command_alias_completions "attach" "dat" "_docker_attach"
-  __add_docker_command_alias_completions "build" "dbu" "_docker_build"
-  __add_docker_command_alias_completions "cp" "dcp" "_docker_cp"
-  __add_docker_command_alias_completions "diff" "ddi" "_docker_diff"
-  __add_docker_command_alias_completions "help" "dh" "_docker_help"
-  __add_docker_command_alias_completions "image" "dim" "_docker_image"
-  __add_docker_command_alias_completions "images" "dims" "_docker_images"
-  __add_docker_command_alias_completions "info" "din" "_docker_info"
-  __add_docker_command_alias_completions "inspect" "dins" "_docker_inspect"
-  __add_docker_command_alias_completions "kill" "dk" "_docker_kill"
-  __add_docker_command_alias_completions "login" "dlogin" "_docker_login"
-  __add_docker_command_alias_completions "logout" "dlogout" "_docker_logout"
-  __add_docker_command_alias_completions "logs" "dlo" "_docker_logs"
-  __add_docker_command_alias_completions "pause" "dpa" "_docker_pause"
-  __add_docker_command_alias_completions "ps" "dps" "_docker_ps"
-  __add_docker_command_alias_completions "pull" "dpl" "_docker_pull"
-  __add_docker_command_alias_completions "restart" "dre" "_docker_restart"
-  __add_docker_command_alias_completions "rm" "drm" "_docker_rm"
-  __add_docker_command_alias_completions "run" "drn" "_docker_run"
-  __add_docker_command_alias_completions "stop" "dst" "_docker_stop"
-  __add_docker_command_alias_completions "tag" "dt" "_docker_tag"
-  __add_docker_command_alias_completions "update" "dup" "_docker_update"
-  __add_docker_command_alias_completions "unpause" "dun" "_docker_unpause"
+  if [ ! -f "${dockerBashCompletionsFile}" ]; then
+    mkdir -p "${userBashCompletionsDir}"
+    log_info "Creating Docker completions file for Bash"
+    docker completion bash >"${dockerBashCompletionsFile}"
+  fi
 }
 
 # Mark a particular alias as a docker command for the purpose of adding shell
