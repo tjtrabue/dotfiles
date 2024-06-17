@@ -8,7 +8,7 @@ l() {
   local flags="-l -F -h"
   local dir_to_list="${*:-.}"
 
-  __do_ls "${flags}" "${dir_to_list}" "light"
+  __do_ls "${flags}" "${dir_to_list}"
 }
 
 alias ll >>/dev/null 2>&1 && unalias ll >>/dev/null 2>&1
@@ -24,7 +24,7 @@ alias la >>/dev/null 2>&1 && unalias la >>/dev/null 2>&1
 la() {
   local flags="-l -F -h -A"
   local dir_to_list="${*:-.}"
-  __do_ls "${flags}" "${dir_to_list}" "light"
+  __do_ls "${flags}" "${dir_to_list}"
 }
 
 alias lla >>/dev/null 2>&1 && unalias lla >>/dev/null 2>&1
@@ -40,19 +40,13 @@ lla() {
 __do_ls() {
   local flags="$1"
   local dir_to_list="${2:-.}"
-  local lightweight="${3}"
 
   flags="${flags} $(__get_ls_colorflag)"
-  if [ -n "${lightweight}" ]; then
-    __do_ls_light "${flags}" "${dir_to_list}"
-  else
-    __do_ls_auto "${flags}" "${dir_to_list}"
-  fi
+  __do_ls_auto "${flags}" "${dir_to_list}"
 }
 
-# Run a lightweight `ls`-compatible command, which mitigates the latency of
-# commands such as `colorls` or `ls-icons`.
-__do_ls_light() {
+# Figure out which ls command to run automatically based on a prioritized list.
+__do_ls_auto() {
   local flags="$1"
   local dir_to_list="${2:-.}"
 
@@ -65,37 +59,6 @@ __do_ls_light() {
   else
     __do_ls_standard "${flags}" "${dir_to_list}"
   fi
-}
-
-# Figure out which ls command to run automatically based on a prioritized list.
-__do_ls_auto() {
-  local flags="$1"
-  local dir_to_list="${2:-.}"
-
-  if [ -x "$(command -v colorls)" ]; then
-    __do_ls_colorls "${flags}" "${dir_to_list}"
-  elif $USE_LS_ICONS && [ -x "$(command -v "ls-icons")" ]; then
-    __do_ls_ls_icons "${flags}" "${dir_to_list}"
-  elif [ -x "$(command -v "eza")" ]; then
-    __do_ls_eza "${flags}" "${dir_to_list}"
-  elif [ -x "$(command -v "exa")" ]; then
-    __do_ls_exa "${flags}" "${dir_to_list}"
-  elif [ -x "$(command -v perl)" ]; then
-    __do_ls_perl_script "${flags}" "${dir_to_list}"
-  else
-    __do_ls_standard "${flags}" "${dir_to_list}"
-  fi
-}
-
-# Ruby's amazing colorls tool is probably the best ls colorizer out there.
-# Take out flags that colorls does not understand.
-__do_ls_colorls() {
-  local flags="${1}"
-  local dir_to_list="${2:-.}"
-
-  flags="$(echo "$flags" | sed -r 's/[Fh]//')"
-  flags="${flags} --sd --gs"
-  eval "command colorls ${flags} ${dir_to_list}"
 }
 
 # The exa command is a drop-in replacement for ls written in rust, and has
@@ -123,13 +86,6 @@ __do_ls_eza() {
   # Add extra eza-specific flags.
   flags="${flags} -@ --group-directories-first --git"
   eval "command eza ${flags} ${dir_to_list}"
-}
-
-# Use the fancy ls-icons tool to show ls output if we have ls-icons installed.
-__do_ls_ls_icons() {
-  local flags="$1"
-  local dir_to_list="${2:-.}"
-  eval "command ls-icons ${flags} ${dir_to_list}"
 }
 
 # Use our beautiful perl coloration script if we have access to perl
