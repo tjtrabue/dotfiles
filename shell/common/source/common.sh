@@ -71,7 +71,7 @@ __src_dir() {
   fi
 
   # Check that dir exists and is not empty.
-  if [ -d "${dir}" ] && [ -n "$(ls -A "${dir}")" ]; then
+  if [ -d "${dir}" ] && [ -n "$(command ls -A "${dir}")" ]; then
     for f in "${dir}"/*; do
       [ -s "${f}" ] && . "${f}"
     done
