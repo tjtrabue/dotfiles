@@ -238,18 +238,6 @@ __add_bash_docker_completions() {
   fi
 }
 
-# Mark a particular alias as a docker command for the purpose of adding shell
-# completions, such as using `dim` for `docker images`.
-__add_docker_command_alias_completions() {
-
-  local cmd="${1}"
-  local cmdAlias="${2}"
-  local completionFunc="${3}"
-
-  eval "alias ${cmdAlias}='docker ${cmd}'"
-  eval "complete -F ${completionFunc} ${cmdAlias}"
-}
-
 # Enable shell completions for a command alias, such as `g` for `git`.
 __add_completions_to_command_alias() {
   local cmd="${1}"
