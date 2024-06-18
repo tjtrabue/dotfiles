@@ -37,6 +37,8 @@
 ;;;###autoload
 (defcustom my-tab-line-allowed-regexps '(;; Allow *scratch* buffer(s).
                                           "^.*\\*.*scratch.*\\*.*$"
+                                          ;; eshell buffers
+                                          "^.*\\*.*eshell.*\\*.*$"
                                           ;; Allow Customize windows.
                                           "^.*\\*.*Customize Group:.*\\*.*$")
   "List of regular expressions matching special buffers allowed in the tab line."

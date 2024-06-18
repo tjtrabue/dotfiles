@@ -89,14 +89,17 @@ called as a hook upon entering =eshell-mode=.
     ;; Directory manipulation
     (eshell/alias "d" "dired $1")
     ;; Directory listing
-    ;; The 'ls' executable requires the Gnu version on the Mac
-    (let ((ls (if (file-exists-p "/usr/local/bin/gls")
-                  "/usr/local/bin/gls"
-                ;; Otherwise just use standard elisp 'ls' version.
-                "ls")))
-      (eshell/alias "ll" (concat ls " -AlhoG $*"))
-      (eshell/alias "l" "ll $*")
-      (eshell/alias "la" "ll $*")))
+    ;; Prefer fancier
+    (let* ((ls-opts "-l -F -h -o -G")
+           (eza-opts "-l -F -h -@ --group-directories-first --git")
+           (ls (cond
+                ((executable-find "eza") (concat "eza " eza-opts))
+                ((executable-find "exa") (concat "exa " eza-opts))
+                ((executable-find "gls") (concat "gls " ls-opts))
+                (t (concat "ls " ls-opts)))))
+      (eshell/alias "ll" (concat ls " $*"))
+      (eshell/alias "l" (concat ls " $*"))
+      (eshell/alias "la" (concat ls " -a $*"))))
 #+end_src
 
 *** Prompt Functions
@@ -577,13 +580,13 @@ use of all the functions we've written above.
     ;; The main directory where Emacs will store eshell files
     ;; ~/.emacs.d/eshell
     (eshell-directory-name (expand-file-name "eshell" user-emacs-directory))
-    ;; Plan9's smart config.
-    (eshell-where-to-jump 'begin)
-    (eshell-review-quick-commands nil)
-    (eshell-smart-space-goes-to-end t)
     :init
     (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function)
-    :custom
+    ;; Plan9's smart config.
+    (setq eshell-where-to-jump 'begin)
+    (setq eshell-review-quick-commands nil)
+    (setq eshell-smart-space-goes-to-end t)
+    :config
     ;; Load Plan9's smart display.
     (require 'em-smart))
 #+end_src
@@ -623,11 +626,17 @@ customization.
 #+end_src
 
 ** esh-autosuggest
-=esh-autosuggest= is a Fish-style autosuggest feature for =eshell=. This is one
-of my must-have plugins for =eshell=, and I recommend it to everybody!
+=esh-autosuggest= is a Fish-style autosuggest feature for =eshell=.
+
+NOTE: The author has not updated =esh-autosuggest= in years, and it is currently
+quite buggy.
 
 #+begin_src emacs-lisp
   (use-package esh-autosuggest
+    ;; Locks eshell when entering text on the command line. There is some terrible IO bug in this
+    ;; plugin. Plus, this plugin has not been updated for three years, so I doubt a fix is
+    ;; forthcoming.
+    :disabled
     :hook
     (eshell-mode . esh-autosuggest-mode))
 #+end_src
@@ -655,5 +664,11 @@ Cool enhancements for eshell.
 
 #+begin_src emacs-lisp
   (use-package aweshell
-    :straight (aweshell :type git :host github :repo "manateelazycat/aweshell"))
+    :straight (aweshell :type git :host github :repo "manateelazycat/aweshell")
+    :hook
+    (eshell-mode . (lambda ()
+                     (require 'aweshell)))
+    :cusotm
+    ;; I have my own preferred way of getting the proper `exec-path', which is my ~/.path_static file.
+    (aweshell-use-exec-path-from-shell nil))
 #+end_src
