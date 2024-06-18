@@ -661,6 +661,8 @@ Cool enhancements for eshell.
 
 #+begin_src emacs-lisp
   (use-package aweshell
+    ;; Most aweshell enhancements are outdated.
+    :disabled
     :straight (aweshell :type git :host github :repo "manateelazycat/aweshell")
     :hook
     (eshell-mode . (lambda ()
