@@ -33,7 +33,7 @@ This is a hook function that sets important environment variables upon entering
 =eshell-mode=.
 
 #+begin_src emacs-lisp
-  (defun set-eshell-env-vars ()
+  (defun my/set-eshell-env-vars ()
     "Set eshell environment variables.
     This function is called as part of the `shell-mode-hook'."
     ;; Needed to get eshell to render ANSI colors correctly.
@@ -45,7 +45,7 @@ These are special alias definitions wrapped in a function call that will be
 called as a hook upon entering =eshell-mode=.
 
 #+begin_src emacs-lisp
-  (defun set-eshell-aliases ()
+  (defun my/set-eshell-aliases ()
     "Set aliases for use within eshell-mode.
 
     To define an alias, use the 'eshell/alias function like so:
@@ -533,17 +533,14 @@ executable from within the =eshell=.
     ;; The echo command suppresses output
     (eshell/echo))
 
-  (defun eshell-below ()
+  (defun my/eshell-split ()
     "Open new or existing eshell session in split window below current window.
 
   If you are currently in an eshell session then this function does nothing."
     (interactive)
-    (let (;; Tell windmove to create a new window if it does not already exist.
-          (windmove-create-window t)
-          (eshell-win nil))
-
-      (when (not (string= "*eshell*" (buffer-name)))
-        (setq eshell-win (windmove-down))
+    (when (not (or (string-match-p "^\s*\*eshell.*\*" (buffer-name))
+                   (string-match-p "^\s*Aweshell.*" (buffer-name))))
+      (let ((eshell-win (or (split-window-sensibly) (next-window))))
         (select-window eshell-win)
         (eshell))))
 #+end_src
@@ -557,8 +554,8 @@ use of all the functions we've written above.
     :after evil-collection
     :hook
     (eshell-mode . (lambda ()
-                     (set-eshell-env-vars)
-                     (set-eshell-aliases)))
+                     (my/set-eshell-env-vars)
+                     (my/set-eshell-aliases)))
     :general
     (general-def eshell-proc-mode-map
       "M-j" 'eshell-next-matching-input-from-input
@@ -668,7 +665,10 @@ Cool enhancements for eshell.
     :hook
     (eshell-mode . (lambda ()
                      (require 'aweshell)))
-    :cusotm
+    :custom
     ;; I have my own preferred way of getting the proper `exec-path', which is my ~/.path_static file.
-    (aweshell-use-exec-path-from-shell nil))
+    (aweshell-use-exec-path-from-shell nil)
+    ;; Vertico and its alternatives enhance the default completing-read function far more than the Ido
+    ;; replacement.
+    (aweshell-search-history-completing-read-fn #'completing-read))
 #+end_src

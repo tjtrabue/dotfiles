@@ -1440,7 +1440,7 @@ and hooks in a way that defers loading the package.
       "dd" 'dired
       "dw" 'dired-other-window
       ;; eshell
-      "es" 'eshell-below
+      "es" 'my/eshell-split
       ;; File
       "ff" 'find-file-at-point
       "fF" 'find-file-other-window

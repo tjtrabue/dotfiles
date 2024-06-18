@@ -293,7 +293,7 @@ using =general= and foregoing =evil-leader= altogether.
      ;; Dired
      "dd" #'dired
      ;; eshell
-     "es" #'eshell-below
+     "es" #'my/eshell-split
      ;; ace-window
      "jk" #'ace-window
      ;; Killing buffers
