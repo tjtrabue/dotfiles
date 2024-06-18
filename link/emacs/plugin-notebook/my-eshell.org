@@ -577,8 +577,15 @@ use of all the functions we've written above.
     ;; The main directory where Emacs will store eshell files
     ;; ~/.emacs.d/eshell
     (eshell-directory-name (expand-file-name "eshell" user-emacs-directory))
+    ;; Plan9's smart config.
+    (eshell-where-to-jump 'begin)
+    (eshell-review-quick-commands nil)
+    (eshell-smart-space-goes-to-end t)
     :init
-    (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function))
+    (setq-default eshell-prompt-function #'eshell/eshell-local-prompt-function)
+    :custom
+    ;; Load Plan9's smart display.
+    (require 'em-smart))
 #+end_src
 
 * Plugins
