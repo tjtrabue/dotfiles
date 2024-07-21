@@ -152,6 +152,9 @@ __update_python2_packages() {
 __update_python3_packages() {
   log_info "Updating $(python3 --version) packages"
 
+  # Upgrade PiP if necessary
+  python3 -m pip install --upgrade pip
+
   python3 -m pip list --user --outdated |
     cut -f1 -d' ' |
     tr " " "\n" |

@@ -45,6 +45,8 @@ mermaid
 node-cljfmt
 npm-check
 npm-check-updates
+npm-run-all
+postcss-cli
 prettier
 prettier-plugin-elm
 prettier-plugin-tailwindcss
