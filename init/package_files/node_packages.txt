@@ -42,7 +42,6 @@ lua-fmt
 markdownlint
 markdownlint-cli
 mermaid
-node-cljfmt
 npm-check
 npm-check-updates
 npm-run-all
