@@ -63,7 +63,8 @@ install_clojure_lsp() {
 install_clj_kondo() {
   local cljKondoInstallerUrl="https://raw.githubusercontent.com/clj-kondo/clj-kondo/master/script/install-clj-kondo"
   local cljKondoInstaller="$(basename "${cljKondoInstallerUrl}")"
-  local installDir="${HOME}/bin"
+  local installPrefix="${HOME}/.local"
+  local installDir="${installPrefix}/bin"
 
   mkdir -p "${installDir}"
 
