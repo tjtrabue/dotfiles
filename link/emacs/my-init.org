@@ -546,6 +546,11 @@ remove this wistful aside (and my custom bootstrap code for =straight.el=).
     :ensure nil
     :straight (grep :type built-in)
     :commands (grep-apply-setting))
+  ;; Emacs' built-in package library.
+  (use-package package
+    :ensure nil
+    :straight (package :type built-in)
+    :commands (define-package))
 #+end_src
 
 * Load Custom Libraries
