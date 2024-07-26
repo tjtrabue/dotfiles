@@ -308,7 +308,11 @@ using =general= and foregoing =evil-leader= altogether.
      "rg" #'deadgrep
      ;; undo-tree
      ;; "ut" #'undo-tree-visualize
-     ))
+     )
+    ;; Save all buffers visiting files with :W<return>
+    (evil-define-command W
+      "Write all buffers visiting files."
+      (save-some-buffers t)))
 #+end_src
 
 ** evil-collection
