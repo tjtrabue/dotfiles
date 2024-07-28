@@ -122,6 +122,9 @@ all supported keywords.
 
 #+begin_src emacs-lisp
   (use-package magit-todos
+    ;; Currently erroring out when `magit-status' is invoked due to bad arguments to `pcre2el' library
+    ;; functions.
+    :disabled
     :after magit
     :hook
     (magit-mode . magit-todos-mode)
