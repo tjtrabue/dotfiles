@@ -75,6 +75,14 @@ install_clj_kondo() {
   rm -f "${cljKondoInstaller}"
 }
 
+# Installs or updates the cljfmt executable used to format Clojure/ClojureScript
+# source code.
+install_or_update_cljfmt() {
+  log_info "Installing cljfmt executable to ${BLUE}/usr/local/bin${NC}"
+  # The same command is used both to install and update cljfmt.
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh)"
+}
+
 # Wrapper for the Leiningen command line tool that supports readline
 # configuration to make using the Clojure REPL more joyful.
 wlein() {
