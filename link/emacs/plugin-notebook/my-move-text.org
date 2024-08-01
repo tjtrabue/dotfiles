@@ -14,6 +14,7 @@ selection much better than =move-text=.
 
 #+begin_src emacs-lisp
   (use-package drag-stuff
+    :after evil-collection
     :demand t
     :delight
     :general

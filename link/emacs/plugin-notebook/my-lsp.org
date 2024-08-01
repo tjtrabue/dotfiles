@@ -735,6 +735,7 @@ infrastructure for Emacs.
   ;;; LSP TeX language server options:
     (lsp-bridge-tex-lsp-server "digestif")
     :init
+    (require 'svg)
     (add-hook 'lsp-bridge-mode-hook
               (lambda ()
                 ;; Initialization logic for lsp-bridge-mode:
