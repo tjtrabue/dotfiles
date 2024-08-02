@@ -60,6 +60,10 @@ main() {
   print_header "Initializing Clojure"
   link_dot_clojure_dir
   link_shadow_cljs_dir
+  install_clojure_cli_tools
+  install_clojure_lsp
+  install_clj_kondo
+  install_or_update_cljfmt
   log_info "Done"
 }
 # }}}

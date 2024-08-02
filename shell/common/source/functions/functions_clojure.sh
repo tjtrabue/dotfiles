@@ -37,12 +37,12 @@ __install_clojure_cli_tools_linux() {
 
 # Install the Clojure Language Server.
 install_clojure_lsp() {
+  # The parent of the "bin" directory containing the installed binary.
+  local installPrefix="${1:-${HOME}/.local}"
   # Where to get the install script
   local clojureLspDownloadUrl="https://raw.githubusercontent.com/clojure-lsp/clojure-lsp/master/install"
   # The downloaded install script
   local clojureLspInstaller="$(basename "${clojureLspDownloadUrl}")"
-  # The parent of the "bin" directory containing the installed binary.
-  local installPrefix="${HOME}/.local"
   # Where we want to install clojure-lsp
   local installDir="${installPrefix}/bin"
 
@@ -78,9 +78,12 @@ install_clj_kondo() {
 # Installs or updates the cljfmt executable used to format Clojure/ClojureScript
 # source code.
 install_or_update_cljfmt() {
-  log_info "Installing cljfmt executable to ${BLUE}/usr/local/bin${NC}"
+  local installDir="/usr/local/bin"
+  local cljfmtInstallerUrl="https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh"
+
+  log_info "Installing latest cljfmt executable to ${BLUE}${installDir}${NC}"
   # The same command is used both to install and update cljfmt.
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL "${cljfmtInstallerUrl}")"
 }
 
 # Wrapper for the Leiningen command line tool that supports readline
