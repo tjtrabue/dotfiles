@@ -1,7 +1,6 @@
 PyGObject
 Wand
 autopep8
-beautysh
 black
 build
 cmake-language-server
