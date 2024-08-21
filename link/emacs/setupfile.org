@@ -1,4 +1,3 @@
-#+LATEX_HEADER: \RequirePackage{fix-cm}
 #+LATEX_HEADER: \PassOptionsToPackage{svgnames}{xcolor}
 #+LATEX_HEADER: \setmainfont{Linux Libertine O}
 #+LATEX_HEADER: \setsansfont[Scale=MatchLowercase]{Raleway}

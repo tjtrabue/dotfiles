@@ -1504,6 +1504,7 @@ try to load =org= later.
     (org-startup-indented t)
     ;; Which LaTeX compiler command to use. Defaults to "pdflatex".
     (org-latex-compiler (cond
+                         ((executable-find "luatex") "luatex")
                          ((executable-find "xelatex") "xelatex")
                          (t "pdflatex")))
     ;; The CLI program used to convert LaTeX fragments to image files.
@@ -1622,6 +1623,7 @@ try to load =org= later.
     (dolist (package '(("" "amsthm" t)
                        ("" "color" t)
                        ("" "enumitem" t)
+                       ("" "fix-cm" t)
                        ("" "fontspec" t)
                        ("letterpaper,margin=1in" "geometry")
                        ("" "grffile" t)
@@ -1637,8 +1639,8 @@ try to load =org= later.
                        ("dvipsnames" "xcolor" t)))
       (add-to-list 'org-latex-default-packages-alist package))
     ;; The command used to generate PDFs from Org's LaTeX exports.
-    (setq org-latex-pdf-process (list (concat "latexmk -f -%latex"
-                                              " -%latex='%latex -shell-escape %%O %%S'"
+    (setq org-latex-pdf-process (list (concat "latexmk -f"
+                                              " -lualatex='lualatex --shell-escape %%O %%S'"
                                               " -recorder -synctex=1 -bibtex-cond"
                                               " -interaction=nonstopmode -output-directory=%o %f")))
     ;; Register PlantUML as an Org-compatible language for source blocks.
