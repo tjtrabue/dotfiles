@@ -58,7 +58,7 @@ through a tutorial or two.
 #+begin_src emacs-lisp
   (use-package auctex
     :defines (latex-help-cmd-alist latex-help-file)
-    :mode ("\\.tex\\'" . TeX-latex-mode)
+    :mode ("\\.tex\\'" . LaTeX-mode)
     :hook
     (LaTeX-mode . (lambda ()
                     (let ((file-name (file-name-nondirectory buffer-file-name)))
@@ -68,7 +68,11 @@ through a tutorial or two.
                       ;; Make the standard compile command compile the TeX file
                       ;; into a PDF.
                       (setq-local compile-command
-                                  (concat "latexmk -pvc -pdf " file-name)))))
+                                  (concat "latexmk -pvc -pdf " file-name)))
+                    ;; Use `pdf-tools' to view PDFs so we can stay in Emacs.
+                    (push '(output-pdf "PDF Tools") TeX-view-program-selection)
+                    (add-to-list 'TeX-command-list
+                                 '("Latex Make" "latexmk %(-pdf) %t" TeX-run-TeX))))
     :init
     (setq TeX-auto-save t
           TeX-parse-self t
@@ -100,11 +104,7 @@ through a tutorial or two.
     (setq reftex-plug-into-AUCTeX '(t t t t t))
     ;; Revert pdf-view after compilation
     (add-hook 'TeX-after-compilation-finished-functions
-              #'TeX-revert-document-buffer)
-    :config
-    ;; Use `pdf-tools' to view PDFs so we can stay in Emacs.
-    (push '(output-pdf "PDF Tools") TeX-view-program-selection)
-    (add-to-list 'TeX-command-list '("Latex Make" "latexmk %(-pdf) %t" TeX-run-TeX)))
+              #'TeX-revert-document-buffer))
 #+end_src
 
 ** CDLaTeX

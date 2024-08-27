@@ -86,4 +86,3 @@
 #+LATEX_HEADER:   \endgroup}
 #+LATEX_HEADER: \makeatother
 #+LATEX_HEADER: \hypersetup{linkcolor=Blue,urlcolor=DarkBlue,citecolor=DarkRed,colorlinks=true}
-#+LATEX_HEADER: \AtBeginDocument{\renewcommand{\UrlFont}{\ttfamily}}

@@ -1520,7 +1520,7 @@ try to load =org= later.
     ;;   'engraved (requires the `engrave-faces' Emacs package and LaTeX `fvextra' package)
     (org-latex-src-block-backend 'engraved)
     ;; Whether to show LaTeX previews when opening a new Org buffer.
-    (org-startup-with-latex-preview t)
+    (org-startup-with-latex-preview nil)
     ;; The default LaTeX preview program to use.
     ;; Can be one of the following:
     ;; (you must have the corresponding CLI program installed)
@@ -1615,8 +1615,11 @@ try to load =org= later.
                                " --output-directory=%o"
                                " %f") ))
       (setf dvipng-config (plist-put dvipng-config :latex-compiler gen-dvi-cmd))
+      (setf dvipng-config (plist-put dvipng-config :programs '("lualatex" "dvipng")))
       (setf dvisvgm-config (plist-put dvisvgm-config :latex-compiler gen-dvi-cmd))
-      (setf imagemagick-config (plist-put imagemagick-config :latex-compiler gen-pdf-cmd)))
+      (setf dvisvgm-config (plist-put dvisvgm-config :programs '("lualatex" "dvisvgm")))
+      (setf imagemagick-config (plist-put imagemagick-config :latex-compiler gen-pdf-cmd))
+      (setf imagemagick-config (plist-put imagemagick-config :programs '("lualatex" "convert"))))
     ;; Required for expand-region.
     (require 'org-fold)
     ;; Add more default LaTeX packages
@@ -1627,6 +1630,7 @@ try to load =org= later.
                        ("" "fontspec" t)
                        ("letterpaper,margin=1in" "geometry")
                        ("" "grffile" t)
+                       ("" "hyperref" t)
                        ("" "listings" t)
                        ("" "minted" t)
                        ("" "parskip" t)
