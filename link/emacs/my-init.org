@@ -1536,8 +1536,9 @@ try to load =org= later.
                                          'dvisvgm)
                                         (t
                                          'dvipng)))
-    ;; Directory used by Org only in rare circumstances, such as when filing
-    ;; away remember notes.
+    ;; Whether to highlight LaTeX related syntax in Org buffers.
+    (org-highlight-latex-and-related '(native script entities))
+    ;; Directory used by Org only in rare circumstances, such as when filing away remember notes.
     (org-directory my/org-dir)
     ;; Pressing return while point is over a hyperlink will open the link in
     ;; the user's web browser.
