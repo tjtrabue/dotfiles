@@ -20,6 +20,7 @@ declare IE_CC="gcc"
 declare IE_CXX="g++"
 declare USE_MOLD_LINKER=false
 declare USE_CLANG=false
+declare NATIVE_COMP=aot
 
 # Build options
 declare DOCS_HTML=false
@@ -125,6 +126,12 @@ OPTIONS:
   -m | --use-mold
     Use the Modern Linker (mold) instead of the standard linker. This requires
     you to have mold installed on your machine.
+
+  -n TYPE | --native-comp=TYPE
+    Use Emacs native compilation for Emacs Lisp code. TYPE must be one of: 
+      - aot (ahead-of-time compilation; default)
+      - yes (JIT compilation)
+      - no (disable native compilation)
 
   --prefix=PREFIX_DIR
     Install all Emacs files under prefix directory PREFIX_DIR. PREFIX_DIR
@@ -255,6 +262,7 @@ ie__linux_build_options() {
   log_info "Adding Linux build options"
   printf '%s' "--with-x-toolkit=gtk \
     --with-cairo-xcb \
+    --with-file-notification=inotify \
     --without-gsettings"
 }
 
@@ -471,7 +479,7 @@ ie__construct_configure_cmd() {
     --with-tree-sitter \
     --with-imagemagick \
     --with-modules \
-    --with-native-compilation=aot \
+    --with-native-compilation=${NATIVE_COMP} \
     --with-gameuser=${GAME_USER} \
     --with-wide-int \
     --with-small-ja-dic \
@@ -605,7 +613,7 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o ce:g:hj:lmps: --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
+args=$(getopt -o ce:g:hj:lmn:ps: --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,native-comp:,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -681,6 +689,23 @@ while true; do
     log_info "Using ${CYAN}mold${NC} linker"
     USE_MOLD_LINKER=true
     shift
+    ;;
+
+  -n | --native-comp)
+    case "$2" in
+    "")
+      shift 2
+      ;;
+    "aot" | "yes" | "no")
+      log_info "Using native compilation: ${CYAN}${2}${NC}"
+      NATIVE_COMP="${2}"
+      shift 2
+      ;;
+    *)
+      err "Unrecognized native compilation option: ${2}"
+      exit 1
+      ;;
+    esac
     ;;
 
   --prefix)
