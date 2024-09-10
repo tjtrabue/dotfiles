@@ -11,5 +11,9 @@ such as Message mode, Mail mode, Rmail, gnus, Mu4e, VM, and Wanderlust. BBDB is
 fully customizeable.
 
 #+begin_src emacs-lisp
-  (use-package bbdb)
+  (use-package bbdb
+    ;; 9/9/2024
+    ;; As of now, it has been over six years since BBDB received an update.
+    ;; The Straight package recipe is also out of date.
+    :disabled)
 #+end_src
