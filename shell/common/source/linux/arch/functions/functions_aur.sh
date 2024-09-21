@@ -175,21 +175,31 @@ __aur_install() {
 
   local -a aurPackages=("$@")
   local package
+  local -a installedPackages=()
+  local -a errorPackages=()
 
   __check_aur_provided "${aurPackages[@]}" || return 1
 
   # Build packages one at a time, since pacman can only handle one build at once.
   log_info "Building packages..."
   for package in "${aurPackages[@]}"; do
-    (
-      cd "${AUR_HOME}/$package"
-      if __prepare_and_build_package; then
-        rm -rf "${AUR_HOME:?}/$package"
-      fi
-    )
+    cd "${AUR_HOME}/$package" &&
+    if __prepare_and_build_package; then
+      rm -rf "${AUR_HOME:?}/$package"
+      installedPackaged+=("${package}")
+    else
+      errorPackages+=("${package}")
+    fi
   done
 
-  __print_final_effect_msg "Installed" "${aurPackages[@]}"
+  if [ "${#installedPackages}" -gt 0 ]; then
+    __print_final_effect_msg "Installed" "${installedPackages[@]}"
+  fi
+
+  if [ "${#errorPackages}" -gt 0 ]; then
+    __print_package_error_msg "Could not install some packages" \
+      "${errorPackages[0]}"
+  fi
 }
 
 # Remove one or more installed AUR packages.
@@ -236,7 +246,7 @@ __aur_update_packages() {
 
     log_info "Updating AUR: $package"
     (
-      cd "${AUR_HOME}/${package}"
+      cd "${AUR_HOME}/${package}" &&
       __prepare_and_build_package && updatedPackages+=("$package")
     )
   done
@@ -296,7 +306,7 @@ __prepare_and_build_package() {
   git pull &>/dev/null
 
   {
-    makepkg -sic --noconfirm &&
+    makepkg -sic &&
       [ $hasStashedChanges ] &&
       git stash pop || :
   } || {
@@ -310,10 +320,22 @@ __print_final_effect_msg() {
   shift
   local -a packages=("$@")
 
-  if [ "${#packages[@]}" -gt 0 ]; then
+  if [ "${#packages[@]}" -gt 0 ] && ! ${error}; then
     echoe ""
     succ "${effect}: ${packages[*]}"
   fi
+}
+
+__print_package_error_msg() {
+  local effect="$1"
+  shift
+  local -a packages=("$@")
+
+  if [ "${#packages[@]}" -gt 0 ] && ! ${error}; then
+    echoe ""
+    err "${effect}: ${packages[*]}"
+  fi
+
 }
 
 # Filters a list of requested packages based on whether or not they are already

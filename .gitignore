@@ -4,10 +4,10 @@
 
 # Ignore files in the backup folder, which are backups made during the initial
 # install.
-backup/
+/backup/
 
 # Ignore the test directory, used for developing test scripts:
-test/
+/test/
 
 # Folder view configuration files
 .DS_Store
@@ -51,70 +51,70 @@ __pycache__
 
 # broot {{{
 # Don't ignore the config file, but ignore everything else
-link/config/broot/*
-!link/config/broot/conf.hjson
+/link/config/broot/*
+!/link/config/broot/conf.hjson
 # }}}
 
 # LSP / Visual Studio Code metadata {{{
-.vscode/
-link/lsp/.cache/
+/.vscode/
+/link/lsp/.cache/
 # }}}
 
 # Eclipse {{{
 # Eclipse config cache
-link/config/mimeapps.list
-link/config/jgit/
+/link/config/mimeapps.list
+/link/config/jgit/
 # }}}
 
 # Extra config directories to ignore
-link/config/dconf/
-link/config/pulse/
-link/config/configstore/
+/link/config/dconf/
+/link/config/pulse/
+/link/config/configstore/
 
 # Ignore local desktop menu config
-link/config/menus
+/link/config/menus
 
 # Vim {{{
-link/vim/backups
+/link/vim/backups
 # Ignore all vim-plug managed plugins.
-link/vim/plugged
+/link/vim/plugged
 # Do not track vim-plug's init file, since we download it automatically.
-link/vim/autoload/plug.vim
+/link/vim/autoload/plug.vim
 # Saved vim sessions.
-link/vim/sessions
-link/vim/swaps
+/link/vim/sessions
+/link/vim/swaps
 # History file for netrw
-link/vim/.netrwhist
+/link/vim/.netrwhist
 # }}}
 
 # caja
-link/config/caja
+/link/config/caja
 
 # Neovim {{{
-link/config/nvim/backups
-link/config/nvim/override-config
-link/config/nvim/swaps
-link/config/nvim/undo
-link/config/nvim/.netrwhist
+/link/config/nvim/backups
+/link/config/nvim/override-config
+/link/config/nvim/swaps
+/link/config/nvim/undo
+/link/config/nvim/.netrwhist
 # The compiled package manifest for Neovim.
-link/config/nvim/plugin/packer_compiled.vim
-link/config/nvim/plugin/packer_compiled.lua
+/link/config/nvim/plugin/packer_compiled.vim
+/link/config/nvim/plugin/packer_compiled.lua
 # Ignore downloded Neovim releases.
-link/config/nvim/.releases
+/link/config/nvim/.releases
 
 # coc.nvim {{{
-link/config/coc/commands
-link/config/coc/explorer-actions
-link/config/coc/history.json
-link/config/coc/list-extensions-history.json
-link/config/coc/list-files-history.json
-link/config/coc/list-lists-history.json
-link/config/coc/lists
-link/config/coc/memos.json
-link/config/coc/mru
-link/config/coc/snippets-mru
-link/config/coc/list-links-history.json
-link/config/coc/extensions/*
+/link/config/coc/commands
+/link/config/coc/explorer-actions
+/link/config/coc/history.json
+/link/config/coc/list-extensions-history.json
+/link/config/coc/list-files-history.json
+/link/config/coc/list-lists-history.json
+/link/config/coc/lists
+/link/config/coc/memos.json
+/link/config/coc/mru
+/link/config/coc/snippets-mru
+/link/config/coc/list-links-history.json
+/link/config/coc/extensions/*
 !/link/config/coc/extensions/package.json
 # }}}
 
@@ -150,230 +150,236 @@ cedet-rc.el
 **/plugin-notebook/*.html
 
 # Emacs straight package manager
-link/emacs/straight/build*
-link/emacs/straight/modified
-link/emacs/straight/repos
+/link/emacs/straight/build*
+/link/emacs/straight/modified
+/link/emacs/straight/repos
 
 # Emacs LaTeX output for configuration files
-link/emacs/plugin-notebook/ltximg/
+/link/emacs/plugin-notebook/ltximg/
 # }}}
 
 # sw {{{
 # sw is my own custom git branch switching function.
-link/config/sw
+/link/config/sw
 # }}}
 
 # ccls
 .ccls-cache
 
 # Do not track files in the 'secure' folder
-secure/
+/secure/
 
 # Brave browser metadata
-link/config/BraveSoftware
+/link/config/BraveSoftware
 
 # Mutt/Neomutt {{{
-link/config/mutt/cache
+/link/config/mutt/cache
 # Do not store mutt aliases
-link/config/mutt/aliases
+/link/config/mutt/aliases
 # Do not track Mutt themes (it's a separate repo now)
-link/config/mutt/themes
-link/config/mutt/mutt-themes
+/link/config/mutt/themes
+/link/config/mutt/mutt-themes
 # }}}
 
 # Awesome WM {{{
 
 # Do not track vendor features repos for Awesome WM
-link/config/awesome/awesome-*
+/link/config/awesome/awesome-*
 # Ignore custom set wallpaper
-link/config/awesome/wallpaper/
+/link/config/awesome/wallpaper/
 # }}}
 
 # Ranger {{{
 
 # Do not track Ranger plugins
-link/config/ranger/plugins
+/link/config/ranger/plugins
 # Do not track Ranger colorshemes since we clone this repository
-link/config/ranger/colorschemes
+/link/config/ranger/colorschemes
 # }}}
 
 # nnn {{{
 # Ignore installed nnn plugins
-link/config/nnn/plugins*.tar.gz
-link/config/nnn/plugins/
+/link/config/nnn/plugins*.tar.gz
+/link/config/nnn/plugins/
 # }}}
 
 # Ignore libreoffice config
-link/config/libreoffice
+/link/config/libreoffice
 
 # cmus {{{
-link/config/cmus/autosave
-link/config/cmus/cache
-link/config/cmus/command-history
-link/config/cmus/lib.pl
+/link/config/cmus/autosave
+/link/config/cmus/cache
+/link/config/cmus/command-history
+/link/config/cmus/lib.pl
 # }}}
 
 # Ignore chromium config by defaul
-link/config/chromium
+/link/config/chromium
 
 # GitHub CLI client {{{
-link/config/gh/hosts.yml
+/link/config/gh/hosts.yml
 # }}}
 
 # Authy {{{
 # Authy local configuration files
-link/config/Authy\ Desktop
+/link/config/Authy\ Desktop
 # }}}
 
 # ExpressVPN {{{
-link/config/expressvpn
+/link/config/expressvpn
 # }}}
 
 # ZSH {{{
 # Completion database files.
-shell/zsh/zdotdir/.zcomp*
+/shell/zsh/zdotdir/.zcomp*
 # Extra completion files that should not be tracked.
-shell/zsh/zdotdir/completion/_docker
-shell/zsh/zdotdir/completion/_docker-compose
-shell/zsh/zdotdir/completion/_git
-shell/zsh/zdotdir/completion/git-completion.bash
-shell/zsh/zdotdir/completion/_gh
-shell/zsh/zdotdir/completion/_poetry
+/shell/zsh/zdotdir/completion/_docker
+/shell/zsh/zdotdir/completion/_docker-compose
+/shell/zsh/zdotdir/completion/_git
+/shell/zsh/zdotdir/completion/git-completion.bash
+/shell/zsh/zdotdir/completion/_gh
+/shell/zsh/zdotdir/completion/_poetry
 # History file
-shell/zsh/zdotdir/.zsh_history
+/shell/zsh/zdotdir/.zsh_history
 # Saved sessions
-shell/zsh/zdotdir/.zsh_sessions
+/shell/zsh/zdotdir/.zsh_sessions
 # }}}
 
 # FileZilla {{{
-link/config/filezilla/*
+/link/config/filezilla/*
 # }}}
 
 # Flutter {{{
-link/config/flutter/tool_state
+/link/config/flutter/tool_state
 # }}}
 
 # Kitty terminal emulator {{{
-link/config/kitty/kitty-themes
+/link/config/kitty/kitty-themes
 # }}}
 
 # libaccounts {{{
-link/config/libaccounts-glib/
+/link/config/libaccounts-glib/
 # }}}
 
 # SQL LS {{{
 # We don't want to track the sqls config file because it always contains local,
 # and possibly sensitive configuration.
-link/config/sqls/config.yml
+/link/config/sqls/config.yml
 # }}}
 
 # Android Development Environment {{{
-link/config/Android\ Open\ Source\ Project
-link/config/Google
+/link/config/Android\ Open\ Source\ Project
+/link/config/Google
 # }}}
 
 # SystemD {{{
-link/config/systemd/
+/link/config/systemd/
 # }}}
 
 # KDE {{{
 # KDE is a desktop environment for Linux.
 
-link/config/KDE/
-link/config/QtProject.conf
-link/config/Trolltech.conf
-link/config/Unknown\ Organization/
-link/config/akregatorrc
-link/config/arkrc
-link/config/autostart/
-link/config/autostart/dropbox.desktop
-link/config/baloofileinformationrc
-link/config/baloofilerc
-link/config/bluedevilglobalrc
-link/config/discoverrc
-link/config/dolphinrc
-link/config/drkonqirc
-link/config/emaildefaults
-link/config/emailidentities
-link/config/gtk-*
-link/config/gtkrc*
-link/config/gwenviewrc
-link/config/kalarmrc
-link/config/kalendaracrc
-link/config/kapmanrc
-link/config/katemetainfos
-link/config/katerc
-link/config/kateschemarc
-link/config/katevirc
-link/config/kcminputrc
-link/config/kconf_updaterc
-link/config/kde.org/
-link/config/kdeconnect
-link/config/kded5rc
-link/config/kdedefaults
-link/config/kdeglobals
-link/config/kdfrc
-link/config/kfontinstuirc
-link/config/kgammarc
-link/config/kgetrc
-link/config/kglobalshortcutsrc
-link/config/khelpcenterrc
-link/config/khotkeysrc
-link/config/khtml
-link/config/kinfocenterrc
-link/config/kiorc
-link/config/kioslaverc
-link/config/kmail2rc
-link/config/kmixctrlrc
-link/config/kmixrc
-link/config/konquerorrc
-link/config/korgacrc
-link/config/krunnerrc
-link/config/kscreenlockerrc
-link/config/kservicemenurc
-link/config/ksmserverrc
-link/config/ktimezonedrc
-link/config/kwalletmanager5rc
-link/config/kwalletrc
-link/config/kwinoutputconfig.json
-link/config/kwinrc
-link/config/kwinrulesrc
-link/config/kxkbrc
-link/config/okularpartrc
-link/config/okularrc
-link/config/phishingurlrc
-link/config/plasma-localerc
-link/config/plasma-org.kde.plasma.desktop-appletsrc
-link/config/plasma-welcomerc
-link/config/plasma.emojierrc
-link/config/plasmanotifyrc
-link/config/plasmaparc
-link/config/plasmarc
-link/config/plasmashellrc
-link/config/powerdevilrc
-link/config/powermanagementprofilesrc
-link/config/sddmthemeinstallerrc
-link/config/session/
-link/config/signond/
-link/config/specialmailcollectionsrc
-link/config/spectaclerc
-link/config/systemsettingsrc
-link/config/trashrc
-link/config/webengineurlinterceptoradblockrc
-link/config/xdg-desktop-portal-kderc
-link/config/xsettingsd/
+/link/config/KDE/
+/link/config/QtProject.conf
+/link/config/Trolltech.conf
+/link/config/Unknown\ Organization/
+/link/config/akregatorrc
+/link/config/arkrc
+/link/config/autostart/
+/link/config/autostart/dropbox.desktop
+/link/config/baloofileinformationrc
+/link/config/baloofilerc
+/link/config/bluedevilglobalrc
+/link/config/discoverrc
+/link/config/dolphinrc
+/link/config/drkonqirc
+/link/config/emaildefaults
+/link/config/emailidentities
+/link/config/gtk-*
+/link/config/gtkrc*
+/link/config/gwenviewrc
+/link/config/kalarmrc
+/link/config/kalendaracrc
+/link/config/kapmanrc
+/link/config/katemetainfos
+/link/config/katerc
+/link/config/kateschemarc
+/link/config/katevirc
+/link/config/kcminputrc
+/link/config/kconf_updaterc
+/link/config/kde.org/
+/link/config/kdeconnect
+/link/config/kded5rc
+/link/config/kdedefaults
+/link/config/kdeglobals
+/link/config/kdfrc
+/link/config/kfontinstuirc
+/link/config/kgammarc
+/link/config/kgetrc
+/link/config/kglobalshortcutsrc
+/link/config/khelpcenterrc
+/link/config/khotkeysrc
+/link/config/khtml
+/link/config/kinfocenterrc
+/link/config/kiorc
+/link/config/kioslaverc
+/link/config/kmail2rc
+/link/config/kmixctrlrc
+/link/config/kmixrc
+/link/config/konquerorrc
+/link/config/korgacrc
+/link/config/krunnerrc
+/link/config/kscreenlockerrc
+/link/config/kservicemenurc
+/link/config/ksmserverrc
+/link/config/ktimezonedrc
+/link/config/kwalletmanager5rc
+/link/config/kwalletrc
+/link/config/kwinoutputconfig.json
+/link/config/kwinrc
+/link/config/kwinrulesrc
+/link/config/kxkbrc
+/link/config/okularpartrc
+/link/config/okularrc
+/link/config/phishingurlrc
+/link/config/plasma-localerc
+/link/config/plasma-org.kde.plasma.desktop-appletsrc
+/link/config/plasma-welcomerc
+/link/config/plasma.emojierrc
+/link/config/plasmanotifyrc
+/link/config/plasmaparc
+/link/config/plasmarc
+/link/config/plasmashellrc
+/link/config/powerdevilrc
+/link/config/powermanagementprofilesrc
+/link/config/sddmthemeinstallerrc
+/link/config/session/
+/link/config/signond/
+/link/config/specialmailcollectionsrc
+/link/config/spectaclerc
+/link/config/systemsettingsrc
+/link/config/trashrc
+/link/config/webengineurlinterceptoradblockrc
+/link/config/xdg-desktop-portal-kderc
+/link/config/xsettingsd/
+/link/config/dragonplayerrc
+/link/config/go/
 
 # The activity manager changes too frequently, and is not useful for sharing.
-link/config/kactivitymanagerd*
+/link/config/kactivitymanagerd*
+# }}}
+
+# VLC {{{
+/link/config/vlc/
 # }}}
 
 # Slack {{{
-link/config/Slack/
+/link/config/Slack/
 # }}}
 
 # Akonadi {{{
-link/config/akonadi/
-link/config/akonadi*
+/link/config/akonadi/
+/link/config/akonadi*
 # }}}
 
 # OS X / macOS {{{
@@ -385,46 +391,46 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
-link/config/iterm2
+/link/config/iterm2
 # }}}
 
 # Kitware {{{
-link/config/Kitware/
+/link/config/Kitware/
 # }}}
 
 # Terminus terminal {{{
-link/config/terminus/*
-!link/config/terminus/config.yaml
+/link/config/terminus/*
+!/link/config/terminus/config.yaml
 # }}}
 
 # user-dirs {{{
-link/config/user-dirs*
+/link/config/user-dirs*
 # }}}
 
 # lazygit {{{
-link/config/lazygit/state.yml
+/link/config/lazygit/state.yml
 # }}}
 
 # git-cola {{{
-link/config/git-cola
+/link/config/git-cola
 # }}}
 
 # AWS {{{
 # VPN Client
-link/config/AWSVPNClient/
+/link/config/AWSVPNClient/
 # }}}
 
 # Google Cloud CLI {{{
-link/config/gcloud/
+/link/config/gcloud/
 # }}}
 
 # rclone cloud file tool {{{
-link/config/rclone/rclone.conf
+/link/config/rclone/rclone.conf
 # }}}
 
 # ActiveState {{{
-link/config/activestate/
-link/config/autostart/state-svc.desktop
+/link/config/activestate/
+/link/config/autostart/state-svc.desktop
 # }}}
 
 # Tex/LaTeX {{{
@@ -447,30 +453,30 @@ link/config/autostart/state-svc.desktop
 # }}}
 
 # 1Password {{{
-link/config/1Password/
-link/config/op/
+/link/config/1Password/
+/link/config/op/
 # }}}
 
 # Browser {{{
-link/config/google-chrome-beta/
-link/config/google-chrome-unstable/
-link/config/google-chrome/
-link/config/microsoft-edge-dev/
-link/config/vivaldi-snapshot/
-link/config/vivaldi/
+/link/config/google-chrome-beta/
+/link/config/google-chrome-unstable/
+/link/config/google-chrome/
+/link/config/microsoft-edge-dev/
+/link/config/vivaldi-snapshot/
+/link/config/vivaldi/
 # }}}
 
 # Flameshot screenshot program {{{
-link/config/flameshot/
-link/config/flameshotrc
+/link/config/flameshot/
+/link/config/flameshotrc
 # }}}
 
 # Helm (Kubernetes) {{{
-link/config/helm/
+/link/config/helm/
 # }}}
 
 # Common Lisp {{{
-!link/config/common-lisp
+!/link/config/common-lisp
 # }}}
 
 # vim:foldenable:foldmethod=marker
