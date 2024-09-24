@@ -1,8 +1,7 @@
 #!/bin/sh
 
-# Get rid of cache directores under ~/.emacs.d/ to help get rid of unusual
-# behavior.
-emacs_rm_caches() {
+# Remove cache directores under ~/.emacs.d/ to help get rid of unusual behavior.
+emaclean() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
 
   log_info "Deleting Emacs cache directories"

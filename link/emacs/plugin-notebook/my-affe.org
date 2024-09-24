@@ -22,7 +22,7 @@ finding files by name.
   The default Consult regex compiler is pretty basic, and does no sorting
   ranking.  Orderless, on the other hand, handles these concerns in superb
   fashion."
-    (let ((input (orderless-pattern-compiler input)))
+    (let ((input (cdr (orderless-compile input))))
       (cons input (apply-partially #'orderless--highlight input t))))
 #+end_src
 
