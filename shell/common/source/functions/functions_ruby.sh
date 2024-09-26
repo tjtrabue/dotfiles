@@ -24,7 +24,7 @@ add_gem_bin_dirs_to_path() {
 # Install Ruby Version Manager (rvm) for any supported platform.
 install_rvm() {
   # Download RVM, and do not add boilerplate to shell RC files.
-  \curl -sSL "https://get.rvm.io" | bash -s -- --ignore-dotfiles
+  command curl -sSL "https://get.rvm.io" | bash -s -- --ignore-dotfiles
 }
 
 # Use rvm to install the latest ruby.
@@ -42,10 +42,19 @@ install_latest_ruby() {
   fi
 
   rvm install ruby --latest
+  # Set the latest version of Ruby as default and switch to it.
+  rvm alias create default ruby --latest
+  rvm use default
 }
 
 # Update all Ruby Gems.
 update_ruby_packages() {
+  if [ -z "$(command -v gem)" ]; then
+    err "gem command not found on PATH. Is Ruby installed?"
+    return 1
+  fi
+  log_info "Updating Ruby version" \
+    "${GREEN}$(ruby --version | awk '{print $2}')${NC} packages"
   gem update
 }
 

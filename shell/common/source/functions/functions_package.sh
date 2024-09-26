@@ -31,4 +31,16 @@ install_packages_from_file_with_tool() {
   done <"${packageFile}"
 }
 
+# Many useful CLI and system tools are installed through secondary programming
+# environments, such as Perl's CPAN, Ruby's CRAN, Python PIP or Node.js's NPM
+# archive. This function issues commands to update all of those packages.
+update_auxiliary_packages() {
+  log_info "Updating auxiliary packages"
+
+  update_node_packages
+  update_python_packages
+  update_ruby_packages
+  update_texlive_packages
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

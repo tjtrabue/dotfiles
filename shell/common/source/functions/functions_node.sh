@@ -64,6 +64,11 @@ install_node_packages() {
 
 # Update all globally installed NPM packages to the latest version.
 update_node_packages() {
+  if [ -z "$(command -v npm)" ]; then
+    err "No npm executable found on PATH"
+    return 1
+  fi
+  log_info "Updating Node version ${GREEN}$(node --version)${NC} packages"
   # Update NPM itself.
   npm install -g npm
   # Install all globally installed packages.
