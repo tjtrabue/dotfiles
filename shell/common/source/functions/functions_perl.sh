@@ -23,7 +23,7 @@ install_plsense() {
   fi
 }
 
-# Install all global Perl packages.
+# Install all global Perl packages from CPAN.
 install_perl_packages() {
   local package
 
@@ -37,12 +37,26 @@ install_perl_packages() {
     bootstrap_cpanm
   fi
 
-  log_info "Installing Perl global packages"
-  while IFS="" read -r package || [ -n "${package}" ]; do
-    cpanm -i --force "${package}"
-  done <"${PERL_PACKAGES_FILE}"
+  log_info "Installing Perl global packages from CPAN"
+  install_packages_from_file_with_tool "cpanm -i --force" \
+    "${PERL_PACKAGES_FILE}"
 
   install_plsense
+}
+
+# Update all Perl packages installed from CPAN.
+# Requires the `cpan-outdated` utility.
+update_perl_packages() {
+  if [ -z "$(command -v cpanm)" ]; then
+    err "No cpanm (CPANMinus) executable found on PATH"
+    return 1
+  fi
+  if [ -z "$(command -v cpan-outdated)" ]; then
+    err "Must install cpan-outdated in order to update Perl packages"
+    return 2
+  fi
+  log_info "Updating Perl global packages from CPAN"
+  cpan-outdated -p | cpanm
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1

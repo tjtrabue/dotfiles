@@ -12,11 +12,14 @@ install_packages_from_file_with_tool() {
   local package
 
   if [ -z "${installCmd}" ]; then
-    err "No install command given."
+    err "No install command given"
     return 1
-  elif [ ! -f "${packageFile}" ] && [ ! -h "${packageFile}" ]; then
-    err "Package file ${packageFile} does not exist."
+  elif [ -z "${packageFile}" ]; then
+    err "No package file given"
     return 2
+  elif [ ! -f "${packageFile}" ] && [ ! -h "${packageFile}" ]; then
+    err "Package file ${BLUE}${packageFile}${NC} does not exist"
+    return 3
   fi
 
   log_info "Installing packages with command: ${GREEN}${installCmd}${NC}"
@@ -40,6 +43,7 @@ update_auxiliary_packages() {
   update_node_packages
   update_python_packages
   update_ruby_packages
+  update_perl_packages
   update_texlive_packages
 }
 

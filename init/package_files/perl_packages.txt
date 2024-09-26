@@ -1,3 +1,4 @@
+App::cpanoutdated
 Devel::CoverX::Covered
 Devel::PerlySense
 Emacs::PDE
