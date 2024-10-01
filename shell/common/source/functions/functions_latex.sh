@@ -34,6 +34,7 @@ install_digestif_lsp() {
 update_texlive_packages() {
   # Add the '--reinstall-forcibly-removed' flag if you want to recover something
   # you uninstalled accidentally.
+  log_info "Updating TexLive packages through CTAN"
   tlmgr update --self --all
 }
 
