@@ -121,7 +121,9 @@ __do_cd_to_dir_or_alias() {
   # Replace $dirArg with $aliasedDir if it is defined and the alias name does
   # not conflict with a true directory name.
   if [ -n "${dirArg}" ] && [ ! -d "${dirArg}" ]; then
+    log_debug "Attempting to get aliased directory for: ${dirArg}"
     dirArg="$(__get_directory_for_alias "${dirArg}")"
+    log_debug "Dir arg is now: ${dirArg}"
   fi
 
   if [ -n "${dirArg}" ] && [ ! -d "${dirArg}" ]; then
@@ -237,6 +239,7 @@ __get_directory_for_alias() {
   local dirAliasFile="${DIR_ALIAS_FILE:-${HOME}/.dirs}"
   local line
   local currentAlias
+  local outputDir="${dirAlias}"
 
   while IFS="" read -r line || [ -n "${line}" ]; do
     # Ignore empty or commented lines.
@@ -249,9 +252,11 @@ __get_directory_for_alias() {
     # Also take off the 'export ' prefix, if it exists.
     currentAlias="${currentAlias#export }"
     if [ "${dirAlias}" = "${currentAlias}" ]; then
-      eval "echo -e \"\$${dirAlias}\""
+      outputDir="$(eval "echo -e \"\$${dirAlias}\"")"
+      break
     fi
   done <"${dirAliasFile}"
+  printf '%s' "${outputDir}"
 }
 
 # Create a new file to hold `cd' history under the directory specified using
