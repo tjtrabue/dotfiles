@@ -66,6 +66,7 @@ fwupd
 fzf
 fzy
 gdb
+giflib
 git
 git-delta
 git-filter-repo
@@ -104,9 +105,15 @@ kubectl
 libdvdcss
 libev
 libfixposix
+libjpeg-turbo
 liblsp-r3d-glx-lib
+libpng
 libreoffice-fresh
+librsvg
+libtiff
+libwebp
 libxcrypt
+libxpm
 light-locker
 lightdm
 lightdm-webkit-theme-litarvan
@@ -236,6 +243,7 @@ wpa_supplicant
 wxwidgets-common
 wxwidgets-gtk3
 wxwidgets-qt5
+xaw3d
 xclip
 xcompmgr
 xdotool
@@ -253,6 +261,7 @@ ydotool
 yq
 zathura
 zathura-pdf-poppler
+zlib
 zoxide
 zsh
 zsh-completions
