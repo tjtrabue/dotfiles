@@ -200,6 +200,16 @@ tidy
 tk
 tree
 tree-sitter
+tree-sitter-bash
+tree-sitter-c
+tree-sitter-javascript
+tree-sitter-lua
+tree-sitter-markdown
+tree-sitter-python
+tree-sitter-query
+tree-sitter-rust
+tree-sitter-vim
+tree-sitter-vimdoc
 ttc-iosevka
 ttf-cascadia-code
 ttf-croscore
