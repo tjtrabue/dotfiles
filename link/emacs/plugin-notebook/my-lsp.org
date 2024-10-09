@@ -521,7 +521,7 @@ infrastructure for Emacs.
 ** Dependencies
 *** Python
 #+begin_src shell :tangle no
-  python3 -m pip install --user --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz
+  python3 -m pip install --user --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog
 #+end_src
 
 *** Elisp
