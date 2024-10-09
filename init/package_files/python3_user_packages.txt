@@ -35,6 +35,7 @@ six
 thefuck
 vim-vint
 virtualenvwrapper
+watchdog
 wheel
 yamlfmt
 yamllint
