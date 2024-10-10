@@ -1,13 +1,11 @@
 #!/bin/sh
 
-# Determine the Linux graphical session type. This is usually either X11 or 
+# Determine the Linux graphical session type. This is usually either X11 or
 # Wayland.
 get_xdg_session_type() {
-  if [ -x "$(command -v loginctl)" ]; then
-    loginctl show-session "$(awk '/tty/ {print $1}' <(loginctl))" -p Type | 
+  if [ -x "$(command -v loginctl)" ] && loginctl list-sesions >>/dev/null 2>&1; then
+    loginctl show-session "$(awk '/tty/ {print $1}' <(loginctl))" -p Type |
       awk -F= '{print $2}' | tr -d '\n'
-  else
-    warn "Could not determine XDG session type"
   fi
 }
 
@@ -26,10 +24,6 @@ get_gdk_backend() {
     gdkBackend='win32'
   elif [ -n "${WAYLAND_DISPLAY}" ] || [ "${XDG_SESSION_TYPE}" = 'wayland' ]; then
     gdkBackend='wayland'
-  fi
-
-  if [ -z "${gdkBackend}" ]; then
-    warn "Could not determine GDK backend"
   fi
 
   printf "%s" "${gdkBackend}"
