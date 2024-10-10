@@ -24,6 +24,7 @@ elixir
 fastfetch
 feh
 fonts-noto
+freeglut3-dev
 g++
 g++-12
 g++-multilib
@@ -47,6 +48,7 @@ isync
 jq
 language-pack-en-base
 libacl1-dev
+libao-dev
 libasound2
 libasound2-dev
 libaspell15
@@ -54,6 +56,7 @@ libasyncns0
 libatk-bridge2.0-0
 libatk1.0-0
 libatspi2.0-0
+libbigint-dev
 libbrotli1
 libbz2-dev
 libc++-dev
@@ -89,6 +92,10 @@ libgif7
 libgirepository1.0-dev
 libgit2-dev
 libgl1
+libglew-dev
+libglfw3-dev
+libglm-dev
+libglu1-mesa-dev
 libglvnd0
 libglx0
 libgnutls28-dev
@@ -122,6 +129,7 @@ libmagickcore-dev
 libmagickwand-dev
 libmpc3
 libmpfr6
+libmpg123-dev
 libncurses5-dev
 libnotify4
 libnss-mdns
@@ -204,6 +212,8 @@ locate
 maildir-utils
 mailutils
 mediainfo
+mesa-common-dev
+mesa-utils
 meson
 mold
 mu4e
@@ -234,6 +244,8 @@ unzip
 w3m
 x11-xserver-utils
 xauth
+xaw3dg
+xaw3dg-dev
 xorg
 zathura-ps
 zip

@@ -22,11 +22,14 @@ declare USE_MOLD_LINKER=false
 declare USE_CLANG=false
 declare NATIVE_COMP=aot
 
+# Installation control options
+declare NO_CONFIRM=false
+
 # Build options
 declare DOCS_HTML=false
 declare DOCS_PDF=false
 declare EXTRA_CONFIG_ARGS=""
-declare INSTALL_PREFIX="/usr/local"
+declare INSTALL_PREFIX="/usr"
 declare USE_PGTK=false
 declare USE_LTO=false
 declare SOUND_SUPPORT=""
@@ -118,6 +121,10 @@ OPTIONS:
   -j NUM_THREADS | --jobs NUM_THREADS
     The number of concurrent threads to run at once while building Emacs.
     Defaults to the result of running the 'nproc' command.
+
+  --no-confirm
+    Do not prompt the user for confirmation before starting the installation 
+    process.
 
   -l | --use-lto
     Enable link-time optimization. This build option is still experimental, and
@@ -325,8 +332,17 @@ ie__construct_cc_options_gcc() {
 # environment variables to reflect that choice.
 ie__construct_cc_options_clang() {
   local nameOfMissingExecutable=""
+  local clangIncludeDirs
+  local clangLibDirs
   local cflagsCommon
+  local ulInclude="/usr/local/include"
   cflagsCommon="$(ie__construct_cc_options_common)"
+
+  # Add directories to header search path
+  clangIncludeDirs="-I $(dirname "$(locate '*libgccjit.h')")"
+
+  # Add directories to library search path
+  clangLibDirs="-L $(dirname "$(locate '*libgccjit.so')")"
 
   CC="$(command -v clang)"
   CXX="$(command -v clang++)"
@@ -334,10 +350,10 @@ ie__construct_cc_options_clang() {
   LD="$(command -v lld)"
   AR="$(command -v llvm-ar)"
   AS="$(command -v llvm-as)"
-  CPPFLAGS="-DFD_SETSIZE=10000 ${CPPFLAGS:-""}"
-  CFLAGS="${cflagsCommon} ${CFLAGS:-""}"
-  CXXFLAGS="${cflagsCommon} ${CXXFLAGS:-""}"
-  LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt ${LDFLAGS:-""}"
+  CPPFLAGS="-DFD_SETSIZE=10000 ${CPPFLAGS:-""} ${clangIncludeDirs}"
+  CFLAGS="${cflagsCommon} ${CFLAGS:-""} -std=gnu17"
+  CXXFLAGS="${cflagsCommon} -stdlib=libstdc++ ${CXXFLAGS:-""}"
+  LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt ${clangLibDirs} ${LDFLAGS:-""}"
 
   if [ ! -x "${CC}" ]; then
     nameOfMissingExecutable="clang"
@@ -387,8 +403,7 @@ ie__confirm_installation() {
   local configureCmd="${1}"
   local response=""
 
-  while ! printf '%s' "${response}" | grep -q '[YyNn]'; do
-    command cat <<EOF
+  command cat <<EOF
 This script will now install Emacs using the following compiler options:
 
 CC      = '${CC}'
@@ -396,49 +411,49 @@ CXX     = '${CXX}'
 LD      = '${LD}'
 EOF
 
-    if [ -n "${CPP}" ]; then
-      command cat <<EOF
+  if [ -n "${CPP}" ]; then
+    command cat <<EOF
 CPP = '${CPP}'
 EOF
-    fi
+  fi
 
-    if [ -n "${AR}" ]; then
-      command cat <<EOF
+  if [ -n "${AR}" ]; then
+    command cat <<EOF
 AR = '${AR}'
 EOF
-    fi
+  fi
 
-    if [ -n "${AS}" ]; then
-      command cat <<EOF
+  if [ -n "${AS}" ]; then
+    command cat <<EOF
 AS = '${AS}'
 EOF
-    fi
+  fi
 
-    if [ -n "${LDFLAGS}" ]; then
-      command cat <<EOF
+  if [ -n "${LDFLAGS}" ]; then
+    command cat <<EOF
 LDFLAGS = '${LDFLAGS}'
 EOF
-    fi
+  fi
 
-    if [ -n "${CPPFLAGS}" ]; then
-      command cat <<EOF
+  if [ -n "${CPPFLAGS}" ]; then
+    command cat <<EOF
 CPPFLAGS = '${CPPFLAGS}'
 EOF
-    fi
+  fi
 
-    if [ -n "${CFLAGS}" ]; then
-      command cat <<EOF
+  if [ -n "${CFLAGS}" ]; then
+    command cat <<EOF
 CFLAGS = '${CFLAGS}'
 EOF
-    fi
+  fi
 
-    if [ -n "${CXXFLAGS}" ]; then
-      command cat <<EOF
+  if [ -n "${CXXFLAGS}" ]; then
+    command cat <<EOF
 CXXFLAGS = '${CXXFLAGS}'
 EOF
-    fi
+  fi
 
-    command cat <<EOF
+  command cat <<EOF
 
 And the following configuration command:
 
@@ -446,38 +461,52 @@ $(printf '%s' "${configureCmd}" | sed -E 's/\s+/\n  /g')
 
 EOF
 
-    if "${DOCS_HTML}"; then
-      command cat <<EOF
+  if "${DOCS_HTML}"; then
+    command cat <<EOF
 HTML documentation will be generated.
 
 EOF
-    fi
+  fi
 
-    if "${DOCS_PDF}"; then
-      command cat <<EOF
+  if "${DOCS_PDF}"; then
+    command cat <<EOF
 PDF documentation will be generated.
 
 EOF
-    fi
+  fi
 
+  while ! "${NO_CONFIRM}" && ! printf '%s' "${response}" | grep -q '[YyNn]'; do
     command cat <<EOF
 Continue? [y/n]
 EOF
     read -r response
   done
 
-  printf '%s' "${response}" | grep -q '[Yy]'
+  printf '%s' "${response}" | grep -q '[Yy]' || ${NO_CONFIRM}
 }
 
 # Put together the options to pass to the './configure' script created by
 # running './autogen.sh' in the Emacs repository root. Return the entire command
 # to be evaluated for the configure step.
 ie__construct_configure_cmd() {
+  local prefix="${INSTALL_PREFIX}"
+  local sysConfDir="/etc"
+  local libExecDir="${prefix}/lib"
+  local localStateDir="/var"
+  local manDir="${prefix}/share/man"
   local osType=""
+
   local configureCmd="./configure \
-    --prefix=${INSTALL_PREFIX} \
+    --prefix=${prefix} \
+    --sysconfdir=${sysConfDir} \
+    --libexecdir=${libExecDir} \
+    --localstatedir=${localStateDir} \
+    --mandir=${manDir} \
     --enable-year2038 \
     --enable-gcc-warnings=warn-only \
+    --without-compress-install \
+    --without-m17n-flt \
+    --without-gconf \
     --with-json \
     --with-tree-sitter \
     --with-imagemagick \
@@ -486,7 +515,6 @@ ie__construct_configure_cmd() {
     --with-gameuser=${GAME_USER} \
     --with-wide-int \
     --with-small-ja-dic \
-    --without-compress-install \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
   osType="$(getostype)"
@@ -540,37 +568,47 @@ ie__construct_configure_cmd() {
 # formats. This function presupposes that the user has already run the
 # configure command.
 ie__build_emacs() {
+  local buildSucceeded
+
   log_info "Compiling Emacs from source"
 
   make bootstrap -j"${NUM_THREADS}"
+  buildSucceeded="$?"
 
-  if "${DOCS_HTML}"; then
+  if [ "${buildSucceeded}" -eq 0 ] && "${DOCS_HTML}"; then
     log_info "Generating ${MAGENTA}HTML${NC} documentation"
     make html -j"$(nproc)"
   fi
 
-  if "${DOCS_PDF}"; then
+  if [ "${buildSucceeded}" -eq 0 ] && "${DOCS_PDF}"; then
     log_info "Generating ${MAGENTA}PDF${NC} documentation"
     make pdf -j"$(nproc)"
   fi
+
+  return "${buildSucceeded}"
 }
 
 # Run the `make install` commands necessary to install a freshly compiled Emacs
 # distribution.
 ie__install_emacs_build() {
+  local installSucceeded
+
   log_info "Installing new Emacs build"
 
   sudo make install
+  installSucceeded="$?"
 
-  if "${DOCS_HTML}"; then
+  if [ "${installSucceeded}" -eq 0 ] && "${DOCS_HTML}"; then
     log_info "Installing generated HTML documentation"
     sudo make install-html
   fi
 
-  if "${DOCS_PDF}"; then
+  if [ "${installSucceeded}" -eq 0 ] && "${DOCS_PDF}"; then
     log_info "Installing generated PDF documentation"
     sudo make install-pdf
   fi
+
+  return "${installSucceeded}"
 }
 
 # Install emacs from source. This option is pretty hard to make portable, but
@@ -616,7 +654,10 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o ce:g:hj:lmn:ps: --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,use-lto,use-mold,native-comp:,pgtk,prefix:,sound: -n 'install_emacs' -- "$@")
+args=$(getopt -o ce:g:hj:lmn:ps: \
+  --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound: \
+  -n 'install_emacs' \
+  -- "$@")
 eval set -- "$args"
 
 # extract options and their arguments into variables.
@@ -680,6 +721,11 @@ while true; do
       shift 2
       ;;
     esac
+    ;;
+
+  --no-confirm)
+    NO_CONFIRM=true
+    shift
     ;;
 
   -l | --use-lto)
