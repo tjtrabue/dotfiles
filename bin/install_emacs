@@ -128,7 +128,7 @@ OPTIONS:
     you to have mold installed on your machine.
 
   -n TYPE | --native-comp=TYPE
-    Use Emacs native compilation for Emacs Lisp code. TYPE must be one of: 
+    Use Emacs native compilation for Emacs Lisp code. TYPE must be one of:
       - aot (ahead-of-time compilation; default)
       - yes (JIT compilation)
       - no (disable native compilation)
@@ -276,29 +276,32 @@ ie__mac_build_options() {
 
 # Construct options common to both CFLAGS and CXXFLAGS.
 ie__construct_cc_options_common() {
-  printf '%s' "-O3 -mtune=native -march=native" \
-    " -fomit-frame-pointer" \
-    " -fallow-store-data-races" \
-    " -fno-semantic-interposition" \
-    " -fno-math-errno -floop-parallelize-all" \
-    " -ftree-parallelize-loops=4" \
-    " -funsafe-math-optimizations" \
-    " -fno-finite-math-only" \
-    " -fno-trapping-math" \
-    " -freciprocal-math" \
-    " -fno-rounding-math" \
-    " -fno-signaling-nans" \
-    " -fassociative-math" \
-    " -fno-signed-zeros" \
-    " -frename-registers" \
-    " -funroll-loops"
+  printf '%s' '-O3 -mtune=native -march=native' \
+    ' -fomit-frame-pointer' \
+    ' -funsafe-math-optimizations' \
+    ' -funroll-loops'
 }
 
 # Construct C and C++ compiler/linker options, and export the appropriate
 # environment variables.
 ie__construct_cc_options_gcc() {
   local cflagsCommon
+  local cflagsGcc
   cflagsCommon="$(ie__construct_cc_options_common)"
+  cflagsGcc="$(
+    printf '%s' '-fallow-store-data-races' \
+      ' -fno-semantic-interposition' \
+      ' -fno-math-errno -floop-parallelize-all' \
+      ' -ftree-parallelize-loops=4' \
+      ' -fno-finite-math-only' \
+      ' -fno-trapping-math' \
+      ' -freciprocal-math' \
+      ' -fno-rounding-math' \
+      ' -fno-signaling-nans' \
+      ' -fassociative-math' \
+      ' -fno-signed-zeros' \
+      ' -frename-registers'
+  )"
 
   CC="$(command -v "${IE_CC}")"
   CXX="$(command -v "${IE_CXX}")"
@@ -307,8 +310,8 @@ ie__construct_cc_options_gcc() {
   AR="$(command -v gcc-ar)"
   AS="$(command -v as)"
   CPPFLAGS="-DFD_SETSIZE=10000 ${CPPFLAGS:-""}"
-  CFLAGS="${cflagsCommon} ${CFLAGS:-""}"
-  CXXFLAGS="${cflagsCommon} ${CXXFLAGS:-""}"
+  CFLAGS="${cflagsCommon} ${cflagsGcc} ${CFLAGS:-""}"
+  CXXFLAGS="${cflagsCommon} ${cflagsGcc} ${CXXFLAGS:-""}"
   LDFLAGS="${LDFLAGS:-""}"
 
   if "${USE_MOLD_LINKER}"; then
