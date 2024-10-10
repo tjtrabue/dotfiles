@@ -56,7 +56,7 @@ update_perl_packages() {
     return 2
   fi
   log_info "Updating Perl global packages from CPAN"
-  cpan-outdated -p | cpanm
+  cpan-outdated -p | cpanm --force
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
