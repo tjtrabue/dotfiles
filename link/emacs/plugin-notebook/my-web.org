@@ -221,6 +221,8 @@ Verb requires at least Emacs version 25 to work.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package verb
+    ;; A bit heavy for everyday use. Enable if desired.
+    :disabled
     :after org
     :hook
     (org-mode . (lambda ()
@@ -236,13 +238,6 @@ within Emacs.
 
 #+begin_src emacs-lisp
   (use-package skewer-mode
-    :preface
-    (require 'skewer-mode)
-    (require 'skewer-setup)
-    (require 'skewer-repl)
-    (require 'skewer-html)
-    (require 'skewer-css)
-    (require 'skewer-bower)
     :config
     (skewer-setup))
 #+end_src
@@ -312,6 +307,9 @@ A paredit-like collection of structured editing commands for =html-mode=.
 
 #+begin_src emacs-lisp
   (use-package tagedit
+    ;; 10/11/24: combobulate is a better structured editing plugin. It works with more languages, and
+    ;; is being actively developed.
+    :disabled
     :hook
     (html-mode . (lambda ()
                    (require 'tagedit)))
