@@ -7,7 +7,9 @@
 
 =dash= provides modern functions and services for Emacs.
 
-* =use-package= specification
-  #+begin_src emacs-lisp
-    (use-package dash)
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package dash
+    :hook
+    ;; Use extra fancy Dash syntax highlighting in Emacs Lisp Mode.
+    (emacs-lisp-mode . dash-fontify-mode))
+#+end_src
