@@ -74,7 +74,10 @@
   ;; - start a CIDER-enhanced nREPL server on a random available port:
   :cider-nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "RELEASE"}}
                 :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
-
+  ;; Helpful for refreshing required namespaces in the REPL.
+  :repl {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}}
+         :extra-paths ["~/.clojure/src"]
+         :ns-default user}
   ;; - see https://github.com/jimpil/jedi-time
   :jedi-time
   {:extra-deps {jedi-time/jedi-time {:mvn/version "0.2.1"}}}
@@ -87,9 +90,7 @@
                 {:git/url "https://github.com/stuarthalloway/reflector"
                  :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
   ;; Super fast pretty-printer/formatter library.
-  :zprint
-  {:extra-deps {zprint/zprint {:mvn/version "1.2.3"}}}
-
+  :zprint {:extra-deps {zprint/zprint {:mvn/version "RELEASE"}}}
   ;; pull in specific versions of Clojure:
   :1.0 {:override-deps {org.clojure/clojure {:mvn/version "1.0.0"}}}
   :1.1 {:override-deps {org.clojure/clojure {:mvn/version "1.1.0"}}}

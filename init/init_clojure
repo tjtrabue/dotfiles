@@ -34,14 +34,21 @@ OPTIONS:
 EOF
 }
 
-link_dot_clojure_dir() {
+link_dot_clojure_config() {
   local dotClojureDir="${DOTFILES_LINK}/clojure"
   local dotClojureTarget="${HOME}/.clojure"
+
+  if [ -d "${dotClojureTarget}" ]; then
+    # Backup the existing ~/.clojure directory if present.
+    mv -f "${dotClojureTarget}"{,.bak}
+  fi
+
+  mkdir -p "${dotClojureTarget}"
 
   if [ ! -h "${dotClojureTarget}" ]; then
     log_info "Linking clojure global config dir to:" \
       "${BLUE}${dotClojureTarget}${NC}"
-    ln -sf "${dotClojureDir}" "${dotClojureTarget}"
+    ln -sft "${dotClojureTarget}" "${dotClojureDir}"/*
   fi
 }
 
@@ -58,7 +65,7 @@ link_shadow_cljs_dir() {
 
 main() {
   print_header "Initializing Clojure"
-  link_dot_clojure_dir
+  link_dot_clojure_config
   link_shadow_cljs_dir
   install_clojure_cli_tools
   install_clojure_lsp
