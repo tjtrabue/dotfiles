@@ -12,8 +12,12 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
 declare LOG_LEVEL="${LOG_LEVEL:-3}"
 
+declare LINUX_DISTRO
+
 declare LLVM_VERSION="17"
 declare LLVM_INSTALLER_FILE="llvm.sh"
+
+declare LLVM_PREFIX="/usr"
 # }}}
 
 # Imports {{{
@@ -56,22 +60,44 @@ illvm__download_llvm_installer_ubuntu() {
 
 illvm__install_llvm_ubuntu() {
   log_info "Intalling LLVM version ${CYAN}${LLVM_VERSION}${NC} for Ubuntu"
-  sudo ./"${LLVM_INSTALLER_FILE}" "${LLVM_VERSION}"
+  sudo ./"${LLVM_INSTALLER_FILE}" "${LLVM_VERSION}" &&
+    sudo update-alternatives --install "${LLVM_PREFIX}/bin/clang" \
+      "clang" \
+      "${LLVM_PREFIX}/bin/clang-${LLVM_VERSION}" 100
 }
 
-illvm__cleanup() {
-  log_info "Cleaning up"
+illvm__cleanup_ubuntu() {
+  log_info "Cleaning up after Ubuntu install"
   rm -f "${LLVM_INSTALLER_FILE}"
 }
 
+illvm__cleanup() {
+  case "${LINUX_DISTRO}" in
+    "Ubuntu")
+      illvm__cleanup_ubuntu
+      ;;
+  esac
+}
+
 illvm__install_llvm() {
-  illvm__download_llvm_installer_ubuntu &&
-    illvm__install_llvm_ubuntu
-  illvm__cleanup
+  case "${LINUX_DISTRO}" in
+    "Ubuntu")
+      illvm__download_llvm_installer_ubuntu &&
+        illvm__install_llvm_ubuntu
+      illvm__cleanup
+      ;;
+
+    *)
+      err "No installation method for OS: ${GREEN}${LINUX_DISTRO}${NC}"
+      return 1
+      ;;
+  esac
 }
 
 illvm__main() {
   LLVM_VERSION="${1:-${LLVM_VERSION}}"
+  LINUX_DISTRO="$(getdistro)"
+
   print_header "Installing Clang version: ${CYAN}${LLVM_VERSION}${NC}"
   illvm__install_llvm
 }
