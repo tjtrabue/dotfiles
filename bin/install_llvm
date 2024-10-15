@@ -14,7 +14,7 @@ declare LOG_LEVEL="${LOG_LEVEL:-3}"
 
 declare LINUX_DISTRO
 
-declare LLVM_VERSION="17"
+declare LLVM_VERSION="20"
 declare LLVM_INSTALLER_FILE="llvm.sh"
 
 declare LLVM_PREFIX="/usr"
