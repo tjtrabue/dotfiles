@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
+
+declare IM_GIT_URL="https://github.com/ImageMagick/ImageMagick.git"
+declare IM_DEST_DIR="${APPS:-${HOME}/applications}/ImageMagick"
+declare IM_CONFIG_CMD="./configure \
+  --enable-shared \
+  --enable-hdri \
+  --with-autotrace \
+  --with-dps \
+  --with-fftw \
+  --with-flif \
+  --with-fpx \
+  --with-gslib \
+  --with-gvc \
+  --with-modules \
+  --with-perl \
+  --with-rsvg \
+  --with-uhdr \
+  --with-wmf"
+
+# Build options
+declare USE_X_WINDOWS=false
+
+# Compiler options
+declare CC="clang"
+declare CXX="clang++"
+declare CFLAGS="-O3 -mtune=native -march=native"
+declare CXXFLAGS="-O3 -mtune=native -march=native"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC} | Install ImageMagick program and libs
+
+This is the best way to get an up-to-date version of ImageMagick and its 
+libraries. If you opt to install ImageMagick this way, it is best to periodically
+rerun this program to keep ImageMagick updated.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
+EOF
+}
+
+iim__setup() {
+  log_info "Setting up"
+  mkdir -p "$(dirname "${IM_DEST_DIR}")"
+}
+
+iim__clone_imagemagick() {
+  clone_or_update_git_repo "${IM_GIT_URL}" "${IM_DEST_DIR}"
+}
+
+iim__export_env_vars() {
+  log_info "Exporting compilation environment variables"
+  export CC
+  export CXX
+  export CFLAGS
+  export CXXFLAGS
+}
+
+iim__construct_config_cmd() {
+  if ${USE_X_WINDOWS}; then
+    IM_CONFIG_CMD="${IM_CONFIG_CMD} --with-x"
+  fi
+}
+
+iim__install_imagemagick() {
+  log_info "Installing ImageMagick from source"
+  iim__export_env_vars
+  iim__construct_config_cmd
+  (
+    cd "${IM_DEST_DIR}" &&
+    eval "${IM_CONFIG_CMD}" &&
+    make &&
+    sudo make install
+  ) || {
+    err "ImageMagick not installed"
+    return 1
+  }
+}
+
+main() {
+  print_header "Installing ImageMagick program and libraries"
+  iim__setup &&
+    iim__clone_imagemagick &&
+    iim__install_imagemagick &&
+    succ "ImageMagick installed successfully"
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hqvx \
+  --long help,quiet,verbose,with-x-windows \
+  -n '<name_here>' \
+  -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
+
+  -x | --with-x-windows)
+    log_info "Compiling with X Window System support"
+    USE_X_WINDOWS=true
+    shift
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+main "${@}"
+
+# vim:foldenable:foldmethod=marker:

@@ -32,6 +32,7 @@ declare EXTRA_CONFIG_ARGS=""
 declare INSTALL_PREFIX="/usr"
 declare USE_PGTK=false
 declare USE_LTO=false
+declare USE_WIDE_INT=false
 declare SOUND_SUPPORT=""
 declare NUM_THREADS="$(nproc)"
 
@@ -123,7 +124,7 @@ OPTIONS:
     Defaults to the result of running the 'nproc' command.
 
   --no-confirm
-    Do not prompt the user for confirmation before starting the installation 
+    Do not prompt the user for confirmation before starting the installation
     process.
 
   -l | --use-lto
@@ -161,6 +162,10 @@ OPTIONS:
       - oss
       - bsd-ossaudio
       - no
+
+  -w | --wide-int
+    Compile Emacs with wide integer support. This only matters on systems that
+    store "long int" and "long long int" differently.
 EOF
 }
 
@@ -513,7 +518,6 @@ ie__construct_configure_cmd() {
     --with-modules \
     --with-native-compilation=${NATIVE_COMP} \
     --with-gameuser=${GAME_USER} \
-    --with-wide-int \
     --with-small-ja-dic \
     --program-transform-name=s/\([ec]tags\)/\1.emacs/"
 
@@ -544,6 +548,10 @@ ie__construct_configure_cmd() {
     } || {
       exit 1
     }
+  fi
+
+  if "${USE_WIDE_INT}"; then
+    configureCmd="${configureCmd} --with-wide-int"
   fi
 
   if "${USE_PGTK}"; then
@@ -654,8 +662,8 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o ce:g:hj:lmn:ps: \
-  --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound: \
+args=$(getopt -o ce:g:hj:lmn:ps:w \
+  --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound:,wide-int \
   -n 'install_emacs' \
   -- "$@")
 eval set -- "$args"
@@ -786,6 +794,12 @@ while true; do
       shift 2
       ;;
     esac
+    ;;
+
+  -w | --wide-int)
+    log_info "Building with wide integer support"
+    USE_WIDE_INT=true
+    shift
     ;;
 
   --)

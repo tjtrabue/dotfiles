@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
+
+declare LLVM_VERSION="17"
+declare LLVM_INSTALLER_FILE="llvm.sh"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+_help() {
+  command cat <<EOF
+${THIS_EXEC} | Install a specific clang/LLVM version
+
+Install a specified version of Clang/LLVM. You may specify the version as the
+main argument on the command line. Otherwise, the default version ${LLVM_VERSION}
+will be installed.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
+EOF
+}
+
+illvm__download_llvm_installer_ubuntu() {
+  local llvmInstallerUrl="https://apt.llvm.org/llvm.sh"
+
+  log_info "Downloading LLVM installer for Ubuntu from:" \
+    "${BLUE}${llvmInstallerUrl}${NC}"
+  wget "${llvmInstallerUrl}"
+  chmod +x "${LLVM_INSTALLER_FILE}"
+}
+
+illvm__install_llvm_ubuntu() {
+  log_info "Intalling LLVM version ${CYAN}${LLVM_VERSION}${NC} for Ubuntu"
+  sudo ./"${LLVM_INSTALLER_FILE}" "${LLVM_VERSION}"
+}
+
+illvm__cleanup() {
+  log_info "Cleaning up"
+  rm -f "${LLVM_INSTALLER_FILE}"
+}
+
+illvm__install_llvm() {
+  illvm__download_llvm_installer_ubuntu &&
+    illvm__install_llvm_ubuntu
+  illvm__cleanup
+}
+
+illvm__main() {
+  LLVM_VERSION="${1:-${LLVM_VERSION}}"
+  print_header "Installing Clang version: ${CYAN}${LLVM_VERSION}${NC}"
+  illvm__install_llvm
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n 'install_llvm' \
+  -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    _help
+    exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+illvm__main "${@}"
+
+# vim:foldenable:foldmethod=marker:
