@@ -744,7 +744,7 @@ main features of =lispyville=:
 *** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lispyville
-    :after (evil-collection lispy)
+    :after (evil-collection evil-escape lispy)
     :delight lispyville-mode
     :hook
     (lispy-mode . lispyville-mode)
@@ -834,9 +834,7 @@ main features of =lispyville=:
       "}"   'self-insert-command
       "["   'self-insert-command
       "]"   'self-insert-command
-      "DEL" 'my/lispyville-delete-backward-char-and-join
-      ;; Remap our favorite normal mode chord to lispyville's version of ESC.
-      (general-chord "jk") 'lispyville-normal-state)
+      "DEL" 'my/lispyville-delete-backward-char-and-join)
     (general-def '(normal insert) lispyville-mode-map
       ;; Function navigation
       "M-h" 'lispyville-beginning-of-defun
