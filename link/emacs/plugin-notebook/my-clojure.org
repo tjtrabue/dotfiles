@@ -221,8 +221,9 @@ file in your project's root directory with the following content:
     ;; Max number of inputs held in history.
     (cider-repl-history-size 1000)
     ;; File for storing CIDER REPL history.
-    (cider-repl-history-file
-     (locate-user-emacs-file "cider-repl-hist"))
+    (cider-repl-history-file (locate-user-emacs-file "cider-repl-hist"))
+    ;; Whether to display images in the REPL
+    (cider-repl-use-content-types t)
     ;; Turn off hover documentation since lsp-mode provides a better alternative.
     (cider-eldoc-display-for-symbol-at-point nil)
     ;; If set to t, CIDER will try to add expected function arguments based on the
