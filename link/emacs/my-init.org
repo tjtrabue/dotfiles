@@ -1644,10 +1644,11 @@ try to load =org= later.
                        ("dvipsnames" "xcolor" t)))
       (add-to-list 'org-latex-default-packages-alist package))
     ;; The command used to generate PDFs from Org's LaTeX exports.
-    (setq org-latex-pdf-process (list (concat "latexmk -f"
-                                              " -lualatex='lualatex --shell-escape %%O %%S'"
-                                              " -recorder -synctex=1 -bibtex-cond"
-                                              " -interaction=nonstopmode -output-directory=%o %f")))
+    (setq org-latex-pdf-process (list (concat "latexmk -f -bibtex-cond -outdir=%o"
+                                              " -pdflatex='pdflatex -recorder -synctex 1 -interaction nonstopmode -shell-escape %%O %%S'"
+                                              " -xelatex='xelatex -recorder -synctex=1 -interaction=nonstopmode -shell-escape %%O %%S'"
+                                              " -lualatex='lualatex --recorder --synctex=1 --interaction=nonstopmode --shell-escape %%O %%S'"
+                                              " %f")))
     ;; Register PlantUML as an Org-compatible language for source blocks.
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages
