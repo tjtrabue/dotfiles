@@ -9,11 +9,12 @@ atp() {
   local binPathFile=${PATH_FILE:-${HOME}/.path}
   local pathToAdd="${1:-$(pwd)}"
   local pathFile="${2:-${binPathFile}}"
-  local evaluatedPathToAdd="$(eval echo "${pathToAdd}")"
+  local evaluatedPathToAdd
   pathToAdd="$(shortpath "${pathToAdd}")"
+  evaluatedPathToAdd="$(expandstr "${pathToAdd}")"
 
   if [ ! -d "${evaluatedPathToAdd}" ]; then
-    err "Path ${BLUE}${pathToAdd}${NC} is not a directory"
+    err "Path ${BLUE}${evaluatedPathToAdd}${NC} is not a directory"
     return 1
   fi
 
@@ -211,6 +212,7 @@ construct_path() {
 
   log_debug "Constructing path variable from file: ${GREEN}${pathFile}${NC}"
   __evaluate_paths "${pathFile}" |
+    escapestr |
     sed "s|${HOME}|\${HOME}|" |
     tr '\n' ':' |
     sed 's/:$//'
@@ -318,20 +320,16 @@ EOF
 # Print paths in $PATH file with all environment variables/subshells evaluated
 __evaluate_paths() {
   local pathFile="${1:-${PATH_FILE}}"
-  local binPath
-  local evaluatedPath
 
   # Make sure that paths are evaluated in reverse order from their listing in
   # the .path file since we want more recently added paths to take precedence
   # over older ones.
   # The grep command is to remove empty and commented lines.
   # The awk command at the end removes cuplicates from the listing.
-
-  while IFS="" read -r binPath || [ -n "${binPath}" ]; do
-    # Make sure only to output paths from the file that can be evaluated.
-    evaluatedPath="$(eval "printf '%s\n' ${binPath}")"
-    [ -n "${evaluatedPath}" ] && printf "%s\n" "${evaluatedPath}"
-  done <"${pathFile}" | grep -v -E -e "^#.*" -e "^$" | tac | awk '!x[$0]++'
+  grep -v -E -e '^\s*#.*' -e '^$' <"${pathFile}" |
+    tac |
+    awk '!x[$0]++' |
+    expandstr
 }
 
 # Gets the static path file's path for a given standard path file.
