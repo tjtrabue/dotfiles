@@ -1461,7 +1461,34 @@ try to load =org= later.
     ;; You may want to comment the `:ensure' and `:straight' directives
     ;; from time to time in order to upgrade your Org version.
     ;; :ensure nil
-    :straight (:type git :host savannah :repo "emacs/org-mode" :branch "main")
+    :straight
+    ;;; The official Savannah Org Mode repository.
+    ;; (org :type git :host savannah :repo "emacs/org-mode" :branch "main")
+    ;;; The org-latex-preview development fork.
+    '(org
+      :fork (:host nil
+                   :repo "https://git.tecosaur.net/tec/org-mode.git"
+                   :branch "dev"
+                   :remote "tecosaur")
+      :files (:defaults "etc")
+      :build t
+      :pre-build
+      (with-temp-file "org-version.el"
+        (require 'lisp-mnt)
+        (let ((version
+               (with-temp-buffer
+                 (insert-file-contents "lisp/org.el")
+                 (lm-header "version")))
+              (git-version
+               (string-trim
+                (with-temp-buffer
+                  (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+                  (buffer-string)))))
+          (insert
+           (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+           (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+           "(provide 'org-version)\n")))
+      :pin nil)
     :delight
     (org-src-mode nil org-src)
     (org-indent-mode nil org-indent)
@@ -1662,6 +1689,28 @@ try to load =org= later.
                                    (python . t)
                                    (R . t)
                                    (shell . t))))
+#+end_src
+
+** org-latex-preview
+Preview LaTeX fragments in Org Mode files.
+
+#+begin_src emacs-lisp
+  (use-package org-latex-preview
+    :after org
+    :ensure nil
+    :straight nil
+    :hook
+    (org-mode . org-latex-preview-auto-mode)
+    :custom
+    (org-latex-preview-process-default 'dvisvgm)
+    (org-latex-preview-auto-ignored-commands
+     '(next-line previous-line mwheel-scroll
+                 scroll-up-command scroll-down-command))
+    (org-latex-preview-numbered t)
+    (org-latex-preview-live t)
+    (org-latex-preview-live-debounce 0.25)
+    :config
+    (plist-put org-latex-preview-appearance-options :page-width 0.8))
 #+end_src
 
 ** org-auto-tangle

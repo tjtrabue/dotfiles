@@ -612,14 +612,13 @@ infrastructure for Emacs.
       "lwl" 'lsp-bridge-workspace-list-symbols
       "lws" 'lsp-bridge-restart-process)
     ;; Keys for `lsp-bridge-mode''s autocomplete popup:
-    (general-def acm-mode-map
-      "C-j" 'acm-select-next
-      "C-k" 'acm-select-prev
-      "C-l" 'acm-complete)
     (general-def 'insert acm-mode-map
       ;; This is to avoid accidentally entering a newline when all you wanted to do is select the
       ;; current completion candidate.
-      "RET" 'acm-complete)
+      "RET" 'acm-complete
+      "C-l" 'acm-complete
+      "C-j" 'acm-select-next
+      "C-k" 'acm-select-prev)
     ;; Evil leader commands (beginning with ","):
     (my/evil-leader-def lsp-bridge-mode-map
       "w]"  'lsp-bridge-diagnostic-jump-next
