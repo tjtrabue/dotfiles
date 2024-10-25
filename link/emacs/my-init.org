@@ -1531,7 +1531,7 @@ try to load =org= later.
     (org-startup-indented t)
     ;; Which LaTeX compiler command to use. Defaults to "pdflatex".
     (org-latex-compiler (cond
-                         ((executable-find "luatex") "luatex")
+                         ((executable-find "lualatex") "lualatex")
                          ((executable-find "xelatex") "xelatex")
                          (t "pdflatex")))
     ;; The CLI program used to convert LaTeX fragments to image files.
@@ -1548,21 +1548,6 @@ try to load =org= later.
     (org-latex-src-block-backend 'engraved)
     ;; Whether to show LaTeX previews when opening a new Org buffer.
     (org-startup-with-latex-preview nil)
-    ;; The default LaTeX preview program to use.
-    ;; Can be one of the following:
-    ;; (you must have the corresponding CLI program installed)
-    ;;   'dvipng (default)
-    ;;   'dvisvgm
-    ;;   'imagemagick (uses the `convert' program)
-    (org-preview-latex-default-process (cond
-                                        ((and (executable-find "convert")
-                                              (string-match-p "\sIMAGEMAGICK\s"
-                                                              system-configuration-features)
-                                              'imagemagick))
-                                        ((executable-find "dvisvgm")
-                                         'dvisvgm)
-                                        (t
-                                         'dvipng)))
     ;; Whether to highlight LaTeX related syntax in Org buffers.
     (org-highlight-latex-and-related '(native script entities))
     ;; Directory used by Org only in rare circumstances, such as when filing away remember notes.
@@ -1624,30 +1609,6 @@ try to load =org= later.
     ;; Also create the agenda directory.
     (make-directory my/org-agenda-dir t)
     :config
-    ;; Use `lualatex' to create DVI/PDF output for LaTeX previews. Also, add '--shell-escape' flag to
-    ;; all LaTeX commands that Org uses to generate previews, and make sure that `:latex-compiler'
-    ;; command strings generate DVI files when appropriate.
-    (let ((dvipng-config (alist-get 'dvipng org-preview-latex-process-alist))
-          (dvisvgm-config (alist-get 'dvisvgm org-preview-latex-process-alist))
-          (imagemagick-config (alist-get 'imagemagick org-preview-latex-process-alist))
-          (gen-dvi-cmd (concat "lualatex"
-                               " --shell-escape"
-                               " --interaction=nonstopmode"
-                               " --output-format=dvi"
-                               " --output-directory=%o"
-                               " %f") )
-          (gen-pdf-cmd (concat "lualatex"
-                               " --shell-escape"
-                               " --interaction=nonstopmode"
-                               " --output-format=pdf"
-                               " --output-directory=%o"
-                               " %f") ))
-      (setf dvipng-config (plist-put dvipng-config :latex-compiler gen-dvi-cmd))
-      (setf dvipng-config (plist-put dvipng-config :programs '("lualatex" "dvipng")))
-      (setf dvisvgm-config (plist-put dvisvgm-config :latex-compiler gen-dvi-cmd))
-      (setf dvisvgm-config (plist-put dvisvgm-config :programs '("lualatex" "dvisvgm")))
-      (setf imagemagick-config (plist-put imagemagick-config :latex-compiler gen-pdf-cmd))
-      (setf imagemagick-config (plist-put imagemagick-config :programs '("lualatex" "convert"))))
     ;; Required for expand-region.
     (require 'org-fold)
     ;; Add more default LaTeX packages
@@ -1692,7 +1653,8 @@ try to load =org= later.
 #+end_src
 
 ** org-latex-preview
-Preview LaTeX fragments in Org Mode files.
+Preview LaTeX fragments in Org Mode buffers. This package is built-in to Org
+Mode.
 
 #+begin_src emacs-lisp
   (use-package org-latex-preview
@@ -1702,7 +1664,21 @@ Preview LaTeX fragments in Org Mode files.
     :hook
     (org-mode . org-latex-preview-auto-mode)
     :custom
-    (org-latex-preview-process-default 'dvisvgm)
+    ;; The default LaTeX preview program to use.
+    ;; Can be one of the following:
+    ;; (you must have the corresponding CLI program installed)
+    ;;   'dvipng (default)
+    ;;   'dvisvgm
+    ;;   'imagemagick (uses the `convert' program)
+    (org-latex-preview-process-default (cond
+                                        ((executable-find "dvisvgm")
+                                         'dvisvgm)
+                                        ((and (executable-find "convert")
+                                              (string-match-p "\sIMAGEMAGICK\s"
+                                                              system-configuration-features)
+                                              'imagemagick))
+                                        (t
+                                         'dvipng)))
     (org-latex-preview-auto-ignored-commands
      '(next-line previous-line mwheel-scroll
                  scroll-up-command scroll-down-command))
@@ -1710,7 +1686,27 @@ Preview LaTeX fragments in Org Mode files.
     (org-latex-preview-live t)
     (org-latex-preview-live-debounce 0.25)
     :config
-    (plist-put org-latex-preview-appearance-options :page-width 0.8))
+    (plist-put org-latex-preview-appearance-options :page-width 0.8)
+    ;; Use `lualatex' to create DVI/PDF output for LaTeX previews.
+    (let ((dvipng-config (alist-get 'dvipng org-latex-preview-process-alist))
+          (dvisvgm-config (alist-get 'dvisvgm org-latex-preview-process-alist))
+          (imagemagick-config (alist-get 'imagemagick org-latex-preview-process-alist))
+          (gen-dvi-cmd (concat "lualatex"
+                               " --interaction=nonstopmode"
+                               " --output-format=dvi"
+                               " -output-directory=%o"
+                               " %f"))
+          (gen-pdf-cmd (concat "lualatex"
+                               " --interaction=nonstopmode"
+                               " --output-format=pdf"
+                               " --output-directory=%o"
+                               " %f")))
+      (setf dvipng-config (plist-put dvipng-config :latex-compiler gen-dvi-cmd))
+      (setf dvipng-config (plist-put dvipng-config :programs '("lualatex" "dvipng")))
+      (setf dvisvgm-config (plist-put dvisvgm-config :latex-compiler gen-dvi-cmd))
+      (setf dvisvgm-config (plist-put dvisvgm-config :programs '("lualatex" "dvisvgm")))
+      (setf imagemagick-config (plist-put imagemagick-config :latex-compiler gen-pdf-cmd))
+      (setf imagemagick-config (plist-put imagemagick-config :programs '("lualatex" "convert")))))
 #+end_src
 
 ** org-auto-tangle
