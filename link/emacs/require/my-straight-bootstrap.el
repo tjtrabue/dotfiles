@@ -61,6 +61,7 @@
   ;; TODO: Remove these host additions once straight.el includes them by
   ;;       default.
   (add-to-list 'straight-hosts '(codeberg "codeberg.org" ".git"))
+  (add-to-list 'straight-hosts '(savannah "git.savannah.gnu.org/git" ".git"))
 
   ;; Refresh package repositories
   (when (not (fboundp 'straight-pull-recipe-repositories))

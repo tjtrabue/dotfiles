@@ -1461,7 +1461,7 @@ try to load =org= later.
     ;; You may want to comment the `:ensure' and `:straight' directives
     ;; from time to time in order to upgrade your Org version.
     ;; :ensure nil
-    ;; :straight (org :type built-in)
+    :straight (:type git :host savannah :repo "emacs/org-mode" :branch "main")
     :delight
     (org-src-mode nil org-src)
     (org-indent-mode nil org-indent)
