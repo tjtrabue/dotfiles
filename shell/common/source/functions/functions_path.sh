@@ -212,7 +212,6 @@ construct_path() {
 
   log_debug "Constructing path variable from file: ${GREEN}${pathFile}${NC}"
   __evaluate_paths "${pathFile}" |
-    escapestr |
     sed "s|${HOME}|\${HOME}|" |
     tr '\n' ':' |
     sed 's/:$//'
