@@ -1,0 +1,26 @@
+#+TITLE:   Persistent Storage for Emacs
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-10-31
+#+TAGS:
+#+STARTUP: fold
+
+Emacs is a software platform and a programming language, as well as an editor,
+so just as with any programming platform, it can be useful to persist arbitrary
+data to disk for later retrieval.
+
+* persistent-soft
+Persistent storage for Emacs, returning nil on failure.
+
+This is a wrapper around =pcache.el=, providing "soft" fetch and store routines
+which never throw an error, but instead return nil on failure.
+
+There is no end-user interface for this library. It is only useful from other
+Lisp code.
+
+The =unicode-fonts= package uses this interface to speed up its startup time.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package persistent-soft
+    :demand t)
+#+end_src

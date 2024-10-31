@@ -65,6 +65,10 @@
   (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 (when (member "Symbols Nerd Font" (font-family-list))
   (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t nil "Symbola" nil 'append))
+(when (member "Quivira" (font-family-list))
+  (set-fontset-font t nil "Quivira" nil 'append))
 
 ;;;###autoload
 (defun my-font-set-default-font ()
@@ -92,7 +96,10 @@
       :family (plist-get variable-pitch-font-plist :family)
       :height (plist-get variable-pitch-font-plist :height)
       :weight (plist-get variable-pitch-font-plist :weight)
-      :width  (plist-get variable-pitch-font-plist :width))))
+      :width  (plist-get variable-pitch-font-plist :width))
+    (add-to-list 'face-font-family-alternatives
+      (list (plist-get default-font-plist :family)
+        "Symbola" "Quivira" "courier" "fixed"))))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)

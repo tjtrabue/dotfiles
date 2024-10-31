@@ -24,6 +24,7 @@ elixir
 fastfetch
 feh
 fonts-noto
+fonts-symbola
 freeglut3-dev
 g++
 g++-12

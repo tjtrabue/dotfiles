@@ -7,10 +7,34 @@
 
 Any extra font configuration goes here.
 
+* unicode-fonts
+Emacs maintains font mappings on a per-glyph basis, meaning that multiple fonts
+are used at the same time (transparently) to display any character for which you
+have a font. Furthermore, Emacs does this out of the box.
+
+However, font mappings via fontsets are a bit difficult to configure. In
+addition, the default setup does not always pick the most legible fonts. As the
+manual warns, the choice of font actually displayed for a non-ASCII character is
+"somewhat random".
+
+This library provides font mappings for 233 of the 255 blocks in the Unicode 8.0
+standard which are public and have displayable characters. It assumes that 6
+Latin blocks are covered by the default font. 16/255 blocks are not mapped to
+any known font.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package unicode-fonts
+    ;; persistent-soft speeds up startup time
+    :after persistent-soft
+    :demand t
+    :config
+    (unicode-fonts-setup))
+#+end_src
+
 * hasklig-mode
-  Use fancy ligatures for Haskell programming.
+Use fancy ligatures for Haskell programming.
 
 #+begin_src emacs-lisp
-(use-package hasklig-mode
-  :hook (haskell-mode))
+  (use-package hasklig-mode
+    :hook (haskell-mode))
 #+end_src

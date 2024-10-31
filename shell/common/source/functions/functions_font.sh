@@ -58,6 +58,17 @@ install_custom_fonts() {
   cp -v -t "${userFontsOtfDir}/ArkibalSerif" "${fontTempDir}/arkibal_serif/"*.otf
   cp -v -t "${userFontsTtfDir}/ArkibalSerif" "${fontTempDir}/arkibal_serif/"*.ttf
 
+  # Install Quivira font
+  mkdir -p "${userFontsOtfDir}/Quivira"
+  wget -qP "${userFontsOtfDir}/Quivira" "http://quivira-font.com/files/Quivira.otf"
+
+  # Install Symbola font
+  mkdir -p "${userFontsTtfDir}/Symbola" "${fontTempDir}/symbola"
+  wget -qP "${fontTempDir}" \
+    "https://fontlibrary.org/assets/downloads/symbola/cf81aeb303c13ce765877d31571dc5c7/symbola.zip"
+  unzip "${fontTempDir}/symbola/symbola.zip"
+  cp -v -t "${userFontsTtfDir}/Symbola" "${fontTempDir}/symbola/"*.ttf
+
   # Update font cache
   fc-cache -fv
 
