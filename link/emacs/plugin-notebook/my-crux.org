@@ -7,7 +7,6 @@
 
 =crux= is a collection of ridiculously useful extensions for Emacs.
 
-* =use package= specification
 #+begin_src emacs-lisp
   (use-package crux
     :demand t

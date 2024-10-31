@@ -11,9 +11,9 @@ programming paradigms such as Behavior-Driven Development and Design by
 Contract.
 
 * d-mode
-  Major mode for editing files written in the D programming language.
+Major mode for editing files written in the D programming language.
 
-  #+begin_src emacs-lisp
-    (use-package d-mode
-      :mode ("\\.d\\'" . d-mode))
-  #+end_src
+#+begin_src emacs-lisp
+  (use-package d-mode
+    :mode ("\\.d\\'" . d-mode))
+#+end_src

@@ -34,6 +34,9 @@ aforementioned Vim plugins have.
 
   #+begin_src emacs-lisp
     (use-package smartparens
+      ;; A combination of `lispy-mode' and `electric-pair-mode' does everything
+      ;; that this plugin can do and more.
+      :disabled
       :delight
       (smartparens-mode)
       (smartparens-strict-mode)
