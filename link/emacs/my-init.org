@@ -1529,6 +1529,20 @@ try to load =org= later.
     (org-startup-folded 'fold)
     ;; Whether to open Org mode buffers with `org-indent-mode' enabled.
     (org-startup-indented t)
+    ;; The column to which tags should be indented in a headline
+    (org-tags-column 0)
+    ;; Whether to insert new headings after the current subtree
+    (org-insert-heading-respect-content t)
+    ;; Check if in invisible region before inserting or deleting a character
+    (org-catch-invisible-edits 'show-and-error)
+    ;; Whether C-a and C-e behave specially in headlines and items
+    (org-special-ctrl-a/e t)
+    ;; Tell font-lock to hide emphasis markers
+    (org-hide-emphasis-markers t)
+    ;; Whether to show entities as UTF-8 characters
+    (org-pretty-entities t)
+    ;; The ellipsis used in Org mode outline.
+    (org-ellipsis "…")
     ;; Which LaTeX compiler command to use. Defaults to "pdflatex".
     (org-latex-compiler (cond
                          ((executable-find "lualatex") "lualatex")
@@ -1569,8 +1583,6 @@ try to load =org= later.
                                    "|"
                                    "DONE(d)"
                                    "CANCELLED(c@)")))
-    ;; Set Org agenda files to a list of files and/or directories.
-    (org-agenda-files `(,my/org-agenda-dir))
     ;; Whether to prompt the user for confirmation before evaluating source
     ;; blocks.
     (org-confirm-babel-evaluate nil)
@@ -1707,6 +1719,26 @@ Org Mode buffers.
       (setf dvisvgm-config (plist-put dvisvgm-config :programs '("lualatex" "dvisvgm")))
       (setf imagemagick-config (plist-put imagemagick-config :latex-compiler gen-pdf-cmd))
       (setf imagemagick-config (plist-put imagemagick-config :programs '("lualatex" "convert")))))
+#+end_src
+
+** org-agenda
+Built-in Org package providing an agenda editor.
+
+#+begin_src emacs-lisp
+  (use-package org-agenda
+    :after org
+    :ensure nil
+    :straight nil
+    :custom
+    ;; Set Org agenda files to a list of files and/or directories.
+    (org-agenda-files `(,my/org-agenda-dir))
+    ;; Shift tags in agenda items to this column.
+    (org-agenda-tags-column 0)
+    (org-agenda-time-grid
+     '((daily today require-timed)
+       (800 1000 1200 1400 1600 1800 2000)
+       " ⎼⎼⎼⎼⎼ " "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"))
+    (org-agenda-current-time-string "◀⎯⎯ now ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"))
 #+end_src
 
 ** org-auto-tangle

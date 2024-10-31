@@ -177,10 +177,13 @@ customization group.
     ;; I am not certain, but I believe this plugin causes Emacs to lock up if window focus is lost
     ;; then regained. org-modern makes Org buffers look nice, but this plugin is unnecessary for
     ;; anything important.
-    :disabled
-    :hook
-    ((org-mode            . org-modern-mode)
-     (org-agenda-finalize . org-modern-agenda)))
+    ;; :disabled
+    :after org
+    :custom
+    ;; Do not use `org-indent-mode' as it interferes with org-modern's block prettification.
+    (org-startup-indented nil)
+    :init
+    (global-org-modern-mode 1))
 #+end_src
 
 * org-preview-html
