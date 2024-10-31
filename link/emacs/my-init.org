@@ -1653,8 +1653,8 @@ try to load =org= later.
 #+end_src
 
 ** org-latex-preview
-Preview LaTeX fragments in Org Mode buffers. This package is built-in to Org
-Mode.
+Built-in Org package providing capabilities for previewing LaTeX fragments in
+Org Mode buffers.
 
 #+begin_src emacs-lisp
   (use-package org-latex-preview
