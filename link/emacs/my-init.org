@@ -27,7 +27,7 @@ config:
   ~/.dotfiles/bin/make_emacs_super_config
 #+end_src
 
-Now, start Emacs, sit back, and enjoy!
+Now, start Emacs, sit back, and enjoy.
 
 * Known Issues (PLEASE READ)
 Here I list any known issues with my configuration and/or plugins, and any
@@ -39,13 +39,13 @@ check it frequently for important updates you must make to your configuration.
 * NOTE: Slow Emacs Initial Load
 When running a fresh Emacs installation with all the goodies for the first time
 (things like AOT native compilation, jitted trampolines, etc.), Emacs will
-probably take a long time to fully load due to the insane number of Elisp files
-Emacs must compile to native code. I'm talking many hours, possibly a full day
-depending on the beefiness of your CPU. This can be discouraging, but it is
+probably take a long time to fully load due to the insane number of Emacs Lisp
+files Emacs must compile to native code. I'm talking many hours, possibly a full
+day depending on the beefiness of your CPU. This can be discouraging, but it is
 nothing to worry about. Emacs will eventually finish compiling all your
-files...usually. If Emacs does hang during compilation, for some reason, it can
-be difficult to tell if Emacs is still running or if something went wrong. Here
-are some tips for ensuring Emacs does, in fact, finish compiling your Elisp
+files…usually. If Emacs does hang during compilation, for some reason, it can be
+difficult to tell if Emacs is still running or if something went wrong. Here are
+some tips for ensuring Emacs does, in fact, finish compiling your Emacs Lisp
 files and become useable:
 
 - Make sure to set the max number of open file descriptors in
@@ -462,7 +462,7 @@ the much superior =straight.el= third-party package manager.
 
 #+begin_src emacs-lisp
   (if (and (not my/use-straight-p) (>= emacs-major-version 24))
-  ;;; IF we want to use the built-in package manager...
+  ;;; IF we want to use the built-in package manager
       (progn
         ;; Package configuration
         (require 'package)
