@@ -27,7 +27,16 @@ any known font.
     ;; persistent-soft speeds up startup time
     :after persistent-soft
     :demand t
+    :custom
+    ;; The list of fontsets to configure.
+    (unicode-fonts-fontset-names '("fontset-default"))
+    ;; Add better glyph fonts to fallback font list
+    (unicode-fonts-fallback-font-list '("Noto Color Emoji"
+                                        "Symbols Nerd Font"
+                                        "Symbola"
+                                        "Quivira"))
     :config
+    ;; Initialize unicode-fonts
     (unicode-fonts-setup))
 #+end_src
 

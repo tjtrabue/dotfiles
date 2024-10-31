@@ -560,10 +560,10 @@ libraries. Using =straight.el= as the module loader takes care of lazy loading.
 #+begin_src emacs-lisp
   ;; My own font functions and definitions.
   (use-package my-font
-     :ensure nil
-     :straight
-     (my-font :local-repo "~/.emacs.d/require"
-              :files ("my-font.el")))
+    :ensure nil
+    :straight
+    (my-font :local-repo "~/.emacs.d/require"
+             :files ("my-font.el")))
 
   ;; My custom window functions.
   (use-package my-window

@@ -96,10 +96,7 @@
       :family (plist-get variable-pitch-font-plist :family)
       :height (plist-get variable-pitch-font-plist :height)
       :weight (plist-get variable-pitch-font-plist :weight)
-      :width  (plist-get variable-pitch-font-plist :width))
-    (add-to-list 'face-font-family-alternatives
-      (list (plist-get default-font-plist :family)
-        "Symbola" "Quivira" "courier" "fixed"))))
+      :width  (plist-get variable-pitch-font-plist :width))))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)
