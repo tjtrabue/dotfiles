@@ -16,7 +16,7 @@ _help() {
   cat <<EOF
 ${THIS_EXEC}
 
-<insert description here>
+Init Arch Linux.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]

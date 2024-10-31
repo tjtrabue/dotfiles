@@ -455,6 +455,15 @@ arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
   "git -C ${DOTFILES_HOME} remote set-url origin ${DOTFILES_GIT_URL}"
 # }}}
 
+# Automatically update mirrorlist {{{
+
+# 'reflector' is a package (a Python script, to be precise) that automatically
+# pulls the most up-to-date Pacman mirrors and updates the
+# /etc/pacman.d/mirrorlist file. The default configuration enables a
+# systemd.timer that updates the mirrorlist file on a weekly basis.
+arch-chroot "$MOUNT_ROOT" systemctl enable reflector
+# }}}
+
 # Run installers {{{
 info_log "Running install scripts"
 arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \

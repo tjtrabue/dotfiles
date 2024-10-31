@@ -75,24 +75,6 @@ pacupmir() {
     --save "${pacmanMirrorListFile}"
 }
 
-# Set the Arch repository mirror list to only US sites
-set_mirrorlist() {
-  local mirrorlist="/etc/pacman.d/mirrorlist"
-  local tempfile="${HOME}/mirrorlist.tmp"
-
-  if ! grep -q "^## United States" <"${mirrorlist}"; then
-    err "No United States mirrors found in mirrorlist"
-    return 1
-  fi
-
-  grep -A 1 "## United States" <"${mirrorlist}" |
-    sed '/^## United States/d;/--/d' >"${tempfile}"
-
-  sudo mv "${mirrorlist}"{,.bak}
-  sudo cp "${tempfile}" "${mirrorlist}"
-  rm -f "${tempfile}"
-}
-
 # Figure out the proper backlight utility to use
 install_brightness_util() {
   if [ "$(command -v xbacklight)" == "" ]; then
