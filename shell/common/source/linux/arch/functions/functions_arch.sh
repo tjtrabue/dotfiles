@@ -56,6 +56,25 @@ pacman_rm_orphans() {
   pacman -Qtdq | sudo pacman -Rns --noconfirm -
 }
 
+# Update PACMAN mirror list in /etc/pacman.d/mirrorlist.
+pacupmir() {
+  local pacmanMirrorListFile="/etc/pacman.d/mirrorlist"
+
+  if [ -z "$(command -v reflector)" ]; then
+    err "Install the reflector Arch Linux package to use this command"
+    return 1
+  fi
+
+  log_info "Updating mirror list file: ${BLUE}${pacmanMirrorListFile}${NC}"
+  sudo reflector \
+    --sort "rate" \
+    --threads "$(nproc)" \
+    --protocol "https" \
+    --ipv4 \
+    --country 'us,ca,gb,de,fr,br,se,dk,*' \
+    --save "${pacmanMirrorListFile}"
+}
+
 # Set the Arch repository mirror list to only US sites
 set_mirrorlist() {
   local mirrorlist="/etc/pacman.d/mirrorlist"

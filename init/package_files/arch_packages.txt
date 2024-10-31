@@ -180,6 +180,7 @@ python-pyqt5
 ranger
 rclone
 read-edid
+reflector
 ripgrep
 rlwrap
 rofi
