@@ -46,6 +46,7 @@
          (satoshi-plist '(:family "Satoshi Variable" :height 110 :weight medium :width normal))
          ;; Default fonts
          (cascadia-code-plist '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+         (fira-code-plist '(:family "FiraCode Nerd Font" :height 110 :weight semi-bold :width normal))
          (noto-sans-plist '(:family "Noto Sans" :height 110 :weight semi-bold :width normal))
          (dejavu-sans-plist '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
     (pcase font
@@ -53,6 +54,8 @@
         (cond
           ((member (plist-get cascadia-code-plist :family) font-family-list)
             cascadia-code-plist)
+          ((member (plist-get fira-code-plist :family) font-family-list)
+            fira-code-plist)
           (t dejavu-sans-plist)))
       ('variable-pitch
         (cond
