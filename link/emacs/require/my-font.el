@@ -40,11 +40,13 @@
          (neogrey-plist '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
          ;; https://freedesignresources.net/triakis-font-family-free-weight/
          (triakis-plist '(:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
-         (dejavu-serif-plist  '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal))
          ;; https://www.fontshare.com/fonts/clash-display
-         (clash-display-plist '(:family "Clash Display Variable" :height 110 :weight medium :width normal))
+         (clash-display-plist '(:family "Clash Display Variable" :height 110 :weight semi-bold :width normal))
+         ;; https://fontshare.com/fonts/satoshi
+         (satoshi-plist '(:family "Satoshi Variable" :height 110 :weight medium :width normal))
          ;; Default fonts
          (cascadia-code-plist '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+         (noto-sans-plist '(:family "Noto Sans" :height 110 :weight semi-bold :width normal))
          (dejavu-sans-plist '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
     (pcase font
       ('default
@@ -54,6 +56,8 @@
           (t dejavu-sans-plist)))
       ('variable-pitch
         (cond
+          ((member (plist-get satoshi-plist :family) font-family-list)
+            satoshi-plist)
           ((member (plist-get clash-display-plist :family) font-family-list)
             clash-display-plist)
           ((member (plist-get arkibal-plist :family) font-family-list)
@@ -62,7 +66,7 @@
             neogrey-plist)
           ((member (plist-get triakis-plist :family) font-family-list)
             triakis-plist)
-          (t dejavu-serif-plist))))))
+          (t noto-sans-plist))))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (when (member "Noto Color Emoji" (font-family-list))
