@@ -12,6 +12,7 @@ and more powerful.
 
 #+begin_src emacs-lisp
   (use-package symbol-overlay
+    :delight
     :hook
     (prog-mode . symbol-overlay-mode)
     :general
