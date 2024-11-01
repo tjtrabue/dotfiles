@@ -41,6 +41,8 @@
          ;; https://freedesignresources.net/triakis-font-family-free-weight/
          (triakis-plist '(:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
          (dejavu-serif-plist  '(:family "DejaVu Serif" :height 1.0 :weight semi-bold :width normal))
+         ;; https://www.fontshare.com/fonts/clash-display
+         (clash-display-plist '(:family "Clash Display Variable" :height 110 :weight medium :width normal))
          ;; Default fonts
          (cascadia-code-plist '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
          (dejavu-sans-plist '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
@@ -52,6 +54,8 @@
           (t dejavu-sans-plist)))
       ('variable-pitch
         (cond
+          ((member (plist-get clash-display-plist :family) font-family-list)
+            clash-display-plist)
           ((member (plist-get arkibal-plist :family) font-family-list)
             arkibal-plist)
           ((member (plist-get neogrey-plist :family) font-family-list)
