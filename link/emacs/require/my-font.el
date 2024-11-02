@@ -44,6 +44,8 @@
          (clash-display-plist '(:family "Clash Display Variable" :height 110 :weight semi-bold :width normal))
          ;; https://fontshare.com/fonts/satoshi
          (satoshi-plist '(:family "Satoshi Variable" :height 110 :weight medium :width normal))
+         ;; https://www.fontshare.com/fonts/switzer
+         (switzer-plist '(:family "Switzer Variable" :height 110 :weight regular :width normal))
          ;; Default fonts
          (cascadia-code-plist '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
          (jetbrains-mono-plist '(:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
@@ -64,14 +66,16 @@
         (cond
           ((member (plist-get satoshi-plist :family) font-family-list)
             satoshi-plist)
-          ((member (plist-get clash-display-plist :family) font-family-list)
-            clash-display-plist)
+          ((member (plist-get switzer-plist :family) font-family-list)
+            switzer-plist)
           ((member (plist-get arkibal-plist :family) font-family-list)
             arkibal-plist)
           ((member (plist-get neogrey-plist :family) font-family-list)
             neogrey-plist)
           ((member (plist-get triakis-plist :family) font-family-list)
             triakis-plist)
+          ((member (plist-get clash-display-plist :family) font-family-list)
+            clash-display-plist)
           (t noto-sans-plist))))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
