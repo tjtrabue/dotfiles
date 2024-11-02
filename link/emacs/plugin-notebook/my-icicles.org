@@ -9,6 +9,7 @@ Icicles is a text completion framework for Emacs. I'd use =helm= whenever
 possible since it is vastly more powerful and flexible.
 
 #+begin_src emacs-lisp
-  ;; Currently unused in favor of helm
-  ;; (use-package icicles)
+  (use-package icicles
+    ;; Currently disabled in favor of vertico
+    :disabled)
 #+end_src

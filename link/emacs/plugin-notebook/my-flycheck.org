@@ -190,20 +190,22 @@ Flycheck checker for =credo=, a static code analyzer for Elixir.
 #+end_src
 
 ** flycheck-inline
-Show Flycheck errors inline at their reporting locations.  This is a simpler
+Show Flycheck errors inline at their reporting locations. This is a simpler
 alternative to =flycheck-pos-tip=. I've found that the tooltips used by
 =flycheck-pos-tip= can be unreadably small. If you encounter that issue, use
 this plugin instead of =flycheck-pos-tip=.
 
 #+begin_src emacs-lisp
   (use-package flycheck-inline
+    ;; Seems to be overridden by Embark and other plugins that output to the echo area.
+    :disabled
     :after flycheck
     :demand t
     :hook
-    (lsp-mode . (lambda ()
-                  ;; Disable flycheck-inline when using lsp-mode.
-                  ;; lsp-mode has a much nicer UI for diagnostics.
-                  (flycheck-inline-mode -1)))
+    ((lsp-mode lsp-bridge-mode) . (lambda ()
+                                    ;; Disable flycheck-inline when using lsp-mode.
+                                    ;; lsp-mode has a much nicer UI for diagnostics.
+                                    (flycheck-inline-mode -1)))
     :config
     (global-flycheck-inline-mode 1))
 #+end_src
@@ -231,15 +233,14 @@ Shows the error at point in a =pos-tip= graphical popup.
 
 #+begin_src emacs-lisp
   (use-package flycheck-pos-tip
-    ;; The tooltips used by flycheck-pos-tip are way too small.
-    :disabled
     :after flycheck
     :hook
     (flycheck-mode . (lambda ()
                        ;; Put errors in tooltips if we're not in lsp-mode, since
                        ;; lsp-mode does its own thing and doing so would cause
                        ;; duplication.
-                       (if (not (bound-and-true-p lsp-mode))
+                       (if (or (not (bound-and-true-p lsp-mode))
+                               (not (bound-and-true-p lsp-bridge-mode)))
                            (flycheck-pos-tip-mode 1)))))
 #+end_src
 

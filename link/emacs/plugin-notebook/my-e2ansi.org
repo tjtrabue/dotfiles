@@ -4,6 +4,12 @@
 #+DATE:   2020-05-25
 #+STARTUP: fold
 
+=e2ansi= provides syntax highlighting for =less= and other tools that run in
+terminal windows. This isn't an Emacs plugin, per se, but rather a command line
+tool that colorizes =less= or =cat= output using Emacs as a syntax highlighting
+engine. Thus, this plugin has no true value within Emacs, only in terminal
+emulators.
+
 #+begin_src emacs-lisp
-(use-package e2ansi)
+  (use-package e2ansi)
 #+end_src

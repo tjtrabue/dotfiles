@@ -10,5 +10,7 @@ profile their Emacs start-up time without leaving Emacs.
 
 #+begin_src emacs-lisp
   (use-package esup
+    ;; Not currently using ESUP
+    :disabled
     :commands esup)
 #+end_src

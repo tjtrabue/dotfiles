@@ -20,7 +20,7 @@ Lisp code.
 
 The =unicode-fonts= package uses this interface to speed up its startup time.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package persistent-soft
     :demand t)
 #+end_src

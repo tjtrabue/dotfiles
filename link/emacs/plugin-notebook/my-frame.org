@@ -10,15 +10,15 @@ found here.
 
 * Moom
   =moom.el= is a plugin that acts like a tiling window manager layer for
-  Emacs. =moom= was a macOS tool used for easily adjusting GUI windows ala
-  tiling window managers, and this plugin is a port of =moom= to Emacs.
+  Emacs. =moom= was a macOS tool used for easily adjusting GUI windows /ala/ tiling
+  window managers, and this plugin is a port of =moom= to Emacs.
 
 ** *NOTE:* You probably don't want =moom= on Linux
   Because =moom='s purpose is to simply imitate a tiling window manager, this
   plugin is usually unnecessary on Linux since every Linux power user already
   makes use of a tiling window manager, and they're more useful than =moom= to
-  begin with. =moom= can be quite useful on macOS computers, though, so I've
-  added some configuration for it. However, macOS computers /do/ have access to
+  begin with. =moom= can be quite useful on macOS computers, though, so I've added
+  some configuration for Mac users. However, macOS computers /do/ have access to
   even better tiling window managers (or "snap tools"), such as Better Snap
   Tool, which I recommend using. Thus, =moom= may or may not be useful even on a
   Mac.

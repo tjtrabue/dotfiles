@@ -22,7 +22,7 @@ standard which are public and have displayable characters. It assumes that 6
 Latin blocks are covered by the default font. 16/255 blocks are not mapped to
 any known font.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package unicode-fonts
     ;; persistent-soft speeds up startup time
     :after persistent-soft
