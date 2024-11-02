@@ -9,6 +9,8 @@
 with various statistical analysis programs, such as R, S-Plus, SAS, Stata, and
 OpenBUGS/JAGS.
 
+Consult [[https://ess.r-project.org/Manual/ess.html#Interacting-with-statistical-programs][the manual]] for usage instructions.
+
 #+begin_src emacs-lisp
   (use-package ess)
 #+end_src

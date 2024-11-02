@@ -27,90 +27,90 @@ any known font.
     ;; persistent-soft speeds up startup time
     :after persistent-soft
     :demand t
-    :init
+    :custom
     ;; The list of fontsets to configure.
-    (setq unicode-fonts-fontset-names '("fontset-default"))
+    (unicode-fonts-fontset-names '("fontset-default"))
     ;; Add better glyph fonts to fallback font list
-    (setq unicode-fonts-fallback-font-list '("Noto Color Emoji"
-                                             "Symbols Nerd Font"
-                                             "Symbola"
-                                             "Quivira"))
+    (unicode-fonts-fallback-font-list '("Noto Color Emoji"
+                                        "Symbols Nerd Font"
+                                        "Symbola"
+                                        "Quivira"))
     ;; Specify only the font mappings we care about.
-    (setq unicode-fonts-block-font-mapping
-          '(("Alchemical Symbols"
-             ("Noto Sans Symbols" "Symbola" "Quivira" "Everson Mono:weight=bold"))
-            ("Alphabetic Presentation Forms"
-             ("DejaVu Sans:width=condensed" "Arial Unicode MS" "Cardo" "Code2000" "Quivira"
-              "Everson Mono:weight=bold" "FreeMono" "ALPHABETUM Unicode"))
-            ("Ancient Greek Musical Notation"
-             ("Cardo" "Noto Sans Symbols" "Aegean" "New Athena Unicode" "Musica" "Symbola"
-              "Quivira" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
-            ("Ancient Greek Numbers"
-             ("Noto Sans Symbols" "Apple Symbols" "New Athena Unicode" "Cardo" "Aegean"
-              "Quivira" "Symbola" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
-            ("Ancient Symbols"
-             ("Noto Sans Symbols" "Analecta" "New Athena Unicode" "Cardo" "Aegean"
-              "Quivira" "Symbola" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
-            ("Arrows"
-             ("Cascadia Code PL" "Noto Sans Symbols" "Cambria Math" "Segoe UI Symbol"
-              "DejaVu Sans:width=condensed" "Asana Math" "Arial Unicode MS"
-              "BabelStone Modern" "Symbola" "Quivira" "Code2000" "Noto Sans Symbols"
-              "Everson Mono:weight=bold" "FreeMono"))
-            ("Braille Patterns"
-             ("Quivira" "Apple Braille" "DejaVu Sans:width=condensed" "Noto Sans Symbols"
-              "Apple Symbols" "Segoe UI Symbol" "Symbola" "Noto Sans Symbols" "FreeMono" "Code2000"
-              "Everson Mono:weight=bold"))
-            ("CJK Compatibility"
-             ("SimHei" "FangSong" "SimSun" "MingLiU" "Meiryo" "Microsoft JhengHei"
-              "Microsoft JhengHei UI" "Lantinghei SC" "Lantinghei TC" "HAN NOM A"
-              "Arial Unicode MS" "WenQuanYi Zen Hei Mono" "HanaMinA" "BabelStone Han"
-              "Code2000"))
-            ("CJK Compatibility Forms"
-             ("WenQuanYi Zen Hei Mono" "Lantinghei SC" "SimHei" "FangSong" "SimSun"
-              "LiSong Pro" "Baoli SC" "Microsoft YaHei" "Microsoft YaHei UI"
-              "Lantinghei TC" "BabelStone Han" "MingLiU" "Microsoft JhengHei"
-              "Microsoft JhengHei UI" "HAN NOM A" "Symbola" "Xingkai SC" "DFKai-SB"
-              "Code2000"))
-            ("CJK Compatibility Ideographs"
-             ("SimHei" "FangSong" "SimSun" "Microsoft YaHei" "Microsoft YaHei UI"
-              "WenQuanYi Zen Hei Mono" "BabelStone Han" "UnBatang" "MingLiU"
-              "Microsoft JhengHei" "Microsoft JhengHei UI" "HAN NOM A" "Arial Unicode MS"
-              "Lantinghei SC" "HanaMinA"))
-            ("CJK Compatibility Ideographs Supplement"
-             ("WenQuanYi Zen Hei Mono" "SimHei" "FangSong" "SimSun" "MingLiU" "HanaMinA"
-              "Hiragino Kaku Gothic Pro" "Hiragino Maru Gothic Pro" "Hiragino Mincho Pro"
-              "Microsoft JhengHei" "Microsoft JhengHei UI" "HAN NOM B" "LiSong Pro"))
-            ("CJK Radicals Supplement"
-             ("WenQuanYi Zen Hei Mono" "SimHei" "FangSong" "SimSun" "Microsoft YaHei"
-              "Microsoft YaHei UI" "HanaMinA" "BabelStone Han" "MingLiU"
-              "Microsoft JhengHei" "Microsoft JhengHei UI" "HAN NOM A" "DFKai-SB"
-              "Apple Symbols" "Code2000"))
-            ("CJK Strokes"
-             ("WenQuanYi Zen Hei Mono" "HanaMinA" "BabelStone Han" "Code2000"))
-            ("CJK Symbols and Punctuation"
-             ("Lantinghei SC" "SimHei" "FangSong" "SimSun" "HanaMinA"
-              "WenQuanYi Zen Hei Mono" "LiSong Pro" "STFangsong" "Microsoft YaHei"
-              "Microsoft YaHei UI" "Lantinghei TC" "MingLiU" "HAN NOM A" "Arial Unicode MS"
-              "PCMyungjo" "BabelStone Han" "Osaka:spacing=m" "Code2000"))
-            ("CJK Unified Ideographs"
-             ("WenQuanYi Zen Hei Mono" "Lantinghei SC" "Songti SC" "SimHei" "FangSong"
-              "STFangsong" "SimSun" "LiSong Pro" "Baoli SC" "HanaMinA" "BabelStone Han"
-              "Apple LiGothic" "Lantinghei TC" "MingLiU" "Microsoft JhengHei"
-              "Microsoft JhengHei UI" "HAN NOM A" "DFKai-SB" "Arial Unicode MS"
-              "Xingkai SC" "GB18030 Bitmap" "UnBatang"))
-            ("CJK Unified Ideographs Extension A"
-             ("SimHei" "FangSong" "STFangsong" "SimSun" "Songti SC" "Microsoft YaHei"
-              "Microsoft YaHei UI" "MingLiU" "Microsoft JhengHei" "Microsoft JhengHei UI"
-              "HanaMinA" "HAN NOM A" "Code2000" "DFKai-SB" "BabelStone Han"
-              "GB18030 Bitmap"))
-            ("CJK Unified Ideographs Extension B"
-             ("SimHei" "FangSong" "SimSun" "LiSong Pro" "Microsoft YaHei"
-              "Microsoft YaHei UI" "HanaMinB" "HAN NOM B" "Code2002" "MingLiU"
-              "Microsoft JhengHei" "Microsoft JhengHei UI" "BabelStone Han" "DFKai-SB"))
-            ("CJK Unified Ideographs Extension C" ("HanaMinB" "BabelStone Han" "HAN NOM B"))
-            ("CJK Unified Ideographs Extension D" ("HanaMinB" "BabelStone Han"))
-            ("CJK Unified Ideographs Extension E" ("HanaMinB" "BabelStone Han"))
-            ("Emoticons" ("Noto Color Emoji"
+    (unicode-fonts-block-font-mapping
+     '(("Alchemical Symbols"
+        ("Noto Sans Symbols" "Symbola" "Quivira" "Everson Mono:weight=bold"))
+       ("Alphabetic Presentation Forms"
+        ("DejaVu Sans:width=condensed" "Arial Unicode MS" "Cardo" "Code2000" "Quivira"
+         "Everson Mono:weight=bold" "FreeMono" "ALPHABETUM Unicode"))
+       ("Ancient Greek Musical Notation"
+        ("Cardo" "Noto Sans Symbols" "Aegean" "New Athena Unicode" "Musica" "Symbola"
+         "Quivira" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
+       ("Ancient Greek Numbers"
+        ("Noto Sans Symbols" "Apple Symbols" "New Athena Unicode" "Cardo" "Aegean"
+         "Quivira" "Symbola" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
+       ("Ancient Symbols"
+        ("Noto Sans Symbols" "Analecta" "New Athena Unicode" "Cardo" "Aegean"
+         "Quivira" "Symbola" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
+       ("Arrows"
+        ("Cascadia Code PL" "Noto Sans Symbols" "Cambria Math" "Segoe UI Symbol"
+         "DejaVu Sans:width=condensed" "Asana Math" "Arial Unicode MS"
+         "BabelStone Modern" "Symbola" "Quivira" "Code2000" "Noto Sans Symbols"
+         "Everson Mono:weight=bold" "FreeMono"))
+       ("Braille Patterns"
+        ("Quivira" "Apple Braille" "DejaVu Sans:width=condensed" "Noto Sans Symbols"
+         "Apple Symbols" "Segoe UI Symbol" "Symbola" "Noto Sans Symbols" "FreeMono" "Code2000"
+         "Everson Mono:weight=bold"))
+       ("CJK Compatibility"
+        ("SimHei" "FangSong" "SimSun" "MingLiU" "Meiryo" "Microsoft JhengHei"
+         "Microsoft JhengHei UI" "Lantinghei SC" "Lantinghei TC" "HAN NOM A"
+         "Arial Unicode MS" "WenQuanYi Zen Hei Mono" "HanaMinA" "BabelStone Han"
+         "Code2000"))
+       ("CJK Compatibility Forms"
+        ("WenQuanYi Zen Hei Mono" "Lantinghei SC" "SimHei" "FangSong" "SimSun"
+         "LiSong Pro" "Baoli SC" "Microsoft YaHei" "Microsoft YaHei UI"
+         "Lantinghei TC" "BabelStone Han" "MingLiU" "Microsoft JhengHei"
+         "Microsoft JhengHei UI" "HAN NOM A" "Symbola" "Xingkai SC" "DFKai-SB"
+         "Code2000"))
+       ("CJK Compatibility Ideographs"
+        ("SimHei" "FangSong" "SimSun" "Microsoft YaHei" "Microsoft YaHei UI"
+         "WenQuanYi Zen Hei Mono" "BabelStone Han" "UnBatang" "MingLiU"
+         "Microsoft JhengHei" "Microsoft JhengHei UI" "HAN NOM A" "Arial Unicode MS"
+         "Lantinghei SC" "HanaMinA"))
+       ("CJK Compatibility Ideographs Supplement"
+        ("WenQuanYi Zen Hei Mono" "SimHei" "FangSong" "SimSun" "MingLiU" "HanaMinA"
+         "Hiragino Kaku Gothic Pro" "Hiragino Maru Gothic Pro" "Hiragino Mincho Pro"
+         "Microsoft JhengHei" "Microsoft JhengHei UI" "HAN NOM B" "LiSong Pro"))
+       ("CJK Radicals Supplement"
+        ("WenQuanYi Zen Hei Mono" "SimHei" "FangSong" "SimSun" "Microsoft YaHei"
+         "Microsoft YaHei UI" "HanaMinA" "BabelStone Han" "MingLiU"
+         "Microsoft JhengHei" "Microsoft JhengHei UI" "HAN NOM A" "DFKai-SB"
+         "Apple Symbols" "Code2000"))
+       ("CJK Strokes"
+        ("WenQuanYi Zen Hei Mono" "HanaMinA" "BabelStone Han" "Code2000"))
+       ("CJK Symbols and Punctuation"
+        ("Lantinghei SC" "SimHei" "FangSong" "SimSun" "HanaMinA"
+         "WenQuanYi Zen Hei Mono" "LiSong Pro" "STFangsong" "Microsoft YaHei"
+         "Microsoft YaHei UI" "Lantinghei TC" "MingLiU" "HAN NOM A" "Arial Unicode MS"
+         "PCMyungjo" "BabelStone Han" "Osaka:spacing=m" "Code2000"))
+       ("CJK Unified Ideographs"
+        ("WenQuanYi Zen Hei Mono" "Lantinghei SC" "Songti SC" "SimHei" "FangSong"
+         "STFangsong" "SimSun" "LiSong Pro" "Baoli SC" "HanaMinA" "BabelStone Han"
+         "Apple LiGothic" "Lantinghei TC" "MingLiU" "Microsoft JhengHei"
+         "Microsoft JhengHei UI" "HAN NOM A" "DFKai-SB" "Arial Unicode MS"
+         "Xingkai SC" "GB18030 Bitmap" "UnBatang"))
+       ("CJK Unified Ideographs Extension A"
+        ("SimHei" "FangSong" "STFangsong" "SimSun" "Songti SC" "Microsoft YaHei"
+         "Microsoft YaHei UI" "MingLiU" "Microsoft JhengHei" "Microsoft JhengHei UI"
+         "HanaMinA" "HAN NOM A" "Code2000" "DFKai-SB" "BabelStone Han"
+         "GB18030 Bitmap"))
+       ("CJK Unified Ideographs Extension B"
+        ("SimHei" "FangSong" "SimSun" "LiSong Pro" "Microsoft YaHei"
+         "Microsoft YaHei UI" "HanaMinB" "HAN NOM B" "Code2002" "MingLiU"
+         "Microsoft JhengHei" "Microsoft JhengHei UI" "BabelStone Han" "DFKai-SB"))
+       ("CJK Unified Ideographs Extension C" ("HanaMinB" "BabelStone Han" "HAN NOM B"))
+       ("CJK Unified Ideographs Extension D" ("HanaMinB" "BabelStone Han"))
+       ("CJK Unified Ideographs Extension E" ("HanaMinB" "BabelStone Han"))
+       ("Emoticons" ("Noto Color Emoji"
                           "Symbols Nerd Font"
                           "Apple Color Emoji"
                           "Segoe UI Symbol"
