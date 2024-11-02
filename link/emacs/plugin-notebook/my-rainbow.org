@@ -1,0 +1,98 @@
+#+TITLE:   Colorize delimiters, identifiers, and blocks based on depth
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-11-02
+#+TAGS:    colorization color rainbow delimiters identifiers
+#+STARTUP: fold
+
+This file contains configuration and plugins for colorizing variables and
+function names to easily pick them out visually in a file, as well as colorizing
+delimiters (parentheses, brackets, etc.) by depth to easily match them.
+
+* color-identifiers-mode
+Minor mode that uniquely colors variable and function names in order to easily
+identify them in a file.
+
+#+begin_src emacs-lisp
+  (use-package color-identifiers-mode
+    ;; We have to load this package after our primary theme! Otherwise we can experience errors on
+    ;; startup.
+    :after modus-themes
+    :demand t
+    :delight
+    :config
+    (global-color-identifiers-mode 1))
+#+end_src
+
+* rainbow-mode
+Colorize color names/hex codes in buffers to help you visualize what actual
+color a name refers to. Very handy!
+
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :delight
+    :hook
+    ;; Automatically turn on rainbow-mode when editing a source code file
+    ((prog-mode org-mode) . rainbow-mode))
+#+end_src
+
+* rainbow-delimiters
+=rainbow-delimiters-mode= adds cool colors to delimiters such as parentheses,
+braces, brackets, etc.  in order to highlight their depth relative to one
+another.  Super handy for Lisp and other delimiter-heavy languages.
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    ;; Add mode hooks for rainbow-delimiters-mode
+    ;; NOTE: Do NOT use prog-mode!
+    ((c-mode
+      c-mode-common
+      c++-mode
+      clojure-mode
+      common-lisp-mode
+      elixir-mode
+      emacs-lisp-mode
+      haskell-mode
+      java-mode
+      json-mode
+      kotlin-mode
+      lisp-mode
+      ruby-mode
+      sh-mode
+      swift-mode)
+     . rainbow-delimiters-mode))
+#+end_src
+
+* prism
+Much like the =rainbow-delimiters= and =rainbow-blocks= packages, =prism= colorizes
+code blocks based on how deeply nested they are, though it is a newer plugin
+that brands itself as respecting existing non-color face properties (such as
+font size and weight) while the older plugins do not. Thus, =prism= is an
+*alternative* to =rainbow-delimiters= and =rainbow-blocks=.
+
+*NOTE:* =prism= is not compatible with =color-idenitifiers-mode=, while
+=rainbow-delimiters= is. For that reason alone, you may wish to forego this
+plugin.
+
+#+begin_src emacs-lisp
+  (use-package prism
+    ;; I prefer to use `rainbow-delimiters' and `color-identifiers-mode'
+    :disabled
+    :hook
+    ;; Activate prism for Lisp-based major modes
+    ((cider-repl-mode
+      clojure-mode
+      common-lisp-mode
+      emacs-lisp-mode
+      ielm-mode
+      lisp-mode
+      lisp-data-mode
+      lisp-interaction-mode
+      slime-repl-mode
+      sly-mrepl-mode)
+     . prism-mode)
+    ;; For whitespace-sensitive languages, we must activate `prism-whitespace-mode' instead.
+    ((python-mode python-ts-mode haskell-mode)
+     . prism-whitespace-mode))
+#+end_src
