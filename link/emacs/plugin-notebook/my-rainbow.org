@@ -15,7 +15,7 @@ identify them in a file.
 
 #+begin_src emacs-lisp
   (use-package color-identifiers-mode
-    ;; We have to load this package after our primary theme! Otherwise we can experience errors on
+    ;; We have to load this package after our primary theme. Otherwise, we may experience errors on
     ;; startup.
     :after modus-themes
     :demand t
@@ -26,7 +26,7 @@ identify them in a file.
 
 * rainbow-mode
 Colorize color names/hex codes in buffers to help you visualize what actual
-color a name refers to. Very handy!
+color a name refers to.
 
 #+begin_src emacs-lisp
   (use-package rainbow-mode
@@ -39,7 +39,7 @@ color a name refers to. Very handy!
 * rainbow-delimiters
 =rainbow-delimiters-mode= adds cool colors to delimiters such as parentheses,
 braces, brackets, etc.  in order to highlight their depth relative to one
-another.  Super handy for Lisp and other delimiter-heavy languages.
+another. Super handy for Lisp and other delimiter-heavy languages.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
