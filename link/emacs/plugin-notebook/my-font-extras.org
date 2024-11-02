@@ -111,107 +111,107 @@ any known font.
        ("CJK Unified Ideographs Extension D" ("HanaMinB" "BabelStone Han"))
        ("CJK Unified Ideographs Extension E" ("HanaMinB" "BabelStone Han"))
        ("Emoticons" ("Noto Color Emoji"
-                          "Symbols Nerd Font"
-                          "Apple Color Emoji"
-                          "Segoe UI Symbol"
-                          "Symbola"
-                          "Quivira"))
-            ("Enclosed Alphanumeric Supplement"
-             ("Segoe UI Symbol" "Noto Sans Symbols" "Symbola" "Quivira" "BabelStone Han"
-              "BabelStone Modern"))
-            ("Enclosed Alphanumerics"
-             ("Noto Sans Symbols" "Segoe UI Symbol" "Junicode" "Arial Unicode MS" "Symbola"
-              "Quivira" "Code2000" "BabelStone Han" "WenQuanYi Zen Hei Mono"
-              "BabelStone Modern" "HAN NOM A" "Everson Mono:weight=bold"))
-            ("Enclosed Ideographic Supplement"
-             ("Segoe UI Symbol" "Noto Sans Symbols" "HanaMinA" "BabelStone Han" "Symbola"))
-            ("General Punctuation"
-             ("Monaco" "Noto Sans Symbols" "Apple Symbols" "Segoe UI Symbol" "Cambria Math"
-              "DejaVu Sans Mono" "DejaVu Sans:width=condensed" "Charis SIL" "Doulos SIL"
-              "Antinoou" "Symbola" "Code2000" "Quivira" "Noto Sans" "Everson Mono:weight=bold"
-              "FreeMono" "BabelStone Modern"))
-            ("Geometric Shapes"
-             ("Cascadia Code PL" "DejaVu Sans Mono" "DejaVu Sans:width=condensed" "Segoe UI Symbol"
-              "Arial Unicode MS" "Symbola" "Noto Sans Symbols" "Quivira"
-              "BabelStone Modern" "Everson Mono" "FreeMono" "Code2000"))
-            ("Geometric Shapes Extended" ("Symbola" "Quivira"))
-            ("Mathematical Alphanumeric Symbols"
-             ("Cambria Math" "Noto Sans Symbols" "Asana Math" "Code2001" "Symbola"
-              "Quivira" "Everson Mono:weight=bold"))
-            ("Mathematical Operators"
-             ("Monaco" "DejaVu Sans Mono" "Segoe UI Symbol" "Cambria Math"
-              "DejaVu Sans:width=condensed" "Noto Sans Symbols" "Apple Symbols"
-              "Asana Math" "Arial Unicode MS" "Code2000" "Symbola" "Quivira"
-              "Everson Mono:weight=bold" "FreeMono"))
-            ("Miscellaneous Mathematical Symbols-B"
-             ("Noto Sans Symbols" "Segoe UI Symbol" "Apple Symbols" "Cambria Math" "Asana Math"
-              "Code2000" "Symbola" "Quivira"))
-            ("Miscellaneous Symbols"
-             ("Noto Sans Symbols" "Segoe UI Symbol" "Apple Symbols" "DejaVu Sans Mono"
-              "DejaVu Sans:width=condensed" "Arial Unicode MS" "Symbola" "Quivira"
-              "MS Reference Sans Serif" "Cardo" "Code2000" "Everson Mono:weight=bold"))
-            ("Miscellaneous Symbols and Arrows"
-             ("Symbola" "Quivira" "Asana Math" "Code2000" "Segoe UI Symbol"
-              "Noto Sans Symbols"))
-            ("Miscellaneous Symbols and Pictographs"
-             ("Apple Color Emoji" "Segoe UI Symbol" "Symbola" "Quivira"))
-            ("Miscellaneous Technical"
-             ("Segoe UI Symbol" "Noto Sans Symbols" "Apple Symbols" "Cambria Math"
-              "DejaVu Sans Mono" "Code2000" "Symbola" "Quivira" "Everson Mono:weight=bold"))
-            ("Musical Symbols"
-             ("Noto Sans Symbols" "Musica" "FreeSerif" "Symbola" "Quivira"))
-            ("Number Forms"
-             ("DejaVu Sans:width=condensed" "Asana Math" "Arial Unicode MS" "Junicode"
-              "Symbola" "Quivira" "Charis SIL" "Doulos SIL" "Code2000"
-              "Everson Mono:weight=bold" "FreeMono" "ALPHABETUM Unicode"))
-            ("Optical Character Recognition"
-             ("Noto Sans Symbols" "Apple Symbols" "Segoe UI Symbol" "Arial Unicode MS"
-              "Symbola" "Quivira" "FreeMono" "BabelStone Modern" "Code2000" "Everson Mono"))
-            ("Ornamental Dingbats" ("Symbola"))
-            ("Phonetic Extensions"
-             ("Monaco" "Consolas" "Calibri" "Noto Sans" "Aboriginal Sans" "Charis SIL"
-              "Doulos SIL" "Quivira" "Courier New" "DejaVu Sans:width=condensed" "Code2000"
-              "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
-            ("Phonetic Extensions Supplement"
-             ("Consolas" "Calibri" "Courier New" "Noto Sans" "Aboriginal Sans" "Charis SIL"
-              "Doulos SIL" "Quivira" "DejaVu Sans Mono" "DejaVu Sans:width=condensed"
-              "Code2000" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
-            ("Playing Cards"
-             ("Cascadia Code PL" "DejaVu Sans:width=condensed" "Symbola" "Noto Sans Symbols"
-              "Segoe UI Symbol" "Quivira"))
-            ("Small Form Variants"
-             ("Noto Sans Symbols" "Apple Symbols" "Arial Unicode MS" "WenQuanYi Zen Hei Mono"
-              "Microsoft YaHei" "Microsoft YaHei UI" "Code2000"))
-            ("Specials"
-             ("BabelStone Modern" "Noto Sans Symbols" "Apple Symbols" "Arial Unicode MS"
-              "Symbola" "DejaVu Sans Mono" "DejaVu Sans:width=condensed" "Quivira"
-              "FreeMono" "BabelStone Han"))
-            ("Superscripts and Subscripts"
-             ("Consolas" "Monaco" "Noto Sans Symbols" "Apple Symbols" "Cambria Math"
-              "Cascadia Code PL" "DejaVu Sans Mono" "DejaVu Sans:width=condensed"
-              "Segoe UI Symbol" "Asana Math" "Charis SIL" "Doulos SIL" "Symbola" "Quivira"
-              "Everson Mono:weight=bold" "FreeMono"))
-            ("Supplemental Arrows-A"
-             ("Segoe UI Symbol" "Cambria Math" "DejaVu Sans:width=condensed" "Asana Math"
-              "Quivira" "Symbola" "Noto Sans Symbols" "Apple Symbols" "Code2000"
-              "Everson Mono:weight=bold" "FreeMono" "BabelStone Modern"))
-            ("Supplemental Arrows-B"
-             ("Cambria Math" "Segoe UI Symbol" "Noto Sans Symbols" "Apple Symbols"
-              "Asana Math" "Quivira" "Symbola" "Code2000" "Everson Mono:weight=bold"))
-            ("Supplemental Arrows-C" ("Symbola"))
-            ("Supplemental Mathematical Operators"
-             ("Cambria Math" "Segoe UI Symbol" "Noto Sans Symbols" "Apple Symbols"
-              "Asana Math" "Code2000" "Symbola" "Quivira" "Everson Mono:weight=bold"))
-            ("Supplemental Punctuation"
-             ("Cascadia Code PL" "DejaVu Sans Mono" "Segoe UI Symbol" "Noto Sans Symbols" "Antinoou"
-              "New Athena Unicode" "Cardo" "Aegean" "Symbola" "Quivira"
-              "Everson Mono:weight=bold" "Code2000" "ALPHABETUM Unicode"))
-            ("Supplemental Symbols and Pictographs" ("Symbola"))
-            ("Tags" ("BabelStone Modern" "BabelStone Han"))
-            ("Transport and Map Symbols" ("Apple Color Emoji" "Segoe UI Symbol" "Symbola"))
-            ("Variation Selectors" ("BabelStone Modern" "BabelStone Han" "Code2000"))
-            ("Variation Selectors Supplement" ("BabelStone Modern" "BabelStone Han"))
-            ("Vertical Forms" ("Microsoft YaHei" "Microsoft YaHei UI" "Symbola"))))
+                     "Symbols Nerd Font"
+                     "Apple Color Emoji"
+                     "Segoe UI Symbol"
+                     "Symbola"
+                     "Quivira"))
+       ("Enclosed Alphanumeric Supplement"
+        ("Segoe UI Symbol" "Noto Sans Symbols" "Symbola" "Quivira" "BabelStone Han"
+         "BabelStone Modern"))
+       ("Enclosed Alphanumerics"
+        ("Noto Sans Symbols" "Segoe UI Symbol" "Junicode" "Arial Unicode MS" "Symbola"
+         "Quivira" "Code2000" "BabelStone Han" "WenQuanYi Zen Hei Mono"
+         "BabelStone Modern" "HAN NOM A" "Everson Mono:weight=bold"))
+       ("Enclosed Ideographic Supplement"
+        ("Segoe UI Symbol" "Noto Sans Symbols" "HanaMinA" "BabelStone Han" "Symbola"))
+       ("General Punctuation"
+        ("Monaco" "Noto Sans Symbols" "Apple Symbols" "Segoe UI Symbol" "Cambria Math"
+         "DejaVu Sans Mono" "DejaVu Sans:width=condensed" "Charis SIL" "Doulos SIL"
+         "Antinoou" "Symbola" "Code2000" "Quivira" "Noto Sans" "Everson Mono:weight=bold"
+         "FreeMono" "BabelStone Modern"))
+       ("Geometric Shapes"
+        ("Cascadia Code PL" "DejaVu Sans Mono" "DejaVu Sans:width=condensed" "Segoe UI Symbol"
+         "Arial Unicode MS" "Symbola" "Noto Sans Symbols" "Quivira"
+         "BabelStone Modern" "Everson Mono" "FreeMono" "Code2000"))
+       ("Geometric Shapes Extended" ("Symbola" "Quivira"))
+       ("Mathematical Alphanumeric Symbols"
+        ("Cambria Math" "Noto Sans Symbols" "Asana Math" "Code2001" "Symbola"
+         "Quivira" "Everson Mono:weight=bold"))
+       ("Mathematical Operators"
+        ("Monaco" "DejaVu Sans Mono" "Segoe UI Symbol" "Cambria Math"
+         "DejaVu Sans:width=condensed" "Noto Sans Symbols" "Apple Symbols"
+         "Asana Math" "Arial Unicode MS" "Code2000" "Symbola" "Quivira"
+         "Everson Mono:weight=bold" "FreeMono"))
+       ("Miscellaneous Mathematical Symbols-B"
+        ("Noto Sans Symbols" "Segoe UI Symbol" "Apple Symbols" "Cambria Math" "Asana Math"
+         "Code2000" "Symbola" "Quivira"))
+       ("Miscellaneous Symbols"
+        ("Noto Sans Symbols" "Segoe UI Symbol" "Apple Symbols" "DejaVu Sans Mono"
+         "DejaVu Sans:width=condensed" "Arial Unicode MS" "Symbola" "Quivira"
+         "MS Reference Sans Serif" "Cardo" "Code2000" "Everson Mono:weight=bold"))
+       ("Miscellaneous Symbols and Arrows"
+        ("Symbola" "Quivira" "Asana Math" "Code2000" "Segoe UI Symbol"
+         "Noto Sans Symbols"))
+       ("Miscellaneous Symbols and Pictographs"
+        ("Apple Color Emoji" "Segoe UI Symbol" "Symbola" "Quivira"))
+       ("Miscellaneous Technical"
+        ("Segoe UI Symbol" "Noto Sans Symbols" "Apple Symbols" "Cambria Math"
+         "DejaVu Sans Mono" "Code2000" "Symbola" "Quivira" "Everson Mono:weight=bold"))
+       ("Musical Symbols"
+        ("Noto Sans Symbols" "Musica" "FreeSerif" "Symbola" "Quivira"))
+       ("Number Forms"
+        ("DejaVu Sans:width=condensed" "Asana Math" "Arial Unicode MS" "Junicode"
+         "Symbola" "Quivira" "Charis SIL" "Doulos SIL" "Code2000"
+         "Everson Mono:weight=bold" "FreeMono" "ALPHABETUM Unicode"))
+       ("Optical Character Recognition"
+        ("Noto Sans Symbols" "Apple Symbols" "Segoe UI Symbol" "Arial Unicode MS"
+         "Symbola" "Quivira" "FreeMono" "BabelStone Modern" "Code2000" "Everson Mono"))
+       ("Ornamental Dingbats" ("Symbola"))
+       ("Phonetic Extensions"
+        ("Monaco" "Consolas" "Calibri" "Noto Sans" "Aboriginal Sans" "Charis SIL"
+         "Doulos SIL" "Quivira" "Courier New" "DejaVu Sans:width=condensed" "Code2000"
+         "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
+       ("Phonetic Extensions Supplement"
+        ("Consolas" "Calibri" "Courier New" "Noto Sans" "Aboriginal Sans" "Charis SIL"
+         "Doulos SIL" "Quivira" "DejaVu Sans Mono" "DejaVu Sans:width=condensed"
+         "Code2000" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
+       ("Playing Cards"
+        ("Cascadia Code PL" "DejaVu Sans:width=condensed" "Symbola" "Noto Sans Symbols"
+         "Segoe UI Symbol" "Quivira"))
+       ("Small Form Variants"
+        ("Noto Sans Symbols" "Apple Symbols" "Arial Unicode MS" "WenQuanYi Zen Hei Mono"
+         "Microsoft YaHei" "Microsoft YaHei UI" "Code2000"))
+       ("Specials"
+        ("BabelStone Modern" "Noto Sans Symbols" "Apple Symbols" "Arial Unicode MS"
+         "Symbola" "DejaVu Sans Mono" "DejaVu Sans:width=condensed" "Quivira"
+         "FreeMono" "BabelStone Han"))
+       ("Superscripts and Subscripts"
+        ("Consolas" "Monaco" "Noto Sans Symbols" "Apple Symbols" "Cambria Math"
+         "Cascadia Code PL" "DejaVu Sans Mono" "DejaVu Sans:width=condensed"
+         "Segoe UI Symbol" "Asana Math" "Charis SIL" "Doulos SIL" "Symbola" "Quivira"
+         "Everson Mono:weight=bold" "FreeMono"))
+       ("Supplemental Arrows-A"
+        ("Segoe UI Symbol" "Cambria Math" "DejaVu Sans:width=condensed" "Asana Math"
+         "Quivira" "Symbola" "Noto Sans Symbols" "Apple Symbols" "Code2000"
+         "Everson Mono:weight=bold" "FreeMono" "BabelStone Modern"))
+       ("Supplemental Arrows-B"
+        ("Cambria Math" "Segoe UI Symbol" "Noto Sans Symbols" "Apple Symbols"
+         "Asana Math" "Quivira" "Symbola" "Code2000" "Everson Mono:weight=bold"))
+       ("Supplemental Arrows-C" ("Symbola"))
+       ("Supplemental Mathematical Operators"
+        ("Cambria Math" "Segoe UI Symbol" "Noto Sans Symbols" "Apple Symbols"
+         "Asana Math" "Code2000" "Symbola" "Quivira" "Everson Mono:weight=bold"))
+       ("Supplemental Punctuation"
+        ("Cascadia Code PL" "DejaVu Sans Mono" "Segoe UI Symbol" "Noto Sans Symbols" "Antinoou"
+         "New Athena Unicode" "Cardo" "Aegean" "Symbola" "Quivira"
+         "Everson Mono:weight=bold" "Code2000" "ALPHABETUM Unicode"))
+       ("Supplemental Symbols and Pictographs" ("Symbola"))
+       ("Tags" ("BabelStone Modern" "BabelStone Han"))
+       ("Transport and Map Symbols" ("Apple Color Emoji" "Segoe UI Symbol" "Symbola"))
+       ("Variation Selectors" ("BabelStone Modern" "BabelStone Han" "Code2000"))
+       ("Variation Selectors Supplement" ("BabelStone Modern" "BabelStone Han"))
+       ("Vertical Forms" ("Microsoft YaHei" "Microsoft YaHei UI" "Symbola"))))
     :config
     ;; Initialize unicode-fonts
     (unicode-fonts-setup))
