@@ -64,10 +64,10 @@
           (t dejavu-sans-plist)))
       ('variable-pitch
         (cond
-          ((member (plist-get satoshi-plist :family) font-family-list)
-            satoshi-plist)
           ((member (plist-get switzer-plist :family) font-family-list)
             switzer-plist)
+          ((member (plist-get satoshi-plist :family) font-family-list)
+            satoshi-plist)
           ((member (plist-get arkibal-plist :family) font-family-list)
             arkibal-plist)
           ((member (plist-get neogrey-plist :family) font-family-list)
