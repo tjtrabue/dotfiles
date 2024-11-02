@@ -1,0 +1,65 @@
+#+TITLE:   Ruby Configuration/Plugins
+
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-11-01
+#+TAGS:
+#+STARTUP: fold
+
+* Enhanced Ruby Mode (deprecated)
+Enhanced Ruby Mode replaces the Emacs =ruby-mode= that comes with Ruby.
+
+It uses the Ripper class found in ruby 1.9.2 (and later) to parse and indent the
+source code. As a consequence only ruby 1.9.2 (or later) syntax is parsed
+correctly.
+
+Syntax checking is also performed.
+
+#+begin_src emacs-lisp
+  (use-package enh-ruby-mode
+    ;; Now that we have a `ruby-ts-mode' available, this plugin is outdated.
+    :disabled)
+#+end_src
+
+* rvm
+Integrates Emacs with the Ruby Version Manager =rvm=.
+
+Just call the interactive function =rvm-activate-corresponding-ruby= and =rvm.el=
+will change Emacs to use the right ruby version for the file in the current
+buffer. Remember that the new ruby version will be used for the whole Emacs
+session and not just the current file. If you want to switch to another ruby
+version manually you can call =rvm-use= instead. See =rvm-activate-ruby-for= to
+activate for a specific path.
+
+Please note that using =system-ruby= is not supported in =rvm.el=.
+
+RVM will by default print messages when switching environment. You can disable
+all messages by setting =rvm-verbose= to =nil=.
+
+#+begin_src emacs-lisp
+  (use-package rvm)
+#+end_src
+
+* Robe
+Robe is a code assistance tool that uses a Ruby REPL subprocess with your
+application or gem code loaded, to provide information about loaded classes and
+modules, and where each method is defined.
+
+Generally, you'll want to start with =M-x inf-ruby-console-auto= or with =M-x
+robe-start= (which will offer to call the former function as well if there is no
+Ruby console running). Some interactive commands provided by Robe will also
+offer to launch it first.
+
+The exceptions are code completion and Eldoc, which only work if the server is
+already running. To launch it, type =M-x robe-start=.
+
+As you change the code in your project, you'll want to update the running
+process. To load the current file, type =C-c C-l= (ruby-load-file), see inf-ruby
+for more commands. When you're working on a Rails project, you can type =C-c C-k=
+instead to reload the whole environment at once.
+
+#+begin_src emacs-lisp
+  (use-package robe
+    :hook
+    ((ruby-mode ruby-ts-mode) . robe-mode))
+#+end_src

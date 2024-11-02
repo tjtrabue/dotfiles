@@ -47,6 +47,9 @@ blocks in a separate buffer with =C-c C-'= a la Org Mode.
     ;; Whether to abbreviate URLs by default. Toggle this option with
     ;; `C-c C-x C-m'.
     (markdown-hide-urls t)
+    ;; Whether to hide markup punctuation such as the delimiters for bold **...**, italics _..._,
+    ;; monospace `...`, etc.
+    (markdown-hide-markup t)
     ;; When non-nil, fontify fenced code blocks using the native major mode.  You
     ;; can customize the language-to-mode mapping by setting the variable
     ;; `markdown-code-lang-modes'.

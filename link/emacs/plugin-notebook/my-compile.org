@@ -99,3 +99,48 @@ ways:
     :config
     (fancy-compilation-mode 1))
 #+end_src
+
+* quickrun
+=quickrun.el= provides a simple yet highly configurable interface for "executing"
+the current buffer. =quickrun.el= is similar to =executable-interpret= but provides
+more convenient commands. This plugin also supports a /ton/ of programming
+languages, granting developers the ability to execute commands for dynamic
+scripting languages (Perl, Ruby, Python etc), compiled languages (C, C++, Go,
+Java etc), and even markup languages.
+
+** Usage
+
+- =quickrun=: Execute the current buffer. If =quickrun.el= does not find
+  =command-key=, then =quickrun.el= asks you for the =command-key= (or input the
+  command manually if you use the =C-u= prefix key)
+
+- =quickrun-select=: Like =quickrun= command but select the backend before the
+  execution.
+
+- =quickrun-region=: Execute selected region. (Java is not supported)
+
+- =quickrun-with-arg=: Execute the current buffer with arguments. =quickrun.el= asks
+  you command line argument.
+
+- =quickrun-shell=: Execute the current buffer in =eshell= for interactive commands,
+  such as a program which reads input from STDIN.
+
+- =quickrun-compile-only=: Compile the current buffer with =compile.el= framework,
+  but do not execute. quickrun with =C-u C-u= prefix behaves the same as
+  =quickrun-compile-only=.
+
+- =quickrun-compile-only-select=: Like =quickrun-compile-only= command but select
+  the backend before the execution.
+
+- =quickrun-replace-region=: Replace region of code with its output.
+
+- =quickrun-autorun-mode=: Minor mode which executes quickrun after saving buffer.
+
+- =helm-quickrun=: =M-x quickrun= with helm interface
+
+- =anything-quickrun=: =M-x quickrun= with anything interface
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package quickrun)
+#+end_src
