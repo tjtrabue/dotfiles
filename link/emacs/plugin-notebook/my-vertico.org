@@ -141,6 +141,8 @@ is a modern looking child frame in the middle of the active Emacs frame.
 #+begin_src emacs-lisp
   (use-package vertico-posframe
     :after vertico
+    ;; Only usable in GUI Emacs.
+    :if (display-graphic-p)
     :hook
     (vertico-mode . vertico-posframe-mode)
     :init
