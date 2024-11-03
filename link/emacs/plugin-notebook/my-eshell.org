@@ -447,14 +447,14 @@ one super prompt.
           (cons nil (buffer-substring-no-properties (match-beginning 0) (match-end 0)))
 
         ;; Returns the text associated with match expression, NUM or `nil' if no match was found.
-        (cl-flet ((ha/eshell-get-expression (num) (if-let ((first (match-beginning num))
-                                                           (end   (match-end num)))
+        (cl-flet ((ha/eshell-get-expression (num) (if-let* ((first (match-beginning num))
+                                                            (end   (match-end num)))
                                                       (buffer-substring-no-properties first end))))
 
           (search-forward-regexp (ha/eshell-host-regexp 'full) (line-end-position))
 
           ;; Until this is completely robust, let's keep this debugging code here:
-          ;; (message (mapconcat (lambda (tup) (if-let ((s (car tup))
+          ;; (message (mapconcat (lambda (tup) (if-let* ((s (car tup))
           ;;                                       (e (cadr tup)))
           ;;                                  (buffer-substring-no-properties s e)
           ;;                                "null"))

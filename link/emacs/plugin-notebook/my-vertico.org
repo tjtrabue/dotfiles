@@ -1,8 +1,8 @@
-#+TITLE:    Vertico: Minimal Completion UI
-#+AUTHOR:   Tom Trabue
-#+EMAIL:    tom.trabue@gmail.com
-#+DATE:     2021-07-21
-#+TAGS:
+#+TITLE:   Vertico: Minimal Completion UI
+#+AUTHOR:  Tom Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2021-07-21
+#+TAGS:    vertico minibuffer completion framework candidate
 #+STARTUP: fold
 
 =vertico= provides a Helm-like completion UI for several completion frameworks,
@@ -85,16 +85,29 @@ completion UI in terms of customization.
     (vertico-count 20)
     ;; Enable cycling for vertico-next and vertico-previous
     (vertico-cycle t)
+    ;; The number of lines at the top and bottom of the candidate view when scrolling
+    (vertico-scroll-margin 2)
+    ;; Configure the display per command.
+    (vertico-multiform-commands
+     ;; Use a buffer with indices for imenu
+     '((consult-imenu buffer indexed)))
+    ;; Configure the display per com pletion category.
+    (vertico-multiform-categories
+     ;; Use a buffer for the consult-grep commands.
+     '((consult-grep buffer)))
     :init
     (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
     :config
-    (vertico-mode 1))
+    ;; Enable Vertico globally.
+    (vertico-mode 1)
+    ;; `vertico-multiform-mode' allows you to style and configure Vertico per completion category
+    ;; rather than globally.
+    (vertico-multiform-mode 1))
 #+end_src
 
 * Extensions
 ** vertico-directory
 Configure directory extension.
-*NOTE:* You must intall the =vertico-directory.el= file manually.
 
 #+begin_src emacs-lisp
   (use-package vertico-directory
@@ -112,12 +125,33 @@ Mouse integration for Vertico.
 
 #+begin_src emacs-lisp
   (use-package vertico-mouse
-    ;; Does not work with my setup.
-    :disabled
     :after vertico
     ;; Vertico extensions come with the repo.
     :ensure nil
     :straight nil
     :hook
     (vertico-mode . vertico-mouse-mode))
+#+end_src
+
+* Plugins
+** vertico-posframe
+=vertico-posframe= lets Vertico use =posframe= to display its candidate menu, which
+is a modern looking child frame in the middle of the active Emacs frame.
+
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :after vertico
+    :hook
+    (vertico-mode . vertico-posframe-mode)
+    :init
+    (add-to-list 'vertico-multiform-commands '(t posframe))
+    (add-to-list 'vertico-multiform-commands
+                 '(consult-line
+                   posframe
+                   (vertico-posframe-poshandler . posframe-poshandler-frame-top-center)
+                   (vertico-posframe-border-width . 10)
+                   ;; NOTE: This is useful when emacs is used in both in X and terminal since posframe
+                   ;; does not work well in terminal, so `vertico-buffer-mode' will be used as the
+                   ;; fallback display style.
+                   (vertico-posframe-fallback-mode . vertico-buffer-mode))))
 #+end_src
