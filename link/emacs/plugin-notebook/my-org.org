@@ -318,8 +318,8 @@ Keep the =org-mode= header for the current section at the top of the buffer.
     ;;   'full (show full path to the current heading)
     ;;   'reversed (show full path to current heading but in reverse order)
     (org-sticky-header-full-path 'full)
-    ;; The prefix string for the sticky header-line.
-    (org-sticky-header-heading-star "◉"))
+    ;; The star, or bullet character that prefixes the sticky heading
+    (org-sticky-header-heading-star "▶"))
 #+end_src
 
 * org-trello
