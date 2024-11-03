@@ -182,6 +182,8 @@ customization group.
     :custom
     ;; Do not use `org-indent-mode' as it interferes with org-modern's block prettification.
     (org-startup-indented nil)
+    ;; Update the org-sticky-header bullet character to match org-modern bullets.
+    (org-sticky-header-heading-star "▶")
     :init
     (global-org-modern-mode 1))
 #+end_src
