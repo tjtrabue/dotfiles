@@ -982,6 +982,11 @@ Custom functions, both standard and interactive.
     "Native compile all Elisp files in the super config directory."
     (interactive)
     (native-compile-async (list my/super-config-dir) 'recursively))
+
+  (defun my/revert-buffer ()
+    "Revert the current buffer without prompting the user."
+    (interactive)
+    (revert-buffer nil t))
 #+end_src
 
 * Environment Variables
@@ -1415,7 +1420,9 @@ and hooks in a way that defers loading the package.
       "ff" 'find-file-at-point
       "fF" 'find-file-other-window
       "fr" 'recentf-open-files
-      "lf" 'load-file))
+      "lf" 'load-file
+      ;; Revert
+      "rb" 'my/revert-buffer))
 #+end_src
 
 ** org
