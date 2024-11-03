@@ -27,5 +27,7 @@ Emacs.
     (use-package pdf-view-restore
       :after pdf-tools
       :hook
-      (pdf-view-mode . pdf-view-restore-mode))
+      (pdf-view-mode . pdf-view-restore-mode)
+      :init
+      (setq pdf-view-restore-filename (file-truename (concat user-emacs-directory ".pdf-view-restore"))))
   #+end_src
