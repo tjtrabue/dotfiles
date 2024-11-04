@@ -72,6 +72,8 @@ completion buffer to some category. For example:
       ;; Other custom bindings
       ;; orig. yank-pop
       "M-y" 'consult-yank-pop
+      ;; Yank from kill-ring with preview
+      "M-g y" 'consult-yank-from-kill-ring
       ;; M-g bindings (goto-map)
       "M-g e" 'consult-compile-error
       ;; Alternative: consult-flycheck

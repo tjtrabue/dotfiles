@@ -91,11 +91,14 @@ completion UI in terms of customization.
     (vertico-multiform-commands
      ;; Use a buffer with indices for imenu
      '((consult-imenu buffer indexed)
-       (consult-outline buffer indexed)))
+       (consult-outline buffer indexed)
+       (consult-line buffer)
+       (consult-line-multi buffer)))
     ;; Configure the display per completion category.
     (vertico-multiform-categories
      ;; Use a verbose, separate buffer for the following commands
-     '((consult-grep buffer)))
+     '((consult-grep buffer)
+       (imenu buffer indexed)))
     :init
     (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
     :config
