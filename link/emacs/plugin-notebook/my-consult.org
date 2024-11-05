@@ -6,16 +6,16 @@
 #+STARTUP: fold
 
 Yet another completion framework for Emacs. Jeez, you think there would be
-enough of them at this point to satisfy these Emacs sycophants, but no.  Consult
+enough of them at this point to satisfy these Emacs sycophants, but no. Consult
 is a bit of a different creature than Helm and Ivy. In fact, Consult is more
 closely related to Counsel than to Ivy, but whereas Counsel is a suite of
 utility functions implemented on Ivy's completion system, Consult is a suite of
-utility functions implemented using only Emacs' built-in =completing-read= API.
+utility functions which use only Emacs' built-in =completing-read= API.
 Furthermore, whereas Counsel integrates only with Ivy, Consult integrates with
 any narrowing completion UI that supports =completing-read=, such as the default
-Emacs completion system, =icomplete-vertical=, Selectrum, and Vertico. This
-makes Consult far more flexible and widely usable than Counsel or Helm since a
-myriad systems benefit from Consult's functions.
+Emacs completion system, =icomplete-vertical=, Selectrum, and Vertico. This makes
+Consult far more flexible and widely usable than Counsel or Helm since a myriad
+systems benefit from Consult's functions.
 
 * What is Consult really?
 Consult fulfills the same role for Ido, Selectrum, Vertico, and more that
@@ -132,7 +132,7 @@ completion buffer to some category. For example:
     ;; Optionally configure the register formatting. This improves the register
     ;; preview for `consult-register', `consult-register-load',
     ;; `consult-register-store' and the Emacs built-ins.
-    (setq register-preview-delay 0.5
+    (setq register-preview-delay 0.2
           register-preview-function #'consult-register-format)
     ;; Optionally tweak the register preview window.
     ;; This adds thin lines, sorting and hides the mode line of the window.
