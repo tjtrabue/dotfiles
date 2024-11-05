@@ -130,11 +130,11 @@ web browser, or in Emacs itself if you have compiled Emacs with the
     ;; 26 and compiled with `--with-xwidgets` option.
     (grip-preview-use-webkit (if (functionp 'xwidgetp) t nil))
     ;; Use `mdopen' Rust CLI tool, if available, instead of `grip'. `mdopen' is nice because it is
-    ;; very fast, but better yet, it circumvents accessing GitHub's API to render the document
-    ;; preview.
+    ;; fast, but better yet, it circumvents accessing GitHub's API to render the document preview.
     ;; NOTE: `mdopen' requires the use of an external browser, and does not respect Emacs' webkit
     ;;       preview.
-    (grip-use-mdopen (executable-find "mdopen"))
+    ;; (grip-use-mdopen (executable-find "mdopen"))
+    (grip-use-mdopen nil)
     ;; Number of seconds to wait before opening the preview to ensure the server starts
     (grip-sleep-time 2)
     ;; The preview color theme to use.
