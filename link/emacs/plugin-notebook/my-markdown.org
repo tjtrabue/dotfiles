@@ -117,18 +117,29 @@ web browser, or in Emacs itself if you have compiled Emacs with the
   (use-package grip-mode
     :after (markdown-mode org)
     :commands
-    ;; Need to list all grip commands to be autoloaded.
+    ;; Need to list all grip commands to be autoloaded
     (grip-browse-preview grip-restart-preview grip-start-preview grip-stop-preview)
     :custom
-    ;; Path to the grip executable.
+    ;; Path to the grip executable
     (grip-binary-path (executable-find "grip"))
-    ;; Whether to refresh the preview after a change to the source file.
+    ;; Whether to refresh the preview after a change to the source file
     (grip-update-after-change t)
-    ;; The host to use for previewing.
+    ;; The host to use for previewing
     (grip-preview-host "localhost")
     ;; Whether to use embedded webkit to preview.  Requires GNU/Emacs version >=
     ;; 26 and compiled with `--with-xwidgets` option.
     (grip-preview-use-webkit (if (functionp 'xwidgetp) t nil))
+    ;; Use `mdopen' Rust CLI tool, if available, instead of `grip'. `mdopen' is nice because it is
+    ;; very fast, but better yet, it circumvents accessing GitHub's API to render the document
+    ;; preview.
+    ;; NOTE: `mdopen' requires the use of an external browser, and does not respect Emacs' webkit
+    ;;       preview.
+    (grip-use-mdopen (executable-find "mdopen"))
+    ;; Number of seconds to wait before opening the preview to ensure the server starts
+    (grip-sleep-time 2)
+    ;; The preview color theme to use.
+    ;; Should be one of: 'light, 'dark
+    (grip-theme 'light)
     :init
     (require 'auth-source)
     ;; Set up list of authinfo files to check.

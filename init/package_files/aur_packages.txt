@@ -15,6 +15,7 @@ dropbox-cli
 emacs-git
 findimagedupes
 flutter-git
+git-credential-manager-bin
 google-cloud-cli
 google-cloud-cli-gke-gcloud-auth-plugin
 hadolint-bin

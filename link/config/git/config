@@ -120,6 +120,17 @@
   # Speed up commands involving untracked files, such as `git status`.
   untrackedCache = true
 
+[credential]
+  # Generate a GPG key pair using `gpg --quick-generate-key <username>', then
+  # copy the key ID and enter `pass init <GPG key ID>' to setup the credential
+  # store.
+  credentialStore = gpg
+  # NOTE: You must install the `git-credential-manager' CLI tool
+  helper = git-credential-manager
+
+[credential "https://dev.azure.com"]
+  useHttpPath = true
+
 # delta (called `git-delta' in most package repositories) is a fantastic open
 # source tool for viewing syntax-highlighted git diff information. It acts as a
 # front-end for git-diff, git-show, and git-blame.
