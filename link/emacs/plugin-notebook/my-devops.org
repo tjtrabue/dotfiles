@@ -4,7 +4,8 @@
 #+DATE:   2020-05-25
 #+STARTUP: fold
 
-Various dev-ops packages and configuration for Emacs.
+Various dev-ops packages and configuration for Emacs. These tools enable
+software deployment automation, testing, and maintenance.
 
 * ansible
 #+begin_src emacs-lisp
