@@ -40,4 +40,19 @@ alias vzrc="edit \${ZDOTDIR}/.zshrc"
 alias vi3="edit \${USER_CONF}/i3/config"
 # }}}
 
+# Emacs {{{
+# Start Emacs in servre mode, which you can later connect to using
+# `emacsclient'
+alias emd="command emacs --daemon"
+
+# Kill a running emacs daemon.
+alias killemd="command emacsclient -e '(kill-emacs)'"
+
+# Connect to a running Emacs server.
+alias emc="command emacsclient"
+
+# Re-create the super config file, then launch Emacs.
+alias remacs="make_emacs_super_config && command emacs -mm"
+# }}}
+
 # vim:foldmethod=marker
