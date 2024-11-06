@@ -190,8 +190,10 @@ file in your project's root directory with the following content:
     ;; zprint:           Fast and flexible alternative to the libraries mentioned
     ;;                   above. Highly configurable, but requires you to specify
     ;;                   zprint as a depdency either in your cider jack-in init
-    ;;                   command, or in your project dependencies file.
-    (cider-print-fn 'zprint)
+    ;;                   command, or in your project dependencies file. I have also
+    ;;                   noticed that zprint crashes when printing very large strings,
+    ;;                   while fipp handles them far better.
+    (cider-print-fn 'fipp)
     ;; Whether to show the large help message when the CIDER REPL opens.  Turning
     ;; it off saves space in the REPL buffer, which could speed up performance in
     ;; the beginning.
