@@ -1,6 +1,6 @@
 #+LATEX_HEADER: \PassOptionsToPackage{svgnames}{xcolor}
 #+LATEX_HEADER: \setmainfont{Linux Libertine O}
-#+LATEX_HEADER: \setsansfont[Scale=MatchLowercase]{Raleway}
+#+LATEX_HEADER: \setsansfont[Scale=MatchLowercase]{Switzer Variable}
 #+LATEX_HEADER: \setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
 #+LATEX_HEADER: \allsectionsfont{\sffamily}
 #+LATEX_HEADER: \setlist[description]{style=unboxed,font=\sffamily\bfseries}
