@@ -10,5 +10,8 @@ Emacs plugins and configuration for the PHP dynamic web programming language.
   Major mode for editing PHP files.
 
 #+begin_src emacs-lisp
-  (use-package php-mode)
+  (use-package php-mode
+    ;; `php-ts-mode' now comes bundled with Emacs. See my Treesitter configuration in `my-init.org'
+    ;; for more details.
+    :disabled)
 #+end_src

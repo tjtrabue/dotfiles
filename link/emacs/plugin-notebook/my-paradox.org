@@ -9,6 +9,8 @@ replacement as the standard =list-packages= interface.
 
 #+begin_src emacs-lisp
   (use-package paradox
+    ;; Using `straight.el' as the primary package manager, so there is no need to include `paradox'.
+    :disabled
     :config
     ;; Use paradox as default package interface for list-packages
     (paradox-enable))

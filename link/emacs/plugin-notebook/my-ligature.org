@@ -19,16 +19,14 @@ Allows the user to specify which ligatures they want to use per major mode. Note
 that each set of ligatures must be compatible with the selected font, and each
 set of ligatures may not be compatible with others.
 
-** =use-package= specification
 #+begin_src emacs-lisp
   (use-package ligature
+    :demand t
     :straight
     (ligature :type git
               :host github
               :repo "mickeynp/ligature.el"
               :branch "master")
-    :hook
-    (after-init . global-ligature-mode)
     :config
     (let ((cascadia-code-ligatures '("|||>" "<|||" "<==>" "<!--" "####" "~~>"
                                      "***" "||=" "||>" ":::" "::=" "=:=" "==="
@@ -88,5 +86,6 @@ set of ligatures may not be compatible with others.
                                       "#(" ";;" "_|_" "__" "~~" "~~>" "~>" "~-"
                                       "~@" "$>" "^=" "]#")))
       ;; Enable all JetBrains Mono ligatures in programming modes
-      (ligature-set-ligatures 'prog-mode cascadia-code-ligatures)))
+      (ligature-set-ligatures 'prog-mode cascadia-code-ligatures))
+    (global-ligature-mode 1))
 #+end_src

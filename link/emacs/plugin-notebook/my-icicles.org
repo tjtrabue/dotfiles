@@ -5,8 +5,10 @@
 #+TAGS:     icicles minibuffer text
 #+STARTUP: fold
 
-Icicles is a text completion framework for Emacs. I'd use =helm= whenever
-possible since it is vastly more powerful and flexible.
+Icicles is a text completion framework for Emacs, and quite an old one at that.
+Icicles was superceded by Helm, then Ivy, and then those frameworks were
+superceded yet again by the modern slate of =completing-read= based completion
+systems such as Selectrum and Vertico.
 
 #+begin_src emacs-lisp
   (use-package icicles

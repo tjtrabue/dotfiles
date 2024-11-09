@@ -12,6 +12,7 @@ need to press that key combination more than once).
 
 #+begin_src emacs-lisp
   (use-package multiple-cursors
+    ;; Does not work well with `evil-mode'. Use `evil-multiedit' instead.
     :disabled
     :general
     (general-def

@@ -18,7 +18,7 @@ which never throw an error, but instead return nil on failure.
 There is no end-user interface for this library. It is only useful from other
 Lisp code.
 
-The =unicode-fonts= package uses this interface to speed up its startup time.
+The =unicode-fonts= package uses this interface to lower its startup time.
 
 #+begin_src emacs-lisp
   (use-package persistent-soft

@@ -10,7 +10,10 @@ This file contains all Emacs configuration related to the Lua programming langua
   This is the major mode for editing Lua files.
 
 #+begin_src emacs-lisp
-(use-package lua-mode)
+  (use-package lua-mode
+    ;; Not only is `lua-mode' built-in to Emacs nowadays, but so is `lua-ts-mode'. That's right, we
+    ;; now have a Treesitter mode for Lua!
+    :disabled)
 #+end_src
 
 * luarocks
