@@ -30,6 +30,38 @@ Major mode for editing Clojure files.
     (require 'clojure-mode-extra-font-locking))
 #+end_src
 
+* clojure-ts-mode
+A work-in-progress replacement major mode for =clojure-mode= and its variants,
+=clojure-ts-mode= (and its companion major modes) provide Treesitter-enabled
+syntax highlighting, indentation, and navigation.
+
+** Prerequisites
+- Install the [[https://github.com/sogaiu/tree-sitter-clojure][tree-sitter-clojure]] grammar,
+- Ensure Emacs is version 29 or higher,
+- Make sure Emacs has Treesitter support by checking the result of
+  =(treesit-available-p)=
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package clojure-ts-mode
+    :after clojure-mode
+    ;; Only install when running Emacs 29 or higher built with Treesitter support
+    :if (and (>= emacs-major-version 29) (treesit-available-p))
+    :custom
+    ;; Highlight entire rich comment expression with the comment font face
+    (clojure-ts-comment-macro-font-lock-body t)
+    ;; How to indent Clojure code:
+    ;;   'semantic (default) -> tries to match clojure-mode and cljfmt indentation
+    ;;   'fixed -> Simple indentation strategy outlined in a blog post by Tonsky.
+    (clojure-ts-indent-style 'semantic)
+    :init
+    ;; Remap old Clojure(Script) major modes to new Treesitter-enabled modes
+    (dolist (mapping '((clojure-mode       . clojure-ts-mode)
+                       (clojurec-mode      . clojure-ts-clojurec-mode)
+                       (clojurescript-mode . clojure-ts-clojurescript-mode)))
+      (add-to-list 'major-mode-remap-alist mapping)))
+#+end_src
+
 * CIDER
 An /extremely/ powerful IDE for Clojure similar to SLIME or SLY for Common
 Lisp.
@@ -215,7 +247,7 @@ file in your project's root directory with the following content:
     ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
     (cider-repl-pop-to-buffer-on-connect 'display-only)
     ;; Prefix string for results of REPL evaluation
-    (cider-repl-result-prefix " => ")
+    (cider-repl-result-prefix " ━➤ ")
     ;; Set character size limit for the REPL buffer.
     (cider-repl-buffer-size-limit 100000)
     ;; Wrap around REPL input history.
@@ -226,6 +258,8 @@ file in your project's root directory with the following content:
     (cider-repl-history-file (locate-user-emacs-file "cider-repl-hist"))
     ;; Whether to display images in the REPL
     (cider-repl-use-content-types t)
+    ;; String separating entries in the history buffer
+    (cider-repl-history-separator "🞜⎯⎯⎯⎯⎯⎯⎯🞜⎯⎯⎯⎯⎯⎯⎯🞜")
     ;; Turn off hover documentation since lsp-mode provides a better alternative.
     (cider-eldoc-display-for-symbol-at-point nil)
     ;; If set to t, CIDER will try to add expected function arguments based on the
