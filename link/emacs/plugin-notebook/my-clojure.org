@@ -249,7 +249,7 @@ file in your project's root directory with the following content:
     ;; 'display-only -> Do not focus the CIDER REPL when it starts up.
     (cider-repl-pop-to-buffer-on-connect 'display-only)
     ;; Prefix string for results of REPL evaluation
-    (cider-repl-result-prefix " ━➤ ")
+    (cider-repl-result-prefix " ➤ ")
     ;; Set character size limit for the REPL buffer.
     (cider-repl-buffer-size-limit 100000)
     ;; Wrap around REPL input history.

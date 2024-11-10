@@ -1380,7 +1380,9 @@ and hooks in a way that defers loading the package.
       ;; Kill the current buffer.
       "C-M-k" 'kill-this-buffer
       ;; Duplicate the current line or region N times.
-      "C-S-p" 'duplicate-dwim)
+      "C-S-p" 'duplicate-dwim
+      ;; I prefer the regular `newline-and-indent' function over the `electric' version.
+      [remap electric-newline-and-maybe-indent] 'newline-and-indent)
     ;; "C-c" keybindings:
     (my/user-leader-def 'visual
       ;; Use `C-c (' to align a visual region.
