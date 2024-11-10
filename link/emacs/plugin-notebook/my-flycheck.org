@@ -200,14 +200,13 @@ this plugin instead of =flycheck-pos-tip=.
     ;; Seems to be overridden by Embark and other plugins that output to the echo area.
     :disabled
     :after flycheck
-    :demand t
     :hook
-    ((lsp-mode lsp-bridge-mode) . (lambda ()
-                                    ;; Disable flycheck-inline when using lsp-mode.
-                                    ;; lsp-mode has a much nicer UI for diagnostics.
-                                    (flycheck-inline-mode -1)))
-    :config
-    (global-flycheck-inline-mode 1))
+    (flycheck-mode . (lambda ()
+                       ;; Do not activate for `lsp-mode' or `lsp-brdige-mode' due to them having their
+                       ;; own dedicated diagnostic UIs.
+                       (unless (or (bound-and-true-p lsp-mode)
+                                   (bound-and-true-p lsp-bridge-mode))
+                         (flycheck-inline-mode 1)))))
 #+end_src
 
 ** flycheck-package
@@ -236,12 +235,11 @@ Shows the error at point in a =pos-tip= graphical popup.
     :after flycheck
     :hook
     (flycheck-mode . (lambda ()
-                       ;; Put errors in tooltips if we're not in lsp-mode, since
-                       ;; lsp-mode does its own thing and doing so would cause
-                       ;; duplication.
-                       (if (or (not (bound-and-true-p lsp-mode))
-                               (not (bound-and-true-p lsp-bridge-mode)))
-                           (flycheck-pos-tip-mode 1)))))
+                       ;; Put errors in tooltips if we're not in lsp-mode or lsp-bridge-mode, since
+                       ;; those modes present diagnostic messages through their own UIs.
+                       (unless (or (bound-and-true-p lsp-mode)
+                                   (bound-and-true-p lsp-bridge-mode))
+                         (flycheck-pos-tip-mode 1)))))
 #+end_src
 
 ** flycheck-relint
