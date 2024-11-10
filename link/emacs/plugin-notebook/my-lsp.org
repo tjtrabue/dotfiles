@@ -754,6 +754,10 @@ infrastructure for Emacs.
                   (when (or (bound-and-true-p flycheck-inline-mode)
                             (bound-and-true-p global-flycheck-inline-mode))
                     (flycheck-inline-mode -1))
+                  ;; Disable flycheck-pos-tip-mode since it interferes with lsp-bridge's diagnostic
+                  ;; UI.
+                  (when (bound-and-true-p flycheck-pos-tip-mode)
+                    (flycheck-pos-tip-mode -1))
                   ;; Enable semantic tokens highlighting. See the Wiki for more
                   ;; information:
                   ;; https://github.com/manateelazycat/lsp-bridge/wiki/Semantic-Tokens
