@@ -44,7 +44,6 @@ syntax highlighting, indentation, and navigation.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package clojure-ts-mode
-    :after clojure-mode
     ;; Only install when running Emacs 29 or higher built with Treesitter support
     :if (and (>= emacs-major-version 29) (treesit-available-p))
     :custom
