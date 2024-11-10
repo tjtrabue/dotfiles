@@ -10,9 +10,10 @@
 ;; adjust vertical size.
 ;; - `(fullscreen . fullheight)': Make the frame as tall as possible, but do not
 ;; adjust horizontal size.
-;; - `(fullscreen . fullboth)': Set height and width to the size of the screen.
-;; - `(fullscreen . maximized)': Like =fullboth=, but you cannot readjust the
-;; frame size later with the mouse.
+;; - `(fullscreen . maximized)': Set height and width to the size of the screen.
+;; - `(fullscreen . fullboth)': Like 'maximized, but you cannot readjust the
+;; frame size later with the mouse (removed the window manager options, such as
+;; the close, minimize, and maximize buttons).
 ;;
 ;; ** How to adjust the initial frame's size
 ;; Use the `initial-frame-alist' to change the size of the first frame Emacs
@@ -21,4 +22,4 @@
 ;; ** How to adjust all frames' sizes
 ;; To change the size of all frames Emacs creates, set `default-frame-alist', instead.
 ;; Maximize Emacs' initial frame.
-(add-to-list 'initial-frame-alist `(fullscreen . fullboth))
+(add-to-list 'initial-frame-alist `(fullscreen . maximized))
