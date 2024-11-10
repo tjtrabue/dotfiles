@@ -1,0 +1,57 @@
+#+TITLE:   Typst: Professional Document Writing Language
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-11-10
+#+TAGS:    typst markup typsetting language
+#+STARTUP: fold
+
+According to the [[https://typst.app/][official website]], Typst is "a productive workflow for science."
+It brands itself as a bit of a modern alternative to LaTeX, serving the same
+primary purpose of composing professional academic documents (articles,
+journals, books, essays, etc.). Typst is both a typesetting language and an app
+that leverages said language. The plugins and configuration in this file bring
+Typst capabilities into Emacs.
+
+* typst-ts-mode
+Treesitter support for Typst.
+
+#+begin_src emacs-lisp
+  (use-package typst-ts-mode
+    :straight
+    (typst-ts-mode :type   git
+                   :host   codeberg
+                   :repo   "meow_king/typst-ts-mode"
+                   :brance "main"))
+#+end_src
+
+* outline-indent-mode
+Indents documents according to their outline. Designed for use in =typst-mode=,
+but may also work for =org-mode= and =markdown-mode=.
+
+#+begin_src emacs-lisp
+  (use-package outline-indent-mode
+    :straight
+    (outline-indent-mode :type   git
+                         :host   sourcehut
+                         :repo   "meow_king/outline-indent-mode"
+                         :branch "main")
+    :hook
+    (typst-ts-mode . outline-indent-mode))
+#+end_src
+
+* tip
+TIP = Typst Inline Preview. It seeks to emulate the experience of writing LaTeX
+in Org mode documents using =org-latex-preview=, only for Typst documents in Emacs.
+
+** Prerequisites
+- A [[https://git.sr.ht/~mafty/tip-server-py][tip]] server installed locally.
+
+** =use-package= specification
+
+#+begin_src emacs-lisp
+  (use-package tip
+    :straight
+    (tip :type git :host sourcehut :repo "mafty/tip" :branch "main")
+    :custom
+    (tip-server-basedir (locate-user-emacs-file "tip-server-py")))
+#+end_src
