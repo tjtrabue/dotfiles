@@ -1776,35 +1776,117 @@ library that greatly enhances Emacs' semantic understanding of source code.
       (setq treesit-language-source-alist nil))
     ;; Specifies configuration for downloading and installing `tree-sitter' language grammars.
     (dolist (grammar
-             '((bash       "https://github.com/tree-sitter/tree-sitter-bash" "master")
-               (c          "https://github.com/tree-sitter/tree-sitter-c" "master")
-               (cpp        "https://github.com/tree-sitter/tree-sitter-cpp" "master")
-               (clojure    "https://github.com/sogaiu/tree-sitter-clojure" "master")
-               (cmake      "https://github.com/uyha/tree-sitter-cmake" "master")
-               (commonlisp "https://github.com/theHamsta/tree-sitter-commonlisp" "master")
-               (css        "https://github.com/tree-sitter/tree-sitter-css" "master")
-               (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile" "main")
-               (elisp      "https://github.com/Wilfred/tree-sitter-elisp" "main")
-               (elixir     "https://github.com/elixir-lang/tree-sitter-elixir" "main")
-               (go         "https://github.com/tree-sitter/tree-sitter-go" "master")
-               (haskell    "https://github.com/tree-sitter/tree-sitter-haskell" "master")
-               (heex       "https://github.com/phoenixframework/tree-sitter-heex" "main")
-               (html       "https://github.com/tree-sitter/tree-sitter-html" "master")
-               (java       "https://github.com/tree-sitter/tree-sitter-java" "master")
-               (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-               (json       "https://github.com/tree-sitter/tree-sitter-json" "master")
-               (latex      "https://github.com/latex-lsp/tree-sitter-latex" "master")
-               (make       "https://github.com/alemuller/tree-sitter-make" "master")
-               (markdown   "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser"
-                           "tree-sitter-markdown/src")
-               (org        "https://github.com/milisims/tree-sitter-org" "main")
-               (php        "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src")
-               (python     "https://github.com/tree-sitter/tree-sitter-python" "master")
-               (toml       "https://github.com/tree-sitter/tree-sitter-toml" "master")
-               (tsx        "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-               (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master"
-                           "typescript/src")
-               (yaml       "https://github.com/ikatyang/tree-sitter-yaml" "master")))
+             '((actionscript    "https://github.com/Rileran/tree-sitter-actionscript" "main")
+               (ada             "https://github.com/briot/tree-sitter-ada" "master")
+               (agda            "https://github.com/tree-sitter/tree-sitter-agda" "master")
+               (arduino         "https://github.com/tree-sitter-grammars/tree-sitter-arduino" "master")
+               (asm             "https://github.com/RubixDev/tree-sitter-asm" "main")
+               (astro           "https://github.com/virchau13/tree-sitter-astro" "master")
+               (bash            "https://github.com/tree-sitter/tree-sitter-bash" "master")
+               (beancount       "https://github.com/polarmutex/tree-sitter-beancount" "master")
+               (bibtex          "https://github.com/latex-lsp/tree-sitter-bibtex" "master")
+               (c               "https://github.com/tree-sitter/tree-sitter-c" "master")
+               (c-sharp         "https://github.com/tree-sitter/tree-sitter-c-sharp" "master")
+               (clojure         "https://github.com/sogaiu/tree-sitter-clojure" "master")
+               (cmake           "https://github.com/uyha/tree-sitter-cmake" "master")
+               (comment         "https://github.com/stsewd/tree-sitter-comment" "master")
+               (commonlisp      "https://github.com/theHamsta/tree-sitter-commonlisp" "master")
+               (cpp             "https://github.com/tree-sitter/tree-sitter-cpp" "master")
+               (css             "https://github.com/tree-sitter/tree-sitter-css" "master")
+               (csv             "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+                                "master"
+                                "csv/src")
+               (d               "https://github.com/CyberShadow/tree-sitter-d" "master")
+               (dart            "https://github.com/UserNobody14/tree-sitter-dart" "master")
+               (dockerfile      "https://github.com/camdencheek/tree-sitter-dockerfile" "main")
+               (doxygen         "https://github.com/tree-sitter-grammars/tree-sitter-doxygen" "master")
+               (dtd             "https://github.com/tree-sitter-grammars/tree-sitter-xml"
+                                "master"
+                                "dtd/src")
+               (elisp           "https://github.com/Wilfred/tree-sitter-elisp" "main")
+               (elixir          "https://github.com/elixir-lang/tree-sitter-elixir" "main")
+               (elm             "https://github.com/elm-tooling/tree-sitter-elm" "main")
+               (erlang          "https://github.com/WhatsApp/tree-sitter-erlang" "main")
+               (fish            "https://github.com/ram02z/tree-sitter-fish" "master")
+               (fortran         "https://github.com/stadelmanma/tree-sitter-fortran" "master")
+               (gdscript        "https://github.com/PrestonKnopp/tree-sitter-gdscript" "master")
+               (git-rebase      "https://github.com/the-mikedavis/tree-sitter-git-rebase" "main")
+               (gitattributes   "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes" "master")
+               (gitcommit       "https://github.com/gbprod/tree-sitter-gitcommit" "main")
+               (gitignore       "https://github.com/shunsambongi/tree-sitter-gitignore" "main")
+               (gleam           "https://github.com/gleam-lang/tree-sitter-gleam" "main")
+               (go              "https://github.com/tree-sitter/tree-sitter-go" "master")
+               (groovy          "https://github.com/Decodetalkers/tree-sitter-groovy" "gh-pages")
+               (haskell         "https://github.com/tree-sitter/tree-sitter-haskell" "master")
+               (heex            "https://github.com/phoenixframework/tree-sitter-heex" "main")
+               (html            "https://github.com/tree-sitter/tree-sitter-html" "master")
+               (java            "https://github.com/tree-sitter/tree-sitter-java" "master")
+               (javascript      "https://github.com/tree-sitter/tree-sitter-javascript" "master")
+               (jsdoc           "https://github.com/tree-sitter/tree-sitter-jsdoc" "master")
+               (json            "https://github.com/tree-sitter/tree-sitter-json" "master")
+               (julia           "https://github.com/tree-sitter/tree-sitter-julia" "master")
+               (kotlin          "https://github.com/fwcd/tree-sitter-kotlin" "main")
+               (latex           "https://github.com/latex-lsp/tree-sitter-latex" "master")
+               (llvm            "https://github.com/benwilliamgraham/tree-sitter-llvm" "main")
+               (llvm-mir        "https://github.com/Flakebi/tree-sitter-llvm-mir" "master")
+               (make            "https://github.com/alemuller/tree-sitter-make" "master")
+               (markdown        "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                                "split_parser"
+                                "tree-sitter-markdown/src")
+               (markdown_inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                                "split_parser"
+                                "tree-sitter-markdown-inline/src")
+               (matlab          "https://github.com/acristoffers/tree-sitter-matlab" "main")
+               (mermaid         "https://github.com/monaqa/tree-sitter-mermaid" "master")
+               (meson           "https://github.com/tree-sitter-grammars/tree-sitter-meson" "master")
+               (ninja           "https://github.com/alemuller/tree-sitter-ninja" "main")
+               (ocaml           "https://github.com/tree-sitter/tree-sitter-ocaml"
+                                "master"
+                                "grammars/ocaml/src")
+               (ocaml-interface "https://github.com/tree-sitter/tree-sitter-ocaml"
+                                "master"
+                                "grammars/interface/src")
+               (ocaml-type      "https://github.com/tree-sitter/tree-sitter-ocaml"
+                                "master"
+                                "grammars/type/src")
+               (org             "https://github.com/milisims/tree-sitter-org" "main")
+               (pascal          "https://github.com/Isopod/tree-sitter-pascal" "master")
+               (perl            "https://github.com/tree-sitter-perl/tree-sitter-perl" "master")
+               (php             "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src")
+               (prisma          "https://github.com/LumaKernel/tree-sitter-prisma" "master")
+               (psv             "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+                                "master"
+                                "psv/src")
+               (purescript      "https://github.com/postsolar/tree-sitter-purescript" "main")
+               (python          "https://github.com/tree-sitter/tree-sitter-python" "master")
+               (r               "https://github.com/r-lib/tree-sitter-r" "main")
+               (racket          "https://github.com/6cdh/tree-sitter-racket" "main")
+               (rst             "https://github.com/stsewd/tree-sitter-rst" "master")
+               (ruby            "https://github.com/tree-sitter/tree-sitter-ruby" "master")
+               (rust            "https://github.com/tree-sitter/tree-sitter-rust" "master")
+               (scala           "https://github.com/tree-sitter/tree-sitter-scala" "master")
+               (scheme          "https://github.com/6cdh/tree-sitter-scheme" "main")
+               (sql             "https://github.com/DerekStride/tree-sitter-sql" "gh-pages")
+               (swift           "https://github.com/alex-pinkus/tree-sitter-swift" "main")
+               (tablegen        "https://github.com/Flakebi/tree-sitter-tablegen" "master")
+               (tcl             "https://github.com/tree-sitter-grammars/tree-sitter-tcl" "main")
+               (toml            "https://github.com/tree-sitter/tree-sitter-toml" "master")
+               (tsv             "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+                                "master"
+                                "tsv/src")
+               (tsx             "https://github.com/tree-sitter/tree-sitter-typescript"
+                                "master"
+                                "tsx/src")
+               (typescript      "https://github.com/tree-sitter/tree-sitter-typescript"
+                                "master"
+                                "typescript/src")
+               (typst           "https://github.com/uben0/tree-sitter-typst" "master")
+               (verilog         "https://github.com/tree-sitter/tree-sitter-verilog" "master")
+               (xml             "https://github.com/tree-sitter-grammars/tree-sitter-xml"
+                                "master"
+                                "xml/src")
+               (yaml            "https://github.com/ikatyang/tree-sitter-yaml" "master")
+               (zig             "https://github.com/tree-sitter-grammars/tree-sitter-zig" "master")))
       (add-to-list 'treesit-language-source-alist grammar))
     ;; Here we remap major modes to ensure that the correct `tree-sitter' enabled mode activates,
     ;; instead.
