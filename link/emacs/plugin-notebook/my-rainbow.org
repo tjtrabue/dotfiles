@@ -50,6 +50,7 @@ another. Super handy for Lisp and other delimiter-heavy languages.
       c-mode-common
       c++-mode
       clojure-mode
+      clojure-ts-mode
       common-lisp-mode
       elixir-mode
       emacs-lisp-mode
@@ -83,6 +84,7 @@ plugin.
     ;; Activate prism for Lisp-based major modes
     ((cider-repl-mode
       clojure-mode
+      clojure-ts-mode
       common-lisp-mode
       emacs-lisp-mode
       ielm-mode

@@ -154,8 +154,8 @@ running REPL in order to function. That makes =clj-kondo= is a great
   (use-package flycheck-clj-kondo
     :after flycheck
     :hook
-    (clojure-mode . (lambda ()
-                      (require 'flycheck-clj-kondo))))
+    ((clojure-mode clojure-ts-mode) . (lambda ()
+                                        (require 'flycheck-clj-kondo))))
 #+end_src
 
 ** flycheck-color-mode-line

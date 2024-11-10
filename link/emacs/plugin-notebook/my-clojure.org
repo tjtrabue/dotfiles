@@ -47,12 +47,15 @@ syntax highlighting, indentation, and navigation.
     ;; Only install when running Emacs 29 or higher built with Treesitter support
     :if (and (>= emacs-major-version 29) (treesit-available-p))
     :custom
-    ;; Highlight entire rich comment expression with the comment font face
+    ;; Highlight entire rich `(comment ...)' expression with the comment font face
     (clojure-ts-comment-macro-font-lock-body t)
     ;; How to indent Clojure code:
     ;;   'semantic (default) -> tries to match clojure-mode and cljfmt indentation
     ;;   'fixed -> Simple indentation strategy outlined in a blog post by Tonsky.
     (clojure-ts-indent-style 'semantic)
+    ;; Whether to make forms inside `(comment ...)' forms top-level forms for evaluation and
+    ;; navigation
+    (clojure-ts-toplevel-inside-comment-form t)
     :init
     ;; Remap old Clojure(Script) major modes to new Treesitter-enabled modes
     (dolist (mapping '((clojure-mode       . clojure-ts-mode)
@@ -143,7 +146,7 @@ file in your project's root directory with the following content:
   (use-package cider
     :after evil-collection
     :hook
-    (clojure-mode . cider-mode)
+    ((clojure-mode clojure-ts-mode) . cider-mode)
     :general
     (general-unbind cider-repl-mode-map
       ",")
@@ -334,12 +337,12 @@ necessary, Node.js dependencies are up-to-date and compatible and try again.
   (use-package clj-refactor
     :delight
     :hook
-    (clojure-mode .
-                  (lambda ()
-                    (clj-refactor-mode 1)
-                    ;; This choice of keybinding leaves cider-macroexpand-1
-                    ;; unbound
-                    (cljr-add-keybindings-with-prefix "C-c C-j")))
+    ((clojure-mode clojure-ts-mode) .
+     (lambda ()
+       (clj-refactor-mode 1)
+       ;; This choice of keybinding leaves cider-macroexpand-1
+       ;; unbound
+       (cljr-add-keybindings-with-prefix "C-c C-j")))
     :custom
     ;; disable clj-refactor adding ns to blank files.
     ;; This is for interoperability with lsp-mode.
