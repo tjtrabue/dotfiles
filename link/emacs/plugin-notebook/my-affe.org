@@ -33,7 +33,7 @@ finding files by name.
     :demand t
     :commands (affe-grep affe-find)
     :general
-    (general-def 'normal 'override
+    (general-def 'normal
       "C-r" 'affe-grep)
     :custom
     ;; Change how affe's regex engine behaves, including sorting/filtering.
