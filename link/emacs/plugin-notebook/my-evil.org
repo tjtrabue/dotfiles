@@ -944,3 +944,12 @@ main features of =lispyville=:
       "M-["
       "M-{"))
 #+end_src
+
+** evil-cleverparens
+A delimiter-balancing plugin for =evil-mode=. A bit like =smartparens=.
+
+#+begin_src emacs-lisp
+  (use-package evil-cleverparens
+    ;; Lispyville is superior and integrates with Lispy.
+    :disabled)
+#+end_src

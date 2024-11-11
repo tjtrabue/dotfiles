@@ -8,6 +8,32 @@
 This file contains configuration and plugins for editing generic LISP code
 regardless of its particular dialect.
 
+* paredit
+The ancestor of all structural editing plugins in Emacs.
+
+Check out the [[http://danmidwood.com/content/2014/11/21/animated-paredit.html][animated tutorial]] for a great introduction to structural editing
+in Paredit.
+
+#+begin_src emacs-lisp
+  (use-package paredit
+    ;; Currently using Lispy and Lispyville
+    :disabled
+    :hook
+    ((cider-repl-mode
+      clojure-mode
+      clojure-ts-mode
+      common-lisp-mode
+      emacs-lisp-mode
+      ielm-mode
+      lisp-mode
+      lisp-data-mode
+      lisp-interaction-mode
+      scheme-mode
+      slime-repl-mode
+      sly-mrepl-mode)
+     . enable-paredit-mode))
+#+end_src
+
 * lispy
 =lispy= is a great plugin for editing LISP files in a VI-oriented
 manner. There is also the fantastic =lispyville= plugin for integrating
@@ -163,4 +189,21 @@ for =parinfer-rust-mode-map=.
     ;; Automatically download latest parinfer-rust library needed for this
     ;; plugin to work without prompting the user.
     (parinfer-rust-auto-download t))
+#+end_src
+
+* symex
+A modern replacement for Lispy that is somehow even more opinionated. Symex has
+some integration with Treesitter, which will allow its editing features to
+transcend Lisp dialects, making it more general-purpose than Lispy.
+
+#+begin_src emacs-lisp
+  (use-package symex
+    ;; So far, I don't see anything in Symex I don't already get from Lispy.
+    :disabled
+    :demand t
+    :delight
+    :custom
+    (symex-modal-backend 'evil)
+    :config
+    (symex-initialize))
 #+end_src
