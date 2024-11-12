@@ -109,6 +109,7 @@ libjpeg-turbo
 liblsp-r3d-glx-lib
 libpng
 libreoffice-fresh
+libretls
 librsvg
 libtiff
 libwebp
@@ -165,6 +166,8 @@ pass
 perl-image-exiftool
 perl-tk
 picom
+pkcs11-helper
+pkcs11-provider
 plantuml
 plasma
 plasma-wayland-session
