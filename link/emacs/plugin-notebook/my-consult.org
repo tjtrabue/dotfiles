@@ -277,5 +277,6 @@ Consult integration with the =flycheck= linting engine.
     :after (consult flycheck)
     :general
     (general-def
-      [remap consult-flymake] 'consult-flycheck))
+      [remap consult-flymake] 'consult-flycheck
+      [remap flycheck-list-errors] 'consult-flycheck))
 #+end_src
