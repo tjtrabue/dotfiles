@@ -1785,7 +1785,7 @@ library that greatly enhances Emacs' semantic understanding of source code.
                (asm             "https://github.com/RubixDev/tree-sitter-asm" "main")
                (astro           "https://github.com/virchau13/tree-sitter-astro" "master")
                (bash            "https://github.com/tree-sitter/tree-sitter-bash" "master")
-               ;; (beancount       "https://github.com/polarmutex/tree-sitter-beancount" "master")
+               (beancount       "https://github.com/yagebu/tree-sitter-beancount" "main")
                (bibtex          "https://github.com/latex-lsp/tree-sitter-bibtex" "master")
                (c               "https://github.com/tree-sitter/tree-sitter-c" "master")
                (c-sharp         "https://github.com/tree-sitter/tree-sitter-c-sharp" "master")
