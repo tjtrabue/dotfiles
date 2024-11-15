@@ -1,6 +1,7 @@
 PyGObject
 Wand
 autopep8
+beancount
 black
 build
 cmake-language-server
