@@ -336,7 +336,10 @@ ie__construct_cc_options_gcc() {
 # Clang is missing some preprocessor macros required to compile Emacs, so we
 # define them here.
 ie__define_clang_macros() {
-  printf "%s" "-D__LONG_LONG_WIDTH__=64"
+  local longLongWidth
+  longLongWidth="$(getconf LONG_BIT)"
+
+  printf "%s" "-D__LONG_LONG_WIDTH__=${longLongWidth}"
 }
 
 # If the user desires to compile Emacs using LLVM/Clang, adjust the C/C++
