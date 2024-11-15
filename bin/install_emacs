@@ -333,6 +333,12 @@ ie__construct_cc_options_gcc() {
   fi
 }
 
+# Clang is missing some preprocessor macros required to compile Emacs, so we
+# define them here.
+ie__define_clang_macros() {
+  printf "%s" "-D__LONG_LONG_WIDTH__=64"
+}
+
 # If the user desires to compile Emacs using LLVM/Clang, adjust the C/C++
 # environment variables to reflect that choice.
 ie__construct_cc_options_clang() {
@@ -340,7 +346,7 @@ ie__construct_cc_options_clang() {
   local clangIncludeDirs
   local clangLibDirs
   local cflagsClang
-  cflagsClang="-O3 $(ie__construct_cc_options_common)"
+  cflagsClang="-O3 $(ie__construct_cc_options_common) $(ie__define_clang_macros)"
 
   # Add directories to header search path
   clangIncludeDirs="-I $(dirname "$(locate '*libgccjit.h')")"
