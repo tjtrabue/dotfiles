@@ -301,7 +301,7 @@ ie__construct_cc_options_gcc() {
   local cflagsGcc
   cflagsCommon="$(ie__construct_cc_options_common)"
   cflagsGcc="$(
-    printf '%s' '-fallow-store-data-races' \
+    printf '%s' '-Ofast -fallow-store-data-races' \
       ' -fno-semantic-interposition' \
       ' -fno-math-errno -floop-parallelize-all' \
       ' -ftree-parallelize-loops=4' \
@@ -339,9 +339,8 @@ ie__construct_cc_options_clang() {
   local nameOfMissingExecutable=""
   local clangIncludeDirs
   local clangLibDirs
-  local cflagsCommon
-  local ulInclude="/usr/local/include"
-  cflagsCommon="$(ie__construct_cc_options_common)"
+  local cflagsClang
+  cflagsClang="-O3 $(ie__construct_cc_options_common)"
 
   # Add directories to header search path
   clangIncludeDirs="-I $(dirname "$(locate '*libgccjit.h')")"
@@ -356,8 +355,8 @@ ie__construct_cc_options_clang() {
   AR="$(command -v llvm-ar)"
   AS="$(command -v llvm-as)"
   CPPFLAGS="-DFD_SETSIZE=10000 ${CPPFLAGS:-""} ${clangIncludeDirs}"
-  CFLAGS="${cflagsCommon} ${CFLAGS:-""} -std=gnu17"
-  CXXFLAGS="${cflagsCommon} -stdlib=libstdc++ ${CXXFLAGS:-""}"
+  CFLAGS="${cflagsClang} ${CFLAGS:-""} -std=gnu17"
+  CXXFLAGS="${cflagsClang} -stdlib=libstdc++ ${CXXFLAGS:-""}"
   LDFLAGS="-fuse-ld=lld -rtlib=compiler-rt ${clangLibDirs} ${LDFLAGS:-""}"
 
   if [ ! -x "${CC}" ]; then
