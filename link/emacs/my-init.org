@@ -1422,6 +1422,8 @@ and hooks in a way that defers loading the package.
       "fF" 'find-file-other-window
       "fr" 'recentf-open-files
       "lf" 'load-file
+      ;; Highlight
+      "hn" 'evil-ex-nohighlight
       ;; Revert
       "rb" 'my/revert-buffer))
 #+end_src
