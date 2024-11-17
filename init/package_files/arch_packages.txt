@@ -231,6 +231,7 @@ ttf-fira-mono
 ttf-hack
 ttf-liberation
 ttf-nerd-fonts-symbols
+ttf-victor-mono-nerd
 ugrep
 unixodbc
 unzip
