@@ -142,7 +142,7 @@ file in your project's root directory with the following content:
 
   (defun my/cider-repl-prompt-function (namespace)
     "Return the CIDER REPL prompt for the current NAMESPACE."
-    (format "%s➣ " namespace))
+    (format "%s➣ " (cider-abbreviate-ns namespace)))
 #+end_src
 
 ** =use-package= specification
