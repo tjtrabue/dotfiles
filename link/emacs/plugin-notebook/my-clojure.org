@@ -139,6 +139,10 @@ file in your project's root directory with the following content:
       (cider-doc arg))
      (t
       (lsp-bridge-popup-documentation))))
+
+  (defun my/cider-repl-prompt-function (namespace)
+    "Return the CIDER REPL prompt for the current NAMESPACE."
+    (format "%s➣ " namespace))
 #+end_src
 
 ** =use-package= specification
@@ -251,6 +255,8 @@ file in your project's root directory with the following content:
     (cider-repl-pop-to-buffer-on-connect 'display-only)
     ;; Prefix string for results of REPL evaluation
     (cider-repl-result-prefix " ➤ ")
+    ;; The function returning the prompt string for the REPL.
+    (cider-repl-prompt-function #'my/cider-repl-prompt-function)
     ;; Set character size limit for the REPL buffer.
     (cider-repl-buffer-size-limit 100000)
     ;; Wrap around REPL input history.
