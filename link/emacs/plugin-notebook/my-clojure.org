@@ -161,6 +161,10 @@ file in your project's root directory with the following content:
       "C-k" 'cider-repl-previous-input
       "C-r" 'cider-repl-history
       "K"   'my/cider-doc-or-fallback-doc-function)
+    (general-def 'normal cider-repl-history-mode-map
+      ;; Move backwards/forwards through REPL history with j and k
+      "j" 'cider-repl-history-forward
+      "k" 'cider-repl-history-previous)
     (general-def 'insert cider-repl-mode-map
       "C-j"        'cider-repl-next-input
       "C-k"        'cider-repl-previous-input
