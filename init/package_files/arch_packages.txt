@@ -91,6 +91,7 @@ inkscape
 inotify-tools
 iotop
 iproute2
+isoimagewriter
 isync
 jdk-openjdk
 jdk8-openjdk
