@@ -82,7 +82,6 @@ gst-devtools
 gtk4
 hacksaw
 hicolor-icon-theme
-hplip
 htop
 httpie
 hunspell

@@ -292,12 +292,15 @@ cedet-rc.el
 /link/config/bluedevilglobalrc
 /link/config/discoverrc
 /link/config/dolphinrc
+/link/config/dragonplayerrc
 /link/config/drkonqirc
 /link/config/emaildefaults
 /link/config/emailidentities
+/link/config/go/
 /link/config/gtk-*
 /link/config/gtkrc*
 /link/config/gwenviewrc
+/link/config/isoimagewriterrc
 /link/config/kalarmrc
 /link/config/kalendaracrc
 /link/config/kapmanrc
@@ -362,8 +365,6 @@ cedet-rc.el
 /link/config/webengineurlinterceptoradblockrc
 /link/config/xdg-desktop-portal-kderc
 /link/config/xsettingsd/
-/link/config/dragonplayerrc
-/link/config/go/
 
 # The activity manager changes too frequently, and is not useful for sharing.
 /link/config/kactivitymanagerd*

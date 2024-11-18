@@ -315,7 +315,9 @@ file in your project's root directory with the following content:
               (lambda ()
                 ;; We still want `company-mode' in the CIDER REPL, even if we use `lsp-bridge'
                 ;; completions in Clojure(Script) source code buffers.
-                (company-mode 1)))
+                (company-mode 1)
+                (when (bound-and-true-p lsp-bridge-mode)
+                  (lsp-bridge-mode -1))))
     :config
     ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
     ;; You must set these variables in :config instead of :custom due to a loading

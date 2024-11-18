@@ -25,12 +25,7 @@ completion functions directly to keys to invoke them manually.
         (add-to-list 'completion-at-point-functions #'cape-tex)))
      ((comint-mode eshell-mode) .
       (lambda ()
-        (add-to-list 'completion-at-point-functions #'cape-history)))
-     (company-mode . (lambda ()
-                       ;; Use Company backends as Capfs.
-                       (setq-local completion-at-point-functions
-                                   (mapcar #'cape-company-to-capf
-                                           (list #'company-files #'company-keywords #'company-dabbrev))))))
+        (add-to-list 'completion-at-point-functions #'cape-history))))
     :general
     (my/user-leader-def
       "o p" 'completion-at-point
