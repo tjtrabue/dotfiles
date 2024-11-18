@@ -177,28 +177,28 @@ file in your project's root directory with the following content:
       ","   'cider-repl-handle-shortcut
       "<"   'cider-eval-last-sexp
       ">"   'cider-eval-last-sexp-and-replace
-      "cC"  'cider-classpath
-      "cF"  'cider-repl-toggle-clojure-font-lock
-      "cH"  'cider-repl-history
-      "cN"  'cider-ns-reload
-      "cR"  'cider-run
-      "cS"  'cider-sideloader-start
-      "cU"  'cider-repl-require-repl-utils
       "ca"  'cider-restart
       "cb"  'cider-repl-clear-buffer
+      "cC"  'cider-classpath
       "cc"  'cider-repl-clear-output
       "cd"  'cider-doc
+      "cF"  'cider-repl-toggle-clojure-font-lock
+      "cH"  'cider-repl-history
       "ch"  'cider-repl-shortcuts-help
+      "cN"  'cider-ns-reload
       "cn"  'cider-repl-set-ns
       "cp"  'cider-repl-toggle-pretty-printing
       "cq"  'cider-quit
+      "cR"  'cider-run
       "cr"  'cider-ns-refresh
+      "cS"  'cider-sideloader-start
       "cta" 'cider-test-run-loaded-tests
       "ctf" 'cider-test-run-ns-tests-with-filters
       "ctF" 'my/cider-test-prompt-for-filters
       "ctn" 'cider-test-run-ns-tests
       "ctp" 'cider-test-run-project-tests
       "ctr" 'cider-test-show-report
+      "cU"  'cider-repl-require-repl-utils
       "cu"  'cider-undef
       "cv"  'cider-version)
     (my/evil-leader-def cider-mode-map
@@ -206,6 +206,8 @@ file in your project's root directory with the following content:
       "<"   'cider-eval-last-sexp
       "ee"  'cider-eval-last-sexp
       ">"   'cider-eval-last-sexp-and-replace
+      "cI"  'cider-insert-region-in-repl
+      "ci"  'cider-insert-last-sexp-in-repl
       "cjj" 'cider-jack-in
       "cjs" 'cider-jack-in-cljs
       "cq"  'cider-quit)
