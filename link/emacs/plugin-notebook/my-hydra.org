@@ -42,11 +42,11 @@ Cycles through todo states for an Org file entry.
     :preface
     (require 'hydra)
     (eval-and-compile
-      (defhydra hydra-zoom (global-map "C-/")
+      (defhydra hydra-zoom ()
         "Zoom in/out in the current window"
         ("k" text-scale-increase "in")
         ("j" text-scale-decrease "out"))
-      (defhydra hydra-resize-window (global-map "C-]")
+      (defhydra hydra-resize-window ()
         "Resize window with VI keys"
         ("h" shrink-window-horizontally "Shrink horizontally")
         ("j" shrink-window "Shrink vertically")
@@ -64,6 +64,10 @@ Cycles through todo states for an Org file entry.
       "C-c C-t" 'hydra-org-todo/org-todo)
     (my/evil-leader-def 'override
       "ar" 'hydra-resize-window/body)
+    (general-def '(normal insert visual) 'global
+      "C-]" 'hydra-resize-window/body)
+    (general-def '(normal insert visual) 'global
+      "C-/" 'hydra-zoom/body)
     ;; Notice that we don't bind any keys in the hydra definition because this
     ;; hydra only contains one binding: "t". We bind to this command directly
     ;; after we define the hydra.
