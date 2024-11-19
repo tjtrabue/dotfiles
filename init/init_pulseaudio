@@ -17,7 +17,7 @@ declare LOG_LEVEL=3
 # }}}
 
 # Functions {{{
-_help() {
+ipa__help() {
   command cat <<EOF
 ${THIS_EXEC}
 
@@ -32,14 +32,22 @@ OPTIONS:
 EOF
 }
 
+# PulseAudio requires a system user named "pulse" in order to function.
+ipa__create_pulse_user() {
+  log_info "Creating pulse user"
+  sudo useradd -r -G audio,input pulse
+}
+
 # PulseAudio should be enabled as service on a per-user basis.
 # That's just how it works.
-link_pulse_user_service_module() {
+ipa__link_pulse_user_service_module() {
+  log_info "Linking pulseaudio Systemd user service"
   systemctl --user enable --now pulseaudio
 }
 
-main() {
-  link_pulse_user_service_module
+ipa__main() {
+  ipa__create_pulse_user &&
+  ipa__link_pulse_user_service_module
 }
 # }}}
 
@@ -51,7 +59,7 @@ eval set -- "$args"
 while true; do
   case "$1" in
   -h | --help)
-    _help
+    ipa__help
     exit 0
     ;;
 
@@ -68,6 +76,6 @@ while true; do
 done
 # }}}
 
-main "${@}"
+ipa__main "${@}"
 
 # vim:foldenable:foldmethod=marker:

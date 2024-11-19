@@ -317,11 +317,6 @@ arch-chroot "${MOUNT_ROOT}" chpasswd <<<"${USERNAME}:${PASSWORD}"
 arch-chroot "${MOUNT_ROOT}" chpasswd <<<"root:${PASSWORD}"
 # }}}
 
-# Add other users and groups {{{
-info_log "Adding pulse user for PulseAudio"
-arch-chroot "${MOUNT_ROOT}" useradd -G audio,input pulse
-# }}}
-
 # Configure the sudoers file {{{
 info_log "Configuring sudoers file"
 arch-chroot "${MOUNT_ROOT}" sed -i \
@@ -478,7 +473,7 @@ arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
 # Run init scripts {{{
 info_log "Running initialization scripts for important topics"
 arch-chroot "${MOUNT_ROOT}" runuser -l "${USERNAME}" -c \
-  "runinit arch lightdm emacs neovim nerd_fonts awesome shell zsh docker asdf"
+  "runinit arch lightdm pulseaudio emacs neovim nerd_fonts awesome shell zsh docker asdf"
 # }}}
 
 # Run language-specific package install scripts {{{
