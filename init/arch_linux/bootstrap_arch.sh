@@ -317,6 +317,11 @@ arch-chroot "${MOUNT_ROOT}" chpasswd <<<"${USERNAME}:${PASSWORD}"
 arch-chroot "${MOUNT_ROOT}" chpasswd <<<"root:${PASSWORD}"
 # }}}
 
+# Add other users and groups {{{
+info_log "Adding pulse user for PulseAudio"
+arch-chroot "${MOUNT_ROOT}" useradd -G audio,input pulse
+# }}}
+
 # Configure the sudoers file {{{
 info_log "Configuring sudoers file"
 arch-chroot "${MOUNT_ROOT}" sed -i \
