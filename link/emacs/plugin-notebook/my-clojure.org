@@ -274,7 +274,8 @@ file in your project's root directory with the following content:
     ;; Whether to display images in the REPL
     (cider-repl-use-content-types t)
     ;; String separating entries in the history buffer
-    (cider-repl-history-separator "🞜⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯🞜")
+    (cider-repl-history-separator
+     ";; 🞜⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯🞜")
     ;; Turn off hover documentation since lsp-mode provides a better alternative.
     (cider-eldoc-display-for-symbol-at-point nil)
     ;; If set to t, CIDER will try to add expected function arguments based on the

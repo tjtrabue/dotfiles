@@ -243,6 +243,7 @@ vulkan-intel
 vulkan-tools
 w3m
 wdiff
+websocat
 wget
 wireless_tools
 wpa_supplicant
