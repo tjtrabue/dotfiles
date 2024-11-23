@@ -480,4 +480,8 @@ Thumbs.db
 !/link/config/common-lisp
 # }}}
 
+# Enchant (spelling and dictionaries) {{{
+/link/config/enchant
+# }}}
+
 # vim:foldenable:foldmethod=marker

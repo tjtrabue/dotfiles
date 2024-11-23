@@ -1,0 +1,45 @@
+#+TITLE:   Terminal Emulators for Emacs
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-11-23
+#+TAGS:
+#+STARTUP: fold
+
+Since Emacs is an entire programming ecosystem, there are a number of terminal
+emulators that Emacs supports.
+
+* EAT
+EAT = Emulate A Terminal.
+
+Eat is a terminal emulator. It can run most (if not all) full-screen terminal
+programs, including Emacs.
+
+It is pretty fast, more than three times faster than Term, despite being
+implemented entirely in Emacs Lisp. So fast that you can comfortably run Emacs
+inside Eat, or even use your Emacs as a terminal multiplexer.
+
+It has many features that other Emacs terminal emulator do not, for example
+Sixel support, complete mouse support, shell integration, etc.  It flickers less
+than other Emacs terminal emulator, so you get more performance and a smoother
+experience.
+
+#+begin_src emacs-lisp
+  (use-package eat
+    ;; EAT is cool, but I prefer Eshell.
+    :disabled)
+#+end_src
+
+* vterm
+=vterm= is a full on terminal emulator for Emacs. It is not at all like
+=eshell=, which is a custom shell written in Emacs Lisp completely different
+than Bash, Zsh, etc. In contrast, =vterm= is a terminal emulator much like
+=xterm=, or =termite=, which in turn can run any shell installed on your
+operating system like Bash or Zsh.
+
+Not currently using =vterm= because EShell is largely a better alternative, and
+a terminal emulator is a better alternative when EShell is not enough.
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :disabled)
+#+end_src

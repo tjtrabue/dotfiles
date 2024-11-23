@@ -1,0 +1,32 @@
+#+TITLE:   Citar: Completing Read Interface for Bibliographies
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2024-11-23
+#+TAGS:    bibliography citar citation latex tex org org-mode
+#+STARTUP: fold
+
+Citar provides a highly configurable =completing-read= front-end for BibTeX,
+BibLaTeX, and CSL JSON bibliographic data, complete with LaTeX, Markdown, and
+=org-cite= editing support.
+
+#+begin_src emacs-lisp
+  (use-package citar
+    :hook
+    ((LaTeX-mode org-mode) . citar-capf-setup)
+    :custom
+    (citar-bibliography (list (file-truename (concat user-emacs-directory "/bib/references.bib")))))
+#+end_src
+
+* Plugins
+** citar-embark
+Adds contextual access actions in the minibuffer and at point via the
+=citar-embark-mode= minor mode.
+
+#+begin_src emacs-lisp
+  (use-package citar-embark
+    :after (citar embark)
+    :demand t
+    :no-require
+    :config
+    (citar-embark-mode 1))
+#+end_src

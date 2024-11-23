@@ -469,6 +469,16 @@ be marginally useful at times.
 #+end_src
 
 ** evil-matchit
+Port of =vim-matchit= for =evil-mode=. =evil-matchit= extends the VI =%= operator by
+adding programming language aware delimiter matching (for instance, jumping
+between matching =<div></div>= tags in HTML). HTML, Python, Java, Bash, Ruby,
+Elixit, Markdown, and YAML are just a few of the languages =evil-matchit=
+supports.
+
+As an interesting aside, Evil is not required to use =evil-matchit=. If you forego
+Evil in favor of Emacs' default keybindings, you must bind
+=evilmi-jump-items-native= to some custom key sequence.
+
 #+begin_src emacs-lisp
   (use-package evil-matchit
     :after evil-collection
@@ -479,10 +489,27 @@ be marginally useful at times.
 
 ** evil-exchange
 Port of =vim-exchange= used to exchange two text selections based on two
-consecutive motions beginning with =gx=.
+consecutive motions beginning with =gx=. For instance, to exchange the words "red"
+and "blue" in the following stanza, place point behind "red", type =gx w=, then
+move point behind "blue", and again type =gx w=:
+
+#+begin_src :tangle no
+  Roses are <gx w>red,
+  Violets are <gx w>blue
+#+end_src
+
+How useful is this feature? I will leave that decision to the user. In general,
+Vim's editing features are text-oriented, and have little in the way of semantic
+code understanding. Emacs, on the other hand, favors plugins that enable code
+awareness in editing capabilities, so the two editors' philophies are quite
+different. I believe that plugins like =evil-exchange= exist to satisfy Vim expats
+who miss their old editor plugins. I, however, like to lean on Emacs' more
+powerful features, so I find little use for basic text manipulation plugins.
 
 #+begin_src emacs-lisp
   (use-package evil-exchange
+    ;; I have never found much use for this plugin.
+    :disabled
     :after evil-collection
     :demand t
     :config
@@ -528,6 +555,9 @@ such as 'f', 'F', 's', and 'S'. See its GitHub page for more details.
 
 #+begin_src emacs-lisp
   (use-package evil-snipe
+    ;; I have not used `evil-snipe' in a long time, and to be honest, Avy provides a much more
+    ;; powerful system for fast, flexible text movement.
+    :disabled
     :demand t
     :after evil-collection
     :delight evil-snipe-local-mode
