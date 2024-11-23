@@ -34,32 +34,32 @@ aforementioned Vim plugins have.
 
   #+begin_src emacs-lisp
     (use-package smartparens
-      ;; A combination of `lispy-mode' and `electric-pair-mode' does everything
-      ;; that this plugin can do and more.
+      ;; A bit computationally intensive, and `electric-pair-mode' plus `lispy' does
+      ;; nearly everything this plugin can do.
       :disabled
       :delight
       (smartparens-mode)
       (smartparens-strict-mode)
       :hook
       ;; Enable strict mode for Lisp dialects:
-      (((cider-repl-mode
-         clojure-mode
-         clojure-ts-mode
-         common-lisp-mode
-         emacs-lisp-mode
-         ielm-mode
-         lisp-mode
-         lisp-interaction-mode
-         scheme-mode
-         sly-mrepl-mode)
-        . smartparens-strict-mode)
-       ;; Enable smartparens-mode for these major modes:
-       (text-mode . smartparens-mode))
+      ((cider-repl-mode
+        clojure-mode
+        clojure-ts-mode
+        common-lisp-mode
+        emacs-lisp-mode
+        ielm-mode
+        lisp-mode
+        lisp-interaction-mode
+        scheme-mode
+        sly-mrepl-mode)
+       . smartparens-strict-mode)
+      ;; Enable smartparens-mode for these major modes:
+      (text-mode . smartparens-mode)
       :config
       ;; Enable smartparens globally.
-      ;; NOTE: `electric-indent-mode' does a perfectly good job of balancing delimiters for most
+      ;; NOTE: `electric-pair-mode' does a perfectly good job of balancing delimiters for most
       ;; languages. `smartparens-strict-mode' is still valuable for Lisp-based languages, but we should
       ;; enable those per major mode.
       ;; (smartparens-global-mode)
-      (require 'smartparens-config))
+      )
   #+end_src

@@ -47,5 +47,8 @@ to a massive decrease in Emacs' performance. I recommend that you disable
         python-mode
         ruby-mode
         sly-mrepl-mode)
-       . aggressive-indent-mode))
+       . aggressive-indent-mode)
+      :init
+      (add-hook 'aggressive-indent-mode-hook (lambda ()
+                                               (electric-indent-local-mode -1))))
   #+end_src
