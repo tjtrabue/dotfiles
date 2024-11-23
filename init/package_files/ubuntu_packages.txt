@@ -84,6 +84,7 @@ libdbus-1-dev
 libdrm2
 libeffcee-dev
 libegl1
+libenchant-2-dev
 libepoxy0
 libflac8
 libfontconfig1
@@ -232,6 +233,7 @@ notmuch
 npm
 openbox
 parallel
+pkgconf
 plocate
 poppler-utils
 procps

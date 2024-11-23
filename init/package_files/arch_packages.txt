@@ -50,6 +50,7 @@ doxygen
 dvisvgm
 efibootmgr
 elixir
+enchant
 evince
 expac
 eza
@@ -168,6 +169,7 @@ perl-tk
 picom
 pkcs11-helper
 pkcs11-provider
+pkgconf
 plantuml
 plasma
 plasma-wayland-session
