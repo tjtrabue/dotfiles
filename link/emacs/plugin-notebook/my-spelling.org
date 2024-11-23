@@ -15,7 +15,7 @@ and in a more coding-correct sense (i.e., take camel case into account, and so
 on).
 
 *NOTE:* =flyspell-mode= requires you to have an ispell-compatible spell-checking
-binary installed, such as =hunspell=.  Furthermore, =hunspell= requires you to
+binary installed, such as =hunspell=. Furthermore, =hunspell= requires you to
 have dictionaries installed in predictable locations. Run =hunspell -D= to view
 the path =hunspell= uses to find dictionaries, which is different depending on
 your operating system.
@@ -82,11 +82,12 @@ corrected from a list of dictionary words presented as a completion menu.
 #+begin_src emacs-lisp
   (use-package jinx
     :delight
-    :hook
-    (text-mode . jinx-mode)
+    :demand t
     :general
     (general-def jinx-mode-map
-      "M-$" 'jinx-correct))
+      "M-$" 'jinx-correct)
+    :config
+    (global-jinx-mode 1))
 #+end_src
 
 * Wucuo
