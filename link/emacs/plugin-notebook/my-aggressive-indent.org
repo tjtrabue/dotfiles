@@ -29,10 +29,10 @@ to a massive decrease in Emacs' performance. I recommend that you disable
       ;; helpful, but it doesn't always play nicely with automatic code
       ;; formatters. It's also far more useful in Lisp modes than it is for editing
       ;; ALGOL-derived languages.
-      ((clojure-mode
-        clojure-ts-mode
-        c-mode
+      ((c-mode
         c++-mode
+        clojure-mode
+        clojure-ts-mode
         common-lisp-mode
         emacs-lisp-mode
         ;; elixir-mode
