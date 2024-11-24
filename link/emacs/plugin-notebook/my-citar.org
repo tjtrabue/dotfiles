@@ -25,6 +25,7 @@ Adds contextual access actions in the minibuffer and at point via the
 #+begin_src emacs-lisp
   (use-package citar-embark
     :after (citar embark)
+    :delight
     :demand t
     :no-require
     :config
