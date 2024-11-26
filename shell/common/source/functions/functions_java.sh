@@ -124,7 +124,7 @@ install_sdkman_packages() {
 
   log_info "Installing SDKMAN packages"
   # Install latest GraalVM JDK.
-  sdk install java "$(sdk list java | grep 'GraalVM' | awk '{print $NF}')"
+  sdk install java "$(sdk list java | grep 'GraalVM CE' | awk '{print $NF}')"
   # Install default Groovy version.
   sdk install groovy
   # Maven is the most popular Java build and dependency management tool.
