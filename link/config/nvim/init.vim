@@ -48,9 +48,6 @@ set encoding=utf-8 nobomb
 set binary
 set noeol
 
-" Use F2 to toggle paste mode for pasting in text from the system clipboard
-set pastetoggle=<F2>
-
 " Set to auto read when a file is changed from the outside
 set autoread
 

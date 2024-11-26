@@ -23,6 +23,8 @@ your operating system.
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package flyspell
+    ;; Currently using Jinx, which is newer and faster.
+    :disabled
     ;; :hook
     ;; NOTE: Activating `flyspell-mode' or `flyspell-prog-mode' can really slow down editing.
     ;; ((prog-mode . flyspell-prog-mode)
@@ -65,6 +67,8 @@ Correct misspelled words using your favorite completion interface.
 
 #+begin_src emacs-lisp
   (use-package flyspell-correct
+    ;; Flyspell is currently disabled in favor of Jinx.
+    :disabled
     :after flyspell
     :general
     (general-def flyspell-mode-map
