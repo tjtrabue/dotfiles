@@ -775,7 +775,7 @@ main features of =lispyville=:
 *** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lispyville
-    :after (evil-collection evil-escape lispy)
+    :after (evil-collection lispy)
     :delight lispyville-mode
     :hook
     (lispy-mode . lispyville-mode)
@@ -854,7 +854,9 @@ main features of =lispyville=:
       ;; Kill quoted string or sexp including point.
       "C-'" 'lispy-kill-at-point
       ;; Mark symbols with M-m
-      "M-m" 'lispy-mark-symbol)
+      "M-m" 'lispy-mark-symbol
+      ;; Remap evil-nerd-commenter commands to lispyville versions.
+      [remap evilnc-comment-or-uncomment-lines] 'lispyville-comment-or-uncomment-line)
     (general-def '(insert replace) lispyville-mode-map
       ;; lispy pair insertion commands tend to mess with the CIDER nREPL, so I
       ;; prefer to use plain old self-insert-command for inserting parentheses,
