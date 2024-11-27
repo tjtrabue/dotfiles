@@ -55,6 +55,8 @@ jq
 language-pack-en-base
 libacl1-dev
 libao-dev
+libapr1
+libaprutil1
 libasound2
 libasound2-dev
 libaspell15

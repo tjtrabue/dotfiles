@@ -5,6 +5,8 @@ alsa-firmware
 alsa-plugins
 alsa-utils
 android-tools
+apr
+apr-util
 arandr
 arc-gtk-theme
 arc-icon-theme
