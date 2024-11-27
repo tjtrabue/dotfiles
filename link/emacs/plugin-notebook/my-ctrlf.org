@@ -14,10 +14,10 @@ replacement for plugins like Swiper and Helm Swoop.
     :after evil-collection
     :demand t
     :general
-    (general-def
+    (general-def ctrlf-mode-map
       ;; Remap standard Emacs isearch keybinding
       "C-s" 'ctrlf-forward-default)
-    (general-def 'normal
+    (general-def 'normal ctrlf-mode-map
       ;; Remap standard Emacs isearch keybinding
       "C-s" 'ctrlf-forward-default
       ;; Remap evil-search keys to ctrlf.
