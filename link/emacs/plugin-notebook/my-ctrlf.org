@@ -11,6 +11,9 @@ replacement for plugins like Swiper and Helm Swoop.
 
 #+begin_src emacs-lisp
   (use-package ctrlf
+    ;; I find that evil-mode's basic `evil-ex-search-forward' and `evil-ex-search-backward' work just
+    ;; fine for my needs.
+    :disabled
     :after evil-collection
     :demand t
     :general
@@ -26,7 +29,13 @@ replacement for plugins like Swiper and Helm Swoop.
       "/" 'ctrlf-forward-default
       "?" 'ctrlf-backward-default)
     :custom
-    ;; Use fuzzy search and regular expressions by default.
+    ;; Change default search style.
+    ;; Must be one of:
+    ;;   'literal
+    ;;   'regexp
+    ;;   'symbol
+    ;;   'fuzzy
+    ;;   'fuzzy-regexp
     (ctrlf-default-search-style 'fuzzy-regexp)
     :config
     ;; Enable ctrlf-mode globally
