@@ -89,7 +89,7 @@ corrected from a list of dictionary words presented as a completion menu.
     :demand t
     :general
     (general-def jinx-mode-map
-      "M-$" 'jinx-correct)
+      "C-&" 'jinx-correct)
     :config
     (global-jinx-mode 1))
 #+end_src
