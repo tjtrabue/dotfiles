@@ -155,6 +155,7 @@ nss-mdns
 ntfs-3g
 ntp
 numlockx
+nuspell
 nvidia
 nvidia-utils
 openjdk-doc

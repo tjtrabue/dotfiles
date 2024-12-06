@@ -241,6 +241,7 @@ neovim
 nodejs
 notmuch
 npm
+nuspell
 openbox
 parallel
 pkgconf
