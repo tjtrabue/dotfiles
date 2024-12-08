@@ -767,7 +767,7 @@ main features of =lispyville=:
         (lispy-new-copy)
         (evil-paste-before count)
         (forward-char)
-        (newline-and-indent))))
+        (lispy-newline-and-indent))))
 
   (defun my/lispyville-delete-backward-char-and-join (count)
     "Delete previous COUNT chars, keeping parens balanced.
