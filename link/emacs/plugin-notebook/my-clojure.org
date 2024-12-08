@@ -204,8 +204,9 @@ file in your project's root directory with the following content:
     (my/evil-leader-def cider-mode-map
       "="   'cider-format-buffer
       "<"   'cider-eval-last-sexp
-      "ee"  'cider-eval-last-sexp
       ">"   'cider-eval-last-sexp-and-replace
+      "ee"  'cider-eval-last-sexp
+      "eE"  'cider-eval-last-sexp-and-replace
       "cI"  'cider-insert-region-in-repl
       "ci"  'cider-insert-last-sexp-in-repl
       "cjj" 'cider-jack-in
