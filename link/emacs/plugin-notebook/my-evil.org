@@ -759,6 +759,16 @@ main features of =lispyville=:
                (lispyville-yank-line beg end type reg yank-handler)))
         (evil-paste-after count))))
 
+  (defun my/lispyville-duplicate-at-point (count)
+    "Duplicates the symbol or s-exp at point COUNT times."
+    (interactive "P")
+    (save-excursion
+      (with-undo-amalgamate
+        (lispy-new-copy)
+        (evil-paste-before count)
+        (forward-char)
+        (newline-and-indent))))
+
   (defun my/lispyville-delete-backward-char-and-join (count)
     "Delete previous COUNT chars, keeping parens balanced.
 
@@ -823,7 +833,7 @@ main features of =lispyville=:
       "C-S-j" 'lispy-down
       "C-S-k" 'lispy-up
       "C-S-l" 'lispyville-right
-      "C-S-p" 'my/lispyville-duplicate-dwim)
+      "C-S-p" 'my/lispyville-duplicate-at-point)
     (general-def 'normal lispyville-mode-map
       ;; slurp: expand current s-exp; barf: Contract current s-exp
       "-" 'lispyville-slurp
