@@ -1366,7 +1366,7 @@ and hooks in a way that defers loading the package.
     (general-unbind
       ;; Unbind some keys to make room for my custom keybindings.
       "M-c")
-    (general-def
+    (general-def 'global
       ;; Nobody uses downcase-region, anyway.
       "C-x C-l" 'find-library
       ;; Compile command for the current buffer.

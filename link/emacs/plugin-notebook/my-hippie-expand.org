@@ -66,9 +66,12 @@ all the time.
     :straight nil
     :demand t
     :general
-    (general-def '(normal insert)
+    (general-def 'global
       ;; The primary HippieExpand keybinding.
-      "C-;" 'hippie-expand)
+      "C-;" 'hippie-expand
+      ;; This remaps `M-/' from dynamic abbrev (which is pretty useless) to the much superior
+      ;; `hippie-expand'.
+      [remap dabbrev-expand] 'hippie-expand)
     ;; NOTE: Using default Tab key behavior along with completion-at-point functions, which provides
     ;;       more predictable behavior.
     ;; (general-def 'insert
