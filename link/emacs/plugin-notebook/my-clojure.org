@@ -221,11 +221,15 @@ file in your project's root directory with the following content:
       "ee"  'cider-eval-last-sexp
       "eE"  'cider-eval-last-sexp-and-replace
       "ca"  'cider-apropos
+      "cd"  'cider-doc
       "cI"  'cider-insert-region-in-repl
       "ci"  'my/cider-insert-last-sexp-in-repl
       "cjj" 'cider-jack-in
       "cjs" 'cider-jack-in-cljs
-      "cq"  'cider-quit)
+      "cN"  'cider-ns-reload
+      "cn"  'cider-repl-set-ns
+      "cq"  'cider-quit
+      "cu"  'cider-undef)
     (my/user-leader-def cider-mode-map
       ;; For some reason `cider-jack-in' doesn't have a default binding.
       ;; I like `C-c C-j'.
