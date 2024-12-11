@@ -80,7 +80,8 @@ completion UI in terms of customization.
     :custom
     ;; Whether to grow and shrink vertico buffer dynamically
     ;; Can be t (which means grow and shrink), nil, or 'grow-only
-    (vertico-resize nil)
+    ;; NOTE: You must set this variable to t if using the `vertico-posframe' plugin.
+    (vertico-resize t)
     ;; Max number of candidates to show
     (vertico-count 20)
     ;; Enable cycling for vertico-next and vertico-previous
