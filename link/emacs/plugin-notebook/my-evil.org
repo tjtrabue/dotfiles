@@ -833,7 +833,7 @@ main features of =lispyville=:
       "C-S-j" 'lispy-down
       "C-S-k" 'lispy-up
       "C-S-l" 'lispyville-right
-      "C-S-p" 'my/lispyville-duplicate-at-point)
+      "C-S-p" 'my/lispyville-duplicate-dwim)
     (general-def 'normal lispyville-mode-map
       ;; slurp: expand current s-exp; barf: Contract current s-exp
       "-" 'lispyville-slurp
@@ -888,8 +888,8 @@ main features of =lispyville=:
       ;; Contract/expand current sexp.
       "<<" 'lispyville-<
       ">>" 'lispyville->
-      ;; Clone the current sexp or region
-      "C-y" 'lispy-clone
+      ;; Clone the s-exp at point
+      "C-y" 'my/lispyville-duplicate-at-point
       ;; Move s-exps back and forth
       "M-j" 'lispyville-move-down
       "M-k" 'lispyville-move-up)

@@ -327,7 +327,7 @@ LanguageServerProtocol clients and servers.
     (setq mouse-wheel-follow-mouse 't))
   (setq scroll-margin 0)
   (setq scroll-step 1)
-  (setq scroll-conservatively 10000)
+  (setq scroll-conservatively 101)
   (setq auto-window-vscroll nil)
 
   ;; Automatically reload TAGS file without prompting us.
@@ -443,6 +443,11 @@ LanguageServerProtocol clients and servers.
                                                "chromium"
                                                "firefox"
                                                "chrome")))
+
+  ;; Idle time after which deferred fontification takes place.
+  ;; If nil, do not defer fontification.
+  ;; If 0, only defer fontification when there is input pending.
+  (setq jit-lock-defer-time 0)
 
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
@@ -810,6 +815,11 @@ edited location, as opposed to opening them at the beginning of the file.
   ;; `visual-line-mode' wraps text at word boundaries at the window's edge so that you do not have to
   ;; horizontally scroll to read long lines.
   (global-visual-line-mode 1)
+
+  ;; These minor modes will only activate in GUI Emacs.
+  (when (display-graphic-p)
+    ;; Enable right-click context menu in Emacs.
+    (context-menu-mode 1))
 #+end_src
 
 * Key Bindings
