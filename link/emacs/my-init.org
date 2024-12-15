@@ -816,6 +816,10 @@ edited location, as opposed to opening them at the beginning of the file.
   ;; horizontally scroll to read long lines.
   (global-visual-line-mode 1)
 
+  ;; Allow certain commands to be repeated by typing a single character, rather.
+  ;; than the entire key sequence.
+  (repeat-mode 1)
+
   ;; These minor modes will only activate in GUI Emacs.
   (when (display-graphic-p)
     ;; Enable right-click context menu in Emacs.

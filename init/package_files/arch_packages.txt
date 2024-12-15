@@ -248,6 +248,8 @@ vulkan-intel
 vulkan-tools
 w3m
 wdiff
+webkit2gtk
+webkit2gtk-4.1
 websocat
 wget
 wireless_tools
