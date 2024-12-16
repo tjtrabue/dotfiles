@@ -578,8 +578,8 @@ autocmd BufNewFile,BufRead */git/ignore set filetype=gitignore syntax=gitignore
 " Highlight yanked text {{{
 augroup highlight_yank
   autocmd!
-  autocmd TextYankPost * silent!
-        \lua require'vim.highlight'.on_yank{higroup="IncSearch", timeout=500}
+  au TextYankPost * silent!
+        \lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})
 augroup END
 " }}}
 
