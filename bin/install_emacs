@@ -35,7 +35,8 @@ declare USE_LTO=false
 declare USE_WIDE_INT=false
 declare SOUND_SUPPORT=""
 declare TRAMPOLINES=false
-declare NUM_THREADS="$(nproc)"
+declare NUM_THREADS
+NUM_THREADS="$(nproc)"
 
 # User/group options
 # The name of the user or group used for shared game score files.
@@ -307,19 +308,7 @@ ie__construct_cc_options_gcc() {
   cflagsCommon="$(ie__construct_cc_options_common)"
   cflagsGcc="$(
     printf '%s' '-Ofast' \
-      ' -fallow-store-data-races' \
-      ' -fno-semantic-interposition' \
-      ' -fno-math-errno' \
-      ' -floop-parallelize-all' \
-      ' -ftree-parallelize-loops=4' \
-      ' -fno-finite-math-only' \
-      ' -fno-trapping-math' \
-      ' -freciprocal-math' \
-      ' -fno-rounding-math' \
-      ' -fno-signaling-nans' \
-      ' -fassociative-math' \
-      ' -fno-signed-zeros' \
-      ' -frename-registers'
+      ' -fno-finite-math-only'
   )"
 
   CC="$(command -v "${IE_CC}")"
@@ -601,11 +590,11 @@ ie__build_emacs() {
   local buildSucceeded
   local makeCmd="make -j${NUM_THREADS}"
 
-  log_info "Compiling Emacs from source"
-
   if "${TRAMPOLINES}"; then
     makeCmd="${makeCmd} trampolines"
   fi
+
+  log_info "Compiling Emacs with GNU Make command: ${GREEN}${makeCmd}${NC}"
 
   eval "${makeCmd}"
   buildSucceeded="$?"
