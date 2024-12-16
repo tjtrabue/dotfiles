@@ -39,16 +39,7 @@ Emacs' internal undo data.
 
 #+begin_src emacs-lisp
   (use-package undo-fu
-    :after evil-collection
-    :custom
-    ;; The type of compression to use for session files.
-    ;; Can be one of:
-    ;;   'bz2
-    ;;   'gz
-    ;;   'xz
-    ;;   'zst
-    ;;   nil - Disable compression
-    (undo-fu-session-compression nil))
+    :after evil-collection)
 #+end_src
 
 * undo-fu-session
@@ -64,6 +55,14 @@ history after restarting.
     (undo-fu-session-linear t)
     ;; Number of undo history files to store; nil to remove limit entirely.
     (undo-fu-session-file-limit 500)
+    ;; The type of compression to use for session files.
+    ;; Can be one of:
+    ;;   'bz2
+    ;;   'gz
+    ;;   'xz
+    ;;   'zst
+    ;;   nil - Disable compression
+    (undo-fu-session-compression nil)
     :config
     (global-undo-fu-session-mode 1))
 #+end_src
