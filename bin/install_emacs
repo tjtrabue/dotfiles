@@ -26,6 +26,7 @@ declare NATIVE_COMP=aot
 declare NO_CONFIRM=false
 
 # Build options
+declare BOOTSTRAP=false
 declare DOCS_HTML=false
 declare DOCS_PDF=false
 declare EXTRA_CONFIG_ARGS=""
@@ -87,6 +88,11 @@ USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
+  -b | --bootstrap
+    Force a clean build of Emacs, recompiling all files. This option will incur
+    more time in compilation, but may be useful when a stubborn compile error
+    is encountered.
+
   -c | --use-clang
     Whether to use Clang to compile Emacs.
     You may need to install extra development libraries, such as openmp, for
@@ -307,8 +313,7 @@ ie__construct_cc_options_gcc() {
   local cflagsGcc
   cflagsCommon="$(ie__construct_cc_options_common)"
   cflagsGcc="$(
-    printf '%s' '-Ofast' \
-      ' -fno-finite-math-only'
+    printf '%s' '-O3'
   )"
 
   CC="$(command -v "${IE_CC}")"
@@ -576,13 +581,6 @@ ie__construct_configure_cmd() {
   printf '%s' "${configureCmd}"
 }
 
-# Make sure no lingering auto-generated or compiled files remain in the Emacs 
-# repository.
-ie__clean_emacs_repo() {
-  log_info "Cleaning the Eamcs repository before building"
-  make extraclean
-}
-
 # Compile Emacs source code. Optionally, generate documentation in HTML/PDF
 # formats. This function presupposes that the user has already run the
 # configure command.
@@ -590,6 +588,10 @@ ie__build_emacs() {
   local buildSucceeded
   local makeCmd="make -j${NUM_THREADS}"
 
+  # Add extra make targets:
+  if "${BOOTSTRAP}"; then
+    makeCmd="${makeCmd} bootstrap"
+  fi
   if "${TRAMPOLINES}"; then
     makeCmd="${makeCmd} trampolines"
   fi
@@ -661,7 +663,6 @@ ie__install_from_source() {
   (
     log_info "Installing latest Emacs" &&
       cd "${EMACS_DEST}" &&
-      ie__clean_emacs_repo &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
       ie__build_emacs &&
@@ -679,8 +680,8 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o ce:g:hj:lmn:ps:tw \
-  --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound:,trampolines,wide-int \
+args=$(getopt -o bce:g:hj:lmn:ps:tw \
+  --long bootstrap,use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound:,trampolines,wide-int \
   -n 'install_emacs' \
   -- "$@")
 eval set -- "$args"
@@ -688,6 +689,12 @@ eval set -- "$args"
 # extract options and their arguments into variables.
 while true; do
   case "$1" in
+  -b | --bootstrap)
+    log_info "Will ${CYAN}bootstrap${NC} clean build"
+    BOOTSTRAP=true
+    shift
+    ;;
+
   -c | --use-clang)
     log_info "Using Clang compiler"
     USE_CLANG=true
@@ -812,7 +819,7 @@ while true; do
       ;;
     esac
     ;;
- 
+
   -t | --trampolines)
     log_info "Will compile ${CYAN}trampolines${NC}"
     TRAMPOLINES=true
