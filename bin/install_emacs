@@ -302,8 +302,8 @@ ie__construct_cc_options_common() {
   printf '%s' '-mtune=native' \
     ' -march=native' \
     ' -fomit-frame-pointer' \
-    ' -funsafe-math-optimizations' \
-    ' -funroll-loops'
+    ' -funroll-loops' \
+    ' -funsafe-math-optimizations'
 }
 
 # Construct C and C++ compiler/linker options, and export the appropriate
@@ -313,7 +313,20 @@ ie__construct_cc_options_gcc() {
   local cflagsGcc
   cflagsCommon="$(ie__construct_cc_options_common)"
   cflagsGcc="$(
-    printf '%s' '-O3'
+    printf '%s' '-Ofast' \
+      ' -fallow-store-data-races' \
+      ' -fno-semantic-interposition' \
+      ' -fno-math-errno' \
+      ' -floop-parallelize-all' \
+      ' -ftree-parallelize-loops=4' \
+      ' -fno-finite-math-only' \
+      ' -fno-trapping-math' \
+      ' -freciprocal-math' \
+      ' -fno-rounding-math' \
+      ' -fno-signaling-nans' \
+      ' -fassociative-math' \
+      ' -fno-signed-zeros' \
+      ' -frename-registers'
   )"
 
   CC="$(command -v "${IE_CC}")"
