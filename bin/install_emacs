@@ -34,6 +34,7 @@ declare USE_PGTK=false
 declare USE_LTO=false
 declare USE_WIDE_INT=false
 declare SOUND_SUPPORT=""
+declare TRAMPOLINES=false
 declare NUM_THREADS="$(nproc)"
 
 # User/group options
@@ -163,6 +164,9 @@ OPTIONS:
       - bsd-ossaudio
       - no
 
+  -t | --trampolines
+    Compile jitted Emacs Lisp files with trampolines.
+
   -w | --wide-int
     Compile Emacs with wide integer support. This only matters on systems that
     store "long int" and "long long int" differently.
@@ -288,7 +292,8 @@ ie__mac_build_options() {
 
 # Construct options common to both CFLAGS and CXXFLAGS.
 ie__construct_cc_options_common() {
-  printf '%s' '-O3 -mtune=native -march=native' \
+  printf '%s' '-mtune=native' \
+    ' -march=native' \
     ' -fomit-frame-pointer' \
     ' -funsafe-math-optimizations' \
     ' -funroll-loops'
@@ -301,9 +306,11 @@ ie__construct_cc_options_gcc() {
   local cflagsGcc
   cflagsCommon="$(ie__construct_cc_options_common)"
   cflagsGcc="$(
-    printf '%s' '-Ofast -fallow-store-data-races' \
+    printf '%s' '-Ofast' \
+      ' -fallow-store-data-races' \
       ' -fno-semantic-interposition' \
-      ' -fno-math-errno -floop-parallelize-all' \
+      ' -fno-math-errno' \
+      ' -floop-parallelize-all' \
       ' -ftree-parallelize-loops=4' \
       ' -fno-finite-math-only' \
       ' -fno-trapping-math' \
@@ -488,14 +495,14 @@ PDF documentation will be generated.
 EOF
   fi
 
-  while ! "${NO_CONFIRM}" && ! printf '%s' "${response}" | grep -q '[YyNn]'; do
+  while ! printf '%s' "${response}" | grep -q '[YyNn]'; do
     command cat <<EOF
 Continue? [y/n]
 EOF
     read -r response
   done
 
-  printf '%s' "${response}" | grep -q '[Yy]' || ${NO_CONFIRM}
+  printf '%s' "${response}" | grep -q '[Yy]'
 }
 
 # Put together the options to pass to the './configure' script created by
@@ -580,15 +587,27 @@ ie__construct_configure_cmd() {
   printf '%s' "${configureCmd}"
 }
 
+# Make sure no lingering auto-generated or compiled files remain in the Emacs 
+# repository.
+ie__clean_emacs_repo() {
+  log_info "Cleaning the Eamcs repository before building"
+  make extraclean
+}
+
 # Compile Emacs source code. Optionally, generate documentation in HTML/PDF
 # formats. This function presupposes that the user has already run the
 # configure command.
 ie__build_emacs() {
   local buildSucceeded
+  local makeCmd="make -j${NUM_THREADS}"
 
   log_info "Compiling Emacs from source"
 
-  make bootstrap -j"${NUM_THREADS}"
+  if "${TRAMPOLINES}"; then
+    makeCmd="${makeCmd} trampolines"
+  fi
+
+  eval "${makeCmd}"
   buildSucceeded="$?"
 
   if [ "${buildSucceeded}" -eq 0 ] && "${DOCS_HTML}"; then
@@ -645,7 +664,7 @@ ie__install_from_source() {
   # Export appropriate C/C++ compiler environment variables
   ie__construct_cc_options
 
-  if ! ie__confirm_installation "${configureCmd}"; then
+  if ! "${NO_CONFIRM}" && ! ie__confirm_installation "${configureCmd}"; then
     err "Installation terminated by user."
     return 1
   fi
@@ -653,6 +672,7 @@ ie__install_from_source() {
   (
     log_info "Installing latest Emacs" &&
       cd "${EMACS_DEST}" &&
+      ie__clean_emacs_repo &&
       ./autogen.sh &&
       eval "${configureCmd}" &&
       ie__build_emacs &&
@@ -670,8 +690,8 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o ce:g:hj:lmn:ps:w \
-  --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound:,wide-int \
+args=$(getopt -o ce:g:hj:lmn:ps:tw \
+  --long use-clang,docs-html,docs-pdf,extra-config:,gcc-version:,help,jobs:,no-confirm,use-lto,use-mold,native-comp:,pgtk,prefix:,sound:,trampolines,wide-int \
   -n 'install_emacs' \
   -- "$@")
 eval set -- "$args"
@@ -802,6 +822,12 @@ while true; do
       shift 2
       ;;
     esac
+    ;;
+ 
+  -t | --trampolines)
+    log_info "Will compile ${CYAN}trampolines${NC}"
+    TRAMPOLINES=true
+    shift
     ;;
 
   -w | --wide-int)
