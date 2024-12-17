@@ -144,17 +144,12 @@ file in your project's root directory with the following content:
     "Return the CIDER REPL prompt for the current NAMESPACE."
     (format "%s➣ " (cider-abbreviate-ns namespace)))
 
-  (defun my/cider-insert-last-sexp-in-repl (&optional arg)
-    "Advances point one character forward before inserting the last s-exp in the REPL.
+  (defun my/cider-insert-sexp-at-point-in-repl (&optional arg)
+    "Insert the s-expression at point into the CIDER REPL and switch to it.
 
-  This properly integrates `evil-mode' with CIDER since, while in normal mode, Emacs assumes point
-  is one character behind the cursor rather than on the cursor, leading to undesirable behavior
-  when executing `cider-insert-last-sexp-in-repl'.
-
-  If invoked with prefix ARG, evaluate the s-expression in the REPL."
+  If invoked with prefix ARG, also evaluate the s-expression in the REPL."
     (interactive "P")
-    (evil-with-state 'insert
-      (cider-insert-last-sexp-in-repl arg)))
+    (cider-insert-in-repl (cider-sexp-at-point) arg))
 #+end_src
 
 ** =use-package= specification
@@ -219,7 +214,7 @@ file in your project's root directory with the following content:
       "cC"  'cider-classpath
       "cd"  'cider-doc
       "cI"  'cider-insert-region-in-repl
-      "ci"  'my/cider-insert-last-sexp-in-repl
+      "ci"  'my/cider-insert-sexp-at-point-in-repl
       "cjj" 'cider-jack-in
       "cjs" 'cider-jack-in-cljs
       "cN"  'cider-ns-reload
