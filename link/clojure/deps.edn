@@ -24,27 +24,42 @@
            :exec-fn deps-deploy.deps-deploy/deploy
            :exec-args {:installer :remote}}
 
+  ;; polylith tool:
+  :poly {:replace-deps {polylith/clj-poly {:mvn/version "0.2.21"}}
+         :main-opts ["-m" "polylith.clj.core.poly-cli.core"]}
+  :poly-next {:replace-deps {polylith/clj-poly {:mvn/version "0.3.21-SNAPSHOT"}}
+              :main-opts ["-m" "polylith.clj.core.poly-cli.core"]}
+
   ;; testing and debugging tools (this would normally be overridden
   ;; by a :test alias in the project deps.edn file -- but it's a
   ;; useful default):
   :test {:extra-paths ["test" "src/test/clojure"]
          :extra-deps {org.clojure/test.check {:mvn/version "RELEASE"}}}
+
+  ;; use this at the end of your aliases to cancel any main opts in earlier
+  ;; aliases, e.g., clojure -M:test:no-main to avoid running tests:
+  :no-main {:main-opts []}
+
   ;; - see https://github.com/cognitect-labs/test-runner
   ;; - run your tests: clj -X:test:runner
   :runner {:extra-deps {io.github.cognitect-labs/test-runner
                         {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
            :exec-fn cognitect.test-runner.api/test
            :exec-args {:dirs ["test" "src/test/clojure"]}}
+
   ;; - see https://github.com/jonase/eastwood#running-eastwood-in-a-repl
   :eastwood {:extra-deps {jonase/eastwood {:mvn/version "RELEASE"}}
              :main-opts ["-m" "eastwood.lint" "{:source-paths,[\"src\"],:test-paths,[\"test\"]}"]}
+
   ;; - see https://github.com/athos/clj-check
   :check {:extra-deps {io.github.athos/clj-check
                        {:git/tag "0.1.0" :git/sha "0ca84df"}}
           :main-opts ["-m" "clj-check.check"]}
+
   ;; - see https://github.com/clojure-expectations/clojure-test
   ;; - run your expectations: clj -M:test:expect:runner
   :expect {:extra-deps {com.github.seancorfield/expectations {:mvn/version "RELEASE"}}}
+
   ;; - see https://github.com/hugoduncan/criterium/
   ;; - (require '[criterium.core :refer [bench]])
   ;; - (bench (your-expression))
@@ -58,39 +73,58 @@
   ;;   - clojure -M:fig:build:dev/repl
   :dev/repl {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]
              :main-opts ["-e" "(load-file,(str,(System/getProperty,\"user.home\"),\"/.clojure/dev.clj\"))"]}
+
   ;; - in case you need precompiled code on your classpath:
   :classes {:extra-paths ["classes"]}
+
   ;; - start a Socket REPL on port 50505 (not needed if you use the :dev/repl alias):
   :socket {:jvm-opts ["-Dclojure.server.repl={:address,\"0.0.0.0\",:port,50505,:accept,clojure.core.server/repl}"]}
+
   ;; - see https://github.com/bhauman/rebel-readline
   ;; - start a Rebel Readline REPL:
   :rebel {:extra-deps {com.bhauman/rebel-readline {:mvn/version "RELEASE"}}
           :main-opts ["-m" "rebel-readline.main"]}
+
   ;; - see https://nrepl.org/
   ;; - start a basic nREPL server on a random available port:
   :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "RELEASE"}}
           :main-opts ["-m" "nrepl.cmdline"]}
+
   ;; - see https://nrepl.org/
   ;; - start a CIDER-enhanced nREPL server on a random available port:
   :cider-nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "RELEASE"}}
                 :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
+
   ;; Helpful for refreshing required namespaces in the REPL.
   :repl {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}}
          :extra-paths ["~/.clojure/src"]
          :ns-default user}
+  ;; - see https://github.com/Datomic/dev.datafy
+  :datomic/dev.datafy
+  {com.datomic/dev.datafy {:git/sha "4a9dffb"
+                           :git/tag "v0.1"
+                           :git/url "https://github.com/Datomic/dev.datafy"}}
+  ;; - see https://github.com/donut-party/dbxray
+  :dbxray
+  {party.donut/dbxray {:mvn/version "RELEASE"}}
+
   ;; - see https://github.com/jimpil/jedi-time
   :jedi-time
   {:extra-deps {jedi-time/jedi-time {:mvn/version "0.2.1"}}}
+
   ;; - see https://github.com/djblue/portal
   :portal
   {:extra-deps {djblue/portal {:mvn/version "RELEASE"}}}
+
   ;; - see https://github.com/stuarthalloway/reflector
   :reflect
   {:extra-deps {io.github.stuarthalloway/reflector
                 {:git/url "https://github.com/stuarthalloway/reflector"
                  :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
-  ;; Super fast pretty-printer/formatter library.
+
+  ;; Super flexible pretty-printer/formatter library.
   :zprint {:extra-deps {zprint/zprint {:mvn/version "RELEASE"}}}
+
   ;; pull in specific versions of Clojure:
   :1.0 {:override-deps {org.clojure/clojure {:mvn/version "1.0.0"}}}
   :1.1 {:override-deps {org.clojure/clojure {:mvn/version "1.1.0"}}}
@@ -107,13 +141,14 @@
   :1.10.0 {:override-deps {org.clojure/clojure {:mvn/version "1.10.0"}}}
   :1.10.1 {:override-deps {org.clojure/clojure {:mvn/version "1.10.1"}}}
   :1.10.2 {:override-deps {org.clojure/clojure {:mvn/version "1.10.2"}}}
-  ;; latest 1.11 is 1.11.1 but you can ask for earlier versions:
+  ;; latest 1.11 is 1.11.4 but you can ask for earlier versions:
   :1.11 {:override-deps {org.clojure/clojure {:mvn/version "1.11.1"}}}
   :1.11.0 {:override-deps {org.clojure/clojure {:mvn/version "1.11.0"}}}
-  ;; current 1.12 release is Alpha 1:
-  :1.12 {:override-deps {org.clojure/clojure {:mvn/version "1.12.0-alpha1"}}}
-  ;; master is currently 1.12:
-  :master {:override-deps {org.clojure/clojure {:mvn/version "1.12.0-master-SNAPSHOT"}}}
+  :1.11.1 {:override-deps {org.clojure/clojure {:mvn/version "1.11.1"}}}
+  :1.11.2 {:override-deps {org.clojure/clojure {:mvn/version "1.11.2"}}}
+  :1.11.3 {:override-deps {org.clojure/clojure {:mvn/version "1.11.3"}}}
+  ;; latest 1.12 is 1.12.0
+  :1.12 {:override-deps {org.clojure/clojure {:mvn/version "1.12.0"}}}
 
   :add-libs ; to get access to clojure.tools.deps.alpha.repl/add-libs
   ;; IMPORTANT NOTE: this is the new add-lib3 branch but is still a work
