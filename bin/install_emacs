@@ -299,7 +299,8 @@ ie__mac_build_options() {
 
 # Construct options common to both CFLAGS and CXXFLAGS.
 ie__construct_cc_options_common() {
-  printf '%s' '-mtune=native' \
+  printf '%s' \
+    '-mtune=native' \
     ' -march=native' \
     ' -fomit-frame-pointer' \
     ' -funroll-loops' \
@@ -313,7 +314,8 @@ ie__construct_cc_options_gcc() {
   local cflagsGcc
   cflagsCommon="$(ie__construct_cc_options_common)"
   cflagsGcc="$(
-    printf '%s' '-Ofast' \
+    printf '%s' \
+      '-Ofast' \
       ' -fallow-store-data-races' \
       ' -fno-semantic-interposition' \
       ' -fno-math-errno' \

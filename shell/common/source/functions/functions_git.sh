@@ -375,6 +375,24 @@ gcleanup() {
   git -C "${repo}" gc --aggressive
   git -C "${repo}" fetch --prune --prune-tags
 }
+
+# Completely reset a given Git repository to its last clean, unadulterated
+# state.Useful if you want to restore a Git repo to pristine condition.
+# Be warned: the will remove build artifacts and all untracked files.
+reset_repo() {
+  local repo="${1}"
+
+  if [ -z "${repo}" ] && ! isgitrepo; then
+    err "Not in a Git repo"
+    return 1
+  elif [ -z "${repo}" ]; then
+    repo="$(git rev-parse --show-toplevel)"
+  fi
+
+  git -C "${repo}" clean -dfx
+  git -C "${repo}" restore --staged .
+  git -C "${repo}" restore .
+}
 # }}}
 
 # Committing {{{
@@ -504,7 +522,6 @@ clone_or_update_git_repo() {
     log_info "Updating Git repo: ${BLUE}${repoDestDir}${NC}"
     defaultBranch="$(defaultbranch "${repoDestDir}")"
     currentRef="$(git -C "${repoDestDir}" rev-parse --abbrev-ref HEAD)"
-    git -C "${repoDestDir}" clean -df
     git -C "${repoDestDir}" restore --staged .
     git -C "${repoDestDir}" restore .
     if [ "${currentRef}" != "${defaultBranch}" ]; then
