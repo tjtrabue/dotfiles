@@ -99,8 +99,13 @@
 
   ;; - see https://nrepl.org/
   ;; - start a CIDER-enhanced nREPL server on a random available port:
-  :cider-nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "RELEASE"}}
-                :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
+  :cider-nrepl {:extra-deps {acyclic/squiggly-clojure {:mvn/version "RELEASE"}
+                             cider/cider-nrepl {:mvn/version "RELEASE"}
+                             nrepl/nrepl {:mvn/version "RELEASE"}
+                             refactor-nrepl/refactor-nrepl {:mvn/version "RELEASE"}}
+                :main-opts ["-m" "nrepl.cmdline"
+                            "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]
+                :jvm-opts ["-Djdk.attach.allowAttachSelf"]}
 
   ;; Helpful for refreshing required namespaces in the REPL.
   :repl {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}}
@@ -111,9 +116,27 @@
   {com.datomic/dev.datafy {:git/sha "4a9dffb"
                            :git/tag "v0.1"
                            :git/url "https://github.com/Datomic/dev.datafy"}}
+
   ;; - see https://vlaaad.github.io/reveal
+  ;; Reveal is a GUI data inspector for Clojure which always runs as part of a
+  ;; parent REPL process.
+  ;; Start with clj REPL in terminal:
+  ;; `clj -X:reveal`
   :reveal {:extra-deps {vlaaad/reveal {:mvn/version "RELEASE"}}
-           :exec-fn vlaaad.reveal/repl}
+           :exec-fn vlaaad.reveal/repl
+           :jvm-opts ["--enable-native-access" "ALL-UNNAMED"]}
+  ;; Run the Reveal inspector in a CIDER-enhanced nREPL:
+  ;;   `clj -M:reveal-cider`.
+  :reveal-cider {:extra-deps {acyclic/squiggly-clojure {:mvn/version "RELEASE"}
+                              cider/cider-nrepl {:mvn/version "RELEASE"}
+                              nrepl/nrepl {:mvn/version "RELEASE"}
+                              refactor-nrepl/refactor-nrepl {:mvn/version "RELEASE"}
+                              vlaaad/reveal {:mvn/version "RELEASE"}}
+                 :main-opts ["-m" "nrepl.cmdline"
+                             "--middleware" "[refactor-nrepl.middleware/wrap-refactor,vlaaad.reveal.nrepl/middleware,cider.nrepl/cider-middleware]"]
+                 :jvm-opts ["--enable-native-access" "ALL-UNNAMED"
+                            "-Djdk.attach.allowAttachSelf"]}
+
   ;; - see https://github.com/donut-party/dbxray
   :dbxray
   {party.donut/dbxray {:mvn/version "RELEASE"}}

@@ -231,6 +231,10 @@ The Evil mode plugin itself.
                   evil-shift-round t)
     ;; Use undo-fu as evil's undo/redo system.
     (setq evil-undo-system 'undo-fu)
+    ;; Whether movement commands respect `visual-line-mode'. If non-nil, movement commands, such as j
+    ;; and k, navigate by visual lines (on the screen) rather than "physical" lines (defined by
+    ;; newline characters). If nil, the setting of `visual-line-mode' is ignored.
+    (setq evil-respect-visual-line-mode t)
     :config
     ;; Enable evil-mode globally
     (evil-mode 1)
