@@ -107,10 +107,6 @@
                             "--middleware" "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]
                 :jvm-opts ["-Djdk.attach.allowAttachSelf"]}
 
-  ;; Helpful for refreshing required namespaces in the REPL.
-  :repl {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}}
-         :extra-paths ["~/.clojure/src"]
-         :ns-default user}
   ;; - see https://github.com/Datomic/dev.datafy
   :datomic/dev.datafy
   {com.datomic/dev.datafy {:git/sha "4a9dffb"
@@ -154,6 +150,11 @@
   {:extra-deps {io.github.stuarthalloway/reflector
                 {:git/url "https://github.com/stuarthalloway/reflector"
                  :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
+
+  ;; - see https://github.com/gfredericks/user.clj
+  ;; Automatically loads `~/.clojure/user.clj`, if it exists.
+  :user {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}
+                      com.gfredericks/user.clj {:mvn/version "RELEASE"}}}
 
   ;; Super flexible pretty-printer/formatter library.
   :zprint {:extra-deps {zprint/zprint {:mvn/version "RELEASE"}}}
