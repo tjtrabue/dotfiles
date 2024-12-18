@@ -120,7 +120,8 @@
   ;; `clj -X:reveal`
   :reveal {:extra-deps {vlaaad/reveal {:mvn/version "RELEASE"}}
            :exec-fn vlaaad.reveal/repl
-           :jvm-opts ["--enable-native-access" "ALL-UNNAMED"]}
+           :jvm-opts ["--enable-native-access" "ALL-UNNAMED"
+                      "-Dvlaaad.reveal.prefs={:font-size,18}"]}
   ;; Run the Reveal inspector in a CIDER-enhanced nREPL:
   ;;   `clj -M:reveal-cider`.
   :reveal-cider {:extra-deps {acyclic/squiggly-clojure {:mvn/version "RELEASE"}
@@ -131,7 +132,8 @@
                  :main-opts ["-m" "nrepl.cmdline"
                              "--middleware" "[refactor-nrepl.middleware/wrap-refactor,vlaaad.reveal.nrepl/middleware,cider.nrepl/cider-middleware]"]
                  :jvm-opts ["--enable-native-access" "ALL-UNNAMED"
-                            "-Djdk.attach.allowAttachSelf"]}
+                            "-Djdk.attach.allowAttachSelf"
+                            "-Dvlaaad.reveal.prefs={:font-size,18}"]}
 
   ;; - see https://github.com/donut-party/dbxray
   :dbxray

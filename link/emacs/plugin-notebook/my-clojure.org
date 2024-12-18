@@ -203,7 +203,9 @@ file in your project's root directory with the following content:
       "ctp" 'cider-test-run-project-tests
       "ctr" 'cider-test-show-report
       "cu"  'cider-undef
-      "cx"  'cider-run)
+      "cx"  'cider-run
+      "czv" 'cider-tap-sexp-at-point
+      "czz" 'cider-tap-last-sexp)
     (my/evil-leader-def cider-mode-map
       "="   'cider-format-buffer
       "<"   'cider-eval-last-sexp
@@ -229,7 +231,9 @@ file in your project's root directory with the following content:
       "ctp" 'cider-test-run-project-tests
       "ctr" 'cider-test-show-report
       "cu"  'cider-undef
-      "cx"  'cider-run)
+      "cx"  'cider-run
+      "czv" 'cider-tap-sexp-at-point
+      "czz" 'cider-tap-last-sexp)
     (my/user-leader-def cider-mode-map
       ;; For some reason `cider-jack-in' doesn't have a default binding.
       ;; I like `C-c C-j'.
