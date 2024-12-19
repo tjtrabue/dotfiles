@@ -31,8 +31,8 @@ to a massive decrease in Emacs' performance. I recommend that you disable
       ;; ALGOL-derived languages.
       ((c-mode
         c++-mode
-        clojure-mode
-        clojure-ts-mode
+        ;; clojure-mode
+        ;; clojure-ts-mode
         common-lisp-mode
         emacs-lisp-mode
         ;; elixir-mode
