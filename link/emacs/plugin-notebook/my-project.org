@@ -104,13 +104,6 @@ software development.
     (put 'projectile-project-src-dir 'safe-local-variable #'stringp)
     (put 'projectile-project-test-dir 'safe-local-variable #'stringp)
     :config
-    ;; Add folder paths to ignore within a project.
-    ;; These are different from the `projectile-ignored-projects' folders, which
-    ;; are a list of top-level project folders to ignore. These are subfolders
-    ;; to ignore within a Projectile project.
-    (mapc  (lambda (pattern)
-             (add-to-list 'projectile-globally-ignored-directories pattern))
-           (list (concat my/straight-repos-dir ".*")))
     ;; Add newly opened project buffers to current perspective.
     (add-hook 'projectile-find-file-hook #'my/add-current-buffer-to-perspective))
 #+end_src

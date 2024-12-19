@@ -19,3 +19,11 @@ Plugins and configuration for regular expression support within Emacs.
 #+begin_src emacs-lisp
   (use-package visual-regexp)
 #+end_src
+
+* visual-regexp-steroids
+ An enhancement package for =visual-regexp= that enables PCRE2 regexps.
+
+#+begin_src emacs-lisp
+  (use-package visual-regexp-steroids
+    :after visual-regexp)
+#+end_src

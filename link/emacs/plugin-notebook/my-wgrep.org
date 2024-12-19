@@ -34,21 +34,21 @@ the changed text is highlighted. The following keybindings are defined:
 
     To save buffer automatically when wgrep-finish-edit:
 
-    #+begin_src emacs-lisp :tangle no
-      (setq wgrep-auto-save-buffer t)
-    #+end_src
+  #+begin_src emacs-lisp :tangle no
+    (setq wgrep-auto-save-buffer t)
+  #+end_src
 
-    You can change the default key binding to switch to wgrep:
+  You can change the default key binding to switch to wgrep:
 
-    #+begin_src emacs-lisp :tangle no
-      (setq wgrep-enable-key "r")
-    #+end_src
+  #+begin_src emacs-lisp :tangle no
+    (setq wgrep-enable-key "r")
+  #+end_src
 
-    To apply all changes regardless of whether or not buffer is read-only:
+  To apply all changes regardless of whether or not buffer is read-only:
 
-    #+begin_src emacs-lisp :tangle no
-      (setq wgrep-change-readonly-file t)
-    #+end_src
+  #+begin_src emacs-lisp :tangle no
+    (setq wgrep-change-readonly-file t)
+  #+end_src
 
 * =use-package= specification
 #+begin_src emacs-lisp
