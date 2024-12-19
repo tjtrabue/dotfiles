@@ -65,14 +65,22 @@ install_clj_kondo() {
   local cljKondoInstaller="$(basename "${cljKondoInstallerUrl}")"
   local installPrefix="${HOME}/.local"
   local installDir="${installPrefix}/bin"
+  local downloadDirTemplate="/tmp/clj_kondo.XXXXXXXXXX"
+  local downloadDir
+
+  # Create the download dir based on a template
+  downloadDir="$(mktemp -d "${downloadDirTemplate}")"
 
   mkdir -p "${installDir}"
 
   log_info "Installing clj-kondo to: ${BLUE}${installDir}${NC}"
-  curl -sLO "${cljKondoInstallerUrl}"
-  chmod +x "${cljKondoInstaller}"
-  ./"${cljKondoInstaller}" --dir "${installDir}"
-  rm -f "${cljKondoInstaller}"
+  curl --output-dir "${downloadDir}" --create-dirs -sLO "${cljKondoInstallerUrl}"
+  (
+    cd "${downloadDir}" &&
+    chmod +x "${cljKondoInstaller}" &&
+    ./"${cljKondoInstaller}" --dir "${installDir}"
+  )
+  rm -rf "${downloadDir}"
 }
 
 # Installs or updates the cljfmt executable used to format Clojure/ClojureScript
