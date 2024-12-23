@@ -49,8 +49,14 @@ add_asdf_plugins() {
 }
 
 # Wrapper function for updating all installed asdf plugins.
-update_asdf_plugins() {
-  asdf plugin update --all
+update_asdf_and_plugins() {
+  if [ -n "$(command -v asdf)" ]; then
+    log_info "Updating ASDF and all plugins"
+    asdf update
+    asdf plugin update --all
+  else
+    warn "'asdf' function not sourced in this shell"
+  fi
 }
 
 # Build and install the latest Erlang/OTP using ASDF.

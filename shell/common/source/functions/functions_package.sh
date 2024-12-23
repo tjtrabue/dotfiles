@@ -40,11 +40,17 @@ install_packages_from_file_with_tool() {
 update_auxiliary_packages() {
   log_info "Updating auxiliary packages"
 
+  update_asdf_and_plugins
   update_node_packages
+  update_perl_packages
   update_python_packages
   update_ruby_packages
-  update_perl_packages
   update_texlive_packages
+
+  # For Zsh only
+  if [ "$(currentshell)" = "zsh" ]; then
+    update_zplug_and_plugins
+  fi
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
