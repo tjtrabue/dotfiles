@@ -17,7 +17,8 @@ Plugins and configuration for regular expression support within Emacs.
   Makes regular expressions look nicer in Emacs Lisp strings.
 
 #+begin_src emacs-lisp
-  (use-package visual-regexp)
+  (use-package visual-regexp
+    :demand t)
 #+end_src
 
 * visual-regexp-steroids
@@ -25,5 +26,6 @@ Plugins and configuration for regular expression support within Emacs.
 
 #+begin_src emacs-lisp
   (use-package visual-regexp-steroids
-    :after visual-regexp)
+    :after visual-regexp
+    :demand t)
 #+end_src

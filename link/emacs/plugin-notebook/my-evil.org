@@ -424,21 +424,6 @@ Code commenting plugin based on =vim-commentary= for Vim.
     (evil-commentary-mode 1))
 #+end_src
 
-** evil-goggles
-Display visual hints (i.e., pulse a visual highlight) when editing in
-=evil-mode=.
-
-#+begin_src emacs-lisp
-  (use-package evil-goggles
-    ;; Really slow and rather incomplete.
-    :disabled
-    :after evil-collection
-    :demand t
-    :config
-    (evil-goggles-mode 1)
-    (evil-goggles-use-diff-faces))
-#+end_src
-
 ** evil-nerd-commenter
 A powerful and configurable code commenting plugin based on =NerdCommenter=
 for Vim. Unlike =evil-commentary=, this plugin does not come with any default
@@ -458,6 +443,21 @@ configuration.
     (general-def 'visual 'override
       "gc" 'evilnc-comment-or-uncomment-lines
       "gC" 'comment-or-uncomment-region))
+#+end_src
+
+** evil-goggles
+Display visual hints (i.e., pulse a visual highlight) when editing in
+=evil-mode=.
+
+#+begin_src emacs-lisp
+  (use-package evil-goggles
+    ;; Really slow and rather incomplete.
+    :disabled
+    :after evil-collection
+    :demand t
+    :config
+    (evil-goggles-mode 1)
+    (evil-goggles-use-diff-faces))
 #+end_src
 
 ** evil-mark-replace
@@ -503,12 +503,12 @@ move point behind "blue", and again type =gx w=:
 #+end_src
 
 How useful is this feature? I will leave that decision to the user. In general,
-Vim's editing features are text-oriented, and have little in the way of semantic
-code understanding. Emacs, on the other hand, favors plugins that enable code
-awareness in editing capabilities, so the two editors' philophies are quite
-different. I believe that plugins like =evil-exchange= exist to satisfy Vim expats
-who miss their old editor plugins. I, however, like to lean on Emacs' more
-powerful features, so I find little use for basic text manipulation plugins.
+Vim's editing features are text-oriented, and have little understanding of code
+semantics. Emacs, on the other hand, favors plugins that have code-aware editing
+capabilities, so the two editors' philosophies are quite different. I believe
+that plugins like =evil-exchange= exist to satisfy Vim expats who miss their old
+editor plugins. I, however, like to lean on Emacs' more powerful features, so I
+find little use for basic text manipulation plugins.
 
 #+begin_src emacs-lisp
   (use-package evil-exchange
@@ -545,6 +545,10 @@ powerful features, so I find little use for basic text manipulation plugins.
 #+end_src
 
 ** evil-visualstar
+An Emacs port of one of the many visual-star plugins for Vim. When
+=evil-visualstart-mode= is active, make a visual selection with =v= or =V= then
+hit =*= to search forward or =#= to search backward.
+
 #+begin_src emacs-lisp
   (use-package evil-visualstar
     :after evil-collection
@@ -706,6 +710,15 @@ Heavily inspired by =vimtex=; successor of =evil-latex-textobjects=.
     :after (evil kubernetes))
 #+end_src
 
+** evil-cleverparens
+A delimiter-balancing plugin for =evil-mode=. A bit like =smartparens=.
+
+#+begin_src emacs-lisp
+  (use-package evil-cleverparens
+    ;; Lispyville is superior and integrates with Lispy.
+    :disabled)
+#+end_src
+
 ** lispyville
 Provides better integration between =evil-mode= and =lispy-mode=, which is a
 minor mode plugin for editing files written in LISP dialects.  Here are the
@@ -833,6 +846,7 @@ main features of =lispyville=:
       "lx" 'lispy-extract-defun
       "ly" 'lispy-new-copy)
     (general-def lispyville-mode-map
+      "C-S-d" 'lispyville-delete-whole-line
       "C-S-h" 'lispyville-left
       "C-S-j" 'lispy-down
       "C-S-k" 'lispy-up
@@ -989,13 +1003,4 @@ main features of =lispyville=:
       "M-("
       "M-["
       "M-{"))
-#+end_src
-
-** evil-cleverparens
-A delimiter-balancing plugin for =evil-mode=. A bit like =smartparens=.
-
-#+begin_src emacs-lisp
-  (use-package evil-cleverparens
-    ;; Lispyville is superior and integrates with Lispy.
-    :disabled)
 #+end_src
