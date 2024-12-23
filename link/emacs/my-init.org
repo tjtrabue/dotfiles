@@ -661,6 +661,30 @@ interactive, templated Grep commands:
   (let ((has-ugrep (executable-find "ugrep"))
         (has-rg    (executable-find "rg"))
         (find-cmd-str "find -H <D> <X> -type f <F> -exec "))
+    ;; The default command to run for `grep'.
+    (grep-apply-setting 'grep-command
+                        (cond (has-ugrep
+                               "ugrep --color=always --no-heading -0HIPine ")
+                              (has-rg
+                               "rg --color=always --no-heading -0HPne ")
+                              (t "grep --color=always -nH --null -e ")))
+    ;; The default command to run for `lgrep'.
+    (grep-apply-setting 'grep-template
+                        (cond (has-ugrep
+                               "ugrep <C> <X> --color=always --no-heading -HIPine <R> <F>")
+                              (has-rg
+                               "rg --color=always --no-heading -HPine <R> <F>")
+                              (t nil)))
+    ;; The default command to use for `rgrep'.
+    (grep-apply-setting 'grep-find-template
+                        (cond (has-ugrep
+                               (concat find-cmd-str
+                                       "ugrep <C> --color=always --index --no-heading -0HIine <R> \\{\\} +"))
+                              (has-rg
+                               (concat find-cmd-str
+                                       "rg --color=always --no-heading -0HPne <R> \\{\\} +"))
+                              (t
+                               (concat find-cmd-str "grep <C> -nH --null -e <R> \\{\\} +"))))
     ;; Change standard `grep-find' command to use Ripgrep when available.  The numbers means place the
     ;; cursor at that character position, right between the '' where we will begin typing our search
     ;; expression.
@@ -673,25 +697,7 @@ interactive, templated Grep commands:
                               (has-rg
                                '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)"
                                  . 8))
-                              (t nil)))
-
-    ;; The default command to run for `lgrep'.
-    (grep-apply-setting 'grep-template
-                        (cond (has-ugrep
-                               "ugrep <C> <X> --color=always --index --no-heading -HIPine <R> <F>")
-                              (has-rg
-                               "rg --color=always --no-heading -HPine <R> <F>")
-                              (t nil)))
-    ;; The default command to use for `rgrep'.
-    (grep-apply-setting 'grep-find-template
-                        (cond (has-ugrep
-                               (concat find-cmd-str
-                                       "ugrep <C> --color=always --index --no-heading -0HIPine <R> \\{\\} +"))
-                              (has-rg
-                               (concat find-cmd-str
-                                       "rg --color=always --no-heading -0HPne <R> \\{\\} +"))
-                              (t
-                               (concat find-cmd-str "grep <C> -nH --null -e <R> \\{\\} +")))))
+                              (t nil))))
 #+end_src
 
 * Set fringe width

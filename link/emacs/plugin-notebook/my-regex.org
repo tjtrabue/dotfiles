@@ -7,22 +7,26 @@
 Plugins and configuration for regular expression support within Emacs.
 
 * relint
-  Code linter (that is, a syntax/style checker) for regular expressions.
+Code linter (that is, a syntax/style checker) for regular expressions.
 
 #+begin_src emacs-lisp
   (use-package relint)
 #+end_src
 
 * visual-regexp
-  Makes regular expressions look nicer in Emacs Lisp strings.
+Makes regular expressions look nicer in Emacs Lisp strings.
 
 #+begin_src emacs-lisp
   (use-package visual-regexp
-    :demand t)
+    :demand t
+    :general
+    (my/user-leader-def 'global
+      "r r" 'vr/replace
+      "r q" 'vr/query-replace))
 #+end_src
 
 * visual-regexp-steroids
- An enhancement package for =visual-regexp= that enables PCRE2 regexps.
+An enhancement package for =visual-regexp= that enables Python and PCRE2 regexps.
 
 #+begin_src emacs-lisp
   (use-package visual-regexp-steroids
