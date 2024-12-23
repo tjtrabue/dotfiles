@@ -1407,6 +1407,12 @@ and hooks in a way that defers loading the package.
     (my/user-leader-def 'visual
       ;; Use `C-c (' to align a visual region.
       "(" 'align)
+    (my/user-leader-def 'global
+      ;; `grep', `lgrep',`rgrep', etc.
+      "sf" 'grep-find
+      "sg" 'grep
+      "sl" 'lgrep
+      "sr" 'rgrep)
     ;; Evil leader shortcuts:
     (my/evil-leader-def
       ;; Move cursor to beginning/end of line.
