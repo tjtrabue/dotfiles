@@ -86,6 +86,8 @@ software development.
     (projectile-mode-line-function (lambda ()
                                      (format " Projectile[%s]"
                                              (projectile-project-name))))
+    ;; Whether to use `vc-git-grep' in Git projects.
+    (projectile-use-git-grep t)
     :init
     ;; Enable projectile globally.  It's important to keep this here!!! Do not
     ;; create an after-init-hook for projectile because it doesn't work
