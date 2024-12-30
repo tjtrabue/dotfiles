@@ -633,11 +633,21 @@ ie__build_emacs() {
 # distribution.
 ie__install_emacs_build() {
   local installSucceeded
+  local installBinDir="${INSTALL_PREFIX}/bin"
+  local nemacsExecutable="nemacs"
 
   log_info "Installing new Emacs build"
 
   sudo make install
   installSucceeded="$?"
+
+  # 'nemacs' is a convenience executalbe that starts Emacs in TUI mode in the
+  # terminal in which the command is run.
+  if [ "${installSucceeded}" -eq 0 ]; then
+    log_info "Installing ${nemacsExecutable} to: ${BLUE}${installBinDir}${NC}"
+    sudo install -D -m 755 "${nemacsExecutable}" \
+      "${installBinDir}/${nemacsExecutable}"
+  fi
 
   if [ "${installSucceeded}" -eq 0 ] && "${DOCS_HTML}"; then
     log_info "Installing generated HTML documentation"
@@ -650,6 +660,23 @@ ie__install_emacs_build() {
   fi
 
   return "${installSucceeded}"
+}
+
+# Fix permissions on certain directories and files.
+ie__set_file_permissions() {
+  local gamesDir="/var/games"
+  local gamesEmacsDir="${gamesDir}/emacs"
+  local shareEmacsDir="${INSTALL_PREFIX}/share/emacs"
+
+  log_info "Setting file permissions on: ${BLUE}${shareEmacsDir}${NC}"
+  sudo chown -R root:root "${shareEmacsDir}"
+
+  log_info "Setting file permissions on games directories:" \
+    "${BLUE}${gamesDir}${NC}, ${BLUE}${gamesEmacsDir}${NC}"
+  sudo mkdir -p "${gamesEmacsDir}"
+  sudo chmod 775 "${gamesDir}"
+  sudo chmod 775 "${gamesEmacsDir}"
+  sudo chown -R root:games "${gamesDir}"
 }
 
 # Install emacs from source. This option is pretty hard to make portable, but
@@ -681,7 +708,8 @@ ie__install_from_source() {
       ./autogen.sh &&
       eval "${configureCmd}" &&
       ie__build_emacs &&
-      ie__install_emacs_build
+      ie__install_emacs_build &&
+      ie__set_file_permissions
   ) &&
     ie__remove_emacs_backup_repository
 }
