@@ -8,9 +8,9 @@
 HippieExpand is a built-in Emacs feature that looks at the word before point and
 tries to expand it in various ways, including expanding from a fixed list (like
 =expand-abbrev=), expanding from matching text found in a buffer (like
-=dabbrev-expand=), expanding entire lines of text, or expanding in ways defined
-by your own functions. Which of these it tries and in what order is controlled
-by a configurable list of functions.
+=dabbrev-expand=), expanding entire lines of text, or expanding in ways defined by
+your own functions. Which of these it tries and in what order is controlled by a
+configurable list of functions.
 
 HippieExpand is absolutely one of my favorite Emacs features, and it should be a
 part of everyone's workflow, in my opinion. HippieExpand can expand words,
@@ -67,8 +67,6 @@ all the time.
     :demand t
     :general
     (general-def 'global
-      ;; The primary HippieExpand keybinding.
-      "C-;" 'hippie-expand
       ;; This remaps `M-/' from dynamic abbrev (which is pretty useless) to the much superior
       ;; `hippie-expand'.
       [remap dabbrev-expand] 'hippie-expand)
