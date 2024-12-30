@@ -47,6 +47,9 @@ declare GAME_USER=":games"
 # Emacs location variables
 declare EMACS_GIT_URL="https://github.com/emacs-mirror/emacs.git"
 declare EMACS_DEST="${WS}/emacs"
+# The build/ directory is where we perform the actual compilation. This
+# keeps the root emacs/ directory clean.
+declare EMACS_BUILD="${EMACS_DEST}/build"
 declare EMACS_BACKUP="${EMACS_DEST}.bak"
 # }}}
 
@@ -702,11 +705,21 @@ ie__install_from_source() {
     return 1
   fi
 
-  (
-    log_info "Installing latest Emacs" &&
+  if "${BOOTSTRAP}" || [ ! -x "${EMACS_DEST}/configure" ]; then
+    log_info "Running autogen scripts"
+    (
       cd "${EMACS_DEST}" &&
-      ./autogen.sh &&
-      eval "${configureCmd}" &&
+        ./autogen.sh git &&
+        ./autogen.sh autoconf
+    )
+  fi
+
+  mkdir -p "${EMACS_BUILD}"
+
+  log_info "Building and installing latest Emacs"
+  (
+    cd "${EMACS_BUILD}" &&
+      eval "../${configureCmd}" &&
       ie__build_emacs &&
       ie__install_emacs_build &&
       ie__set_file_permissions
