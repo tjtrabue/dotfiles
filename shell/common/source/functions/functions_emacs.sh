@@ -251,5 +251,28 @@ install_emacs_cask() {
   )
 }
 
+# A preconfigured function used to install Emacs from its source code
+# repository.
+install_emacs_from_source() {
+  # Extra CLI args for the install_emacs script.
+  local extraArgs="$*"
+  local dotDir="${DOTFILES_HOME:-${HOME}/.dotfiles}"
+  local installEmacsScript="${dotDir}/bin/install_emacs"
+  local prefix="/usr"
+
+  if [ ! -d "${dotDir}" ]; then
+    err "Cannot find dotfiles directory at: ${BLUE}${dotDir}${NC}"
+    return 1
+  elif [ ! -x "${installEmacsScript}" ]; then
+    err "Cannot locate 'install_emacs' script at:" \
+      "${BLUE}$(dirname "${installEmacsScript}")${NC}"
+    return 2
+  fi
+
+  eval "${installEmacsScript}" --bootstrap --no-confirm --use-lto --use-mold \
+    --native-comp=aot --prefix="${prefix}" --sound=alsa --wide-int \
+    -j "$(nproc)" "${extraArgs}"
+}
+
 # Modeline for this file (leave it commented!)
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1

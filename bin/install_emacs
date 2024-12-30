@@ -159,7 +159,7 @@ OPTIONS:
     running Emacs in an X Windows session. Pure GTK works well for Wayland, and
     for Emacs running as part of WSL on Windows.
 
-  -s VALUE | --sound VALUE
+  -s VALUE | --sound=VALUE
     Compile Emacs with sound support for backend with name VALUE.
     This option is only valid for GNU/Linux, FreeBSD, NetBSD, MinGW, or Cygwin
     builds.
