@@ -269,8 +269,8 @@ install_emacs_from_source() {
     return 2
   fi
 
-  eval "${installEmacsScript}" --bootstrap --no-confirm --use-lto --use-mold \
-    --native-comp=aot --prefix="${prefix}" --sound=alsa --wide-int \
+  eval "${installEmacsScript}" --no-confirm --use-lto --use-mold \
+    --native-comp=aot --prefix="${prefix}" --sound=yes --wide-int \
     -j "$(nproc)" "${extraArgs}"
 }
 

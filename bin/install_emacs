@@ -636,21 +636,11 @@ ie__build_emacs() {
 # distribution.
 ie__install_emacs_build() {
   local installSucceeded
-  local installBinDir="${INSTALL_PREFIX}/bin"
-  local nemacsExecutable="nemacs"
 
   log_info "Installing new Emacs build"
 
   sudo make install
   installSucceeded="$?"
-
-  # 'nemacs' is a convenience executalbe that starts Emacs in TUI mode in the
-  # terminal in which the command is run.
-  if [ "${installSucceeded}" -eq 0 ]; then
-    log_info "Installing ${nemacsExecutable} to: ${BLUE}${installBinDir}${NC}"
-    sudo install -D -m 755 "${nemacsExecutable}" \
-      "${installBinDir}/${nemacsExecutable}"
-  fi
 
   if [ "${installSucceeded}" -eq 0 ] && "${DOCS_HTML}"; then
     log_info "Installing generated HTML documentation"
@@ -663,6 +653,28 @@ ie__install_emacs_build() {
   fi
 
   return "${installSucceeded}"
+}
+
+# Create a shell script 'nemacs' for running Emacs in TUI mode.
+ie__install_nemacs_script() {
+  local installBinDir="${INSTALL_PREFIX}/bin"
+  local nemacsBuildFile="${EMACS_BUILD}/nemacs"
+  local nemacsDestFile="${installBinDir}/nemacs"
+
+  log_info "Installing nemacs script to: ${BLUE}${nemacsDestFile}${NC}"
+
+  command cat <<EOF > "${nemacsBuildFile}"
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# This script runs Emacs in the terminal, even if you have compiled it with GUI
+# support.
+
+[ -x "\$(command -v emacs)" ] && emacs -nw \$*
+EOF
+
+  chmod 755 "${nemacsBuildFile}"
+  sudo install -D -m 755 "${nemacsBuildFile}" "${nemacsDestFile}"
 }
 
 # Fix permissions on certain directories and files.
@@ -722,6 +734,7 @@ ie__install_from_source() {
       eval "../${configureCmd}" &&
       ie__build_emacs &&
       ie__install_emacs_build &&
+      ie__install_nemacs_script &&
       ie__set_file_permissions
   ) &&
     ie__remove_emacs_backup_repository
