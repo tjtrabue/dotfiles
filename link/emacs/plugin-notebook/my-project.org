@@ -76,10 +76,13 @@ software development.
                                                 (cons lisp-dir 2)
                                               ""))))
     ;; Add top-level folders for Projectile to ignore.
-    (projectile-ignored-projects (list (getenv "HOME")
-                                       (concat (getenv "HOME") "/Downloads/")
-                                       (concat (getenv "HOME") "/Dropbox/")
-                                       (concat (getenv "HOME") "/applications/")
+    (projectile-ignored-projects (list (file-truename (expand-file-name (getenv "HOME")))
+                                       (file-truename (expand-file-name
+                                                       (concat (getenv "HOME") "/Downloads/")))
+                                       (file-truename (expand-file-name
+                                                       (concat (getenv "HOME") "/Dropbox/")))
+                                       (file-truename (expand-file-name
+                                                       (concat (getenv "HOME") "/applications/")))
                                        my/straight-repos-dir))
     ;; Customize how Projectile reports project information in the mode line.  The
     ;; default function is a bit verbose, and can clutter the mode line.
