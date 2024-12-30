@@ -265,7 +265,7 @@ file in your project's root directory with the following content:
     ;; The size in bytes of each chunk used for print streaming.
     ;; Smaller sizes mean smaller data chunks and faster feedback, but can lead
     ;; to inconsistent font-locking of output.
-    (cider-print-buffer-size 1024)
+    (cider-print-buffer-size (* 4 1024))
     ;; Whether to show the large help message when the CIDER REPL opens.  Turning
     ;; it off saves space in the REPL buffer, which could speed up performance in
     ;; the beginning.
