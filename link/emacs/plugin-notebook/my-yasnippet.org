@@ -101,6 +101,8 @@ Use helm menu for yasnippet completions
 
 #+begin_src emacs-lisp
   (use-package helm-c-yasnippet
+    ;; I prefer not to use helm if at all possible.
+    :disabled
     :after yasnippet
     :general
     (general-def 'global
