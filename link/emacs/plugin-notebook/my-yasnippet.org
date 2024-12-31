@@ -101,14 +101,14 @@ Use helm menu for yasnippet completions
 
 #+begin_src emacs-lisp
   (use-package helm-c-yasnippet
-    ;; Not currently using Helm
-    :disabled
-    :after (helm yasnippet)
-    :config
-    (setq helm-yas-space-match-any-greedy t)
-    ;; Must use global-set-key here because this function must be defined at
-    ;; the top level to be used in conjunction with yas-maybe-expand.
-    (global-set-key (kbd "C-c y") 'helm-yas-complete))
+    :after yasnippet
+    :general
+    (general-def 'global
+      ;; Must use global-set-key here because this function must be defined at
+      ;; the top level to be used in conjunction with yas-maybe-expand.
+      "C-S-y" 'helm-yas-complete)
+    :custom
+    (helm-yas-space-match-any-greedy t))
 #+end_src
 
 * auto-yasnippet
