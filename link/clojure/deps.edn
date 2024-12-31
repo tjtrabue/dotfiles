@@ -58,6 +58,16 @@
   :eastwood {:extra-deps {jonase/eastwood {:mvn/version "RELEASE"}}
              :main-opts ["-m" "eastwood.lint" "{:source-paths,[\"src\"],:test-paths,[\"test\"]}"]}
 
+  ;; - see https://github.com/NoahTheDuke/splint
+  ;; Splint is a Static code analyzer for Clojure inspired by Ruby's RuboCop and
+  ;; Clojure's Kibit. It's primary focus is style and code shape rather than
+  ;; lexical analysis. It also doesn't understand macros, or perform any macro
+  ;; expansion (unlike Eastwood).
+  ;;
+  ;; Run with `clj -M:splint [args...]`
+  :splint {:extra-deps {io.github.noahtheduke/splint {:mvn/version "RELEASE"}}
+           :main-opts ["-m" "noahtheduke.splint"]}
+
   ;; - see https://github.com/athos/clj-check
   :check {:extra-deps {io.github.athos/clj-check
                        {:git/tag "0.1.0" :git/sha "0ca84df"}}
