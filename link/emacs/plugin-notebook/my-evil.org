@@ -909,8 +909,8 @@ main features of =lispyville=:
       ;; Clone the s-exp at point
       "C-y" 'my/lispyville-duplicate-at-point
       ;; Move s-exps back and forth
-      "M-j" 'lispyville-move-down
-      "M-k" 'lispyville-move-up)
+      "M-j" 'lispy-move-down
+      "M-k" 'lispy-move-up)
     (general-def 'visual lispyville-mode-map
       "gc" 'lispyville-comment-or-uncomment-line
       "gC" 'lispyville-comment-or-uncomment
