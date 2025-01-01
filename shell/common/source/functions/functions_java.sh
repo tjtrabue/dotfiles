@@ -124,7 +124,7 @@ install_sdkman_packages() {
 
   log_info "Installing SDKMAN packages"
   # Install latest GraalVM JDK.
-  sdk install java "$(sdk list java | grep 'GraalVM CE' | awk '{print $NF}')"
+  sdk install java "$(sdk list java | grep 'GraalVM Oracle' | awk '{print $NF}')"
   # Install default Groovy version.
   sdk install groovy
   # Maven is the most popular Java build and dependency management tool.
@@ -167,6 +167,13 @@ add_sdkman_java_candidates_to_jenv() {
       jenv add "${dir}"
     fi
   done
+}
+
+# Update the sdkman shell functions and all candidates.
+update_sdkman() {
+  log_info "Updating SDKMAN and all candidates"
+  sdk selfupdate
+  sdk update
 }
 
 # vim:foldenable:foldmethod=indent::foldnestmax=1
