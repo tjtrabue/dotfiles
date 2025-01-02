@@ -318,6 +318,10 @@ file in your project's root directory with the following content:
     ;; Whether to enable a native JVMTI agent which makes eval interrupts work properly
     ;; on Java 21 and later.
     (cider-enable-nrepl-jvmti-agent t)
+    ;; Whether to use the `enrich-classpath' program to add sources and Javadocs to the classpath.
+    ;; This option is super helpful in that it allows `cider-doc' to look up documentation for Java
+    ;; classes and methods in the same way it looks up Clojure definitions.
+    (cider-enrich-classpath t)
     :init
     (dolist (hook '(cider-mode-hook cider-repl-mode-hook))
       ;; Use fuzzy matching to display CIDER Company completions.

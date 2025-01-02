@@ -206,7 +206,9 @@ The Evil mode plugin itself.
       ;; Use ";" as an alias for "M-x"
       ";" 'execute-extended-command)
     (my/evil-leader-def
-      "eE" 'my/evil-eval-and-replace-last-sexp)
+      "eE" 'my/evil-eval-and-replace-last-sexp
+      ;; Convert all tabs to spaces, or vice versa
+      "er" 'evil-retab)
     :init
     ;; Set evil-mode variables here.
     ;; These values must be set here because evil-leader loads before evil

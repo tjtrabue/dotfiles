@@ -12,6 +12,32 @@ professional software developer. This practice accomplishes two important tasks:
 first, it ensures that any commits you make to a codebase have as few edited
 lines as necessary, and second, it keeps your code contributions clean.
 
+* whitespace [built-in]
+=whitespace.el= is a built-in package for handling whitespace-related editing
+concerns, such as trimming trailing whitespace, or highlighting whitespace
+characters under certain circumstances using =whitespace-mode=.
+
+#+begin_src emacs-lisp
+  (use-package whitespace
+    :demand t
+    :delight
+    (whitespace-mode nil whitespace)
+    :hook
+    (;; Deactivate `whitespace-mode' in certain minor modes.
+     (Buffer-menu-mode minibuffer-mode org-mode) . (lambda () (whitespace-mode -1)))
+    :custom
+    ;; The max column width for a line after which whitespace-mode highlights characters that exceed
+    ;; this width.
+    (whitespace-line-column my/line-width)
+    ;; Determine the kinds of whitespace to be visualized.  The value of this variable is a list of
+    ;; symbols, each of which has rich meaning, so I will not repeat them here.  See the variable's
+    ;; documentation for details.
+    (whitespace-style '(face trailing lines-tail tabs tab-mark empty))
+    :config
+    ;; Globally enable `whitespace-mode' by default.
+    (global-whitespace-mode 1))
+#+end_src
+
 * whitespace-cleanup-mode
 Cleans trailing whitespace when saving a buffer, but only for edited lines of
 code.

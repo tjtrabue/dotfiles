@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Trap errors and print error message
-set -uo pipefail
+set -Eeuo pipefail
 trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
 
 # Variables {{{
@@ -140,15 +140,15 @@ mesc__create_super_config() {
     "$(readlink "${MAIN_ORG_CONFIG_FILE}" | sed 's/\.org$/.el/')" \
     "${super_config_index}"
 
-  ((count++))
+  count=$((count + 1))
 
   for f in "${pluginNotebookDir}"/*.el; do
     if ((count % 10 == 0)); then
-      ((super_config_index++))
+      super_config_index=$((super_config_index + 1))
       mesc__make_super_config_file "${super_config_index}"
     fi
     mesc__write_to_super_config_file "${f}" "${super_config_index}"
-    ((count++))
+    count=$((count + 1))
   done
 }
 

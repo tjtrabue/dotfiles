@@ -307,11 +307,6 @@ LanguageServerProtocol clients and servers.
   ;; Each line should be 80 characters wide.
   (setq-default fill-column my/line-width)
 
-  ;; Set vertical ruler in programming modes
-  (setq-default
-   whitespace-line-column my/line-width
-   whitespace-style '(face lines-tail))
-
   ;; Smooth-scrolling
   (if (>= emacs-major-version 29)
       ;; Use native smooth-scrolling (requires Emacs version >= 29)
@@ -1061,8 +1056,7 @@ besides those for major and minor modes, such as Evil's state change hooks like
 #+begin_src emacs-lisp
   (add-hook 'Buffer-menu-mode-hook (lambda ()
                                      ;; Disable whitespace visualization in Buffer menu.
-                                     (setq-local show-trailing-whitespace nil)
-                                     (whitespace-mode -1)))
+                                     (setq-local show-trailing-whitespace nil)))
 #+end_src
 
 ** dired-mode hooks
@@ -1108,8 +1102,7 @@ These hooks run after =minibuffer-mode= activates for a buffer.
 #+begin_src emacs-lisp
   (add-hook 'minibuffer-mode-hook (lambda ()
                                     ;; Don't highlight whitespace in minibuffer.
-                                    (setq-local show-trailing-whitespace nil)
-                                    (whitespace-mode -1)))
+                                    (setq-local show-trailing-whitespace nil)))
 #+end_src
 
 ** prog-mode hooks
@@ -1121,9 +1114,7 @@ These commands run whenever Emacs finds a file of any programming language.
                               (goto-address-mode 1)
                               ;; Turn various keywords into pretty programming
                               ;; symbols, such as "lambda" -> "λ" in lisp-mode.
-                              (prettify-symbols-mode 1)
-                              ;; Show invisible characters.
-                              (whitespace-mode 1)))
+                              (prettify-symbols-mode 1)))
 #+end_src
 
 ** shell-mode hooks
@@ -1144,9 +1135,7 @@ derivatives.
                               ;; threshold.
                               (auto-fill-mode 1)
                               ;; Make hyperlinks clickable.
-                              (goto-address-mode 1)
-                              ;; Show invisible characters.
-                              (whitespace-mode 1)))
+                              (goto-address-mode 1)))
 #+end_src
 
 ** conf-mode hooks
@@ -1156,9 +1145,7 @@ or =.gitconfig= files.
 #+begin_src emacs-lisp
   (add-hook 'conf-mode-hook (lambda ()
                               ;; Make hyperlinks clickable.
-                              (goto-address-mode 1)
-                              ;; Show invisible characters.
-                              (whitespace-mode 1)))
+                              (goto-address-mode 1)))
 #+end_src
 
 ** before-save hooks
@@ -1168,9 +1155,7 @@ These hooks run before Emacs saves a file.
   (add-hook 'before-save-hook (lambda ()
                                 ;; Strip trailing whitespace from the
                                 ;; current buffer before saving.
-                                (delete-trailing-whitespace)
-                                ;; Convert tabs to spaces.
-                                (untabify (point-min) (point-max))))
+                                (delete-trailing-whitespace)))
 #+end_src
 
 ** after-save hooks
@@ -1325,9 +1310,8 @@ default mode name is hidden completely.
   (use-package delight
     :demand t
     :config
-    ;; Remove lighter text for whitespace-mode
-    (delight '((whitespace-mode nil whitespace)
-               (auto-fill-function nil simple)
+    ;; Remove lighter text for some built-in minor modes.
+    (delight '((auto-fill-function nil simple)
                (subword-mode nil subword)
                (visual-line-mode nil simple))))
 #+end_src
@@ -1607,8 +1591,7 @@ try to load =org= later.
     ;;   (setq org-latex-default-packages-alist (remove pkg org-latex-default-packages-alist)))
     (add-hook 'org-mode-hook
               (lambda ()
-                ;; Disable whitespace mode for org mode.
-                (whitespace-mode -1)
+                ;; Do not show or highlight trailing whitespace characters.
                 (setq-local show-trailing-whitespace nil)
                 ;; Org mode requires a `tab-width' value of 8, for some reason.
                 (setq-local tab-width 8)))
