@@ -206,31 +206,24 @@ straight_rm_repo() {
   rm -rf "${straightBuild}/${repo:?}"
 }
 
-# Start an external file watcher program for straight.el which catches updates
-# made to package source files.
-straight_start_file_watcher() {
+# Start or stop an external file watcher program for straight.el which discovers
+# updates made to package source files in the ~/.emacs.d/straight/repos/
+# directory.
+straight_file_watcher() {
+  local cmd="${1:-start}"
   local straightBootstrapScript="${EMACS_CONFIG_HOME}/require/my-straight-bootstrap.el"
+  local straightFunc="straight-watcher-${cmd}"
 
   if [ ! -x "$(command -v watchexec)" ]; then
     err "Must install watchexec to use straight's filesystem watcher"
     return 1
+  elif [ "${cmd}" != "start" ] && [ "${cmd}" != "stop" ]; then
+    err "Must either pass 'start' or 'stop' as argument"
+    return 2
   fi
 
-  emacs --batch -l "${straightBootstrapScript}" \
-    --eval "(straight-watcher-start)"
-}
-
-# Stop the file watcher process for straight.el.
-straight_stop_file_watcher() {
-  local straightBootstrapScript="${EMACS_CONFIG_HOME}/require/my-straight-bootstrap.el"
-
-  if [ ! -x "$(command -v watchexec)" ]; then
-    err "Must install watchexec to use straight's filesystem watcher"
-    return 1
-  fi
-
-  emacs --batch -l "${straightBootstrapScript}" \
-    --eval "(straight-watcher-stop)"
+  log_info "Running ${CYAN}${straightFunc}${NC}"
+  emacs --batch -l "${straightBootstrapScript}" --eval "(${straightFunc})"
 }
 
 # Clone my personal roam-notes database.
