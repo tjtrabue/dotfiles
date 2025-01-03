@@ -29,6 +29,8 @@ initialize_jenv_for_shell() {
 
   log_info "Initializing jenv for shell: $(currentshell)"
   eval "$(jenv init -)"
+
+  export JAVA_HOME="$(jenv javahome)"
 }
 
 # Make SDKMan shell functions available.
