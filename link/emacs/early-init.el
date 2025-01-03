@@ -1,17 +1,32 @@
-;;; The very first configuration file, read even before `~/.emacs'.
+;;; early-init.el --- First config file loaded -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; The very first configuration file, read even before `~/.emacs'.
 ;; Here we set values that must be defined before the first GUI frame is created.
 
+;;; Code:
 ;; * Emacs Lisp File Loading / Compilation
-;; Determines how to load .el/.elc files using `load'.  If non-nil, always load
-;; the newer file, regardless of extension. If nil, load based on the predefined
-;; load order.
-(setq load-prefer-newer t)
+;; In noninteractive sessions, prioritize non-byte-compiled source files to
+;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
+;; to skip the mtime checks on every *.elc file.
+(setq load-prefer-newer 'noninteractive)
 ;; Define the level of native compilation optimization.
 ;; Allowed values: -1, 0, 1, 2, 3.
 (setq native-comp-speed 3)
 ;; The number of parallel async jobs to perform.
 ;; Defaults to 0, meaning use half the available CPU cores.
 (setq native-comp-async-jobs-number 0)
+;; If non-nil, compile loaded .elc files asynchronously.
+;; After compilation, each function definition is updated to use the
+;; natively-compiled one.
+(setq native-comp-jit-compilation nil)
+
+;; * Initial Garbage Collection Options
+;; Set the garbage collection threshold super high for startup. We'll need to
+;; reset these values later so as not to impede our computer's performance, but
+;; it does speed up Emacs' start time.
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 0.6)
 
 ;; * Fullscreen Options
 ;; To change the initial fullscreen behavior of a frame using =initial-frame-alist=
@@ -35,6 +50,17 @@
 ;; To change the size of all frames Emacs creates, set `default-frame-alist', instead.
 ;; Maximize Emacs' initial frame.
 (add-to-list 'initial-frame-alist `(fullscreen . maximized))
+
+;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
+(dolist (opt '((vertical-scroll-bars . nil)
+                (menu-bar-lines . 0)
+                (tool-bar-lines . 0)))
+  (add-to-list 'default-frame-alist opt))
+
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
+(setq frame-inhibit-implied-resize t)
 
 ;; * Package Manager
 ;; We must determine which package management system we desire BEFORE we load
@@ -68,3 +94,14 @@
   ;; this tells package.el not to add those pesky customized variable settings
   ;; at the end of your init.el
   (setq package--init-file-ensured t))
+
+;; * use-package
+;; This option must be set before `use-package' is loaded in the primary configuration file.
+(setq use-package-enable-imenu-support t)
+
+;; * Xorg Integration
+;; Ignore X resources; its settings would be redundant with the other settings
+;; in this file and can conflict with later config (particularly where the
+;; cursor color is concerned).
+(advice-add #'x-apply-session-resources :override #'ignore)
+;;; early-init.el ends here

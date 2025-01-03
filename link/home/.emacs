@@ -1,4 +1,4 @@
-;;; .emacs --- summary -*- lexical-binding: t -*-
+;;; .emacs --- primary Emacs config file -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;  This is the standard Emacs configuration file.  It uses the Emacs Lisp
@@ -20,11 +20,7 @@
 ;; They will be reset later on to further optimize our experience.
 (defvar last-file-name-handler-alist file-name-handler-alist
   "Name of the `file-name-handler-alist' that was set to nil during startup.")
-;; Set the garbage collection threshold super high for startup. We'll need to
-;; reset these values later so as not to impede our computer's performance, but
-;; it does speed up Emacs' start time.
-(setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 0.6)
+
 ;; Instruct Emacs not to go through the trouble of running each filename loaded
 ;; against special regexps.
 (setq file-name-handler-alist nil)
