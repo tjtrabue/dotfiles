@@ -28,4 +28,4 @@
   (require 'straight)
   (require 'general)
 
-  (byte-recompile-directory super-config-dir 0))
+  (byte-recompile-directory super-config-dir 0 'force 'follow-symlinks))

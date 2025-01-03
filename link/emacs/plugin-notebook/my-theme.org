@@ -25,7 +25,7 @@ theme code added by customize.
 
 * Functions
 #+begin_src emacs-lisp
-  (defsubst my/modus-themes-custom-faces ()
+  (defun my/modus-themes-custom-faces ()
     "Customize faces for modus themes."
     (modus-themes-with-colors
       ;;   Adjust mode line style
@@ -69,7 +69,7 @@ theme code added by customize.
         (set-face-background 'highlight-indent-guides-stack-even-face bg-lavender)
         (set-face-foreground 'highlight-indent-guides-stack-character-face bg-lavender))))
 
-  (defsubst my/activate-theme--modus ()
+  (defun my/activate-theme--modus ()
     "Activation/configuration function for modus theme."
     (if (eq my/color-theme 'dark)
         ;; Load the dark Modus theme if we desire to dwell in darkness.
@@ -79,7 +79,7 @@ theme code added by customize.
     ;; Set custom faces for the active Modus theme.
     (my/modus-themes-custom-faces))
 
-  (defsubst my/activate-theme--doom ()
+  (defun my/activate-theme--doom ()
     "Activation/configuration function for doom theme."
     (load-theme 'doom-one t)
     ;; Flash the modeline when the Emacs bell rings.
@@ -90,7 +90,7 @@ theme code added by customize.
     ;; Correct and improve some of org-mode's native fontification.
     (doom-themes-org-config))
 
-  (defsubst my/activate-theme ()
+  (defun my/activate-theme ()
     "Activate my favorite color theme.
   This function wraps the `load-theme' function and other theme activation
   functions to provide a single point of theme configuration."

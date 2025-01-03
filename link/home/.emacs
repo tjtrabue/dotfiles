@@ -158,10 +158,8 @@ If called with a prefix ARG, run in verbose mode."
         (not (file-directory-p super-config-dir)))
     (progn
       ;; Create the super config if it is not yet present.
-      (my/create-super-config)
-      ;; Force compilation of the super config dir after it's first created.
-      (byte-recompile-directory super-config-dir 0 t))
-    ;; OTHERWISE only recompile files that need recompiling.
+      (my/create-super-config))
+    ;; OTHERWISE only recompile Elisp files that need recompiling.
     (byte-recompile-directory super-config-dir))
   (if (and my/use-compiled-config
         (directory-files super-config-dir nil "\\.elc$"))
