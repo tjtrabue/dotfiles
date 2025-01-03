@@ -52,7 +52,7 @@
 ;;   - 'watch-files -> Requires the external `watchexec' executable; straight starts a watcher
 ;;                     process to detect modifications made to files in `~/.emacs.d/straight/repos/'
 (setq straight-check-for-modifications nil)
-(if (executable-find "find")
+(when (executable-find "find")
   ;; Only attempt to run `find' to check for file modifications if we have `find' installed
   ;; (which is usually not the case on Windows).
   (add-to-list 'straight-check-for-modifications 'find-when-checking))
