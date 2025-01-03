@@ -111,10 +111,6 @@
   ;; at the end of your init.el
   (setq package--init-file-ensured t))
 
-;; * use-package
-;; This option must be set before `use-package' is loaded in the primary configuration file.
-(setq use-package-enable-imenu-support t)
-
 ;; * Xorg Integration
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the

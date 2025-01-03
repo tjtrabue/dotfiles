@@ -13,12 +13,17 @@
 (when (< emacs-major-version 27)
   ;; Explicitly load `early-init.el' if running on a crusty old Emacs that does
   ;; not automatically recognize the early initialization file.
-  (load (file-truename (expand-file-name "early-init.el" user-emacs-directory))))
+  (load (file-name-sans-extension
+          (file-truename (expand-file-name "early-init.el" user-emacs-directory)))))
 
 ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
 ;; screen with debugging output seems to mess with evil-mode, so I find it
 ;; prudent to turn this variable off until I have a reason to turn it on.
 (setq debug-on-error nil)
+
+;; This option must be set before `use-package' is loaded.
+;; When non-nil, causes imenu to see `use-package' declarations.
+(setq use-package-enable-imenu-support t)
 
 ;; Tip from Doom Emacs:
 ;; Set these variables here to speed up our initial load.
