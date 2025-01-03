@@ -1,8 +1,11 @@
 ;;; early-init.el --- First config file loaded -*- lexical-binding: t -*-
 
 ;;; Commentary:
-;; The very first configuration file, read even before `~/.emacs'.
-;; Here we set values that must be defined before the first GUI frame is created.
+
+;; The very first configuration file, read even before `~/.emacs'.  This
+;; configuration file was introduced in Emacs 27, and will not be automatically
+;; loaded on older versions of Emacs.  Here we set values that must be defined
+;; before package initialization and before the first GUI frame is created.
 
 ;;; Code:
 

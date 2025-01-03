@@ -10,6 +10,11 @@
 
 ;;; Code:
 
+(when (< emacs-major-version 27)
+  ;; Explicitly load `early-init.el' if running on a crusty old Emacs that does
+  ;; not automatically recognize the early initialization file.
+  (load (file-truename (expand-file-name "early-init.el" user-emacs-directory))))
+
 ;; Show diagnostic output in the event of an error if non-nil.  Blowing up the
 ;; screen with debugging output seems to mess with evil-mode, so I find it
 ;; prudent to turn this variable off until I have a reason to turn it on.
@@ -41,7 +46,7 @@
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
 ;; Org version mismatches.
 (add-to-list
-  'load-path (file-truename (concat user-emacs-directory "straight/build/org")))
+  'load-path (file-truename (expand-file-name "straight/build/org" user-emacs-directory)))
 
 ;; JIT settings to speed up startup.
 ;; https://tychoish.com/post/towards-faster-emacs-start-times/
@@ -102,9 +107,9 @@ Once created, the file should be placed in
 
 If called with a prefix ARG, run in verbose mode."
   (interactive "P")
-  (let* ((dotfiles-home-dir (file-truename (concat (getenv "HOME") "/.dotfiles")))
-          (dotfiles-bin-dir (file-truename (concat dotfiles-home-dir "/bin")))
-          (super-config-script (file-truename (concat dotfiles-bin-dir "/make_emacs_super_config"))))
+  (let* ((dotfiles-home-dir (file-truename (expand-file-name ".dotfiles" (getenv "HOME"))))
+          (dotfiles-bin-dir (file-truename (expand-file-name "bin" dotfiles-home-dir)))
+          (super-config-script (file-truename (expand-file-name "make_emacs_super_config" dotfiles-bin-dir))))
     (compile (if arg
                super-config-script
                (concat super-config-script " -q")))))
@@ -119,23 +124,23 @@ If called with a prefix ARG, run in verbose mode."
       (normal-top-level-add-subdirs-to-load-path))))
 ;; This sets additional paths where Emacs looks for Elisp files when a load
 ;; command is issued.
-(dolist (dir (list (file-truename (concat user-emacs-directory "plugin"))
-               (file-truename (concat user-emacs-directory "private"))
-               (file-truename (concat user-emacs-directory "require"))
-               (file-truename (concat user-emacs-directory "require/fix"))))
+(dolist (dir (list (file-truename (expand-file-name "plugin" user-emacs-directory))
+               (file-truename (expand-file-name "private" user-emacs-directory))
+               (file-truename (expand-file-name "require" user-emacs-directory))
+               (file-truename (expand-file-name "require/fix" user-emacs-directory))))
   (add-to-list 'load-path dir))
 
 ;; I refactored my `straight.el' bootstrap code to a separate file.
 (load "my-straight-bootstrap")
 
 ;; Make downloaded straight packages available on `load-path'.
-(dolist (dir (directory-files (file-truename (concat user-emacs-directory "straight/build"))
+(dolist (dir (directory-files (file-truename (expand-file-name "straight/build" user-emacs-directory))
                'full-name))
   (when (file-directory-p dir)
     (add-to-list 'load-path dir)))
 
   ;;; Load the super config:
-(let* ((super-config-dir (file-truename (concat user-emacs-directory "super_config")))
+(let* ((super-config-dir (file-truename (expand-file-name "super_config" user-emacs-directory)))
         (default-directory user-emacs-directory))
   (if (or my/force-refresh-super-config
         (not (file-directory-p super-config-dir)))
@@ -161,4 +166,5 @@ If called with a prefix ARG, run in verbose mode."
   (setq gc-cons-threshold my/gc-cons-threshold)
   (setq gc-cons-percentage 0.1)
   (setq file-name-handler-alist last-file-name-handler-alist))
+
 ;;; .emacs ends here
