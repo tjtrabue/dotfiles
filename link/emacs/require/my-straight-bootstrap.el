@@ -27,7 +27,11 @@
 ;;; Commentary:
 
 ;; This file is more of a script that bootstraps and loads the `straight.el'
-;; package manager.
+;; package manager.  `straight.el' installs and "builds" packages from their
+;; source code repositories rather than from opaque tarballs, allowing a far
+;; more customizable approach to managing third-party packages.
+;;
+;; To update all packages installed with `straight', run `M-x straight-pull-all'.
 
 ;;; Code:
 
@@ -35,6 +39,22 @@
 ;; Always use `use-package' when installing packages, making the `:straight t'
 ;; part of the `use-package' macro unnecessary.
 (setq straight-use-package-by-default t)
+;; When to check for a package modifications. The value of this variable is a list
+;; of symbols. By default, `straight.el.' checks for modifications on startup, which
+;; has major performance implications for Emacs' startup time.
+;; Possible values:
+;;   - 'find-at-startup -> straight checks for modifications on all packages at startup
+;;   - 'find-when-checking -> straight checks for modifications when `straight-check-package'
+;;                            or `straight-check-all' is run.
+;;   - 'check-on-save -> straight adds a check to `before-save-hook' to check for file
+;;                       modifications that you perform from within Emacs (does not catch
+;;                       modifications made outside of Emacs).
+;;   - 'watch-files -> Requires the external `watchexec' executable; straight starts a watcher
+;;                     process to detect modifications made to files in `~/.emacs.d/straight/repos/'
+(setq straight-check-for-modifications '(check-on-save find-when-checking))
+(when (executable-find "watchexec")
+  ;; Only use file system watchers to check for modifications if we have `watchexec' installed.
+  (add-to-list 'straight-check-for-modifications 'watch-files))
 ;; The straight.el branch to clone.
 (setq straight-repository-branch "develop")
 (let ((bootstrap-file
@@ -52,10 +72,6 @@
       (eval-print-last-sexp)))
   (with-no-warnings
     (load bootstrap-file nil 'nomessage))
-
-  ;; Load all of straight's macros at compile-time.
-  (add-to-list 'load-path (file-truename (concat user-emacs-directory "straight/build/straight")))
-  (require 'straight)
 
   ;; Register more Git project hosting sites with Straight.el.
   ;; TODO: Remove these host additions once straight.el includes them by

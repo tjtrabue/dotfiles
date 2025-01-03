@@ -263,6 +263,7 @@ tk-dev
 tree
 unzip
 w3m
+watchexec
 x11-xserver-utils
 xauth
 xaw3dg
