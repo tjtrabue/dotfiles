@@ -55,7 +55,7 @@
 ;;   jit-lock-defer-time 0.05
 ;;   jit-lock-stealth-load 200)
 
-  ;;; NOTE REGARDING BYTE COMPILING CONFIG FILES:
+;;; NOTE REGARDING BYTE COMPILING CONFIG FILES:
 ;; In general, I have observed that attempting to load compiled Elisp files is
 ;; much, much slower than simply interpreting their corresponding .el files at
 ;; run time. I don't know why this is, but I have a guess. I am making prolific
@@ -67,7 +67,6 @@
 ;; In addition, the process of compiling all of these macro-heavy Elisp files is
 ;; extremely difficult to get right. Many things are left up to chance, and
 ;; things we often take for granted in the Elisp world cease to function.
-
 
 ;; Add required libraries
 (eval-when-compile
