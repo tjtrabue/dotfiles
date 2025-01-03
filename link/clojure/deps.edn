@@ -88,8 +88,9 @@
   ;;   - clojure -M:rebel:dev/repl
   ;;   - clojure -M:nrepl:dev/repl
   ;;   - clojure -M:fig:build:dev/repl
-  :dev/repl {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]
-             :main-opts ["-e" "(load-file,(str,(System/getProperty,\"user.home\"),\"/.clojure/dev.clj\"))"]}
+  :dev/repl {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}}
+             :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]
+             :main-opts ["-e" "(load-file,(str,(System/getProperty,\"user.home\"),\"/.clojure/user.clj\"))"]}
 
   ;; - in case you need precompiled code on your classpath:
   :classes {:extra-paths ["classes"]}
@@ -131,7 +132,7 @@
   :reveal {:extra-deps {vlaaad/reveal {:mvn/version "RELEASE"}}
            :exec-fn vlaaad.reveal/repl
            :jvm-opts ["--enable-native-access" "ALL-UNNAMED"
-                      "-Dvlaaad.reveal.prefs={:font-family,\"Cascadia Code PL\",:font-size,17}"]}
+                      "-Dvlaaad.reveal.prefs={:font-size,17}"]}
   ;; Run the Reveal inspector in a CIDER-enhanced nREPL:
   ;;   `clj -M:reveal-cider`.
   :reveal-cider {:extra-deps {acyclic/squiggly-clojure {:mvn/version "RELEASE"}
@@ -143,7 +144,7 @@
                              "--middleware" "[refactor-nrepl.middleware/wrap-refactor,vlaaad.reveal.nrepl/middleware,cider.nrepl/cider-middleware]"]
                  :jvm-opts ["--enable-native-access" "ALL-UNNAMED"
                             "-Djdk.attach.allowAttachSelf"
-                            "-Dvlaaad.reveal.prefs={:font-family,\"Cascadia Code PL\",:font-size,17}"]}
+                            "-Dvlaaad.reveal.prefs={:font-size,17}"]}
 
   ;; - see https://github.com/donut-party/dbxray
   :dbxray
@@ -162,11 +163,6 @@
   {:extra-deps {io.github.stuarthalloway/reflector
                 {:git/url "https://github.com/stuarthalloway/reflector"
                  :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
-
-  ;; - see https://github.com/gfredericks/user.clj
-  ;; Automatically loads `~/.clojure/user.clj`, if it exists.
-  :user {:extra-deps {org.clojure/tools.namespace {:mvn/version "RELEASE"}
-                      com.gfredericks/user.clj {:mvn/version "RELEASE"}}}
 
   ;; Super flexible pretty-printer/formatter library.
   :zprint {:extra-deps {zprint/zprint {:mvn/version "RELEASE"}}}
