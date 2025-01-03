@@ -86,12 +86,7 @@
 (eval-when-compile
   (require 'bytecomp)
   (require 'cl-lib)
-  (require 'vc-git)
-  ;; Automatically install packages using use-package
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-  (require 'use-package))
+  (require 'vc-git))
 
 ;; Autoload certain functions required by early config.
 (autoload 'vc-git-root "vc-git")
@@ -145,6 +140,10 @@ If called with a prefix ARG, run in verbose mode."
 
 ;; I refactored my `straight.el' bootstrap code to a separate file.
 (load "my-straight-bootstrap")
+;; Load `use-package' after bootstrapping `straight.el' since we may need
+;; `straight' to install `use-package', which is taken care of in the bootstrap
+;; script.
+(require 'use-package)
 
 ;; Make downloaded straight packages available on `load-path'.
 (dolist (dir (directory-files (file-truename (expand-file-name "straight/build" user-emacs-directory))
