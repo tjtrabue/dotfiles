@@ -5,8 +5,16 @@
 ;; Here we set values that must be defined before the first GUI frame is created.
 
 ;;; Code:
+
+;; * Set Variables Needed Right Away
+(eval-and-compile
+  (defconst my/use-straight-p t
+    "Whether to use straight.el instead of Emacs' built-in package manager.")
+  (defconst my/color-theme 'dark
+    "A symbol that is equal to one of: \\='light, \\='dark."))
+
 ;; * Emacs Lisp File Loading / Compilation
-;; In noninteractive sessions, prioritize non-byte-compiled source files to
+;; In non-interactive sessions, prioritize non-byte-compiled source files to
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer 'noninteractive)
@@ -19,7 +27,7 @@
 ;; If non-nil, compile loaded .elc files asynchronously.
 ;; After compilation, each function definition is updated to use the
 ;; natively-compiled one.
-(setq native-comp-jit-compilation nil)
+(setq native-comp-jit-compilation t)
 
 ;; * Initial Garbage Collection Options
 ;; Set the garbage collection threshold super high for startup. We'll need to
@@ -27,6 +35,13 @@
 ;; it does speed up Emacs' start time.
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 0.6)
+
+;; * Initial Faces
+;; Set the initial frame's coloration while waiting for the theme to load.  This
+;; avoids a bright flash when Emacs first starts if using a dark theme.
+(let ((bg (if (eq my/color-theme 'dark) "#000000" "#ffffff"))
+       (fg (if (eq my/color-theme 'dark) "#ffffff" "#000000")))
+  (set-face-attribute 'default nil :background bg :foreground fg))
 
 ;; * Fullscreen Options
 ;; To change the initial fullscreen behavior of a frame using =initial-frame-alist=
@@ -61,14 +76,12 @@
 ;; font. By inhibiting this, we easily halve startup times with fonts that are
 ;; larger than the system default.
 (setq frame-inhibit-implied-resize t)
+(setq frame-resize-pixelwise t)
 
 ;; * Package Manager
 ;; We must determine which package management system we desire BEFORE we load
 ;; our main Emacs configuration files since Emacs initializes the package system
 ;; by default before loading `~/.emacs'.
-(eval-and-compile
-  (defconst my/use-straight-p t
-    "Whether to use straight.el instead of Emacs' built-in package manager."))
 
 (if (and (not my/use-straight-p) (>= emacs-major-version 24))
 ;;; IF we want to use the built-in package manager...

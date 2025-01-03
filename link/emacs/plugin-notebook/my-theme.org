@@ -71,7 +71,11 @@ theme code added by customize.
 
   (defsubst my/activate-theme--modus ()
     "Activation/configuration function for modus theme."
-    (load-theme 'modus-vivendi t)
+    (if (eq my/color-theme 'dark)
+        ;; Load the dark Modus theme if we desire to dwell in darkness.
+        (load-theme 'modus-vivendi t)
+      ;; Otherwise, join the light side and be bright and happy.
+      (load-theme 'modus-operandi t))
     ;; Set custom faces for the active Modus theme.
     (my/modus-themes-custom-faces))
 
