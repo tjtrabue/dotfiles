@@ -1,6 +1,18 @@
 ;;; The very first configuration file, read even before `~/.emacs'.
 ;; Here we set values that must be defined before the first GUI frame is created.
 
+;; * Emacs Lisp File Loading / Compilation
+;; Determines how to load .el/.elc files using `load'.  If non-nil, always load
+;; the newer file, regardless of extension. If nil, load based on the predefined
+;; load order.
+(setq load-prefer-newer t)
+;; Define the level of native compilation optimization.
+;; Allowed values: -1, 0, 1, 2, 3.
+(setq native-comp-speed 3)
+;; The number of parallel async jobs to perform.
+;; Defaults to 0, meaning use half the available CPU cores.
+(setq native-comp-async-jobs-number 0)
+
 ;; * Fullscreen Options
 ;; To change the initial fullscreen behavior of a frame using =initial-frame-alist=
 ;; or =default-frame-alist=, append one of the following options to one or both of
