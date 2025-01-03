@@ -51,14 +51,22 @@
 ;;                       modifications made outside of Emacs).
 ;;   - 'watch-files -> Requires the external `watchexec' executable; straight starts a watcher
 ;;                     process to detect modifications made to files in `~/.emacs.d/straight/repos/'
-(setq straight-check-for-modifications '(check-on-save find-when-checking))
-(when (executable-find "watchexec")
-  ;; Only use file system watchers to check for modifications if we have `watchexec' installed.
-  (add-to-list 'straight-check-for-modifications 'watch-files))
+(setq straight-check-for-modifications nil)
+(if (executable-find "find")
+  ;; Only attempt to run `find' to check for file modifications if we have `find' installed
+  ;; (which is usually not the case on Windows).
+  (add-to-list 'straight-check-for-modifications 'find-when-checking))
+(if (and (executable-find "python3") (executable-find "watchexec"))
+  ;; Use filesystem watchers to check for modifications if we have `watchexec' installed.
+  (add-to-list 'straight-check-for-modifications 'watch-files)
+  ;; Otherwise, only check for modifications after saving files in Emacs.
+  (add-to-list 'straight-check-for-modifications 'check-on-save))
 ;; The straight.el branch to clone.
 (setq straight-repository-branch "develop")
 (let ((bootstrap-file
-        (file-truename (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
+        (file-truename
+          (concat
+            user-emacs-directory "straight/repos/straight.el/bootstrap.el")))
        (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -70,8 +78,7 @@
         'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
-  (with-no-warnings
-    (load bootstrap-file nil 'nomessage))
+  (with-no-warnings (load bootstrap-file nil 'nomessage))
 
   ;; Register more Git project hosting sites with Straight.el.
   ;; TODO: Remove these host additions once straight.el includes them by
@@ -84,18 +91,10 @@
     ;; Sometimes straight.el does not include the convenience function
     ;; `straight-pull-recipe-repositories', in which case we should alias
     ;; that function to our own custom version.
-    (defalias 'straight-pull-recipe-repositories
+    (defalias
+      'straight-pull-recipe-repositories
       'my-straight-helpers-pull-recipe-repositories))
   (straight-pull-recipe-repositories)
-
-  ;; Default mode for loading packages: either defer or demand.
-  ;; (setq use-package-always-demand t)
-  (setq use-package-always-defer t)
-
-  ;; Always treat `use-package' specifications as if they had `:ensure t' by
-  ;; default. You can override this behavior by specifying `:ensure nil',
-  ;; instead.
-  (setq use-package-always-ensure t)
 
   ;; Install use-package via straight.
   ;; After this function runs, use-package will automatically use straight
@@ -108,7 +107,10 @@
       ;; Override the MELPA recipe in order to get all Elisp files for
       ;; use-package. For some reason, the MELPA recipe excludes several
       ;; important source files.
-      '(use-package :type git :host github :repo "jwiegley/use-package"
+      '(use-package
+         :type git
+         :host github
+         :repo "jwiegley/use-package"
          :files (:defaults)))))
 
 (provide 'my-straight-bootstrap)

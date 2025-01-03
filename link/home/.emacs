@@ -21,6 +21,15 @@
 ;; prudent to turn this variable off until I have a reason to turn it on.
 (setq debug-on-error nil)
 
+;; Default mode for loading packages: either defer or demand.
+;; (setq use-package-always-demand t)
+(setq use-package-always-defer t)
+
+;; Always treat `use-package' specifications as if they had `:ensure t' by
+;; default. You can override this behavior by specifying `:ensure nil',
+;; instead.
+(setq use-package-always-ensure t)
+
 ;; This option must be set before `use-package' is loaded.
 ;; When non-nil, causes imenu to see `use-package' declarations.
 (setq use-package-enable-imenu-support t)
