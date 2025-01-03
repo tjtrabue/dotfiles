@@ -236,6 +236,8 @@ file in your project's root directory with the following content:
       "czv" 'cider-tap-sexp-at-point
       "czz" 'cider-tap-last-sexp)
     (my/user-leader-def cider-mode-map
+      ;; Remap `C-c C-c' to a better evaluation function.
+      "C-c" 'cider-eval-dwim
       ;; For some reason `cider-jack-in' doesn't have a default binding.
       ;; I like `C-c C-j'.
       "C-j" 'cider-jack-in)
