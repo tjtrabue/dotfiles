@@ -442,6 +442,12 @@ LanguageServerProtocol clients and servers.
   ;; If 0, only defer fontification when there is input pending.
   (setq jit-lock-defer-time 0)
 
+  ;; Grep
+  ;; The default grep CLI command to use for `grep-command' and `grep-find-command'.
+  (setq grep-program (cond ((executable-find "ugrep") "ugrep")
+                           ((executable-find "rg") "rg")
+                           (t "grep")))
+
   (when (display-graphic-p)
     ;; How to handle child frames. Can be nil or 'resize-mode.  Setting this
     ;; variable to 'resize-mode may improve the performance of plugins that use
@@ -624,10 +630,10 @@ interactive, templated Grep commands:
     ;; The default command to run for `grep'.
     (grep-apply-setting 'grep-command
                         (cond (has-ugrep
-                               "ugrep --color=always --no-heading -0HIPine ")
+                               "ugrep --color=always --no-heading --index -0HIine ")
                               (has-rg
                                "rg --color=always --no-heading -0HPne ")
-                              (t "grep --color=always -nH --null -e ")))
+                              (t "grep --color=always -nH -r --null -e ")))
     ;; The default command to run for `lgrep'.
     (grep-apply-setting 'grep-template
                         (cond (has-ugrep
@@ -657,7 +663,15 @@ interactive, templated Grep commands:
                               (has-rg
                                '("rg -e '' -n -H --no-heading $(git rev-parse --show-toplevel || pwd)"
                                  . 8))
-                              (t nil))))
+                              (t nil)))
+    ;; How to combine `find' and `xargs'.
+    (grep-apply-setting 'grep-find-use-xargs 'gnu-sort)
+    ;; Whether to append the null device to the end of the grep command.  This is not necessary if the
+    ;; grep program supports the `-H' option or an equivalent flag that outputs the file path before
+    ;; the match.
+    (grep-apply-setting 'grep-use-null-device nil)
+    ;; Apply grep preferences
+    (grep-compute-defaults))
 #+end_src
 
 * Set fringe width
