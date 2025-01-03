@@ -206,6 +206,40 @@ straight_rm_repo() {
   rm -rf "${straightBuild}/${repo:?}"
 }
 
+# Start an external file watcher program for straight.el which catches updates
+# made to package source files.
+straight_start_file_watcher() {
+  local straightDir="${EMACS_CONFIG_HOME}/straight"
+  local straightReposDir="${straightDir}/repos"
+  local straightModifiedDir="${straightDir}/modified"
+  local straightWatchCallback="${straightReposDir}/straight.el/watcher/straight_watch_callback.py"
+  local watchexecCmd="watchexec --no-vcs-ignore -p --debounce 100ms --emit-events-to=environment ${straightWatchCallback} ${straightReposDir} ${straightModifiedDir}"
+
+  if [ ! -x "$(command -v watchexec)" ]; then
+    err "Must install watchexec to use straight's file system watcher."
+    return 1
+  elif [ ! -d "${straightReposDir}" ]; then
+    err "straight.el does not appear to be installed; cannot locate repos dir" \
+      "at: ${BLUE}${straightReposDir}${NC}"
+    return 2
+  elif [ ! -f "${straightWatchCallback}" ]; then
+    err "Could not find straight.el watcher file at: ${straightWatchCallback}"
+    return 3
+  fi
+
+  if pgrep "${watchexecCmd}" >>/dev/null 2>&1; then
+    err "straight.el file watcher already running"
+    return 4
+  fi
+
+  log_info "Starting straight.el file watcher in the following directories:" \
+    "${BLUE}${straightReposDir}${NC}, ${BLUE}${straightModifiedDir}${NC}"
+  (
+    cd "${straightReposDir}" &&
+      eval "${watchexecCmd}" &
+  )
+}
+
 # Clone my personal roam-notes database.
 clone_roam_notes() {
   local emacsHome="${EMACS_CONFIG_HOME:-${HOME}/.emacs.d}"
