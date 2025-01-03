@@ -18,8 +18,8 @@ The Tree-Sitter enabled version of =elixir-mode=.
     ;; The MELPA package is a back-port for use Emacs 29.1.
     :ensure nil
     :straight nil
-    :if (eval-and-compile (and (fboundp 'treesit-available-p)
-                               (treesit-available-p)))
+    :if (and (fboundp 'treesit-available-p)
+             (treesit-available-p))
     :hook
     ((elixir-mode elixir-ts-mode) .
      (lambda ()
@@ -216,7 +216,7 @@ the built-in =elxir-mode= when possible.
 
 #+begin_src emacs-lisp
   (use-package elixir-mode
-    :if (eval-and-compile (<= emacs-major-version 29)))
+    :if (<= emacs-major-version 29))
 #+end_src
 
 * Alchemist (deprecated)

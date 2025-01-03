@@ -1,7 +1,7 @@
 ;;; The very first configuration file, read even before `~/.emacs'.
 ;; Here we set values that must be defined before the first GUI frame is created.
 
-;; * Fullscreen options
+;; * Fullscreen Options
 ;; To change the initial fullscreen behavior of a frame using =initial-frame-alist=
 ;; or =default-frame-alist=, append one of the following options to one or both of
 ;; those lists:
@@ -23,3 +23,36 @@
 ;; To change the size of all frames Emacs creates, set `default-frame-alist', instead.
 ;; Maximize Emacs' initial frame.
 (add-to-list 'initial-frame-alist `(fullscreen . maximized))
+
+;; * Package Manager
+;; We must determine which package management system we desire BEFORE we load
+;; our main Emacs configuration files since Emacs initializes the package system
+;; by default before loading `~/.emacs'.
+(eval-and-compile
+  (defconst my/use-straight-p t
+    "Whether to use straight.el instead of Emacs' built-in package manager."))
+
+(if (and (not my/use-straight-p) (>= emacs-major-version 24))
+;;; IF we want to use the built-in package manager...
+  (progn
+    ;; Package configuration
+    (require 'package)
+    ;; Add extra package archives to the list of repositories.
+    ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+    ;;       to change the URLs to simple HTTP in order for them to function.
+    ;;       If you must do this, also uncomment the two expressions below.
+    ;;       That will reset the archives list and allow you to only use
+    ;;       unsecured connections for package transfer.
+    ;; (setq package-archives nil)
+    ;; (add-to-list 'package-archives
+    ;;   '("gnu" . "http://elpa.gnu.org/packages/") t)
+    (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
+    (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
+    (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+    (package-initialize))
+;;; OTHERWISE...
+  ;; Do not auto-initialize packages! This can slow down Emacs's startup time.
+  (setq package-enable-at-startup nil)
+  ;; this tells package.el not to add those pesky customized variable settings
+  ;; at the end of your init.el
+  (setq package--init-file-ensured t))

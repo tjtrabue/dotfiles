@@ -190,7 +190,7 @@ GitHub page for installation details]].
 #+begin_src emacs-lisp
   (use-package magit-delta
     ;; Only use this package if `git-delta' is installed.
-    :if (eval-and-compile (executable-find "delta"))
+    :if (executable-find "delta")
     :after magit
     :hook
     (magit-mode . magit-delta-mode)

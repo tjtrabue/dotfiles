@@ -95,12 +95,6 @@
       '(use-package :type git :host github :repo "jwiegley/use-package"
          :files (:defaults)))))
 
-;; NOTE: This is `eval-and-compile`, not `eval-when-compile'. They are different
-;; macros. `eval-and-compile' evaluates its code both during compilation and
-;; when run. `eval-when-compile' only evaluates its code during compile-time.
-(eval-and-compile
-  (require 'use-package))
-
 (provide 'my-straight-bootstrap)
 
 ;;; my-straight-bootstrap.el ends here

@@ -7,43 +7,42 @@
 
 Here's my Perl configuration for Emacs. If there's one thing I've discovered in
 my exploration of Emacs/Perl integration, it's that all the Perl plugins are old
-as heck and super slow. My advice is to simply use =flycheck= and =cperl-mode=
-for the time being and pray that =Perl::LanguageServer= eventually gets its act
+as heck and super slow. My advice is to simply use =flycheck= and =cperl-mode= for
+the time being and pray that =Perl::LanguageServer= eventually gets its act
 together and starts to work with =lsp-mode=. That being said, I have curated a
 fairly sophisticated configuration for various Perl plugins should you wish to
-use them, such as =plsense= and =Devel::PerlySense=. Just be warned that using
-such plugins is sure to slow your system down significantly.
+use them, such as =plsense= and =Devel::PerlySense=. Just be warned that using such
+plugins is sure to slow your system down significantly.
 
 * PDE
 PDE is a collection of Emacs Lisp modules for interacting with Perl code
-distributed through CPAN in a package named =Emacs::PDE=. Thus, you must
-install =Emacs::PDE= through your CPAN install utility, usually =cpanm=. Once
-you have installed PDE, you may load it in Emacs.
+distributed through CPAN in a package named =Emacs::PDE=. Thus, you must install
+=Emacs::PDE= through your CPAN install utility, usually =cpanm=. Once you have
+installed PDE, you may load it in Emacs.
 
 *NOTE*: I do not recommend you use PDE right now as it can hijack a number of
 different configuration settings, such as =helm=.
 
 #+begin_src emacs-lisp
-  (eval-and-compile
-    ;; Add the Elisp code in the PDE directory to load-path.
-    (let ((pde-dir (concat user-emacs-directory "pde")))
-      (when (file-directory-p pde-dir)
-        (add-to-list 'load-path pde-dir)))
+  ;; Add the Elisp code in the PDE directory to load-path.
+  (let ((pde-dir (concat user-emacs-directory "pde")))
+    (when (file-directory-p pde-dir)
+      (add-to-list 'load-path pde-dir)))
 
-    (defun load-pde ()
-      "Load the Perl Development Environment."
-      (interactive)
-      (let* ((pde-dir (concat user-emacs-directory "pde"))
-             (pde-load-file (concat pde-dir "/pde-load.el")))
-        (when (file-exists-p pde-load-file)
-          (load pde-load-file))))
+  (defun load-pde ()
+    "Load the Perl Development Environment."
+    (interactive)
+    (let* ((pde-dir (concat user-emacs-directory "pde"))
+           (pde-load-file (concat pde-dir "/pde-load.el")))
+      (when (file-exists-p pde-load-file)
+        (load pde-load-file))))
 
-    (define-minor-mode pde-mode
-      "Minor mode for activating the Perl Development Environment package from CPAN."
-      :lighter " PDE"
-      (if pde-mode
-          (load-pde)
-        (unload-feature 'pde-load))))
+  (define-minor-mode pde-mode
+    "Minor mode for activating the Perl Development Environment package from CPAN."
+    :lighter " PDE"
+    (if pde-mode
+        (load-pde)
+      (unload-feature 'pde-load)))
 #+end_src
 
 * Plugins
@@ -63,65 +62,63 @@ This code block exists to satisfy both the byte-compiler and native compiler.
 
 *** Variables
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (defconst my/ffap-perl-inc-dirs
-      (apply 'append
-             (mapcar (function ffap-all-subdirs)
-                     (split-string (shell-command-to-string
-                                    "perl -e 'pop @INC; print join(q/ /,@INC);'"))))
-      "Directories from the @INC variables in Perl used to locate
-    files at point."))
+  (defconst my/ffap-perl-inc-dirs
+    (apply 'append
+           (mapcar (function ffap-all-subdirs)
+                   (split-string (shell-command-to-string
+                                  "perl -e 'pop @INC; print join(q/ /,@INC);'"))))
+    "Directories from the @INC variables in Perl used to locate
+    files at point.")
 #+end_src
 
 *** Functions
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (defun my/cperl-ffap-locate(name)
-      "Return cperl module for find-file-at-point."
-      (let* ((r (replace-regexp-in-string ":" "/" (file-name-sans-extension name)))
-             (e (replace-regexp-in-string "//" "/" r))
-             (x (ffap-locate-file e '(".pm" ".pl" ".xs") my/ffap-perl-inc-dirs)))
-        x))
+  (defun my/cperl-ffap-locate(name)
+    "Return cperl module for find-file-at-point."
+    (let* ((r (replace-regexp-in-string ":" "/" (file-name-sans-extension name)))
+           (e (replace-regexp-in-string "//" "/" r))
+           (x (ffap-locate-file e '(".pm" ".pl" ".xs") my/ffap-perl-inc-dirs)))
+      x))
 
-    (defun my/perl-module-path (module-name)
-      "Return the path to the given Perl module."
-      (let* ((file-name
-              (concat (replace-regexp-in-string "::" "/" module-name)
-                      ".pm"))
-             (command-line
-              (concat "perl -M'"
-                      module-name
-                      "' -e'print $INC{q{"
-                      file-name
-                      "}}'"))
-             (path (shell-command-to-string command-line))
-             (cant-locate (string-match "^Can't locate " path)))
-        (if cant-locate
-            nil
-          path)))
+  (defun my/perl-module-path (module-name)
+    "Return the path to the given Perl module."
+    (let* ((file-name
+            (concat (replace-regexp-in-string "::" "/" module-name)
+                    ".pm"))
+           (command-line
+            (concat "perl -M'"
+                    module-name
+                    "' -e'print $INC{q{"
+                    file-name
+                    "}}'"))
+           (path (shell-command-to-string command-line))
+           (cant-locate (string-match "^Can't locate " path)))
+      (if cant-locate
+          nil
+        path)))
 
-    (defun find-perl-module (module-name)
-      "Open a Perl module's source file."
-      (interactive (list (let* ((default-arg (cperl-word-at-point))
-                                (input (read-string (format "Perl module name%s: "
-                                                            (if (string= default-arg "")
-                                                                ""
-                                                              (format " (default %s)" default-arg))))))
-                           (if (string= input "")
-                               (if (string= default-arg "")
-                                   (error "No Perl module given")
-                                 default-arg)
-                             input))))
-      (let ((path (my/perl-module-path module-name)))
-        (if path
-            (find-file path)
-          (error "Module '%s' not found" module-name))))
+  (defun find-perl-module (module-name)
+    "Open a Perl module's source file."
+    (interactive (list (let* ((default-arg (cperl-word-at-point))
+                              (input (read-string (format "Perl module name%s: "
+                                                          (if (string= default-arg "")
+                                                              ""
+                                                            (format " (default %s)" default-arg))))))
+                         (if (string= input "")
+                             (if (string= default-arg "")
+                                 (error "No Perl module given")
+                               default-arg)
+                           input))))
+    (let ((path (my/perl-module-path module-name)))
+      (if path
+          (find-file path)
+        (error "Module '%s' not found" module-name))))
 
-    (defun my/cperl-eldoc-documentation-function ()
-      "Return meaningful doc string for `eldoc-mode'."
-      (car
-       (let ((cperl-message-on-help-error nil))
-         (cperl-get-help)))))
+  (defun my/cperl-eldoc-documentation-function ()
+    "Return meaningful doc string for `eldoc-mode'."
+    (car
+     (let ((cperl-message-on-help-error nil))
+       (cperl-get-help))))
 #+end_src
 
 *** =use-package= specification

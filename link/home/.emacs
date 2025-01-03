@@ -82,11 +82,17 @@
 ;; extremely difficult to get right. Many things are left up to chance, and
 ;; things we often take for granted in the Elisp world cease to function.
 
+
 ;; Add required libraries
 (eval-when-compile
   (require 'bytecomp)
   (require 'cl-lib)
-  (require 'vc-git))
+  (require 'vc-git)
+  ;; Automatically install packages using use-package
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (require 'use-package))
 
 ;; Autoload certain functions required by early config.
 (autoload 'vc-git-root "vc-git")
