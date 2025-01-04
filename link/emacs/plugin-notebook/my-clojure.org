@@ -332,6 +332,9 @@ file in your project's root directory with the following content:
     ;; most likely an upstream issue. To get around this, use the Makefile configuration found
     ;; in the URL provided, and use `cider-connect' instead.
     (cider-enrich-classpath nil)
+    ;; How to go about reusing dead CIDER REPLs when a new `cider-jack-in' or `cider-connect' command
+    ;; is issued.
+    (cider-reuse-dead-repls 'auto)
     :init
     (dolist (hook '(cider-mode-hook cider-repl-mode-hook))
       ;; Use fuzzy matching to display CIDER Company completions.
