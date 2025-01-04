@@ -209,6 +209,7 @@ __src_extra_environment_profiles() {
   src_asdf_for_profile
   src_broot_for_profile
   src_parallel_for_profile
+  src_pay_respects_for_profile
   src_prompt_for_profile
 }
 # }}}
