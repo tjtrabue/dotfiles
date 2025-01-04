@@ -142,7 +142,8 @@ file in your project's root directory with the following content:
 
   (defun my/cider-repl-prompt-function (namespace)
     "Return the CIDER REPL prompt for the current NAMESPACE."
-    (format "%s➣ " (cider-abbreviate-ns namespace)))
+    (format "%s➣ " (replace-regexp-in-string "\\." "｜" (cider-abbreviate-ns namespace)
+                                             'fixed-case 'literal)))
 
   (defun my/cider-insert-sexp-at-point-in-repl (&optional arg)
     "Insert the s-expression at point into the CIDER REPL and switch to it.
