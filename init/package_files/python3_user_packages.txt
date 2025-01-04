@@ -33,7 +33,6 @@ rapidfuzz
 rebound-cli
 sexpdata
 six
-thefuck
 vim-vint
 virtualenvwrapper
 watchdog
