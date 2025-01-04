@@ -37,6 +37,7 @@ numix-circle-icon-theme-git
 optimus-manager
 p4v
 pack-cli-bin
+pay-respects-bin
 polybar-git
 roswell
 slack-desktop
