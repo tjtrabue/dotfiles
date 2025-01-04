@@ -42,6 +42,13 @@ configuration, which is where I keep most of my interesting =lispy= settings.
 
 #+begin_src emacs-lisp
   (use-package lispy
+    ;; 1/3/25 - Abo Abo has been absent from his GitHub account for over two years at this point.  A
+    ;; good Samaritan going by the moniker Enzuru has graciously decided to fork and take over Lispy
+    ;; for Abo Abo until he returns to his projects. Thus, for the time being, we should clone
+    ;; Enzuru's fork of Lispy, not Abo Abo's. We should remove this `:straight' directive once
+    ;; Abo Abo returns.
+    :straight
+    (lispy :type git :host github :repo "enzuru/lispy" :branch "master")
     :delight
     :hook
     ;; Load lispyj-mode for any LISP derived major mode.
