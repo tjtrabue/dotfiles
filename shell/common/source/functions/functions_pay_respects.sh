@@ -6,10 +6,10 @@ src_pay_respects_for_profile() {
   if [ -x "$(command -v pay-respects)" ]; then
     case "$(currentshell)" in
     "bash")
-      __src_pay_respects_bash
+      __src_pay_respects_for_shell "bash"
       ;;
     "zsh")
-      __src_pay_respects_zsh
+      __src_pay_respects_for_shell "zsh"
       ;;
     *)
       warn "Could not source pay-respects for shell: $1"
@@ -18,18 +18,18 @@ src_pay_respects_for_profile() {
   fi
 }
 
-__src_pay_respects_bash() {
+__src_pay_respects_for_shell() {
+  local userShell="${1}"
   local prAlias="f"
 
-  log_info "Initializing ${CYAN}pay-respects${NC} for Bash with alias: ${prAlias}"
-  eval "$(pay-respects bash --alias "${prAlias}")"
-}
+  if [ -z "${userShell}" ]; then
+    err "No shell name provided"
+    return 1
+  fi
 
-__src_pay_respects_zsh() {
-  local prAlias="f"
-
-  log_info "Initializing ${CYAN}pay-respects${NC} for Zsh with alias: ${prAlias}"
-  eval "$(pay-respects zsh --alias "${prAlias}")"
+  log_info "Initializing ${CYAN}pay-respects${NC} for" \
+    "${MAGENTA}${userShell}${NC} with alias: ${GREEN}${prAlias}${NC}"
+  eval "$(pay-respects "${userShell}" --alias "${prAlias}")"
 }
 
 # vim:foldenable:foldmethod=indent:foldnestmax=1
