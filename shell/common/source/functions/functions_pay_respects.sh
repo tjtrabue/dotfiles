@@ -32,4 +32,13 @@ __src_pay_respects_for_shell() {
   eval "$(pay-respects "${userShell}" --alias "${prAlias}")"
 }
 
+# Install the pay-respects tool via its install script. In lieu of a system 
+# package, this is the best option for installing pay-respects.
+install_pay_respects() {
+  local payRespectsInstallerUrl="https://raw.githubusercontent.com/iffse/pay-respects/main/install.sh"
+
+  log_info "Installing pay-respects via installer script"
+  curl -sSfL "${payRespectsInstallerUrl}" | sh
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

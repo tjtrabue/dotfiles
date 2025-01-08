@@ -273,3 +273,4 @@ zathura-ps
 zip
 zlib1g-dev
 zoxide
+zstd
