@@ -75,7 +75,7 @@ abo-abo/lispy]] for more details.
      . lispy-mode)
     :custom
     ;; Make lispy compatible with the following Lisp minor modes.
-    (lispy-compat '(edebug cider))
+    (lispy-compat '(cider magit-blame-mode))
     :init
     ;; Whether to consider all open parens in the window, rather than just the
     ;; open parens in the current defun.

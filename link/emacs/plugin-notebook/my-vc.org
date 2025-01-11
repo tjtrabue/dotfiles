@@ -52,11 +52,13 @@ porcelain exists in Magit.
       ;; "q" 'my/magit-kill-buffers
       )
     (my/evil-leader-def
+      "gb" 'magit-blame
       "gD" 'magit-diff-dwim
       "gP" 'magit-push
       "gR" 'magit-reset
       "gc" 'magit-commit
       "gd" 'magit-dispatch
+      "gf" 'magit-file-dispatch
       "gg" 'magit-status
       "gm" 'magit-merge
       "gp" 'magit-pull
