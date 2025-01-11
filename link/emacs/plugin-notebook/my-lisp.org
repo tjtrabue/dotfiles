@@ -40,6 +40,14 @@ manner. There is also the fantastic =lispyville= plugin for integrating
 =lispy= with =evil-mode=. See the =my-evil.org= file for =lispyville='s
 configuration, which is where I keep most of my interesting =lispy= settings.
 
+** IMPORTANT: Currently using enzuru/lispy GitHub fork
+abo-abo, the author of Lispy, has been MIA for two years at the time of this
+writing. In his absence, GitHub user enzuru has [[https://github.com/enzuru/lispy][forked abo-abo's repo]] and is
+maintaining it for the foreseeable future. Please check both GitHub repositories
+for updates as to the status of the Lispy project. Also see [[https://github.com/abo-abo/lispy/issues/684][GitHub issue #684 in
+abo-abo/lispy]] for more details.
+
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package lispy
     ;; 1/3/25 - Abo Abo has been absent from his GitHub account for over two years at this point.  A
