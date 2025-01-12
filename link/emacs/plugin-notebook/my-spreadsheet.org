@@ -44,24 +44,34 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
       "Move column at point OFFSET (defaults to 1) indices to the right."
       (interactive "p")
       (let* ((offset (or offset 1))
+             (num-fields (1+ (count-matches "," (point-at-bol) (point-at-eol))))
              (index (csv--field-index))
              (new-index (+ index offset)))
+        (when (> new-index num-fields)
+          (setq new-index offset))
         (csv-kill-fields (list index) (point-min) (point-max))
         (csv-yank-fields new-index (point-min) (point-max))
-        (csv-beginning-of-field)
-        (csv-forward-field (1+ offset))
+        (if (<= (+ index offset) num-fields)
+            (csv-forward-field (1+ offset))
+          (csv-backward-field num-fields))
         (csv-beginning-of-field)))
 
     (defun my/csv-move-column-left (offset)
       "Move column at point OFFSET (defaults to 1) indices to the left."
       (interactive "p")
       (let* ((offset (or offset 1))
+             (num-fields (1+ (count-matches "," (point-at-bol) (point-at-eol))))
              (index (csv--field-index))
              (new-index (- index offset)))
+        (when (<= new-index 0)
+          (setq new-index (1- new-index)))
         (csv-kill-fields (list index) (point-min) (point-max))
         (csv-yank-fields new-index (point-min) (point-max))
         (csv-beginning-of-field)
-        (csv-backward-field offset)))
+        (if (> (- index offset) 0)
+            (csv-backward-field offset)
+          (csv-forward-field num-fields)
+          (csv-beginning-of-field))))
     :custom
     ;; All valid separator chars.
     ;; I include the pipe character "|" since .psv files are pipe-separated.
