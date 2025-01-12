@@ -1,0 +1,45 @@
+#+TITLE:   Spreadsheet Capabilities for Emacs
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2025-01-11
+#+TAGS:    csv tsv
+#+STARTUP: fold
+
+Emacs has extensive support for editing, displaying, and exporting spreadsheets.
+
+* csv-mode
+Major mode for editing CSV (Comma Separated Values) files.
+
+#+begin_src emacs-lisp
+  (use-package csv-mode
+    :preface
+    (require 'color)
+    (defun my/csv-highlight (&optional separator)
+      "Set a different color for each CSV column.
+
+  An optional SEPARATOR char may be provided, if the file's separator is
+  not a comma. The separator character may also be provided interactively,
+  if called with a prefix argument.
+
+  Taken from: https://www.emacswiki.org/emacs/CsvMode"
+      (interactive (list (when current-prefix-arg (read-char "Separator: "))))
+      (font-lock-mode 1)
+      (let* ((separator (or separator ?\,))
+             (n (count-matches (string separator) (pos-bol) (pos-eol)))
+             (colors (cl-loop for i from 0 to 1.0 by (/ 2.0 n)
+                              collect (apply #'color-rgb-to-hex
+                                             (color-hsl-to-rgb i 0.3 0.5)))))
+        (cl-loop for i from 2 to n by 2
+                 for c in colors
+                 for r = (format "^\\([^%c\n]+%c\\)\\{%d\\}" separator separator i)
+                 do (font-lock-add-keywords nil `((,r (1 '(face (:foreground ,c)))))))))
+    :init
+    (add-hook 'csv-mode-hook (lambda ()
+                               ;; Align columns on the fly.
+                               (csv-align-mode 1)
+                               ;; Do not fold long lines in CSV files, as that would be confusing to
+                               ;; read.
+                               (toggle-truncate-lines nil)
+                               ;; Set different colors for each column.
+                               (my/csv-highlight))))
+#+end_src
