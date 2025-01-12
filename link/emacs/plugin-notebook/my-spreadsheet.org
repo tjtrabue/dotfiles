@@ -8,16 +8,18 @@
 Emacs has extensive support for editing, displaying, and exporting spreadsheets.
 
 * csv-mode
-Major mode for editing CSV (Comma Separated Values) files.
+Major mode for editing CSV (Comma Separated Values) files. Although files with
+rows of comma-separated values with the =.csv= extension are most common, this
+major mode works just as well with tab-separated value files (=.tsv= files) and
+pipe-separated value files (=.psv= files). I highly recommend you activate both
+=csv-mode= and the =csv-align-mode= minor mode automatically when editing CSV
+files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
 
 #+begin_src emacs-lisp
   (use-package csv-mode
-    :custom
-    ;; All valid separator chars.
-    ;; I include the pipe character "|" since .psv files are pipe-separated.
-    (csv-separators '("," "	" "|"))
     :preface
     (require 'color)
+
     (defun my/csv-highlight (&optional separator)
       "Set a different color for each CSV column.
 
@@ -37,6 +39,37 @@ Major mode for editing CSV (Comma Separated Values) files.
                  for c in colors
                  for r = (format "^\\([^%c\n]+%c\\)\\{%d\\}" separator separator i)
                  do (font-lock-add-keywords nil `((,r (1 '(face (:foreground ,c)))))))))
+
+    (defun my/csv-move-column-right (offset)
+      "Move column at point OFFSET (defaults to 1) indices to the right."
+      (interactive "p")
+      (let* ((offset (or offset 1))
+             (index (csv--field-index))
+             (new-index (+ index offset)))
+        (csv-kill-fields (list index) (point-min) (point-max))
+        (csv-yank-fields new-index (point-min) (point-max))
+        (csv-beginning-of-field)
+        (csv-forward-field (1+ offset))
+        (csv-beginning-of-field)))
+
+    (defun my/csv-move-column-left (offset)
+      "Move column at point OFFSET (defaults to 1) indices to the left."
+      (interactive "p")
+      (let* ((offset (or offset 1))
+             (index (csv--field-index))
+             (new-index (- index offset)))
+        (csv-kill-fields (list index) (point-min) (point-max))
+        (csv-yank-fields new-index (point-min) (point-max))
+        (csv-beginning-of-field)
+        (csv-backward-field offset)))
+    :custom
+    ;; All valid separator chars.
+    ;; I include the pipe character "|" since .psv files are pipe-separated.
+    (csv-separators '("," "	" "|"))
+    :general
+    (general-def csv-mode-map
+      "M-h" 'my/csv-move-column-left
+      "M-l" 'my/csv-move-column-right)
     :init
     ;; Open *.csv, *.psv, and *.tsv file buffers in `csv-mode'.
     ;; CSV - Comma-Separated Values
