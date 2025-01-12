@@ -224,6 +224,9 @@ navigate slides.
 
 #+begin_src emacs-lisp
   (use-package org-tree-slide
+    ;; Re-enable when the need for org-tree-slide arises.
+    ;; Otherwise, this just slows down Emacs' startup time.
+    :disabled
     :general
     (general-def org-tree-slide-mode-map
       "C->" 'org-tree-slide-move-next-tree
@@ -284,10 +287,10 @@ Org mode.
 
 #+begin_src emacs-lisp
   (use-package ox-gfm
-    :after org
-    :demand t
-    :config
-    (require 'ox-gfm nil t))
+    :hook
+    (org-load . (lambda ()
+                  ;; Support GitHub Flavored Markdown in Org's export feature.
+                  (require 'ox-gfm nil t))))
 #+end_src
 
 * org-ql
@@ -304,6 +307,9 @@ game-changer.
 
 #+begin_src emacs-lisp
   (use-package org-ql
+    ;; I do not currently use this plugin.
+    ;; Enable if desired.
+    :disabled
     :after org)
 #+end_src
 
@@ -343,5 +349,9 @@ processing HTML into Org syntax, and much more. A very powerful package!
 *NOTE:* This package depends on the Pandoc executable for many of its features.
 
 #+begin_src emacs-lisp
-  (use-package org-web-tools)
+  (use-package org-web-tools
+    ;; This package is helpful if you want to download entire web pages as Org mode files, a
+    ;; specialized use case for which I rarely have need.
+    ;; Enable if desired.
+    :disabled)
 #+end_src

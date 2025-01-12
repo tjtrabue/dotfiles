@@ -236,14 +236,23 @@ Verb requires at least Emacs version 25 to work.
 Provides a live development environment for JavaScript, CSS, and HTML from
 within Emacs.
 
+*NOTE (1/11/25):* The authors of =skewer-mode= have not maintained the project for
+over six years. I do not believe it has any future in Emacs. =impatient-mode= is a
+decent alternative for simple cases where all you need to do is develop static
+HTML. If you require a modern JS development setup with React, etc., opt for an
+LSP client and all the Node.js plugins you require for your project.
+
 #+begin_src emacs-lisp
   (use-package skewer-mode
+    ;; See note regarding the state of `skewer-mode' above.
+    :disabled
     :config
     (skewer-setup))
 #+end_src
 
 * simple-httpd
-A small HTTP server abstraction for Emacs.
+A small HTTP server abstraction for Emacs. Other plugins, such as
+=impatient-mode=, require =simple-httpd= to function.
 
 #+begin_src emacs-lisp
   (use-package simple-httpd

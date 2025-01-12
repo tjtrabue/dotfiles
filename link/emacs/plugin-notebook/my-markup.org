@@ -8,7 +8,7 @@ Plugins for various markup/serialization languages, such as HTML.
 
 * GNU Hyperbole
 Hyperbole is an interactive minor mode for viewing and managing any sort of
-hypertext in Emacs. It has been called Markdown for hypertext. If you activate
+hypertext in Emacs. It has been called "Markdown for hypertext." If you activate
 =hyperbole= in a buffer containing hypertext, Texinfo, email addresses, URLs,
 Emacs key sequences, Org mode links, Markdown links, or any of a dozen other
 hypertext patterns, Hyperbole will render them as interactable objects.
@@ -24,5 +24,8 @@ Org Mode in tandem.
 ** =use-package= specification
 
 #+begin_src emacs-lisp
-  (use-package hyperbole)
+  (use-package hyperbole
+    ;; Although it is interesting, I do not currently use Hyperbole.
+    ;; May re-enable later.
+    :disabled)
 #+end_src

@@ -91,7 +91,7 @@ server and your local development machine:
 #+end_src
 
 * Plugins
-** tramp-container
+** docker-tramp
 This is a built-in Emacs package that offers the TRAMP method =docker= for
 interacting with running Docker containers.
 
@@ -103,11 +103,9 @@ For example, if you want to access a Docker container as the root user:
 =/sudo:root@localhost|docker:user@container:/path/to/file=
 
 #+begin_src emacs-lisp
-  (use-package tramp-container
-    ;; This feature is built-in to Emacs 29.
-    :if (>= emacs-major-version 29)
-    :ensure nil
-    :straight nil)
+  (use-package docker-tramp
+    ;; This feature is built into Emacs 29+ as `tramp-container'.
+    :unless (>= emacs-major-version 29))
 #+end_src
 
 ** vagrant-tramp
@@ -117,5 +115,8 @@ command. The =vagrant-tramp= method simply provides auto-completion and a
 wrapper around =vagrant ssh= for connecting to boxes.
 
 #+begin_src emacs-lisp
-  (use-package vagrant-tramp)
+  (use-package vagrant-tramp
+    ;; I have no use for this plugin at this time.
+    ;; Enable if desired.
+    :disabled)
 #+end_src
