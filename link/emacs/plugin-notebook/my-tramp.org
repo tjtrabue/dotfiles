@@ -103,9 +103,11 @@ For example, if you want to access a Docker container as the root user:
 =/sudo:root@localhost|docker:user@container:/path/to/file=
 
 #+begin_src emacs-lisp
-  (use-package docker-tramp
-    ;; This feature is built into Emacs 29+ as `tramp-container'.
-    :unless (>= emacs-major-version 29))
+  (when (< emacs-major-version 29)
+    ;; For some reason, the :if keyword does not appear to work in use-package.
+    (use-package docker-tramp
+      ;; This feature is built into Emacs 29+ as `tramp-container'.
+      :if (< emacs-major-version 29)))
 #+end_src
 
 ** vagrant-tramp
