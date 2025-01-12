@@ -67,9 +67,8 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
           (setq new-index (1- new-index)))
         (csv-kill-fields (list index) (point-min) (point-max))
         (csv-yank-fields new-index (point-min) (point-max))
-        (csv-beginning-of-field)
         (if (> (- index offset) 0)
-            (csv-backward-field offset)
+            (csv-backward-field (1+ offset))
           (csv-forward-field num-fields)
           (csv-beginning-of-field))))
     :custom
