@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: tjtrabue <tom.trabue@gmail.com>
+# name: lesson_plan
+# key: lesson_plan_
+# --
+#+TITLE:    Lesson: $1
+#+SUBTITLE: Class: $2
+#+AUTHOR:   Thomas Trabue
+#+EMAIL:    tom.trabue@gmail.com
+#+DATE:     `(shell-command-to-string "date +%Y-%m-%d | tr -d '\n'")`
+#+TAGS:
+
+* Objectives
+$0
+
+* Material
+
+* Exercises
+1.
