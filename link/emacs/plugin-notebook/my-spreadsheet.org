@@ -87,7 +87,7 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
     (general-def '(normal visual operator) csv-mode-map
       "W" (evil-define-motion evil-csv-forward-field-begin (count)
             "Move the cursor to the beginning of the COUNT-th next CSV column."
-            :type inclusive
+            :type exclusive
             (let ((count (or count 1)))
               (csv-forward-field count)
               (forward-char 1)))
@@ -102,7 +102,7 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
               (backward-char 1)))
       "B" (evil-define-motion evil-csv-backward-field-begin (count)
             "Move the cursor to the beginning of the COUNT-th previous CSV column."
-            :type inclusive
+            :type exclusive
             (let ((count (or count 1)))
               (csv-backward-field count)))
       "gE" (evil-define-motion evil-csv-backward-field-end (count)
