@@ -17,6 +17,7 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
 
 #+begin_src emacs-lisp
   (use-package csv-mode
+    :after evil-collection
     :preface
     (require 'color)
 
@@ -40,6 +41,11 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
                  for r = (format "^\\([^%c\n]+%c\\)\\{%d\\}" separator separator i)
                  do (font-lock-add-keywords nil `((,r (1 '(face (:foreground ,c)))))))))
 
+    (defun my/csv--move-column-at-index-to-index (old new)
+      "Move CSV field at OLD index to NEW index."
+      (csv-kill-fields (list old) (point-min) (point-max))
+      (csv-yank-fields new (point-min) (point-max)))
+
     (defun my/csv-move-column-right (offset)
       "Move column at point OFFSET (defaults to 1) indices to the right."
       (interactive "p")
@@ -49,8 +55,7 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
              (new-index (+ index offset)))
         (when (> new-index num-fields)
           (setq new-index offset))
-        (csv-kill-fields (list index) (point-min) (point-max))
-        (csv-yank-fields new-index (point-min) (point-max))
+        (my/csv--move-column-at-index-to-index index new-index)
         (if (<= (+ index offset) num-fields)
             (csv-forward-field (1+ offset))
           (csv-backward-field num-fields))
@@ -65,8 +70,7 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
              (new-index (- index offset)))
         (when (<= new-index 0)
           (setq new-index (1- new-index)))
-        (csv-kill-fields (list index) (point-min) (point-max))
-        (csv-yank-fields new-index (point-min) (point-max))
+        (my/csv--move-column-at-index-to-index index new-index)
         (if (> (- index offset) 0)
             (csv-backward-field (1+ offset))
           (csv-forward-field num-fields)
@@ -79,8 +83,8 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
     (general-def csv-mode-map
       "M-h" 'my/csv-move-column-left
       "M-l" 'my/csv-move-column-right)
-    (general-def 'normal csv-mode-map
-      ;; Navigate CSV columns with W/B/E/gE Evil keys.
+    ;; Navigate CSV columns with W/B/E/gE Evil keys.
+    (general-def '(normal visual operator) csv-mode-map
       "W" (evil-define-motion evil-csv-forward-field-begin (count)
             "Move the cursor to the beginning of the COUNT-th next CSV column."
             :type inclusive
@@ -111,9 +115,9 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
                  (backward-char 1)))))
     :init
     ;; Open *.csv, *.psv, and *.tsv file buffers in `csv-mode'.
-    ;; CSV - Comma-Separated Values
-    ;; PSV - Pipe-Separated Values
-    ;; TSV - Tab-Separated Values
+    ;;   CSV - Comma-Separated Values
+    ;;   PSV - Pipe-Separated Values
+    ;;   TSV - Tab-Separated Values
     (dolist (e '(("\\.[Pp][Ss][Vv]\\'" . csv-mode)
                  ("\\.[Tt][Ss][Vv]\\'" . csv-mode)))
       (add-to-list 'auto-mode-alist e))
