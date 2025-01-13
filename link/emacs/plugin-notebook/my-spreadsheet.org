@@ -79,6 +79,36 @@ files. =csv-align-mode= automatically keeps the CSV buffer's columns aligned.
     (general-def csv-mode-map
       "M-h" 'my/csv-move-column-left
       "M-l" 'my/csv-move-column-right)
+    (general-def 'normal csv-mode-map
+      ;; Navigate CSV columns with W/B/E/gE Evil keys.
+      "W" (evil-define-motion evil-csv-forward-field-begin (count)
+            "Move the cursor to the beginning of the COUNT-th next CSV column."
+            :type inclusive
+            (let ((count (or count 1)))
+              (csv-forward-field count)
+              (forward-char 1)))
+      "E" (evil-define-motion evil-csv-forward-field-end (count)
+            "Move the cursor to the end of the COUNT-th next CSV column."
+            :type inclusive
+            (let ((count (or count 1)))
+              (when (looking-at ".,")
+                ;; Move point forward one char if next char is a comma.
+                (forward-char 1))
+              (csv-forward-field count)
+              (backward-char 1)))
+      "B" (evil-define-motion evil-csv-backward-field-begin (count)
+            "Move the cursor to the beginning of the COUNT-th previous CSV column."
+            :type inclusive
+            (let ((count (or count 1)))
+              (csv-backward-field count)))
+      "gE" (evil-define-motion evil-csv-backward-field-end (count)
+             "Move the cursor to the end of the COUNT-th previous CSV column."
+             :type inclusive
+             (let ((count (or count 1)))
+               (csv-backward-field (1+ count))
+               (csv-end-of-field)
+               (when (looking-at ",")
+                 (backward-char 1)))))
     :init
     ;; Open *.csv, *.psv, and *.tsv file buffers in `csv-mode'.
     ;; CSV - Comma-Separated Values
