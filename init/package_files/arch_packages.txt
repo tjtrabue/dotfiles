@@ -163,6 +163,7 @@ openjdk8-doc
 openmp
 openssh
 openssl
+openvpn
 pacman-contrib
 papirus-icon-theme
 parallel
