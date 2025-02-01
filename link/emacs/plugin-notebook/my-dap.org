@@ -11,6 +11,9 @@ fact, many modern LSP servers also provide a DAP server.
 * =use-package= specification
 #+begin_src emacs-lisp
   (use-package dap-mode
+    ;; Not currently using `lsp-mode', a dependency for `dap-mode', so leaving this
+    ;; disabled until `lsp-mode' is once again desired.
+    :disabled
     :after lsp-bridge
     ;; :after (lsp-mode lsp-treemacs)
     :hook

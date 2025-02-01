@@ -192,6 +192,8 @@ The Evil mode plugin itself.
       "gR" 'xref-find-references
       ;; Shortcut for ":w<RET>"
       "ZC" 'save-buffer
+      ;; Save all open file buffers.
+      "ZA" 'evil-write-all
       ;; Shortcut for ":wq<RET>"
       "ZX" 'evil-save-and-close)
     ;; This form unbinds keys in given evil states and/or keymaps.
