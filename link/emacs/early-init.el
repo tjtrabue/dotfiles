@@ -103,6 +103,7 @@
     (add-to-list 'package-archives '("org"       . "https://orgmode.org/elpa/") t)
     (add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
     (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+    (add-to-list 'package-archives '("jcs-elpa"  . "https://jcs-emacs.github.io/jcs-elpa/packages/") t)
     (package-initialize))
 ;;; OTHERWISE...
   ;; Do not auto-initialize packages! This can slow down Emacs's startup time.

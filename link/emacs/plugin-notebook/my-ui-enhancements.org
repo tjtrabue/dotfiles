@@ -42,8 +42,8 @@ but none come /a la carte/ like =sideline=.
     ;; An alternative to `sideline-force-display-if-exceeds'.
     ;; Force `sideline' to display all messages but truncate them if they are too long to fit on the screen.
     (sideline-truncate t)
-    ;; Sideline Backends
-    (sideline-backends-right '(sideline-flycheck))
+    ;; Sideline Backends (added one-by-one in each backend's configuration)
+    (sideline-backends-right '())
     ;; LSP clients tend to use the left side.
     ;; (sideline-backends-left '(sideline-lsp))
     )
@@ -55,5 +55,24 @@ Integrates =sideline= with Flycheck.
 
 #+begin_src emacs-lisp
   (use-package sideline-flycheck
-    :hook (flycheck-mode . sideline-flycheck-setup))
+    :after sideline
+    :hook (flycheck-mode . sideline-flycheck-setup)
+    :init
+    ;; Do not show Flycheck errors/diagnostics in the minibuffer since we want to hand over the
+    ;; display responsibilities to `sideline'.
+    (setq flycheck-display-errors-function nil)
+    (add-to-list 'sideline-backends-right 'sideline-flycheck))
+#+end_src
+
+*** sideline-eros
+Display EROS results with =sideline=.
+
+#+begin_src emacs-lisp
+  (use-package sideline-eros
+    :after sideline
+    :straight
+    (:type git :host github :repo "emacs-sideline/sideline-eros" :branch "master")
+    :hook (sideline-mode . sideline-eros-setup)
+    :init
+    (add-to-list 'sideline-backends-right 'sideline-eros))
 #+end_src
