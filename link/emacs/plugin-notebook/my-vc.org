@@ -285,6 +285,39 @@ maintained.
     (diff-hl-show-hunk-mouse-mode 1))
 #+end_src
 
+* blamer
+a git blame plugin inspired by VS Code's GitLens plugin.
+
+#+begin_src emacs-lisp
+  (use-package blamer
+    ;; 2/22/25: Currently broken with a `wrong argument type stringp nil' error.
+    :disabled
+    :demand t
+    :general
+    (my/evil-leader-def 'global
+      "gi" 'blamer-show-commit-info
+      "gI" 'blamer-show-posframe-commit-info)
+    :custom
+    (blamer-idle-time 0.5)
+    (blamer-min-offset 70)
+    (blamer-enable-async-execution-p nil)
+    ;; How blamer displays messages.
+    (blamer-type 'overlay-popup)
+    ;; Where blamer will position the overlay popup.
+    ;; Can be one of:
+    ;;   'bottom
+    ;;   'top
+    ;;   'smart - will choose the better position, usually the center
+    (blamer--overlay-popup-position 'smart)
+    :custom-face
+    (blamer-face ((t :foreground "#7a88cf"
+                     :background nil
+                     :height 140
+                     :italic t)))
+    :config
+    (global-blamer-mode 1))
+#+end_src
+
 * git-timemachine
 Step through historic versions of git controlled file using Emacs.  All you must
 do is visit a git-controlled file and invoke =git-timemachine= or

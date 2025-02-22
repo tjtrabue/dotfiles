@@ -1,0 +1,59 @@
+#+TITLE:   Emacs UI Enhancements
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2025-02-22
+#+TAGS:    ui enhancements sideline lsp
+#+STARTUP: fold
+
+Emacs, while infinitely customizable, offers little in the way of its default
+UI. These plugins greatly enhance the user's editing experience by adding
+beautiful visual components.
+
+* sideline
+=sideline= provides a universal diagnostics UI for the left and right sides of the
+Emacs frame. Many other plugins present their own variants of this interface,
+but none come /a la carte/ like =sideline=.
+
+#+begin_src emacs-lisp
+  (use-package sideline
+    :hook
+    ((flycheck-mode lsp-bridge-mode) . sideline-mode)
+    :custom
+    ;; Whether to display a left-diagnostic on the current line.
+    (sideline-backends-left-skip-current-line nil)
+    ;; Whether to display a right-diagnostic on the current line.
+    (sideline-backends-right-skip-current-line nil)
+    ;; Either 'up or 'down
+    (sideline-order-left 'down)
+    ;; Either 'up or 'down
+    (sideline-order-right 'up)
+    ;; Format string for left-diagnostics.
+    (sideline-format-left "%s   ")
+    ;; Format string for right-diagnostics.
+    (sideline-format-right "   %s")
+    ;; The overlay's priority.
+    (sideline-priority 100)
+    ;; Whether to display the backend's name along with the diagnostic.
+    (sideline-display-backend-name t)
+    ;; An alternative to `sideline-truncate'.
+    ;; By default, sideline will not display a message if it is too long to display on the screen.
+    ;; This option forces sideline to display the message even if it will not fit.
+    ;; (sideline-force-display-if-exceeds t)
+    ;; An alternative to `sideline-force-display-if-exceeds'.
+    ;; Force `sideline' to display all messages but truncate them if they are too long to fit on the screen.
+    (sideline-truncate t)
+    ;; Sideline Backends
+    (sideline-backends-right '(sideline-flycheck))
+    ;; LSP clients tend to use the left side.
+    ;; (sideline-backends-left '(sideline-lsp))
+    )
+#+end_src
+
+** Plugins
+*** sideline-flycheck
+Integrates =sideline= with Flycheck.
+
+#+begin_src emacs-lisp
+  (use-package sideline-flycheck
+    :hook (flycheck-mode . sideline-flycheck-setup))
+#+end_src

@@ -181,6 +181,8 @@ Shows the error at point in a =pos-tip= graphical popup.
 
 #+begin_src emacs-lisp
   (use-package flycheck-pos-tip
+    ;; Currently using `sideline' to display Flycheck diagnostics.
+    :disabled
     :after flycheck
     :hook
     ((flycheck-mode . (lambda ()
