@@ -43,10 +43,8 @@ but none come /a la carte/ like =sideline=.
     ;; Force `sideline' to display all messages but truncate them if they are too long to fit on the screen.
     (sideline-truncate t)
     ;; Sideline Backends (added one-by-one in each backend's configuration)
-    (sideline-backends-right '())
-    ;; LSP clients tend to use the left side.
-    ;; (sideline-backends-left '(sideline-lsp))
-    )
+    (sideline-backends-right nil)
+    (sideline-backends-left nil))
 #+end_src
 
 ** Plugins
@@ -58,10 +56,16 @@ Integrates =sideline= with Flycheck.
     :after sideline
     :hook (flycheck-mode . sideline-flycheck-setup)
     :init
-    ;; Do not show Flycheck errors/diagnostics in the minibuffer since we want to hand over the
-    ;; display responsibilities to `sideline'.
-    (setq flycheck-display-errors-function nil)
-    (add-to-list 'sideline-backends-right 'sideline-flycheck))
+    (add-to-list 'sideline-backends-right 'sideline-flycheck)
+    (add-hook 'sideline-mode-hook
+              (lambda ()
+                (if (bound-and-true-p sideline-mode)
+                    ;; Do not show Flycheck errors/diagnostics in the echo area since we want to hand
+                    ;; over the display responsibilities to `sideline'.
+                    (setq flycheck-display-errors-function nil)
+                  ;; If we are leaving sideline-mode, return flycheck's error displaying function to
+                  ;; its original value.
+                  (setq flycheck-display-errors-function #'flycheck-display-error-messages)))))
 #+end_src
 
 *** sideline-eros
@@ -75,4 +79,17 @@ Display EROS results with =sideline=.
     :hook (sideline-mode . sideline-eros-setup)
     :init
     (add-to-list 'sideline-backends-right 'sideline-eros))
+#+end_src
+
+*** sideline-lsp
+Display =lsp-mode= diagnostics in =sideline=.
+
+#+begin_src emacs-lisp
+  (use-package sideline-lsp
+    ;; Not currently using `lsp-mode', and this plugin does not work with
+    ;; `lsp-bridge-mode'.
+    :disabled
+    :after sideline
+    :init
+    (add-to-list 'sideline-backends-left 'sideline-lsp))
 #+end_src
