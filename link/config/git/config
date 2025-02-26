@@ -27,7 +27,7 @@
   whitespace = fix
 
 [blame]
-  coloring = highlightRecent
+  coloring = none
   date = human
   markIgnoredLines = true
   markUnblamableLines = true

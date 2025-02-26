@@ -286,23 +286,23 @@ maintained.
 #+end_src
 
 * blamer
-a git blame plugin inspired by VS Code's GitLens plugin.
+A git blame plugin inspired by VS Code's GitLens plugin. =blamer= shows =git blame=
+previews for the current or selected lines after a brief idle period.
 
 #+begin_src emacs-lisp
   (use-package blamer
-    ;; 2/22/25: Currently broken with a `wrong argument type stringp nil' error.
-    :disabled
-    :demand t
     :general
     (my/evil-leader-def 'global
       "gi" 'blamer-show-commit-info
       "gI" 'blamer-show-posframe-commit-info)
     :custom
-    (blamer-idle-time 0.5)
-    (blamer-min-offset 70)
-    (blamer-enable-async-execution-p nil)
+    (blamer-idle-time 0.3)
+    (blamer-min-offset 60)
+    ;; Whether blamer runs blame jobs in separate threads.
+    ;; Setting this to `t' will improve blamer's performance.
+    (blamer-enable-async-execution-p t)
     ;; How blamer displays messages.
-    (blamer-type 'overlay-popup)
+    (blamer-type 'both)
     ;; Where blamer will position the overlay popup.
     ;; Can be one of:
     ;;   'bottom
@@ -310,12 +310,18 @@ a git blame plugin inspired by VS Code's GitLens plugin.
     ;;   'smart - will choose the better position, usually the center
     (blamer--overlay-popup-position 'smart)
     :custom-face
-    (blamer-face ((t :foreground "#7a88cf"
-                     :background nil
-                     :height 140
-                     :italic t)))
+    (blamer-face ((t
+                   :foreground "#79a8ff"
+                   :background "unspecified"
+                   :italic t)))
     :config
-    (global-blamer-mode 1))
+    ;; Make sure that git-blame outputs dates in a format that blamer can parse.
+    (setq blamer--git-blame-cmd '("blame" "--date=iso" "-L"))
+    ;; You can enable blamer globally this way, but I prefer to enable it
+    ;; as-needed by activating `blamer-mode' interactively since blamer can make
+    ;; Emacs a bit sluggish.
+    ;; (global-blamer-mode 1)
+    )
 #+end_src
 
 * git-timemachine
