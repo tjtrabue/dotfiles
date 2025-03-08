@@ -45,6 +45,7 @@ the code block with =C-c C-c= and checking out the results!
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package sage-shell-mode
+    :after org
     :custom
     ;; Only enable this option for IPython version <7
     (sage-shell:use-prompt-toolkit nil)
