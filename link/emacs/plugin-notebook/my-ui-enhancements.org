@@ -16,6 +16,7 @@ but none come /a la carte/ like =sideline=.
 
 #+begin_src emacs-lisp
   (use-package sideline
+    :delight (sideline-mode nil sideline)
     :hook
     ((flycheck-mode lsp-bridge-mode) . sideline-mode)
     :custom
