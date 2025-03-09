@@ -72,10 +72,6 @@
   "Print tab name for BUFFER with some leading space for readability."
   (concat " " (buffer-name buffer) " "))
 
-(defun my-tab-line-default-tabs-function ()
-  "Displays buffers in the `tab-line'."
-  (my-tab-line-filter-display-buffers (buffer-list)))
-
 (defun my-tab-line-filter-display-buffers (bufs)
   "Determine which buffers in BUFS will show up in `tab-line'.
 
@@ -98,9 +94,29 @@ See the documentation for `perspective.el' for further details."
                       (seq-some (lambda (regexp)
                                   (string-match-p regexp buf-name))
                         my-tab-line-allowed-regexps)))))
-    ;; Reverse the buffer list because otherwise newly added buffers end up on
-    ;; the left of the tab-line.
     (seq-reverse bufs)))
+
+(defun my-tab-line-tab-buffers ()
+  "Return a list of buffers that should be displayed in the tab line."
+  (my-tab-line-filter-display-buffers (buffer-list)))
+
+(defun my-tab-line-default-tabs-function ()
+  "Displays buffers in the `tab-line'."
+  (let* ((old-buffers (window-parameter nil 'tab-line-buffers))
+          (buffer-positions (let ((index-table (make-hash-table
+                                                 :size (length old-buffers)
+                                                 :test #'eq)))
+                              (seq-do-indexed
+                                (lambda (buf idx) (puthash buf idx index-table))
+                                old-buffers)
+                              index-table))
+          (new-buffers (sort (my-tab-line-tab-buffers)
+                         :in-place t
+                         :key (lambda (buffer)
+                                (gethash buffer buffer-positions
+                                  most-positive-fixnum)))))
+    (set-window-parameter nil 'tab-line-buffers new-buffers)
+    new-buffers))
 
 ;;;###autoload
 (define-minor-mode my-tab-line-mode

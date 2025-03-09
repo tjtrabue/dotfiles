@@ -34,7 +34,7 @@ seizes control of Emacs in some invasive ways.
      (my-tab-line-mode . (lambda ()
                            ;; When using the tab-line to list buffers in visual tabs, only list
                            ;; buffers visiting files in the current perspective.
-                           (setq my-tab-line-tabs-function #'my/persp-tab-line-tabs-files))))
+                           (setq my-tab-line-tabs-function #'my/persp-tab-line-tabs-function))))
     :preface
     (require 'perspective)
     (defun my/add-current-buffer-to-perspective ()
@@ -75,14 +75,29 @@ seizes control of Emacs in some invasive ways.
                   (lsp-deferred))))
             (persp-current-buffers)))
 
-    (defun my/persp-tab-line-tabs-files ()
-      "Return list of current perspective's file buffers to display in the tab line.
+    (defun my/persp-tab-line-tabs-function ()
+      "Set the tab line's buffer list to a filtered list of buffers in the current perspective.
+
+  Return the determined buffer list.
 
     See the documentation for `perspective.el' for further details."
-      (if (bound-and-true-p persp-mode)
-          (let ((current-persp-buffers (persp-get-buffers (persp-current-name))))
-            (my-tab-line-filter-display-buffers current-persp-buffers))
-        (buffer-list)))
+      (let* ((old-buffers (window-parameter nil 'tab-line-buffers))
+             (buffer-positions (let ((index-table (make-hash-table
+                                                   :size (length old-buffers)
+                                                   :test #'eq)))
+                                 (seq-do-indexed
+                                  (lambda (buf idx) (puthash buf idx index-table))
+                                  old-buffers)
+                                 index-table))
+             (new-buffers (sort (if (bound-and-true-p persp-mode)
+                                    (my-tab-line-filter-display-buffers (persp-get-buffers (persp-current-name)))
+                                  (my-tab-line-tab-buffers))
+                                :in-place t
+                                :key (lambda (buffer)
+                                       (gethash buffer buffer-positions
+                                                most-positive-fixnum)))))
+        (set-window-parameter nil 'tab-line-buffers new-buffers)
+        new-buffers))
     :general
     (my/user-leader-def persp-mode-map
       ;; This is general.el's way of accomplishing :bind-keymap.
@@ -136,7 +151,7 @@ seizes control of Emacs in some invasive ways.
     (when (bound-and-true-p my-tab-line-mode)
       ;; When using the my custom tab-line to list buffers in visual tabs, only list buffers visiting
       ;; files in the current perspective.
-      (setq my-tab-line-tabs-function #'my/persp-tab-line-tabs-files)))
+      (setq my-tab-line-tabs-function #'my/persp-tab-line-tabs-function)))
 #+end_src
 
 * Plugins
