@@ -86,3 +86,15 @@ in Emacs, making it more convenient to edit foreign files.
     :config
     (dtrt-indent-global-mode 1))
 #+end_src
+
+* pangu-spacing
+A minor mode that automatically adds a space between Japanese/Chinese and
+English characters.
+
+#+begin_src emacs-lisp
+  (use-package pangu-spacing
+    ;; Not currently editing any files with Japanese characters.
+    :disabled
+    :config
+    (global-pangu-spacing-mode 1))
+#+end_src
