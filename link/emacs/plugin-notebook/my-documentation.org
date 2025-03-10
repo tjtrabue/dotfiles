@@ -1,0 +1,35 @@
+#+TITLE:   Emacs Documentation Configuration/Plugins
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2025-03-09
+#+TAGS:    doc docs documentation
+#+STARTUP: fold
+
+Documentation is an everyday part of life for the diligent programmer, and any
+decent editor should support useful, configurable, and beautiful presentations
+for documentation.
+
+* eldoc-box
+Display ElDoc documentation in a child frame. The child frame is selectable and
+scrollable with the mouse, even though the cursor is hidden within the child
+frame.
+
+#+begin_src emacs-lisp
+  (use-package eldoc-box
+    ;; Only use this package for GUI Emacs.
+    :if (display-graphic-p)
+    :delight
+    (eldoc-box-hover-mode nil eldoc-box)
+    (eldoc-box-hover-at-point-mode nil eldoc-box)
+    :hook
+    ;; Minor-mode that displays ElDoc documentation in a child frame in a top corner of the
+    ;; frame.
+    (eldoc-mode . eldoc-box-hover-mode)
+    ;; An alternative to `eldoc-box-hover-mode' that displays the child frame at point instead of in a
+    ;; top corner. This minor mode is noticeably slower than its alternative.
+    ;; (eldoc-mode . eldoc-box-hover-at-point-mode)
+    :custom
+    ;; Whether to only display multi-line ElDoc messages in the child frame, in which case single-line
+    ;; messages will still appear in the echo area.
+    (eldoc-box-only-multi-line t))
+#+end_src
