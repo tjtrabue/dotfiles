@@ -5,14 +5,6 @@
 #+TAGS:    project projectile
 #+STARTUP: fold
 
-* project.el
-=project.el= is Emacs' built-in project management system. It has come a long
-way over the past few years, and now rivals =projectile= in terms of features.
-
-#+begin_src emacs-lisp
-  (use-package project)
-#+end_src
-
 * Projectile
 =projectile= is a project management plugin for Emacs that helps you perform
 important coding actions at the project level. Such actions include searching

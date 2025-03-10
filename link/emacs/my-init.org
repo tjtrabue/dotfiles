@@ -463,42 +463,101 @@ is ideal because =straight.el= handles file compilation and lazy-loading. I pray
 Emacs incorporates =straight.el= into the core project someday soon and I get to
 remove this wistful aside (and my custom bootstrap code for =straight.el=).
 
+** man
+Man pager library.
+
 #+begin_src emacs-lisp
-  ;; Man pager library
   (use-package man
     :ensure nil
-    :straight (man :type built-in)
+    :straight (:type built-in)
     :demand t)
-  ;; Newer dired library
+#+end_src
+
+** dired-x
+Newer dired library.
+
+#+begin_src emacs-lisp
   (use-package dired-x
     :ensure nil
-    :straight (dired-x :type built-in))
-  ;; String manipulation library
+    :straight (:type built-in))
+#+end_src
+
+** subr-x
+String manipulation library.
+
+#+begin_src emacs-lisp
   (use-package subr-x
     :ensure nil
-    :straight (subr-x :type built-in))
-  ;; Make C and C++ modes available; necessary for some third-party packages
+    :straight (:type built-in))
+#+end_src
+
+** cc-mode
+Make C and C++ modes available. Necessary for some third-party packages.
+
+#+begin_src emacs-lisp
   (use-package cc-mode
     :ensure nil
-    :straight (cc-mode :type built-in))
-  ;; "find function at point" library
+    :straight (:type built-in))
+#+end_src
+
+** ffap
+"find function at point" library.
+
+#+begin_src emacs-lisp
   (use-package ffap
     :ensure nil
-    :straight (ffap :type built-in))
-  ;; EasyPG, Emacs' front-end for GPG.
+    :straight (:type built-in))
+#+end_src
+
+** epa
+EasyPG, Emacs' front-end for GPG.
+
+#+begin_src emacs-lisp
   (use-package epa
     :ensure nil
-    :straight (epa :type built-in))
-  ;; Emacs Grep integration functions/configuration.
+    :straight (:type built-in))
+#+end_src
+
+** grep
+Emacs Grep integration functions/configuration.
+
+#+begin_src emacs-lisp
   (use-package grep
     :ensure nil
-    :straight (grep :type built-in)
+    :straight (:type built-in)
     :commands (grep-apply-setting))
-  ;; Emacs' built-in package library.
+#+end_src
+
+** package
+Emacs' built-in package library.
+
+#+begin_src emacs-lisp
   (use-package package
     :ensure nil
-    :straight (package :type built-in)
-    :commands (define-package))
+    :straight (:type built-in)
+    :commands (define-package)
+    :config
+    ;; Add extra package archives to the archives list.
+    ;; NOTE: HTTPS may be unsupported on Emacs versions < 27. You may need
+    ;;       to change the URLs to simple HTTP in order for them to function.
+    ;;       If you must do this, also uncomment the expression below.
+    ;;       That will reset the archives list and allow you to only use
+    ;;       unsecured connections for package transfer.
+    ;; (setq package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+    (dolist (archive-url-pair '(("org"      . "https://orgmode.org/elpa/")
+                                ("melpa"    . "https://melpa.org/packages/")
+                                ("melpa"    . "https://melpa.org/packages/")
+                                ("jcs-elpa" . "https://jcs-emacs.github.io/jcs-elpa/packages/")))
+      (add-to-list 'package-archives archive-url-pair)))
+#+end_src
+
+** project
+Emacs built-in software project utilities.
+
+#+begin_src emacs-lisp
+  (use-package project
+    :ensure nil
+    :straight (:type built-in))
 #+end_src
 
 * Load Custom Libraries
