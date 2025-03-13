@@ -40,7 +40,7 @@ install_packages_from_file_with_tool() {
 update_auxiliary_packages() {
   log_info "Updating auxiliary packages"
 
-  update_asdf_and_plugins
+  update_asdf
   update_node_packages
   update_perl_packages
   update_python_packages

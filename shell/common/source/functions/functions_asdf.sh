@@ -3,15 +3,14 @@
 # Functions for interacting with the asdf version manager.
 
 # Load the asdf version manager into the current shell session.
+# NOTE 3/12/25: Modern versions of ASDF should be installed as standalone
+# binaries, not through shell functions sourced into a profile.
 src_asdf_for_profile() {
-  local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"
-
-  if [ ! -d "${asdfDir}" ]; then
-    clone_asdf
+  if [ -x "$(command -v asdf)" ]; then
     add_asdf_plugins
+  else
+    warn 'asdf executable not found on $PATH'
   fi
-
-  __src_asdf
 }
 
 # Clone the asdf Git repository to ~/.asdf
@@ -49,13 +48,12 @@ add_asdf_plugins() {
 }
 
 # Wrapper function for updating all installed asdf plugins.
-update_asdf_and_plugins() {
+update_asdf() {
   if [ -n "$(command -v asdf)" ]; then
-    log_info "Updating ASDF and all plugins"
-    asdf update
+    log_info "Updating ASDF plugins"
     asdf plugin update --all
   else
-    warn "'asdf' function not sourced in this shell"
+    warn 'asdf executable not found on $PATH'
   fi
 }
 

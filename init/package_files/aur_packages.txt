@@ -5,6 +5,7 @@ android-sdk
 android-sdk-build-tools
 android-sdk-platform-tools
 android-studio
+asdf-vm-git
 brave-beta-bin
 clj-kondo
 clojure-git
