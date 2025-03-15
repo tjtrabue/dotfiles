@@ -116,7 +116,9 @@ is not available."
 (defgroup my-font '((my-font-default-preset custom-variable)
                      (my-font-fixed-pitch-preset custom-variable)
                      (my-font-variable-pitch-preset custom-variable))
-  "All customizable variables for `my-font'.")
+  "All customizable variables for `my-font'."
+  :group 'emacs
+  :prefix "my-font-")
 
 ;;;###autoload
 (defun my-font-set-default-font ()

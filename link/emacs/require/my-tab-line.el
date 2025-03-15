@@ -66,7 +66,9 @@
 ;;;###autoload
 (defgroup my-tab-line '((my-tab-line-allowed-regexps custom-variable)
                          (my-tab-line-allowed-major-modes custom-variable))
-  "My special `tab-line' variables.")
+  "My special `tab-line' variables."
+  :group 'emacs
+  :prefix "my-tab-line-")
 
 (defun my-tab-line-tab-name-function (buffer &optional _buffers)
   "Print tab name for BUFFER with some leading space for readability."
