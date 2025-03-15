@@ -7,6 +7,20 @@
 
 Any extra font configuration goes here.
 
+* fontaine
+=fontaine= is a hot-swappable font preset plugin by Protesilaos (AKA, Prot). It is
+a wonderful system that allows Emacs users to define named font presets, or
+profiles, and set them on demand. I have my own font configuration code that I
+maintain in the [[file:~/workspace/dotfiles/link/emacs/require/my-font.el][my-font.el]] file which accomplishes roughly the same goals as
+=fontaine=, so I do not tend to use this plugin. Still, it is a fantastic
+alternative.
+
+#+begin_src emacs-lisp
+  (use-package fontaine
+    ;; I use my own font configuration code to accomplish the same ends as Fontaine.
+    :disabled)
+#+end_src
+
 * unicode-fonts
 Emacs maintains font mappings on a per-glyph basis, meaning that multiple fonts
 are used at the same time (transparently) to display any character for which you

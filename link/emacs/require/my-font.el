@@ -30,91 +30,86 @@
 
 ;;; Code:
 
-(defun my-font-get-font-plist (font)
-  "Retrun the preferred configuration for symbol FONT."
-  (let ((font-family-list (font-family-list))
-         ;; Variable pitch fonts
-         ;; https://freedafonts.com/arkibal-font/
-         (arkibal-plist '(:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
-         ;; https://www.dafont.com/neogrey.font
-         (neogrey-plist '(:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
-         ;; https://freedesignresources.net/triakis-font-family-free-weight/
-         (triakis-plist '(:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
-         ;; https://www.fontshare.com/fonts/clash-display
-         (clash-display-plist '(:family "Clash Display Variable" :height 110 :weight semi-bold :width normal))
-         ;; https://fontshare.com/fonts/satoshi
-         (satoshi-plist '(:family "Satoshi Variable" :height 110 :weight medium :width normal))
-         ;; https://www.fontshare.com/fonts/switzer
-         (switzer-plist '(:family "Switzer Variable" :height 110 :weight regular :width normal))
-         ;; Default fonts
-         (cascadia-code-plist '(:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
-         (jetbrains-mono-plist '(:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
-         (fira-code-plist '(:family "FiraCode Nerd Font" :height 110 :weight semi-bold :width normal))
-         (noto-sans-plist '(:family "Noto Sans" :height 110 :weight semi-bold :width normal))
-         (dejavu-sans-plist '(:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
-    (pcase font
-      ('default
-        (cond
-          ((member (plist-get cascadia-code-plist :family) font-family-list)
-            cascadia-code-plist)
-          ((member (plist-get jetbrains-mono-plist :family) font-family-list)
-            jetbrains-mono-plist)
-          ((member (plist-get fira-code-plist :family) font-family-list)
-            fira-code-plist)
-          (t dejavu-sans-plist)))
-      ('variable-pitch
-        (cond
-          ((member (plist-get switzer-plist :family) font-family-list)
-            switzer-plist)
-          ((member (plist-get satoshi-plist :family) font-family-list)
-            satoshi-plist)
-          ((member (plist-get arkibal-plist :family) font-family-list)
-            arkibal-plist)
-          ((member (plist-get neogrey-plist :family) font-family-list)
-            neogrey-plist)
-          ((member (plist-get triakis-plist :family) font-family-list)
-            triakis-plist)
-          ((member (plist-get clash-display-plist :family) font-family-list)
-            clash-display-plist)
-          (t noto-sans-plist))))))
+(defvar my-font-default-preset 'cascadia-code
+  "The name of the preset used by default settings, or as a fallback.")
+
+(defvar my-font-fixed-pitch-preset 'cascadia-code
+  "The name of the preset used for mono-spaced or fixed pitch fonts.")
+
+(defvar my-font-variable-pitch-preset 'switzer
+  "The name of the preset used for variable pitch fonts.")
+
+(defvar my-font-preset-alist
+  '((arkibal (:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
+     ;;; Variable pitch fonts
+     ;; https://freedafonts.com/arkibal-font/
+     ;; https://www.dafont.com/neogrey.font
+     (neogrey (:family "Neogrey Medium" :height 1.0 :weight semi-bold :width normal))
+     ;; https://freedesignresources.net/triakis-font-family-free-weight/
+     (triakis (:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
+     ;; https://www.fontshare.com/fonts/clash-display
+     (clash-display (:family "Clash Display Variable" :height 110 :weight semi-bold :width normal))
+     ;; https://fontshare.com/fonts/satoshi
+     (satoshi (:family "Satoshi Variable" :height 110 :weight medium :width normal))
+     ;; https://www.fontshare.com/fonts/switzer
+     (switzer (:family "Switzer Variable" :height 110 :weight regular :width normal))
+     ;; Basic Google sans-serif font usually installed through package manager.
+     (noto-sans (:family "Noto Sans" :height 110 :weight semi-bold :width normal))
+     ;;; Fixed pitch fonts
+     (cascadia-code (:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+     (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
+     (fira-code (:family "FiraCode Nerd Font" :height 110 :weight semi-bold :width normal))
+     (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal))
+     (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
+  "Alist containing all named font preset configurations.")
 
 ;; Set fallback font for glyphs and emojis not found in default font.
-(when (member "Noto Color Emoji" (font-family-list))
-  (set-fontset-font t nil "Noto Color Emoji" nil 'append))
-(when (member "Symbols Nerd Font" (font-family-list))
-  (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font t nil "Symbola" nil 'append))
-(when (member "Quivira" (font-family-list))
-  (set-fontset-font t nil "Quivira" nil 'append))
+(let ((font-families (font-family-list)))
+  (when (member "Noto Color Emoji" font-families)
+    (set-fontset-font t nil "Noto Color Emoji" nil 'append))
+  (when (member "Symbols Nerd Font" font-families)
+    (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
+  (when (member "Symbola" font-families)
+    (set-fontset-font t nil "Symbola" nil 'append))
+  (when (member "Quivira" font-families)
+    (set-fontset-font t nil "Quivira" nil 'append)))
+
+(defun my-font-get-preset-plist (preset fallback)
+  "Return the plist associated with PRESET if available, or FALLBACK otherwise."
+  (let ((font-families (font-family-list))
+         (preset-plist (car (alist-get preset my-font-preset-alist)))
+         (fallback-plist (car (alist-get fallback my-font-preset-alist))))
+    (if (member (plist-get preset-plist :family) font-families)
+      preset-plist
+      fallback-plist)))
+
+(defun my-font-set-font-face-for-preset (face preset fallback)
+  "Set the FACE to the settings in a PRESET.
+FACE is one of \='default, \='fixed-pitch, or \='variable-pitch.
+
+PRESET is a symbol corresponding to the name of one of the preset plists
+in `my-font-preset-alist', such as \='noto-sans-mono.
+
+FALLBACK is another preset symbol to use if the font specified in PRESET
+is not available."
+  (let* ((actual-plist (my-font-get-preset-plist preset fallback)))
+    (set-face-attribute
+      face nil
+      ;; The name of the font.
+      :family (plist-get actual-plist :family)
+      ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
+      :height (plist-get actual-plist :height)
+      ;; Style.
+      :weight (plist-get actual-plist :weight)
+      ;; A symbol
+      :width  (plist-get actual-plist :width))))
 
 ;;;###autoload
 (defun my-font-set-default-font ()
-  "Set the default font for all of Emacs."
-  (let ((default-font-plist (my-font-get-font-plist 'default))
-         (variable-pitch-font-plist (my-font-get-font-plist 'variable-pitch)))
-    (set-face-attribute
-      'default nil
-      ;; The name of the font.
-      :family (plist-get default-font-plist :family)
-      ;; Unit is 1/10 pt size (i.e., height 110 = 11 pt font).
-      :height (plist-get default-font-plist :height)
-      ;; Style.
-      :weight (plist-get default-font-plist :weight)
-      ;; A symbol
-      :width  (plist-get default-font-plist :width))
-    (set-face-attribute
-      'fixed-pitch nil
-      :family (plist-get default-font-plist :family)
-      :height (plist-get default-font-plist :height)
-      :weight (plist-get default-font-plist :weight)
-      :width  (plist-get default-font-plist :width))
-    (set-face-attribute
-      'variable-pitch nil
-      :family (plist-get variable-pitch-font-plist :family)
-      :height (plist-get variable-pitch-font-plist :height)
-      :weight (plist-get variable-pitch-font-plist :weight)
-      :width  (plist-get variable-pitch-font-plist :width))))
+  "Set default fonts (fixed pitch and variable pitch) for all Emacs frames."
+  (my-font-set-font-face-for-preset 'default my-font-default-preset 'noto-sans-mono)
+  (my-font-set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)
+  (my-font-set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (frame)
