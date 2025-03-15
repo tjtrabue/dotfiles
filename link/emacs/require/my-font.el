@@ -87,7 +87,10 @@ is not available."
 
 ;;;###autoload
 (defcustom my-font-default-preset 'cascadia-code
-  "The name of the preset used by default settings, or as a fallback."
+  "The name of the preset used for default font settings.
+
+This variable's value should be a symbol corresponding to one of the
+plist names in `my-font-preset-alist'."
   :type '(symbol)
   :group 'my-font
   :set (lambda (symbol value)
@@ -96,7 +99,10 @@ is not available."
 
 ;;;###autoload
 (defcustom my-font-fixed-pitch-preset 'cascadia-code
-  "The name of the preset used for mono-spaced or fixed pitch fonts."
+  "The name of the preset used for monospaced or fixed pitch fonts.
+
+This variable's value should be a symbol corresponding to one of the
+plist names in `my-font-preset-alist'."
   :type '(symbol)
   :group 'my-font
   :set (lambda (symbol value)
@@ -105,7 +111,10 @@ is not available."
 
 ;;;###autoload
 (defcustom my-font-variable-pitch-preset 'switzer
-  "The name of the preset used for variable pitch fonts."
+  "The name of the preset used for variable pitch fonts (i.e., GUI fonts).
+
+This variable's value should be a symbol corresponding to one of the
+plist names in `my-font-preset-alist'."
   :type '(symbol)
   :group 'my-font
   :set (lambda (symbol value)
