@@ -4,8 +4,8 @@
 #+DATE:    2020-05-25
 #+STARTUP: fold
 
-Integration for the awesome Clojure programming language.  Thanks, Rich! The
-world needed another Lisp.
+Integration for the awesome Clojure programming language. Thanks, Rich. The
+world needed a better Lisp.
 
 * clojure-mode
 Major mode for editing Clojure files.
@@ -429,13 +429,13 @@ Customizations are made via [[https://www.emacswiki.org/emacs/EvalSexpFu][eval-s
 Cider Storm is an Emacs Cider front-end for the [[https://github.com/flow-storm/flow-storm-debugger?tab=readme-ov-file][Flow Storm debugger]] with support
 for Clojure and ClojureScript.
 
-It brings the time-travel code stepping capabilities of FlowStorm to Emacs,
+It brings the time-travel code stepping capabilities of Flow Storm to Emacs,
 providing an interface similar to the Cider debugger one.
 
-It also contains a bunch of utilities functions for interacting with FlowStorm.
+It also contains a bunch of utilities functions for interacting with Flow Storm.
 
-Cider Storm isn't trying to re-implement the entire FlowStorm UI, but the most
-used functionality. You can always start the full FlowStorm UI if you need the
+Cider Storm isn't trying to re-implement the entire Flow Storm UI, but the most
+used functionality. You can always start the full Flow Storm UI if you need the
 extra tools.
 
 #+begin_src emacs-lisp
@@ -447,7 +447,7 @@ extra tools.
     :init
     ;; Add flow-storm's middleware to the list of nREPL middleware packages to load when jacking in to
     ;; a CIDER session.
-    ;; This setting may also be set in `.dir-locals.el' like so:
+    ;; You can also configure this setting in `.dir-locals.el' like so:
     ;; ((clojure-mode . ((cider-jack-in-nrepl-middlewares . ("flow-storm.nrepl.middleware/wrap-flow-storm"
   	;;                                                        ("refactor-nrepl.middleware/wrap-refactor" :predicate cljr--inject-middleware-p)
   	;;                                                         "cider.nrepl/cider-middleware")))))
