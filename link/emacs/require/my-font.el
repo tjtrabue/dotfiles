@@ -85,10 +85,10 @@
 
 (defun my-font-set-font-face-for-preset (face preset fallback)
   "Set the FACE to the settings in a PRESET.
-FACE is one of \='default, \='fixed-pitch, or \='variable-pitch.
+FACE is one of \\='default, \\='fixed-pitch, or \\='variable-pitch.
 
 PRESET is a symbol corresponding to the name of one of the preset plists
-in `my-font-preset-alist', such as \='noto-sans-mono.
+in `my-font-preset-alist', such as \\='noto-sans-mono.
 
 FALLBACK is another preset symbol to use if the font specified in PRESET
 is not available."
