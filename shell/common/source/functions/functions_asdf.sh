@@ -2,17 +2,6 @@
 
 # Functions for interacting with the asdf version manager.
 
-# Load the asdf version manager into the current shell session.
-# NOTE 3/12/25: Modern versions of ASDF should be installed as standalone
-# binaries, not through shell functions sourced into a profile.
-src_asdf_for_profile() {
-  if [ -x "$(command -v asdf)" ]; then
-    add_asdf_plugins
-  else
-    warn 'asdf executable not found on $PATH'
-  fi
-}
-
 # Clone the asdf Git repository to ~/.asdf
 clone_asdf() {
   local asdfDir="${ASDF_DIR:-${HOME}/.asdf}"

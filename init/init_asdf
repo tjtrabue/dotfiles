@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Trap errors and print error message
-set -uo pipefail
+set -Eeuo pipefail
 trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
 
 # Variables {{{
@@ -18,7 +18,7 @@ declare LOG_LEVEL=3
 # }}}
 
 # Functions {{{
-_help() {
+iasdf__help() {
   cat <<EOF
 ${THIS_EXEC}
 
@@ -26,18 +26,6 @@ asdf is a version manager for many languages, such as Java, Ruby, Python,
 Erlang, Elixir, and many more. It's a one-stop-shop for managing programming
 platforms on a project-by-project basis. You can think of asdf like rvm, nvm,
 pyenv, and jenv all combined, but better!
-
-The only configuration needed on the user's part is to put an initialization
-statement in their shell's config file.
-
-Bash:
-  . \$HOME/.asdf/asdf.sh
-
-Zsh:
-  . \$HOME/.asdf/asdf.sh
-
-Fish:
-  source \$HOME/.asdf/asdf.fish
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -48,12 +36,21 @@ OPTIONS:
 EOF
 }
 
-main() {
-  print_header "Initializing asdf version manager"
-  clone_asdf
-  src_asdf_for_profile
-  add_asdf_plugins
-  log_info "Done!"
+# Make sure ASDF executable is available before proceeding.
+iasdf__check_asdf_exec_on_path() {
+  if [ ! -x "$(command -v asdf)" ]; then
+    err 'asdf executable not found on $PATH'
+    return 1
+  fi
+}
+
+iasdf__main() {
+  print_header "Initializing ASDF Version Manager"
+  (
+    iasdf__check_asdf_exec_on_path &&
+      add_asdf_plugins &&
+      log_info "Done!"
+  )
 }
 # }}}
 
@@ -65,7 +62,7 @@ eval set -- "$args"
 while true; do
   case "$1" in
   -h | --help)
-    _help
+    iasdf__help
     exit 0
     ;;
 
@@ -82,6 +79,6 @@ while true; do
 done
 # }}}
 
-main "${@}"
+iasdf__main "${@}"
 
 # vim:foldenable:foldmethod=marker:
