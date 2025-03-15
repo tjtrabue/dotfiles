@@ -454,6 +454,39 @@ extra tools.
     (add-to-list 'cider-jack-in-nrepl-middlewares "flow-storm.nrepl.middleware/wrap-flow-storm"))
 #+end_src
 
+*** kaocha-runner
+An Emacs package for running Kaocha tests via CIDER.
+
+Kaocha runner exposes the following commands:
+
+- =kaocha-runner-run-test-at-point=: Runs the test at point in the current
+  namespace.
+
+- =kaocha-runner-run-tests=: Runs tests in the current namespace. With a prefix
+  argument, it runs test id provided by the user.
+
+- =kaocha-runner-run-all-tests=: Runs all tests in the project.
+
+- =kaocha-runner-show-warnings=: If you get any warnings from Kaocha, the report
+  will just say X warnings. You can display them with this command. Given a
+  prefix argument, it displays the warnings in a separate window.
+
+- =kaocha-runner-hide-windows=: When displaying results, kaocha-runner pops up a
+  window. This command hides it again. You can also switch to the window and
+  kill it normally, if you prefer that.
+
+#+begin_src emacs-lisp
+  (use-package kaocha-runner
+    :after cider
+    :general
+    (my/user-leader-def cider-mode-map
+      "k t" 'kaocha-runner-run-test-at-point
+      "k r" 'kaocha-runner-run-tests
+      "k a" 'kaocha-runner-run-all-test
+      "k w" 'kaocha-runner-show-warnings
+      "k h" 'kaocha-runner-hide-windows))
+#+end_src
+
 * clj-refactor
 =clj-refactor= provides refactoring support for Clojure projects. It
 complements the refactoring functionality you'd find in =clojure-mode= and
