@@ -84,7 +84,8 @@
       fallback-plist)))
 
 (defun my-font-set-font-face-for-preset (face preset fallback)
-  "Set the FACE to the settings in a PRESET.
+  "Set FACE to the settings in PRESET if available, or FALLBACK preset.
+
 FACE is one of \\='default, \\='fixed-pitch, or \\='variable-pitch.
 
 PRESET is a symbol corresponding to the name of one of the preset plists
