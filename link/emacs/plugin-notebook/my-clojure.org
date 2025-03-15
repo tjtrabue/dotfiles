@@ -294,7 +294,12 @@ file in your project's root directory with the following content:
     ;; How to colorize defined symbols of the following types.
     ;; Set this to nil to disable dynamic font-locking.
     ;; WARNING: Dynamic font-locking can slow down the REPL!
-    (cider-font-lock-dynamically '(macro core deprecated function var))
+    ;;
+    ;; NOTE 3/15/25: This option currently appears broken. Opening Clojure buffers with dynamic font
+    ;; locking seems to disable font locking altogether. It may be due to a compatibility issue with
+    ;; `clojure-ts-mode'. Try re-enabling dynamic font locking later and observe what happens.
+    ;; (cider-font-lock-dynamically '(macro core deprecated function var))
+    (cider-font-lock-dynamically nil)
     ;; (cider-font-lock-dynamically nil)
     ;; Whether to pretty-print REPL output
     (cider-repl-use-pretty-printing t)
