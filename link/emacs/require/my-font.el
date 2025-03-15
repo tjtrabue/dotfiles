@@ -30,15 +30,6 @@
 
 ;;; Code:
 
-(defvar my-font-default-preset 'cascadia-code
-  "The name of the preset used by default settings, or as a fallback.")
-
-(defvar my-font-fixed-pitch-preset 'cascadia-code
-  "The name of the preset used for mono-spaced or fixed pitch fonts.")
-
-(defvar my-font-variable-pitch-preset 'switzer
-  "The name of the preset used for variable pitch fonts.")
-
 (defvar my-font-preset-alist
   '((arkibal (:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
      ;;; Variable pitch fonts
@@ -104,6 +95,39 @@ is not available."
       :weight (plist-get actual-plist :weight)
       ;; A symbol
       :width  (plist-get actual-plist :width))))
+
+;;;###autoload
+(defcustom my-font-default-preset 'cascadia-code
+  "The name of the preset used by default settings, or as a fallback."
+  :type '(symbol)
+  :group 'my-font
+  :set (lambda (symbol value)
+         (set-default-toplevel-value symbol value)
+         (my-font-set-font-face-for-preset 'default value 'noto-sans-mono)))
+
+;;;###autoload
+(defcustom my-font-fixed-pitch-preset 'cascadia-code
+  "The name of the preset used for mono-spaced or fixed pitch fonts."
+  :type '(symbol)
+  :group 'my-font
+  :set (lambda (symbol value)
+         (set-default-toplevel-value symbol value)
+         (my-font-set-font-face-for-preset 'fixed-pitch value 'dejavu-sans-mono)))
+
+;;;###autoload
+(defcustom my-font-variable-pitch-preset 'switzer
+  "The name of the preset used for variable pitch fonts."
+  :type '(symbol)
+  :group 'my-font
+  :set (lambda (symbol value)
+         (set-default-toplevel-value symbol value)
+         (my-font-set-font-face-for-preset 'variable-pitch value 'noto-sans)))
+
+;;;###autoload
+(defgroup my-font '((my-font-default-preset custom-variable)
+                     (my-font-fixed-pitch-preset custom-variable)
+                     (my-font-variable-pitch-preset custom-variable))
+  "All customizable variables for `my-font'.")
 
 ;;;###autoload
 (defun my-font-set-default-font ()
