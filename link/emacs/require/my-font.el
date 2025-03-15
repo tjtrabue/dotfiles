@@ -54,19 +54,8 @@
      (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
   "Alist containing all named font preset configurations.")
 
-;; Set fallback font for glyphs and emojis not found in default font.
-(let ((font-families (font-family-list)))
-  (when (member "Noto Color Emoji" font-families)
-    (set-fontset-font t nil "Noto Color Emoji" nil 'append))
-  (when (member "Symbols Nerd Font" font-families)
-    (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
-  (when (member "Symbola" font-families)
-    (set-fontset-font t nil "Symbola" nil 'append))
-  (when (member "Quivira" font-families)
-    (set-fontset-font t nil "Quivira" nil 'append)))
-
 (defun my-font-get-preset-plist (preset fallback)
-  "Return the plist associated with PRESET if available, or FALLBACK otherwise."
+  "Return the plist for PRESET if available, or FALLBACK otherwise."
   (let ((font-families (font-family-list))
          (preset-plist (car (alist-get preset my-font-preset-alist)))
          (fallback-plist (car (alist-get fallback my-font-preset-alist))))
@@ -168,6 +157,17 @@ Adjust the font size of an Emacs frame based on the monitor's size."
       (set-face-attribute
         'linum-relative-current-face nil
         :height font-height))))
+
+;; Set fallback font for glyphs and emojis not found in default font.
+(let ((font-families (font-family-list)))
+  (when (member "Noto Color Emoji" font-families)
+    (set-fontset-font t nil "Noto Color Emoji" nil 'append))
+  (when (member "Symbols Nerd Font" font-families)
+    (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
+  (when (member "Symbola" font-families)
+    (set-fontset-font t nil "Symbola" nil 'append))
+  (when (member "Quivira" font-families)
+    (set-fontset-font t nil "Quivira" nil 'append)))
 
 (provide 'my-font)
 
