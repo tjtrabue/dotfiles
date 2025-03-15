@@ -12,7 +12,10 @@ declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare TEXLIVE_DIR="/usr/local/texlive"
 
 # Whether to force a clean install.
-declare FORCE_INSTALL=false
+declare FORCE=false
+
+# Uninstalling TexLive
+declare UNINSTALL_VERSION=""
 
 # Logging variables
 declare LOG_TO_FILE=""
@@ -42,17 +45,24 @@ To uninstall this distribution, the cleanest solution is to use
 must remove will be named with the scheme:
   /usr/local/texlive/YYYY
   ~/.texliveYYYY
+Alternatively, you may pass the '--uninstall YYYY' option to this script to 
+uninstall a specific version of TexLive.
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
 
 OPTIONS:
   -f | --force
-    Force a clean installation of TexLive, even if an existing installtion is
-    found.
+    Force TexLive installation or uninstallation. Be warned: this option 
+    overrides all safety checks.
 
   -h | --help
     Print the help message (this message) and exit.
+
+  -u YYYY | --uninstall YYYY
+    Uninstall a specific version of TexLive. This option is useful to use
+    before performing a fresh annual installation of the latest TexLive 
+    distribution.
 EOF
 }
 # }}}
@@ -204,6 +214,45 @@ itl__check_no_existing_texlive_installation() {
   log_info "No TexLive installation found"
 }
 
+# Uninstall a TexLive distribution.
+itl__uninstall_texlive_version() {
+  local systemTexliveDir="/usr/local/texlive/${UNINSTALL_VERSION}"
+  local userTexliveDir="${HOME}/.texlive${UNINSTALL_VERSION}"
+  local response=""
+
+  if [ -z "${UNINSTALL_VERSION}" ]; then
+    err "Must specify a TexLive version to uninstall"
+    return 1
+  elif [ ! -d "${systemTexliveDir}" ]; then
+    err "TexLive version ${CYAN}${UNINSTALL_VERSION}${NC} not found at" \
+      "${BLUE}${systemTexliveDir}${NC}"
+    return 1
+  fi
+
+  while ! ${FORCE} && ! echo "${response}" | grep -q '[YyNn]'; do
+    printf "Are you sure you want to uninstall TexLive %s? [y/n]\n" \
+      "${UNINSTALL_VERSION}" 1>&2
+    read -sn 1 -r response
+  done
+  if echo "${response}" | grep -q '[Nn]'; then
+    printf "Process terminated by user\n" 1>&2
+    return 1
+  fi
+
+  log_info "Uninstalling TexLive version ${CYAN}${UNINSTALL_VERSION}${NC}"
+  tlmgr uninstall --all --force
+
+  if [ -d "${systemTexliveDir}" ]; then
+    log_info "Uninstalling TexLive system dir: ${BLUE}${systemTexliveDir}${NC}"
+    sudo rm -rf "${systemTexliveDir:?}"
+  fi
+
+  if [ -d "${userTexliveDir}" ]; then
+    log_info "Uninstalling TexLive user dir: ${BLUE}${userTexliveDir}${NC}"
+    rm -rf "${userTexliveDir:?}"
+  fi
+}
+
 # Print the user a final informational message to ensure that they know which
 # system files to edit/link.
 itl__print_final_message() {
@@ -223,7 +272,9 @@ EOF
 }
 
 main() {
-  if "${FORCE_INSTALL}" || itl__check_no_existing_texlive_installation; then
+  if [ -n "${UNINSTALL_VERSION}" ]; then
+    itl__uninstall_texlive_version
+  elif "${FORCE}" || itl__check_no_existing_texlive_installation; then
     itl__delete_existing_texlive_installations
     itl__install_texlive &&
       itl__update_texlive_permissions &&
@@ -240,8 +291,8 @@ main() {
 # }}}
 
 # Parse CLI Options {{{
-args=$(getopt -o fh \
-  --long force,help \
+args=$(getopt -o fhu: \
+  --long force,help,uninstall: \
   -n "${THIS_EXEC}" \
   -- "$@")
 eval set -- "$args"
@@ -250,14 +301,28 @@ eval set -- "$args"
 while true; do
   case "$1" in
   -f | --force)
-    log_info "Forcing clean TexLive install"
-    FORCE_INSTALL=true
+    log_info "Forcing indicated behavior"
+    FORCE=true
     shift
     ;;
 
   -h | --help)
     _help
     exit 0
+    ;;
+
+  -u | --uninstall)
+    case "$2" in
+    "")
+      err "Must specify version of TexLive to uninstall"
+      shift 2
+      ;;
+    *)
+      log_info "Uninsatlling TexLive version: ${CYAN}${2}${NC}"
+      UNINSTALL_VERSION="${2}"
+      shift 2
+      ;;
+    esac
     ;;
 
   --)

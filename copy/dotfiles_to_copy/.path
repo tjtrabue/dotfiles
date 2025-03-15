@@ -16,6 +16,9 @@
 /usr/sbin
 /usr/local/bin
 /usr/local/sbin
+;; Uncomment this line if you install TexLive via the installer script.
+;; Also replace 'YYYY' with the current four-digit year.
+;; /usr/local/texlive/YYYY/bin/x86_64-linux
 ${HOME}/bin
 ${HOME}/.local/bin
 ${HOME}/.dotfiles/bin
