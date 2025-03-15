@@ -54,7 +54,7 @@
      (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
   "Alist containing all named font preset configurations.")
 
-(defun my-font-get-preset-plist (preset fallback)
+(defun my-font--get-preset-plist (preset fallback)
   "Return the plist for PRESET if available, or FALLBACK otherwise."
   (let ((font-families (font-family-list))
          (preset-plist (car (alist-get preset my-font-preset-alist)))
@@ -63,7 +63,7 @@
       preset-plist
       fallback-plist)))
 
-(defun my-font-set-font-face-for-preset (face preset fallback)
+(defun my-font--set-font-face-for-preset (face preset fallback)
   "Set FACE to the settings in PRESET if available, or FALLBACK preset.
 
 FACE is one of \\='default, \\='fixed-pitch, or \\='variable-pitch.
@@ -73,7 +73,7 @@ in `my-font-preset-alist', such as \\='noto-sans-mono.
 
 FALLBACK is another preset symbol to use if the font specified in PRESET
 is not available."
-  (let* ((actual-plist (my-font-get-preset-plist preset fallback)))
+  (let* ((actual-plist (my-font--get-preset-plist preset fallback)))
     (set-face-attribute
       face nil
       ;; The name of the font.
@@ -92,7 +92,7 @@ is not available."
   :group 'my-font
   :set (lambda (symbol value)
          (set-default-toplevel-value symbol value)
-         (my-font-set-font-face-for-preset 'default value 'noto-sans-mono)))
+         (my-font--set-font-face-for-preset 'default value 'noto-sans-mono)))
 
 ;;;###autoload
 (defcustom my-font-fixed-pitch-preset 'cascadia-code
@@ -101,7 +101,7 @@ is not available."
   :group 'my-font
   :set (lambda (symbol value)
          (set-default-toplevel-value symbol value)
-         (my-font-set-font-face-for-preset 'fixed-pitch value 'dejavu-sans-mono)))
+         (my-font--set-font-face-for-preset 'fixed-pitch value 'dejavu-sans-mono)))
 
 ;;;###autoload
 (defcustom my-font-variable-pitch-preset 'switzer
@@ -110,7 +110,7 @@ is not available."
   :group 'my-font
   :set (lambda (symbol value)
          (set-default-toplevel-value symbol value)
-         (my-font-set-font-face-for-preset 'variable-pitch value 'noto-sans)))
+         (my-font--set-font-face-for-preset 'variable-pitch value 'noto-sans)))
 
 ;;;###autoload
 (defgroup my-font '((my-font-default-preset custom-variable)
@@ -121,12 +121,12 @@ is not available."
 ;;;###autoload
 (defun my-font-set-default-font ()
   "Set default fonts (fixed pitch and variable pitch) for all Emacs frames."
-  (my-font-set-font-face-for-preset 'default my-font-default-preset 'noto-sans-mono)
-  (my-font-set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)
-  (my-font-set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans))
+  (my-font--set-font-face-for-preset 'default my-font-default-preset 'noto-sans-mono)
+  (my-font--set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)
+  (my-font--set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans))
 
 ;;;###autoload
-(defun my-font-adjust-font-size (frame)
+(defun my-font-adjust-font-size (_frame)
   "Inspired by https://emacs.stackexchange.com/a/44930/17066.
 
 FRAME is not used directly, but its presence is necessary for this function to
