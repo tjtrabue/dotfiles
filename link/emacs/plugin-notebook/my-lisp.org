@@ -8,6 +8,69 @@
 This file contains configuration and plugins for editing generic LISP code
 regardless of its particular dialect.
 
+* eval-sexp-fu
+Tiny functionality enhancements for evaluating sexps.
+This package provides:
+
+- Flashing the sexps during the evaluation.
+- `eval-last-sexp' variants (inner-list/inner-sexp).
+
+** Commands
+
+Below is the complete list of commands:
+
+- =eval-sexp-fu-flash-mode=: Global minor mode that flashes an evaluated
+  s-expression (i.e., using =C-x C-e=). Toggle EvalSexpFuFlash mode on or off. If
+  this mode is on, some `eval-last-sexp'-ish commands will highlight the sexps
+  during evaluation.
+
+- =turn-on-eval-sexp-fu-flash-mode=: Unequivocally turn on EvalSexpFuFlash mode
+
+- =eval-sexp-fu-eval-sexp-inner-list=: Evaluate the list _currently_ pointed at as
+  sexp; print value in minibuffer.
+
+- =eval-sexp-fu-eval-sexp-inner-sexp=: Evaluate the sexp _currently_ pointed; print
+  value in minibuffer.
+
+** Customizable Options:
+
+Below are all customizable options:
+
+- =eval-sexp-fu-flash-face=: *Face to use for showing the sexps' overlay during the evaluation.
+   default = (quote eval-sexp-fu-flash)
+
+- =eval-sexp-fu-flash-error-face=: *Face to use for showing the sexps' overlay if
+  the evaluation signaled any error. The error highlighting is take into account
+  only if non-nil value.
+  default = (quote eval-sexp-fu-flash-error)
+
+- =eval-sexp-fu-flash-duration=: *For time duration, highlight the evaluating
+  sexps.
+  default = 0.15
+
+- =eval-sexp-fu-flash-error-duration=
+   *For time duration, highlight the evaluating sexps signaled errors.
+   default = 0.3
+
+- =eval-sexp-fu-flash-function=: *Function to be used to create all of the actual
+  flashing implementations.
+  default = (quote eval-sexp-fu-flash-default)
+
+- =eval-sexp-fu-overlay-priority=: Priority of the overlays created by
+  esf-hl-highlight-bounds.
+  default = 0
+
+- =eval-sexp-fu-flash-doit-function=: *Function to use for flashing the sexps.
+  default = (quote eval-sexp-fu-flash-doit-simple)
+
+** =use-package= specification
+#+begin_src emacs-lisp
+  (use-package eval-sexp-fu
+    :demand t
+    :config
+    (eval-sexp-fu-flash-mode 1))
+#+end_src
+
 * paredit
 The ancestor of all structural editing plugins in Emacs.
 

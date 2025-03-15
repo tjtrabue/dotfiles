@@ -411,6 +411,49 @@ file in your project's root directory with the following content:
        :slant  'italic)))
 #+end_src
 
+** Plugins
+*** cider-eval-sexp-fu
+=eval-sexp-fu= extensions for CIDER. =eval-sexp-fu= provides tiny improvements to
+expression evaluation - e.g. the expression you've just evaluated would briefly
+flash, and other little enhancements.
+
+Customizations are made via [[https://www.emacswiki.org/emacs/EvalSexpFu][eval-sexp-fu]].
+
+#+begin_src emacs-lisp
+  (use-package cider-eval-sexp-fu
+    :after cider
+    :demand t)
+#+end_src
+
+*** cider-storm
+Cider Storm is an Emacs Cider front-end for the FlowStorm debugger with support
+for Clojure and ClojureScript.
+
+It brings the time-travel code stepping capabilities of FlowStorm to Emacs,
+providing an interface similar to the Cider debugger one.
+
+It also contains a bunch of utilities functions for interacting with FlowStorm.
+
+Cider Storm isn't trying to re-implement the entire FlowStorm UI, but the most
+used functionality. You can always start the full FlowStorm UI if you need the
+extra tools.
+
+#+begin_src emacs-lisp
+  (use-package cider-storm
+    :after cider
+    :general
+    (my/user-leader-def cider-mode-map
+      "C-f" 'cider-storm-map)
+    :init
+    ;; Add flow-storm's middleware to the list of nREPL middleware packages to load when jacking in to
+    ;; a CIDER session.
+    ;; This setting may also be set in `.dir-locals.el' like so:
+    ;; ((clojure-mode . ((cider-jack-in-nrepl-middlewares . ("flow-storm.nrepl.middleware/wrap-flow-storm"
+  	;;                                                        ("refactor-nrepl.middleware/wrap-refactor" :predicate cljr--inject-middleware-p)
+  	;;                                                         "cider.nrepl/cider-middleware")))))
+    (add-to-list 'cider-jack-in-nrepl-middlewares "flow-storm.nrepl.middleware/wrap-flow-storm"))
+#+end_src
+
 * clj-refactor
 =clj-refactor= provides refactoring support for Clojure projects. It
 complements the refactoring functionality you'd find in =clojure-mode= and

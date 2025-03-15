@@ -43,6 +43,56 @@
   :test {:extra-paths ["test" "src/test/clojure"]
          :extra-deps {org.clojure/test.check {:mvn/version "RELEASE"}}}
 
+  ;; Flow Storm Debugger - A fancy GUI time-travel debugger for Clojure
+  ;; and ClojureScript. To start the GUI, add start Clojure with the
+  ;; :flow-storm alias, and evaluate the :dbg keyword in the REPL.
+  ;;
+  ;; ClojureStorm is a fork of the official Clojure compiler that adds
+  ;; automatic instrumentation so you do not need to worry about your
+  ;; code compiling in development but not for production builds.
+  :fs-clj {:classpath-overrides {org.clojure/clojure nil}
+           :extra-deps {com.github.flow-storm/flow-storm-dbg {:mvn/version "RELEASE"}
+                        com.github.flow-storm/clojure {:mvn/version "RELEASE"}}
+           ;; Accepted ClojureStorm Styling options:
+           ;; -Dflowstorm.title - The title of the window
+           ;; -Dflowstorm.theme - either light or dark
+           ;; -Dflowstorm.styles - path to CSS file containing
+           ;;                      window styles.
+           :jvm-opts ["-Dflowstorm.theme=dark"]}
+  ;; ClojureScriptStorm is the same as ClojureStorm but for ClojureScript,
+  ;; meaning it is a fork of the ClojureScript compiler with automatic 
+  ;; instrumentation.
+  ;;
+  ;; NOTE for using with shadow-cljs: make sure to add the following to your
+  ;; shadow-cljs.edn:
+  ;;   ;; This adds FlowStorm dependencies to shadow-cljs
+  ;;   {:deps {:aliases [:fs-cljs]} ...}
+  ;;   ...
+  ;;    :builds
+  ;;    {:my-app {...
+  ;;                        ;; If you have other preloads, the Flow Storm 
+  ;;                        ;; preload must be the first one!!!
+  ;;              :devtools {:preloads [flow-storm.storm.preload]
+  ;;                         ...}}}
+  :fs-cljs {:classpath-overrides {org.clojure/clojurescript nil}
+            :extra-deps {com.github.flow-storm/clojurescript {:mvn/version "RELEASE"}
+                         ;; Flow Storm runtime dependency for use with
+                         ;; shadow-cljs
+                         com.github.flow-storm/flow-storm-inst {:mvn/version "RELEASE"}
+                         ;; GUI debugger
+                         com.github.flow-storm/flow-storm-dbg {:mvn/version "RELEASE"}}
+            ;; The instrumentOnlyPrefixes property is a comma-separated list of
+            ;; namespace prefixes. You normally want your main app's namespace
+            ;; plus some libraries, so for example:
+            ;;   cljs.storm.instrumentOnlyPrefixes=org.my-app,org.my-lib,hiccup
+            :jvm-opts ["-Dcljs.storm.instrumentOnlyPrefixes=your-app-base-ns"
+                       "-Dcljs.storm.instrumentEnable=true"
+                       "-Dflowstorm.startRecording=false"]}
+  ;; Optional Flow Storm plugins you find yourself using regularly
+  :fs-web-plugin {:extra-deps {com.github.flow-storm/flow-storm-web-plugin {:mvn/version "RELEASE"}}
+                  :jvm-opts ["-Dclojure.storm.instrumentOnlyPrefixes.webPlugin=org.httpkit.server,ring.adapter.jetty,next.jdbc.result-set" 
+                             "-Dflowstorm.plugins.namespaces.webPlugin=flow-storm.plugins.web.all"]}
+
   ;; use this at the end of your aliases to cancel any main opts in earlier
   ;; aliases, e.g., clojure -M:test:no-main to avoid running tests:
   :no-main {:main-opts []}
