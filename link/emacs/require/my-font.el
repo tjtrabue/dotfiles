@@ -130,7 +130,7 @@ plist names in `my-font-preset-alist'."
   :prefix "my-font-")
 
 ;;;###autoload
-(defun my-font-set-default-font ()
+(defun my-font-set-default-fonts ()
   "Set default fonts (fixed pitch and variable pitch) for all Emacs frames."
   (my-font--set-font-face-for-preset 'default my-font-default-preset 'noto-sans-mono)
   (my-font--set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)

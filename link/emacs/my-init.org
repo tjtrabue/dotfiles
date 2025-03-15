@@ -649,70 +649,54 @@ Once we have configured the =load-path=, we can load custom Emacs Lisp
 libraries. Using =straight.el= as the module loader takes care of lazy loading.
 
 #+begin_src emacs-lisp
-  ;; My own font functions and definitions.
+  ;; My custom default/mono/GUI font configuration.
   (use-package my-font
     :ensure nil
-    :straight
-    (my-font :local-repo "~/.emacs.d/require"
-             :files ("my-font.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-font.el"))
+    :init
+    (my-font-set-default-fonts))
 
   ;; My custom window functions.
   (use-package my-window
     :ensure nil
-    :straight
-    (my-window :local-repo "~/.emacs.d/require"
-               :files ("my-window.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-window.el")))
 
   ;; Functions for interacting with hooks.
   (use-package my-hook-fns
     :ensure nil
-    :straight
-    (my-hook-fns :local-repo "~/.emacs.d/require"
-                 :files ("my-hook-fns.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-hook-fns.el")))
 
   ;; recentf library for managing recently accessed filed.
   (use-package my-recentf
     :ensure nil
-    :straight
-    (my-recentf :local-repo "~/.emacs.d/require"
-                :files ("my-recentf.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-recentf.el")))
 
   ;; GTAGS function library.
   (use-package my-gtags
     :ensure nil
-    :straight
-    (my-gtags :local-repo "~/.emacs.d/require"
-              :files ("my-gtags.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-gtags.el")))
 
   ;; straight.el convenience functions.
   (use-package my-straight-helpers
     :ensure nil
-    :straight
-    (my-straight-helpers :local-repo "~/.emacs.d/require"
-                         :files ("my-straight-helpers.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-straight-helpers.el")))
 
   ;; Custom completing-read functions.
   (use-package my-completing-read
     :ensure nil
-    :straight
-    (my-completing-read :local-repo "~/.emacs.d/require"
-                        :files ("my-completing-read.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-completing-read.el")))
 
   ;; My customized buffer tab-line, based on Emacs' built-in version.
   (use-package my-tab-line
     :ensure nil
-    :straight
-    (my-tab-line :local-repo "~/.emacs.d/require"
-                 :files ("my-tab-line.el"))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-tab-line.el"))
     :init
     (my-tab-line-mode 1))
 
   ;; Custom functions for making/starting processes.
   (use-package my-process
     :ensure nil
-    :straight
-    (my-process :local-repo "~/.emacs.d/require"
-                :files ("my-process.el")))
+    :straight (:local-repo "~/.emacs.d/require" :files ("my-process.el")))
 #+end_src
 
 * Color Configuration
@@ -806,15 +790,6 @@ of the right and left fringes individually.
     ;; specified number of pixels.  When called interactively, prompt the user for a
     ;; fringe style to apply.
     (set-fringe-mode 8))
-#+end_src
-
-* Font Configuration
-Set default font for Emacs.
-
-*NOTE:* The main font configuration is in =my-font.el=.
-
-#+begin_src emacs-lisp
-  (my-font-set-default-font)
 #+end_src
 
 * Info
