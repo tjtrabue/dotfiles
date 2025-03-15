@@ -426,7 +426,7 @@ Customizations are made via [[https://www.emacswiki.org/emacs/EvalSexpFu][eval-s
 #+end_src
 
 *** cider-storm
-Cider Storm is an Emacs Cider front-end for the FlowStorm debugger with support
+Cider Storm is an Emacs Cider front-end for the [[https://github.com/flow-storm/flow-storm-debugger?tab=readme-ov-file][Flow Storm debugger]] with support
 for Clojure and ClojureScript.
 
 It brings the time-travel code stepping capabilities of FlowStorm to Emacs,
