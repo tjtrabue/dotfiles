@@ -32,6 +32,9 @@
 ;;; Code:
 
 ;;;###autoload
+(require 'tab-line)
+
+;;;###autoload
 (require 'easy-mmode)
 
 ;;;###autoload
@@ -42,13 +45,13 @@
                                           ;; Allow Customize windows.
                                           "^.*\\*.*Customize Group:.*\\*.*$")
   "List of regular expressions matching special buffers allowed in the tab line."
-  :type '(regexp)
+  :type '(repeat regexp)
   :group 'my-tab-line)
 
 ;;;###autoload
 (defcustom my-tab-line-allowed-major-modes '(dired-mode)
   "List of major modes whose buffers are allowed in the tab line."
-  :type '(symbol)
+  :type '(repeat symbol)
   :group 'my-tab-line)
 
 ;;;###autoload
@@ -99,11 +102,11 @@ See the documentation for `perspective.el' for further details."
     (seq-reverse bufs)))
 
 (defun my-tab-line-tab-buffers ()
-  "Return a list of buffers that should be displayed in the tab line."
-  (my-tab-line-filter-display-buffers (buffer-list)))
+  "Return a list of buffers to display in the `tab-line'."
+  (my-tab-line-filter-display-buffers (tab-line-tabs-window-buffers)))
 
 (defun my-tab-line-default-tabs-function ()
-  "Displays buffers in the `tab-line'."
+  "Return sorted list of tabs to display in `tab-line'."
   (let* ((old-buffers (window-parameter nil 'tab-line-buffers))
           (buffer-positions (let ((index-table (make-hash-table
                                                  :size (length old-buffers)
