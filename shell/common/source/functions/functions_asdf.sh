@@ -39,7 +39,7 @@ add_asdf_plugins() {
 # Download and install a given ASDF version from the archive page on GitHub.
 install_asdf() {
   local gitHubDownloadUrlBase="https://github.com/asdf-vm/asdf/releases/download"
-  local asdfVersion="v${1:-0.16.5}"
+  local asdfVersion="${1:-v0.16.5}"
   # One of: 386, amd64, arm64
   local processorArch="${2:-386}"
   local archiveFile="asdf-${asdfVersion}-linux-${processorArch}.tar.gz"
