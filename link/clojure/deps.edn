@@ -74,17 +74,15 @@
   ;;   ...
   ;;    :builds
   ;;    {:my-app {...
-  ;;                        ;; If you have other preloads, the Flow Storm
-  ;;                        ;; preload must be the first one!!!
+  ;;              ;; If you have other preloads, the Flow Storm
+  ;;              ;; preload must be the first one!!!
   ;;              :devtools {:preloads [flow-storm.storm-preload]
   ;;                         ...}}}
   :fs-cljs {:classpath-overrides {org.clojure/clojurescript nil}
             :extra-deps {com.github.flow-storm/clojurescript {:mvn/version "RELEASE"}
                          ;; Flow Storm runtime dependency for use with
                          ;; shadow-cljs
-                         com.github.flow-storm/flow-storm-inst {:mvn/version "RELEASE"}
-                         ;; GUI debugger
-                         com.github.flow-storm/flow-storm-dbg {:mvn/version "RELEASE"}}
+                         com.github.flow-storm/flow-storm-inst {:mvn/version "RELEASE"}}
             ;; The instrumentOnlyPrefixes property is a comma-separated list of
             ;; namespace prefixes. You normally want your main app's namespace
             ;; plus some libraries, so for example:
