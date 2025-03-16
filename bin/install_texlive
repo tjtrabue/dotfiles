@@ -45,7 +45,7 @@ To uninstall this distribution, the cleanest solution is to use
 must remove will be named with the scheme:
   /usr/local/texlive/YYYY
   ~/.texliveYYYY
-Alternatively, you may pass the '--uninstall YYYY' option to this script to 
+Alternatively, you may pass the '--uninstall YYYY' option to this script to
 uninstall a specific version of TexLive.
 
 USAGE:
@@ -53,7 +53,7 @@ USAGE:
 
 OPTIONS:
   -f | --force
-    Force TexLive installation or uninstallation. Be warned: this option 
+    Force TexLive installation or uninstallation. Be warned: this option
     overrides all safety checks.
 
   -h | --help
@@ -61,7 +61,7 @@ OPTIONS:
 
   -u YYYY | --uninstall YYYY
     Uninstall a specific version of TexLive. This option is useful to use
-    before performing a fresh annual installation of the latest TexLive 
+    before performing a fresh annual installation of the latest TexLive
     distribution.
 EOF
 }
@@ -126,7 +126,7 @@ itl__setup_paths() {
     sort -n |
     tail -1)"
   local texliveBinDir="$(find "${latestTexliveDir}/bin" -maxdepth 1 \
-    -mindepth 1 -type d)"
+    -mindepth 1 -type d | head -1)"
   local texliveInfoDir="${latestTexliveDir}/texmf-dist/doc/info"
   local texliveManDir="${latestTexliveDir}/texmf-dist/doc/man"
   local userInfoPathFile="${HOME}/.info_path"
@@ -240,7 +240,7 @@ itl__uninstall_texlive_version() {
   fi
 
   log_info "Uninstalling TexLive version ${CYAN}${UNINSTALL_VERSION}${NC}"
-  tlmgr uninstall --all --force
+  (tlmgr uninstall --all --force || :)
 
   if [ -d "${systemTexliveDir}" ]; then
     log_info "Uninstalling TexLive system dir: ${BLUE}${systemTexliveDir}${NC}"

@@ -38,8 +38,8 @@ escapestr() {
 # This is a more reliable method for ensuring that variables embedded in strings
 # come out evaluated.
 expandstr() {
-  local input="${1}"
-  local line
+  local input="${1:-""}"
+  local line=""
 
   if [ -n "${input}" ]; then
     printf '%s\n' "$(eval "printf '%s' \"${input}\"")"
