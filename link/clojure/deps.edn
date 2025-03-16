@@ -58,9 +58,13 @@
            ;; -Dflowstorm.theme - either light or dark
            ;; -Dflowstorm.styles - path to CSS file containing
            ;;                      window styles.
-           :jvm-opts ["-Dflowstorm.theme=dark"]}
+           :jvm-opts ["-Dclojure.storm.instrumentEnable=true"
+                      ;; You must also add your app's main namespace prefixes
+                      ;; here.
+                      "-Dclojure.storm.instrumentOnlyPrefixes=user"
+                      "-Dflowstorm.theme=dark"]}
   ;; ClojureScriptStorm is the same as ClojureStorm but for ClojureScript,
-  ;; meaning it is a fork of the ClojureScript compiler with automatic 
+  ;; meaning it is a fork of the ClojureScript compiler with automatic
   ;; instrumentation.
   ;;
   ;; NOTE for using with shadow-cljs: make sure to add the following to your
@@ -70,9 +74,9 @@
   ;;   ...
   ;;    :builds
   ;;    {:my-app {...
-  ;;                        ;; If you have other preloads, the Flow Storm 
+  ;;                        ;; If you have other preloads, the Flow Storm
   ;;                        ;; preload must be the first one!!!
-  ;;              :devtools {:preloads [flow-storm.storm.preload]
+  ;;              :devtools {:preloads [flow-storm.storm-preload]
   ;;                         ...}}}
   :fs-cljs {:classpath-overrides {org.clojure/clojurescript nil}
             :extra-deps {com.github.flow-storm/clojurescript {:mvn/version "RELEASE"}
@@ -85,12 +89,12 @@
             ;; namespace prefixes. You normally want your main app's namespace
             ;; plus some libraries, so for example:
             ;;   cljs.storm.instrumentOnlyPrefixes=org.my-app,org.my-lib,hiccup
-            :jvm-opts ["-Dcljs.storm.instrumentOnlyPrefixes=your-app-base-ns"
+            :jvm-opts ["-Dcljs.storm.instrumentOnlyPrefixes=user"
                        "-Dcljs.storm.instrumentEnable=true"
                        "-Dflowstorm.startRecording=false"]}
   ;; Optional Flow Storm plugins you find yourself using regularly
   :fs-web-plugin {:extra-deps {com.github.flow-storm/flow-storm-web-plugin {:mvn/version "RELEASE"}}
-                  :jvm-opts ["-Dclojure.storm.instrumentOnlyPrefixes.webPlugin=org.httpkit.server,ring.adapter.jetty,next.jdbc.result-set" 
+                  :jvm-opts ["-Dclojure.storm.instrumentOnlyPrefixes.webPlugin=org.httpkit.server,ring.adapter.jetty,next.jdbc.result-set"
                              "-Dflowstorm.plugins.namespaces.webPlugin=flow-storm.plugins.web.all"]}
 
   ;; use this at the end of your aliases to cancel any main opts in earlier

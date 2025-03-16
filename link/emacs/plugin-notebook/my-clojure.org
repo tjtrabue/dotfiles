@@ -454,7 +454,10 @@ your project for Flow Storm.
     ;; ((clojure-mode . ((cider-jack-in-nrepl-middlewares . ("flow-storm.nrepl.middleware/wrap-flow-storm"
   	;;                                                        ("refactor-nrepl.middleware/wrap-refactor" :predicate cljr--inject-middleware-p)
   	;;                                                         "cider.nrepl/cider-middleware")))))
-    (add-to-list 'cider-jack-in-nrepl-middlewares "flow-storm.nrepl.middleware/wrap-flow-storm"))
+    (add-to-list 'cider-jack-in-nrepl-middlewares "flow-storm.nrepl.middleware/wrap-flow-storm")
+    ;; Make sure the primary Flow Storm library is available when jacking in to a CIDER nREPL server,
+    ;; otherwise the process will fail when injecting the Flow Storm middleware.
+    (add-to-list 'cider-jack-in-dependencies '("com.github.flow-storm/flow-storm-dbg" "RELEASE")))
 #+end_src
 
 *** kaocha-runner
