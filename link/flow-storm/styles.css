@@ -1,0 +1,29 @@
+/**
+ * Overrides for the Flow Storm GUI application's styles.
+ * Flow Storm is an omniscient debugger for Clojure and ClojureScript.
+ * You can find the reference CSS file at:
+ * https://github.com/flow-storm/flow-storm-debugger/blob/master/resources/flowstorm/styles/styles.css
+ */
+
+@font-face {
+  font-family: "Switzer Medium";
+  src: local("Switzer Medium");
+}
+
+@font-face {
+  font-family: "Cascadia Code PL";
+  src: local("Cascadia Code PL");
+}
+
+.main-pane {
+  -fx-font-family: "Switzer Medium";
+}
+
+.code-token {
+  -fx-font-family: "Cascadia Code PL";
+  -fx-fill: -fx-theme-flow-code-text;
+}
+
+.monospaced {
+  -fx-font-family: "Cascadia Code PL";
+}
