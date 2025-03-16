@@ -36,6 +36,26 @@ add_asdf_plugins() {
   done <"${ASDF_PLUGINS_FILE}"
 }
 
+# Download and install a given ASDF version from the archive page on GitHub.
+install_asdf() {
+  local gitHubDownloadUrlBase="https://github.com/asdf-vm/asdf/releases/download"
+  local asdfVersion="v${1:-0.16.5}"
+  # One of: 386, amd64, arm64
+  local processorArch="${2:-386}"
+  local archiveFile="asdf-${asdfVersion}-linux-${processorArch}.tar.gz"
+  local downloadDir="/tmp"
+  local destinationDir="${HOME}/.local/bin"
+
+  mkdir -p "${destinationDir}"
+  log_info "Downloading ASDF version ${CYAN}${asdfVersion}${NC}"
+  (
+    cd "${downloadDir}" &&
+      wget "${gitHubDownloadUrlBase}/${asdfVersion}/${archiveFile}" &&
+      tar -zxvf "${archiveFile}" &&
+      mv "asdf" "${destinationDir}/"
+  )
+}
+
 # Wrapper function for updating all installed asdf plugins.
 update_asdf() {
   if [ -n "$(command -v asdf)" ]; then
