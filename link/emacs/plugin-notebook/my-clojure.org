@@ -438,6 +438,9 @@ Cider Storm isn't trying to re-implement the entire Flow Storm UI, but the most
 used functionality. You can always start the full Flow Storm UI if you need the
 extra tools.
 
+*NOTE:* CIDER will fail to start if you use this plugin without first configuring
+your project for Flow Storm.
+
 #+begin_src emacs-lisp
   (use-package cider-storm
     :after cider
