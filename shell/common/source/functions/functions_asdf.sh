@@ -36,23 +36,23 @@ add_asdf_plugins() {
   done <"${ASDF_PLUGINS_FILE}"
 }
 
-# Download and install a given ASDF version from the archive page on GitHub.
-install_asdf() {
-  local gitHubDownloadUrlBase="https://github.com/asdf-vm/asdf/releases/download"
-  local asdfVersion="${1:-v0.16.5}"
-  # One of: 386, amd64, arm64
-  local processorArch="${2:-386}"
-  local archiveFile="asdf-${asdfVersion}-linux-${processorArch}.tar.gz"
+# Download and install the latest ASDF version from ASDF assets page on GitHub.
+# You may specify the processor architecture for your computer as a positional
+# argument, which must be one of 386, amd64, or arm64. You may also specify
+# the install directory for the asdf executable as the second argument.
+install_asdf_from_github() {
+  local processorArch="${1:-386}"
+  local destinationDir="${2:-${HOME}/.local/bin}"
   local downloadDir="/tmp"
-  local destinationDir="${HOME}/.local/bin"
 
   mkdir -p "${destinationDir}"
-  log_info "Downloading ASDF version ${CYAN}${asdfVersion}${NC}"
+  log_info "Downloading latest ASDF from GitHub"
   (
     cd "${downloadDir}" &&
-      wget "${gitHubDownloadUrlBase}/${asdfVersion}/${archiveFile}" &&
-      tar -zxvf "${archiveFile}" &&
-      mv "asdf" "${destinationDir}/"
+      download_latest_github_release "asdf-vm/asdf" "${processorArch}.tar.gz" &&
+      tar -zxvf asdf*.tar.gz &&
+      mv "asdf" "${destinationDir}/" &&
+      rm -f asdf*
   )
 }
 
