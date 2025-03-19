@@ -5,9 +5,6 @@
 src_java_for_profile() {
   local sdkmanHome="${SDKMAN_DIR:-${HOME}/.sdkman}"
 
-  # Use jenv to manage installed java versions.
-  initialize_jenv_for_shell
-
   # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
   export SDKMAN_DIR="${sdkmanHome}"
   initialize_sdkman_for_shell

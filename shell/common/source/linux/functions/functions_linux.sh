@@ -42,11 +42,11 @@ expandstr() {
   local line=""
 
   if [ -n "${input}" ]; then
-    printf '%s\n' "$(eval "printf '%s' \"${input}\"")"
+    eval "printf '%s\n' $(echo ${input})"
   else
     # Read strings from stdin
     while read -r line || [ -n "${line}" ]; do
-      printf '%s\n' "$(eval "printf '%s' \"${line}\"")"
+      eval "printf '%s\n' $(echo ${line})"
     done </dev/stdin
   fi
 }
