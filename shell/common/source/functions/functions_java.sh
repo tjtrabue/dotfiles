@@ -171,7 +171,7 @@ add_sdkman_java_candidates_to_jenv() {
 # Update the sdkman shell functions and all candidates.
 update_sdkman() {
   log_info "Updating SDKMAN and all candidates"
-  sdk selfupdate
+  sdk selfupdate force
   sdk update
 }
 
