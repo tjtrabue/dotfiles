@@ -7,6 +7,10 @@
 #   /usr/bin
 # in that order, then `mybin` in "/usr/bin" will be used when the user invokes
 # `mybin` on the command line.
+#
+# Glob characters such as '*' and '**' in path entries are expanded, and 
+# shell command expressions in '$()' are evaluated when creating the $PATH 
+# variable.
 
 /bin
 /sbin
