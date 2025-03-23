@@ -21,6 +21,7 @@
 ;; GNU General Public License for more details.
 
 ;; For a full copy of the GNU General Public License
+
 ;; see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
@@ -73,7 +74,8 @@ in `my-font-preset-alist', such as \\='noto-sans-mono.
 
 FALLBACK is another preset symbol to use if the font specified in PRESET
 is not available."
-  (let* ((actual-plist (my-font--get-preset-plist preset fallback)))
+  (let* ((fallback (or fallback "monospace"))
+          (actual-plist (my-font--get-preset-plist preset fallback)))
     (set-face-attribute
       face nil
       ;; The name of the font.

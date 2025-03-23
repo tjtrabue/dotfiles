@@ -45,7 +45,7 @@ update_auxiliary_packages() {
   update_perl_packages
   update_python_packages
   update_ruby_packages
-  update_sdkman
+  update_java
   update_texlive_packages
 
   # For Zsh only

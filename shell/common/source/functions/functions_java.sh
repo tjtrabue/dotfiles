@@ -10,6 +10,13 @@ src_java_for_profile() {
   initialize_sdkman_for_shell
 }
 
+# Update all Java CLI tools and, if possible, SDKs.
+update_java() {
+  if [ -n "$(command -v sdk)" ]; then
+    update_sdkman
+  fi
+}
+
 # Enable jenv in the current shell.
 initialize_jenv_for_shell() {
   local jenvHome="${JENV_HOME:-${HOME}/.jenv}"
