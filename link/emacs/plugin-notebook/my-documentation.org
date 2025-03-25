@@ -25,6 +25,13 @@ well.
     ;; returned message, or compose all of the returned messages into a single
     ;; string.
     (eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+    ;; Whether ElDoc is allowed to resize the echo area to display docs.
+    ;; If t, never truncate. If nil, ElDoc will always truncate doc strings to fit
+    ;; the echo area. If a positive number, it represents the number of screen lines
+    ;; of documentation ElDoc puts into the echo area. IF `truncate-sym-name-if-fit',
+    ;; the part of the doc string representing a symbol's name may be truncated
+    ;; if it will enable the rest of the doc string to fit on a single line.
+    (eldoc-echo-area-use-multiline-p 'truncate-sym-name-if-fit)
     :init
     (global-eldoc-mode 1))
 #+end_src

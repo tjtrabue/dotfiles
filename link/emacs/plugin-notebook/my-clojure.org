@@ -408,7 +408,10 @@ file in your project's root directory with the following content:
        'cider-repl-prompt-face nil
        :family cider-repl-font
        :weight 'bold
-       :slant  'italic)))
+       :slant  'italic))
+    ;; When using CIDER alongside clojure-lsp, use clojure-lsp for ElDoc integration rather than
+    ;; CIDER.
+    (remove-hook 'eldoc-documentation-functions #'cider-eldoc))
 #+end_src
 
 ** Plugins
