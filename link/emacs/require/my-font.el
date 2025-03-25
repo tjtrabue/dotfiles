@@ -28,6 +28,17 @@
 
 ;; This package contains my personal font configuration.  It's supposed to be a
 ;; single point of configuration for my Emacs font defaults.
+;;
+;; Fonts you should download for Unicode symbol compatibility:
+;;
+;; JoyPixels
+;; Noto Sans Emoji
+;; Code2000
+;; Code2001
+;; Code2002
+;; Code20X3
+;; Symbola
+;; Quivira
 
 ;;; Code:
 

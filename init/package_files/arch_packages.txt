@@ -235,6 +235,7 @@ ttf-dejavu
 ttf-fira-code
 ttf-fira-mono
 ttf-hack
+ttf-joypixels
 ttf-liberation
 ttf-nerd-fonts-symbols
 ttf-victor-mono-nerd
