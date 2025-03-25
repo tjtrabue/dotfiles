@@ -91,7 +91,6 @@ any known font.
        ("Braille Patterns"
         ("Quivira" "Apple Braille" "DejaVu Sans:width=condensed" "Noto Sans Symbols"
          "Apple Symbols" "Segoe UI Symbol" "Symbola" "Noto Sans Symbols" "FreeMono"
-         "Code2002"
          "Code2000"
          "Everson Mono:weight=bold"))
        ("CJK Compatibility"
@@ -321,8 +320,8 @@ any known font.
          "SuttonSignWritingFill"
          "SuttonSignWritingOneD"))
        ("Symbols for Legacy Computing"
-        ("Code2002" "Code2001" "Code2000"
-         "Noto Sans" "Noto Sans Symbols" "Apple Symbols" "Symbola" "Quivira"))
+        ("Code2001"
+         "Noto Sans Symbols" "Apple Symbols" "Symbola" "Quivira"))
        ("Tags"
         ("BabelStone Modern" "BabelStone Han"))
        ("Transport and Map Symbols"
@@ -341,6 +340,9 @@ any known font.
     ;; Initialize unicode-fonts
     (unicode-fonts-setup))
 #+end_src
+
+#+RESULTS:
+: t
 
 * hasklig-mode
 Use fancy ligatures for Haskell programming.

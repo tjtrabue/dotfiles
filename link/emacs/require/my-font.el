@@ -32,11 +32,13 @@
 ;; Fonts you should download for Unicode symbol compatibility:
 ;;
 ;; JoyPixels
-;; Noto Sans Emoji
-;; Code2000
-;; Code2001
-;; Code2002
-;; Code20X3
+;; Noto Sans
+;; Noto Sans Symbols
+;; Noto Color Emoji
+;; Code2000 - https://www.code2001.com/
+;; Code2001 - https://www.code2001.com/
+;; Code2002 - https://www.code2001.com/
+;; Code20X3 - https://www.code2001.com/
 ;; Symbola
 ;; Quivira
 
