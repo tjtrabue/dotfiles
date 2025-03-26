@@ -79,7 +79,7 @@ software development.
     ;; Customize how Projectile reports project information in the mode line.  The
     ;; default function is a bit verbose, and can clutter the mode line.
     (projectile-mode-line-function (lambda ()
-                                     (format " 🚀[%s]"
+                                     (format " ⤜⦃%s⦄↠"
                                              (projectile-project-name))))
     ;; Whether to use `vc-git-grep' in Git projects.
     (projectile-use-git-grep t)

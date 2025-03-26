@@ -132,7 +132,7 @@ seizes control of Emacs in some invasive ways.
     (persp-state-default-file (locate-user-emacs-file "persp-state.el"))
     ;; Three strings representing the opening, closing, and dividing symbols for Perspective's mode
     ;; line information.
-    (persp-modestring-dividers '("🪟 ⟪" "⟫" "｜"))
+    (persp-modestring-dividers '("🪟 ⦃" "⦄" "｜"))
     :init
     (require 'perspective)
     :config
