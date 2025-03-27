@@ -53,22 +53,22 @@
      ;; https://freedesignresources.net/triakis-font-family-free-weight/
      (triakis (:family "Triakis  Font" :height 1.3 :weight semi-bold :width normal))
      ;; https://www.fontshare.com/fonts/clash-display
-     (clash-display (:family "Clash Display Variable" :height 110 :weight semi-bold :width normal))
+     (clash-display (:family "Clash Display Variable" :height 1.0 :weight semi-bold :width normal))
      ;; https://fontshare.com/fonts/satoshi
-     (satoshi (:family "Satoshi Variable" :height 110 :weight medium :width normal))
+     (satoshi (:family "Satoshi Variable" :height 1.0 :weight medium :width normal))
      ;; https://www.fontshare.com/fonts/switzer
-     (switzer (:family "Switzer Variable" :height 110 :weight regular :width normal))
+     (switzer (:family "Switzer Variable" :height 1.0 :weight regular :width normal))
      ;; Basic Google sans-serif font usually installed through package manager.
-     (noto-sans (:family "Noto Sans" :height 110 :weight semi-bold :width normal))
+     (noto-sans (:family "Noto Sans" :height 100 :weight semi-bold :width normal))
      ;;; Fixed pitch fonts
-     (cascadia-code-pl (:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+     (cascadia-code-pl (:family "Cascadia Code PL" :height 100 :weight semi-bold :width normal))
      ;; This font is proprietary, and can be purchased here:
      ;; https://philpl.gumroad.com/l/dank-mono
-     (dank-mono (:family "Dank Mono" :height 110 :weight bold :width normal))
-     (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
-     (fira-code (:family "FiraCode Nerd Font" :height 110 :weight semi-bold :width normal))
-     (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal))
-     (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
+     (dank-mono (:family "Dank Mono" :height 100 :weight bold :width normal))
+     (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 100 :weight semi-bold :width normal))
+     (fira-code (:family "FiraCode Nerd Font" :height 100 :weight semi-bold :width normal))
+     (noto-sans-mono (:family "Noto Sans Mono" :height 100 :weight semi-bold :width normal))
+     (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 100 :weight semi-bold :width normal)))
   "Alist containing all named font preset configurations.")
 
 (defun my-font--get-preset-plist (preset fallback)
@@ -186,6 +186,30 @@ Adjust the font size of an Emacs frame based on the monitor's size."
       (set-face-attribute
         'linum-relative-current-face nil
         :height font-height))))
+
+;;;###autoload
+(defun my-font-set-font-preset (pitch preset)
+  "Set the PITCH font to PRESET.
+
+PITCH is one of \\='fixed or \\='variable.
+
+PRESET is the car of one of the plists in `my-font-preset-alist'"
+  (interactive
+    (let ((pitch (intern (completing-read "Pitch to Set: "
+                           '(fixed variable)
+                           nil t)))
+           (preset (intern (completing-read "Font Preset: "
+                             (seq-map (lambda (p)
+                                        (car p))
+                               my-font-preset-alist)
+                             nil t))))
+      (list pitch preset)))
+  (cond
+    ((eq pitch 'fixed)
+      (customize-set-variable 'my-font-default-preset preset)
+      (customize-set-variable 'my-font-fixed-pitch-preset preset))
+    ((eq pitch 'variable)
+      (customize-set-variable 'my-font-variable-pitch-preset preset))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (let ((font-families (font-family-list)))
