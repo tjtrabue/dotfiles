@@ -64,7 +64,7 @@
      (cascadia-code-pl (:family "Cascadia Code PL" :height 100 :weight semi-bold :width normal))
      ;; This font is proprietary, and can be purchased here:
      ;; https://philpl.gumroad.com/l/dank-mono
-     (dank-mono (:family "Dank Mono" :height 100 :weight bold :width normal))
+     (dank-mono (:family "Dank Mono" :height 100 :weight normal :width normal))
      (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 100 :weight semi-bold :width normal))
      (fira-code (:family "FiraCode Nerd Font" :height 100 :weight semi-bold :width normal))
      (noto-sans-mono (:family "Noto Sans Mono" :height 100 :weight semi-bold :width normal))
