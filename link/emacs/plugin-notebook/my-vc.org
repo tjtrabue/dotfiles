@@ -38,6 +38,23 @@ porcelain exists in Magit.
       (mapc #'kill-buffer buffers)))
 #+end_src
 
+** Dependencies
+Magit requires the following packages to function.
+
+#+begin_src emacs-lisp
+  (use-package compat
+    :demand t)
+
+  (use-package transient
+    :demand t)
+
+  (use-package llama
+    :demand t)
+
+  (use-package with-editor
+    :demand t)
+#+end_src
+
 ** =use-package= specification
 #+begin_src emacs-lisp
   (use-package magit

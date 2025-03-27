@@ -59,16 +59,16 @@
      ;; https://www.fontshare.com/fonts/switzer
      (switzer (:family "Switzer Variable" :height 1.0 :weight regular :width normal))
      ;; Basic Google sans-serif font usually installed through package manager.
-     (noto-sans (:family "Noto Sans" :height 100 :weight semi-bold :width normal))
+     (noto-sans (:family "Noto Sans" :height 1.0 :weight semi-bold :width normal))
      ;;; Fixed pitch fonts
-     (cascadia-code-pl (:family "Cascadia Code PL" :height 100 :weight semi-bold :width normal))
+     (cascadia-code-pl (:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
      ;; This font is proprietary, and can be purchased here:
      ;; https://philpl.gumroad.com/l/dank-mono
-     (dank-mono (:family "Dank Mono" :height 100 :weight normal :width normal))
-     (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 100 :weight semi-bold :width normal))
-     (fira-code (:family "FiraCode Nerd Font" :height 100 :weight semi-bold :width normal))
-     (noto-sans-mono (:family "Noto Sans Mono" :height 100 :weight semi-bold :width normal))
-     (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 100 :weight semi-bold :width normal)))
+     (dank-mono (:family "Dank Mono" :height 110 :weight normal :width normal))
+     (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
+     (fira-code (:family "FiraCode Nerd Font" :height 110 :weight semi-bold :width normal))
+     (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal))
+     (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal)))
   "Alist containing all named font preset configurations.")
 
 (defun my-font--get-preset-plist (preset fallback)
