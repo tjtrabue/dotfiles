@@ -62,6 +62,9 @@
      (noto-sans (:family "Noto Sans" :height 110 :weight semi-bold :width normal))
      ;;; Fixed pitch fonts
      (cascadia-code-pl (:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
+     ;; This font is proprietary, and can be purchased here:
+     ;; https://philpl.gumroad.com/l/dank-mono
+     (dank-mono (:family "Dank Mono" :height 110 :weight bold :width normal))
      (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
      (fira-code (:family "FiraCode Nerd Font" :height 110 :weight semi-bold :width normal))
      (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal))
@@ -101,7 +104,7 @@ is not available."
       :width  (plist-get actual-plist :width))))
 
 ;;;###autoload
-(defcustom my-font-default-preset 'cascadia-code-pl
+(defcustom my-font-default-preset 'dank-mono
   "The name of the preset used for default font settings.
 
 This variable's value should be a symbol corresponding to one of the
@@ -113,7 +116,7 @@ plist names in `my-font-preset-alist'."
          (my-font--set-font-face-for-preset 'default value 'noto-sans-mono)))
 
 ;;;###autoload
-(defcustom my-font-fixed-pitch-preset 'cascadia-code-pl
+(defcustom my-font-fixed-pitch-preset 'dank-mono
   "The name of the preset used for monospaced or fixed pitch fonts.
 
 This variable's value should be a symbol corresponding to one of the
