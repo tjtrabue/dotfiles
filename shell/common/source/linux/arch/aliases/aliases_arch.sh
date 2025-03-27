@@ -17,6 +17,9 @@ alias pacss="sudo pacman -Ss"
 alias pacq="sudo pacman -Q"
 # Update/upgrade all installed packages
 alias pacup="sudo pacman -Syyu"
+# Update/updgrade all installed packages WITHOUT CONFIRMATION.
+# Potentially dangerous!
+alias pacupn="sudo pacman -Syyu --noconfirm"
 # }}}
 
 # AUR package build/install {{{
