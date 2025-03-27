@@ -720,7 +720,7 @@ infrastructure for Emacs.
     ;; May slow Emacs down.
     (lsp-bridge-enable-org-babel t)
     ;; Whether to show LSP Bridge's server info in the mode line.
-    (lsp-bridge-enable-mode-line nil)
+    (lsp-bridge-enable-mode-line t)
     ;; Fallback function in case LSP cannot find a definition.
     (lsp-bridge-find-def-fallback-function #'citre-get-definitions)
     ;; Fallback function in case LSP cannot find a reference.

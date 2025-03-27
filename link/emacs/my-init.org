@@ -323,6 +323,13 @@ LanguageServerProtocol clients and servers.
   (setq scroll-conservatively 101)
   (setq auto-window-vscroll nil)
 
+  ;; The user's preferred approach to splitting windows.
+  ;;   'vertical   - The default; prefer to split vertically (across the frame) if sensible.
+  ;;   'horizontal - Prefer to split horizontally (down the frame) if sensible.
+  ;;   'longest    - Prefer to split horizontally when the frame is in landscape, and vertically
+  ;;                 when in portrait.
+  (setq split-window-preferred-direction 'longest)
+
   ;; Automatically reload TAGS file without prompting us.
   (setq tags-revert-without-query t)
 
