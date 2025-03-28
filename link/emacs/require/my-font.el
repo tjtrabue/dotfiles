@@ -61,13 +61,26 @@
      ;; Basic Google sans-serif font usually installed through package manager.
      (noto-sans (:family "Noto Sans" :height 1.0 :weight semi-bold :width normal))
      ;;; Fixed pitch fonts
+     ;; Cascadia Code PL is Microsoft's flagship monospace programming font. It
+     ;; comes with ligatures included, and I find it quite pleasant and legible.
      (cascadia-code-pl (:family "Cascadia Code PL" :height 110 :weight semi-bold :width normal))
      ;; This font is proprietary, and can be purchased here:
      ;; https://philpl.gumroad.com/l/dank-mono
+     ;; It's pretty to look at, but not terribly feature-rich, especially given
+     ;; the price point.
      (dank-mono (:family "Dank Mono" :height 110 :weight regular :width normal))
+     ;; A pretty basic programming monospaced font.
      (dejavu-sans-mono (:family "DejaVu Sans Mono" :height 110 :weight semi-bold :width normal))
+     ;; This is by far the most detailed, configurable, and fully featured
+     ;; font. Using Fira Code allows for clear, detailed contrast between the
+     ;; regular and (semi-)bold weights, making syntax highlighting much more
+     ;; pleasant and useful. Fira Code is my favorite coding font.
      (fira-code (:family "Fira Code" :height 110 :weight regular :width normal))
+     ;; One of the most aesthetic coding fonts, for sure. I like it, just not as
+     ;; much as Fira Code.
      (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
+     ;; Google's default monospaced font. A decent fallback option since its
+     ;; easy to install.
      (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal)))
   "Alist containing all named font preset configurations.")
 
@@ -213,6 +226,8 @@ PRESET is the car of one of the plists in `my-font-preset-alist'"
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (let ((font-families (font-family-list)))
+  (when (member "JoyPixels" font-families)
+    (set-fontset-font t nil "JoyPixels" nil 'append))
   (when (member "Noto Color Emoji" font-families)
     (set-fontset-font t nil "Noto Color Emoji" nil 'append))
   (when (member "Symbols Nerd Font" font-families)
