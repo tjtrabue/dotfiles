@@ -138,11 +138,12 @@ If called with a prefix ARG, run in verbose mode."
                (file-truename (expand-file-name "require/fix" user-emacs-directory))))
   (add-to-list 'load-path dir))
 
-;; I refactored my `straight.el' bootstrap code to a separate file.
-(load "my-straight-bootstrap")
-;; Load `use-package' after bootstrapping `straight.el' since we may need
-;; `straight' to install `use-package', which is taken care of in the bootstrap
-;; script.
+(require 'my-straight-helpers)
+
+;; This function takes care of bootstrapping and configuring the wonderful
+;; straight.el package manager.
+(my-straight-helpers-bootstrap)
+
 (require 'use-package)
 
 ;; Make downloaded straight packages available on `load-path'.

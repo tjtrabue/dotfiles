@@ -42,17 +42,23 @@ porcelain exists in Magit.
 Magit requires the following packages to function.
 
 #+begin_src emacs-lisp
-  (use-package compat
-    :demand t)
+  ;; Forwards compatibility library for Emacs, providing definitions for functions
+  ;; introduced in newer versions of the editor.
+  (use-package compat)
 
-  (use-package transient
-    :demand t)
+  ;; Provides the signature Magit-style UI for executing interactive Git commands.
+  ;; This package used to be part of Magit, but was deemed useful enough to become
+  ;; a standalone library for any plugin.
+  (use-package transient)
 
-  (use-package llama
-    :demand t)
+  ;; Provides a macro `##' for terse lambda syntax:
+  ;;   (## FN &rest BODY)
+  ;; Kind of like #() in Clojure.
+  (use-package llama)
 
-  (use-package with-editor
-    :demand t)
+  ;; Use `emacsclient' as the $EDITOR of child processes. Essentially provides more
+  ;; sophisticated versions of `shell-command' and `async-shell-command'.
+  (use-package with-editor)
 #+end_src
 
 ** =use-package= specification
