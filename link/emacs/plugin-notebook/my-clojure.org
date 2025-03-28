@@ -384,7 +384,16 @@ file in your project's root directory with the following content:
                 ;; completions in Clojure(Script) source code buffers.
                 (company-mode 1)
                 (when (bound-and-true-p lsp-bridge-mode)
-                  (lsp-bridge-mode -1))))
+                  (lsp-bridge-mode -1))
+                ;; Customize the CIDER REPL's face when we have fancy fonts installed.
+                (when-let* ((cider-repl-font (seq-find (lambda (f)
+                                                         (member f (font-family-list)))
+                                                       '("VictorMono Nerd Font" "Cascadia Code PL"))))
+                  (set-face-attribute
+                   'cider-repl-prompt-face nil
+                   :family cider-repl-font
+                   :weight 'bold
+                   :slant  'italic))))
     :config
     ;; Set default Clojure dependencies to inject upon jacking into the nREPL.
     ;; You must set these variables in :config instead of :custom due to a loading
@@ -399,16 +408,6 @@ file in your project's root directory with the following content:
                 (delete-dups
                  (append cider-jack-in-dependencies
                          my/extra-cider-jack-in-deps))))
-    ;; Customize the CIDER REPL's face when we have fancy fonts installed.
-    (when-let* ((fonts (font-family-list))
-                (cider-repl-font (seq-find (lambda (f)
-                                             (member f fonts))
-                                           '("VictorMono Nerd Font" "Cascadia Code PL"))))
-      (set-face-attribute
-       'cider-repl-prompt-face nil
-       :family cider-repl-font
-       :weight 'bold
-       :slant  'italic))
     ;; When using CIDER alongside clojure-lsp, use clojure-lsp for ElDoc integration rather than
     ;; CIDER.
     (remove-hook 'eldoc-documentation-functions #'cider-eldoc))
