@@ -225,27 +225,28 @@ Adjust the font size of an Emacs frame based on the monitor's size."
         :height font-height))))
 
 ;;;###autoload
-(defun my-font-set-font-preset (pitch preset)
-  "Set the PITCH font to PRESET.
+(defun my-font-set-font-preset (font preset)
+  "Set the FONT to PRESET.
 
-PITCH is one of \\='fixed or \\='variable.
+FONT is one of \\='default, \\='italic, or \\='variable.
 
 PRESET is the car of one of the plists in `my-font-preset-alist'"
   (interactive
-    (let ((pitch (intern (completing-read "Pitch to Set: "
-                           '(fixed variable)
-                           nil t)))
-           (preset (intern (completing-read "Font Preset: "
+    (let ((font (intern (completing-read "Font: "
+                          '(default italic variable) nil t)))
+           (preset (intern (completing-read "Preset: "
                              (seq-map (lambda (p)
                                         (car p))
                                my-font-preset-alist)
                              nil t))))
-      (list pitch preset)))
+      (list font preset)))
   (cond
-    ((eq pitch 'fixed)
+    ((eq font 'default)
       (customize-set-variable 'my-font-default-preset preset)
       (customize-set-variable 'my-font-fixed-pitch-preset preset))
-    ((eq pitch 'variable)
+    ((eq font 'italic)
+      (customize-set-variable 'my-font-italic-preset preset))
+    ((eq font 'variable)
       (customize-set-variable 'my-font-variable-pitch-preset preset))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
