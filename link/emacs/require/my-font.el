@@ -92,7 +92,7 @@
      ;; using Victor Mono for specific situations, such as for beautifying
      ;; prompts.
      (victor-mono-italic (:family "VictorMono Nerd Font Mono"
-                           :height 105 :weight medium :width normal :slant italic)))
+                           :height 110 :weight medium :width normal :slant italic)))
   "Alist containing all named font preset configurations.")
 
 (defun my-font--get-preset-plist (preset fallback)
