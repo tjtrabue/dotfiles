@@ -76,12 +76,23 @@
      ;; regular and (semi-)bold weights, making syntax highlighting much more
      ;; pleasant and useful. Fira Code is my favorite coding font.
      (fira-code (:family "Fira Code" :height 110 :weight regular :width normal))
+     ;; System default mono-spaced font with italic slant.
+     (italic (:family "Monospace" :height 110 :weight normal :width normal :slant italic))
      ;; One of the most aesthetic coding fonts, for sure. I like it, just not as
      ;; much as Fira Code.
      (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
+     ;; System default mono-spaced font. Handy to use as a last-resort fallback.
+     (monospace (:family "Monospace" :height 110 :weight normal :width normal))
      ;; Google's default monospaced font. A decent fallback option since its
      ;; easy to install.
-     (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal)))
+     (noto-sans-mono (:family "Noto Sans Mono" :height 110 :weight semi-bold :width normal))
+     ;; Victor Mono is super impressive, mainly for its truly italicized font
+     ;; slant. It only has limited ligature support, however, making it a
+     ;; second-rate choice as a primary coding font. I do find great joy in
+     ;; using Victor Mono for specific situations, such as for beautifying
+     ;; prompts.
+     (victor-mono-italic (:family "VictorMono Nerd Font Mono"
+                           :height 105 :weight medium :width normal :slant italic)))
   "Alist containing all named font preset configurations.")
 
 (defun my-font--get-preset-plist (preset fallback)
@@ -129,6 +140,18 @@ plist names in `my-font-preset-alist'."
          (my-font--set-font-face-for-preset 'default value 'noto-sans-mono)))
 
 ;;;###autoload
+(defcustom my-font-italic-preset 'victor-mono-italic
+  "The name of the preset used for default italic font settings.
+
+This variable's value should be a symbol corresponding to one of the
+plist names in `my-font-preset-alist'."
+  :type '(symbol)
+  :group 'my-font
+  :set (lambda (symbol value)
+         (set-default-toplevel-value symbol value)
+         (my-font--set-font-face-for-preset 'italic value 'italic)))
+
+;;;###autoload
 (defcustom my-font-fixed-pitch-preset 'fira-code
   "The name of the preset used for monospaced or fixed pitch fonts.
 
@@ -164,6 +187,7 @@ plist names in `my-font-preset-alist'."
 (defun my-font-set-default-fonts ()
   "Set default fonts (fixed pitch and variable pitch) for all Emacs frames."
   (my-font--set-font-face-for-preset 'default my-font-default-preset 'noto-sans-mono)
+  (my-font--set-font-face-for-preset 'default my-font-italic-preset 'noto-sans-mono)
   (my-font--set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)
   (my-font--set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans))
 

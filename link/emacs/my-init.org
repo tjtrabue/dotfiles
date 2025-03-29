@@ -706,16 +706,35 @@ libraries. Using =straight.el= as the module loader takes care of lazy loading.
     :straight (:local-repo "~/.emacs.d/require" :files ("my-process.el")))
 #+end_src
 
-* Color Configuration
-Here we configure ANSI colors for major and minor modes used throughout Emacs.
+* Face Configuration
+/Faces/ are the collective utility that Emacs uses for font and color
+configuration. Whereas most editors simply present you with a small set of
+customizable font selections and theme color variables, faces provide a far
+richer interface for fine-grained UI customization, which is one of the reasons
+Emacs looks as good as it does, even at more than 40 years old.
+
+** comint faces
 We need to make =comint-mode=, which all shell emulators in Emacs (known as
 inferior interpreters) inherit from, recognize ANSI color escape sequences so
-that shells don't look like a hot mess. We also want colorized man pages.
+that shells don't look like a hot mess.
 
 #+begin_src emacs-lisp
   ;; Set ANSI color integration in comint-mode
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
-  ;; Colorize Emacs' man page viewer
+  ;; Change the default font and style of the minibuffer prompt.
+  (set-face-attribute 'minibuffer-prompt nil
+                      :family (if-let* ((font (seq-find (lambda (f) (string= f "VictorMono Nerd Font Mono"))
+                                                        (font-family-list))))
+                                  font
+                                "Monospace")
+                      :weight 'bold
+                      :slant 'italic)
+#+end_src
+
+** Man faces
+Colorize Emacs' man page viewer to make it more comely and readable.
+
+#+begin_src emacs-lisp
   (set-face-attribute 'Man-overstrike nil
                       :inherit font-lock-type-face
                       :bold t)
