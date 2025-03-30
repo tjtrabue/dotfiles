@@ -517,19 +517,19 @@ EasyPG, Emacs' front end for GPG.
   (use-package epg
     :ensure nil
     :straight (:type built-in)
-    :init
+    :custom
     ;; How to prompt the user for passphrases.
     ;; 'loopback means to query passphrases through the minibuffer.
-    (setq epg-pinentry-mode 'loopback))
+    (epg-pinentry-mode 'loopback))
 
   ;; This package contains functions to use GnuPG from Emacs.
   (use-package epa
     :ensure nil
     :straight (:type built-in)
-    :init
-    (require 'epa-file)
+    :custom
     ;; Whether to cache the user's passphrases for symmetrically encrypted files.
-    (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+    (epa-file-cache-passphrase-for-symmetric-encryption t)
+    :init
     (epa-file-enable))
 #+end_src
 
