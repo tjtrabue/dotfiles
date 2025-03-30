@@ -92,6 +92,7 @@ hunspell-en_US
 imagemagick
 inkscape
 inotify-tools
+inxi
 iotop
 iproute2
 isoimagewriter
