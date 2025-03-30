@@ -345,6 +345,14 @@ info_log "Installing additional packages"
 # Grab packages file from dotfiles GitHub repository
 arch-chroot "${MOUNT_ROOT}" pacman -Sy --needed --noconfirm - \
   <<<"$(curl -sL "${PACKAGE_URL}" | grep -E -v -e '^\s*#' -e '^$')"
+
+if lscpu | grep -E -q ".*Vendor ID:.*Intel"; then
+  # Install Intel microcode if using an Intel CPU
+  arch-chroot "${MOUNT_ROOT}" pacman -S --needed --noconfirm intel-ucode
+elif lscpu | grep -E -q ".*Vendor ID:.*AMD"; then
+  # Install AMD microcode if using an AMD CPU
+  arch-chroot "${MOUNT_ROOT}" pacman -S --needed --noconfirm amd-ucode
+fi
 # }}}
 
 # Sound configuration {{{
