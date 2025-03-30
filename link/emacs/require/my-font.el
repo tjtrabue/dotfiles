@@ -44,6 +44,8 @@
 
 ;;; Code:
 
+(require 'faces)
+
 (defvar my-font-preset-alist
   '((arkibal (:family "Arkibal Serif" :height 1.0 :weight semi-bold :width normal))
      ;;; Variable pitch fonts
@@ -188,10 +190,36 @@ plist names in `my-font-preset-alist'."
 ;;;###autoload
 (defun my-font-set-default-fonts ()
   "Set default fonts (fixed pitch and variable pitch) for all Emacs frames."
+  (interactive)
   (my-font--set-font-face-for-preset 'default my-font-default-preset 'default)
   (my-font--set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)
   (my-font--set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans)
   (my-font--set-font-face-for-preset 'italic my-font-italic-preset 'italic))
+
+;;;###autoload
+(defun my-font-set-font-preset (font preset)
+  "Set the FONT to PRESET.
+
+FONT is one of \\='default, \\='italic, or \\='variable.
+
+PRESET is the car of one of the plists in `my-font-preset-alist'"
+  (interactive
+    (let ((font (intern (completing-read "Font: "
+                          '(default italic variable) nil t)))
+           (preset (intern (completing-read "Preset: "
+                             (seq-map (lambda (p)
+                                        (car p))
+                               my-font-preset-alist)
+                             nil t))))
+      (list font preset)))
+  (cond
+    ((eq font 'default)
+      (customize-set-variable 'my-font-default-preset preset)
+      (customize-set-variable 'my-font-fixed-pitch-preset preset))
+    ((eq font 'italic)
+      (customize-set-variable 'my-font-italic-preset preset))
+    ((eq font 'variable)
+      (customize-set-variable 'my-font-variable-pitch-preset preset))))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (_frame)

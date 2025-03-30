@@ -660,9 +660,12 @@ libraries. Using =straight.el= as the module loader takes care of lazy loading.
   (use-package my-font
     :ensure nil
     :straight (:local-repo "~/.emacs.d/require" :files ("my-font.el"))
-    :demand t
-    :config
-    (my-font-set-default-fonts))
+    :custom-face
+    (default ((nil (:family "Fira Code" :height 110 :weight regular :width normal))))
+    (fixed-pitch ((nil (:family "Fira Code" :height 110 :weight regular :width normal))))
+    (italic ((nil (:family "VictorMono Nerd Font"
+                           :height 110 :weight medium :width normal :slant italic))))
+    (variable-pitch ((nil (:family "Switzer Variable" :height 1.0 :weight regular :width normal)))))
 
   ;; My custom window functions.
   (use-package my-window
