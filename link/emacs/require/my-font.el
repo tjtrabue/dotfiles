@@ -91,7 +91,7 @@
      ;; second-rate choice as a primary coding font. I do find great joy in
      ;; using Victor Mono for specific situations, such as for beautifying
      ;; prompts.
-     (victor-mono-italic (:family "VictorMono Nerd Font Mono"
+     (victor-mono-italic (:family "VictorMono Nerd Font"
                            :height 110 :weight medium :width normal :slant italic)))
   "Alist containing all named font preset configurations.")
 
@@ -107,14 +107,15 @@
 (defun my-font--set-font-face-for-preset (face preset fallback)
   "Set FACE to the settings in PRESET if available, or FALLBACK preset.
 
-FACE is one of \\='default, \\='fixed-pitch, or \\='variable-pitch.
+FACE is one of \\='default, \\='fixed-pitch, \\='italic, or
+\\='variable-pitch.
 
 PRESET is a symbol corresponding to the name of one of the preset plists
 in `my-font-preset-alist', such as \\='noto-sans-mono.
 
 FALLBACK is another preset symbol to use if the font specified in PRESET
 is not available."
-  (let* ((fallback (or fallback "monospace"))
+  (let* ((fallback (or fallback 'monospace))
           (actual-plist (my-font--get-preset-plist preset fallback)))
     (set-face-attribute
       face nil
@@ -127,6 +128,11 @@ is not available."
       ;; A symbol
       :width  (plist-get actual-plist :width))))
 
+(defun my-font--initialize-preset (symbol face preset fallback)
+  "Initialize a PRESET SYMBOL and set the FACE, or FALLBACK if not found."
+  (set-default-toplevel-value symbol preset)
+  (my-font--set-font-face-for-preset face preset fallback))
+
 ;;;###autoload
 (defcustom my-font-default-preset 'fira-code
   "The name of the preset used for default font settings.
@@ -136,8 +142,18 @@ plist names in `my-font-preset-alist'."
   :type '(symbol)
   :group 'my-font
   :set (lambda (symbol value)
-         (set-default-toplevel-value symbol value)
-         (my-font--set-font-face-for-preset 'default value 'noto-sans-mono)))
+         (my-font--initialize-preset symbol 'default value 'monospace)))
+
+;;;###autoload
+(defcustom my-font-fixed-pitch-preset 'fira-code
+  "The name of the preset used for mono-spaced or fixed pitch fonts.
+
+This variable's value should be a symbol corresponding to one of the
+plist names in `my-font-preset-alist'."
+  :type '(symbol)
+  :group 'my-font
+  :set (lambda (symbol value)
+         (my-font--initialize-preset symbol 'fixed-pitch value 'monospace)))
 
 ;;;###autoload
 (defcustom my-font-italic-preset 'victor-mono-italic
@@ -148,20 +164,7 @@ plist names in `my-font-preset-alist'."
   :type '(symbol)
   :group 'my-font
   :set (lambda (symbol value)
-         (set-default-toplevel-value symbol value)
-         (my-font--set-font-face-for-preset 'italic value 'italic)))
-
-;;;###autoload
-(defcustom my-font-fixed-pitch-preset 'fira-code
-  "The name of the preset used for monospaced or fixed pitch fonts.
-
-This variable's value should be a symbol corresponding to one of the
-plist names in `my-font-preset-alist'."
-  :type '(symbol)
-  :group 'my-font
-  :set (lambda (symbol value)
-         (set-default-toplevel-value symbol value)
-         (my-font--set-font-face-for-preset 'fixed-pitch value 'dejavu-sans-mono)))
+         (my-font--initialize-preset symbol 'italic value 'italic)))
 
 ;;;###autoload
 (defcustom my-font-variable-pitch-preset 'switzer
@@ -172,8 +175,7 @@ plist names in `my-font-preset-alist'."
   :type '(symbol)
   :group 'my-font
   :set (lambda (symbol value)
-         (set-default-toplevel-value symbol value)
-         (my-font--set-font-face-for-preset 'variable-pitch value 'noto-sans)))
+         (my-font--initialize-preset symbol 'variable-pitch value 'noto-sans)))
 
 ;;;###autoload
 (defgroup my-font '((my-font-default-preset custom-variable)
@@ -186,10 +188,10 @@ plist names in `my-font-preset-alist'."
 ;;;###autoload
 (defun my-font-set-default-fonts ()
   "Set default fonts (fixed pitch and variable pitch) for all Emacs frames."
-  (my-font--set-font-face-for-preset 'default my-font-default-preset 'noto-sans-mono)
-  (my-font--set-font-face-for-preset 'default my-font-italic-preset 'noto-sans-mono)
+  (my-font--set-font-face-for-preset 'default my-font-default-preset 'default)
   (my-font--set-font-face-for-preset 'fixed-pitch my-font-fixed-pitch-preset 'dejavu-sans-mono)
-  (my-font--set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans))
+  (my-font--set-font-face-for-preset 'variable-pitch my-font-variable-pitch-preset 'noto-sans)
+  (my-font--set-font-face-for-preset 'italic my-font-italic-preset 'italic))
 
 ;;;###autoload
 (defun my-font-adjust-font-size (_frame)
@@ -223,31 +225,6 @@ Adjust the font size of an Emacs frame based on the monitor's size."
       (set-face-attribute
         'linum-relative-current-face nil
         :height font-height))))
-
-;;;###autoload
-(defun my-font-set-font-preset (font preset)
-  "Set the FONT to PRESET.
-
-FONT is one of \\='default, \\='italic, or \\='variable.
-
-PRESET is the car of one of the plists in `my-font-preset-alist'"
-  (interactive
-    (let ((font (intern (completing-read "Font: "
-                          '(default italic variable) nil t)))
-           (preset (intern (completing-read "Preset: "
-                             (seq-map (lambda (p)
-                                        (car p))
-                               my-font-preset-alist)
-                             nil t))))
-      (list font preset)))
-  (cond
-    ((eq font 'default)
-      (customize-set-variable 'my-font-default-preset preset)
-      (customize-set-variable 'my-font-fixed-pitch-preset preset))
-    ((eq font 'italic)
-      (customize-set-variable 'my-font-italic-preset preset))
-    ((eq font 'variable)
-      (customize-set-variable 'my-font-variable-pitch-preset preset))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
 (let ((font-families (font-family-list)))
