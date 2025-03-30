@@ -9,8 +9,8 @@
 # (i.e., terminal) which is not only logically incohesive with starting global
 # services, but could also cause duplicate service sessions to be created.
 
-if [ "${XDG_SESSION_DESKTOP}" = "plasma" ] ||
-  [ "${XDG_SESSION_DESKTOP}" = "plasma-wayland" ]; then
+if echo "${XDG_SESSION_DESKTOP}" |
+  grep -E -q '^(plasma)|(plasma-wayland)|(KDE)$'; then
   # Ignore this file for certain desktop environments (DEs), such as
   # KDE Plasma and GNOME. These GUIs have their own variants of the services
   # this file starts (compositors, audio services, etc.), so the settings in
