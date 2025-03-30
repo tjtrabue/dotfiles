@@ -234,22 +234,6 @@ link_lsp_config() {
   ln -sf "${lspConfigDir}" "${lspConfigTarget}"
 }
 
-# Link the gpg.conf file to ~/.gnupg/gpg.conf
-link_gpg_config() {
-  local gpgConfFile="${DOTFILES_LINK}/gnupg/gpg.conf"
-  local gnupgHome="${HOME}/.gnupg"
-  local gpgConfTarget="${gnupgHome}/gpg.conf"
-
-  if [ ! -f "${gpgConfFile}" ]; then
-    err "No GPG config file found at: ${BLUE}${gpgConfFile}${NC}"
-    return 1
-  fi
-
-  log_info "Linking ${BLUE}${gpgConfFile}${NC} to ${BLUE}${gpgConfTarget}${NC}"
-  mkdir -p "${gnupgHome}"
-  ln -sf "${gpgConfFile}" "${gpgConfTarget}"
-}
-
 # Link the repository itself, if necessary.
 link_repo() {
   log_info "Linking dotfiles repository to: ${DOTFILES_HOME}"
@@ -324,6 +308,7 @@ source_common_defs() {
 run_init_scripts() {
   log_info "Running initialization scripts"
 
+  runinit gpg
   runinit emacs
 }
 
@@ -336,7 +321,6 @@ main() {
   link_zdotdir
   link_config
   link_lsp_config
-  link_gpg_config
   run_init_scripts
   add_extra_os_vars
   add_extra_paths_to_path_file
@@ -348,9 +332,10 @@ main() {
 prepare_for_os
 
 # Parse CLI Options {{{
-declare args=$(getopt -o hvfk: \
-  --long help,verbose,force,fake-home: \
-  -n 'install.sh' -- "$@" \
+declare args=$(
+  getopt -o hvfk: \
+    --long help,verbose,force,fake-home: \
+    -n 'install.sh' -- "$@"
 )
 eval set -- "$args"
 

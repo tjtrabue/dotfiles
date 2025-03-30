@@ -425,13 +425,6 @@ LanguageServerProtocol clients and servers.
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
 
-  ;;; EasyPG settings (Emacs' front-end for GPG)
-  ;; Whether to cache the user's passphrases for symmetrically encrypted files.
-  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-  ;; How to prompt the user for passphrases.
-  ;; 'loopback means to query passphrases through the minibuffer.
-  (setq epg-pinentry-mode 'loopback)
-
   ;;; Browser
   ;; Determines the default web browser function to use when opening a URL via
   ;; `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file'.
@@ -517,12 +510,27 @@ Make C and C++ modes available. Necessary for some third-party packages.
 #+end_src
 
 ** epa
-EasyPG, Emacs' front-end for GPG.
+EasyPG, Emacs' front end for GPG.
 
 #+begin_src emacs-lisp
+  ;; A fully functional interface library to GnuPG.
+  (use-package epg
+    :ensure nil
+    :straight (:type built-in)
+    :init
+    ;; How to prompt the user for passphrases.
+    ;; 'loopback means to query passphrases through the minibuffer.
+    (setq epg-pinentry-mode 'loopback))
+
+  ;; This package contains functions to use GnuPG from Emacs.
   (use-package epa
     :ensure nil
-    :straight (:type built-in))
+    :straight (:type built-in)
+    :init
+    (require 'epa-file)
+    ;; Whether to cache the user's passphrases for symmetrically encrypted files.
+    (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+    (epa-file-enable))
 #+end_src
 
 ** grep

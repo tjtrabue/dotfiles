@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+igpg__help() {
+  command cat <<EOF
+${THIS_EXEC} | Link GnuPG configuration
+
+Link GPG configuration in the dotfiles repository to the ~/.gnupg directory.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
+EOF
+}
+
+# Link all GnuPG configuration files in the dotfiles repo to the ~/.gnupg
+# directory.
+igpg__link_gpg_files() {
+  local gpgDotDir="${DOTFILES_HOME}/link/gnupg"
+  local gpgHomeDir="${HOME}/.gnupg"
+
+  mkdir -p "${gpgHomeDir}"
+
+  log_info "Linking GPG configuration files to: ${BLUE}${gpgHomeDir}${NC}"
+  ln -sf -t "${gpgHomeDir}/" "${gpgDotDir}"/*
+}
+
+igpg__main() {
+  print_header "Initializing GnuPG Configuration"
+  igpg__link_gpg_files
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n 'init_gpg' \
+  -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    igpg__help
+    exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+igpg__main "${@}"
+
+# vim:foldenable:foldmethod=marker:
