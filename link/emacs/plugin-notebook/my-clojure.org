@@ -388,7 +388,7 @@ file in your project's root directory with the following content:
                 ;; Customize the CIDER REPL's face when we have fancy fonts installed.
                 (when-let* ((cider-repl-font (seq-find (lambda (f)
                                                          (member f (font-family-list)))
-                                                       '("VictorMono Nerd Font Mono" "Cascadia Code PL"))))
+                                                       '("VictorMono Nerd Font" "Cascadia Code PL"))))
                   (set-face-attribute
                    'cider-repl-prompt-face nil
                    :family cider-repl-font

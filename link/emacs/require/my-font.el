@@ -158,17 +158,6 @@ plist names in `my-font-preset-alist'."
          (my-font--initialize-preset symbol 'fixed-pitch value 'monospace)))
 
 ;;;###autoload
-(defcustom my-font-italic-preset 'victor-mono-italic
-  "The name of the preset used for default italic font settings.
-
-This variable's value should be a symbol corresponding to one of the
-plist names in `my-font-preset-alist'."
-  :type '(symbol)
-  :group 'my-font
-  :set (lambda (symbol value)
-         (my-font--initialize-preset symbol 'italic value 'italic)))
-
-;;;###autoload
 (defcustom my-font-variable-pitch-preset 'switzer
   "The name of the preset used for variable pitch fonts (i.e., GUI fonts).
 
@@ -180,9 +169,21 @@ plist names in `my-font-preset-alist'."
          (my-font--initialize-preset symbol 'variable-pitch value 'noto-sans)))
 
 ;;;###autoload
+(defcustom my-font-italic-preset 'victor-mono-italic
+  "The name of the preset used for default italic font settings.
+
+This variable's value should be a symbol corresponding to one of the
+plist names in `my-font-preset-alist'."
+  :type '(symbol)
+  :group 'my-font
+  :set (lambda (symbol value)
+         (my-font--initialize-preset symbol 'italic value 'italic)))
+
+;;;###autoload
 (defgroup my-font '((my-font-default-preset custom-variable)
                      (my-font-fixed-pitch-preset custom-variable)
-                     (my-font-variable-pitch-preset custom-variable))
+                     (my-font-variable-pitch-preset custom-variable)
+                     (my-font-italic-preset custom-variable))
   "All customizable variables for `my-font'."
   :group 'emacs
   :prefix "my-font-")

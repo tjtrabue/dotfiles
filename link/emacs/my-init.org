@@ -663,9 +663,9 @@ libraries. Using =straight.el= as the module loader takes care of lazy loading.
     :custom-face
     (default ((nil (:family "Fira Code" :height 110 :weight regular :width normal))))
     (fixed-pitch ((nil (:family "Fira Code" :height 110 :weight regular :width normal))))
+    (variable-pitch ((nil (:family "Switzer Variable" :height 1.0 :weight regular :width normal))))
     (italic ((nil (:family "VictorMono Nerd Font"
-                           :height 110 :weight medium :width normal :slant italic))))
-    (variable-pitch ((nil (:family "Switzer Variable" :height 1.0 :weight regular :width normal)))))
+                           :height 110 :weight medium :width normal :slant italic)))))
 
   ;; My custom window functions.
   (use-package my-window
@@ -727,7 +727,7 @@ that shells don't look like a hot mess.
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
   ;; Change the default font and style of the minibuffer prompt.
   (set-face-attribute 'minibuffer-prompt nil
-                      :family (if-let* ((font (seq-find (lambda (f) (string= f "VictorMono Nerd Font Mono"))
+                      :family (if-let* ((font (seq-find (lambda (f) (string= f "VictorMono Nerd Font"))
                                                         (font-family-list))))
                                   font
                                 "Monospace")
