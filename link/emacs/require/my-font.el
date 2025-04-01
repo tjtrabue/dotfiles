@@ -83,6 +83,18 @@
      ;; One of the most aesthetic coding fonts, for sure. I like it, just not as
      ;; much as Fira Code.
      (jetbrains-mono (:family "JetBrainsMono Nerd Font" :height 110 :weight semi-bold :width normal))
+     ;; MonoLisa is the BEST proprietary font on the market. It is not cheap,
+     ;; but in my opinion, there is no better coding font. MonoLisa is loaded
+     ;; with more font variants and coding ligatures than you will believe. When
+     ;; you download the font, you select from a huge number of customization
+     ;; options to suit your preferences, meaning you can tailor MonoLisa to
+     ;; your preferred style. Not only that, but it receives regular updates
+     ;; from its developers, so you can expect even more features in the future.
+     ;;
+     ;; Get it here: https://www.monolisa.dev/
+     (monolisa (:family "MonoLisa Variable" :height 110 :weight regular :width normal))
+     (monolisa-italic (:family "MonoLisa Variable"
+                        :height 110 :weight regular :width normal :slant italic))
      ;; System default mono-spaced font. Handy to use as a last-resort fallback.
      (monospace (:family "Monospace" :height 110 :weight normal :width normal))
      ;; Google's default monospaced font. A decent fallback option since its
@@ -136,7 +148,7 @@ is not available."
   (my-font--set-font-face-for-preset face preset fallback))
 
 ;;;###autoload
-(defcustom my-font-default-preset 'fira-code
+(defcustom my-font-default-preset 'monolisa
   "The name of the preset used for default font settings.
 
 This variable's value should be a symbol corresponding to one of the
@@ -147,7 +159,7 @@ plist names in `my-font-preset-alist'."
          (my-font--initialize-preset symbol 'default value 'monospace)))
 
 ;;;###autoload
-(defcustom my-font-fixed-pitch-preset 'fira-code
+(defcustom my-font-fixed-pitch-preset 'monolisa
   "The name of the preset used for mono-spaced or fixed pitch fonts.
 
 This variable's value should be a symbol corresponding to one of the
@@ -169,7 +181,7 @@ plist names in `my-font-preset-alist'."
          (my-font--initialize-preset symbol 'variable-pitch value 'noto-sans)))
 
 ;;;###autoload
-(defcustom my-font-italic-preset 'victor-mono-italic
+(defcustom my-font-italic-preset 'monolisa-italic
   "The name of the preset used for default italic font settings.
 
 This variable's value should be a symbol corresponding to one of the

@@ -669,10 +669,10 @@ libraries. Using =straight.el= as the module loader takes care of lazy loading.
     :ensure nil
     :straight (:local-repo "~/.emacs.d/require" :files ("my-font.el"))
     :custom-face
-    (default ((nil (:family "Fira Code" :height 110 :weight regular :width normal))))
+    (default ((nil (:family "MonoLisa Variable" :height 110 :weight regular :width normal))))
     (fixed-pitch ((nil (:family "Fira Code" :height 110 :weight regular :width normal))))
     (variable-pitch ((nil (:family "Switzer Variable" :height 1.0 :weight regular :width normal))))
-    (italic ((nil (:family "VictorMono Nerd Font"
+    (italic ((nil (:family "MonoLisa Variable"
                            :height 110 :weight medium :width normal :slant italic)))))
 
   ;; My custom window functions.
@@ -735,8 +735,11 @@ that shells don't look like a hot mess.
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
   ;; Change the default font and style of the minibuffer prompt.
   (set-face-attribute 'minibuffer-prompt nil
-                      :family (if-let* ((font (seq-find (lambda (f) (string= f "VictorMono Nerd Font"))
-                                                        (font-family-list))))
+                      :family (if-let* ((font (seq-find (lambda (f)
+                                                          (member f (font-family-list)))
+                                                        '("MonoLisa Variable"
+                                                          "VictorMono Nerd Font"
+                                                          "Cascadia Code PL"))))
                                   font
                                 "Monospace")
                       :weight 'bold
