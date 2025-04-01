@@ -109,12 +109,18 @@ install_and_configure_packages() {
   # install_optimus_manager
 }
 
+enable_nvidia_systemd_services() {
+  log_info "Enabling NVIDIA suspend, hibernate, and resume Systemd units."
+  sudo systemctl enable nvidia-{suspend,hibernate,resume}
+}
+
 main() {
   print_header "Configuring Arch Linux for Nvidia"
   no_log_to_file
   install_and_configure_packages
   add_mkinitcpio_hook_for_nvidia
   make_nvidia_gpu_primary_rendering_device
+  enable_nvidia_systemd_services
 }
 
 main "$@"
