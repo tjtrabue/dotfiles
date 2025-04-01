@@ -67,6 +67,19 @@ EndSection
 EOF
 }
 
+preserve_nvidia_memory_after_suspend() {
+  local nvidiaModprobeFile="/etc/modprobe.d/nvidia-preserve-video-memory.conf"
+
+  log_info "Configuring NVIDIA to preserve all video memory during suspend"
+  sudo tee "${nvidiaModprobeFile}" <<EOF &>/dev/null
+# Tell NVIDIA driver to save all video memory before suspending the session.
+options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/var/tmp
+# Do not load the 'nvidiafb' module on boot.
+# This may prevent errors when resuming from a suspended session.
+blacklist nvidiafb
+EOF
+}
+
 configure_optimus_manager() {
   local baseOptimusConfigFile="/usr/share/optimus-manager.conf"
   local mainOptimusConfigFile="/etc/optimus-manager/optimus-manager.conf"
@@ -120,6 +133,7 @@ main() {
   install_and_configure_packages
   add_mkinitcpio_hook_for_nvidia
   make_nvidia_gpu_primary_rendering_device
+  preserve_nvidia_memory_after_suspend
   enable_nvidia_systemd_services
 }
 
