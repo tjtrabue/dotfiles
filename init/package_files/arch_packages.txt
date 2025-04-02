@@ -121,6 +121,7 @@ libxcrypt
 libxpm
 light-locker
 lightdm
+lightdm-slick-greeter
 lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
 linux-headers
