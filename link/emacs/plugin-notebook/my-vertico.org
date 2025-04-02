@@ -89,21 +89,18 @@ completion UI in terms of customization.
     ;; The number of lines at the top and bottom of the candidate view when scrolling
     (vertico-scroll-margin 2)
     ;; Configure the display per command.
-    ;; (vertico-multiform-commands
-    ;;  ;; Use a buffer with indices for imenu
-    ;;  '((consult-imenu buffer indexed)
-    ;;    (consult-outline buffer indexed)
-    ;;    (consult-line buffer)
-    ;;    (consult-line-multi buffer)))
+    (vertico-multiform-commands
+     ;; Use a buffer with indices for imenu
+     '((affe-grep buffer)
+       (consult-imenu buffer indexed)
+       (consult-outline buffer indexed)
+       (consult-line buffer)
+       (consult-line-multi buffer)))
     ;; Configure the display per completion category.
-    ;; (vertico-multiform-categories
-    ;;  ;; Use a verbose, separate buffer for the following commands
-    ;;  '((consult-grep buffer)
-    ;;    (imenu buffer indexed)))
-    ;; NOTE 3/27/25: Temporarily disabling configured multiform commands and categories due to a
-    ;; Vertico bug that must be fixed. Try uncommenting the above lines after a few weeks.
-    (vertico-multiform-commands nil)
-    (vertico-multiform-categories nil)
+    (vertico-multiform-categories
+     ;; Use a verbose, separate buffer for the following commands
+     '((consult-grep buffer)
+       (imenu buffer indexed)))
     :init
     (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
     :config
