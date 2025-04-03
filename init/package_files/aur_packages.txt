@@ -40,6 +40,7 @@ p4v
 pack-cli-bin
 pay-respects-bin
 polybar-git
+rmlint-git
 roswell
 slack-desktop
 swift-bin

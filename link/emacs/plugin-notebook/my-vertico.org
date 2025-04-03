@@ -88,21 +88,24 @@ completion UI in terms of customization.
     (vertico-cycle t)
     ;; The number of lines at the top and bottom of the candidate view when scrolling
     (vertico-scroll-margin 2)
-    ;; Configure the display per command.
+    ;; Configure the Vertico display per command.
+    ;; Takes precedence over `vertico-multiform-categories'.
     (vertico-multiform-commands
-     ;; Use a buffer with indices for imenu
      '((affe-grep buffer)
+       (consult-grep buffer)
        (consult-imenu buffer indexed)
        (consult-outline buffer indexed)
        (consult-line buffer)
-       (consult-line-multi buffer)))
+       (consult-line-multi buffer)
+       ))
     ;; Configure the display per completion category.
     (vertico-multiform-categories
-     ;; Use a verbose, separate buffer for the following commands
-     '((consult-grep buffer)
-       (imenu buffer indexed)))
+     '((file grid)))
     :init
-    (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
+    (when (< emacs-major-version 31)
+      ;; Older versions of Emacs do not indicate to the user that multiple strings can be completed
+      ;; via `completing-read-multiple', so we fix that behavior here.
+      (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator))
     :config
     ;; Enable Vertico globally.
     (vertico-mode 1)
