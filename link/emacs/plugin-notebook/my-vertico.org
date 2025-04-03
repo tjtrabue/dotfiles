@@ -77,12 +77,6 @@ completion UI in terms of customization.
       "M-RET" 'minibuffer-force-complete-and-exit
       ;; Select currently typed text and exit Vertico
       "C-M-j" 'vertico-exit-input)
-    ;; Keybindings for use in Vertico's grid UI, which can be specified for command categories
-    ;; `vertico-multiform-categories' or specific functions in `vertico-multiform-commands'.
-    (general-def '(normal insert) vertico-grid-map
-      ;; VI-friendly grid movement bindings
-      "C-l" 'vertico-grid-right
-      "C-h" 'vertico-grid-left)
     :custom
     ;; Whether to grow and shrink vertico buffer dynamically
     ;; Can be t (which means grow and shrink), nil, or 'grow-only
@@ -93,30 +87,16 @@ completion UI in terms of customization.
     (vertico-cycle t)
     ;; The number of lines at the top and bottom of the candidate view when scrolling
     (vertico-scroll-margin 2)
-    ;; Configure the Vertico display per command.
-    ;; Takes precedence over `vertico-multiform-categories'.
-    (vertico-multiform-commands
-     '((affe-grep buffer)
-       (consult-grep buffer)
-       (consult-imenu buffer indexed)
-       (consult-outline buffer indexed)
-       (consult-line buffer)
-       (consult-line-multi buffer)))
-    ;; Configure the display per completion category.
-    (vertico-multiform-categories
-     '((file grid)
-       (imenu buffer)))
     :init
+    ;; Workaround for an issue where the *Completion* buffer displays when Vertico is active.
+    (setq completion-eager-display nil)
     (when (< emacs-major-version 31)
       ;; Older versions of Emacs do not indicate to the user that multiple strings can be completed
       ;; via `completing-read-multiple', so we fix that behavior here.
       (advice-add #'completing-read-multiple :filter-args #'my/crm-indicator))
     :config
     ;; Enable Vertico globally.
-    (vertico-mode 1)
-    ;; `vertico-multiform-mode' allows you to style and configure Vertico per completion category
-    ;; rather than globally.
-    (vertico-multiform-mode 1))
+    (vertico-mode 1))
 #+end_src
 
 * Extensions
@@ -126,12 +106,32 @@ Configure directory extension.
 #+begin_src emacs-lisp
   (use-package vertico-directory
     :after vertico
-    ;; Vertico extensions come with the repo.
+    ;; Vertico extensions come with the main vertico repo.
     :ensure nil
     :straight nil
     :hook
     ;; Tidy shadowed file names
     (rfn-eshadow-update-overlay . vertico-directory-tidy))
+#+end_src
+
+** vertico-grid
+Grid layout for the Vertico completion UI. This interface is handy for file
+listings since it can present far more candidates at once than the other
+layouts.
+
+#+begin_src emacs-lisp
+  (use-package vertico-grid
+    :after vertico
+    ;; Vertico extensions come with the main vertico repo.
+    :ensure nil
+    :straight nil
+    :general
+    ;; Keybindings for use in Vertico's grid UI, which can be specified for command categories
+    ;; `vertico-multiform-categories' or specific functions in `vertico-multiform-commands'.
+    (general-def '(normal insert) vertico-grid-map
+      ;; VI-friendly grid movement bindings
+      "C-l" 'vertico-grid-right
+      "C-h" 'vertico-grid-left))
 #+end_src
 
 ** vertico-mouse
@@ -145,6 +145,36 @@ Mouse integration for Vertico.
     :straight nil
     :hook
     (vertico-mode . vertico-mouse-mode))
+#+end_src
+
+** vertico-multiform
+Customize the Vertico display UI on a per-command basis.
+
+#+begin_src emacs-lisp
+  (use-package vertico-multiform
+    :after vertico
+    ;; Vertico extensions come with the repo.
+    :ensure nil
+    :straight nil
+    :demand t
+    :custom
+    ;; Configure the Vertico display per command.
+    ;; Takes precedence over `vertico-multiform-categories'.
+    (vertico-multiform-commands
+     `((affe-grep buffer)
+       (consult-grep buffer)
+       (consult-imenu buffer indexed)
+       (consult-outline buffer indexed)
+       (consult-line buffer)
+       (consult-line-multi buffer)))
+    ;; Configure the display per completion category.
+    (vertico-multiform-categories
+     '((file grid)
+       (imenu buffer)))
+    :config
+    ;; `vertico-multiform-mode' allows you to style and configure Vertico per completion category
+    ;; rather than globally.
+    (vertico-multiform-mode 1))
 #+end_src
 
 * Plugins
