@@ -7,6 +7,9 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 declare DOTFILES_REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 declare VERBOSE=false
+
+# The greeter UI to use.
+declare LIGHTDM_GREETER_PROGRAM="lightdm-slick-greeter"
 # }}}
 
 # Imports {{{
@@ -56,8 +59,9 @@ configure_lightdm() {
   # The main lightdm configuration file.
   local lightdmConf="/etc/lightdm/lightdm.conf"
 
-  # Turn on webkit2 greeter
-  sudo sed -i -r 's/^#(greeter-session).*/\1=lightdm-webkit2-greeter/' \
+  # Turn on the specified greeter.
+  log_info "Enabling ${GREEN}${LIGHTDM_GREETER_PROGRAM}${NC}"
+  sudo sed -i -r "s/^#(greeter-session).*/\1=${LIGHTDM_GREETER_PROGRAM}/" \
     "${lightdmConf}"
 
   # Make sure graphics driver loads before LightDM starts to avoid black screen
@@ -74,7 +78,6 @@ configure_lightdm() {
 main() {
   print_header "Configuring LightDM"
   configure_lightdm
-  configure_webkit2_greeter
   succ "Done configuring LightDM!"
 }
 # }}}
