@@ -141,6 +141,7 @@ meld
 meson
 mold
 nano
+ncdu
 neomutt
 neovim
 network-manager-applet
