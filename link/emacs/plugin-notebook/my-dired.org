@@ -53,18 +53,25 @@ modular and less bulky than =dired+=.
 
 #+begin_src emacs-lisp
   (use-package dired-hacks
-    :demand t)
+    :demand t
+    :config
+    ;; Must require `dired-rainbow' here for its macros to load properly.
+    (require 'dired-rainbow))
 #+end_src
 
 *** dired-hacks-utils
 #+begin_src emacs-lisp
   (use-package dired-hacks-utils
+    :ensure nil
+    :straight nil
     :after dired-hacks)
 #+end_src
 
 *** dired-filter
 #+begin_src emacs-lisp
   (use-package dired-filter
+    :ensure nil
+    :straight nil
     :after dired-hacks
     :general
     (my/evil-leader-def dired-mode-map
@@ -74,6 +81,8 @@ modular and less bulky than =dired+=.
 *** dired-narrow
 #+begin_src emacs-lisp
   (use-package dired-narrow
+    :ensure nil
+    :straight nil
     :after dired-hacks
     :hook
     (dired-mode . dired-narrow-mode)
@@ -85,6 +94,8 @@ modular and less bulky than =dired+=.
 *** dired-subtree
 #+begin_src emacs-lisp
   (use-package dired-subtree
+    :ensure nil
+    :straight nil
     :after (dired-hacks evil-collection)
     :general
     (general-def dired-mode-map
@@ -96,12 +107,16 @@ modular and less bulky than =dired+=.
 *** dired-avfs
 #+begin_src emacs-lisp
   (use-package dired-avfs
+    :ensure nil
+    :straight nil
     :after dired-hacks)
 #+end_src
 
 *** dired-open
 #+begin_src emacs-lisp
   (use-package dired-open
+    :ensure nil
+    :straight nil
     :after dired-hacks)
 #+end_src
 
@@ -110,11 +125,11 @@ Provides far more customization options for file colors in =dired=.
 
 #+begin_src emacs-lisp
   (use-package dired-rainbow
-    ;; NOTE 4/1/25: broken on the current version of Emacs. Waiting for a patch.
-    :disabled
+    :ensure nil
+    :straight nil
     :after dired-hacks
     :config
-    (progn
+    (eval-and-compile
       (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
       (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm"
                                             "html" "jhtm" "mht" "eml" "mustache"
@@ -173,6 +188,8 @@ copy-and-paste and bookmarks.
   (use-package dired-ranger
     ;; I like to use dired the way it was intended. Ranger is for casuals.
     :disabled
+    :ensure nil
+    :straight nil
     :after dired-hacks
     :general
     (my/user-leader-def dired-mode-map
@@ -186,6 +203,8 @@ copy-and-paste and bookmarks.
 *** dired-collapse
 #+begin_src emacs-lisp
   (use-package dired-collapse
+    :ensure nil
+    :straight nil
     :after dired-hacks
     :general
     (my/user-leader-def dired-mode-map
@@ -237,6 +256,7 @@ developers.
                     (diredp-toggle-find-file-reuse-dir 1))))
 #+end_src
 
+jjjjjjj
 ** dired-rsync
 A package containing the =dired-rsync= command which allows users to copy marked
 files in a =dired= buffer via =rsync=.
