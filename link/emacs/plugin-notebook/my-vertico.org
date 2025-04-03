@@ -80,8 +80,7 @@ completion UI in terms of customization.
     :custom
     ;; Whether to grow and shrink vertico buffer dynamically
     ;; Can be t (which means grow and shrink), nil, or 'grow-only
-    ;; NOTE: You must set this variable to t if using the `vertico-posframe' plugin.
-    (vertico-resize t)
+    (vertico-resize nil)
     ;; Max number of candidates to show
     (vertico-count 20)
     ;; Enable cycling for vertico-next and vertico-previous
@@ -96,11 +95,11 @@ completion UI in terms of customization.
        (consult-imenu buffer indexed)
        (consult-outline buffer indexed)
        (consult-line buffer)
-       (consult-line-multi buffer)
-       ))
+       (consult-line-multi buffer)))
     ;; Configure the display per completion category.
     (vertico-multiform-categories
-     '((file grid)))
+     '((file grid)
+       (imenu buffer)))
     :init
     (when (< emacs-major-version 31)
       ;; Older versions of Emacs do not indicate to the user that multiple strings can be completed
