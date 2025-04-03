@@ -77,6 +77,12 @@ completion UI in terms of customization.
       "M-RET" 'minibuffer-force-complete-and-exit
       ;; Select currently typed text and exit Vertico
       "C-M-j" 'vertico-exit-input)
+    ;; Keybindings for use in Vertico's grid UI, which can be specified for command categories
+    ;; `vertico-multiform-categories' or specific functions in `vertico-multiform-commands'.
+    (general-def '(normal insert) vertico-grid-map
+      ;; VI-friendly grid movement bindings
+      "C-l" 'vertico-grid-right
+      "C-h" 'vertico-grid-left)
     :custom
     ;; Whether to grow and shrink vertico buffer dynamically
     ;; Can be t (which means grow and shrink), nil, or 'grow-only
