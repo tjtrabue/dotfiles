@@ -129,7 +129,7 @@ Provides far more customization options for file colors in =dired=.
     :straight nil
     :after dired-hacks
     :config
-    (eval-and-compile
+    (progn
       (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
       (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm"
                                             "html" "jhtm" "mht" "eml" "mustache"
