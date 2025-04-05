@@ -448,7 +448,7 @@ your project for Flow Storm.
     :after cider
     :general
     (my/user-leader-def cider-mode-map
-      "C-f" 'cider-storm-map)
+      "C-f" '(:keymap cider-storm-map))
     :init
     ;; Add flow-storm's middleware to the list of nREPL middleware packages to load when jacking in to
     ;; a CIDER session.
