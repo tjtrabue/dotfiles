@@ -903,7 +903,7 @@ edited location, as opposed to opening them at the beginning of the file.
   ;; the user will have to manually revert the buffer to see the updated
   ;; information.
   ;;
-  ;; NOTE: Enabling global-auto-revert can cause Emacs to slow down!
+  ;; NOTE: Enabling `global-auto-revert-mode' can cause Emacs to slow down!
   (global-auto-revert-mode 1)
 
   ;; Persist command history to disk to maintain it between restarts.

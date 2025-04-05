@@ -51,8 +51,8 @@ syntax highlighting, indentation, and navigation.
     ;; Highlight entire rich `(comment ...)' expression with the comment font face
     (clojure-ts-comment-macro-font-lock-body t)
     ;; How to indent Clojure code:
-    ;;   'semantic (default) -> tries to match clojure-mode and cljfmt indentation
-    ;;   'fixed -> Simple indentation strategy outlined in a blog post by Tonsky.
+    ;;   \\='semantic (default) -> tries to match clojure-mode and cljfmt indentation
+    ;;   \\='fixed -> Simple indentation strategy outlined in a blog post by Tonsky.
     (clojure-ts-indent-style 'semantic)
     ;; Whether to make forms inside `(comment ...)' forms top-level forms for evaluation and
     ;; navigation
