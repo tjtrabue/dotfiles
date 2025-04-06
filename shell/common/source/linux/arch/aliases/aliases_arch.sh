@@ -22,6 +22,13 @@ alias pacup="sudo pacman -Syyu"
 alias pacupn="sudo pacman -Syyu --noconfirm"
 # }}}
 
+# Pacman Mirrorlist {{{
+if [ -n "$(command -v reflector)" ]; then
+  # Update the Pacman mirrorlist using the reflector scirpt.
+  alias refreshmirrors="sudo reflector --save /etc/pacman.d/mirrorlist --protocol https --country us --fastest 7 --age 12 --sort rate --ipv4"
+fi
+# }}}
+
 # AUR package build/install {{{
 
 # Build the package and install it, resolving all dependencies beforehand, and
