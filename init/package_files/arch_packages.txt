@@ -161,6 +161,7 @@ numlockx
 nuspell
 nvidia
 nvidia-utils
+nvtop
 openjdk-doc
 openjdk8-doc
 openmp
@@ -247,6 +248,7 @@ ugrep
 unixodbc
 unzip
 upower
+vdpauinfo
 vi
 vim
 vlc
