@@ -168,9 +168,9 @@ Customize the Vertico display UI on a per-command basis.
        (consult-line buffer)
        (consult-line-multi buffer)))
     ;; Configure the display per completion category.
-    (vertico-multiform-categories
-     '((file grid)
-       (imenu buffer)))
+    ;; (vertico-multiform-categories
+    ;;  '((file grid)
+    ;;    (imenu buffer)))
     :config
     ;; `vertico-multiform-mode' allows you to style and configure Vertico per completion category
     ;; rather than globally.
