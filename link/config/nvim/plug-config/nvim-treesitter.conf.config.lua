@@ -3,8 +3,17 @@
 -- languages.
 
 require "nvim-treesitter.configs".setup {
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = {"org"}, -- List of parsers to ignore installing
+  -- A list of parser names, or "all" (the listed parsers MUST always be
+  -- installed)
+  ensure_installed = "all",
+  -- Whether to install parsers synchronously.
+  sync_install = false,
+  -- Automatically install missing parsers when entering buffer.
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed
+  -- locally.
+  auto_install = true,
+  --List of parsers to ignore installing (or "all")
+  ignore_install = {"org"},
   highlight = {
     enable = true, -- false will disable the whole extension
     -- disable = {"org"}, -- list of language that will be disabled

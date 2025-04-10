@@ -1,7 +1,7 @@
 #+LATEX_HEADER: \PassOptionsToPackage{svgnames}{xcolor}
-#+LATEX_HEADER: \setmainfont{Linux Libertine O}
+#+LATEX_HEADER: \setmainfont{EB Garamond}
 #+LATEX_HEADER: \setsansfont[Scale=MatchLowercase]{Switzer Variable}
-#+LATEX_HEADER: \setmonofont[Scale=MatchLowercase]{Cascadia Code PL}
+#+LATEX_HEADER: \setmonofont[Scale=MatchLowercase]{MonoLisa Variable}
 #+LATEX_HEADER: \allsectionsfont{\sffamily}
 #+LATEX_HEADER: \setlist[description]{style=unboxed,font=\sffamily\bfseries}
 #+LATEX_HEADER: \lstloadlanguages{XML,XSLT}
