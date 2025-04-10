@@ -31,13 +31,10 @@ lightdm-webkit-theme-aether
 ls-icons
 lua-emmy-language-server-bin
 lua-language-server-git
-marksman-bin
 neovim-nightly-bin
-nonicons-git
 numix-circle-icon-theme-git
 optimus-manager
 p4v
-pack-cli-bin
 pay-respects-bin
 polybar-git
 rmlint-git
