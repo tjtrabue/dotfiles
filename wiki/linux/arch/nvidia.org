@@ -1,0 +1,41 @@
+#+TITLE:   Configure NVIDIA on Arch Linux
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2025-04-11
+#+TAGS:    nvidia arch linux arch_linux graphics gpu
+#+STARTUP: fold
+
+Almost all of the important documentation for installing and configuring NVIDIA
+drivers and supporting software comes from the [[https://wiki.archlinux.org/title/NVIDIA][Arch Wiki page]]. This article
+seeks to distill information from a plethora of Arch Wiki pages, help pages, and
+other random places on the internet.
+
+* Install the correct driver
+Visit the official Arch Wiki page for NVIDIA for guidance on which driver to use
+for your graphics card.
+
+* Configure NVIDIA kernel module parameters in the bootloader configuration
+** GRUB
+Open =/etc/default/grub= and add the following to =GRUB_CMDLINE_LINUX_DEFAULT=:
+
+#+begin_src sh :tangle no
+  # The elipsis represents other parameters that may already exist in this string.
+  GRUB_CMDLINE_LINUX_DEFAULT="... nvidia-drm.modeset=1 nvidia-drm.fbdev=1"
+#+end_src
+
+Now, regenerate your GRUB configuration:
+
+#+begin_src sh :tangle no
+  sudo grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+#+end_src
+
+* NVIDIA Optimus
+If you own a laptop that includes a discrete NVIDIA GPU, then you have an NVIDIA
+Optimus device. Optimus is NVIDIA technology that allows a laptop to use both
+integrated graphics via the computer's CPU alongside graphics from the GPU, and
+to switch between those drivers without requiring a reboot. However, you will
+need to configure Arch for Optimus, which includes writing both an Xorg
+configuration file and a setup script for your Display Manager (DM) of
+choice. Visit the official [[https://wiki.archlinux.org/title/NVIDIA_Optimus][Arch Wiki page]] for details.

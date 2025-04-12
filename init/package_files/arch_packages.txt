@@ -13,6 +13,7 @@ arc-icon-theme
 asciidoc
 aspell
 aspell-en
+atool
 autorandr
 avahi
 awesome
@@ -24,6 +25,7 @@ bear
 biber
 broot
 cabal-install
+calcurse
 chromium
 clang
 clazy
@@ -97,6 +99,7 @@ iotop
 iproute2
 isoimagewriter
 isync
+jansson
 jdk-openjdk
 jdk8-openjdk
 jq
@@ -106,6 +109,8 @@ kio-gdrive
 kitty
 kubeadm
 kubectl
+lib32-jansson
+lib32-nvidia-utils
 libdvdcss
 libev
 libfixposix
