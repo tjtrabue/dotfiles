@@ -18,7 +18,7 @@ for your graphics card.
 ** GRUB
 Open =/etc/default/grub= and add the following to =GRUB_CMDLINE_LINUX_DEFAULT=:
 
-#+begin_src sh :tangle no
+#+begin_src conf :tangle no
   # The elipsis represents other parameters that may already exist in this string.
   GRUB_CMDLINE_LINUX_DEFAULT="... nvidia-drm.modeset=1 nvidia-drm.fbdev=1"
 #+end_src
@@ -30,6 +30,25 @@ Now, regenerate your GRUB configuration:
 
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 #+end_src
+
+* Add early init configuration to initramfs manager
+** mkinitcpio
+If you use =mkinitcpio= to create an initial ramdisk image for early module
+loading, add the following to the =MODULES()= array in =/etc/mkinitcpio.conf=
+
+#+begin_src conf :tangle no
+  MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+#+end_src
+
+You must also *remove* =kms= from the =HOOKS()= array in that same file if it is
+present.
+
+Next, regenerate the initramfs:
+
+#+begin_src sh :tangle no
+  sudo mkinitcpio -P
+#+end_src
+
 
 * NVIDIA Optimus
 If you own a laptop that includes a discrete NVIDIA GPU, then you have an NVIDIA
