@@ -222,7 +222,9 @@ configured globally.
     :hook
     (vertico-mode . vertico-prescient-mode)
     :custom
-    (vertico-prescient-enable-filtering t)
+    ;; Enable candidate filtering (this can also be done using Orderless)
+    (vertico-prescient-enable-filtering nil)
+    ;; Enable candidate sorting (Orderless does no sorting)
     (vertico-prescient-enable-sorting t)
     (vertico-prescient-override-sorting nil)
     :init
