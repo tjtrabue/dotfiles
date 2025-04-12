@@ -1878,8 +1878,10 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
     :hook
     (org-mode . org-auto-tangle-mode)
     :custom
-    ;; Whether to use auto-tangle as the default behavior for all org buffers.
-    (org-auto-tangle-default t))
+    ;; Whether to use auto-tangle as the default behavior for all org buffers.  In my opinion,
+    ;; tangling should always be a deliberate choice. Tangling all src blocks by default can lead to
+    ;; messy directories and unexpected results.
+    (org-auto-tangle-default nil))
 #+end_src
 
 ** ediff

@@ -49,6 +49,32 @@ Next, regenerate the initramfs:
   sudo mkinitcpio -P
 #+end_src
 
+* pacman hook
+
+Create a Pacman hook file =/etc/pacman.d/hooks/nvidia.hook= with the following contents:
+
+#+begin_src conf :tangle no
+  [Trigger]
+  Operation=Install
+  Operation=Upgrade
+  Operation=Remove
+  Type=Package
+  # You can remove package(s) that don't apply to your config, e.g. if you only use nvidia-open you can remove nvidia-lts as a Target
+  Target=nvidia
+  Target=nvidia-lts
+  Target=nvidia-open
+  Target=nvidia-open-lts
+  # If running a different kernel, modify below to match
+  Target=linux
+  Target=linux-lts
+
+  [Action]
+  Description=Updating NVIDIA module in initcpio
+  Depends=mkinitcpio
+  When=PostTransaction
+  NeedsTargets
+  Exec=/bin/sh -c 'while read -r trg; do case $trg in linux*) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+#+end_src
 
 * NVIDIA Optimus
 If you own a laptop that includes a discrete NVIDIA GPU, then you have an NVIDIA
@@ -58,3 +84,35 @@ to switch between those drivers without requiring a reboot. However, you will
 need to configure Arch for Optimus, which includes writing both an Xorg
 configuration file and a setup script for your Display Manager (DM) of
 choice. Visit the official [[https://wiki.archlinux.org/title/NVIDIA_Optimus][Arch Wiki page]] for details.
+
+* Create modprobe file for NVIDIA kernel modules parameters
+
+Create a file =/etc/modprobe.d/nvidia.conf= with the following contents:
+
+#+begin_src conf :tangle no
+  ### Power management
+  # Save all video memory to a temporary file under `/var/tmp' when Systemd
+  # suspends the system.
+  options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/var/tmp
+  # Do not load the 'nvidiafb' module on boot.
+  # This may help prevent errors when resuming from a suspended session.
+  blacklist nvidiafb
+  # We wish to use the proprietary NVIDIA driver, not the open source Nouveau
+  # driver.
+  blacklist nouveau
+#+end_src
+
+* Enable NVIDIA services
+
+Enable the following NVIDIA Systemd services:
+
+#+begin_src sh :tangle no
+  # Use NVIDIA to suspend system
+  sudo systemctl enable nvidia-suspend
+  # Use NVIDIA to hibernate system
+  sudo systemctl enable nvidia-hibernate
+  # Use NVIDIA to resume from suspend/hibernate
+  sudo systemctl enable nvidia-resume
+  # Manages saved video memory during suspend/hibernate
+  sudo systemctl enable nvidia-persistenced
+#+end_src
