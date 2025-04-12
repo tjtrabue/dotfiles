@@ -33,7 +33,8 @@ not sort matches.
     ;; Whether to perform down-casing on filter arguments
     (prescient-use-case-folding 'smart)
     ;; List of filtering methods prescient uses on space-separated arguments
-    ;; (prescient-filter-method '(literal regexp initialism fuzzy))
-    :config
-    (prescient-persist-mode 1))
+    (prescient-filter-method '(literal regexp initialism anchored))
+    ;; If non-nil, write the cache data to `prescient-save-file' after the cache data is updated by
+    ;; `prescient-remember' when `prescient-persist-mode' is activated.
+    (prescient-aggressive-file-save t))
 #+end_src

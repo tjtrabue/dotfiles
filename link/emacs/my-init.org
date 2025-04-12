@@ -180,6 +180,7 @@ Language and encoding parameters for this particular Emacs instance.
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
+  (setq file-name-coding-system 'utf-8)
 #+end_src
 
 * Load Hotfix Modules
@@ -455,6 +456,9 @@ LanguageServerProtocol clients and servers.
     ;; variable to 'resize-mode may improve the performance of plugins that use
     ;; child frames.
     (setq posframe-gtk-resize-child-frames 'resize-mode))
+
+  ;; The string Emacs uses to represent arrows in various contexts.
+  (setq overlay-arrow-string "⇒")
 #+end_src
 
 * Load Built-In Libraries
@@ -844,10 +848,13 @@ of the right and left fringes individually.
 
 #+begin_src emacs-lisp
   (when (display-graphic-p)
-    ;; When called with a number, set the fringe on the right and left to the
-    ;; specified number of pixels.  When called interactively, prompt the user for a
-    ;; fringe style to apply.
-    (set-fringe-mode 8))
+    ;; When called interactively, prompt the user for a fringe style to apply.
+    ;; When called from a Lisp program, the argument must be one of:
+    ;; - nil -> default fringe width of 8 pixel for both the left and right fringes.
+    ;; - a cons cell (LEFT . RIGHT) -> LEFT and RIGHT are the pixel widths for the left and right
+    ;;   fringes, respectively.
+    ;; - a single integer -> specifies the pixel widths of both fringes.
+    (fringe-mode '(12 . 8)))
 #+end_src
 
 * Info

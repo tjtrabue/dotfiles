@@ -213,6 +213,11 @@ configured globally.
 
 #+begin_src emacs-lisp
   (use-package vertico-prescient
+    ;; 4/12/25 - Prescient.el messes with Vertico's input history, meaning that whenever you restart
+    ;; Emacs, pressing `M-x', for instance, will not have any previous inputs to suggest. This could
+    ;; be fixed by enabling `prescient-persist-mode', but that mode appears to be broken in modern
+    ;; Emacs.
+    :disabled
     :after (vertico prescient)
     :hook
     (vertico-mode . vertico-prescient-mode)
