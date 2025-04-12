@@ -6,9 +6,11 @@
 #+STARTUP: fold
 
 Almost all of the important documentation for installing and configuring NVIDIA
-drivers and supporting software comes from the [[https://wiki.archlinux.org/title/NVIDIA][Arch Wiki page]]. This article
-seeks to distill information from a plethora of Arch Wiki pages, help pages, and
-other random places on the internet.
+drivers and supporting software comes from the [[https://wiki.archlinux.org/title/NVIDIA][Arch Wiki page]], and I suggest you
+read that article in its entirety. This page seeks to distill information from a
+plethora of Arch Wiki pages, help pages, FAQs, and other random places on the
+internet so that users can quickly get their NVIDIA configurations up and
+running on a new Arch installation.
 
 * Install the correct driver
 Visit the official Arch Wiki page for NVIDIA for guidance on which driver to use
