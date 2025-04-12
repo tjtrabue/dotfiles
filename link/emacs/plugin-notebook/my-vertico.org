@@ -204,3 +204,23 @@ is a modern looking child frame in the middle of the active Emacs frame.
                                                (list (my/vertico-posframe-top-center 'consult-line)
                                                      '(t posframe)))))
 #+end_src
+
+** vertico-prescient
+=vertico-prescient.el= configures filtering locally in the Vertico buffer. To do
+this, it modifies the values of =completion-styles=,
+=completion-category-overrides=, and =completion-category-defaults=. Sorting is
+configured globally.
+
+#+begin_src emacs-lisp
+  (use-package vertico-prescient
+    :after (vertico prescient)
+    :hook
+    (vertico-mode . vertico-prescient-mode)
+    :custom
+    (vertico-prescient-enable-filtering t)
+    (vertico-prescient-enable-sorting t)
+    (vertico-prescient-override-sorting nil)
+    :init
+    (when (bound-and-true-p vertico-mode)
+      (vertico-prescient-mode 1)))
+#+end_src
