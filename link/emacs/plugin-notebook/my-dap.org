@@ -64,7 +64,7 @@ buffers and =repeat-mode= for more pleasant key mappings.
     (setq dape-key-prefix "\C-x\C-a")
     ;; Create an empty `~/.emacs.d/dape-breakpoints' file if it does not exist.  This file must be
     ;; present for `dape-breakpoint-save' and `dape-breakpoint-load' to work.
-    (let ((breakpoints-file (expand-file-name "dape-breakpoints" (concat user-emacs-directory))))
+    (let ((breakpoints-file (expand-file-name "dape-breakpoints" user-emacs-directory)))
       ;; Make sure the Dape variable matches our established breakpoints file.
       (setq dape-default-breakpoints-file breakpoints-file)
       (unless (file-exists-p breakpoints-file)
