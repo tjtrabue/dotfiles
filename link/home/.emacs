@@ -54,7 +54,7 @@
   my configuration.  Most of the performance increase comes from
   native-compiling Emacs itself, along with any downloaded libraries.")
 
-(defvar my/gc-cons-threshold (* 80 1024 1024) ;; 80 MB
+(defvar my/gc-cons-threshold (* 100 1024 1024) ;; 100 MB
   "My chosen threshold for garbage collection.")
 
 ;; Use latest org-mode installed via `straight.el' from the beginning to avoid
