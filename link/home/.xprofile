@@ -10,7 +10,7 @@
 # services, but could also cause duplicate service sessions to be created.
 
 if echo "${XDG_SESSION_DESKTOP}" |
-  grep -E -q '^(plasma)|(plasma-wayland)|(KDE)$'; then
+  grep -E -q '^(plasma)|(plasmax11)|(plasma-wayland)|(KDE)$'; then
   # Ignore this file for certain desktop environments (DEs), such as
   # KDE Plasma and GNOME. These GUIs have their own variants of the services
   # this file starts (compositors, audio services, etc.), so the settings in

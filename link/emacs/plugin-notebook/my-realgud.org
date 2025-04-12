@@ -9,11 +9,28 @@
 debuggers. It is quite feature-rich, and I recommend you take a look at its
 [[https://github.com/realgud/realgud][GitHub page]] for more information.
 
+*NOTE (4/11/25):* =realgud= has not been actively maintained for more than 2
+years. Additionally, =realgud= follows an antiquated design philosophy when it
+comes to supporting debuggers. Long ago, the primary way for modular programs to
+support new features from third-parties was through plugins. This approach
+worked great...as long as programmers were committed to the original host
+program. If they wanted to port their awesome debugging code to a new editor,
+they would have to start over, rewriting all their debugging integration code to
+fit the new editor's API. This was no good, since developers believe that a good
+debugger should work in any editor. The latest craze in the debugging world is
+the DAP, or Debug Adapter Protocol, which is a UI-agnostic approach to providing
+debugging support for programming platforms. DAP functions in a similar manner
+to LSP, which provides intellisense, documentation, refactoring, and code
+navigation features to any editor with an LSP client. =realgud= currently does not
+support DAP, and as such, I would look elsewhere for debugger plugins for Emacs.
+
 * realgud
   This is the debugging package itself.
 
 #+begin_src emacs-lisp
-  (use-package realgud)
+  (use-package realgud
+    ;; Not currently using realgud.
+    :disabled)
 #+end_src
 
 * Plugins
@@ -22,19 +39,25 @@ debuggers. It is quite feature-rich, and I recommend you take a look at its
    =realgud= interface to =byebug=, a popular Ruby debugger.
 
 #+begin_src emacs-lisp
-  (use-package realgud-byebug)
+  (use-package realgud-byebug
+    ;; Not currently using realgud.
+    :disabled)
 #+end_src
 
 ** realgud-ipdb
    =realgud= interface to =ipdb=, a Python debugger that leverages IPython.
 
 #+begin_src emacs-lisp
-  (use-package realgud-ipdb)
+  (use-package realgud-ipdb
+    ;; Not currently using realgud.
+    :disabled)
 #+end_src
 
 ** realgud-trepan-ni
    Node.js debugger.
 
 #+begin_src emacs-lisp
-  (use-package realgud-trepan-ni)
+  (use-package realgud-trepan-ni
+    ;; Not currently using realgud.
+    :disabled)
 #+end_src
