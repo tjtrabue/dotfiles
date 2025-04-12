@@ -8,6 +8,7 @@ cmake-language-server
 cmakelint
 cookiecutter
 cpplint
+debugpy
 epc
 eyed3
 flake8

@@ -8,7 +8,9 @@
 debuggers. It builds on the LanguageServerProtocol to perform its duties. In
 fact, many modern LSP servers also provide a DAP server.
 
-* =use-package= specification
+* dap-mode
+=dap-mode= is a similar package to =lsp-mode=, providing a DAP client for Emacs.
+
 #+begin_src emacs-lisp
   (use-package dap-mode
     ;; Not currently using `lsp-mode', a dependency for `dap-mode', so leaving this
@@ -38,4 +40,43 @@ fact, many modern LSP servers also provide a DAP server.
       "lH" 'dap-hydra)
     (my/evil-leader-def lsp-bridge-mode-map
       "wH" 'dap-hydra))
+#+end_src
+
+* Dape
+Dape is a Debug Adapter Protocol (DAP) client for Emacs. The Debug Adapter
+Protocol, much like its more familiar counterpart the Language Server Protocol,
+aims to establish a common API for programming tools. However, instead of
+capabilities such as code completion, navigation, refactoring, and
+documentation, DAP provides a standardized interface for debuggers.
+
+To begin a debugging session, invoke the =dape= command. In the minibuffer prompt,
+enter a debug adapter configuration name from =dape-configs=.
+
+For complete functionality, make sure to enable =eldoc-mode= in your source
+buffers and =repeat-mode= for more pleasant key mappings.
+
+#+begin_src emacs-lisp
+  (use-package dape
+    :demand t
+    :preface
+    ;; The key sequence prefixing all Dape commands.
+    ;; Defaults to `C-x C-a', which is the same one used by `gud'.
+    (setq dape-key-prefix "\C-x\C-a")
+    :hook
+    ;; Save breakpoints on exit
+    (kill-emacs . dape-breakpoint-save)
+    ;; Load breakpoints on startup
+    (after-init . dape-breakpoint-load)
+    :custom
+    ;; Arrange information windows to the right of the primary window.
+    (dape-buffer-window-arrangement 'right)
+    ;; Whether to hide Dape information in the mode line.
+    (dape-info-hide-mode-line nil)
+    ;; Whether to show inlay hints.
+    (dape-inlay-hints t)
+    ;; For Projectile users: use Projectile to establish the project's root directory.
+    (dape-cwd-function 'projectile-project-root)
+    :config
+    ;; Turn on global bindings for setting breakpoints with mouse
+    (dape-breakpoint-global-mode 1))
 #+end_src

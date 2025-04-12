@@ -126,6 +126,7 @@ lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
 linux-headers
 lld
+lldb
 llvm
 lsof
 lua

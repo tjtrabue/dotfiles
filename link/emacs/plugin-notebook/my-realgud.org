@@ -22,7 +22,9 @@ the DAP, or Debug Adapter Protocol, which is a UI-agnostic approach to providing
 debugging support for programming platforms. DAP functions in a similar manner
 to LSP, which provides intellisense, documentation, refactoring, and code
 navigation features to any editor with an LSP client. =realgud= currently does not
-support DAP, and as such, I would look elsewhere for debugger plugins for Emacs.
+support DAP, and as such, I would look elsewhere for debugger plugins for
+Emacs. Check out my Dape configuration in =my-dap.org= for some ideas as to how to
+get started using DAP in Emacs.
 
 * realgud
   This is the debugging package itself.

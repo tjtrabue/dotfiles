@@ -286,9 +286,11 @@ LanguageServerProtocol clients and servers.
   ;; Get rid of scrollbars since l33t programmers don't need any.
   (setq vertical-scroll-bar nil)
 
-  ;; Increase the amount of bytes Emacs reads per unit time from a given
-  ;; process. The initial value is 4KB, far too low for modern day applications.
-  (setq read-process-output-max (* 3 (* 1024 1024)))
+  ;; Increase the amount of bytes Emacs reads per unit time from a given process. The initial value is
+  ;; 4KB, far too low for modern day applications.  To find the maximum size in bytes your system
+  ;; supports, run `cat /proc/sys/fs/pipe-max-size` from the terminal.
+  ;; (* 1024 1024) = 1MB
+  (setq read-process-output-max (* 1024 1024))
 
   ;; Max file size (in bytes) before a confirmation is required of the user before
   ;; opening.
@@ -573,6 +575,21 @@ Emacs built-in software project utilities.
   (use-package project
     :ensure nil
     :straight (:type built-in))
+#+end_src
+
+** repeat
+When Repeat mode is enabled, certain commands bound to multi-key sequences can
+be repeated by typing a single key, after typing the full key sequence once.
+The commands which can be repeated like that are those whose symbol has the
+property =repeat-map= which specifies a keymap of single keys for repeating.  See
+=describe-repeat-maps= for a list of all repeatable commands.
+
+#+begin_src emacs-lisp
+  (use-package repeat
+    :ensure nil
+    :straight (:type built-in)
+    :init
+    (repeat-mode 1))
 #+end_src
 
 ** TRAMP
