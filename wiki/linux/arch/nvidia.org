@@ -104,6 +104,9 @@ Create a file =/etc/modprobe.d/nvidia.conf= with the following contents:
   blacklist nouveau
 #+end_src
 
+Please check the [[https://wiki.gentoo.org/wiki/NVIDIA/nvidia-drivers][Gentoo Wiki]] page for detailed documentation about NVIDIA's
+kernel module parameters.
+
 * Enable NVIDIA services
 
 Enable the following NVIDIA Systemd services:
