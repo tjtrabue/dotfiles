@@ -432,6 +432,16 @@ kernel.sysrq = 1
 EOF
 # }}}
 
+# Linux Console {{{
+# Configure default font and keymap for the virtual console.
+# This silences a warning issued when running `mkinitcpio -P`.
+cat <<EOF >>"${MOUNT_ROOT}/etc/vconsole.conf"
+
+FONT=eurlatgr
+KEYMAP=us
+EOF
+# }}}
+
 # Configure Avahi {{{
 # Make nss-mdns authoritative for the '.local' domain, unless the unicast DNS
 # server responds to SOA queries for the top level local name, or the request
