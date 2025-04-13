@@ -1891,6 +1891,21 @@ files if they contain a non-nil value for the =#+auto_tangle:= option.
     (org-auto-tangle-default nil))
 #+end_src
 
+** emacs-async
+=async.el= is a module for asynchronous processing in Emacs. This package also
+provides some async applications:
+
+- =dired-async=
+- =smtp-mail-async=
+- =async-bytecomp=
+- =async-package=
+
+#+begin_src emacs-lisp
+  (use-package emacs-async
+    :init
+    (dired-async-mode 1))
+#+end_src
+
 ** ediff
 =ediff= is Emacs' built-in file diff tool. Although originally designed for
 viewing generic file diffs in ye olden times, =ediff= works wonderfully for
