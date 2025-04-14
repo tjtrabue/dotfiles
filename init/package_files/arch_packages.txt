@@ -145,6 +145,7 @@ maturin
 mediainfo
 meld
 meson
+modemmanager
 mold
 nano
 ncdu
@@ -254,6 +255,8 @@ ugrep
 unixodbc
 unzip
 upower
+usb_modeswitch
+usbutils
 vdpauinfo
 vi
 vim

@@ -275,6 +275,8 @@ Adjust the font size of an Emacs frame based on the monitor's size."
     (set-fontset-font t nil "Noto Color Emoji" nil 'append))
   (when (member "Symbols Nerd Font" font-families)
     (set-fontset-font t nil "Symbols Nerd Font" nil 'append))
+  (when (member "Code2001" font-families)
+    (set-fontset-font t nil "Code2001" nil 'append))
   (when (member "Symbola" font-families)
     (set-fontset-font t nil "Symbola" nil 'append))
   (when (member "Quivira" font-families)
