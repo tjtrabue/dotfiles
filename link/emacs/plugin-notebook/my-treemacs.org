@@ -89,9 +89,9 @@ update the =treemacs= workspace when we switch =projectile= projects because
     (my/evil-leader-def
       "tp" 'treemacs-projectile)
     :init
-    (add-to-list 'projectile-after-switch-project-hook
-                 '(lambda ()
-                    (treemacs-add-and-display-current-project-exclusively)))
+    (add-hook 'projectile-after-switch-project-hook
+              (lambda ()
+                (treemacs-add-and-display-current-project-exclusively)))
     :config
     (my/sync-treemacs-with-projectile))
 #+end_src

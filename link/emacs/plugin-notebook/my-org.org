@@ -174,18 +174,31 @@ customization group.
 
 #+begin_src emacs-lisp
   (use-package org-modern
-    ;; I am not certain, but I believe this plugin causes Emacs to lock up if window focus is lost
-    ;; then regained. org-modern makes Org buffers look nice, but this plugin is unnecessary for
-    ;; anything important.
-    ;; :disabled
-    :after org
+    :after (org modus-themes)
+    :hook
+    (org-mode . org-modern-mode)
+    (org-agenda-finalize . org-modern-agenda)
     :custom
-    ;; Do not use `org-indent-mode' as it interferes with org-modern's block prettification.
-    (org-startup-indented nil)
+    ;; Whether to enable `org-modern-indent' when `org-indent' is active
+    (org-modern-block-indent t)
+    (org-modern-hide-stars nil)
+    (org-modern-todo-faces
+     '(("STARTED" :foreground "yellow")
+       ("CANCELED" org-special-keyword :inverse-video t :weight bold)))
+    (org-modern-list
+     '((?* . "•")
+       (?+ . "‣")))
+    (org-modern-fold-stars
+     '(("▶" . "▼")
+       ("▷" . "▽")
+       ("▸" . "▾")
+       ("▹" . "▿")))
+    (org-modern-checkbox
+     '((?X . "✔")
+       (?- . "┅")
+       (?\s . " ")))
     ;; Update the org-sticky-header bullet character to match org-modern bullets.
-    (org-sticky-header-heading-star "▶")
-    :init
-    (global-org-modern-mode 1))
+    (org-sticky-header-heading-star "▶"))
 #+end_src
 
 * org-preview-html
