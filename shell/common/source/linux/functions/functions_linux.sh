@@ -51,4 +51,17 @@ expandstr() {
   fi
 }
 
+# List screen/display connector information. Useful for getting identifiers for
+# different displays.
+display_connector_statuses() {
+  local con
+  local p
+
+  for p in /sys/class/drm/*/status; do
+    con="${p%/status}"
+    echo -n "${con#*/card?-}: "
+    command cat "${p}"
+  done
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
