@@ -135,14 +135,16 @@ The Evil mode plugin itself.
   (use-package evil
     :demand t
     :hook
-    ;; Activate relative line numbers by default, and absolute line numbers when
-    ;; in evil's insert state.
-    ((evil-insert-state-entry . (lambda ()
-                                  (setq display-line-numbers t)))
-     (evil-insert-state-exit . (lambda ()
-                                 (if (eq my/line-number-state 'absolute)
-                                     (setq display-line-numbers t)
-                                   (setq display-line-numbers 'relative)))))
+    ;; If we are displaying line numbers in the current buffer, activate relative line numbers by
+    ;; default, and absolute line numbers when in evil's insert state.
+    (evil-insert-state-entry . (lambda ()
+                                 (when (bound-and-true-p display-line-numbers)
+                                   (setq display-line-numbers t))))
+    (evil-insert-state-exit . (lambda ()
+                                (when (bound-and-true-p display-line-numbers)
+                                  (if (eq my/line-number-state 'absolute)
+                                      (setq display-line-numbers t)
+                                    (setq display-line-numbers 'relative)))))
     :general
     ;; Use "jk" to escape from insert and replace states.
     ;; Currently using evil-escape for this feature, but I'm leaving the code
