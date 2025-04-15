@@ -142,9 +142,11 @@ The Evil mode plugin itself.
                                    (setq display-line-numbers t))))
     (evil-insert-state-exit . (lambda ()
                                 (when (bound-and-true-p display-line-numbers)
-                                  (setq display-line-numbers (if (eq my/line-number-state 'absolute)
-                                                                 t
-                                                               'relative)))))
+                                  (setq display-line-numbers (pcase my/line-number-state
+                                                               ('absolute t)
+                                                               ('relative 'relative)
+                                                               ('visual 'visual)
+                                                               (_ nil))))))
     :general
     ;; Use "jk" to escape from insert and replace states.
     ;; Currently using evil-escape for this feature, but I'm leaving the code

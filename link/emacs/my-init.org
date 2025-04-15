@@ -853,7 +853,7 @@ of the right and left fringes individually.
     ;; - a cons cell (LEFT . RIGHT) -> LEFT and RIGHT are the pixel widths for the left and right
     ;;   fringes, respectively.
     ;; - a single integer -> specifies the pixel widths of both fringes.
-    (fringe-mode '(16 . 8)))
+    (fringe-mode '(12 . 8)))
 #+end_src
 
 * Info
