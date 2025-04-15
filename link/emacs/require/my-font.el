@@ -92,9 +92,9 @@
      ;; from its developers, so you can expect even more features in the future.
      ;;
      ;; Get it here: https://www.monolisa.dev/
-     (monolisa (:family "MonoLisa Variable" :height 110 :weight regular :width normal))
+     (monolisa (:family "MonoLisa Variable" :height 105 :weight regular :width normal))
      (monolisa-italic (:family "MonoLisa Variable"
-                        :height 110 :weight regular :width normal :slant italic))
+                        :height 105 :weight regular :width normal :slant italic))
      ;; System default mono-spaced font. Handy to use as a last-resort fallback.
      (monospace (:family "Monospace" :height 110 :weight normal :width normal))
      ;; Google's default monospaced font. A decent fallback option since its
