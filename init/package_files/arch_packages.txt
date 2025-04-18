@@ -24,6 +24,7 @@ bc
 bear
 biber
 broot
+bspwm
 cabal-install
 calcurse
 chromium
@@ -51,6 +52,7 @@ docker
 docker-buildx
 docker-compose
 doxygen
+dunst
 dvisvgm
 efibootmgr
 elixir
@@ -154,6 +156,7 @@ neovim
 network-manager-applet
 networkmanager
 ninja
+nitrogen
 nodejs
 notmuch
 noto-fonts
@@ -215,6 +218,7 @@ shfmt
 shotgun
 stack
 streamlink
+sxhkd
 sysfsutils
 t1utils
 tar
