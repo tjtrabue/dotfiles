@@ -41,7 +41,16 @@ picom --config "${HOME}/.config/picom/picom.conf" &
 dunst &
 
 # System Panel
-polybar &
+polybarLauncher="${HOME}/.config/polybar/launch.sh"
+if [ -f "${polybarLauncher}" ]; then
+  # Launch Polybar from custom shell script
+  /bin/sh "${polybarLauncher}"
+else
+  # Otherwise, fall back on default polybar. This is not very useful, but serves
+  # as an indicator that something is wrong with our polybar configuration.
+  polybar &
+fi
+unset polybarLauncher
 
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
