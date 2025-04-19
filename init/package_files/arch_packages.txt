@@ -282,6 +282,7 @@ xclip
 xcompmgr
 xcursor-themes
 xdotool
+xkeycaps
 xorg
 xorg-server
 xorg-server-xephyr
@@ -289,6 +290,7 @@ xorg-xbacklight
 xorg-xfd
 xorg-xinit
 xorg-xinput
+xorg-xmodmap
 xscreensaver
 xsel
 xterm

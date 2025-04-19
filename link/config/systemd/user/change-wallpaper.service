@@ -1,0 +1,15 @@
+# This service changes the user's desktop wallpaper periodically using
+# ~/.fehbg. See that script for details as to how the wallpaper changes.
+
+[Unit]
+Description=Change the wallpaper on X display :0
+Wants=change-wallpaper.timer
+
+[Service]
+Type=oneshot
+# use the executable ~/.fehbg script to change the wallpaper to a random
+# image
+ExecStart=/bin/sh ~/.fehbg
+
+[Install]
+WantedBy=graphical.target

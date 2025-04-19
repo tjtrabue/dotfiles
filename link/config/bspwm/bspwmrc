@@ -25,7 +25,8 @@ bspc config gapless_monocle true
 picom --config "${HOME}/.config/picom/picom.conf" &
 
 # Wallpaper
-nitrogen --restore &
+# Use feh commands in ~/.fehbg to set wallpaper
+"${HOME}/.fehbg" &
 
 # Notification
 dunst &

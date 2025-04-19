@@ -272,10 +272,6 @@ cedet-rc.el
 /link/config/Google
 # }}}
 
-# SystemD {{{
-/link/config/systemd/
-# }}}
-
 # KDE {{{
 # KDE is a desktop environment for Linux.
 
@@ -369,7 +365,7 @@ cedet-rc.el
 # The activity manager changes too frequently, and is not useful for sharing.
 /link/config/kactivitymanagerd*
 # }}}
-
+j
 # VLC {{{
 /link/config/vlc/
 # }}}

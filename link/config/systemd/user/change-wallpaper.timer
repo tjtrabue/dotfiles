@@ -1,0 +1,13 @@
+# Timer for the change-wallpaper.service unit.
+
+[Unit]
+Description=Change the wallpaper on X display :0 every few minutes
+Requires=change-wallpaper.service
+
+[Timer]
+# Changes wallpaper every 15 minutes.
+OnActiveSec=15m
+OnUnitActiveSec=15m
+
+[Install]
+WantedBy=timers.target

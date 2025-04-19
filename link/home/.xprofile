@@ -68,5 +68,10 @@ if [ -n "$(command -v xsetroot)" ]; then
   xsetroot -cursor_name left_ptr
 fi
 
+# Load the user's ~/.Xresources definitions before the window manager starts.
+if [ -n "$(command -v xrdb)" ]; then
+  xrdb "${HOME}/.Xresources"
+fi
+
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0

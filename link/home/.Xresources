@@ -26,10 +26,19 @@ Xterm.vt100.scrollbar.width: 8
 ! Turn on TrueType fonts by default
 XTerm.vt100.renderFont: true
 ! Set TrueType font and size
-XTerm*faceName: FiraCode Nerd Font:style=Medium
+XTerm*faceName: MonoLisa Variable:style=Regular
 XTerm*faceSize: 11
 ! Set default font size
 XTerm*font: *-fixed-*-*-*-18-*
+! }}}
+
+! Cursor {{{
+! Icon themes must be installed under `/usr/share/icons/`, and the selected
+! theme linked to `~/.local/share/icons/default`
+Xcursor.theme: phinger-cursors-dark
+! Sizes are usually: 24, 32, 48, 96, and 128, but the available sizes depend on
+! your cursor theme.
+Xcursor.size: 24
 ! }}}
 
 ! Key bindings {{{
