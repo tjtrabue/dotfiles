@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Set a random wallpaper for each monitor screen
-DISPLAY=:0 feh --bg-max --no-fehbg --randomize ~/wallpaper/*
+DISPLAY=:0 feh --bg-fill --no-fehbg --randomize ~/wallpaper/*
