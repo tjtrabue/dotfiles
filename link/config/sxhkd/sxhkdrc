@@ -129,11 +129,11 @@ super + {_,shift + }r
 #
 
 # Web browser
-super + ctrl + w
+super +  b
 	brave
 
 # File browser
-super + ctrl + f
+super + d
 	krusader
 
 # Emacs
