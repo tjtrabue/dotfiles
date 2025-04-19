@@ -33,7 +33,7 @@ icon-theme: "Papirus";
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-/*	combi-modes: "window,run";*/
+combi-modes: "window,run";
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
@@ -48,7 +48,7 @@ icon-theme: "Papirus";
 /*	combi-display-format: "{mode} {text}";*/
 /*	matching-negate-char: '-' /* unsupported */;*/
 /*	cache-dir: ;*/
-/*	window-thumbnail: false;*/
+window-thumbnail: true;
 /*	drun-use-desktop-cache: false;*/
 /*	drun-reload-desktop-cache: false;*/
 /*	normalize-match: false;*/
