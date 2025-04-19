@@ -73,5 +73,14 @@ if [ -n "$(command -v xrdb)" ]; then
   xrdb "${HOME}/.Xresources"
 fi
 
+# Load multi-monitor configuration via a saved `arandr` profile in the
+# ~/.screenlayout directory. If the profile named "default" does not yet exist,
+# use arandr to create it.
+defaultArandrProfileFile="${HOME}/.screenlayout/default.sh"
+if [ -f "${defaultArandrProfileFile}" ]; then
+  sh "${defaultArandrProfileFile}"
+fi
+unset defaultArandrProfileFile
+
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0

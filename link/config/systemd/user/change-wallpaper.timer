@@ -1,4 +1,6 @@
 # Timer for the change-wallpaper.service unit.
+# Credit to ejmastnak.
+# See the original post here: https://ejmastnak.com/tutorials/arch/wallpaper/
 
 [Unit]
 Description=Change the wallpaper on X display :0 every few minutes

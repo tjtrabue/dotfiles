@@ -2,6 +2,15 @@
 
 pgrep -x sxhkd >/dev/null || sxhkd &
 
+# Set desktops on various connected displays
+bspc monitor -d I II III IV
+if xrandr -q | grep -E -q "DP-0\s*connected"; then
+  bspc monitor DP-0 -d I V VI VII VII
+fi
+if xrandr -q | grep -E -q "DP-1\s*connected"; then
+  bspc monitor DP-1 -d VIII IX X
+fi
+
 # Load multi-monitor configuration
 defaultArandrProfileFile="${HOME}/.screenlayout/default.sh"
 if [ -f "${defaultArandrProfileFile}" ]; then
@@ -33,3 +42,6 @@ dunst &
 
 # System Panel
 polybar &
+
+# Modeline for this file (LEAVE IT COMMENTED!)
+# vim:foldenable:foldmethod=marker:foldlevel=0

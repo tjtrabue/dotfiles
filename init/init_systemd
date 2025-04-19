@@ -20,7 +20,7 @@ declare LOG_LEVEL="${LOG_LEVEL:-3}"
 # Functions {{{
 _help() {
   command cat <<EOF
-${THIS_EXEC} | <insert description here>
+${THIS_EXEC} | Enable custom Systemd services
 
 USAGE:
   ${THIS_EXEC} [OPTIONS]
@@ -38,6 +38,22 @@ OPTIONS:
 EOF
 }
 
+# Link a wallpaper changing script to `/usr/local/bin/change-wallpaper`
+isd__link_change_wallpaper_script() {
+  local changeWallpaperScript="${DOTFILES_HOME}/link/home/.fehbg"
+  local scriptTarget="/usr/local/bin/change-wallpaper"
+
+  log_info "Linking wallpaper changing script" \
+    "${BLUE}${changeWallpaperScript}${NC} to ${BLUE}${scriptTarget}${NC}"
+
+  if [ -f "${scriptTarget}" ]; then
+    err "File ${BLUE}${scriptTarget}${NC} already exists"
+    return 1
+  fi
+
+  sudo ln -sf "${changeWallpaperScript}" "${scriptTarget}"
+}
+
 # Enable/start custom Systemd units contained in the dotfiles repo.
 isd__enable_custom_user_services() {
   systemctl --user daemon-reload
@@ -47,6 +63,8 @@ isd__enable_custom_user_services() {
 
 main() {
   print_header "Initializing custom Systemd services"
+  isd__link_change_wallpaper_script
+  isd__enable_custom_user_services
 }
 # }}}
 

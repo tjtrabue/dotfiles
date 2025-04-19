@@ -156,7 +156,6 @@ neovim
 network-manager-applet
 networkmanager
 ninja
-nitrogen
 nodejs
 notmuch
 noto-fonts
