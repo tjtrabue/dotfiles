@@ -129,7 +129,7 @@ super + {_,shift + }r
 #
 
 # Web browser
-super +  b
+super + v
 	brave
 
 # File browser

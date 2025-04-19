@@ -38,7 +38,7 @@ XTerm*font: *-fixed-*-*-*-18-*
 Xcursor.theme: phinger-cursors-dark
 ! Sizes are usually: 24, 32, 48, 96, and 128, but the available sizes depend on
 ! your cursor theme.
-Xcursor.size: 24
+Xcursor.size: 32
 ! }}}
 
 ! Key bindings {{{
