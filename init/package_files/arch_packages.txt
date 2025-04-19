@@ -189,8 +189,6 @@ pkcs11-helper
 pkcs11-provider
 pkgconf
 plantuml
-plasma
-plasma-wayland-session
 plocate
 poppler
 postgresql
@@ -282,6 +280,7 @@ wxwidgets-qt5
 xaw3d
 xclip
 xcompmgr
+xcursor-themes
 xdotool
 xorg
 xorg-server

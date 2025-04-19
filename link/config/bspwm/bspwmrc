@@ -19,11 +19,6 @@ bspc config split_ratio 0.52
 bspc config borderless_monocle true
 bspc config gapless_monocle true
 
-# Set key repeat
-if [ -n "$(command -v xset)" ]; then
-  xset r rate 200 50
-fi
-
 ### Auto-start applications ###
 
 # Start the compositing manager in the background

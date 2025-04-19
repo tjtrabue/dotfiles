@@ -36,6 +36,7 @@ numix-circle-icon-theme-git
 optimus-manager
 p4v
 pay-respects-bin
+phinger-cursors
 polybar-git
 rmlint-git
 roswell
