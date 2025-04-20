@@ -117,6 +117,8 @@ Enable the following NVIDIA Systemd services:
   # Use NVIDIA to hibernate system
   sudo systemctl enable nvidia-hibernate
   # Use NVIDIA to resume from suspend/hibernate
+  # NOTE: This service sometimes causes problems resuming! You may want to
+  #       disable this service should that occur.
   sudo systemctl enable nvidia-resume
   # Manages saved video memory during suspend/hibernate
   sudo systemctl enable nvidia-persistenced

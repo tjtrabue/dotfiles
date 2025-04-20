@@ -129,6 +129,17 @@ super + {_,shift + }r
 	bspc node '@parent' -R {_,-}90
 
 #
+# System
+#
+
+# Lock the X session using XScreenSaver.
+# This requires a running XScreenSaver daemon. See the Arch Wiki page for
+# details:
+# https://wiki.archlinux.org/title/XScreenSaver
+super + shift + q
+	xscreensaver-command -lock
+
+#
 # Applications
 #
 

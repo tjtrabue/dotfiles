@@ -61,10 +61,17 @@ isd__enable_custom_user_services() {
   systemctl --user enable --now change-wallpaper.timer
 }
 
+# Enable global Systemd services.
+isd__enable_system_services() {
+  log_info "Enabling ACPID service"
+  sudo systemctl enable --now acpid.service
+}
+
 main() {
   print_header "Initializing custom Systemd services"
   isd__link_change_wallpaper_script
   isd__enable_custom_user_services
+  isd__enable_system_services
 }
 # }}}
 

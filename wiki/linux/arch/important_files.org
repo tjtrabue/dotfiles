@@ -1,0 +1,15 @@
+#+TITLE:   Important Linux Files
+#+AUTHOR:  Thomas Trabue
+#+EMAIL:   tom.trabue@gmail.com
+#+DATE:    2025-04-20
+#+TAGS:
+#+STARTUP: fold
+
+This is a wiki article on the purpose and configuration of common Linux system
+files.
+
+* =/etc/systemd/logind.conf=
+** Purpose
+Manager user session details, mainly around power management, i.e., when the
+system suspends, how long of an idle period elapses before suspending, what
+happens when the user presses the power button, etc.

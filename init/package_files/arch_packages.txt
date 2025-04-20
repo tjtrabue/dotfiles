@@ -1,5 +1,6 @@
 ack
 acpi
+acpid
 alacritty
 alsa-firmware
 alsa-plugins

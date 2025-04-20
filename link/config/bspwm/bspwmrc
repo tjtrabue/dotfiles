@@ -52,5 +52,13 @@ else
 fi
 unset polybarLauncher
 
+# XScreenSaver
+# Check the ~/.xscreensaver file for settings, and use the
+# `xscreensaver-settings` command to configure the screensaver/locking behavior
+# You can issue `xscreensaver-command -lock` to lock the X session manually.
+if [ -n "$(command -v xscreensaver)" ]; then
+  xscreensaver &
+fi
+
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0
