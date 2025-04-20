@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+ibspwm__help() {
+  command cat <<EOF
+${THIS_EXEC} | Initialize BSPWM window manager
+
+This is a minimal setup script since BSPWM requires very little in the way
+of setup duties.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
+EOF
+}
+
+# Enable basic Systemd services.
+# These should only be enabled for very minimal desktop environments, such as
+ibspwm__enable_services() {
+  log_info "Enabling services"
+  runinit systemd
+}
+
+ibspwm__main() {
+  print_header "Initializing Binary Space Partitioning Window Manager"
+  ibspwm__enable_services
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n 'init_bspwm' \
+  -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    ibspwm__help
+    exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+ibspwm__main "${@}"
+
+# vim:foldenable:foldmethod=marker:

@@ -22,6 +22,11 @@ _help() {
   command cat <<EOF
 ${THIS_EXEC} | Enable custom Systemd services
 
+This script should only be run to initialize very minimal desktop environments,
+such as simple window managers (bspwm, i3, etc.), but not for full DEs like
+KDE, GNOME, or Xfce since they manage many of these services in their own
+unique ways.
+
 USAGE:
   ${THIS_EXEC} [OPTIONS]
 

@@ -294,6 +294,7 @@ xorg-xinput
 xorg-xmodmap
 xscreensaver
 xsel
+xss-lock
 xterm
 ydotool
 yq
