@@ -173,4 +173,19 @@ URxvt*highlightTextColor : _highlightFg
 URxvt*highlightReverse   : true
 ! }}}
 
+! XScreenSaver {{{
+! Starting with XScreenSaver version 6.0, we can set custom theme variables.
+
+! Font for regular texts.
+! Font names are case-insensitive.
+! You can use a comma-separated list of fonts to set a fallback font.
+xscreensaver-auth.default.Dialog.bodyFont: Switzer Variable 12, Noto Sans 12, Code2001 12, Liberation Sans 12, sans-serif 12
+
+! Window background color. You can use color names.
+xscreensaver-auth.default.Dialog.background: black
+
+! Main text color. You can also use HEX color codes.
+xscreensaver-auth.default.Dialog.forebround: #bbc2cf
+! }}}
+
 ! vim:foldenable:foldmethod=marker
