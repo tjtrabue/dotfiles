@@ -40,6 +40,7 @@ phinger-cursors
 polybar-git
 rmlint-git
 roswell
+siji-git
 slack-desktop
 swift-bin
 texlive-latexindent-meta
