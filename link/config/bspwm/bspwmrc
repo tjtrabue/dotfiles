@@ -57,7 +57,7 @@ unset polybarLauncher
 # `xscreensaver-settings` command to configure the screensaver/locking behavior
 # You can issue `xscreensaver-command -lock` to lock the X session manually.
 if [ -n "$(command -v xscreensaver)" ]; then
-  xscreensaver &
+  xscreensaver --no-splash &
 fi
 
 # XSS-Lock
