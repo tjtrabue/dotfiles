@@ -20,15 +20,10 @@ fi
 
 # Variables {{{
 DOTFILES_HOME="${HOME}/.dotfiles"
+. "${DOTFILES_HOME}/link/home/.vars"
 # }}}
 
 # Set PATH {{{
-# PATH="/sbin:${PATH}"
-# PATH="/usr/sbin:${PATH}"
-# PATH="/usr/local/bin:${PATH}"
-# PATH="${HOME}/bin:${PATH}"
-# PATH="${HOME}/.local/bin:${PATH}"
-# export PATH
 . "${DOTFILES_HOME}/shell/common/source/functions/functions_path.sh"
 src
 # }}}

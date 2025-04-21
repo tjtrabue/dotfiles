@@ -13,6 +13,7 @@ clojure-lsp-bin
 code-minimap-bin
 dropbox
 dropbox-cli
+ebgaramond-otf
 emacs-git
 findimagedupes
 flutter-git
@@ -47,12 +48,13 @@ texlive-latexindent-meta
 texlive-most-doc
 thunderbird-nightly-bin
 tllocalmgr
-ttf-ms-fonts
+ttf-ms-win11-auto
 ttf-nerd-fonts-symbols
 ttf-nerd-fonts-symbols-mono
 ttf-unifont
 up
 vale-git
 vmtouch-git
+xscreensaver-arch-logo
 yank
 zprint-bin
