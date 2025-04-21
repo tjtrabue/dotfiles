@@ -266,7 +266,11 @@ Adjust the font size of an Emacs frame based on the monitor's size."
         :height font-height))))
 
 ;; Set fallback font for glyphs and emojis not found in default font.
-(let ((font-families (font-family-list)))
+(let* ((font-families (font-family-list))
+        (fa-version "Font Awesome 6")
+        (fa-brands (concat fa-version " Brands"))
+        (fa-solid (concat fa-version " Solid"))
+        (fa-regular (concat fa-version " Regular")))
   (when (member "JoyPixels" font-families)
     (set-fontset-font t nil "JoyPixels" nil 'append))
   (when (member "Noto Color Emoji" font-families)
@@ -278,7 +282,13 @@ Adjust the font size of an Emacs frame based on the monitor's size."
   (when (member "Symbola" font-families)
     (set-fontset-font t nil "Symbola" nil 'append))
   (when (member "Quivira" font-families)
-    (set-fontset-font t nil "Quivira" nil 'append)))
+    (set-fontset-font t nil "Quivira" nil 'append))
+  (when (member fa-brands font-families)
+    (set-fontset-font t nil fa-brands nil 'append))
+  (when (member fa-solid font-families)
+    (set-fontset-font t nil fa-solid nil 'append))
+  (when (member fa-regular font-families)
+    (set-fontset-font t nil fa-regular nil 'append)))
 
 (provide 'my-font)
 

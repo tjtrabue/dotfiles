@@ -59,7 +59,8 @@ any known font.
         ("Noto Sans Symbols"
          "Symbola"
          "Quivira"
-         "Everson Mono:weight=bold"))
+         "Everson Mono:weight=bold"
+         "Unifont"))
        ("Alphabetic Presentation Forms"
         ("DejaVu Sans:width=condensed" "Arial Unicode MS" "Cardo" "Code2002" "Code2000" "Quivira"
          "Everson Mono:weight=bold" "FreeMono" "ALPHABETUM Unicode"))
@@ -70,8 +71,16 @@ any known font.
         ("Noto Sans Symbols" "Apple Symbols" "New Athena Unicode" "Cardo" "Aegean"
          "Quivira" "Symbola" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
        ("Ancient Symbols"
-        ("Noto Sans Symbols" "Analecta" "New Athena Unicode" "Cardo" "Aegean"
-         "Quivira" "Symbola" "Everson Mono:weight=bold" "ALPHABETUM Unicode"))
+        ("Noto Sans Symbols"
+         "Analecta"
+         "New Athena Unicode"
+         "Cardo"
+         "Aegean"
+         "Quivira"
+         "Symbola"
+         "Everson Mono:weight=bold"
+         "ALPHABETUM Unicode"
+         "Unifont"))
        ("Arrows"
         ("Cascadia Code PL"
          "Noto Sans Symbols"
@@ -87,12 +96,21 @@ any known font.
          "Code2002"
          "Code2000"
          "Noto Sans Symbols"
-         "Everson Mono:weight=bold" "FreeMono"))
+         "Everson Mono:weight=bold"
+         "FreeMono"))
        ("Braille Patterns"
-        ("Quivira" "Apple Braille" "DejaVu Sans:width=condensed" "Noto Sans Symbols"
-         "Apple Symbols" "Segoe UI Symbol" "Symbola" "Noto Sans Symbols" "FreeMono"
+        ("Quivira"
+         "Apple Braille"
+         "DejaVu Sans:width=condensed"
+         "Noto Sans Symbols"
+         "Apple Symbols"
+         "Segoe UI Symbol"
+         "Symbola"
+         "Noto Sans Symbols"
+         "FreeMono"
          "Code2000"
-         "Everson Mono:weight=bold"))
+         "Everson Mono:weight=bold"
+         "Unifont"))
        ("CJK Compatibility"
         ("SimHei" "FangSong" "SimSun" "MingLiU" "Meiryo" "Microsoft JhengHei"
          "Microsoft JhengHei UI" "Lantinghei SC" "Lantinghei TC" "HAN NOM A"
