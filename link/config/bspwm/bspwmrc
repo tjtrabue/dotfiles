@@ -66,7 +66,7 @@ fi
 # automatically triggering xscreensaver's lock command when Systemd locks the
 # user's session, or when the user manually locks their session with
 # `loginctl lock-session`.
-if [ -n "$(command -v xss-lock)" ]; then
+if [ -n "$(command -v xss-lock)" ] && [ -n "$(command -v xscreensaver)" ]; then
   xss-lock -- xscreensaver-command -lock &
 fi
 
