@@ -60,5 +60,15 @@ if [ -n "$(command -v xscreensaver)" ]; then
   xscreensaver &
 fi
 
+# XSS-Lock
+# This command hooks a selected screen locker program into Systemd's 'suspend',
+# 'hibernate', 'lock-session', and ''unlock-session' events. This allows
+# automatically triggering xscreensaver's lock command when Systemd locks the
+# user's session, or when the user manually locks their session with
+# `loginctl lock-session`.
+if [ -n "$(command -v xss-lock)" ]; then
+  xss-lock -- xscreensaver-command -lock &
+fi
+
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0

@@ -132,12 +132,14 @@ super + {_,shift + }r
 # System
 #
 
-# Lock the X session using XScreenSaver.
-# This requires a running XScreenSaver daemon. See the Arch Wiki page for
-# details:
+# Lock the X session using the configured screen locking program.
+# I prefer XScreenSaver as my screen locker. In order for this to work, both the 
+# `xss-lock` and `xscreensaver` daemon programs must be running, which are 
+# normally started in the window manager's startup file, or in `~/.xprofile` or 
+# `~/.xinitrc`. See the Arch Wiki page for details:
 # https://wiki.archlinux.org/title/XScreenSaver
 super + shift + q
-	xscreensaver-command -lock
+	loginctl lock-session
 
 #
 # Applications
