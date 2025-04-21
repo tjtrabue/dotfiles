@@ -255,6 +255,7 @@ ttf-jetbrains-mono-nerd
 ttf-joypixels
 ttf-liberation
 ttf-nerd-fonts-symbols
+ttf-nunito
 ttf-victor-mono-nerd
 ugrep
 unixodbc

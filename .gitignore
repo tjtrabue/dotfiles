@@ -74,6 +74,10 @@ __pycache__
 # Ignore local desktop menu config
 /link/config/menus
 
+# PulseAudio {{{
+/link/config/pavucontrol.ini
+# }}}
+
 # Vim {{{
 /link/vim/backups
 # Ignore all vim-plug managed plugins.
