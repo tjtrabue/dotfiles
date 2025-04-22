@@ -1,0 +1,13 @@
+[Unit]
+Description=Stop/start change-wallpaper when system sleeps/resumes
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=-/usr/sbin/systemctl --user stop change-wallpaper.timer
+ExecStop=-/usr/sbin/systemctl --user start change-wallpaper.timer
+
+[Install]
+WantedBy=sleep.target

@@ -4,7 +4,7 @@
 
 [Unit]
 Description=Change the wallpaper on X display :0 every few minutes
-Requires=change-wallpaper.service
+Requires=change-wallpaper.service change-wallpaper-sleep.service
 
 [Timer]
 # Changes wallpaper every 15 minutes.
