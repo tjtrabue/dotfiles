@@ -68,6 +68,12 @@ if [ -n "$(command -v xrdb)" ]; then
   xrdb "${HOME}/.Xresources"
 fi
 
+# NumLock
+# The numlockx program turns on NumLock for new X sessions.
+if [ -n "$(command -v numlockx)" ]; then
+  numlockx &
+fi
+
 # Load multi-monitor configuration via a saved `arandr` profile in the
 # ~/.screenlayout directory. If the profile named "default" does not yet exist,
 # use arandr to create it.
