@@ -48,9 +48,9 @@ texlive-latexindent-meta
 texlive-most-doc
 thunderbird-nightly-bin
 tllocalmgr
+ttf-ancient-fonts
 ttf-ms-win11-auto
-ttf-nerd-fonts-symbols
-ttf-nerd-fonts-symbols-mono
+ttf-ubraille
 ttf-unifont
 up
 vale-git

@@ -154,6 +154,7 @@ nano
 ncdu
 neomutt
 neovim
+nerd-fonts
 network-manager-applet
 networkmanager
 ninja
@@ -169,7 +170,7 @@ ntfs-3g
 ntp
 numlockx
 nuspell
-nvidia
+nvidia-open
 nvidia-utils
 nvtop
 openjdk-doc
@@ -178,6 +179,8 @@ openmp
 openssh
 openssl
 openvpn
+otf-latin-modern
+otf-latinmodern-math
 pacman-contrib
 papirus-icon-theme
 parallel
