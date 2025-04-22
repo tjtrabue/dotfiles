@@ -198,6 +198,7 @@ poppler
 postgresql
 pulseaudio
 pulseaudio-alsa
+pulseaudio-bluetooth
 pulsemixer
 python
 python-gpgme
@@ -220,6 +221,7 @@ shellcheck
 shfmt
 shotgun
 stack
+stalonetray
 streamlink
 sxhkd
 sysfsutils
