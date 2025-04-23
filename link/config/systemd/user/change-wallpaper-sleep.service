@@ -1,5 +1,5 @@
 [Unit]
-Description=Stop/start change-wallpaper when system sleeps/resumes
+Description=Change wallpaper sleep hooks
 Before=sleep.target
 StopWhenUnneeded=yes
 
