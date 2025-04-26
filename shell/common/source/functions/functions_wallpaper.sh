@@ -26,8 +26,13 @@ find_wallpaper_dupes() {
 # Create a compressed TAR archive of the desktop wallpaper directory.
 create_wallpaper_archive() {
   local wallpaperArchiveFile="${1:-wallpaper.tar.gz}"
-  local wallpaperDir="${2:-${HOME}/wallpaper}"
+  local wallpaperDir="${2:-${WALLPAPER_DIR}}"
   local prefixDir="$(dirname "${wallpaperDir}")"
+
+  if [ ! -d "${wallpaperDir}" ]; then
+    err "No wallpaper directory found at: ${BLUE}${wallpaperDir}${NC}"
+    return 1
+  fi
 
   (
     cd "${prefixDir}" &&
@@ -56,8 +61,11 @@ update_wallpaper_in_google_drive() {
     return 1
   fi
 
-  # Compress wallpaper into a .tar.gz archive.
-  create_wallpaper_archive "${wallpaperArchiveFile}" "${wallpaperDir}"
+  if [ ! -f "${prefixDir}/${wallpaperArchiveFile}" ]; then
+    # Compress wallpaper image files into a .tar.gz archive if the archive does
+    # not yet exist.
+    create_wallpaper_archive "${wallpaperArchiveFile}" "${wallpaperDir}"
+  fi
 
   (
     cd "${prefixDir}" &&
