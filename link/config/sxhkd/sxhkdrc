@@ -137,6 +137,10 @@ super + ctrl + {u,i,o,p}
 	bspc node -s "$dir.local" --follow \
 	    || bspc node -m "$dir" --follow
 
+# Move the focused window to the monitor on the left/right.
+super + shift + {n,period}
+  bspc node -m {west,east} --follow
+
 #
 # System
 #
