@@ -67,11 +67,13 @@ pacupmir() {
 
   log_info "Updating mirror list file: ${BLUE}${pacmanMirrorListFile}${NC}"
   sudo reflector \
-    --sort "rate" \
-    --threads "$(nproc)" \
     --protocol "https" \
+    --country us \
+    --fastest 7 \
+    --age 12 \
+    --sort "rate" \
     --ipv4 \
-    --country 'us,ca,gb,de,fr,br,se,dk,*' \
+    --threads "$(nproc)" \
     --save "${pacmanMirrorListFile}"
 }
 
