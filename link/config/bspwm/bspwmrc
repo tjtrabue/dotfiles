@@ -28,6 +28,13 @@ bspc config split_ratio 0.52
 bspc config borderless_monocle true
 bspc config gapless_monocle true
 
+# Use mouse to move/resize floating windows.
+# NOTE: You must hold down the super key to perform pointer actions.
+bspc config pointer_modifier mod4
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action2 resize_corner
+
 ### Auto-start applications ###
 
 # Start the compositing manager in the background

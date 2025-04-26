@@ -130,7 +130,7 @@ super + {_,shift + }r
 
 # Swap the focused window with the window in the given direction. If there
 # is no existing window next to the focused window in the given direction,
-# simply move the window to fill the empty space. 
+# simply move the window to fill the empty space.
 # REALLY useful!
 super + ctrl + {u,i,o,p}
   dir={west,south,north,east}; \
