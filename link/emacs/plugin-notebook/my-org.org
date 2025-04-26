@@ -179,8 +179,6 @@ customization group.
     (org-mode . org-modern-mode)
     (org-agenda-finalize . org-modern-agenda)
     :custom
-    ;; Whether to enable `org-modern-indent' when `org-indent' is active
-    (org-modern-block-indent t)
     (org-modern-hide-stars nil)
     (org-modern-todo-faces
      '(("STARTED" :foreground "yellow")
