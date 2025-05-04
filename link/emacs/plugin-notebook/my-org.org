@@ -232,7 +232,7 @@ approximately reproduces the block styling of =org-modern= when using
   (use-package org-modern-indent
     :straight (:type git :host github :repo "jdtsmith/org-modern-indent")
     :hook
-    (org-modern-mode . org-modern-indent-mode))
+    (org-indent-mode . org-modern-indent-mode))
 #+end_src
 
 * org-preview-html
