@@ -172,7 +172,6 @@ and source blocks. The styling is configurable: you can enable, disable, or
 modify the style of each syntax element individually via the =org-modern=
 customization group.
 
-** =use-package= specification
 #+begin_src emacs-lisp
   (use-package org-modern
     :after (org modus-themes)
@@ -218,8 +217,7 @@ customization group.
     (set-face-background 'fringe (face-attribute 'default :background)))
 #+end_src
 
-** Plugins
-*** org-modern-indent
+* org-modern-indent
 Modern block styling with =org-indent=.
 
 =org-modern= provides a clean and efficient org style. The /blocks/ (e.g. source,
