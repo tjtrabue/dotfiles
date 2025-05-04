@@ -172,6 +172,7 @@ and source blocks. The styling is configurable: you can enable, disable, or
 modify the style of each syntax element individually via the =org-modern=
 customization group.
 
+** =use-package= specification
 #+begin_src emacs-lisp
   (use-package org-modern
     :after (org modus-themes)
@@ -196,7 +197,46 @@ customization group.
        (?- . "┅")
        (?\s . " ")))
     ;; Update the org-sticky-header bullet character to match org-modern bullets.
-    (org-sticky-header-heading-star "▶"))
+    (org-sticky-header-heading-star "▶")
+    ;; Edit basic Org settings for better compatibility with `org-modern'.
+    (org-auto-align-tags nil)
+    (org-tags-column 0)
+    (org-catch-invisible-edits 'show-and-error)
+    (org-special-ctrl-a/e t)
+    (org-insert-heading-respect-content t)
+    ;; Org styling, hide markup etc.
+    (org-hide-emphasis-markers t)
+    (org-pretty-entities t)
+    (org-agenda-tags-column 0)
+    (org-ellipsis "…")
+    :init
+    ;; Add frame borders and window dividers.
+    (modify-all-frames-parameters
+     '((right-divider-width . 40)
+       (internal-border-width . 40)))
+    (dolist (face '(window-divider
+                    window-divider-first-pixel
+                    window-divider-last-pixel))
+      (face-spec-reset-face face)
+      (set-face-foreground face (face-attribute 'default :background)))
+    (set-face-background 'fringe (face-attribute 'default :background)))
+#+end_src
+
+** Plugins
+*** org-modern-indent
+Modern block styling with =org-indent=.
+
+=org-modern= provides a clean and efficient org style. The /blocks/ (e.g. source,
+example) are particularly nicely decorated. However, enabling =org-indent=
+disables the block "bracket", which uses the fringe area. This small package
+approximately reproduces the block styling of =org-modern= when using
+=org-indent=. Emacs users may enable =org-modern-indent= with or without =org-modern=.
+
+#+begin_src emacs-lisp
+  (use-package org-modern-indent
+    :straight (:type git :host github :repo "jdtsmith/org-modern-indent")
+    :hook
+    (org-modern-mode . org-modern-indent-mode))
 #+end_src
 
 * org-preview-html
