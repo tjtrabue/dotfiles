@@ -12,11 +12,11 @@
 
 # background <color>         # color can be specified as an HTML hex triplet or
                              # as a name from rgb.txt, note that '#' must be quoted
-background "#777777"
+background "#242730"
 
 # decorations <decspec>      # set trays window decorations; possible values for
                              # decspec are: all, title, border, none
-decorations none
+decorations all
 
 # display <display name>     # as usual
 
@@ -33,17 +33,17 @@ fuzzy_edges 0
 
 # geometry <geometry>        # tray's geometry in standard X notation; width and
                              # height are specified in slot_size multiples
-geometry 1x1+0+0
+geometry 1x1+0-0
 
 # grow_gravity <gravity>     # one of N, S, E, W, NW, NE, SW, SE; tray will grow
                              # in the direction opposite to one specified by
 							 # grow_gravity; if horizontal or vertical
 							 # direction is not specified, tray will not grow in
 							 # that direction
-grow_gravity NW
+grow_gravity SW
 
 # icon_gravity <gravity>     # icon placement gravity, one of NW, NE, SW, SE
-icon_gravity NW
+icon_gravity SW
 
 # icon_size <int>            # specifies dimensions of an icon
 icon_size 24
