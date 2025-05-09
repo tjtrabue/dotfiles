@@ -59,6 +59,11 @@ else
 fi
 unset polybarLauncher
 
+# System Tray
+if [ -n "$(command -v stalonetray)" ]; then
+  stalonetray &
+fi
+
 # XScreenSaver
 # Check the ~/.xscreensaver file for settings, and use the
 # `xscreensaver-settings` command to configure the screensaver/locking behavior
