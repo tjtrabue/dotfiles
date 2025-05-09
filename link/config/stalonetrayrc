@@ -20,6 +20,8 @@ decorations all
 
 # display <display name>     # as usual
 
+display ":0"
+
 # dockapp_mode <mode>        # set dockapp mode, which can be either simple (for
                              # e.g. OpenBox, wmaker for WindowMaker, or none
                              # (default). NEW in @VERSION_STR@.
