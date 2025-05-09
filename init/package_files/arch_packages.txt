@@ -15,10 +15,12 @@ asciidoc
 aspell
 aspell-en
 atool
+audiocd-kio
 autorandr
 avahi
 awesome
 aws-cli
+baloo
 bash-completion
 bat
 bc
@@ -52,6 +54,8 @@ docbook2x
 docker
 docker-buildx
 docker-compose
+dolphin
+dolphin-plugins
 doxygen
 dunst
 dvisvgm
@@ -65,6 +69,7 @@ fastfetch
 fd
 feh
 ffmpegthumbnailer
+ffmpegthumbs
 findutils
 firefox
 flameshot
@@ -94,6 +99,7 @@ htop
 httpie
 hunspell
 hunspell-en_US
+icoutils
 imagemagick
 inkscape
 inotify-tools
@@ -110,10 +116,12 @@ kde-applications
 khal
 kio-gdrive
 kitty
+kompare
 kubeadm
 kubectl
 lib32-jansson
 lib32-nvidia-utils
+libappimage
 libdvdcss
 libev
 libfixposix
@@ -226,6 +234,7 @@ streamlink
 sxhkd
 sysfsutils
 t1utils
+taglib
 tar
 texi2html
 texinfo

@@ -39,6 +39,8 @@ p4v
 pay-respects-bin
 phinger-cursors
 polybar-git
+raw-thumbnailer
+resvg-git
 rmlint-git
 roswell
 siji-git
