@@ -164,7 +164,7 @@ super + v
 
 # File browser
 super + d
-	krusader
+	dolphin
 
 # Emacs
 super + e
