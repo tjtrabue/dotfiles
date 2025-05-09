@@ -44,6 +44,11 @@ picom --config "${HOME}/.config/picom/picom.conf" &
 # Use feh commands in ~/.fehbg to set wallpaper
 "${HOME}/.fehbg" &
 
+# System Tray
+if [ -n "$(command -v stalonetray)" ]; then
+  stalonetray &
+fi
+
 # Notification
 dunst &
 
@@ -59,9 +64,9 @@ else
 fi
 unset polybarLauncher
 
-# System Tray
-if [ -n "$(command -v stalonetray)" ]; then
-  stalonetray &
+# Dropbox
+if [ -n "$(command -v dropbox-cli)" ]; then
+  dropbox-cli start &
 fi
 
 # XScreenSaver
