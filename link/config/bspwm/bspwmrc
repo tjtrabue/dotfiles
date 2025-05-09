@@ -64,6 +64,11 @@ else
 fi
 unset polybarLauncher
 
+# 1Password
+if [ -n "$(command -v 1password)" ]; then
+  1password --silent &
+fi
+
 # Dropbox
 if [ -n "$(command -v dropbox-cli)" ]; then
   dropbox-cli start &
