@@ -1,3 +1,4 @@
+asciidoctor
 colorls
 fusuma
 fusuma-plugin-sendkey
