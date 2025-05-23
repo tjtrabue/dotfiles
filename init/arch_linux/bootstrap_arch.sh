@@ -367,8 +367,8 @@ cat <<EOF >"${MOUNT_ROOT}/etc/asound.conf"
 # You may need to replace the card index value to a string value to improve
 # consistency from one boot to another. The strings are the name of the card to
 # use, like "PCH," although you can also use the card's 0-based index as its
-# identifier. You can list the names of your sound devices by issuing the 
-# command 'aplay -l'. I highly recommend you read the ALSA article on the Arch 
+# identifier. You can list the names of your sound devices by issuing the
+# command 'aplay -l'. I highly recommend you read the ALSA article on the Arch
 # Wiki before changing this file because its syntax is quite tricky.
 #
 # NOTE: You must enclose the strings in double quotes.
@@ -396,9 +396,10 @@ update_config=1
 EOF
 
 # Activate WiFi services
-info_log "Enabling NetworkManager and wpa_supplicant"
+info_log "Enabling wpa_supplicant, NetworkManager, and ModemManager"
 arch-chroot "$MOUNT_ROOT" systemctl enable wpa_supplicant
 arch-chroot "$MOUNT_ROOT" systemctl enable NetworkManager
+arch-chroot "$MOUNT_ROOT" systemctl enable ModemManager
 # }}}
 
 # Configure bootloader {{{
