@@ -457,7 +457,7 @@ arch-chroot "${MOUNT_ROOT}" sed -i -E 's/hosts:\s*mymachines/hosts: mymachines m
 # Create .xinitrc file {{{
 info_log "Configuring xinit"
 cat <<EOF >"${MOUNT_ROOT}${XINIT_FILE}"
-exec awesome
+exec bspwm
 EOF
 arch-chroot "${MOUNT_ROOT}" chown "${USERNAME}:${USERNAME}" "${XINIT_FILE}"
 arch-chroot "${MOUNT_ROOT}" chmod 644 "${XINIT_FILE}"
@@ -496,7 +496,7 @@ arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
 # Run init scripts {{{
 info_log "Running initialization scripts for important topics"
 arch-chroot "${MOUNT_ROOT}" runuser -l "${USERNAME}" -c \
-  "runinit arch lightdm pulseaudio emacs neovim nerd_fonts awesome shell zsh docker asdf"
+  "runinit arch lightdm pulseaudio emacs neovim nerd_fonts bspwm shell zsh docker asdf"
 # }}}
 
 # Run language-specific package install scripts {{{
