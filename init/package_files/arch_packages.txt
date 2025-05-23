@@ -234,8 +234,6 @@ taglib
 tar
 texi2html
 texinfo
-texlive
-texlive-lang
 texworks
 the_silver_searcher
 throttled
