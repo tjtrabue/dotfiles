@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+# Trap errors and print error message
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
+
+# Variables {{{
+declare DOTFILES_HOME="${HOME}/.dotfiles"
+declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
+
+# Logging variables
+declare LOG_TO_FILE="${LOG_TO_FILE:-''}"
+declare LOG_LEVEL="${LOG_LEVEL:-3}"
+# }}}
+
+# Imports {{{
+. "${DOTFILES_HOME}/shell/common/source/common.sh" && src
+# }}}
+
+# Functions {{{
+expstr__help() {
+  command cat <<EOF
+${THIS_EXEC} | Expand shell variables in a string
+
+Expand shell variables in an input string, or read inputs from stdin.
+This is a more reliable method for ensuring that variables embedded in strings
+come out evaluated.
+
+USAGE:
+  ${THIS_EXEC} [OPTIONS]
+
+OPTIONS:
+  -h | --help
+    Print the help message (this message) and exit.
+
+  -q | --quiet
+    Only print error messages.
+
+  -v | --verbose
+    Increase the quantity of debugging output. Useful for debugging. This option
+    may be presented multiple times to further increase logging verbosity.
+EOF
+}
+
+expstr__main() {
+  local input="${1:-""}"
+  local line=""
+
+  if [ -n "${input}" ]; then
+    eval "printf '%s\n' $(echo ${input})"
+  else
+    # Read strings from stdin
+    while read -r line || [ -n "${line}" ]; do
+      eval "printf '%s\n' $(echo ${line})"
+    done </dev/stdin
+  fi
+}
+# }}}
+
+# Parse CLI Options {{{
+args=$(getopt -o hqv \
+  --long help,quiet,verbose \
+  -n 'expandstr' \
+  -- "$@")
+eval set -- "$args"
+
+# extract options and their arguments into variables.
+while true; do
+  case "$1" in
+  -h | --help)
+    expstr__help
+    exit 0
+    ;;
+
+  -q | --quiet)
+    LOG_LEVEL=1
+    shift
+    ;;
+
+  -v | --verbose)
+    ((LOG_LEVEL += 1))
+    shift
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    err "Unknown option $1 to ${THIS_EXEC}"
+    exit 2
+    ;;
+  esac
+done
+# }}}
+
+expstr__main "${@}"
+
+# vim:foldenable:foldmethod=marker:

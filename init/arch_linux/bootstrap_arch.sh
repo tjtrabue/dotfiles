@@ -465,10 +465,10 @@ arch-chroot "${MOUNT_ROOT}" chmod 644 "${XINIT_FILE}"
 
 # Clone dotfiles {{{
 info_log "Cloning dotfiles"
-arch-chroot "${MOUNT_ROOT}" mkdir -p "${WORKSPACE}"
-arch-chroot "${MOUNT_ROOT}" git clone "${DOTFILES_REPO_URL}" "${DOTFILES_HOME}"
-arch-chroot "${MOUNT_ROOT}" chown -R "${USERNAME}:${USERNAME}" "${WORKSPACE}"
-arch-chroot "${MOUNT_ROOT}" chmod -R a+rX "${WORKSPACE}"
+arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
+  "mkdir -p ${WORKSPACE}"
+arch-chroot "${MOUNT_ROOT}" runuser "${USERNAME}" -c \
+  "git clone ${DOTFILES_REPO_URL} ${DOTFILES_HOME}"
 
 # Change the dotfiles URL to the SSH version so that we may push commits to the
 # repository later on.

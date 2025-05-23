@@ -87,6 +87,9 @@ set_dotfiles_variables() {
   DOTFILES_LINK="${DOTFILES_REPO}/link"
   DOTFILES_COPY="${DOTFILES_REPO}/copy"
   DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
+
+  # Prepare the PATH variable with executables in this repo
+  export PATH="${DOTFILES_HOME}/bin:${PATH}"
 }
 
 # Take care of backing up existing ~/.dotfiles directory

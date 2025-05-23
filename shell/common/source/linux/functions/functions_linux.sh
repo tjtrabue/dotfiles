@@ -34,23 +34,6 @@ escapestr() {
   fi
 }
 
-# Expand shell variables in an input string, or read inputs from stdin.
-# This is a more reliable method for ensuring that variables embedded in strings
-# come out evaluated.
-expandstr() {
-  local input="${1:-""}"
-  local line=""
-
-  if [ -n "${input}" ]; then
-    eval "printf '%s\n' $(echo ${input})"
-  else
-    # Read strings from stdin
-    while read -r line || [ -n "${line}" ]; do
-      eval "printf '%s\n' $(echo ${line})"
-    done </dev/stdin
-  fi
-}
-
 # List screen/display connector information. Useful for getting identifiers for
 # different displays.
 display_connector_statuses() {
