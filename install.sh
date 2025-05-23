@@ -58,6 +58,7 @@ declare LOG_TO_FILE=""
 # Perform other preparation steps depending on the current operating system.
 # This function runs BEFORE the `setup()` function.
 prepare_for_os() {
+  set_initial_path_variable
   set_dotfiles_variables
   source_common_defs
   init_path_file
@@ -77,19 +78,23 @@ init_path_file() {
 
 # Setup/Cleanup {{{
 
+# Prepare the $PATH variable with executables needed for this script to
+# complete.
+set_initial_path_variable() {
+  # Add executables in this repo to $PATH
+  export PATH="${DOTFILES_REPO}/bin:${PATH}"
+}
+
 # Set all dotfiles-related variables after all arguments have been parsed and
 # key variables have been set.
 set_dotfiles_variables() {
-  DOTFILES_HOME="${TARGET_HOME}/.dotfiles"
-  DOTFILES_SHELL="${DOTFILES_REPO}/shell"
-  COMMON_SHELL="${DOTFILES_SHELL}/common"
-  COMMON_SOURCE="${COMMON_SHELL}/source"
-  DOTFILES_LINK="${DOTFILES_REPO}/link"
-  DOTFILES_COPY="${DOTFILES_REPO}/copy"
-  DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
-
-  # Add executables in this repo to $PATH
-  export PATH="${DOTFILES_HOME}/bin:${PATH}"
+  export DOTFILES_HOME="${TARGET_HOME}/.dotfiles"
+  export DOTFILES_SHELL="${DOTFILES_REPO}/shell"
+  export COMMON_SHELL="${DOTFILES_SHELL}/common"
+  export COMMON_SOURCE="${COMMON_SHELL}/source"
+  export DOTFILES_LINK="${DOTFILES_REPO}/link"
+  export DOTFILES_COPY="${DOTFILES_REPO}/copy"
+  export DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
 }
 
 # Take care of backing up existing ~/.dotfiles directory
