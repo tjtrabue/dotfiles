@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -Eeuo pipefail
+set -Eeo pipefail
 
 ### IMPORTANT DEVELOPER NOTE ###
 # You should ALWAYS test any changes you make to this script by running:
@@ -88,7 +88,7 @@ set_dotfiles_variables() {
   DOTFILES_COPY="${DOTFILES_REPO}/copy"
   DOTFILES_ZDOTDIR="${DOTFILES_SHELL}/zsh/zdotdir"
 
-  # Prepare the PATH variable with executables in this repo
+  # Add executables in this repo to $PATH
   export PATH="${DOTFILES_HOME}/bin:${PATH}"
 }
 
@@ -106,6 +106,8 @@ backup_existing_installation() {
 
 # Check for an existing dotfiles installation at $DOTFILES_HOME.
 check_existing_installation() {
+  echo "TARGET_HOME = ${TARGET_HOME}"
+  echo "DOTFILES_HOME = ${DOTFILES_HOME}"
   log_info "Checking for existing dotfiles installation"
   test -h "${DOTFILES_HOME}" || test -d "${DOTFILES_HOME}"
 }
@@ -307,14 +309,6 @@ source_common_defs() {
   done
 }
 
-# Initialize extra application configuration.
-run_init_scripts() {
-  log_info "Running initialization scripts"
-
-  runinit gpg
-  runinit emacs
-}
-
 # Main that calls all subroutines
 main() {
   setup
@@ -324,15 +318,10 @@ main() {
   link_zdotdir
   link_config
   link_lsp_config
-  run_init_scripts
   add_extra_os_vars
   add_extra_paths_to_path_file
 }
 # }}}
-
-# Need to prepare OS before CLI option parsing because we may not even have
-# access to GNU getopt yet.
-prepare_for_os
 
 # Parse CLI Options {{{
 declare args=$(
@@ -385,6 +374,10 @@ while true; do
   esac
 done
 # }}}
+
+# Need to prepare OS before CLI option parsing because we may not even have
+# access to GNU getopt yet.
+prepare_for_os
 
 # Main execution
 main
