@@ -224,6 +224,7 @@ sdl
 shellcheck
 shfmt
 shotgun
+sof-firmware
 stack
 stalonetray
 streamlink
