@@ -227,6 +227,7 @@ shotgun
 sof-firmware
 stack
 stalonetray
+starship
 streamlink
 sxhkd
 sysfsutils
