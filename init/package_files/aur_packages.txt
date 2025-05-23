@@ -51,6 +51,7 @@ texlive-most-doc
 thunderbird-nightly-bin
 tllocalmgr
 ttf-ancient-fonts
+ttf-joypixels
 ttf-ms-win11-auto
 ttf-ubraille
 ttf-unifont

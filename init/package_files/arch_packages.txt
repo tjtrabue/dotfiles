@@ -263,7 +263,6 @@ ttf-fira-mono
 ttf-font-awesome
 ttf-hack
 ttf-jetbrains-mono-nerd
-ttf-joypixels
 ttf-liberation
 ttf-nerd-fonts-symbols
 ttf-nunito
