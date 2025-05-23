@@ -289,7 +289,7 @@ pacstrap "${MOUNT_ROOT}" base linux linux-firmware base-devel
 # }}}
 
 # Generate filesystem table {{{
-ingo_log "Generating file system table"
+info_log "Generating file system table"
 genfstab -U "${MOUNT_ROOT}" >>"${MOUNT_ROOT}/etc/fstab"
 
 info_log "Configuring tmpfs for /tmp"
