@@ -109,7 +109,6 @@ jansson
 jdk-openjdk
 jdk8-openjdk
 jq
-kde-applications
 khal
 kio-gdrive
 kitty
