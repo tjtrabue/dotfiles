@@ -45,8 +45,18 @@ picom --config "${HOME}/.config/picom/picom.conf" &
 "${HOME}/.fehbg" &
 
 # System Tray
-if [ -n "$(command -v stalonetray)" ]; then
-  stalonetray &
+# if [ -n "$(command -v stalonetray)" ]; then
+#   stalonetray &
+# fi
+
+# 1Password
+if [ -n "$(command -v 1password)" ]; then
+  1password --silent &
+fi
+
+# Dropbox
+if [ -n "$(command -v dropbox-cli)" ]; then
+  dropbox-cli start &
 fi
 
 # Notification
@@ -63,16 +73,6 @@ else
   polybar &
 fi
 unset polybarLauncher
-
-# 1Password
-if [ -n "$(command -v 1password)" ]; then
-  1password --silent &
-fi
-
-# Dropbox
-if [ -n "$(command -v dropbox-cli)" ]; then
-  dropbox-cli start &
-fi
 
 # XScreenSaver
 # Check the ~/.xscreensaver file for settings, and use the

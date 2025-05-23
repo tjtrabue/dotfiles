@@ -3,6 +3,12 @@
 # WARNING: This script will destory data on the selected disk.
 # This script can be run by executing the following:
 #   curl -sL https://git.io/JLQlu | bash
+#
+### Getting started installing Arch Linux from the bootable ISO media ###
+#
+# To connect to a wifi network, issue the following command:
+#   iwctl --passphrace "<WIFI_PASSWORD>" station <DEVICE_NAME> connect <SSID>
+# You can find your wifi-enabled device name by running `ip link`
 
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
@@ -283,10 +289,10 @@ pacstrap "${MOUNT_ROOT}" base linux linux-firmware base-devel
 # }}}
 
 # Generate filesystem table {{{
-log_info "Generating file system table"
+ingo_log "Generating file system table"
 genfstab -U "${MOUNT_ROOT}" >>"${MOUNT_ROOT}/etc/fstab"
 
-log_info "Configuring tmpfs for /tmp"
+info_log "Configuring tmpfs for /tmp"
 printf '\n%s\n' "tmpfs  /tmp  tmpfs  rw,nodev,nosuid,size=3G  0  0" \
   >>"${MOUNT_ROOT}/etc/fstab"
 # }}}
