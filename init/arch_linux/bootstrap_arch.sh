@@ -366,8 +366,9 @@ fi
 cat <<EOF >"${MOUNT_ROOT}/etc/asound.conf"
 # You may need to replace the card index value to a string value to improve
 # consistency from one boot to another. The strings are the name of the card to
-# use, like "PCH". You can list the names of your sound devices by issuing the
-# command 'aplay -l'. I highly recommend you read the ALSA article on the Arch
+# use, like "PCH," although you can also use the card's 0-based index as its
+# identifier. You can list the names of your sound devices by issuing the 
+# command 'aplay -l'. I highly recommend you read the ALSA article on the Arch 
 # Wiki before changing this file because its syntax is quite tricky.
 #
 # NOTE: You must enclose the strings in double quotes.
@@ -375,18 +376,15 @@ cat <<EOF >"${MOUNT_ROOT}/etc/asound.conf"
 # Example:
 #   defaults.pcm.!card "PCH";
 #   defaults.ctl.!card "PCH";
-
-defaults.pcm.!card "PCH";
-defaults.ctl.!card "PCH";
 EOF
 
 # Unmute sounds channels
-arch-chroot "$MOUNT_ROOT" amixer sset Master unmute
-arch-chroot "$MOUNT_ROOT" amixer sset Speaker unmute
-arch-chroot "$MOUNT_ROOT" amixer sset Headphone unmute
+arch-chroot "$MOUNT_ROOT" amixer sset Master unmute || :
+arch-chroot "$MOUNT_ROOT" amixer sset Speaker unmute || :
+arch-chroot "$MOUNT_ROOT" amixer sset Headphone unmute || :
 
 # Turn volume all the way up
-arch-chroot "$MOUNT_ROOT" amixer sset Master 100%
+arch-chroot "$MOUNT_ROOT" amixer sset Master 100% || :
 # }}}
 
 # WiFi {{{
