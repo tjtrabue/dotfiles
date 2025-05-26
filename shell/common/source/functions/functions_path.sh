@@ -98,26 +98,6 @@ eval_path_var_from_file() {
   export "${pathVar?}"
 }
 
-# Source all known path files.
-# ~/.path     - PATH file
-# ~/.cpp_path - C/C++ preprocessor path file
-# ~/.lib_path - C/C++ library path file
-spath_all() {
-  # These path files should always exist.
-  spath "${HOME}/.path" "PATH"
-
-  if [ -f "${HOME}/.info_path" ]; then
-    spath "${HOME}/.info_path" "INFOPATH"
-  fi
-
-  if [ -f "${HOME}/.cpp_path" ]; then
-    spath "${HOME}/.cpp_path" "CPATH"
-  fi
-
-  if [ -f "${HOME}/.lib_path" ]; then
-    spath "${HOME}/.lib_path" "LIBRARY_PATH"
-  fi
-}
 
 # Source a path variable from a static, automatically generated file into the
 # current shell session. This is much faster than dynamically evaluating the
@@ -155,6 +135,27 @@ spath() {
 
   log_debug "Sourcing static path file: ${MAGENTA}${staticPathFile}${NC}"
   . "${staticPathFile}"
+}
+
+# Source all known path files.
+# ~/.path     - PATH file
+# ~/.cpp_path - C/C++ preprocessor path file
+# ~/.lib_path - C/C++ library path file
+spath_all() {
+  # These path files should always exist.
+  spath "${HOME}/.path" "PATH"
+
+  if [ -f "${HOME}/.info_path" ]; then
+    spath "${HOME}/.info_path" "INFOPATH"
+  fi
+
+  if [ -f "${HOME}/.cpp_path" ]; then
+    spath "${HOME}/.cpp_path" "CPATH"
+  fi
+
+  if [ -f "${HOME}/.lib_path" ]; then
+    spath "${HOME}/.lib_path" "LIBRARY_PATH"
+  fi
 }
 
 # Retrieve the hash digest for the PATH file, if the hash exists. If not, return
@@ -279,9 +280,6 @@ export_path() {
   local pathFile="${1:-${binPathFile}}"
   local pathVarName="${2:-PATH}"
   local staticPathFile="$(__get_static_path_file_for_path_file "${pathFile}")"
-  local rcFiles=(
-    "${LEAN_PROFILE:-${HOME}/.lean_profile}"
-  )
   local pathValue
   local f
 
@@ -302,18 +300,6 @@ export_path() {
 ${pathVarName}="${pathValue}"
 export ${pathVarName}
 EOF
-
-  # Replace all 'export PATH' directives in shell relevant initialization files
-  # with updated $PATH value.
-  for f in "${rcFiles[@]}"; do
-    if [ -f "${f}" ]; then
-      log_debug "Exporting ${pathVarName} to shell init file: ${BLUE}${f}${NC}"
-      sed -E -i --follow-symlinks \
-        "s|^(\s*export ${pathVarName}=).*|\1\"${pathValue}\"|" "${f}"
-    else
-      warn "Shell file ${BLUE}${f}${NC} does not exist"
-    fi
-  done
 }
 
 # Print paths in $PATH file with all environment variables/subshells evaluated

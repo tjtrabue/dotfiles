@@ -214,15 +214,6 @@ zstyle ':autocomplete:tab:*' fzf-completion yes
 # One more src for good luck!
 src
 
-# These icons are supplied by the icons-in-terminal project
-use_icons_in_terminal() {
-  local iconScript="${HOME}/.local/share/icons-in-terminal/icons_bash.sh"
-  if [ -s "${iconScript}" ]; then
-    . "${iconScript}"
-  fi
-}
-use_icons_in_terminal
-
 # Print system info when the terminal first opens.
 show_system_info
 

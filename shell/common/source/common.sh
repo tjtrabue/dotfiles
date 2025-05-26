@@ -25,7 +25,7 @@ LINUX_SOURCE_DIR="${COMMON_SOURCE}/linux"
 # Source files important for initializing basic environment variables and
 # properties needed by functions and aliases. This should be the first sourcing
 # function called in most circumstances.
-__src_env_setup_files() {
+src_env_setup_files() {
   local f
 
   for f in "${HOME}/."{vars,var_overrides,dirs}; do
@@ -41,7 +41,7 @@ __src_env_setup_files() {
 # NOTE: The config in these files should take precedence over anything
 # committed to this repository. This allows for machine-local overriding of
 # default configuration.
-__src_machine_local_files() {
+src_machine_local_files() {
   local machineLocalFilesDir="${HOME}/.extra"
   local f
 
@@ -78,8 +78,21 @@ __src_dir() {
   fi
 }
 
+# Source the aliases, functions, and other directory located under a provided
+# directory.
+__src_standard_subdirs_under_dir() {
+  local baseDir="${1}"
+  local d
+
+  for d in "${baseDir}/"{aliases,functions,other}; do
+    if [ -d "${d}" ]; then
+      __src_dir "${d}"
+    fi
+  done
+}
+
 # Source OS-specific function/alias files.
-__src_os() {
+src_os() {
   local archSrcDir="${LINUX_SOURCE_DIR}/arch"
   local ubuntuSrcDir="${LINUX_SOURCE_DIR}/ubuntu"
   local macSrcDir="${COMMON_SOURCE}/mac"
@@ -122,19 +135,6 @@ __src_os() {
   esac
 }
 
-# Source the aliases, functions, and other directory located under a provided
-# directory.
-__src_standard_subdirs_under_dir() {
-  local baseDir="${1}"
-  local d
-
-  for d in "${baseDir}/"{aliases,functions,other}; do
-    if [ -d "${d}" ]; then
-      __src_dir "${d}"
-    fi
-  done
-}
-
 # Bash and some other shells rely on the readline library for command line
 # editing capabilities. Thus, we may need to re-activate bindings in the
 # readline init file, named ~/.inputrc, for those shells.
@@ -147,12 +147,21 @@ __src_readline_init_file() {
   fi
 }
 
-# Source all functions and alias files for any POSIX-compliant shell.
-__src() {
+# A leaner source function that just sources aliases/functions instead of the
+# entire environment. That is, this function does NOT rebuild $PATH, does NOT
+# affect nvm/rvm/pyenv/jenv. It only re-sources functions and aliases.
+#
+# You won't want to continually revert to the default environment throughout
+# your shell session, so this function allows you to pull in newer alias and
+# function definitions without affecting the wider environment of rvm, nvm,
+# jenv, pyenv, etc.
+src() {
   local srcDir=""
 
+  export PATH="${HOME}/.dotfiles/bin:${PATH}"
+
   # Source .vars, .var_overrides, and .dirs.
-  __src_env_setup_files
+  src_env_setup_files
 
   # Source all alias/function/other files common to all shells.
   __src_standard_subdirs_under_dir "${COMMON_SOURCE}"
@@ -174,14 +183,10 @@ __src() {
   __src_standard_subdirs_under_dir "${srcDir}"
 
   # Source OS-specific aliases and functions.
-  __src_os
+  src_os
 
   # Source files in ~/.extra/
-  __src_machine_local_files
-
-  # export the dynamically constructed $PATH variable from the entries in
-  # ~/.path, as well as CPATH and LIBRARY_PATH if available.
-  spath_all
+  src_machine_local_files
 
   # Source the dynamically generated ~/.luapath file.
   src_lua_path
@@ -223,7 +228,7 @@ scomm() {
 # rvm/nvm/pyenv/jenv. It should work regardless of the shell in use.
 src_all() {
   # Immediately source all function/alias files.
-  __src
+  src
 
   # Make sure luarocks are available
   src_luarocks_module_path
@@ -237,18 +242,6 @@ src_all() {
   create_dir_hist_file
   # This should come last!!!
   __src_extra_environment_profiles
-}
-
-# A leaner source function that just sources aliases/functions instead of the
-# entire environment. That is, this function does NOT rebuild $PATH, does NOT
-# affect nvm/rvm/pyenv/jenv. It only re-sources functions and aliases.
-#
-# You won't want to continually revert to the default environment throughout
-# your shell session, so this function allows you to pull in newer alias and
-# function definitions without affecting the wider environment of rvm, nvm,
-# jenv, pyenv, etc.
-src() {
-  __src
 }
 
 # vim:foldenable:foldmethod=indent:foldlevel=0:foldnestmax=1
