@@ -485,4 +485,6 @@ Thumbs.db
 /link/config/enchant
 # }}}
 
+link/config/.avalonia-build-tasks
+
 # vim:foldenable:foldmethod=marker
