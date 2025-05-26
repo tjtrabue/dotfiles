@@ -126,7 +126,7 @@
   # store.
   credentialStore = gpg
   # NOTE: You must install the `git-credential-manager' CLI tool
-  helper = git-credential-manager
+	helper = /usr/bin/git-credential-manager
 
 [credential "https://dev.azure.com"]
   useHttpPath = true
