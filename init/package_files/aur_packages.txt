@@ -45,8 +45,6 @@ roswell
 siji-git
 slack-desktop
 swift-bin
-texlive-latexindent-meta
-texlive-most-doc
 thunderbird-nightly-bin
 tllocalmgr
 ttf-ancient-fonts

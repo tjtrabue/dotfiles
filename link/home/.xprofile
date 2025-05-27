@@ -68,6 +68,11 @@ if [ -n "$(command -v xrdb)" ]; then
   xrdb "${HOME}/.Xresources"
 fi
 
+# Load the user's Xmodmap configuration.
+if [ -n "$(command -v xmodmap)" ]; then
+  xmodmap "${HOME}/.Xmodmap"
+fi
+
 # NumLock
 # The numlockx program turns on NumLock for new X sessions.
 if [ -n "$(command -v numlockx)" ]; then
