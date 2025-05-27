@@ -16,6 +16,7 @@ dropbox-cli
 ebgaramond-otf
 findimagedupes
 flutter-git
+font-symbola
 git-credential-manager-bin
 google-cloud-cli
 google-cloud-cli-gke-gcloud-auth-plugin
@@ -38,6 +39,7 @@ p4v
 pay-respects-bin
 phinger-cursors
 polybar-git
+quivira
 raw-thumbnailer
 resvg-git
 rmlint-git

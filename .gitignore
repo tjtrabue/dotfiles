@@ -485,6 +485,12 @@ Thumbs.db
 /link/config/enchant
 # }}}
 
+# Avalonia {{{
 link/config/.avalonia-build-tasks
+# }}}
+
+# FontForge {{{
+link/config/fontforge
+# }}}
 
 # vim:foldenable:foldmethod=marker
