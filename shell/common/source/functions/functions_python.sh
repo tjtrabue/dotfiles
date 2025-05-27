@@ -165,12 +165,14 @@ __update_python3_packages() {
 
 # Return 0 if PIP installed for Python 2.X
 __python2_pip_installed() {
-  command -v "python2" && python2 -m pip --version >>/dev/null 2>&1
+  command -v "python2" >>/dev/null 2>&1 &&
+    python2 -m pip --version >>/dev/null 2>&1
 }
 
 # Return 0 if PIP installed for Python 3.Y
 __python3_pip_installed() {
-  command -v "python3" && python3 -m pip --version >>/dev/null 2>&1
+  command -v "python3" >>/dev/null 2>&1 &&
+    python3 -m pip --version >>/dev/null 2>&1
 }
 
 # Update the PIP installation for our version of Python3.

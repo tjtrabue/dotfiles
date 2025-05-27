@@ -11,7 +11,7 @@ super + p
 	rofi -show drun
 
 # Emoji picker
-super + shift + p
+super + ctrl + p
 	rofi -modi "emoji:rofimoji" -show emoji
 
 # make sxhkd reload its configuration files:
@@ -71,7 +71,7 @@ super + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
+super + shift {u,p}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
