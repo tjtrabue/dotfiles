@@ -147,6 +147,12 @@ __src_readline_init_file() {
   fi
 }
 
+# Setup an initial $PATH variable suitable for most environments. This sets up
+# the environment for installing the dotfiles project.
+set_initial_path() {
+  export PATH="${HOME}/.dotfiles/bin:${HOME}/bin:${HOME}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/sbin:/usr/bin:/sbin:/bin"
+}
+
 # A leaner source function that just sources aliases/functions instead of the
 # entire environment. That is, this function does NOT rebuild $PATH, does NOT
 # affect nvm/rvm/pyenv/jenv. It only re-sources functions and aliases.
@@ -158,7 +164,8 @@ __src_readline_init_file() {
 src() {
   local srcDir=""
 
-  export PATH="${HOME}/.dotfiles/bin:${PATH}"
+  # Set $PATH to a sensible default before proceeding.
+  set_initial_path
 
   # Source .vars, .var_overrides, and .dirs.
   src_env_setup_files
