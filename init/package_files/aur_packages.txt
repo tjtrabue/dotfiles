@@ -14,7 +14,6 @@ code-minimap-bin
 dropbox
 dropbox-cli
 ebgaramond-otf
-emacs-git
 findimagedupes
 flutter-git
 git-credential-manager-bin

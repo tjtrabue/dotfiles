@@ -188,6 +188,9 @@ src() {
   # Source files in ~/.extra/
   src_machine_local_files
 
+  # Source all known path files.
+  spath_all
+
   # Source the dynamically generated ~/.luapath file.
   src_lua_path
 }

@@ -205,6 +205,21 @@ epath() {
   printf "%s='%s'\n" "${pathVar}" "$(construct_path "${pathFile}")"
 }
 
+# Print paths in $PATH file with all environment variables/subshells evaluated
+__evaluate_paths() {
+  local pathFile="${1:-${PATH_FILE}}"
+
+  # Make sure that paths are evaluated in reverse order from their listing in
+  # the .path file since we want more recently added paths to take precedence
+  # over older ones.
+  # The grep command is to remove empty and commented lines.
+  # The awk command at the end removes cuplicates from the listing.
+  grep -v -E -e '^\s*#.*' -e '^$' <"${pathFile}" |
+    tac |
+    awk '!x[$0]++' |
+    expandstr
+}
+
 # Put together a path string from an input path file containing lines to join
 # into a single path specifier.
 construct_path() {
@@ -300,21 +315,6 @@ export_path() {
 ${pathVarName}="${pathValue}"
 export ${pathVarName}
 EOF
-}
-
-# Print paths in $PATH file with all environment variables/subshells evaluated
-__evaluate_paths() {
-  local pathFile="${1:-${PATH_FILE}}"
-
-  # Make sure that paths are evaluated in reverse order from their listing in
-  # the .path file since we want more recently added paths to take precedence
-  # over older ones.
-  # The grep command is to remove empty and commented lines.
-  # The awk command at the end removes cuplicates from the listing.
-  grep -v -E -e '^\s*#.*' -e '^$' <"${pathFile}" |
-    tac |
-    awk '!x[$0]++' |
-    expandstr
 }
 
 # Gets the static path file's path for a given standard path file.
