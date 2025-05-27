@@ -97,5 +97,10 @@ if [ -n "$(command -v "1password")" ]; then
   1password --silent &
 fi
 
+# Restore the previous brightness setting from brightnessctl if available.
+if [ -n "$(command -v brightnessctl)" ]; then
+  brightnessctl --restore
+fi
+
 # Modeline for this file (LEAVE IT COMMENTED!)
 # vim:foldenable:foldmethod=marker:foldlevel=0

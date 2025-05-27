@@ -23,6 +23,7 @@ bat
 bc
 bear
 biber
+brightnessctl
 broot
 bspwm
 cabal-install
