@@ -28,7 +28,6 @@ broot
 bspwm
 cabal-install
 calcurse
-chromium
 clang
 clazy
 clojure
