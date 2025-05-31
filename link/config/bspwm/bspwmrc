@@ -97,6 +97,11 @@ if [ -n "$(command -v "1password")" ]; then
   1password --silent &
 fi
 
+# Launch Cairo-Dock if available
+if [ -n "$(command -v cairo-dock)" ]; then
+  cairo-dock -o &
+fi
+
 # Restore the previous brightness setting from brightnessctl if available.
 if [ -n "$(command -v brightnessctl)" ]; then
   brightnessctl --restore
