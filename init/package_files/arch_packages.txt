@@ -27,6 +27,8 @@ brightnessctl
 broot
 bspwm
 cabal-install
+cairo-dock
+cairo-dock-plug-ins
 calcurse
 clang
 clazy
