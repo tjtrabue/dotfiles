@@ -2,6 +2,7 @@ acpi
 acpid
 alacritty
 alsa-firmware
+alsa-lib
 alsa-plugins
 alsa-utils
 android-tools
@@ -69,6 +70,7 @@ fd
 feh
 ffmpegthumbnailer
 ffmpegthumbs
+fftw
 findutils
 firefox
 flameshot
@@ -86,12 +88,14 @@ git-lfs
 github-cli
 glad
 global
+gnome-menus
 gnupg
 go
 gpicview
 grub
 gst-devtools
 gtk4
+gvfs
 hacksaw
 hicolor-icon-theme
 htop
@@ -121,17 +125,22 @@ lib32-jansson
 lib32-nvidia-utils
 libappimage
 libdvdcss
+libetpan
 libev
+libexif
 libfixposix
+libical
 libjpeg-turbo
 liblsp-r3d-glx-lib
 libpng
+libpulse
 libreoffice-fresh
 libretls
 librsvg
 libtiff
 libwebp
 libxcrypt
+libxklavier
 libxpm
 light-locker
 lightdm
@@ -142,6 +151,7 @@ linux-headers
 lld
 lldb
 llvm
+lm_sensors
 lsof
 lua
 luarocks
@@ -278,6 +288,7 @@ vdpauinfo
 vi
 vim
 vlc
+vte3
 vulkan-intel
 vulkan-tools
 w3m
@@ -314,6 +325,7 @@ ydotool
 yq
 zathura
 zathura-pdf-poppler
+zeitgeist
 zlib
 zoxide
 zsh
