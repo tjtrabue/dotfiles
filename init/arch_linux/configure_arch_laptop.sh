@@ -35,6 +35,9 @@ EOF
 enable_services() {
   sudo systemctl enable --now acpid
   sudo systemctl enable --now tlp
+  # Mask the rfkill service and socket to avoid conflicts with TLP and ensure
+  # proper operation of TLP's radio device switching options.
+  sudo systemctl mask systemd-rfkill.{service,socket}
 }
 # }}}
 

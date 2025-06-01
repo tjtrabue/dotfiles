@@ -4,4 +4,4 @@ default backend=opengl
 last year=0
 
 [Gui]
-mode=0
+mode=1

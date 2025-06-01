@@ -22,7 +22,10 @@ fi
 unset defaultArandrProfileFile
 
 bspc config border_width 2
-bspc config window_gap 12
+bspc config window_gap 8
+
+# Reserve space at the bottom of the screen for Cairo Dock.
+bspc config bottom_padding 60
 
 bspc config split_ratio 0.52
 bspc config borderless_monocle true
@@ -38,7 +41,7 @@ bspc config pointer_action2 resize_corner
 ### Auto-start applications ###
 
 # Start the compositing manager in the background
-picom --config "${HOME}/.config/picom/picom.conf" &
+picom --daemon --config "${HOME}/.config/picom/picom.conf"
 
 # Wallpaper
 # Use feh commands in ~/.fehbg to set wallpaper
@@ -74,6 +77,15 @@ else
 fi
 unset polybarLauncher
 
+if [ -n "$(command -v xset)" ]; then
+  ### Display Power Management Signaling (DPMS) ###
+  # DPMS allows automatic screen dimming and blanking based on user inactivity.
+  xset s on
+  # Dim screen after 3 minutes of inactivity, then blank screen after 7 more
+  # minutes of inactivity.
+  xset s 180 420
+fi
+
 # XScreenSaver
 # Check the ~/.xscreensaver file for settings, and use the
 # `xscreensaver-settings` command to configure the screensaver/locking behavior
@@ -99,7 +111,7 @@ fi
 
 # Launch Cairo-Dock if available
 if [ -n "$(command -v cairo-dock)" ]; then
-  cairo-dock -o &
+  cairo-dock --opengl &
 fi
 
 # Restore the previous brightness setting from brightnessctl if available.
