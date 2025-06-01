@@ -20,11 +20,16 @@ Section "InputClass"
   Identifier "touchpad"
   MatchIsTouchpad "on"
   Driver "libinput"
+  # Enable tap to click
   Option "Tapping" "on"
   Option "TappingButtonMap" "lrm"
+  # Reverse scroll direction
   Option "NaturalScrolling" "on"
+  # Scroll with two fingers
   Option "ScrollMethod" "twofinger"
   Option "ClickMethod" "clickfinger"
+  # Mouse/touchpad acceleration speed
+  Option "AccelSpeed" "0.3"
 EndSection
 
 EOF

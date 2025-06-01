@@ -42,8 +42,8 @@ Terminal=false
 ShowOnViewport=0
 
 #f[0;100] Order you want for this launcher among the others:
-Order=3.5
+Order=8.109130859375
 
 Icon Type=0
 Type=Application
-Origin=/usr/share/applications/libreoffice-writer.desktop;koffice.desktop;abiword.desktop;openoffice.org-writer.desktop;words.desktop
+Origin=/usr/share/applications/vlc.desktop
