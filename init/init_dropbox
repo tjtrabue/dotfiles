@@ -7,6 +7,9 @@ trap 's=$?; echo "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit $s' ERR
 declare DOTFILES_HOME="${HOME}/.dotfiles"
 declare THIS_EXEC="$(basename "${BASH_SOURCE[0]}")"
 
+# The Dropbox root directory on the local filesystem.
+declare DROPBOX_HOME="${HOME}/Dropbox"
+
 # Logging variables
 declare LOG_TO_FILE=""
 declare LOG_LEVEL=3
@@ -17,7 +20,7 @@ declare LOG_LEVEL=3
 # }}}
 
 # Functions {{{
-_help() {
+idb__help() {
   command cat <<EOF
 ${THIS_EXEC}
 
@@ -32,7 +35,7 @@ OPTIONS:
 EOF
 }
 
-install_dropbox__arch_linux() {
+idb__install_dropbox__arch_linux() {
   log_info "Initializing Dropbox for Arch Linux"
 
   if [ -x "$(command -v dropbox)" ]; then
@@ -44,6 +47,9 @@ install_dropbox__arch_linux() {
   sudo pacman -S --noconfirm python-gpgme
   # Use the AUR helper to install the dropbox client.
   aurhi dropbox
+}
+
+idb__configure_dropbox__arch_linux() {
   # Activate the Systemd module to get Dropbox to start up when the computer
   # boots up.
   sudo systemctl enable --now "dropbox@${USER}"
@@ -56,13 +62,13 @@ install_dropbox__arch_linux() {
   install -dm0 "${HOME}/.dropbox-dist"
 }
 
-install_dropbox__linux() {
+idb__configure_dropbox__linux() {
   local distro="$(getdistro)"
 
-  log_info "Installing Dropbox for a Linux distribution"
+  log_info "Initializing Dropbox system service"
   case "${distro}" in
   "Arch Linux")
-    install_dropbox__arch_linux
+    idb__configure_dropbox__arch_linux
     ;;
   *)
     err "Unsupported Linux distro: ${MAGENTA}${distro}${NC}"
@@ -71,12 +77,40 @@ install_dropbox__linux() {
   esac
 }
 
-install_dropbox() {
+idb__install_dropbox__linux() {
+  local distro="$(getdistro)"
+
+  log_info "Installing Dropbox for a Linux distribution"
+  case "${distro}" in
+  "Arch Linux")
+    idb__install_dropbox__arch_linux
+    ;;
+  *)
+    err "Unsupported Linux distro: ${MAGENTA}${distro}${NC}"
+    return 1
+    ;;
+  esac
+}
+
+# Keep certain large directories from syncing so as not to take up undue disk
+# space on the local machine.
+idb__exclude_directories_from_sync() {
+  if [ -n "$(command -v dropbox-cli)" ]; then
+    droppbox-cli exlude add \
+      "${DROPBOX_HOME}/Computer Science/Courses/Clean Code" \
+      "${DROPBOX_HOME}/test"
+  else
+    err 'Could not find dropbox-cli executable on $PATH'
+    returh 1
+  fi
+}
+
+idb__install_dropbox() {
   local osType="$(getostype)"
 
   case "${osType}" in
   "Linux")
-    install_dropbox__linux
+    idb__install_dropbox__linux
     ;;
   *)
     err "Unsupported OS type: ${MAGENTA}${osType}${NC}"
@@ -85,9 +119,26 @@ install_dropbox() {
   esac
 }
 
-main() {
+# Autostart Dropbox at login and initialize the service.
+idb__configure_dropbox() {
+  local osType="$(getostype)"
+
+  case "${osType}" in
+  "Linux")
+    idb__configure_dropbox__linux
+    ;;
+  *)
+    err "Unsupported OS type: ${MAGENTA}${osType}${NC}"
+    return 1
+    ;;
+  esac
+}
+
+idb__main() {
   print_header "Initializing Dropbox"
-  install_dropbox
+  idb__install_dropbox
+  idb__configure_dropbox
+  idb__exclude_directories_from_sync
 }
 # }}}
 
@@ -99,7 +150,7 @@ eval set -- "$args"
 while true; do
   case "$1" in
   -h | --help)
-    _help
+    idb__help
     exit 0
     ;;
 
@@ -116,6 +167,6 @@ while true; do
 done
 # }}}
 
-main "${@}"
+idb__main "${@}"
 
 # vim:foldenable:foldmethod=marker:
