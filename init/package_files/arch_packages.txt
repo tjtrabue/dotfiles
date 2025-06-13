@@ -121,6 +121,9 @@ kitty
 kompare
 kubeadm
 kubectl
+kwallet
+kwallet-pam
+kwalletmanager
 lib32-jansson
 lib32-nvidia-utils
 libappimage
