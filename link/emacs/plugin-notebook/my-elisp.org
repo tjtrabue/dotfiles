@@ -56,11 +56,14 @@ For example: =(number-sequence 1 10)= results in: =1 2 3 4 5 6 7 8 9 10=
     (emacs-lisp-mode . eros-mode)
     :preface
     (defun my/eros-eval-last-sexp (arg)
+      "Integrate EROS's `eros-eval-last-sexp' with Evil Mode."
       (interactive "P")
       (save-excursion
-        (when (evil-normal-state-p)
-          (forward-char 1))
-        (eros-eval-last-sexp arg)))
+        (evil-save-state
+          (when (evil-normal-state-p)
+            (forward-char 1))
+          (evil-with-state 'insert
+            (eros-eval-last-sexp arg)))))
     :general
     (general-def 'normal 'global
       "C-x C-e" 'my/eros-eval-last-sexp)
