@@ -8,6 +8,7 @@ android-studio
 asdf-vm-git
 brave-beta-bin
 clj-kondo
+cljfmt-bin
 clojure-git
 clojure-lsp-bin
 code-minimap-bin
