@@ -54,10 +54,19 @@ For example: =(number-sequence 1 10)= results in: =1 2 3 4 5 6 7 8 9 10=
   (use-package eros
     :hook
     (emacs-lisp-mode . eros-mode)
+    :preface
+    (defun my/eros-eval-last-sexp (arg)
+      (interactive "P")
+      (save-excursion
+        (when (evil-normal-state-p)
+          (forward-char 1))
+        (eros-eval-last-sexp arg)))
     :general
+    (general-def 'normal 'global
+      "C-x C-e" 'my/eros-eval-last-sexp)
     (my/evil-leader-def
-      "<"  'eros-eval-last-sexp
-      "ee" 'eros-eval-last-sexp))
+      "<"  'my/eros-eval-last-sexp
+      "ee" 'my/eros-eval-last-sexp))
 #+end_src
 
 * elmacro
