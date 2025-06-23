@@ -154,6 +154,10 @@ super + shift + {n,period}
 super + shift + q
 	loginctl lock-session
 
+# Suspend the user's session.
+super + shift + s
+	systemctl suspend
+
 #
 # Applications
 #
