@@ -53,6 +53,9 @@ start_program_if_available() {
 }
 # }}}
 
+# Activate D-Bus variables
+dbus-update-activation-environment --all
+
 # Set key repeat
 if [ -n "$(command -v xset)" ]; then
   xset r rate 190 55
