@@ -182,12 +182,12 @@ URxvt*highlightReverse   : true
 xscreensaver-auth.default.Dialog.bodyFont: Switzer Variable 12, Noto Sans 12, Code2001 12, Liberation Sans 12, sans-serif 12
 
 ! Window background color. You can use color names.
-xscreensaver-auth.default.Dialog.background: black
+xscreensaver-auth.default.Dialog.background: #242730
 
 ! Main text color. You can also use HEX color codes.
 xscreensaver-auth.default.Dialog.forebround: #bbc2cf
 
-! Tell XScreenSaver to use LightDM's switching mode when the user clicks the 
+! Tell XScreenSaver to use LightDM's switching mode when the user clicks the
 ! "New Login" button in the lock screen.
 xscreensaver-auth.default.*.newLoginCommand: dm-tool switch-to-greeter
 ! }}}
