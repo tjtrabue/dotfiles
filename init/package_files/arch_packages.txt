@@ -36,6 +36,7 @@ clazy
 clojure
 cmake
 cmus
+cpanminus
 crictl
 critest
 crypto++

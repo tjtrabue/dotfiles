@@ -164,7 +164,7 @@ super + shift + s
 
 # Web browser
 super + v
-	brave
+	brave --password-store=basic
 
 # File browser
 super + d

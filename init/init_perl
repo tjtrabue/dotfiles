@@ -15,8 +15,8 @@ declare VERBOSE=false
 # }}}
 
 # Functions {{{
-_help() {
-  cat <<EOF
+ipl__help() {
+	cat <<EOF
 ${THIS_EXEC}
 
 Get Perl ready to rock on a new system.
@@ -31,13 +31,13 @@ OPTIONS:
   -v | --verbose
     Run with extra logging output.
 EOF
-  exit 0
+	exit 0
 }
 
-main() {
-  print_header "Initializing Perl Environment"
-  bootstrap_cpanm
-  install_perl_packages
+ipl__main() {
+	print_header "Initializing Perl Environment"
+	bootstrap_cpanm
+	install_perl_packages
 }
 # }}}
 
@@ -47,31 +47,31 @@ eval set -- "$args"
 
 # extract options and their arguments into variables.
 while true; do
-  case "$1" in
-  -v | --verbose)
-    VERBOSE=true
-    shift
-    ;;
+	case "$1" in
+	-v | --verbose)
+		VERBOSE=true
+		shift
+		;;
 
-  -h | --help)
-    _help
-    shift
-    break
-    ;;
+	-h | --help)
+		ipl__help
+		shift
+		break
+		;;
 
-  --)
-    shift
-    break
-    ;;
+	--)
+		shift
+		break
+		;;
 
-  *)
-    err "Unknown option $1 to ${THIS_EXEC}"
-    exit 2
-    ;;
-  esac
+	*)
+		err "Unknown option $1 to ${THIS_EXEC}"
+		exit 2
+		;;
+	esac
 done
 # }}}
 
-main
+ipl__main
 
 # vim:foldenable:foldmethod=marker:

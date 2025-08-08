@@ -1,4 +1,6 @@
 App::cpanoutdated
+App:ucpan
+Bundle::CPAN
 Devel::CoverX::Covered
 Devel::PerlySense
 Emacs::PDE
