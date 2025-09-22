@@ -180,5 +180,3 @@ configure_grub() {
   log_info "Configuring GRUB"
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
-
-# vim:foldenable:foldmethod=indent::foldnestmax=1

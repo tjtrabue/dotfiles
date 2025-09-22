@@ -139,9 +139,7 @@ set foldmethod=syntax
 " }}}
 
 " Indentation {{{
-" Use auto-indent
-set autoindent
-filetype indent plugin on
+" Figure out indentation level dynamically.
 set smartindent
 " }}}
 
@@ -651,7 +649,6 @@ call s:SourcePluginConfigFile('vim-signify.config.vim')
 call s:SourcePluginConfigFile('gundo.config.vim')
 call s:SourcePluginConfigFile('latex.config.vim')
 call s:SourcePluginConfigFile('tagbar.config.vim')
-call s:SourcePluginConfigFile('tmuxline.config.vim')
 call s:SourcePluginConfigFile('ultisnips.config.vim')
 call s:SourcePluginConfigFile('vim-easymotion.config.vim')
 call s:SourcePluginConfigFile('vim_latex_live_preview.config.vim')
@@ -662,7 +659,6 @@ call s:SourcePluginConfigFile('neogit.config.vim')
 call s:SourcePluginConfigFile('git-blame.config.vim')
 call s:SourcePluginConfigFile('barbar.config.vim')
 call s:SourcePluginConfigFile('nvim-hlslens.config.lua')
-call s:SourcePluginConfigFile('formatter.config.lua')
 call s:SourcePluginConfigFile('ranger.config.vim')
 
 call s:SourcePluginConfigFile('nvim-tree.config.lua')

@@ -245,6 +245,7 @@ stack
 stalonetray
 starship
 streamlink
+stylua
 sxhkd
 sysfsutils
 t1utils

@@ -228,7 +228,6 @@ packer.startup(
     use {"tpope/vim-repeat"}
     use {"wellle/targets.vim"}
     use {"easymotion/vim-easymotion"}
-    use {"gpanders/editorconfig.nvim"}
     -- }}}
 
     -- Delimiter plugins {{{
@@ -349,7 +348,6 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
 
     -- Prettification {{{
     use {"junegunn/vim-easy-align"}
-    use {"mhartington/formatter.nvim"}
     -- }}}
 
     use {"nvim-lua/plenary.nvim"}
@@ -411,6 +409,22 @@ vim.cmd "autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lig
     -- SQL
     -- PostgreSQL syntax highlighting
     use {"lifepillar/pgsql.vim"}
+
+    use {
+      "stevearc/conform.nvim",
+      config = function()
+        require("conform").setup {
+          formatters_by_ft = {
+            lua = { "stylua" },
+            sh = { "shfmt" }
+          },
+          format_on_save = {
+            timeout_ms = 500,
+            lsp_format = "fallback"
+          }
+        }
+      end
+    }
   end
 )
 -- }}}
