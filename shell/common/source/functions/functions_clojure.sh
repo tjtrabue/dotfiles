@@ -94,6 +94,19 @@ install_or_update_cljfmt() {
   /bin/bash -c "$(curl -fsSL "${cljfmtInstallerUrl}")"
 }
 
+# Install or update cljstyle, which is a code formatter for Clojure.
+install_cljstyle() {
+  local cljstyleInstaller="install-cljstyle"
+  local installDir="${HOME}/.local/bin"
+
+  log_info "Installing cljfmt to: ${BLUE}${installDir}${NC}"
+
+  curl -sLO "https://raw.githubusercontent.com/greglook/cljstyle/main/util/${cljstyleInstaller}" &&
+  chmod +x "${cljstyleInstaller}" &&
+  ./"${cljstyleInstaller}" --dir "${installDir}" &&
+  rm -f "${cljstyleInstaller}"
+}
+
 # Wrapper for the Leiningen command line tool that supports readline
 # configuration to make using the Clojure REPL more joyful.
 wlein() {

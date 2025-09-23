@@ -17,4 +17,11 @@ brave() {
   eval "${braveExec} ${braveFlags}"
 }
 
+# Set the default web browser for the graphical system.
+set_default_browser() {
+  local defaultBrowser="brave-browser.desktop"
+
+  xdg-settings set default-web-browser "${defaultBrowser}"
+}
+
 # vim:foldenable:foldmethod=indent:foldnestmax=1

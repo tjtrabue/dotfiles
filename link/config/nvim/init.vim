@@ -717,6 +717,8 @@ call s:SourcePluginConfigFile('markdown-preview.config.vim')
 
 " vim-markdown
 call s:SourcePluginConfigFile('vim-markdown.config.vim')
+
+call s:SourcePluginConfigFile('conform.nvim.lua')
 " }}}
 
 " Source override config files {{{

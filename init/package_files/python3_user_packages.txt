@@ -17,6 +17,7 @@ grip
 installer
 ipython
 jedi
+mdformat
 mdv3
 orjson
 paramiko
