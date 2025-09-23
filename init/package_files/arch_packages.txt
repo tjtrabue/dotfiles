@@ -116,15 +116,13 @@ jansson
 jdk-openjdk
 jdk8-openjdk
 jq
+keepassxc
 khal
 kio-gdrive
 kitty
 kompare
 kubeadm
 kubectl
-kwallet
-kwallet-pam
-kwalletmanager
 lib32-jansson
 lib32-nvidia-utils
 libappimage
@@ -237,6 +235,7 @@ ruby
 rust
 scrot
 sdl
+seahorse
 shellcheck
 shfmt
 shotgun
