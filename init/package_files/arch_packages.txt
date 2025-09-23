@@ -237,6 +237,7 @@ scrot
 sdl
 seahorse
 shellcheck
+shellharden
 shfmt
 shotgun
 sof-firmware

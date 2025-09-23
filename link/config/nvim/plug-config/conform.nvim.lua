@@ -12,6 +12,7 @@ require("conform").setup({
     javascript = { "prettierd", "prettier", stop_after_first = true },
     lua = { "stylua" },
     markdown = { "mdformat" },
+    perl = { "perltidy" },
     -- Conform will run multiple formatters sequentially
     python = { "isort", "black" },
     r = { "styler" },
