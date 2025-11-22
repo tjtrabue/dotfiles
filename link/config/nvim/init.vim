@@ -13,14 +13,7 @@ let g:plugin_config_dir = stdpath('config') . '/plug-config'
 " This directory is not tracked by Git, and may or may not exist.
 let g:override_config_dir = stdpath('config') . '/override-config'
 
-" Directory containing all installed plugins
-let g:plugin_install_dir = stdpath('data') . '/site/pack/packer/start'
-
 " The file specifying all third-party plugins to use.
-let g:packer_plugins_file = stdpath('config') . '/lua/plugins.lua'
-
-" Settings {{{
-
 " General {{{
 " Make Vim more useful
 set nocompatible
@@ -366,9 +359,6 @@ map <silent> <leader>sv :so $MYVIMRC<CR>:call SourceConfigs()<CR>
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<CR>
-
-" Update all plugins
-nmap <leader>pu :PackerUpdate<CR>
 " }}}
 
 " Keybindings {{{
@@ -599,7 +589,7 @@ augroup END
 " }}}
 
 " Load plugins defined in ./lua/plugins.lua:
-lua require('plugins')
+lua require('config.lazy')
 
 " Private functions {{{
 
@@ -612,20 +602,6 @@ function! s:SourcePluginConfigFile(filename)
   elseif l:filepath =~ '\.lua$'
     silent execute 'luafile ' . l:filepath
   endif
-endfunction
-
-" Source all files in the 'override-config/' directory. The 'override-config/'
-" directory does not have to be present for this function to work properly, and
-" is only intended to allow for machine-local overrides of our baseline
-" configuration.
-function! s:SourceOverrideConfigFiles()
-  for f in split(glob(g:override_config_dir . '/*'), '\n')
-    if f =~ '\.vim$'
-      silent execute 'source ' . f
-    elseif f =~ '\.lua$'
-      silent execute 'luafile ' . f
-    endif
-  endfor
 endfunction
 " }}}
 
@@ -720,13 +696,6 @@ call s:SourcePluginConfigFile('vim-markdown.config.vim')
 
 call s:SourcePluginConfigFile('conform.nvim.lua')
 " }}}
-
-" Source override config files {{{
-call s:SourceOverrideConfigFiles()
 " }}}
-
-" Automatically compile new plugins whenever the plugins.lua file is
-" modified.
-autocmd BufWritePost g:packer_plugins_file PackerCompile
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
