@@ -51,6 +51,4 @@ fi
 
 # Start applications
 sxhkd &
-cairo-dock --opengl --keep-above &
-
 exec bspwm
