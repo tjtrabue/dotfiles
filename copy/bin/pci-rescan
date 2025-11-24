@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+declare pciDir="/sys/bus/pci"
+
+if [ -d "${pciDir}" ]; then
+  echo 1 >"${pciDir}/rescan"
+fi

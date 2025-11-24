@@ -68,6 +68,8 @@ isd__enable_custom_user_services() {
 
 # Enable global Systemd services.
 isd__enable_system_services() {
+  log_info "Enabling systemd-homed service"
+  sudo systemctl enable --now systemd-homed.service
   log_info "Enabling ACPID service"
   sudo systemctl enable --now acpid.service
 }

@@ -179,4 +179,9 @@ configure_grub() {
 
   log_info "Configuring GRUB"
   sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+  if [ -n "$(command -v mkinitcpio)" ]; then
+    log_info "Creating initial ramdisk"
+    sudo mkinitcpio -P
+  fi
 }

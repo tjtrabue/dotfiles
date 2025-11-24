@@ -420,6 +420,10 @@ arch-chroot "$MOUNT_ROOT" grub-mkconfig -o /boot/grub/grub.cfg
 # }}}
 
 # Enable other services {{{
+
+# Enable the SystemD service for user home directory management
+arch-chroot "${MOUNT_ROOT}" systemctl enable systemd-homed.service
+
 # CUPS for printer integration
 arch-chroot "${MOUNT_ROOT}" systemctl enable cups
 

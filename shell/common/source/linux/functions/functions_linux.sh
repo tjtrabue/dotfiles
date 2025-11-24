@@ -47,4 +47,15 @@ display_connector_statuses() {
   done
 }
 
+# Show display manager information
+dminfo() {
+  local dmServiceFile="/etc/systemd/system/display-manager.service"
+  if [ -f "${dmServiceFile}" ]; then
+    file "${dmServiceFile}"
+  else
+    err "Display Manager service file ${dmServiceFile} does not exist"
+    return 1
+  fi
+}
+
 # vim:foldenable:foldmethod=indent::foldnestmax=1
