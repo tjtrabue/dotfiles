@@ -422,6 +422,10 @@ Thumbs.db
 /link/config/AWSVPNClient/
 # }}}
 
+# Cairo Dock {{{
+/link/config/cairo-dock/
+# }}}
+
 # Google Cloud CLI {{{
 /link/config/gcloud/
 # }}}
