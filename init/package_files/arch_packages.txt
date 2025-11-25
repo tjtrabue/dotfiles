@@ -156,6 +156,7 @@ llvm
 lm_sensors
 lsof
 lua
+lua-language-server
 luarocks
 lxappearance
 lynx

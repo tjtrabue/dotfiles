@@ -1,13 +1,16 @@
--- Configuration for Neovim's native LSP functions.
+-- Configuration for Neovim's native LSP functions,.
 -- Must source this file after the `nvim-lspconfig` plugin loads.
 
 local fs = require("tjdot.fs")
 local str = require("tjdot.str")
-local lspconfig = require("lspconfig")
+local lspconfig = vim.lsp.config
+local enable = vim.lsp.enable
 local util = require("lspconfig.util")
 
 -- nvim-cmp completion capabilities for Neovim's LSP.
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").update_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
 
 -- Function called when a buffer attaches to a language server.
 local on_attach = function(client, bufnr)
@@ -18,28 +21,78 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", {})
 
   -- Mappings
-  local opts = {noremap = true, silent = true}
+  local opts = { noremap = true, silent = true }
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
   buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
   buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  buf_set_keymap("n", "<leader>lwa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<leader>lwr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-  buf_set_keymap("n", "<leader>lD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+  buf_set_keymap(
+    "n",
+    "<C-k>",
+    "<cmd>lua vim.lsp.buf.signature_help()<CR>",
+    opts
+  )
+  buf_set_keymap(
+    "n",
+    "<leader>lwa",
+    "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+    opts
+  )
+  buf_set_keymap(
+    "n",
+    "<leader>lwr",
+    "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+    opts
+  )
+  buf_set_keymap(
+    "n",
+    "<leader>wl",
+    "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+    opts
+  )
+  buf_set_keymap(
+    "n",
+    "<leader>lD",
+    "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+    opts
+  )
   buf_set_keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  buf_set_keymap("n", "<leader>le", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
+  buf_set_keymap(
+    "n",
+    "<leader>le",
+    "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
+    opts
+  )
   buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
   buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-  buf_set_keymap("n", "<leader>lq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-  buf_set_keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  buf_set_keymap(
+    "n",
+    "<leader>lq",
+    "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",
+    opts
+  )
+  buf_set_keymap(
+    "n",
+    "<leader>la",
+    "<cmd>lua vim.lsp.buf.code_action()<CR>",
+    opts
+  )
   -- Set some keybinds conditional on server capabilities
   if client.server_capabilities.document_formatting then
-    buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    buf_set_keymap(
+      "n",
+      "<leader>lf",
+      "<cmd>lua vim.lsp.buf.formatting()<CR>",
+      opts
+    )
   elseif client.server_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    buf_set_keymap(
+      "n",
+      "<leader>lf",
+      "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+      opts
+    )
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -55,17 +108,18 @@ local on_attach = function(client, bufnr)
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
         augroup END
         ]],
-      {output = false}
+      { output = false }
     )
   end
 end
 
 -- Language servers
 -- bash-language-server
-lspconfig.bashls.setup {
+lspconfig("bashls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("bashls")
 
 -- clangd
 -- NOTE: Clang >= 9 is recommended! See this issue for more.
@@ -74,57 +128,64 @@ lspconfig.bashls.setup {
 -- compile_commands.json or, for simpler projects, a compile_flags.txt.
 -- For details on how to automatically generate one using CMake look here.
 
-lspconfig.clangd.setup {
+lspconfig("clangd", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("clangd")
 
 -- clojure-lsp
-lspconfig.clojure_lsp.setup {
+lspconfig("clojure_lsp", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("clojure_lsp")
 
 -- cmake-ls
-lspconfig.cmake.setup {
+lspconfig("cmake", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("cmake")
 
 -- cssls
 -- Currently disabled in favor of tailwindcss
---[[ lspconfig.cssls.setup {
+--[[ lspconfig("cssls", {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
 -- cssmodules-language-server
-lspconfig.cssmodules_ls.setup {
+lspconfig("cssmodules_ls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("cssmodules_ls")
 
 -- dartls
-lspconfig.dartls.setup {
+lspconfig("dartls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("dartls")
 
 -- dockerfile-ls
-lspconfig.dockerls.setup {
+lspconfig("dockerls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("dockerls")
 
 -- dot-language-server
-lspconfig.dotls.setup {
+lspconfig("dotls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("dotls")
 
 -- efm-language-server
 -- Not currently used because EFM requires a lot of setup, and is not terribly
 -- useful.
---[[ lspconfig.efm.setup {
+--[[ lspconfig("efm", {
   capabilities = capabilities,
   on_attach = on_attach
 } ]]
@@ -132,7 +193,7 @@ lspconfig.dotls.setup {
 -- Currently using `lexical` instead.
 --[[ local elixir_ls_binary = fs.os_cmd_to_string("command -v elixir-ls")
 if not str.isempty(elixir_ls_binary) then
-  lspconfig.elixirls.setup {
+  lspconfig("elixirls", {
     capabilities = capabilities,
     cmd = {elixir_ls_binary},
     on_attach = on_attach,
@@ -147,127 +208,144 @@ end ]]
 -- lexical (newer Elixir LSP server)
 local lexical_binary = fs.os_cmd_to_string("command -v start_lexical.sh")
 if not str.isempty(lexical_binary) then
-  lspconfig.lexical.setup {
+  lspconfig("lexical", {
     capabilities = capabilities,
-    cmd = {lexical_binary},
-    on_attach = on_attach
-  }
+    cmd = { lexical_binary },
+    on_attach = on_attach,
+  })
+  enable("lexical")
 end
 
 -- emmet-ls (for HTML templating/snippet expansion)
-lspconfig.emmet_ls.setup {
+lspconfig("emmet_ls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("emmet_ls")
 
 -- erlang-ls
-lspconfig.erlangls.setup {
+lspconfig("erlangls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("erlangls")
 
 -- graphql-language-server
-lspconfig.graphql.setup {
+lspconfig("graphql", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("graphql")
 
 -- haskell-language-server
-lspconfig.hls.setup {
+lspconfig("hls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("hls")
 
 -- html-ls
 --Enable (broadcasting) snippet capability for completion
-local html_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local html_capabilities = require("cmp_nvim_lsp").update_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
 html_capabilities.textDocument.completion.completionItem.snippetSupport = true
-lspconfig.html.setup {
+
+lspconfig("html", {
   capabilities = html_capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("html")
 
 -- intelephense
-lspconfig.intelephense.setup {
+lspconfig("intelephense", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("intelephense")
 
 -- jsonls
 -- vscode-json-languageserver only provides range formatting. You can map a
 -- command that applies range formatting to the entire document:
-lspconfig.jsonls.setup {
+lspconfig("jsonls", {
   capabilities = capabilities,
   commands = {
     Format = {
       function()
-        vim.lsp.buf.range_formatting({}, {0, 0}, {vim.fn.line("$"), 0})
-      end
-    }
+        vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
+      end,
+    },
   },
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("jsonls")
 
 -- kotlin-language-server
 -- This server is currently awful. Just terrible. You should not use it if you
 -- have any other options. Use IntelliJ IDEA, use Android Studio, use VSCode,
 -- use anything else but this if you can. It is far too slow, and does not
 -- integrate well with non-VSCode editors.
-local kotlin_language_server_binary = fs.os_cmd_to_string("command -v kotlin-language-server")
+local kotlin_language_server_binary =
+  fs.os_cmd_to_string("command -v kotlin-language-server")
 if not str.isempty(kotlin_language_server_binary) then
-  lspconfig.kotlin_language_server.setup {
+  lspconfig("kotlin_language_server", {
     capabilities = capabilities,
-    cmd = {kotlin_language_server_binary},
-    filetypes = {"kotlin"},
+    cmd = { kotlin_language_server_binary },
+    filetypes = { "kotlin" },
     on_attach = on_attach,
-    root_dir = util.root_pattern("settings.gradle", "settings.gradle.kts", ".git"),
+    root_dir = util.root_pattern(
+      "settings.gradle",
+      "settings.gradle.kts",
+      ".git"
+    ),
     settings = {
       -- Most of these settings are defaults, but for some reason it was necessary
       -- to specify them to get the kotlin-language-server to work.
       kotlin = {
         compiler = {
           jvm = {
-            target = "default"
-          }
+            target = "default",
+          },
         },
         completion = {
           snippets = {
-            enabled = true
-          }
+            enabled = true,
+          },
         },
         debounceTime = 250,
         debugAdapter = {
-          path = ""
+          path = "",
         },
         externalSources = {
           autoConvertToKotlin = true,
-          useKlsScheme = true
+          useKlsScheme = true,
         },
         indexing = {
-          enabled = true
+          enabled = true,
         },
         languageServer = {
           debugAttach = {
             autoSuspend = false,
             enabled = false,
-            port = 5005
+            port = 5005,
           },
           enabled = true,
           path = kotlin_language_server_binary,
           port = 0,
-          transport = "stdio"
+          transport = "stdio",
         },
         linting = {
-          debounceTime = 250
+          debounceTime = 250,
         },
         snippetsEnabled = true,
         trace = {
-          server = "off"
-        }
-      }
+          server = "off",
+        },
+      },
     },
-    single_file_support = true
-  }
+    single_file_support = true,
+  })
+  enable("kotlin_language_server")
 end
 
 -- lua-language-server
@@ -277,74 +355,79 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 if not str.isempty(sumneko_binary) then
-  lspconfig.sumneko_lua.setup {
+  lspconfig("sumneko_lua", {
     capabilities = capabilities,
     -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-    cmd = {sumneko_binary},
+    cmd = { sumneko_binary },
     settings = {
       Lua = {
         runtime = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
           -- Setup your lua path
-          path = runtime_path
+          path = runtime_path,
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = {"vim"}
+          globals = { "vim" },
         },
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file("", true),
           -- Neovim does not currently support third party tools
-          checkThirdParty = false
+          checkThirdParty = false,
         },
         -- Do not send telemetry data containing a randomized but unique identifier
         telemetry = {
-          enable = false
-        }
-      }
+          enable = false,
+        },
+      },
     },
-    on_attach = on_attach
-  }
+    on_attach = on_attach,
+  })
+  enable("sumneko_lua")
 end
 
 -- Marksman Markdown LSP {{{
-lspconfig.marksman.setup {
+lspconfig("marksman", {
   capabilities = capabilities,
-  cmd = {"marksman", "server"},
-  filetypes = {"markdown"},
+  cmd = { "marksman", "server" },
+  filetypes = { "markdown" },
   on_attach = on_attach,
-  root_dir = util.root_pattern(".git", ".marksman.toml")
-}
+  root_dir = util.root_pattern(".git", ".marksman.toml"),
+})
+enable("marksman")
 -- }}}
 
 -- Perl-Language-Server
 -- To use the language server, ensure that you have Perl::LanguageServer
 -- installed and perl command is on your path.
-lspconfig.perlls.setup {
+lspconfig("perlls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("perlls")
 
 -- pyright
-lspconfig.pyright.setup {
+lspconfig("pyright", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("pyright")
 
 -- rls (Rust)
-lspconfig.rls.setup {
+lspconfig("rls", {
   capabilities = capabilities,
   -- Use nightly build
-  cmd = {"rustup", "run", "nightly", "rls"},
-  on_attach = on_attach
-}
+  cmd = { "rustup", "run", "nightly", "rls" },
+  on_attach = on_attach,
+})
+enable("rls")
 
 -- sqlls (SQL LanguageServer written in Node.js)
 --[[ local sql_ls_bin = fs.os_cmd_to_string("command -v sql-language-server")
 
-lspconfig.sqlls.setup {
+lspconfig("sqlls".setup {
   capabilities = capabilities,
   cmd = {sql_ls_bin},
   on_attach = on_attach
@@ -356,45 +439,53 @@ local sqls_binary = fs.os_cmd_to_string("command -v sqls")
 local sqls_config_file = os.getenv("HOME") .. "/.config/sqls/config.yml"
 
 if not str.isempty(sqls_binary) then
-  lspconfig.sqls.setup {
+  lspconfig("sqls", {
     capabilities = capabilities,
-    cmd = {sqls_binary, "-config", sqls_config_file},
-    on_attach = on_attach
-  }
+    cmd = { sqls_binary, "-config", sqls_config_file },
+    on_attach = on_attach,
+  })
+  enable("sqls")
 end
 
 -- tailwind-css
-lspconfig.tailwindcss.setup {
+lspconfig("tailwindcss", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("tailwindcss")
 
 -- terraform-lsp
-lspconfig.terraform_lsp.setup {
+lspconfig("terraform_lsp", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("terraform_lsp")
 
 -- texlab (LaTeX)
-lspconfig.texlab.setup {
+lspconfig("texlab", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("texlab")
 
 -- typescript-language-server
-lspconfig.tsserver.setup {
+lspconfig("tsserver", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("tsserver")
 
 -- vim-language-server
-lspconfig.vimls.setup {
+lspconfig("vimls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
+enable("vimls")
 
 -- yaml-language-server
-lspconfig.yamlls.setup {
+lspconfig("yamlls", {
   capabilities = capabilities,
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+  enable("yamlls"),
+})
+enable("yamlls")
