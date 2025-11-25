@@ -30,11 +30,6 @@ kwin-polonium-git
 lazygit-git
 libgccjit
 lightdm-webkit-theme-aether
-ls-icons
-lua-emmy-language-server-bin
-lua-language-server-git
-neovim-nightly-bin
-numix-circle-icon-theme-git
 optimus-manager
 p4v
 pay-respects-bin

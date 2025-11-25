@@ -5,6 +5,7 @@ beancount
 black
 build
 cmake-language-server
+cmakelang
 cmakelint
 cookiecutter
 cpplint

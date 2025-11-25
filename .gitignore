@@ -413,6 +413,10 @@ Thumbs.db
 /link/config/lazygit/state.yml
 # }}}
 
+# Neovim Lazy {{{
+/link/config/nvim/lazy-lock.json
+# }}}
+
 # git-cola {{{
 /link/config/git-cola
 # }}}

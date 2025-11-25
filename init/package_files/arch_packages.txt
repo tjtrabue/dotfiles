@@ -263,6 +263,7 @@ tree
 tree-sitter
 tree-sitter-bash
 tree-sitter-c
+tree-sitter-cli
 tree-sitter-javascript
 tree-sitter-lua
 tree-sitter-markdown

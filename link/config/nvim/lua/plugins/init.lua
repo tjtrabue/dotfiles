@@ -3,9 +3,6 @@
 -- [x] Fix dependencies syntax
 -- [x] Fix config syntax
 return {
-  -- Packer can manage itself
-  { "wbthomason/packer.nvim" },
-
   {
     "dhananjaylatkar/cscope_maps.nvim",
     after = "which-key.nvim",
