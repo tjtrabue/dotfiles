@@ -15,6 +15,7 @@ code-minimap-bin
 dropbox
 dropbox-cli
 ebgaramond-otf
+erlfmt-git
 findimagedupes
 flutter-git
 font-symbola
